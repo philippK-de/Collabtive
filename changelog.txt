@@ -1,6 +1,7 @@
 Collabtive 0.8
 + Added Estonian translation
 + Fixed timetracker filtering
++ Added to github
 
 Collabtive 0.7.5
 + Improved code comments
