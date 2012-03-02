@@ -1,0 +1,407 @@
+form.main {
+	display:block;
+	margin:0;
+	font-family: Arial, helvetica, sans-serif;
+	font-size:9pt;
+	line-height:normal;
+	padding:0;
+}
+
+form.main .row {
+	clear:both;
+}
+
+form.main .row-butn-top { /* Button top on forms */
+	clear:both;
+	height: 38px;
+}
+
+form.main .row-butn-bottom { /* Button bottom on forms */
+	clear:both;
+	padding: 12px 0 0 0;
+}
+
+form fieldset {
+	display:block;
+	border:none;
+	padding:0;
+	margin:0;
+}
+
+form.main label {
+	width:140px;
+	height:25px;
+	float:left;
+	padding-top:4px;
+	font-weight: bold;
+}
+
+form.main label:hover {
+	cursor: pointer	;
+}
+
+form.main input {
+	float: left;
+	margin-bottom: 6px;
+	width: 307px;
+	height: 17px;
+	padding: 3px 3px 0px 3px;
+	border: 1px solid;
+	font-family: Arial, helvetica, sans-serif;
+	font-size: 9pt;
+}
+
+/* in Userprofile */
+
+.userwrapper form.main label {
+	height: auto;
+	padding: 0;
+}
+
+.userwrapper form.main input, .userwrapper form.main select {
+	margin: 0;
+}
+
+/* ## LOGIN - Form ################################ */
+
+.login form {
+	width: 200px;
+	margin: 0 auto 0 auto;
+	color: #0a182f;
+	font-weight: bold;
+	text-align: left;
+}
+
+.login form .row {
+	height: 38px;
+}
+
+.login form label {
+	float: left;
+	display: block;
+	width: 34px;
+	height: 23px;
+	margin-right: 1px;
+	background-position: 0 0;
+	background-prepeat: no-repeat;
+}
+
+.login .username {
+	background: url(../images/login-user.png);
+}
+
+.login .pass {
+	background: url(../images/login-pass.png);
+}
+
+.login .keep, login .keep-active {
+	background: url(../images/login-keeplogged.png);
+}
+
+.login .keep-active {
+	background: url(../images/login-keeplogged.png) no-repeat -68px 0;
+}
+
+.login label:hover {
+	background-position: -34px 0;
+	cursor: pointer;
+}
+
+.login label.keep-active:hover {
+	background-position: -102px 0;
+}
+
+.login form input, .login form label.keep span, .login form label.keep-active span {
+	float: left;
+	width:153px;
+	height: 19px;
+	padding: 4px 6px 0 6px;
+	border:none;
+	font-size: 12px;
+	background: url(../images/input-bg-a.png) repeat-x 0 0;
+}
+
+.login form label.keep span, .login form label.keep-active span {
+	margin: 0 0 0 35px;
+	background: url(../images/login-logged-butn.png) repeat-x 0 0;
+}
+
+.login form label.keep:hover span, .login form label.keep-active:hover span {
+	background-position: 0 -23px;
+}
+
+
+#stay {
+	visibility: hidden;
+}
+
+.loginbutn {
+	border: none;
+	margin: 0 84px 0 84px;
+	width: 32px;
+	height: 32px;
+	background: url(../images/login-butn.png) repeat-x 0 0;
+	outline: none;
+}
+
+.loginbutn:hover {
+    background: url(../images/login-butn.png);
+	background-position: -32px 0;
+	cursor: pointer;
+}
+
+
+/* ## SEARCH - Form (Sidebar)) ############################### */
+
+#search {
+	position: relative;
+	margin: 0;
+}
+
+#search .row .text, #choices ul {
+	float: left;
+	width:137px;
+	height: 19px;
+	padding: 4px 6px 0 6px;
+	border:none;
+	font-size: 12px;
+	background: url(../images/input-bg-a.png) repeat-x 0 0;
+	color: #0a182f;
+	font-weight: bold;
+	margin-right: 1px;
+}
+
+#search button {
+	width: 34px;
+	height: 23px;
+	background: url(../images/search-butn-side.png) no-repeat 0 0;
+	float: left;
+	margin: 0;
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+}
+
+#search button:hover {
+	background-position: 0 -23px;
+}
+
+#choices ul { /* Autocompleter */
+	width: 184px;
+	height: auto;
+	max-height: 300px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	background: url(../images/color-a.png) repeat 0 0;
+	float:left;
+	padding: 0 0 1px 0;
+}
+#choices li {
+	width: 180px;
+	height: 31px;
+	line-height: 31px;
+	background: url(../images/autocomplete-bg-a.png) repeat-x 0 0;
+	margin-top: 1px;
+	padding: 2px;
+	float:left;
+}
+
+#choices li:hover {
+	cursor:pointer;
+	background-position: 0 -36px;
+}
+#choices li img {
+	float:left;
+	margin:2px 0 2px 0;
+}
+
+#indicator1 {
+	position: absolute;
+	top:0;
+	left: 150px;
+	width: 34px;
+	height: 23px;
+	background: #3c556f;
+}
+
+#indicator1 img {
+	margin: 3px 9px 0 9px;
+}
+
+/* ## BUTTON ############################### */
+
+button, button.inner, button.inner-active {
+	border: none;
+	font-family: Arial, helvetica, sans-serif;
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	color: #fff;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	font-size: 11px;
+	font-weight: bold;
+	margin: 0 5px 0 0;
+	padding-top: 0px;
+	padding-bottom: 1px;
+	/*padding: 2px 0 3px 0;*/
+	white-space: nowrap;
+	background: #384e67;
+}
+
+button:hover {
+	cursor: pointer;
+	background: #001e40;
+}
+
+button[disabled] {
+	opacity:.6;
+	filter:alpha(opacity=60);
+	-moz-opacity:.6;
+}
+
+button[disabled]:hover {
+	background: #384e67;
+}
+
+form.main select {
+	width: 315px;
+	height: 22px;
+	border: 1px solid;
+	float: left;
+	margin-bottom: 6px;
+	padding: 2px 0 0 0;
+	font-family: Arial, helvetica, sans-serif;
+	font-size: 9pt;
+}
+
+form.main option {
+	background:#fff;
+}
+
+/* ## FILES ############################### */
+
+.fileinput {
+	position: relative;
+	float: left;
+	width: 315px;
+}
+
+.fileinput table {
+	width: 315px;
+}
+
+.block .fileinput table td, .blockwrapper .fileinput table td {
+	padding: 0;
+	border: none;
+	height: 24px;
+}
+
+.block .fileinput table td.choose, .blockwrapper .fileinput table td.choose {
+	width: 10%;
+	padding: 0 0 0 13px;
+}
+
+.faux {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 1;
+}
+
+.fileinput button {
+	margin: 0px 0 0 0;
+	float: right;
+}
+
+form.main input.file {
+	position: relative;
+	-moz-opacity: 0 ;
+	filter: alpha(opacity: 0);
+	opacity: 0;
+	z-index: 2;
+	height: 25px;
+}
+
+form.main input.text-file {
+	width: 100%;
+	margin: 0;
+}
+
+form.main textarea {
+	width: 307px;
+	height:90px;
+	font-size:9pt;
+	padding:2px 3px 2px 3px;
+	background:#fff url(../gfx/input_text_bg.png) repeat-x;
+	border:1px solid;
+	font-family:Arial, helvetica, sans-serif;
+	margin-bottom:6px;
+}
+
+form.main .checkbox{
+	width:auto;
+	float:left;
+	margin: 1px 25px 0 0;
+	border:none;
+}
+
+form.main .radio{
+	float:left;
+	width: auto;
+	border:none;
+	position: relative;
+	top: 6px;
+	margin: 0;
+}
+
+
+form.main .input_error {
+	border-color: #be4c43;
+	color: #be4c43;
+}
+
+
+
+
+/* ## Editor ## start */
+
+form.main .row .editor {
+	float: left;
+	margin-bottom:6px;
+	border: 1px solid #000;
+}
+
+/* ## Editor ## end */
+in: 1px 25px 0 0;
+	border:none;
+}
+
+form.main .radio{
+	float:left;
+	width: auto;
+	border:none;
+	position: relative;
+	top: 6px;
+	margin: 0;
+}
+
+
+form.main .input_error {
+	border-color: #be4c43;
+	color: #be4c43;
+}
+
+
+
+
+/* ## Editor ## start */
+
+form.main .row .editor {
+	float: left;
+	margin-bottom:6px;
+	border: 1px solid #000;
+}
+
+/* ## Editor ## end */
