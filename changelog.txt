@@ -1,7 +1,12 @@
-Collabtive 0.8
+Collabtive 0.7.6
 + Added Estonian translation
 + Fixed timetracker filtering
-+ Added to github
++ Fixed a problem in countLanguageStrings() that would throw warnings on the system admin page when there was an empty folder in the /language/ folder
++ Files can now be moved up in the folder hierarchy by dragging them onto the "folder up" icon / titlebar
++ Display the complete path of the folder in the add folder ("Parent folder") and add file ("folder") forms, instead of just the foldernames
++ Display the complete path in the titlebar of the file manager, instead of just the current folder
++ Filemanager can now be switched between Gridview (default) and listview (new)
++ Set sensible defaults for time formating in admin->system
 
 Collabtive 0.7.5
 + Improved code comments

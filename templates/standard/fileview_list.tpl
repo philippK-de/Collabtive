@@ -1,18 +1,17 @@
 
 
-						<table id = "desktopprojects" cellpadding="3px" cellspacing="0" border = "1" style = "border:0px solid;border-collapse:collapse;">
+						<table id = "desktopprojects" cellpadding="3px" cellspacing="0" border = "1" style = "border-left:0px solid;border-collapse:collapse;width:100%">
 
 					<thead>
 						<tr>
-							<th class="a"></th>
-							<th class="b" style = "text-align:left;">Name</th>
-							<th class="c" style = "text-align:left;">Date</th>
-							<th class="d" style = "text-align:left;">Size</th>
+							<th class="a" style = "text-align:center;width:5%;border-right:0px;"></th>
+							<th class="b" style = "text-align:left;width:50%;border-left:0px;">Name</th>
+							<th class="c" style = "text-align:left;width:20%">Uploaded on / by</th>
+							<th class="d" style = "text-align:left;width:10%;">Size</th>
 
-							<th class="tools"></th>
+							<th class="tools" style = "width:3%;"></th>
 						</tr>
 					</thead>
-
 
 					{section name=folder loop=$folders}
 
@@ -23,11 +22,11 @@
 					<tbody class="color-b" id="thefold_{$folders[folder].ID}">
 					{/if}
 						<tr >
-							<td><img src = "templates/standard/images/symbols/folder-sub.png" /></td>
-							<td>
+							<td style = "border-right:0px;"><img src = "templates/standard/images/symbols/folder-sub.png" /></td>
+							<td style = "border-left:0px;">
 <a href = "javascript:change('manageajax.php?action=fileview_list&id={$project.ID}&folder={$folders[folder].ID}','filescontent');">
 										{if $folders[folder].name != ""}
-										{$folders[folder].name|truncate:50:"...":true}
+										{$folders[folder].name|truncate:100:"...":true}
 										{/if}
 										</a>
 
@@ -56,17 +55,17 @@
 					<tbody class="color-b" id="fli_{$files[file].ID}">
 					{/if}
 						<tr >
-							<td><a href = "{$files[file].datei}" {if $files[file].imgfile == 1} rel="lytebox[]" {elseif $files[file].imgfile == 2} rel = "lyteframe[text]" rev="width: 650px; height: 500px;"{/if}>
+							<td style = "border-right:0px;"><a href = "{$files[file].datei}" {if $files[file].imgfile == 1} rel="lytebox[]" {elseif $files[file].imgfile == 2} rel = "lyteframe[text]" rev="width: 650px; height: 500px;"{/if}>
 													 		{if $files[file].imgfile == 1}
 													 		<img src = "thumb.php?pic={$files[file].datei}&amp;width=32" alt="{$files[file].name}" />
 													 		{else}
 													 		<img src = "templates/standard/images/files/{$files[file].type}.png" alt="{$files[file].name}" />
 													 		{/if}
 													 	</a></td>
-							<td>
+							<td style = "border-left:0px;">
                                         <a href = "{$files[file].datei}" {if $files[file].imgfile == 1} rel="lytebox[]" {elseif $files[file].imgfile == 2} rel = "lyteframe[text]" rev="width: 650px; height: 500px;"{/if}>
 
-										{$files[file].name}
+										{$files[file].name|truncate:75:"...":true}
 
                                         </a>
 
@@ -74,8 +73,8 @@
 							<td>{$files[file].addedstr} / <a href = "manageuser.php?action=profile&id={$files[file].userdata.ID}">{$files[file].userdata.name}</a></td>
 							<td>{$files[file].size} KB</td>
 
-                            <td class="tools">
-								<a class="tool_edit" href="managefile.php?action=editform&amp;id={$project.ID}&amp;file={$files[file].ID}" title="{#editfile#}"></a>
+                            <td class="tools" >
+							<!--	<a class="tool_edit" href="managefile.php?action=editform&amp;id={$project.ID}&amp;file={$files[file].ID}" title="{#editfile#}"></a>-->
 							   	<a class="tool_del" href="javascript:confirmfunction('{$langfile.confirmdel}','deleteElement(\'fli_{$files[file].ID}\',\'managefile.php?action=delete&amp;id={$project.ID}&amp;file={$files[file].ID}\')');" title="{#delete#}"></a>
 
 							</td>
@@ -104,15 +103,24 @@
                                 </script>
                             {/literal}
         {/section}
-							<script type = "text/javascript">
-								 {if $foldername}
-								$('dirname').innerHTML = '{$foldername}';
-                            {else}
-                            $('dirname').innerHTML = '{$langfile.rootdir}';
-                            {/if}
-
-								$('filenum').innerHTML = '{$filenum}';
-								new LyteBox();
-
-
-							</script>
+<div id = "parentfolder" style = "display:none;">{$folderid}</div>
+<script type = "text/javascript">
+	{literal}
+	parentFolder = $("parentfolder").innerHTML;
+			Droppables.add('dropDirUp',{
+						onDrop: function(element) {
+								//alert('managefile.php?action=movefile&id={/literal}{$project.ID}{literal}&file='+element.id+'&target='+parentFolder);
+								change('managefile.php?action=movefile&id={/literal}{$project.ID}{literal}&file='+element.id+'&target='+parentFolder,'jslog');
+								element.hide();
+					}
+					});
+	{/literal}
+	{if $foldername}
+	$('dirname').innerHTML = '{$foldername}';
+	{else}
+	$('dirname').innerHTML = '{$langfile.rootdir}';
+	{/if}
+	$('filenum').innerHTML = '{$filenum}';
+	new LyteBox();
+	$('dirUp').href = "javascript:change('manageajax.php?action=fileview_list&id={$project.ID}&folder={$folderid}','filescontent');"
+</script>

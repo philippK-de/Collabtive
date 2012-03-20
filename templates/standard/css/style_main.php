@@ -2610,6 +2610,7 @@ th.tools, td.tools {
 .files .second-thead, .files .second-thead:hover td, .files .block_in_wrapper, .files .inwrapper li:hover {
 	background: <?php echo $filesTableSecondhead;
 ?>;
+	cursor:move;
 }
 
 .files .color-a, .files .datepick table td, .files .datepick tr.head td, .files .staterow {

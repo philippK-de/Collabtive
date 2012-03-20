@@ -228,6 +228,7 @@ if ($action == "timeline1next")
     echo $json;
 } elseif ($action == "fileview")
 {
+
     if (!chkproject($userid, $id))
     {
         $errtxt = $langfile["notyourproject"];
@@ -294,7 +295,7 @@ if ($action == "timeline1next")
     {
         $folders = $myfile->getProjectFolders($id, $folder);
         $thefolder = $myfile->getFolder($folder);
-        $foldername = $thefolder["name"];
+        $foldername = $thefolder["abspath"];
     }
 
     $finfolders = array();
@@ -328,8 +329,14 @@ if ($action == "timeline1next")
     }
     $template->assign("filenum", $filenum);
     $template->assign("foldername", $foldername);
+    if(!$thefolder["parent"])
+    {
+		$thefolder["parent"] = 0;
+	}
+
     $template->assign("folderid", $thefolder["parent"]);
     $template->assign("langfile", $langfile);
+    $template->assign("theAction", "fileview");
     SmartyPaginate::assign($template);
     $template->assign("files", $finfiles);
     $template->assign("postmax", $POST_MAX_SIZE);
@@ -401,7 +408,7 @@ elseif ($action == "fileview_list")
     {
         $folders = $myfile->getProjectFolders($id, $folder);
         $thefolder = $myfile->getFolder($folder);
-        $foldername = $thefolder["name"];
+        $foldername = $thefolder["abspath"];
     }
 
     $finfolders = array();
@@ -437,10 +444,11 @@ elseif ($action == "fileview_list")
     $template->assign("foldername", $foldername);
     $template->assign("folderid", $thefolder["parent"]);
     $template->assign("langfile", $langfile);
+    $template->assign("theAction", "fileview_list");
     SmartyPaginate::assign($template);
     $template->assign("files", $finfiles);
     $template->assign("postmax", $POST_MAX_SIZE);
-    $template->display("fileview.tpl");
+    $template->display("fileview_list.tpl");
 }
 
 elseif ($action == "folderview")

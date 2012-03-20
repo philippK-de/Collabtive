@@ -25,7 +25,7 @@
 			<select name = "upfolder" id = "upfolder">
 			<option value = "">{#rootdir#}</option>
 			{section name=fold loop=$allfolders}
-			<option value = "{$allfolders[fold].ID}">/{$allfolders[fold].name}</option>
+			<option value = "{$allfolders[fold].ID}">{$allfolders[fold].abspath}</option>
 			{/section}
 			</select>
 		</div>
@@ -34,7 +34,7 @@
 			<div class="row"><label for = "title">{#title#}:</label><input type = "text" name = "userfile1-title" id="title" /></div>
 				<div class="row"><label for="file">{#file#}:</label>
 					<div class="fileinput" >
-						<input size = "40" type="file" class = "file"  name="userfile1" id="filer"  realname="{#file#}" size="19" onchange = "file.value = this.value;" />
+						<input size = "40" type="file" class = "file"  name="userfile1" id="filer"  realname="{#file#}" size="19" onchange = "file.value = this.value;" multiple />
 						<table class = "faux" cellpadding="0" cellspacing="0" border="0" style="padding:0;margin:0;border:none;">
 							<tr>
 								<td><input type="text" class="text-file" name="userfile1" id="file" required="1" realname="{#file#}"></td>

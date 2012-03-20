@@ -9,8 +9,7 @@
  * @link http://www.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
-class datei
-{
+class datei {
     /**
      * Constructor
      * Initialize the event log
@@ -19,7 +18,6 @@ class datei
     {
         $this->mylog = new mylog;
     }
-
     // FOLDER METHODS
     /**
      * Create a new folder
@@ -35,14 +33,11 @@ class datei
         $folder = mysql_real_escape_string($folder);
         $folderOrig = $folder;
         $desc = mysql_real_escape_string($desc);
-        if(!empty($visible))
-        {
-			$visstr = serialize($visible);
-		}
-		else
-		{
-			$visstr = "";
-		}
+        if (!empty($visible)) {
+            $visstr = serialize($visible);
+        } else {
+            $visstr = "";
+        }
 
         $folder = str_replace("ä", "ae" , $folder);
         $folder = str_replace("ö", "oe" , $folder);
@@ -53,27 +48,20 @@ class datei
         $folder = preg_replace("/[^-_0-9a-zA-Z]/", "_", $folder);
         // insert the folder into the db
         $ins = mysql_query("INSERT INTO projectfolders (parent,project,name,description,visible) VALUES ($parent,$project,'$folder','$desc','$visstr')");
-        if ($ins)
-        {
+        if ($ins) {
             // create the folder
             $makefolder = CL_ROOT . "/files/" . CL_CONFIG . "/$project/$folder/";
-            if (!file_exists($makefolder))
-            {
-                if (mkdir($makefolder, 0777, true))
-                {
+            if (!file_exists($makefolder)) {
+                if (mkdir($makefolder, 0777, true)) {
                     // folder created
-					$this->mylog->add($folderOrig, 'folder', 1, $project);
+                    $this->mylog->add($folderOrig, 'folder', 1, $project);
                     return true;
                 }
-            }
-            else
-            {
+            } else {
                 // folder already existed, return false
                 return false;
             }
-        }
-        else
-        {
+        } else {
             // folder wasnt created , return false
             return false;
         }
@@ -93,26 +81,22 @@ class datei
         $folder = $this->getFolder($id);
         $files = $this->getProjectFiles($project, 10000, $id);
         // delete all the files in the folder from the database (and filesystem as well)
-        foreach($files as $file)
-        {
+        foreach($files as $file) {
             $this->loeschen($file["ID"]);
         }
-        if (!empty($folder["subfolders"]))
-        {
-            foreach($folder["subfolders"] as $sub)
-            {
+        if (!empty($folder["subfolders"])) {
+            foreach($folder["subfolders"] as $sub) {
                 $this->deleteFolder($sub["ID"], $sub["project"]);
             }
         }
         $del = mysql_query("DELETE FROM projectfolders WHERE ID = $id");
-        if ($del)
-		{
-			// remove directory
-			$foldstr = CL_ROOT . "/files/" . CL_CONFIG . "/$project/" . $folder["name"] . "/";
-			delete_directory($foldstr);
-			$this->mylog->add($folder["name"], 'folder', 3, $project);
-			return true;
-		}
+        if ($del) {
+            // remove directory
+            $foldstr = CL_ROOT . "/files/" . CL_CONFIG . "/$project/" . $folder["name"] . "/";
+            delete_directory($foldstr);
+            $this->mylog->add($folder["name"], 'folder', 3, $project);
+            return true;
+        }
     }
 
     /**
@@ -127,6 +111,7 @@ class datei
         $sel = mysql_query("SELECT * FROM projectfolders WHERE ID = $id LIMIT 1");
         $folder = mysql_fetch_array($sel);
         $folder["subfolders"] = $this->getSubFolders($folder["ID"]);
+        $folder["abspath"] = $this->getAbsolutePathName($folder);
 
         return $folder;
     }
@@ -140,22 +125,19 @@ class datei
     function getSubFolders($parent)
     {
         $parent = (int) $parent;
-        $sel = mysql_query("SELECT * FROM projectfolders WHERE parent = $parent");
+        $sel = mysql_query("SELECT * FROM projectfolders WHERE parent = $parent ORDER BY ID ASC");
 
         $folders = array();
 
-        while ($folder = mysql_fetch_array($sel))
-        {
+        while ($folder = mysql_fetch_array($sel)) {
             $folder["subfolders"] = $this->getSubFolders($folder["ID"]);
+            $folder["abspath"] = $this->getAbsolutePathName($folder);
             array_push($folders, $folder);
         }
 
-        if (!empty($folders))
-        {
+        if (!empty($folders)) {
             return $folders;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -170,21 +152,18 @@ class datei
     {
         $project = (int) $project;
 
-        $sel = mysql_query("SELECT * FROM projectfolders WHERE project = $project AND parent = $parent");
+        $sel = mysql_query("SELECT * FROM projectfolders WHERE project = $project AND parent = $parent ORDER BY ID ASC");
         $folders = array();
 
-        while ($folder = mysql_fetch_array($sel))
-        {
+        while ($folder = mysql_fetch_array($sel)) {
             $folder["subfolders"] = $this->getSubFolders($folder["ID"]);
+            $folder["abspath"] = $this->getAbsolutePathName($folder);
             array_push($folders, $folder);
         }
 
-        if (!empty($folders))
-        {
+        if (!empty($folders)) {
             return $folders;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -199,25 +178,40 @@ class datei
     {
         $project = (int) $project;
 
-        $sel = mysql_query("SELECT * FROM projectfolders WHERE project = $project");
+        $sel = mysql_query("SELECT * FROM projectfolders WHERE project = $project ORDER BY ID ASC");
         $folders = array();
 
-        while ($folder = mysql_fetch_array($sel))
-        {
+        while ($folder = mysql_fetch_array($sel)) {
             $folder["subfolders"] = $this->getSubFolders($folder["ID"]);
+            $folder["abspath"] = $this->getAbsolutePathName($folder);
             array_push($folders, $folder);
         }
 
-        if (!empty($folders))
-        {
+        if (!empty($folders)) {
             return $folders;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
 
+    /**
+     * Get Absolute Path Name
+     * Returns the absolute name (relative to the root-directory of the project) of a folder.
+     *
+     * @param array $folder The folder to be inspected
+     * @return string absolute path/name of the folder
+     */
+    function getAbsolutePathName($folder)
+    {
+        if ($folder['parent'] == 0) {
+            return "/" . $folder['name'];
+        } else {
+            $sel = mysql_query("SELECT * FROM projectfolders WHERE ID = " . $folder['parent']);
+            $parent = mysql_fetch_array($sel);
+
+            return $this->getAbsolutePathName($parent) . "/" . $folder['name'];
+        }
+    }
     // FILE METHODS
     /**
      * Upload a file
@@ -239,12 +233,9 @@ class datei
         $tastr = $fname . "-tags";
         $visible = $_POST["visible"];
 
-        if (!empty($visible[0]))
-        {
+        if (!empty($visible[0])) {
             $visstr = serialize($visible);
-        }
-        else
-        {
+        } else {
             $visstr = "";
         }
 
@@ -253,8 +244,7 @@ class datei
         $error = $_FILES[$fname]['error'];
         $root = CL_ROOT;
 
-        if (empty($name))
-        {
+        if (empty($name)) {
             return false;
         }
 
@@ -269,14 +259,12 @@ class datei
         $erweiterung = $teilnamen[$workteile];
         $subname = "";
         // if its a php file, treat it as plaintext so its not executed when opened in the browser.
-        if (stristr($erweiterung, "php"))
-        {
+        if (stristr($erweiterung, "php")) {
             $erweiterung = "txt";
             $typ = "text/plain";
         }
 
-        for ($i = 0; $i < $workteile; $i++)
-        {
+        for ($i = 0; $i < $workteile; $i++) {
             $subname .= $teilnamen[$i];
         }
 
@@ -290,8 +278,7 @@ class datei
         // remove whitespace
         $subname = preg_replace("/\W/", "", $subname);
         // if filename is longer than 200 chars, cut it.
-        if (strlen($subname) > 200)
-        {
+        if (strlen($subname) > 200) {
             $subname = substr($subname, 0, 200);
         }
 
@@ -299,44 +286,31 @@ class datei
         $datei_final = $root . "/" . $ziel . "/" . $name;
         $datei_final2 = $ziel . "/" . $name;
 
-        if (!file_exists($datei_final))
-        {
-            if (move_uploaded_file($tmp_name, $datei_final))
-            {
-               // $filesize = filesize($datei_final);
-
-                if ($project > 0)
-                {
+        if (!file_exists($datei_final)) {
+            if (move_uploaded_file($tmp_name, $datei_final)) {
+                // $filesize = filesize($datei_final);
+                if ($project > 0) {
                     /**
                      * file did not already exist, was uploaded, and a project is set
                      * add the file to the database, add the upload event to the log and return the file ID.
                      */
                     chmod($datei_final, 0755);
                     $fid = $this->add_file($name, $desc, $project, 0, "$tags", $datei_final2, "$typ", $title, $folder, $visstr);
-					if(!empty($title))
-					{
-						$this->mylog->add($title, 'file', 1, $project);
+                    if (!empty($title)) {
+                        $this->mylog->add($title, 'file', 1, $project);
+                    } else {
+                        $this->mylog->add($name, 'file', 1, $project);
                     }
-					else
-					{
-						$this->mylog->add($name, 'file', 1, $project);
-					}
-					return $fid;
-                }
-                else
-                {
+                    return $fid;
+                } else {
                     // no project means the file is not added to the database wilfully. return file name.
                     return $name;
                 }
-            }
-            else
-            {
+            } else {
                 // file was not uploaded / error occured. return false
                 return false;
             }
-        }
-        else
-        {
+        } else {
             // file already exists. return false
             return false;
         }
@@ -363,13 +337,10 @@ class datei
         $project = $proj[0];
 
         $sql = mysql_query("UPDATE files SET `title` = '$title', `desc` = '$desc', `tags` = '$tags' WHERE id = $id");
-        if ($sql)
-        {
+        if ($sql) {
             $this->mylog->add($title, 'file' , 2, $project);
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -386,8 +357,7 @@ class datei
 
         $sel1 = mysql_query("SELECT datei,name,project,title FROM files WHERE ID = $datei");
         $thisfile = mysql_fetch_row($sel1);
-        if (!empty($thisfile))
-        {
+        if (!empty($thisfile)) {
             $fname = $thisfile[1];
             $project = $thisfile[2];
             $ftitle = $thisfile[3];
@@ -395,31 +365,24 @@ class datei
 
             $delfile = "./" . $thisfile;
 
-            if (!file_exists($delfile))
-            {
+            if (!file_exists($delfile)) {
                 return false;
             }
             $del = mysql_query("DELETE FROM files WHERE ID = $datei");
             $del2 = mysql_query("DELETE FROM files_attached WHERE file = $datei");
-            if ($del)
-            {
-                if (unlink($delfile))
-                {
-					if ($ftitle != "") {
-						$this->mylog->add($ftitle, 'file', 3, $project);
-					} else {
-						$this->mylog->add($fname, 'file', 3, $project);
-					}
+            if ($del) {
+                if (unlink($delfile)) {
+                    if ($ftitle != "") {
+                        $this->mylog->add($ftitle, 'file', 3, $project);
+                    } else {
+                        $this->mylog->add($fname, 'file', 3, $project);
+                    }
                     return true;
-                }
-                else
-                {
+                } else {
                     return false;
                 }
             }
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -438,28 +401,22 @@ class datei
         $sel = mysql_query("SELECT * FROM files WHERE ID=$id");
         $file = mysql_fetch_array($sel);
 
-        if (!empty($file))
-        {
+        if (!empty($file)) {
             // determine if there is an mimetype icon corresponding to the files mimetype. If not set 'none'
             $file['type'] = str_replace("/", "-", $file["type"]);
 
             $set = new settings();
             $settings = $set->getSettings();
             $myfile = "./templates/" . $settings["template"] . "/images/files/" . $file['type'] . ".png";
-            if (!file_exists($myfile))
-            {
+            if (!file_exists($myfile)) {
                 $file['type'] = "none";
             }
             // determine if its an image or textfile or some other file. this is needed for lightboxes
-            if (stristr($file['type'], "image"))
-            {
+            if (stristr($file['type'], "image")) {
                 $file['imgfile'] = 1;
-            } elseif (stristr($file['type'], "text"))
-            {
+            } elseif (stristr($file['type'], "text")) {
                 $file['imgfile'] = 2;
-            }
-            else
-            {
+            } else {
                 $file['imgfile'] = 0;
             }
             // split the tags string into an array, and also count how many tags the file has
@@ -473,16 +430,12 @@ class datei
             $file["tags"] = stripslashes($file["tags"]);
             $file["size"] = filesize(realpath($file["datei"])) / 1024;
             $file["size"] = round($file["size"]);
-            $file["addedstr"] = date("d.m.y",$file["added"]);
+            $file["addedstr"] = date("d.m.y", $file["added"]);
             $userobj = new user();
             $file["userdata"] = $userobj->getProfile($file["user"]);
 
-
-
             return $file;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -525,13 +478,10 @@ class datei
         $lim = (int) $lim;
         $folder = (int) $folder;
 
-        if ($folder > 0)
-        {
+        if ($folder > 0) {
             $fold = "files/" . CL_CONFIG . "/$id/$folder/";
             $sel = mysql_query("SELECT COUNT(*) FROM files WHERE project = $id AND folder = $folder ORDER BY ID DESC");
-        }
-        else
-        {
+        } else {
             $sel = mysql_query("SELECT COUNT(*) FROM files WHERE project = $id AND folder = 0 ORDER BY ID DESC");
         }
         $num = mysql_fetch_row($sel);
@@ -546,29 +496,20 @@ class datei
 
         $files = array();
 
-        if ($folder > 0)
-        {
+        if ($folder > 0) {
             $sql = "SELECT ID FROM files WHERE project = $id AND folder = $folder ORDER BY  ID DESC LIMIT $start,$lim";
             $sel2 = mysql_query($sql);
-        }
-        else
-        {
+        } else {
             $sel2 = mysql_query("SELECT ID FROM files WHERE project = $id AND folder = 0 ORDER BY  ID DESC LIMIT $start,$lim");
-        }
-        while ($file = mysql_fetch_array($sel2))
-        {
-            if (!empty($file))
-            {
+        } while ($file = mysql_fetch_array($sel2)) {
+            if (!empty($file)) {
                 array_push($files, $this->getFile($file["ID"]));
             }
         }
 
-        if (!empty($files))
-        {
+        if (!empty($files)) {
             return $files;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -591,20 +532,15 @@ class datei
 
         $sel2 = mysql_query("SELECT ID FROM files WHERE project = $id  ORDER BY  ID DESC");
 
-        while ($file = mysql_fetch_array($sel2))
-        {
-            if (!empty($file))
-            {
+        while ($file = mysql_fetch_array($sel2)) {
+            if (!empty($file)) {
                 array_push($files, $this->getFile($file["ID"]));
             }
         }
 
-        if (!empty($files))
-        {
+        if (!empty($files)) {
             return $files;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -651,13 +587,10 @@ class datei
 
         $ins = mysql_query("INSERT INTO files (`name`,`desc`,`project`,`milestone`,`user`,`tags`,`added`,`datei`,`type`,`title`,`folder`,`visible`) VALUES ('$name','$desc',$project,$milestone,$userid,'$tags','$now','$datei','$type','$title','$folder','$visstr')");
 
-        if ($ins)
-        {
+        if ($ins) {
             $insid = mysql_insert_id();
             return $insid;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
