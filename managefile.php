@@ -92,7 +92,58 @@ if ($action == "upload") {
     }
     $loc = $url .= "managefile.php?action=showproject&id=$id&mode=added";
     header("Location: $loc");
-} elseif ($action == "editform") {
+}
+elseif($action == "uploadAsync")
+{
+     if ($upfolder) {
+        $thefolder = $myfile->getFolder($upfolder);
+        $thefolder = $thefolder["name"];
+        $upath = "files/" . CL_CONFIG . "/$id/" . $thefolder;
+    } else {
+        $upath = "files/" . CL_CONFIG . "/$id";
+        $upfolder = 0;
+    }
+	$num = count($_FILES);
+    $chk = 0;
+    foreach($_FILES as $file) {
+        $fid = $myfile->uploadAsync($file["name"],$file["tmp_name"],$file["type"],$file["size"], $upath, $id, $upfolder);
+        $fileprops = $myfile->getFile($fid);
+
+        if ($settings["mailnotify"]) {
+            $sendto = getArrayVal($_POST, "sendto");
+            $usr = (object) new project();
+            $pname = $usr->getProject($id);
+            $users = $usr->getProjectMembers($id, 10000);
+            if ($sendto[0] == "all") {
+                $sendto = $users;
+                $sendto = reduceArray($sendto);
+            } elseif ($sendto[0] == "none") {
+                $sendto = array();
+            }
+            foreach($users as $user) {
+                if (!empty($user["email"])) {
+                    if (is_array($sendto)) {
+                        if (in_array($user["ID"], $sendto)) {
+                            // check if subfolder exists, else root folder
+                            $whichfolder = (!empty($thefolder)) ? $thefolder : $langfile["rootdir"];
+                            // send email
+                            $themail = new emailer($settings);
+                            $themail->send_mail($user["email"], $langfile["filecreatedsubject"], $langfile["hello"] . ",<br /><br/>" . $langfile["filecreatedtext"] . "<br /><br />" . $langfile["project"] . ": " . $pname["name"] . "<br />" . $langfile["folder"] . ": " . $whichfolder . "<br />" . $langfile["file"] . ":  <a href = \"" . $url . $fileprops["datei"] . "\">" . $url . $fileprops["datei"] . "</a>");
+                        }
+                    } else {
+                        // send email
+                        $themail = new emailer($settings);
+                        $themail->send_mail($user["email"], $langfile["filecreatedsubject"], "");
+                    }
+                }
+            }
+        }
+    }
+    $loc = $url .= "managefile.php?action=showproject&id=$id&mode=added";
+    //header("Location: $loc");
+    echo "UPLOADED";
+}
+elseif ($action == "editform") {
     if (!$userpermissions["files"]["edit"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];

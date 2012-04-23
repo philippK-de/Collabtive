@@ -63,7 +63,7 @@
 				{*Add File*}
 				{if $userpermissions.files.add}
 					<div id = "form_file" class="addmenue" style = "display:none;">
-						{include file="addfileform.tpl" }
+						{include file="addfileform_new.tpl" }
 					</div>
 				{/if}
 

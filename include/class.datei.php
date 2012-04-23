@@ -315,7 +315,89 @@ class datei {
             return false;
         }
     }
+  /**
+     * Upload a file
+     * Does filename sanitizing as well as MIME-type determination
+     * Also adds the file to the database using add_file()
+     *
+     * @param string $fname Name of the HTML form field POSTed from
+     * @param string $ziel Destination directory
+     * @param int $project Project ID of the associated project
+     * @return bool
+     */
+    function uploadAsync($name,$tmp_name,$typ,$size,$ziel, $project, $folder = 0)
+    {
+        $visible = "";
+        $visstr = "";
+        $root = CL_ROOT;
 
+        if (empty($name)) {
+            return false;
+        }
+
+        // find the extension
+        $teilnamen = explode(".", $name);
+        $teile = count($teilnamen);
+        $workteile = $teile - 1;
+        $erweiterung = $teilnamen[$workteile];
+        $subname = "";
+        // if its a php file, treat it as plaintext so its not executed when opened in the browser.
+        if (stristr($erweiterung, "php")) {
+            $erweiterung = "txt";
+            $typ = "text/plain";
+        }
+
+        for ($i = 0; $i < $workteile; $i++) {
+            $subname .= $teilnamen[$i];
+        }
+
+        $randval = mt_rand(1, 99999);
+        // only allow a-z , 0-9 in filenames, substitute other chars with _
+        $subname = str_replace("ä", "ae" , $subname);
+        $subname = str_replace("ö", "oe" , $subname);
+        $subname = str_replace("ü", "ue" , $subname);
+        $subname = str_replace("ß", "ss" , $subname);
+        $subname = preg_replace("/[^-_0-9a-zA-Z]/", "_", $subname);
+        // remove whitespace
+        $subname = preg_replace("/\W/", "", $subname);
+        // if filename is longer than 200 chars, cut it.
+        if (strlen($subname) > 200) {
+            $subname = substr($subname, 0, 200);
+        }
+
+        $name = $subname . "_" . $randval . "." . $erweiterung;
+        $datei_final = $root . "/" . $ziel . "/" . $name;
+        $datei_final2 = $ziel . "/" . $name;
+
+        if (!file_exists($datei_final)) {
+            if (move_uploaded_file($tmp_name, $datei_final)) {
+                // $filesize = filesize($datei_final);
+                if ($project > 0) {
+                    /**
+                     * file did not already exist, was uploaded, and a project is set
+                     * add the file to the database, add the upload event to the log and return the file ID.
+                     */
+                    chmod($datei_final, 0755);
+                    $fid = $this->add_file($name, $desc, $project, 0, "$tags", $datei_final2, "$typ", $title, $folder, $visstr);
+                    if (!empty($title)) {
+                        $this->mylog->add($title, 'file', 1, $project);
+                    } else {
+                        $this->mylog->add($name, 'file', 1, $project);
+                    }
+                    return $fid;
+                } else {
+                    // no project means the file is not added to the database wilfully. return file name.
+                    return $name;
+                }
+            } else {
+                // file was not uploaded / error occured. return false
+                return false;
+            }
+        } else {
+            // file already exists. return false
+            return false;
+        }
+    }
     /**
      * Edit a file
      *

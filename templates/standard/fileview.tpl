@@ -63,7 +63,7 @@
 						<td class="rightmen" valign="top">
 							<div class="inmenue">
 								{if $userpermissions.files.del}
-								<a class="del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'fli_{$files[file].ID}\',\'managefile.php?action=delete&amp;id={$project.ID}&amp;file={$files[file].ID}\')');" title="{#delete#}"></a>
+								<a class="del" href="javascript:confirmfunction('{$langfile.confirmdel}','deleteElement(\'fli_{$files[file].ID}\',\'managefile.php?action=delete&amp;id={$project.ID}&amp;file={$files[file].ID}\')');" title="{#delete#}"></a>
 								{/if}
 								{if $userpermissions.files.edit}
 								<a class="edit" href="managefile.php?action=editform&amp;id={$project.ID}&amp;file={$files[file].ID}" title="{#editfile#}"></a>
