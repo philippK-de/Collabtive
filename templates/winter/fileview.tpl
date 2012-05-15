@@ -28,7 +28,7 @@
 							<span class="name">
 								<a href = "javascript:change('manageajax.php?action=fileview&id={$project.ID}&folder={$folders[fold].ID}','filescontent');"{if $myprojects[project].messages[message].files[file].imgfile == 1} rel="lytebox[img{$myprojects[project].messages[message].ID}]" {elseif $myprojects[project].messages[message].files[file].imgfile == 2} rel = "lyteframe[text{$myprojects[project].messages[message].ID}]"{/if} title="{$myprojects[project].messages[message].files[file].name}">
 									{if $folders[fold].name != ""}
-									{$folders[fold].name|truncate:13:"...":true}
+									{$folders[fold].name|truncate:14:"...":true}
 									{else}
 									{#folder#}
 									{/if}
@@ -63,7 +63,7 @@
 						<td class="rightmen" valign="top">
 							<div class="inmenue">
 								{if $userpermissions.files.del}
-								<a class="del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'fli_{$files[file].ID}\',\'managefile.php?action=delete&amp;id={$project.ID}&amp;file={$files[file].ID}\')');" title="{#delete#}"></a>
+								<a class="del" href="javascript:confirmfunction('{$langfile.confirmdel}','deleteElement(\'fli_{$files[file].ID}\',\'managefile.php?action=delete&amp;id={$project.ID}&amp;file={$files[file].ID}\')');" title="{#delete#}"></a>
 								{/if}
 								{if $userpermissions.files.edit}
 								<a class="edit" href="managefile.php?action=editform&amp;id={$project.ID}&amp;file={$files[file].ID}" title="{#editfile#}"></a>
@@ -109,11 +109,22 @@
 				});
 			}
 			catch(e){}
+
 		</script>
 	{/literal}
 {/section}
-
+<div id = "parentfolder" style = "display:none;">{$folderid}</div>
 <script type = "text/javascript">
+	{literal}
+	parentFolder = $("parentfolder").innerHTML;
+			Droppables.add('dropDirUp',{
+						onDrop: function(element) {
+								//alert('managefile.php?action=movefile&id={/literal}{$project.ID}{literal}&file='+element.id+'&target='+parentFolder);
+								change('managefile.php?action=movefile&id={/literal}{$project.ID}{literal}&file='+element.id+'&target='+parentFolder,'jslog');
+								element.hide();
+					}
+					});
+	{/literal}
 	{if $foldername}
 	$('dirname').innerHTML = '{$foldername}';
 	{else}

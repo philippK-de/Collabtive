@@ -1,12 +1,13 @@
 {include file="header.tpl" jsload = "ajax" jsload3 = "lightbox" }
 {include file="tabsmenue-project.tpl" filestab = "active"}
-
+<script type = "text/javascript" src = "include/js/5up.js"></script>
 <div id="content-left">
 	<div id="content-left-in">
 		<div class="files">
 
 			<div class="infowin_left">
 				<span id = "deleted" style = "display:none;" class="info_in_red"><img src="templates/standard/images/symbols/files.png" alt=""/>{#filewasdeleted#}</span>
+					<span id = "fileadded" style = "display:none;" class="info_in_green"><img src="templates/standard/images/symbols/files.png" alt=""/>{#filewasadded#}</span>
 			</div>
 
 			<div class="infowin_left" style = "display:none;" id = "systemmsg">
@@ -63,9 +64,17 @@
 				{*Add File*}
 				{if $userpermissions.files.add}
 					<div id = "form_file" class="addmenue" style = "display:none;">
-						{include file="addfileform_new.tpl" }
+						<div id = "newupload" style = "display:block">{include file="addfileform_new.tpl"}</div>
+						<!--[If IE]><div id = "newuploadIE" style = "display:block">{include file="addfileform.tpl"}</div><![endif]-->
 					</div>
 				{/if}
+				<!--[If IE]>
+				{literal}
+				<script type = "text/javascript">
+			$('newupload').innerHTML = "";
+				</script>
+				{/literal}
+				<![endif]-->
 
 				<div class="nosmooth" id="sm_files">
 					<div class="contenttitle" id = "dropDirUp" >

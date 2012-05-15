@@ -1,26 +1,4 @@
-{*Keyboard shortcuts on the project level*}
-{literal}
-<script type = "text/javascript">
-shortcut.add("Alt+O", function() {
-	window.location.href = 'manageproject.php?action=showproject&id={/literal}{$project.ID}{literal}';
-});
-shortcut.add("Alt+S", function() {
-	window.location.href = 'managemilestone.php?action=showproject&id={/literal}{$project.ID}{literal}';
-});
-shortcut.add("Alt+T", function() {
-	window.location.href = 'managetask.php?action=showproject&id={/literal}{$project.ID}{literal}';
-});
-shortcut.add("Alt+F", function() {
-	window.location.href = 'managefile.php?action=showproject&id={/literal}{$project.ID}{literal}';
-});
-shortcut.add("Alt+U", function() {
-	window.location.href = 'manageuser.php?action=showproject&id={/literal}{$project.ID}{literal}';
-});
-shortcut.add("Alt+M", function() {
-	window.location.href = 'managemessage.php?action=showproject&id={/literal}{$project.ID}{literal}';
-});
-</script>
-{/literal}
+
 <div class="tabswrapper">
 	<ul class="tabs">
 		<li class="projects"><a {if $projecttab == "active" }class="active"{/if} href="manageproject.php?action=showproject&amp;id={$project.ID}"><span>{#project#}</span></a></li>

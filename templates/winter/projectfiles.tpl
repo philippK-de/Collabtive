@@ -1,12 +1,13 @@
 {include file="header.tpl" jsload = "ajax" jsload3 = "lightbox" }
 {include file="tabsmenue-project.tpl" filestab = "active"}
-
+<script type = "text/javascript" src = "include/js/5up.js"></script>
 <div id="content-left">
 	<div id="content-left-in">
 		<div class="files">
 
 			<div class="infowin_left">
 				<span id = "deleted" style = "display:none;" class="info_in_red"><img src="templates/standard/images/symbols/files.png" alt=""/>{#filewasdeleted#}</span>
+					<span id = "fileadded" style = "display:none;" class="info_in_green"><img src="templates/standard/images/symbols/files.png" alt=""/>{#filewasadded#}</span>
 			</div>
 
 			<div class="infowin_left" style = "display:none;" id = "systemmsg">
@@ -22,7 +23,7 @@
 				<span class="info_in_red"><img src="templates/standard/images/symbols/folder-root.png" alt=""/>{#folderwasdeleted#}</span>
 				{/if}
 			</div>
-			
+
 			{literal}
 				<script type = "text/javascript">
 					systemMsg('systemmsg');
@@ -63,25 +64,42 @@
 				{*Add File*}
 				{if $userpermissions.files.add}
 					<div id = "form_file" class="addmenue" style = "display:none;">
-						{include file="addfileform.tpl" }
+						<div id = "newupload" style = "display:block">{include file="addfileform_new.tpl"}</div>
+						<!--[If IE]><div id = "newuploadIE" style = "display:block">{include file="addfileform.tpl"}</div><![endif]-->
 					</div>
 				{/if}
+				<!--[If IE]>
+				{literal}
+				<script type = "text/javascript">
+			$('newupload').innerHTML = "";
+				</script>
+				{/literal}
+				<![endif]-->
 
 				<div class="nosmooth" id="sm_files">
-					<div class="contenttitle">
-						<div class="contenttitle_menue">
+					<div class="contenttitle" id = "dropDirUp" >
+						<div class="contenttitle_menue" >
 							<a id = "dirUp" class="dir_up_butn" href="javascript:change('manageajax.php?action=fileview&id={$project.ID}&folder=0','filescontent');" title="{#parent#}"></a>
 						</div>
-						<div class="contenttitle_in">
+						<div class="contenttitle_in" style = "width:500px;">
 							<a href="manageajax.php?action=fileview&id={$project.ID}&folder={$folders[fold].ID}"></a>
 						</div>
+						<div style = "float:right;margin-right:3px;">
+						<form id = "typechose">
+							<select id = "fileviewtype" onchange = "changeFileview(this.value);">
+								<option value = "fileview" selected>Grid View</option>
+								<option value = "fileview_list" >List View</option>
+							</select>
+						</form>
+						</div>
+
 					</div>
 					<div class="content_in_wrapper">
 						<div class="content_in_wrapper_in">
 
 							{*change to fileview_list.tpl for list style view*}
 							<div id = "filescontent" class="inwrapper" >
-								{include file = "fileview.tpl"}
+								{*include file = "fileview.tpl"*}
 							</div>
 						</div> {*content_in_wrapper_in End*}
 					</div> {*content_in_wrapper End*}
@@ -92,7 +110,7 @@
 						<div class="staterowin_right"><span >{$langfile.page} {paginate_prev} {paginate_middle} {paginate_next}</span></div>
 					</div>
 				</div> {*nosmooth End*}
-			
+
 				<div class="tablemenue">
 					<div class="tablemenue-in">
 						{if $userpermissions.files.add}
@@ -107,6 +125,16 @@
 		</div> {*Files END*}
 	</div> {*content-left-in END*}
 </div> {*content-left END*}
-
+{literal}
+<script type = "text/javascript">
+function changeFileview(viewtype)
+{
+	change("manageajax.php?action="+viewtype+"&id={/literal}{$project.ID}{literal}&folder=0","filescontent");
+}
+</script>
+<script type = "text/javascript">
+changeFileview($('fileviewtype').value);
+</script>
+{/literal}
 {include file="sidebar-a.tpl"}
 {include file="footer.tpl"}

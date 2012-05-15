@@ -22,7 +22,7 @@
 			</div>
 
 			<div class = "row"><label for = "fproject">{#project#}</label>
-				<select name = "project[]" multiple="multiple" style = "height:80px;" id = "fproject" >
+				<select name = "project" id = "fproject" >
 					<option value = "">{#chooseone#}</option>
 					{section name = proj loop=$opros}
 						<option value = "{$opros[proj].ID}" {if $opros[proj].ID == $fproject}selected="selected"{/if}>{$opros[proj].name}</option>

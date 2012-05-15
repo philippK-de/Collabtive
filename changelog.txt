@@ -7,6 +7,10 @@ Collabtive 0.7.6
 + Display the complete path in the titlebar of the file manager, instead of just the current folder
 + Filemanager can now be switched between Gridview (default) and listview (new)
 + Set sensible defaults for time formating in admin->system
++ Implemented asynchronous file upload, with real progress indicator (for browsers that can support it)
++ Removed open ID login option. it was based on a terribly outdated library that only supports openID 1.0, which possibly poses a security problem.
++ Improved file type checking for avatar uploads to prevent non-image files from being uploaded to the avatar directory. This improves security.
++ Removed some dead code paths from manageproject.php
 
 Collabtive 0.7.5
 + Improved code comments

@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <title>{$title} @ {$settings.name}</title>
-<link rel="shortcut icon" href="templates/standard/images/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="templates/winter/images/favicon.ico" type="image/x-icon" />
 {if $stage != "project" and $loggedin}
 <link rel="search" type="application/opensearchdescription+xml" title="{$settings.name} {#search#}" href="manageajax.php?action=addfx-all" />
 {elseif $stage == "project" and $loggedin}
@@ -67,19 +67,22 @@ tinyMCE.init({
 	mode : "textareas",
 	theme : "advanced",
 	language: "{/literal}{$locale}{literal}",
-	width: "55%",
-	height: "220px",
+	width: "400px",
+	height: "250px",
 	plugins : "inlinepopups,style,advimage,advlink,xhtmlxtras,safari,template",
-	theme_advanced_buttons1 : "bold,italic,underline,|,fontsizeselect,|,bullist,numlist,|,link,unlink,image,|,forecolor,",
+	theme_advanced_buttons1 : "bold,italic,underline,|,fontsizeselect,forecolor,|,bullist,numlist,|,link,unlink,image",
 	theme_advanced_buttons2 : "",
 	theme_advanced_buttons3 : "",
 	theme_advanced_toolbar_location : "top",
 	theme_advanced_toolbar_align : "left",
 	theme_advanced_path : false,
-	theme_advanced_resizing : true,
+	extended_valid_elements : "a[name|href|target|title],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|name],font[face|size|color|style],span[class|align|style]",
+    theme_advanced_statusbar_location: "bottom",
+    theme_advanced_resizing : true,
 	theme_advanced_resizing_use_cookie : false,
-	theme_advanced_resizing_max_width : "55%",
-	extended_valid_elements : "a[name|href|target|title],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]",
+	theme_advanced_resizing_min_width : "400px",
+	theme_advanced_resizing_max_width : "600px",
+	theme_advanced_resize_horizontal : false,
 	force_br_newlines : true,
 	cleanup: true,
 	cleanup_on_startup: true,

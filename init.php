@@ -30,7 +30,7 @@ $languages = getAvailableLanguages();
 $url = getMyUrl();
 $template->assign("url", $url);
 $template->assign("languages", $languages);
-$template->assign("myversion", "0.7.5");
+$template->assign("myversion", "0.7.6");
 $template->assign("cl_config", CL_CONFIG);
 // Assign globals to all templates
 if (isset($_SESSION["userid"]))

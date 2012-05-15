@@ -44,7 +44,11 @@
 
 			<div class="row">
 				<label for="dateformat">{#dateformat#}:</label>
-				<input type = "text"  name = "dateformat" id = "dateformat" value = "{$settings.dateformat}" / >
+				<select name = "dateformat" id = "dateformat">
+				<option value = "{$settings.dateformat}" selected>{$settings.dateformat}</option>
+				<option value = "d.m.Y">day.month.Year</option>
+				<option value = "m/d/Y">month/day/Year</option>
+				</select>
 			</div>
 
 			<div class="row">
