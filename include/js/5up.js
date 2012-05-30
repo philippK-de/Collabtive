@@ -181,7 +181,7 @@ html5up.prototype.complete = function(evt) {
 		//console.log(evt.target.responseText);
 
         indicator.setAttribute("style","width:100%");
-        window.setTimeout("finisher()",2000);
+        window.setTimeout("finisher()",900);
         //document.title = "100%";
       }
 

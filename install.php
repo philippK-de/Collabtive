@@ -23,6 +23,10 @@ $title = $langfile['installcollabtive'];
 $template->assign("title", $title);
 $template->template_dir = "./templates/standard/";
 if (!$action) {
+	//check if the settings table / object is present. if yes, assume collabtive is already installed and abort
+    if (!empty($settings)) {
+        die("Collabtive seems to be already installed.<br />If this is an error, please clear your database.");
+    }
     // check if required directories are writable
     $configfilechk = is_writable(CL_ROOT . "/config/" . CL_CONFIG . "/config.php");
     $filesdir = is_writable(CL_ROOT . "/files/");
@@ -38,6 +42,10 @@ if (!$action) {
 
     $template->display("install1.tpl");
 } elseif ($action == "step2") {
+	//check if the settings table / object is present. if yes, assume collabtive is already installed and abort
+    if (!empty($settings)) {
+        die("Collabtive seems to be already installed.<br />If this is an error, please clear your database.");
+    }
     $db_host = $_POST['db_host'];
     $db_name = $_POST['db_name'];
     $db_user = $_POST['db_user'];
