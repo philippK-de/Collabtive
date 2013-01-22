@@ -1,0 +1,77 @@
+/* padding top for fixed menu */
+.wrapper {
+	padding-top: 60px
+}
+/* desktop calendar */
+.calendar{
+	width: 100%;
+}
+.calendar th {
+	font-size:14px;
+	font-weight:bold;
+	border-top:1px solid #ccc;
+}
+.calendar td {
+	height:50px;
+	font-size:24px;
+	color:#999;
+}
+.calendar td.weekend{
+	color:#CDCDCD;
+}
+.calendar td.today{
+	background-color:#EFEFEF;
+	color:#666666;
+}
+.calendar td.holiday{
+	color:red;
+}
+/* modal table */
+.modal-table{
+	width: 100%;
+}
+.modal-table th {
+	font-size:14px;
+	font-weight:bold;
+	border-top:none;
+}
+.modal-table td {
+	height:auto;
+	font-size:12px;
+	color:#999;
+}
+.table .tools {
+	width: 4%;
+	text-align: right;
+}
+/* footer */
+.footer {
+	border-top: #e5e5e5;
+	background: #f5f5f5;
+	padding: 30px 0 70px 0;
+	margin-top: 70px
+}
+/* online user */
+#onlinelist ul {
+	margin: 0;
+	list-style: none
+}
+#onlinelist li {
+	border-bottom: 1px solid #e5e5e5
+}
+#onlinelist li div {
+	display: none
+}
+a {
+	outline: 0
+}
+.clear {
+	clear: both
+}
+.color-b tr td {
+	background-color: #f9f9f9
+}
+.huge {
+	font-size: 30px
+}
+
