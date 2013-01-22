@@ -8,14 +8,14 @@
 		<!--[if lt IE 9]>
 		<script src='//html5shim.googlecode.com/svn/trunk/html5.js'></script>
 		<![endif]-->
-		<link rel='stylesheet' type='text/css' href='templates/idt/css/bootstrap.min.css' />
-		<link rel='stylesheet' type='text/css' href='templates/idt/css/bootstrap-responsive.min.css' />
-		<link rel='stylesheet' type='text/css' href='templates/idt/css/datepicker.css' />
-		<link rel='stylesheet' type='text/css' href='templates/idt/css/theme.css' />
+		<link rel='stylesheet' type='text/css' href='templates/tbs/css/bootstrap.min.css' />
+		<link rel='stylesheet' type='text/css' href='templates/tbs/css/bootstrap-responsive.min.css' />
+		<link rel='stylesheet' type='text/css' href='templates/tbs/css/datepicker.css' />
+		<link rel='stylesheet' type='text/css' href='templates/tbs/css/theme.css' />
 		<script src='http://code.jquery.com/jquery-latest.js'></script>
-		<script src='templates/idt/js/bootstrap.min.js'></script>
-		<script src='templates/idt/js/bootstrap-datepicker.js'></script>
-		<script src='templates/idt/js/app.js'></script>
+		<script src='templates/tbs/js/bootstrap.min.js'></script>
+		<script src='templates/tbs/js/bootstrap-datepicker.js'></script>
+		<script src='templates/tbs/js/app.js'></script>
 		<title>{$title} @ {$settings.name}</title>
 		<link rel='shortcut icon' href='templates/standard/images/favicon.ico' type='image/x-icon' />
 	{if $stage != "project" and $loggedin}
