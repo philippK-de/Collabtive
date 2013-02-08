@@ -35,21 +35,15 @@ class user
      */
     function add($name, $email, $company, $pass, $locale = "", $tags = "", $rate = 0.0)
     {
-        $name = mysql_real_escape_string($name);
-        $email = mysql_real_escape_string($email);
-		$company = mysql_real_escape_string($company);
-		$pass = mysql_real_escape_string($pass);
-        $locale = mysql_real_escape_string($locale);
-        $tags = mysql_real_escape_string($tags);
-        $rate = (float) $rate;
-
+				global $conn;
         $pass = sha1($pass);
 
-        $ins1 = mysql_query("INSERT INTO user (name,email,company,pass,locale,tags,rate) VALUES ('$name','$email','$company','$pass','$locale','$tags','$rate')");
+        $ins1Stmt = $conn->prepare("INSERT INTO user (name,email,company,pass,locale,tags,rate) VALUES (?, ?, ?, ?, ?, ?, ?)");
+				$ins1 = $ins1Stmt->execute(array($name, $email, $company, $pass, $locale, $tags, $rate));
 
         if ($ins1)
         {
-            $insid = mysql_insert_id();
+            $insid = $conn->lastInsertId();
             $this->mylog->add($name, 'user', 1, 0);
             return $insid;
         }
@@ -81,34 +75,22 @@ class user
      */
     function edit($id, $name, $realname, $email, $tel1, $tel2, $company, $zip, $gender, $url, $address1, $address2, $state, $country, $tags, $locale, $avatar = "", $rate = 0.0)
     {
-        $name = mysql_real_escape_string($name);
-        $realname = mysql_real_escape_string($realname);
-		$company = mysql_real_escape_string($company);
-        $email = mysql_real_escape_string($email);
-        $tel1 = mysql_real_escape_string($tel1);
-        $tel2 = mysql_real_escape_string($tel2);
-        $zip = mysql_real_escape_string($zip);
-        $gender = mysql_real_escape_string($gender);
-        $url = mysql_real_escape_string($url);
-        $address1 = mysql_real_escape_string($address1);
-        $address2 = mysql_real_escape_string($address2);
-        $state = mysql_real_escape_string($state);
-        $country = mysql_real_escape_string($country);
-        $tags = mysql_real_escape_string($tags);
-        $locale = mysql_real_escape_string($locale);
-        $avatar = mysql_real_escape_string($avatar);
-
+				global $conn;
+				
         $rate = (float) $rate;
         $id = (int) $id;
 
         if ($avatar != "")
         {
-            $upd = mysql_query("UPDATE user SET name='$name',email='$email',tel1='$tel1', tel2='$tel2',company='$company',zip='$zip',gender='$gender',url='$url',adress='$address1',adress2='$address2',state='$state',country='$country',tags='$tags',locale='$locale',avatar='$avatar',rate='$rate' WHERE ID = $id");
+            $updStmt = $conn->prepare("UPDATE user SET name=?, email=?, tel1=?, tel2=?, company=?, zip=?, gender=?, url=?, adress=?, adress2=?, state=?, country=?, tags=?, locale=?, avatar=?, rate=? WHERE ID = ?");
+						$upd = $updStmt->execute(array($name, $email, $tel1, $tel2, $company, $zip, $gender, $url, $address1, $address2, $state, $country, $tags, $locale, $avatar, $rate, $id));
         }
         else
         {
-            $upd = mysql_query("UPDATE user SET name='$name',email='$email', tel1='$tel1', tel2='$tel2', company='$company',zip='$zip',gender='$gender',url='$url',adress='$address1',adress2='$address2',state='$state',country='$country',tags='$tags',locale='$locale',rate='$rate' WHERE ID = $id");
+            $updStmt = $conn->prepare("UPDATE user SET name=?, email=?, tel1=?, tel2=?, company=?, zip=?, gender=?, url=?, adress=?, adress2=?, state=?, country=?, tags=?, locale=?, rate=? WHERE ID = ?");
+						$upd = $updStmt->execute(array($name, $email, $tel1, $tel2, $company, $zip, $gender, $url, $address1, $address2, $state, $country, $tags, $locale, $rate, $id));
         }
+				
         if ($upd)
         {
             $this->mylog->add($name, 'user', 2, 0);
@@ -128,15 +110,14 @@ class user
      */
     function resetPassword($email)
     {
-		$email = mysql_real_escape_string($email);
+		
+		global $conn;
 
-		$sel = mysql_query("SELECT ID, email FROM user");
-		while ($user = mysql_fetch_array($sel))
+		$user = $conn->query("SELECT ID, email FROM user WHERE email={$conn->quote($email)} LIMIT 1")->fetch();
+
+		if ($user["email"] == $email)
 		{
-			if ($user["email"] == $email)
-			{
-				$id = $user["ID"];
-			}
+			$id = $user["ID"];
 		}
 
 		if (isset($id))
@@ -154,7 +135,7 @@ class user
 
 			$sha1pass = sha1($newpass);
 
-			$upd = mysql_query("UPDATE user SET `pass` = '$sha1pass' WHERE ID = $id");
+			$upd = $conn->query("UPDATE user SET `pass` = '$sha1pass' WHERE ID = $id");
 			if ($upd)
 			{
 				return $newpass;
@@ -181,21 +162,17 @@ class user
      */
     function editpass($id, $oldpass, $newpass, $repeatpass)
     {
-        $oldpass = mysql_real_escape_string($oldpass);
-        $newpass = mysql_real_escape_string($newpass);
-        $repeatpass = mysql_real_escape_string($repeatpass);
+				global $conn;
         $id = (int) $id;
 
         if ($newpass != $repeatpass)
         {
             return false;
         }
-        $id = mysql_real_escape_string($id);
         $newpass = sha1($newpass);
 
         $oldpass = sha1($oldpass);
-        $chk = mysql_query("SELECT ID, name FROM user WHERE ID = $id AND pass = '$oldpass'");
-        $chk = mysql_fetch_row($chk);
+        $chk = $conn->query("SELECT ID, name FROM user WHERE ID = $id AND pass = {$conn->quote($oldpass)}")->fetch();
         $chk = $chk[0];
         $name = $chk[1];
         if (!$chk)
@@ -203,7 +180,7 @@ class user
             return false;
         }
 
-        $upd = mysql_query("UPDATE user SET pass='$newpass' WHERE ID = $id");
+        $upd = $conn->query("UPDATE user SET pass={$conn->quote($newpass)} WHERE ID = $id");
         if ($upd)
         {
             return true;
@@ -224,18 +201,16 @@ class user
      */
     function admin_editpass($id, $newpass, $repeatpass)
     {
-        $newpass = mysql_real_escape_string($newpass);
-        $repeatpass = mysql_real_escape_string($repeatpass);
-        $id = (int) $id;
+				global $conn;
+				$id = (int) $id;
 
         if ($newpass != $repeatpass)
         {
             return false;
         }
-        $id = mysql_real_escape_string($id);
         $newpass = sha1($newpass);
 
-        $upd = mysql_query("UPDATE user SET pass='$newpass' WHERE ID = $id");
+        $upd = $conn->query("UPDATE user SET pass={$conn->quote($newpass)} WHERE ID = $id");
         if ($upd)
         {
             return true;
@@ -254,19 +229,19 @@ class user
      */
     function del($id)
     {
+				global $conn;
         $id = (int) $id;
 
-        $chk = mysql_query("SELECT name FROM user WHERE ID = $id");
-        $chk = mysql_fetch_row($chk);
+        $chk = $conn->query("SELECT name FROM user WHERE ID = $id")->fetch();
         $name = $chk[0];
 
-        $del = mysql_query("DELETE FROM user WHERE ID = $id");
-        $del2 = mysql_query("DELETE FROM projekte_assigned WHERE user = $id");
-        $del3 = mysql_query("DELETE FROM milestones_assigned WHERE user = $id");
-        $del4 = mysql_query("DELETE FROM tasks_assigned WHERE user = $id");
-        $del5 = mysql_query("DELETE FROM log WHERE user = $id");
-        $del6 = mysql_query("DELETE FROM timetracker WHERE user = $id");
-		$del7 = mysql_query("DELETE FROM roles_assigned WHERE user = $id");
+        $del = $conn->query("DELETE FROM user WHERE ID = $id");
+        $del2 = $conn->query("DELETE FROM projekte_assigned WHERE user = $id");
+        $del3 = $conn->query("DELETE FROM milestones_assigned WHERE user = $id");
+        $del4 = $conn->query("DELETE FROM tasks_assigned WHERE user = $id");
+        $del5 = $conn->query("DELETE FROM log WHERE user = $id");
+        $del6 = $conn->query("DELETE FROM timetracker WHERE user = $id");
+		$del7 = $conn->query("DELETE FROM roles_assigned WHERE user = $id");
         if ($del)
         {
             $this->mylog->add($name, 'user', 3, 0);
@@ -286,10 +261,11 @@ class user
      */
     function getProfile($id)
     {
+				global $conn;
         $id = (int) $id;
 
-        $sel = mysql_query("SELECT * FROM user WHERE ID = $id");
-        $profile = mysql_fetch_array($sel);
+        $sel = $conn->query("SELECT * FROM user WHERE ID = $id");
+        $profile = $sel->fetch();
         if (!empty($profile))
         {
             $profile["name"] = stripslashes($profile["name"]);
@@ -336,9 +312,9 @@ class user
     function getAvatar($id)
     {
         $id = (int) $id;
-
-        $sel = mysql_query("SELECT avatar FROM user WHERE ID = $id");
-        $profile = mysql_fetch_row($sel);
+				global $conn;
+        $sel = $conn->query("SELECT avatar FROM user WHERE ID = $id");
+        $profile = $sel->fetch();
         $profile = $profile[0];
 
         if (!empty($profile))
@@ -360,16 +336,17 @@ class user
      */
     function login($user, $pass)
     {
+				global $conn;
+				
         if (!$user)
         {
             return false;
         }
-        $user = mysql_real_escape_string($user);
-        $pass = mysql_real_escape_string($pass);
+        $user = $conn->quote($user);
         $pass = sha1($pass);
 
-        $sel1 = mysql_query("SELECT ID,name,locale,lastlogin,gender FROM user WHERE (name = '$user' OR email = '$user') AND pass = '$pass'");
-        $chk = mysql_fetch_array($sel1);
+        $sel1 = $conn->query("SELECT ID,name,locale,lastlogin,gender FROM user WHERE (name = $user OR email = $user) AND pass = '$pass'");
+        $chk = $sel1->fetch();
         if ($chk["ID"] != "")
         {
             $rolesobj = new roles();
@@ -389,7 +366,7 @@ class user
             {
                 setcookie("PHPSESSID", "$seid", time() + 14 * 24 * 3600);
             }
-            $upd1 = mysql_query("UPDATE user SET lastlogin = '$now' WHERE ID = $userid");
+            $upd1 = $conn->query("UPDATE user SET lastlogin = '$now' WHERE ID = $userid");
             return true;
         }
         else
@@ -420,10 +397,11 @@ class user
      */
     function getAllUsers($lim = 10)
     {
+				global $conn;
+		
         $lim = (int) $lim;
 
-        $sel = mysql_query("SELECT COUNT(*) FROM `user`");
-        $num = mysql_fetch_row($sel);
+        $num = $conn->query("SELECT COUNT(*) FROM `user`")->fetch();
         $num = $num[0];
         SmartyPaginate::connect();
         // set items per page
@@ -433,10 +411,10 @@ class user
         $start = SmartyPaginate::getCurrentIndex();
         $lim = SmartyPaginate::getLimit();
 
-       $sel2 = mysql_query("SELECT ID FROM `user` ORDER BY ID DESC LIMIT $start,$lim");
+       $sel2 = $conn->query("SELECT ID FROM `user` ORDER BY ID DESC LIMIT $start,$lim");
 
         $users = array();
-        while ($user = mysql_fetch_array($sel2))
+        while ($user = $sel2->fetch())
         {
             array_push($users, $this->getProfile($user["ID"]));
         }
@@ -459,15 +437,17 @@ class user
      */
     function getOnlinelist($offset = 300)
     {
+				global $conn;
+		
         $offset = (int) $offset;
         $time = time();
         $now = $time - $offset;
 
-        $sel = mysql_query("SELECT * FROM user WHERE lastlogin >= $now");
+        $sel = $conn->query("SELECT * FROM user WHERE lastlogin >= $now");
 
         $users = array();
 
-        while ($user = mysql_fetch_array($sel))
+        while ($user = $sel->fetch())
         {
             $user["name"] = stripslashes($user["name"]);
             $user["company"] = stripslashes($user["company"]);
@@ -497,14 +477,16 @@ class user
      */
     function isOnline($user, $offset = 30)
     {
+				global $conn;
+		
         $user = (int) $user;
         $offset = (int) $offset;
 
         $time = time();
         $now = $time - $offset;
 
-        $sel = mysql_query("SELECT ID FROM user WHERE lastlogin >= $now AND ID = $user");
-        $user = mysql_fetch_row($sel);
+        $sel = $conn->query("SELECT ID FROM user WHERE lastlogin >= $now AND ID = $user");
+        $user = $sel->fetch();
 
         if (!empty($user))
         {
@@ -523,10 +505,11 @@ class user
      * @return int $theid
      */
     function getId($user){
-        $user = mysql_real_escape_string($user);
+		
+				global $conn;
 
-        $sel = mysql_query("SELECT ID FROM user WHERE name = '$user'");
-        $id = mysql_fetch_row($sel);
+        $sel = $conn->query("SELECT ID FROM user WHERE name = {$conn->quote($user)}");
+        $id = $sel->fetch();
         $id = $id[0];
 
         $theid = array();

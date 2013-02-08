@@ -12,10 +12,10 @@ function __autoload($class_name)
 
 function chkproject($user, $project)
 {
+		global $conn;
     $user = (int) $user;
     $project = (int) $project;
-    $sel = @mysql_query("SELECT ID FROM projekte_assigned WHERE projekt = $project AND user = $user");
-    $chk = @mysql_fetch_row($sel);
+    $chk = @$conn->query("SELECT ID FROM projekte_assigned WHERE projekt = $project AND user = $user")->fetch();
     $chk = $chk[0];
 
     if ($chk != "") {

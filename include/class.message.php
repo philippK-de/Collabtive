@@ -38,21 +38,12 @@ class message
      */
     function add($project, $title, $text, $tags, $user, $username, $replyto, $milestone)
     {
-        $project = (int) $project;
-        $title = mysql_real_escape_string($title);
-        $text = mysql_real_escape_string($text);
-        $tags = mysql_real_escape_string($tags);
-        $user = (int) $user;
-        $username = mysql_real_escape_string($username);
-        $replyto = (int) $replyto;
-        $milestone = (int) $milestone;
-        $posted = time();
+				global $conn;
 
-        $sql = "INSERT INTO messages (`project`,`title`,`text`,`tags`,`posted`,`user`,`username`,`replyto`,`milestone`) VALUES ($project,'$title','$text','$tags','$posted',$user,'$username',$replyto,$milestone) ";
+        $insStmt = $conn->prepare("INSERT INTO messages (`project`,`title`,`text`,`tags`,`posted`,`user`,`username`,`replyto`,`milestone`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, )");
+				$ins = $insStmt->execute(array((int) $project, $title, $text, $tags, time(), (int) $user, $username, (int) $replyto, (int) $milestone));
 
-        $ins = mysql_query($sql);
-
-        $insid = mysql_insert_id();
+        $insid = $conn->lastInsertId();
         if ($ins)
         {
             $this->mylog->add($title, 'message', 1, $project);
@@ -75,17 +66,14 @@ class message
      */
     function edit($id, $title, $text, $tags)
     {
-        $id = (int) $id;
-        $title = mysql_real_escape_string($title);
-        $text = mysql_real_escape_string($text);
-        $tags = mysql_real_escape_string($tags);
+				global $conn;
 
-        $upd = mysql_query("UPDATE messages SET title='$title', text='$text', tags='$tags' WHERE ID = $id");
+        $updStmt = $conn->query("UPDATE messages SET title=?, text=?, tags=? WHERE ID = ?");
+				$upd = $updStmt->execute(array($title, $text, $tags, (int) $id));
 
         if ($upd)
         {
-            $proj = mysql_query("SELECT project FROM messages WHERE ID = $id");
-            $proj = mysql_fetch_row($proj);
+            $proj = $conn->query("SELECT project FROM messages WHERE ID = $id")->fetch();
             $proj = $proj[0];
             $this->mylog->add($title, 'message', 2, $proj);
             return true;
@@ -104,14 +92,14 @@ class message
      */
     function del($id)
     {
+				global $conn;
         $id = (int) $id;
 
-        $msg = mysql_query("SELECT title,project FROM messages WHERE ID = $id");
-        $msg = mysql_fetch_row($msg);
+        $msg = $conn->query("SELECT title,project FROM messages WHERE ID = $id")->fetch();
 
-        $del = mysql_query("DELETE FROM messages WHERE ID = $id LIMIT 1");
-        $del2 = mysql_query("DELETE FROM messages WHERE replyto = $id");
-        $del3 = mysql_query("DELETE FROM files_attached WHERE message = $id");
+        $del = $conn->query("DELETE FROM messages WHERE ID = $id LIMIT 1");
+        $del2 = $conn->query("DELETE FROM messages WHERE replyto = $id");
+        $del3 = $conn->query("DELETE FROM files_attached WHERE message = $id");
         if ($del)
         {
             $this->mylog->add($msg[0], 'message', 3, $msg[1]);
@@ -131,29 +119,26 @@ class message
      */
     function getMessage($id)
     {
+				global $conn;
         $id = (int) $id;
 
-        $sel = mysql_query("SELECT * FROM messages WHERE ID = $id LIMIT 1");
-        $message = mysql_fetch_array($sel,MYSQL_ASSOC);
+        $message = $conn->query("SELECT * FROM messages WHERE ID = $id LIMIT 1")->fetch();
 
         $tagobj = new tags();
         $milesobj = new milestone();
         if (!empty($message))
         {
-            $replies = mysql_query("SELECT COUNT(*) FROM messages WHERE replyto = $id");
-            $replies = mysql_fetch_row($replies);
+            $replies = $conn->query("SELECT COUNT(*) FROM messages WHERE replyto = $id")->fetch();
             $replies = $replies[0];
 
             $user = new user();
             $avatar = $user->getAvatar($message["user"]);
 
-            $sel = mysql_query("SELECT gender FROM user WHERE ID = $message[user]");
-            $ds = mysql_fetch_row($sel);
+            $ds = $conn->query("SELECT gender FROM user WHERE ID = $message[user]")->fetch();
             $gender = $ds[0];
             $message["gender"] = $gender;
 
-            $project = mysql_query("SELECT name FROM projekte WHERE ID = $message[project]");
-            $project = mysql_fetch_row($project);
+            $project = $conn->query("SELECT name FROM projekte WHERE ID = $message[project]")->fetch();
             $project = $project[0];
             $project["name"] = stripslashes($project["name"]);
             $message["pname"] = $project;
@@ -198,15 +183,16 @@ class message
      */
     function getReplies($id)
     {
+				global $conn;
         $id = (int) $id;
 
-        $sel = mysql_query("SELECT ID FROM messages WHERE replyto = $id ORDER BY posted DESC");
+        $sel = $conn->query("SELECT ID FROM messages WHERE replyto = $id ORDER BY posted DESC");
         $replies = array();
 
         $tagobj = new tags();
         $milesobj = new milestone();
         $user = new user();
-        while ($reply = mysql_fetch_array($sel))
+        while ($reply = $sel->fetch())
         {
             if (!empty($reply))
             {
@@ -226,12 +212,13 @@ class message
 
     function getLatestMessages($limit = 5)
     {
+				global $conn;
         $limit = (int) $limit;
 
         $userid = $_SESSION["userid"];
-        $sel3 = mysql_query("SELECT projekt FROM projekte_assigned WHERE user = $userid");
+        $sel3 = $conn->query("SELECT projekt FROM projekte_assigned WHERE user = $userid");
         $prstring = "";
-        while ($upro = mysql_fetch_row($sel3))
+        while ($upro = $sel3->fetch())
         {
             $projekt = $upro[0];
             $prstring .= $projekt . ",";
@@ -240,12 +227,12 @@ class message
         $prstring = substr($prstring, 0, strlen($prstring)-1);
         if ($prstring)
         {
-            $sel1 = mysql_query("SELECT ID FROM messages WHERE project IN($prstring) ORDER BY posted DESC LIMIT $limit ");
+            $sel1 = $conn->query("SELECT ID FROM messages WHERE project IN($prstring) ORDER BY posted DESC LIMIT $limit ");
             $messages = array();
 
             $tagobj = new tags();
             $milesobj = new milestone();
-            while ($message = mysql_fetch_array($sel1))
+            while ($message = $sel1->fetch())
             {
                 $themessage = $this->getMessage($message["ID"]);
                 array_push($messages, $themessage);
@@ -269,15 +256,16 @@ class message
      */
     function getProjectMessages($project)
     {
+				global $conn;
         $project = (int) $project;
 
         $messages = array();
-        $sel1 = mysql_query("SELECT ID FROM messages WHERE project = $project AND replyto = 0 ORDER BY posted DESC");
+        $sel1 = $conn->query("SELECT ID FROM messages WHERE project = $project AND replyto = 0 ORDER BY posted DESC");
 
         $tagobj = new tags();
         $milesobj = new milestone();
 
-        while ($message = mysql_fetch_array($sel1))
+        while ($message = $sel1->fetch())
         {
             $themessage = $this->getMessage($message["ID"]);
             array_push($messages, $themessage);
@@ -295,6 +283,7 @@ class message
 
     function attachFile($fid, $mid, $id = 0)
     {
+				global $conn;
         $fid = (int) $fid;
         $mid = (int) $mid;
         $id = (int) $id;
@@ -302,17 +291,18 @@ class message
         $myfile = new datei();
         if ($fid > 0)
         {
-            $ins = mysql_query("INSERT INTO files_attached (ID,file,message) VALUES ('',$fid,$mid)");
+            $ins = $conn->query("INSERT INTO files_attached (ID,file,message) VALUES ('',$fid,$mid)");
         }
         else
         {
             $num = $_POST["numfiles"];
 
             $chk = 0;
+						$insStmt= $conn->prepare("INSERT INTO files_attached (ID,file,message) VALUES ('',?,?)");
             for($i = 1;$i <= $num;$i++)
             {
                 $fid = $myfile->upload("userfile$i", "files/" . CL_CONFIG . "/$id", $id);
-                $ins = mysql_query("INSERT INTO files_attached (ID,file,message) VALUES ('',$fid,$mid)");
+                $ins = $insStmt->execute(array($fid,$mid));
             }
         }
         if ($ins)
@@ -327,14 +317,15 @@ class message
 
     private function getAttachedFiles($msg)
     {
+				global $conn;
         $msg = (int) $msg;
 
         $files = array();
-        $sel = mysql_query("SELECT file FROM files_attached WHERE message = $msg");
-        while ($file = mysql_fetch_row($sel))
+        $sel = $conn->query("SELECT file FROM files_attached WHERE message = $msg");
+        while ($file = $sel->fetch())
         {
-            $sel2 = mysql_query("SELECT * FROM files WHERE ID = $file[0]");
-            $thisfile = mysql_fetch_array($sel2);
+            $sel2 = $conn->query("SELECT * FROM files WHERE ID = $file[0]");
+            $thisfile = $sel2->fetch();
             $thisfile["type"] = str_replace("/", "-", $thisfile["type"]);
             if (isset($thisfile["desc"]))
             {

@@ -20,7 +20,7 @@ require(CL_ROOT . "/include/initfunctions.php");
 if (!empty($db_name) and !empty($db_user))
 {
     $tdb = new datenbank();
-    $conn = $tdb->connect($db_name, $db_user, $db_pass, $db_host);
+    $conn = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
 }
 // Start template engine
 $template = new Smarty();

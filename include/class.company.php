@@ -35,16 +35,10 @@ class company
     */
     function add($name, $email, $phone, $address1, $address2, $state, $country, $logo)
     {
-        $name = mysql_real_escape_string($name);
-        $email = mysql_real_escape_string($email);
-        $phone = mysql_real_escape_string($phone);
-        $address1 = mysql_real_escape_string($address1);
-        $address2 = mysql_real_escape_string($address2);
-        $state = mysql_real_escape_string($state);
-        $country = mysql_real_escape_string($country);
-        $logo = mysql_real_escape_string($logo);
+				global $conn;
 
-        $ins1 = mysql_query("INSERT INTO company (ID, name, email, phone, address1, address2, state, country, logo) VALUES ('', '$name', '$email', '$phone', '$address1', '$address2', '$state', '$country', '$logo')");
+        $ins1Stmt = $conn->prepare("INSERT INTO company (ID, name, email, phone, address1, address2, state, country, logo) VALUES ('', ?, ?, ?, ?, ?, ?, ?, ? )");
+				$ins1 = $ins1Stmt->execute(array($name, $email, $phone, $address1, $address2, $state, $country, $logo));
 
         if ($ins1)
         {
@@ -72,17 +66,10 @@ class company
     */
     function edit($id, $name, $email, $phone, $address1, $address2, $state, $country, $logo)
     {
-        $id = (int) $id;
-        $name = mysql_real_escape_string($name);
-        $email = mysql_real_escape_string($email);
-        $phone = mysql_real_escape_string($phone);
-        $address1 = mysql_real_escape_string($address1);
-        $address2 = mysql_real_escape_string($address2);
-        $state = mysql_real_escape_string($state);
-        $country = mysql_real_escape_string($country);
-        $logo = mysql_real_escape_string($logo);
+				global $conn;
 
-        $upd = mysql_query("UPDATE company SET name='$name', email='$email', phone='$phone', address1='$address1', address2='$address2', state='$state', country='$country', logo='$logo' WHERE ID = $id");
+        $updStmt = $conn->prepare("UPDATE company SET name=?, email=?, phone=?, address1=?, address2=?, state=?, country=?, logo=? WHERE ID = ?");
+				$upd = $updStmt->execute(array($name, $email, $phone, $address1, $address2, $state, $country, $logo, (int) $id));
         if ($upd)
         {
             $this->mylog->add('company' , 2);
@@ -102,8 +89,9 @@ class company
     */
     function del($id)
     {
+				global $conn;
         $id = (int) $id;
-        $del = mysql_query("DELETE FROM company WHERE ID = $id");
+        $del = $conn->query("DELETE FROM company WHERE ID = $id");
         if ($del)
         {
             $this->mylog->add('company' , 3);
@@ -125,10 +113,11 @@ class company
     */
 	function assign($company,$user)
 	{
+		global $conn;
 		$company = (int) $company;
 		$user = (int) $user;
 		
-		$ins = mysql_query("UPDATE user SET company=$company WHERE ID = $id");
+		$ins = $conn->query("UPDATE user SET company=$company WHERE ID = $id");
 		if($ins)
 		{
 			return true;
@@ -149,10 +138,11 @@ class company
     */
 	function deassign($company,$user)
 	{
+		global $conn;
 		$company = (int) $company;
 		$user = (int) $user;
 		
-		$ins = mysql_query("UPDATE user SET company=0 WHERE ID = $id");
+		$ins = $conn->query("UPDATE user SET company=0 WHERE ID = $id");
 		if($ins)
 		{
 			return true;
@@ -171,12 +161,11 @@ class company
     */
     function getProfile($id)
     {
+				global $conn;
         $id = (int) $id;
 
-        $sel = mysql_query("SELECT * FROM company WHERE ID = $id");
-        $profile = mysql_fetch_array($sel);
-
-
+        $profile = $conn->query("SELECT * FROM company WHERE ID = $id")->fetch();
+				
         if (!empty($profile))
         {
             return $profile;
@@ -189,10 +178,11 @@ class company
 
 	function getAllCompanies()
 	{
-		$sel = mysql_query("SELECT * FROM company");
+		global $conn;
+		$sel = $conn->query("SELECT * FROM company");
 		$companies = array();
 		
-		while($company = mysql_fetch_array($sel))
+		while($company = $sel->fetch())
 		{
 			array_push($companies,$company);
 		}
@@ -219,13 +209,14 @@ class company
     */
     function getCompanyMembers($id)
     {
+				global $conn;
         $id = (int) $id;
 
-        $sel = mysql_query("SELECT user,company FROM company_assigned WHERE company = $id");
+        $sel = $conn->query("SELECT user,company FROM company_assigned WHERE company = $id");
         $staff = array();
         $userobj = (object) new user();
         $company = $this->getProfile($member[1]);
-        while($member = mysql_fetch_row($sel))
+        while($member = $sel->fetch())
         {
             $user = $userobj->getProfile($member[0]);
             array_push($staff,$user); 
@@ -242,10 +233,6 @@ class company
             return false;
         }
     }
-
-
-
 }
-
 
 ?>

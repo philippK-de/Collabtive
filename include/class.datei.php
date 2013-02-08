@@ -29,10 +29,9 @@ class datei {
      */
     function addFolder($parent, $project, $folder, $desc, $visible = "")
     {
+				global $conn;
         $project = (int) $project;
-        $folder = mysql_real_escape_string($folder);
         $folderOrig = $folder;
-        $desc = mysql_real_escape_string($desc);
         if (!empty($visible)) {
             $visstr = serialize($visible);
         } else {
@@ -47,7 +46,8 @@ class datei {
         $folder = preg_replace("/\W/", "", $folder);
         $folder = preg_replace("/[^-_0-9a-zA-Z]/", "_", $folder);
         // insert the folder into the db
-        $ins = mysql_query("INSERT INTO projectfolders (parent,project,name,description,visible) VALUES ($parent,$project,'$folder','$desc','$visstr')");
+        $insStmt = $conn->prepare("INSERT INTO projectfolders (parent,project,name,description,visible) VALUES (?, ?, ?, ?, ?)");
+				$ins = $insStmt->execute($parent, $project, $folder, $desc, $visstr);
         if ($ins) {
             // create the folder
             $makefolder = CL_ROOT . "/files/" . CL_CONFIG . "/$project/$folder/";
@@ -77,6 +77,7 @@ class datei {
      */
     function deleteFolder($id, $project)
     {
+				global $conn;
         $id = (int) $id;
         $folder = $this->getFolder($id);
         $files = $this->getProjectFiles($project, 10000, $id);
@@ -89,7 +90,7 @@ class datei {
                 $this->deleteFolder($sub["ID"], $sub["project"]);
             }
         }
-        $del = mysql_query("DELETE FROM projectfolders WHERE ID = $id");
+        $del = $conn->query("DELETE FROM projectfolders WHERE ID = $id");
         if ($del) {
             // remove directory
             $foldstr = CL_ROOT . "/files/" . CL_CONFIG . "/$project/" . $folder["name"] . "/";
@@ -107,9 +108,9 @@ class datei {
      */
     function getFolder($id)
     {
+				global $conn;
         $id = (int) $id;
-        $sel = mysql_query("SELECT * FROM projectfolders WHERE ID = $id LIMIT 1");
-        $folder = mysql_fetch_array($sel);
+        $folder = $conn->query("SELECT * FROM projectfolders WHERE ID = $id LIMIT 1")->fetch();
         $folder["subfolders"] = $this->getSubFolders($folder["ID"]);
         $folder["abspath"] = $this->getAbsolutePathName($folder);
 
@@ -124,12 +125,13 @@ class datei {
      */
     function getSubFolders($parent)
     {
+				global $conn;
         $parent = (int) $parent;
-        $sel = mysql_query("SELECT * FROM projectfolders WHERE parent = $parent ORDER BY ID ASC");
+        $sel = $conn->query("SELECT * FROM projectfolders WHERE parent = $parent ORDER BY ID ASC");
 
         $folders = array();
 
-        while ($folder = mysql_fetch_array($sel)) {
+        while ($folder = $sel->fetch()) {
             $folder["subfolders"] = $this->getSubFolders($folder["ID"]);
             $folder["abspath"] = $this->getAbsolutePathName($folder);
             array_push($folders, $folder);
@@ -150,12 +152,13 @@ class datei {
      */
     function getProjectFolders($project, $parent = 0)
     {
+				global $conn;
         $project = (int) $project;
 
-        $sel = mysql_query("SELECT * FROM projectfolders WHERE project = $project AND parent = $parent ORDER BY ID ASC");
+        $sel = $conn->query("SELECT * FROM projectfolders WHERE project = $project AND parent = $parent ORDER BY ID ASC");
         $folders = array();
 
-        while ($folder = mysql_fetch_array($sel)) {
+        while ($folder = $sel->fetch()) {
             $folder["subfolders"] = $this->getSubFolders($folder["ID"]);
             $folder["abspath"] = $this->getAbsolutePathName($folder);
             array_push($folders, $folder);
@@ -176,12 +179,13 @@ class datei {
      */
     function getAllProjectFolders($project)
     {
+				global $conn;
         $project = (int) $project;
 
-        $sel = mysql_query("SELECT * FROM projectfolders WHERE project = $project ORDER BY ID ASC");
+        $sel = $conn->query("SELECT * FROM projectfolders WHERE project = $project ORDER BY ID ASC");
         $folders = array();
 
-        while ($folder = mysql_fetch_array($sel)) {
+        while ($folder = $sel->fetch()) {
             $folder["subfolders"] = $this->getSubFolders($folder["ID"]);
             $folder["abspath"] = $this->getAbsolutePathName($folder);
             array_push($folders, $folder);
@@ -203,11 +207,12 @@ class datei {
      */
     function getAbsolutePathName($folder)
     {
+				global $conn;
         if ($folder['parent'] == 0) {
             return "/" . $folder['name'];
         } else {
-            $sel = mysql_query("SELECT * FROM projectfolders WHERE ID = " . $folder['parent']);
-            $parent = mysql_fetch_array($sel);
+            $sel = $conn->query("SELECT * FROM projectfolders WHERE ID = " . $folder['parent']);
+            $parent = $sel->fetch();
 
             return $this->getAbsolutePathName($parent) . "/" . $folder['name'];
         }
@@ -409,16 +414,16 @@ class datei {
      */
     function edit($id, $title, $desc, $tags)
     {
+				global $conn;
         $id = (int) $id;
-        $title = mysql_real_escape_string($title);
-        $desc = mysql_real_escape_string($desc);
-        $tags = mysql_real_escape_string($tags);
+
         // get project for logging
-        $sel = mysql_query("SELECT project FROM files WHERE ID = $id");
-        $proj = mysql_fetch_row($sel);
+        $proj = $conn->query("SELECT project FROM files WHERE ID = $id")->fetch();
         $project = $proj[0];
 
-        $sql = mysql_query("UPDATE files SET `title` = '$title', `desc` = '$desc', `tags` = '$tags' WHERE id = $id");
+        $sql = $conn->prepare("UPDATE files SET `title` = ?, `desc` = ?, `tags` = ? WHERE id = ?");
+				$sql = $sqlStmt->execute(array($title, $desc, $tags, $id));
+				
         if ($sql) {
             $this->mylog->add($title, 'file' , 2, $project);
             return true;
@@ -435,10 +440,10 @@ class datei {
      */
     function loeschen($datei)
     {
+				global $conn;
         $datei = (int) $datei;
 
-        $sel1 = mysql_query("SELECT datei,name,project,title FROM files WHERE ID = $datei");
-        $thisfile = mysql_fetch_row($sel1);
+        $thisfile = $conn->query("SELECT datei,name,project,title FROM files WHERE ID = $datei")->fetch();
         if (!empty($thisfile)) {
             $fname = $thisfile[1];
             $project = $thisfile[2];
@@ -450,8 +455,8 @@ class datei {
             if (!file_exists($delfile)) {
                 return false;
             }
-            $del = mysql_query("DELETE FROM files WHERE ID = $datei");
-            $del2 = mysql_query("DELETE FROM files_attached WHERE file = $datei");
+            $del = $conn->query("DELETE FROM files WHERE ID = $datei");
+            $del2 = $conn->query("DELETE FROM files_attached WHERE file = $datei");
             if ($del) {
                 if (unlink($delfile)) {
                     if ($ftitle != "") {
@@ -478,10 +483,10 @@ class datei {
 
     function getFile($id)
     {
+				global $conn;
         $id = (int) $id;
         // get the file from MySQL
-        $sel = mysql_query("SELECT * FROM files WHERE ID=$id");
-        $file = mysql_fetch_array($sel);
+        $file = $conn->query("SELECT * FROM files WHERE ID=$id")->fetch();
 
         if (!empty($file)) {
             // determine if there is an mimetype icon corresponding to the files mimetype. If not set 'none'
@@ -531,6 +536,7 @@ class datei {
      */
     function moveFile($file, $target)
     {
+				global $conn;
         $file = (int) $file;
         $target = (int)$target;
         // Get the file
@@ -541,7 +547,7 @@ class datei {
         $targetstr = "files/" . CL_CONFIG . "/" . $thefile["project"] . "/" . $thefolder["name"] . "/" . $thefile["name"];
         $rootstr = CL_ROOT . "/" . $thefile["datei"];
         // update database
-        $upd = mysql_query("UPDATE files SET datei = '$targetstr', folder = '$thefolder[ID]' WHERE ID = $thefile[ID]");
+        $upd = $conn->query("UPDATE files SET datei = '$targetstr', folder = '$thefolder[ID]' WHERE ID = $thefile[ID]");
         // move the file physically
         return rename($rootstr, $targetstr);
     }
@@ -556,17 +562,18 @@ class datei {
      */
     function getProjectFiles($id, $lim = 25, $folder = "")
     {
+				global $conn;
         $id = (int) $id;
         $lim = (int) $lim;
         $folder = (int) $folder;
 
         if ($folder > 0) {
             $fold = "files/" . CL_CONFIG . "/$id/$folder/";
-            $sel = mysql_query("SELECT COUNT(*) FROM files WHERE project = $id AND folder = $folder ORDER BY ID DESC");
+            $sel = $conn->query("SELECT COUNT(*) FROM files WHERE project = $id AND folder = $folder ORDER BY ID DESC");
         } else {
-            $sel = mysql_query("SELECT COUNT(*) FROM files WHERE project = $id AND folder = 0 ORDER BY ID DESC");
+            $sel = $conn->query("SELECT COUNT(*) FROM files WHERE project = $id AND folder = 0 ORDER BY ID DESC");
         }
-        $num = mysql_fetch_row($sel);
+        $num = $sel->fetch();
         $num = $num[0];
         SmartyPaginate::connect();
         // set items per page
@@ -580,10 +587,10 @@ class datei {
 
         if ($folder > 0) {
             $sql = "SELECT ID FROM files WHERE project = $id AND folder = $folder ORDER BY  ID DESC LIMIT $start,$lim";
-            $sel2 = mysql_query($sql);
+            $sel2 = $conn->query($sql);
         } else {
-            $sel2 = mysql_query("SELECT ID FROM files WHERE project = $id AND folder = 0 ORDER BY  ID DESC LIMIT $start,$lim");
-        } while ($file = mysql_fetch_array($sel2)) {
+            $sel2 = $conn->query("SELECT ID FROM files WHERE project = $id AND folder = 0 ORDER BY  ID DESC LIMIT $start,$lim");
+        } while ($file = $sel2->fetch()) {
             if (!empty($file)) {
                 array_push($files, $this->getFile($file["ID"]));
             }
@@ -606,15 +613,16 @@ class datei {
      */
     function getAllProjectFiles($id)
     {
+				global $conn;
         $id = (int) $id;
         $lim = (int) $lim;
         $folder = (int) $folder;
 
         $files = array();
 
-        $sel2 = mysql_query("SELECT ID FROM files WHERE project = $id  ORDER BY  ID DESC");
+        $sel2 = $conn->query("SELECT ID FROM files WHERE project = $id  ORDER BY  ID DESC");
 
-        while ($file = mysql_fetch_array($sel2)) {
+        while ($file = $sel2->fetch()) {
             if (!empty($file)) {
                 array_push($files, $this->getFile($file["ID"]));
             }
@@ -655,22 +663,18 @@ class datei {
      */
     private function add_file($name, $desc, $project, $milestone, $tags, $datei, $type, $title, $folder = 0, $visstr = "")
     {
-        $name = mysql_real_escape_string($name);
-        $desc = mysql_real_escape_string($desc);
-        $tags = mysql_real_escape_string($tags);
-        $datei = mysql_real_escape_string($datei);
+				global $conn;
         $project = (int) $project;
         $milestone = (int) $milestone;
         $folder = (int) $folder;
         $userid = $_SESSION["userid"];
-        $type = mysql_real_escape_string($type);
-        $title = mysql_real_escape_string($title);
         $now = time();
 
-        $ins = mysql_query("INSERT INTO files (`name`,`desc`,`project`,`milestone`,`user`,`tags`,`added`,`datei`,`type`,`title`,`folder`,`visible`) VALUES ('$name','$desc',$project,$milestone,$userid,'$tags','$now','$datei','$type','$title','$folder','$visstr')");
+        $ins = $conn->prepare("INSERT INTO files (`name`, `desc`, `project`, `milestone`, `user`, `tags`, `added`, `datei`, `type`, `title`, `folder`, `visible`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+				$ins = $insStmt->execute(array($name, $desc, $project, $milestone, $userid, $tags, $now, $datei, $type, $title, $folder, $visstr));
 
         if ($ins) {
-            $insid = mysql_insert_id();
+            $insid =	$conn->lastInsertId();
             return $insid;
         } else {
             return false;

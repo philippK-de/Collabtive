@@ -31,20 +31,20 @@ class mylog
      */
     function add($name, $type, $action, $project)
     {
+				global $conn;
         $user = $this->userid;
         $uname = $this->uname;
 
-        $name = mysql_real_escape_string($name);
-        $type = mysql_real_escape_string($type);
         $action = (int) $action;
         $project = (int) $project;
 
         $now = time();
 
-        $ins = mysql_query("INSERT INTO log (user,username,name,type,action,project,datum) VALUES ('$user','$uname','$name','$type',$action,$project,'$now')");
+        $insStmt = $conn->prepare("INSERT INTO log (user,username,name,type,action,project,datum) VALUES (?, ?, ?, ?, ?, ?, ?)");
+				$ins = $insStmt->execute(array($user,$uname,$name,$type,$action,$project,$now));
         if ($ins)
         {
-            $insid = mysql_insert_id();
+            $insid = $conn->lastInsertId();
             return $insid;
         }
         else
@@ -61,9 +61,10 @@ class mylog
      */
     function del($id)
     {
+				global $conn;
         $id = (int) $id;
 
-        $del = mysql_query("DELETE FROM log WHERE ID = $id LIMIT 1");
+        $del = $conn->query("DELETE FROM log WHERE ID = $id LIMIT 1");
         if ($del)
         {
             return true;
@@ -83,11 +84,12 @@ class mylog
      */
     function getProjectLog($project, $lim = 10)
     {
+				global $conn;
         $project =(int) $project;
         $lim = (int) $lim;
 
-        $sel = mysql_query("SELECT COUNT(*) FROM log WHERE project = $project ");
-		$num = mysql_fetch_row($sel);
+        $sel = $conn->query("SELECT COUNT(*) FROM log WHERE project = $project ");
+				$num = $sel->fetch();
         $num = $num[0];
        	if($num > 200)
        	{
@@ -101,15 +103,15 @@ class mylog
 		$start = SmartyPaginate::getCurrentIndex();
         $lim = SmartyPaginate::getLimit();
         $sql = "SELECT * FROM log WHERE project = $project ORDER BY ID DESC LIMIT $start,$lim";
-		$sel2 = mysql_query($sql);
+		$sel2 = $conn->query($sql);
 
         $mylog = array();
-        while ($log = mysql_fetch_array($sel2))
+        while ($log = $sel2->fetch())
         {
             if (!empty($log))
             {
-                $sel3 = mysql_query("SELECT name FROM projekte WHERE ID = $log[project]");
-                $proname = mysql_fetch_array($sel3);
+                $sel3 = $conn->query("SELECT name FROM projekte WHERE ID = $log[project]");
+                $proname = $sel3->fetch();
                 $proname = $proname[0];
                 $log["proname"] = $proname;
                 $log["proname"] = stripslashes($log["proname"]);
@@ -138,13 +140,14 @@ class mylog
      */
     function getUserLog($user, $limit = 10)
     {
+				global $conn;
         $user = (int) $user;
         $limit = (int) $limit;
 
-        $sel = mysql_query("SELECT * FROM log WHERE user = $user ORDER BY ID DESC LIMIT $limit");
+        $sel = $conn->query("SELECT * FROM log WHERE user = $user ORDER BY ID DESC LIMIT $limit");
 
         $mylog = array();
-        while ($log = mysql_fetch_array($sel))
+        while ($log = $sel->fetch())
         {
             $log["username"] = stripslashes($log["username"]);
             $log["name"] = stripslashes($log["name"]);
@@ -169,13 +172,14 @@ class mylog
      */
     function getLog($limit = 5)
     {
+				global $conn;
         $userid = $_SESSION["userid"];
         $limit = (int) $limit;
 
         $mylog = array();
-        $sel3 = mysql_query("SELECT projekt FROM projekte_assigned WHERE user = $userid");
+        $sel3 = $conn->query("SELECT projekt FROM projekte_assigned WHERE user = $userid");
         $prstring = "";
-        while ($upro = mysql_fetch_row($sel3))
+        while ($upro = $sel3->fetch())
         {
             $projekt = $upro[0];
             $prstring .= $projekt . ",";
@@ -185,12 +189,12 @@ class mylog
 
         if ($prstring)
         {
-            $sel = mysql_query("SELECT * FROM log  WHERE project IN($prstring) OR project = 0 ORDER BY ID DESC LIMIT $limit");
+            $sel = $conn->query("SELECT * FROM log  WHERE project IN($prstring) OR project = 0 ORDER BY ID DESC LIMIT $limit");
 
-            while ($log = mysql_fetch_array($sel))
+            while ($log = $sel->fetch())
             {
-                $sel2 = mysql_query("SELECT name FROM projekte WHERE ID = $log[project]");
-                $proname = mysql_fetch_array($sel2);
+                $sel2 = $conn->query("SELECT name FROM projekte WHERE ID = $log[project]");
+                $proname = $sel2->fetch();
                 $proname = $proname[0];
                 $log["proname"] = $proname;
                 $log["proname"] = stripslashes($log["proname"]);
