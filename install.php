@@ -1,6 +1,5 @@
 <?php
 error_reporting(0);
-
 // Check if directory templates_c exists and is writable
 if (!file_exists("./templates_c") or !is_writable("./templates_c")) {
     die("Required folder templates_c does not exist or is not writable. <br>Please create the folder or make it writable in order to proceed.");
@@ -23,7 +22,7 @@ $title = $langfile['installcollabtive'];
 $template->assign("title", $title);
 $template->template_dir = "./templates/standard/";
 if (!$action) {
-	//check if the settings table / object is present. if yes, assume collabtive is already installed and abort
+    // check if the settings table / object is present. if yes, assume collabtive is already installed and abort
     if (!empty($settings)) {
         die("Collabtive seems to be already installed.<br />If this is an error, please clear your database.");
     }
@@ -42,7 +41,7 @@ if (!$action) {
 
     $template->display("install1.tpl");
 } elseif ($action == "step2") {
-	//check if the settings table / object is present. if yes, assume collabtive is already installed and abort
+    // check if the settings table / object is present. if yes, assume collabtive is already installed and abort
     if (!empty($settings)) {
         die("Collabtive seems to be already installed.<br />If this is an error, please clear your database.");
     }
@@ -196,28 +195,11 @@ if (!$action) {
 ) ENGINE=MyISAM");
 
     $table10 = mysql_query("CREATE TABLE `settings` (
-  `ID` tinyint(1)  default '0',
-  `name` varchar(255)  default '',
-  `subtitle` varchar(255)  default '',
-  `locale` varchar(6)  default '',
-  `timezone` varchar(60) ,
-  `dateformat` varchar(50) ,
-  `template` varchar(255)  default '',
-  `mailnotify` tinyint(1)  default '1',
-  `mailfrom` varchar(255) ,
-  `mailfromname` varchar(255) ,
-  `mailmethod` varchar(5) ,
-  `mailhost` varchar(255) ,
-  `mailuser` varchar(255) ,
-  `mailpass` varchar(255) ,
-  `rssuser` varchar(255) ,
-  `rsspass` varchar(255) ,
-  KEY `ID` (`ID`),
-  KEY `name` (`name`),
-  KEY `subtitle` (`subtitle`),
-  KEY `locale` (`locale`),
-  KEY `template` (`template`)
-) ENGINE=MyISAM");
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `settingsKey` varchar(50) NOT NULL,
+  `settingsValue` varchar(50) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM  ");
 
     $table11 = mysql_query("CREATE TABLE `tasklist` (
   `ID` int(10) NOT NULL auto_increment,
@@ -361,7 +343,10 @@ CREATE TABLE `roles_assigned` (
     // Get the servers default timezone
     $timezone = date_default_timezone_get();
     // insert default settings
-    $ins = mysql_query("INSERT INTO settings (name,subtitle,locale,timezone,dateformat,template,mailnotify,mailfrom,mailmethod) VALUES ('Collabtive','Projectmanagement','$locale','$timezone','d.m.Y','standard',1,'collabtive@localhost','mail')");
+    $defSets = array("name" => "Collabtive", "subtitle" => "Projectmanagement", "locale" => $locale, "timezone" => $timezone, "dateformat" => "d.m.Y", "template" => "standard", "mailnotify" => 1, "mailfrom" => "collabtive@localhost", "mailfromname" => "", "mailmethod" => "mail", "mailuser" => "", "mailpass" => "", "rssuser" => "", "rsspass" => "");
+    foreach($defSets as $setKey => $setVal) {
+        $ins = mysql_query("INSERT INTO settings (`settingsKey`,`settingsValue`) VALUES ('$setKey','$setVal')");
+    }
 
     if (!$ins) {
         $template->assign("errortext", "Error: Failed to create initial settings.");

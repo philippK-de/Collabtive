@@ -228,7 +228,7 @@ class tasklist
         $taskobj = new task();
         while ($list = mysql_fetch_array($sel))
         {
-            $sel2 = mysql_query("SELECT ID FROM tasks WHERE liste = $list[ID] AND status=1 ORDER BY `end` ASC");
+            $sel2 = mysql_query("SELECT ID FROM tasks WHERE liste = $list[ID] AND status=1 ORDER BY `end`,`title` ASC");
             $list['tasks'] = array();
             while ($tasks = mysql_fetch_array($sel2))
             {

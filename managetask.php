@@ -128,6 +128,9 @@ if ($action == "addform") {
     $template->assign("tl", $tl);
     $template->assign("task", $thistask);
     $template->assign("pid", $id);
+    $template->assign("showhtml", "no");
+    $template->assign("showheader", "no");
+    $template->assign("async", "yes");
     $template->display("edittask.tpl");
 } elseif ($action == "edit") {
     // check if user has appropriate permissions

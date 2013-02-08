@@ -31,7 +31,7 @@ Cliente:
 
 
 ### Condiciones de la licencia ###
-Collabtive es software libre bajo las condiciones y términos de la 
+Collabtive es software libre bajo las condiciones y términos de la
 licencia GNU General Public License (GPL) (Version 3).
 Por favor lea el archivo license.txt para ver los términos completos
 de esta licencia y sus condiciones.
@@ -39,7 +39,7 @@ de esta licencia y sus condiciones.
 
 ### Créditos ###
 - Los derechos de Collabtive pertenecen a Philipp Kiszka
-- Coordinación del proyecto y soporte por Eva Kranz
+- Coordinación del proyecto y soporte por Eva Kiszka
 - Diseño por Marcus Fröhner
 - Los iconos han sido parcialmente extraídos del pack de iconos de Oxygen.
 - Las traducciones son mantenidas por varios colaboradores:

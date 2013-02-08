@@ -1,6 +1,6 @@
 <?php
 // Autoload requires classes on new class()
-function __autoload($class_name)
+function cl_autoload($class_name)
 {
     $pfad = CL_ROOT . "/include/class." . $class_name . ".php";
     if (file_exists($pfad)) {
@@ -9,7 +9,7 @@ function __autoload($class_name)
         die("<b>Fatal Error. Class $class_name could not be located.</b>");
     }
 }
-
+spl_autoload_register('cl_autoload');
 function chkproject($user, $project)
 {
     $user = (int) $user;
@@ -181,5 +181,7 @@ function reduceArray(array $arr)
     }
     return $earr;
 }
-
+function getUpdateNotify(){
+	return json_decode(@file_get_contents("http://collabtive.o-dyn.de/update/chk.php"));
+}
 ?>

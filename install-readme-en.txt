@@ -40,7 +40,7 @@ Please see license.txt for full licensing terms and conditions.
 
 ### Credits ###
 - Collabtive is (c) Philipp Kiszka
-- Project coordination and support by Eva Kranz
+- Project coordination and support by Eva Kiszka
 - Artwork by Marcus Fröhner
 - Icons are partially taken from the Oxygen iconset.
 - Many locales maintained by various contributors:

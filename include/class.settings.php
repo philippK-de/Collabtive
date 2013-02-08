@@ -9,8 +9,7 @@
  * @link http://www.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
-class settings
-{
+class settings {
     public $mylog;
 
     /*
@@ -27,16 +26,14 @@ class settings
      */
     function getSettings()
     {
-        $sel = mysql_query("SELECT * FROM settings LIMIT 1");
+        $sel = mysql_query("SELECT settingsKey,settingsValue FROM settings");
         $settings = array();
-        $settings = mysql_fetch_array($sel);
-
-        if (!empty($settings))
-        {
-            return $settings;
+        while ($selSettings = mysql_fetch_array($sel, MYSQL_ASSOC)) {
+            $settings[$selSettings["settingsKey"]] = $selSettings["settingsValue"];
         }
-        else
-        {
+        if (!empty($settings)) {
+            return $settings;
+        } else {
             return false;
         }
     }
@@ -58,21 +55,22 @@ class settings
         $name = mysql_real_escape_string($name);
         $subtitle = mysql_real_escape_string($subtitle);
         $locale = mysql_real_escape_string($locale);
-		$timezone = mysql_real_escape_string($timezone);
+        $timezone = mysql_real_escape_string($timezone);
         $dateformat = mysql_real_escape_string($dateformat);
-		$templ = mysql_real_escape_string($templ);
-        $sounds = mysql_real_escape_string($sounds);
+        $templ = mysql_real_escape_string($templ);
         $rssuser = mysql_real_escape_string($rssuser);
         $rsspass = mysql_real_escape_string($rsspass);
 
-        $upd = mysql_query("UPDATE settings SET name = '$name', subtitle = '$subtitle', `locale` = '$locale', `timezone` = '$timezone', `dateformat` = '$dateformat', `template` = '$templ', rssuser = '$rssuser', rsspass = '$rsspass'");
+		//This is an artifact of refactoring to a key/value table for the settings
+        $theSettings = array("name" => $name, "subtitle" => $subtitle, "locale" => $locale, "timezone" => $timezone, "dateformat" => $dateformat, "template" => $templ, "rssuser" => $rssuser, "rsspass" => $rsspass);
 
-		if ($upd)
-        {
-            return true;
+        foreach($theSettings as $setKey => $setVal) {
+            $upd = mysql_query("UPDATE settings SET `settingsValue`='$setVal' WHERE `settingsKey`='$setKey'");
         }
-        else
-        {
+
+	     if ($upd) {
+            return true;
+        } else {
             return false;
         }
     }
@@ -89,27 +87,24 @@ class settings
 	 * @param string $mailpass Password
      * @return bool
      */
-	function editMailsettings($onoff, $mailfrom, $mailfromname, $method, $mailhost, $mailuser, $mailpass)
-	{
-		$onoff = (int) $onoff;
-		$mailfrom = mysql_real_escape_string($mailfrom);
-		$mailfromname = mysql_real_escape_string($mailfromname);
-		$method =  mysql_real_escape_string($method);
-		$mailhost = mysql_real_escape_string($mailhost);
-		$mailuser = mysql_real_escape_string($mailuser);
-		$mailpass = mysql_real_escape_string($mailpass);
+    function editMailsettings($onoff, $mailfrom, $mailfromname, $method, $mailhost, $mailuser, $mailpass)
+    {
+        $onoff = (int) $onoff;
+        $mailfrom = mysql_real_escape_string($mailfrom);
+        $mailfromname = mysql_real_escape_string($mailfromname);
+        $method = mysql_real_escape_string($method);
+        $mailhost = mysql_real_escape_string($mailhost);
+        $mailuser = mysql_real_escape_string($mailuser);
+        $mailpass = mysql_real_escape_string($mailpass);
 
-		$upd = mysql_query("UPDATE settings SET mailnotify = $onoff, mailfrom = '$mailfrom', mailfromname = '$mailfromname', mailmethod = '$method', mailhost = '$mailhost', mailuser = '$mailuser', mailpass = '$mailpass'");
+        $upd = mysql_query("UPDATE settings SET mailnotify = $onoff, mailfrom = '$mailfrom', mailfromname = '$mailfromname', mailmethod = '$method', mailhost = '$mailhost', mailuser = '$mailuser', mailpass = '$mailpass'");
 
-		if($upd)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
+        if ($upd) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /*
      * Returns all available templates
@@ -121,23 +116,18 @@ class settings
         $handle = opendir(CL_ROOT . "/templates");
         $templates = array();
 
-        while (false !== ($file = readdir($handle)))
-        {
+        while (false !== ($file = readdir($handle))) {
             $type = filetype(CL_ROOT . "/templates/" . $file);
 
-			if ($type == "dir" and $file != "." and $file != "..")
-            {
+            if ($type == "dir" and $file != "." and $file != "..") {
                 $template = $file;
                 array_push($templates, $template);
             }
         }
 
-        if (!empty($templates))
-        {
+        if (!empty($templates)) {
             return $templates;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }

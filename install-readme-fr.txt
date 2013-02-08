@@ -34,9 +34,10 @@ Collabtive est un logiciel libre défini par les termes et les conditions de la
 GNU General Public License (GPL) (Version 3).
 Pour lire l'ensemble des termes et des conditions d'utilisation, consultez le fichier license.txt
 
+
 ### Crédits : ###
 - Collabtive est (c) Philipp Kiszka
-- Coordination: Eva Kranz
+- Coordination: Eva Kiszka
 - Graphisme par Marcus Fröhner
 - Les icônes proviennent en partie du set Oxygen
 - Les fichiers de localisation sont maintenus par différents contributeurs :

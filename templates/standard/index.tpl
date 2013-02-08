@@ -9,7 +9,6 @@
 			{if $mode == "projectadded"}
 				<span class="info_in_green"><img src="templates/standard/images/symbols/projects.png" alt=""/>{#projectwasadded#}</span>
 			{/if}
-
 			{*for async display*}
 			<span id = "closed" style = "display:none;" class="info_in_green"><img src="templates/standard/images/symbols/projects.png" alt=""/>{#projectwasclosed#}</span>
 			<span id = "deleted" style = "display:none;" class="info_in_red"><img src="templates/standard/images/symbols/projects.png" alt=""/>{#projectwasdeleted#}</span>
@@ -20,7 +19,9 @@
 				systemMsg('systemmsg');
 			</script>
 		{/literal}
-
+	{if $isUpdated}
+		{include file="updateNotify.tpl"}
+	{/if}
 		<h1>{#desktop#}</h1>
 
 		{*Projects*}
@@ -42,7 +43,7 @@
 					<div id = "form_addmyproject" class="addmenue" style = "display:none;">
 						{include file="addproject.tpl" myprojects="1"}
 					</div>
-					
+
 					<table id = "desktopprojects" cellpadding="0" cellspacing="0" border="0">
 						<thead>
 							<tr>
@@ -90,7 +91,7 @@
 									<td style="text-align:right">{$myprojects[project].daysleft}&nbsp;&nbsp;</td>
 									<td class="tools">
 										{if $userpermissions.projects.edit}
-											<a class="tool_edit" href="manageproject.php?action=editform&amp;id={$myprojects[project].ID}" title="{#edit#}" ></a>{/if}
+											<a class="tool_edit" href="javascript:void(0);" onclick = "change('manageproject.php?action=editform&amp;id={$myprojects[project].ID}','form_addmyproject');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_addmyproject');" title="{#edit#}"></a>{/if}
 										{if $userpermissions.projects.del}
 											<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'proj_{$myprojects[project].ID}\',\'manageproject.php?action=del&amp;id={$myprojects[project].ID}\')');"  title="{#delete#}"></a>
 										{/if}
@@ -134,9 +135,11 @@
 					<div class="wintools">
 						<div class="export-main">
 							<a class="export"><span>{#export#}</span></a>
-							<div class="export-in"  style="width:46px;left: -46px;"> {*at two items*}
+							<div class="export-in"  style="width:69px;left: -69px;"> {*at two items*}
+
 								<a class="rss" href="managerss.php?action=rss-tasks&user={$userid}"><span>{#rssfeed#}</span></a>
 								<a class="ical" href="managetask.php?action=ical"><span>{#icalexport#}</span></a>
+								<a class="pdf" href="mytasks.php?action=pdf"><span>{#pdfexport#}</span></a>
 							</div>
 						</div>
 					</div>
@@ -147,7 +150,9 @@
 				</div>
 
 				<div class="block" id="taskhead" style = "{$taskstyle}">
-				
+					<div id = "form_addmytask" class="addmenue" style = "display:none;">
+						{include file="addmytask.tpl" }
+					</div>
 					<table id = "desktoptasks" cellpadding="0" cellspacing="0" border="0">
 						<thead>
 							<tr>
@@ -196,7 +201,8 @@
 									<td style="text-align:right">{$tasks[task].daysleft}&nbsp;&nbsp;</td>
 									<td class="tools">
 										{if $userpermissions.tasks.edit}
-											<a class="tool_edit" href="managetask.php?action=editform&amp;tid={$tasks[task].ID}&amp;id={$tasks[task].project}" title="{#edit#}"></a>
+											<a class="tool_edit" href="javascript:void(0);"  onclick = "change('managetask.php?action=editform&amp;tid={$tasks[task].ID}&amp;id={$tasks[task].project}','form_addmytask');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_addmytask');" title="{#edit#}"></a>
+
 										{/if}
 										{if $userpermissions.tasks.del}
 											<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'task_{$tasks[task].ID}\',\'managetask.php?action=del&amp;tid={$tasks[task].ID}&amp;id={$tasks[task].project}\')');"  title="{#delete#}"></a>
@@ -220,7 +226,13 @@
 						{/section}
 					</table>
 
-					<div class="tablemenue"></div>
+					<div class="tablemenue">
+						<div class="tablemenue-in">
+							{if $userpermissions.tasks.add}
+								<a class="butn_link" href="javascript:blindtoggle('form_addmytask');" id="add_butn_mytasks" onclick="toggleClass('add_mytasks','add-active','add');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_mytasks','smooth','nosmooth');">{#addtask#}</a>
+							{/if}
+						</div>
+					</div>
 				</div> {*block END*}
 			</div> {*tasks END*}
 			<div class="content-spacer"></div>
@@ -249,7 +261,7 @@
 			</div>	{*miles End*}
 			<div class="content-spacer"></div>{*Milestons END*}
 		{/if}
-		
+
 		{*Messages*}
 		{if $msgnum > 0}
 			<div class="msgs">

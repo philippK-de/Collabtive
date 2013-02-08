@@ -1,24 +1,25 @@
 <?php
 error_reporting(0);
 require("./init.php");
-// 0.5.5
-mysql_query("ALTER TABLE `roles` ADD `chat` TEXT AFTER `timetracker`");
-mysql_query("ALTER TABLE `user` CHANGE `company` `company` VARCHAR( 256 )");
-// 0.6
-mysql_query("ALTER TABLE `projectfolders` ADD `parent` INT(10) unsigned NOT NULL default '0' AFTER `ID`");
-mysql_query("ALTER TABLE `projectfolders` ADD `visible` text NOT NULL AFTER `description`");
-mysql_query("ALTER TABLE `files` ADD `visible` text NOT NULL");
-mysql_query("ALTER TABLE `files` ADD `user` INT(10) NOT NULL default '0' AFTER `milestone`");
-mysql_query("ALTER TABLE `user` CHANGE `zip` `zip` VARCHAR( 10 )"); // overlooked with 0.5
-
-// 0.6.3
-mysql_query("ALTER TABLE `files` DROP `seenby`");
 // 0.7
 mysql_query("ALTER TABLE `files` CHANGE `type` `type` VARCHAR( 255 )");
-//change to new winter template if unmaintained frost template is selected
+// change to new winter template if unmaintained frost template is selected
 if ($settings["template"] == "frost") {
     mysql_query("UPDATE `settings` SET `template` = 'winter'");
 }
+// 1.0
+mysql_query("DROP TABLE `settings`");
+$table = mysql_query("CREATE TABLE `settings` (
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `settingsKey` varchar(50) NOT NULL,
+  `settingsValue` varchar(50) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM  ");
+
+foreach($settings as $setKey => $setVal) {
+    $ins = mysql_query("INSERT INTO `settings` (`settingsKey`,`settingsValue`) VALUES ('$setKey','$setVal')");
+}
+
 // version independent
 // clear templates cache
 $handle = opendir($template->compile_dir);

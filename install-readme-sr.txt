@@ -36,7 +36,7 @@ Molimo vas da pogledate license.txt za potpun spisak uslova za licenciranje.
 
 ### Zasluge ###
 - Collabtive je (c) Philipp Kiszka
-- Koordinacija projekta i podrška: Eva Kranz
+- Koordinacija projekta i podrška: Eva Kiszka
 - Grafika: Marcus Fröhner
 - Ikone su delimično preuzete iz Oxygen iconset-a.
 - Mnoge lokalne verzije održavaju razni pomagači:

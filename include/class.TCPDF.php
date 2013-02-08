@@ -18656,9 +18656,22 @@ public $uni_utf8tolatin = array (
 /**
  * Array of WEB safe colors
  */
-global $webcolor;
 
-$webcolor = array (
+/**
+ * @class TCPDF
+ * PHP class for generating PDF documents without requiring external extensions.
+ * TCPDF project (http://www.tcpdf.org) has been originally derived in 2002 from the Public Domain FPDF class by Olivier Plathey (http://www.fpdf.org), but now is almost entirely rewritten.<br>
+ * @package com.tecnick.tcpdf
+ * @brief PHP class for generating PDF documents without requiring external extensions.
+ * @version 5.9.038
+ * @author Nicola Asuni - info@tecnick.com
+ */
+class TCPDF {
+
+	// private properties
+ 
+
+private $webcolor = array (
 'aliceblue' => 'f0f8ff',
 'antiquewhite' => 'faebd7',
 'aqua' => '00ffff',
@@ -18807,19 +18820,6 @@ $webcolor = array (
 'yellow' => 'ffff00',
 'yellowgreen' => '9acd32'
 );
-
-/**
- * @class TCPDF
- * PHP class for generating PDF documents without requiring external extensions.
- * TCPDF project (http://www.tcpdf.org) has been originally derived in 2002 from the Public Domain FPDF class by Olivier Plathey (http://www.fpdf.org), but now is almost entirely rewritten.<br>
- * @package com.tecnick.tcpdf
- * @brief PHP class for generating PDF documents without requiring external extensions.
- * @version 5.9.038
- * @author Nicola Asuni - info@tecnick.com
- */
-class TCPDF {
-
-	// private properties
 
 	/**
 	 * Current TCPDF version.
@@ -20233,12 +20233,7 @@ class TCPDF {
 	 */
 	protected $page_regions = array();
 
-	/**
-	 * Array containing HTML color names and values.
-	 * @protected
-	 * @since 5.9.004 (2010-10-18)
-	 */
-	protected $webcolor = array();
+
 
 	/**
 	 * Array containing spot color names and values.
@@ -20432,7 +20427,7 @@ class TCPDF {
 			mb_internal_encoding('ASCII');
 		}
 		// get array of HTML colors
-		//require(dirname(__FILE__).'/htmlcolors.php');
+		require(dirname(__FILE__).'/htmlcolors.php');
 		$this->webcolor = $webcolor;
 		// get array of custom spot colors
 		if (file_exists(dirname(__FILE__).'/spotcolors.php')) {

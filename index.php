@@ -1,8 +1,7 @@
 <?php
 require("./init.php");
 
-if (!isset($_SESSION["userid"]))
-{
+if (!isset($_SESSION["userid"])) {
     $template->assign("loginerror", 0);
     $mode = getArrayVal($_GET, "mode");
     $template->assign("mode", $mode);
@@ -10,8 +9,7 @@ if (!isset($_SESSION["userid"]))
     die();
 }
 // collabtive doesn't seem to be installed properly , redirect to installer
-if (empty($db_name) or empty($db_user))
-{
+if (empty($db_name) or empty($db_user)) {
     $loc = $url . "install.php";
     header("Location: " . $loc);
 }
@@ -32,20 +30,16 @@ $milestones = array();
 $tasks = array();
 $cou = 0;
 
-if (!empty($myprojects))
-{
-    foreach($myprojects as $proj)
-    {
+if (!empty($myprojects)) {
+    foreach($myprojects as $proj) {
         $task = $mtask->getAllMyProjectTasks($proj["ID"], 100);
         $msgs = $msg->getProjectMessages($proj["ID"]);
 
-        if (!empty($msgs))
-        {
+        if (!empty($msgs)) {
             array_push($messages, $msgs);
         }
 
-        if (!empty($task))
-        {
+        if (!empty($task)) {
             array_push($tasks, $task);
         }
 
@@ -53,67 +47,67 @@ if (!empty($myprojects))
     }
 }
 
-if($userpermissions["projects"]["add"])
-{
-$user = new user();
-$users = $user->getAllUsers(1000000);
-$template->assign("users", $users);
+if ($userpermissions["projects"]["add"]) {
+    $user = new user();
+    $users = $user->getAllUsers(1000000);
+    $template->assign("users", $users);
 }
 
-if (!empty($messages))
-{
+if (!empty($messages)) {
     $messages = reduceArray($messages);
 }
 $etasks = reduceArray($tasks);
 
 $sort = array();
-foreach($etasks as $etask)
-{
+foreach($etasks as $etask) {
     array_push($sort, $etask["daysleft"]);
 }
 array_multisort($sort, SORT_NUMERIC, SORT_ASC, $etasks);
 
-if (getArrayVal($_COOKIE, "taskhead"))
-{
+if (getArrayVal($_COOKIE, "taskhead")) {
     $taskstyle = "display:" . $_COOKIE['taskhead'];
     $template->assign("taskstyle", $taskstyle);
     $taskbar = "win_" . $_COOKIE['taskhead'];
-}
-else
-{
+} else {
     $taskbar = "win_block";
 }
-if (getArrayVal($_COOKIE, "mileshead"))
-{
+if (getArrayVal($_COOKIE, "mileshead")) {
     $milestyle = "display:" . $_COOKIE['mileshead'];
     $template->assign("milestyle", $milestyle);
     $milebar = "win_" . $_COOKIE['mileshead'];
-}
-else
-{
+} else {
     $milebar = "win_block";
 }
-if (getArrayVal($_COOKIE, "projecthead"))
-{
+if (getArrayVal($_COOKIE, "projecthead")) {
     $projectstyle = "display:" . $_COOKIE['projecthead'];
     $template->assign("projectstyle", $projectstyle);
     $projectbar = "win_" . $_COOKIE['projecthead'];
-}
-else
-{
+} else {
     $projectbar = "win_block";
 }
-if (getArrayVal($_COOKIE, "activityhead"))
-{
+if (getArrayVal($_COOKIE, "activityhead")) {
     $actstyle = "display:" . $_COOKIE['activityhead'];
     $template->assign("actstyle", $actstyle);
     $activitybar = "win_" . $_COOKIE['activityhead'];
-}
-else
-{
+} else {
     $activitybar = "win_block";
 }
-
+$mode = getArrayVal($_GET, "mode");
+if ($mode == "login") {
+	$chkLim = 0;
+    // only check if an admin logs in
+    if ($userpermissions["admin"]["add"]) {
+        // only check 1/2 of the times an admin logs in, to reduce server load
+        $chkLim = mt_rand(1, 2);
+        if ($chkLim == 1) {
+            $updateChk = getUpdateNotify();
+            if ($updateChk->pubDate > CL_PUBDATE) {
+                $template->assign("isUpdated", true);
+                $template->assign("updateNotify", $updateChk);
+            }
+        }
+    }
+}
 $today = date("d");
 $tasknum = count($etasks);
 $projectnum = count($myprojects);
@@ -127,12 +121,11 @@ $template->assign("milebar", $milebar);
 $template->assign("projectbar", $projectbar);
 $template->assign("actbar", $activitybar);
 
-
 $template->assign("today", $today);
 
 $template->assign("myprojects", $myprojects);
 $template->assign("projectnum", $projectnum);
-$mode = getArrayVal($_GET, "mode");
+
 $template->assign("mode", $mode);
 
 $template->assign("tasks", $etasks);

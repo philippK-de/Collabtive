@@ -64,6 +64,9 @@ if ($action == "editform") {
 
     $template->assign("title", $title);
     $template->assign("project", $thisproject);
+    $template->assign("showhtml", "no");
+    $template->assign("showheader", "no");
+    $template->assign("async", "yes");
     $template->display("editform.tpl");
 } elseif ($action == "edit") {
     if (!$userpermissions["projects"]["edit"]) {
@@ -228,55 +231,21 @@ if ($action == "editform") {
         die();
     }
 
-    $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true);
+    $pdf = new MYPDF("P", PDF_UNIT, "A4", true);
+
     $tproject = $project->getProject($id);
     $headstr = $tproject["name"] . " " . $activity;
+    $pdf->setup($headstr,array(235,234,234));
 
-    $pdf->SetHeaderData("", 0, "" , $headstr);
-
-    $pdf->setHeaderFont(Array(PDF_FONT_NAME_DATA, '', 20));
-    $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', 8));
-    $pdf->SetHeaderMargin(0);
-    $pdf->SetFont(PDF_FONT_NAME_DATA, "", 11);
-
-    $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-    $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-    $pdf->SetAutoPageBreak(true, PDF_MARGIN_BOTTOM);
-    $pdf->setLanguageArray($l);
-
-    $pdf->AliasNbPages();
-    $pdf->AddPage();
-
-    $htmltable = "<table border=\"1\" >
-	<tr bgcolor=\"#d9dee8\" style=\"font-weight:bold;\">
-	<th width=\"20\"></th><th align=\"center\">$langfile[title]</th><th align=\"center\">$langfile[action]</th><th align=\"center\">$langfile[day]</th><th>$langfile[user]</th>
-	</tr>";
+    $headers = array($langfile["action"],$langfile["day"],$langfile["user"]);
 
     $thelog = new mylog();
     $datlog = array();
     $tlog = $thelog->getProjectLog($id, 100000);
-    $tlog = $thelog->formatdate($tlog, "d.m.y");
+    $tlog = $thelog->formatdate($tlog, CL_DATEFORMAT . " / H:i:s");
     if (!empty($tlog)) {
         $i = 0;
         foreach($tlog as $logged) {
-            if ($logged["type"] == "datei") {
-                $logged["type"] = "file";
-                $icon = "templates/standard/images/symbols/files.png";
-            } elseif ($logged["type"] == "projekt") {
-                $logged["type"] = "project";
-                $icon = "templates/standard/images/symbols/projects.png";
-            } elseif ($logged["type"] == "track") {
-                $logged["type"] = "timetracker";
-                $icon = "templates/standard/images/symbols/timetracker.png";
-            } elseif ($logged["type"] == "task") {
-                $icon = "templates/standard/images/symbols/task.png";
-            } elseif ($logged["type"] == "message") {
-                $icon = "templates/standard/images/symbols/msgs.png";
-            } elseif ($logged["type"] == "milestone") {
-                $icon = "templates/standard/images/symbols/miles.png";
-            } elseif ($logged["type"] == "tasklist") {
-                $icon = "templates/standard/images/symbols/tasklist.png";
-            }
 
             if ($logged["action"] == 1) {
                 $actstr = $langfile["added"];
@@ -291,28 +260,14 @@ if ($action == "editform") {
             } elseif ($logged["action"] == 6) {
                 $actstr = $langfile["assigned"];
             }
-
-            if ($i % 2 == 0) {
-                $fill = "#ffffff";
-            } else {
-                $fill = "#d9dee8";
-            }
             $i = $i + 1;
 
             $obstr = $logged["name"];
 
-            $htmltable .= "<tr bgcolor=\"$fill\">
-			<td width=\"20\"><img height=\"20\" width=\"20\" src=\"$icon\" /></td>
-			<td>$obstr</td>
-			<td>$actstr</td>
-			<td>$logged[datum]</td>
-			<td>$logged[username]</td>
-			</tr>";
+			array_push($datlog,array($obstr . " " . $langfile["was"] . " " . $actstr,$logged["datum"],$logged["username"]));
         }
     }
-    $htmltable .= "</table>";
-    $pdf->writeHTML($htmltable, true, 0, true, 0);
-    $pdf->lastPage();
+	$pdf->table($headers,$datlog);
     $pdf->Output("project-$id-log.pdf", "D");
 } elseif ($action == "projectlogxls") {
     if (!$userpermissions["admin"]["add"]) {

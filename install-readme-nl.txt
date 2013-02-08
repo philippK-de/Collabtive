@@ -37,7 +37,7 @@ Zie license.txt (in het Engels) voor de volledige beschrijving van de voorwaarde
 
 ### Credits ###
 - Collabtive is (c) Philipp Kiszka
-- Project coördinatie en ondersteuning door Eva Kranz
+- Project coördinatie en ondersteuning door Eva Kiszka
 - Artwork van Marcus Fröhner
 - Iconen zijn deels gebruikt van de Oxygen iconset.
 - Vertalingen worden uitgevoerd door:

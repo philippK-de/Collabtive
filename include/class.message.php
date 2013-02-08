@@ -11,8 +11,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
 
-class message
-{
+class message {
     public $mylog;
 
     /**
@@ -53,13 +52,10 @@ class message
         $ins = mysql_query($sql);
 
         $insid = mysql_insert_id();
-        if ($ins)
-        {
+        if ($ins) {
             $this->mylog->add($title, 'message', 1, $project);
             return $insid;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -82,16 +78,13 @@ class message
 
         $upd = mysql_query("UPDATE messages SET title='$title', text='$text', tags='$tags' WHERE ID = $id");
 
-        if ($upd)
-        {
+        if ($upd) {
             $proj = mysql_query("SELECT project FROM messages WHERE ID = $id");
             $proj = mysql_fetch_row($proj);
             $proj = $proj[0];
             $this->mylog->add($title, 'message', 2, $proj);
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -112,13 +105,10 @@ class message
         $del = mysql_query("DELETE FROM messages WHERE ID = $id LIMIT 1");
         $del2 = mysql_query("DELETE FROM messages WHERE replyto = $id");
         $del3 = mysql_query("DELETE FROM files_attached WHERE message = $id");
-        if ($del)
-        {
+        if ($del) {
             $this->mylog->add($msg[0], 'message', 3, $msg[1]);
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -134,12 +124,11 @@ class message
         $id = (int) $id;
 
         $sel = mysql_query("SELECT * FROM messages WHERE ID = $id LIMIT 1");
-        $message = mysql_fetch_array($sel,MYSQL_ASSOC);
+        $message = mysql_fetch_array($sel, MYSQL_ASSOC);
 
         $tagobj = new tags();
         $milesobj = new milestone();
-        if (!empty($message))
-        {
+        if (!empty($message)) {
             $replies = mysql_query("SELECT COUNT(*) FROM messages WHERE replyto = $id");
             $replies = mysql_fetch_row($replies);
             $replies = $replies[0];
@@ -155,9 +144,14 @@ class message
             $project = mysql_query("SELECT name FROM projekte WHERE ID = $message[project]");
             $project = mysql_fetch_row($project);
             $project = $project[0];
-            $project["name"] = stripslashes($project["name"]);
-            $message["pname"] = $project;
-
+            if ($project) {
+                $project["name"] = stripslashes($project["name"]);
+                $message["pname"] = $project;
+            }
+            else
+            {
+				$message["pname"] = "";
+			}
             $posted = date(CL_DATEFORMAT . " - H:i", $message["posted"]);
             $message["postdate"] = $posted;
             $message["endstring"] = $posted;
@@ -171,21 +165,16 @@ class message
 
             $attached = $this->getAttachedFiles($message["ID"]);
             $message["files"] = $attached;
-            if ($message["milestone"] > 0)
-            {
+            if ($message["milestone"] > 0) {
                 $miles = $milesobj->getMilestone($message["milestone"]);
-            }
-            else
-            {
+            } else {
                 $miles = array();
             }
 
             $message["milestones"] = $miles;
 
             return $message;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -206,20 +195,15 @@ class message
         $tagobj = new tags();
         $milesobj = new milestone();
         $user = new user();
-        while ($reply = mysql_fetch_array($sel))
-        {
-            if (!empty($reply))
-            {
+        while ($reply = mysql_fetch_array($sel)) {
+            if (!empty($reply)) {
                 $thereply = $this->getMessage($reply["ID"]);
                 array_push($replies, $thereply);
             }
         }
-        if (!empty($replies))
-        {
+        if (!empty($replies)) {
             return $replies;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -231,32 +215,26 @@ class message
         $userid = $_SESSION["userid"];
         $sel3 = mysql_query("SELECT projekt FROM projekte_assigned WHERE user = $userid");
         $prstring = "";
-        while ($upro = mysql_fetch_row($sel3))
-        {
+        while ($upro = mysql_fetch_row($sel3)) {
             $projekt = $upro[0];
             $prstring .= $projekt . ",";
         }
 
         $prstring = substr($prstring, 0, strlen($prstring)-1);
-        if ($prstring)
-        {
+        if ($prstring) {
             $sel1 = mysql_query("SELECT ID FROM messages WHERE project IN($prstring) ORDER BY posted DESC LIMIT $limit ");
             $messages = array();
 
             $tagobj = new tags();
             $milesobj = new milestone();
-            while ($message = mysql_fetch_array($sel1))
-            {
+            while ($message = mysql_fetch_array($sel1)) {
                 $themessage = $this->getMessage($message["ID"]);
                 array_push($messages, $themessage);
             }
         }
-        if (!empty($messages))
-        {
+        if (!empty($messages)) {
             return $messages;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -277,18 +255,14 @@ class message
         $tagobj = new tags();
         $milesobj = new milestone();
 
-        while ($message = mysql_fetch_array($sel1))
-        {
+        while ($message = mysql_fetch_array($sel1)) {
             $themessage = $this->getMessage($message["ID"]);
             array_push($messages, $themessage);
         }
 
-        if (!empty($messages))
-        {
+        if (!empty($messages)) {
             return $messages;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -300,27 +274,20 @@ class message
         $id = (int) $id;
 
         $myfile = new datei();
-        if ($fid > 0)
-        {
+        if ($fid > 0) {
             $ins = mysql_query("INSERT INTO files_attached (ID,file,message) VALUES ('',$fid,$mid)");
-        }
-        else
-        {
+        } else {
             $num = $_POST["numfiles"];
 
             $chk = 0;
-            for($i = 1;$i <= $num;$i++)
-            {
+            for($i = 1;$i <= $num;$i++) {
                 $fid = $myfile->upload("userfile$i", "files/" . CL_CONFIG . "/$id", $id);
                 $ins = mysql_query("INSERT INTO files_attached (ID,file,message) VALUES ('',$fid,$mid)");
             }
         }
-        if ($ins)
-        {
+        if ($ins) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -331,51 +298,39 @@ class message
 
         $files = array();
         $sel = mysql_query("SELECT file FROM files_attached WHERE message = $msg");
-        while ($file = mysql_fetch_row($sel))
-        {
+        while ($file = mysql_fetch_row($sel)) {
             $sel2 = mysql_query("SELECT * FROM files WHERE ID = $file[0]");
             $thisfile = mysql_fetch_array($sel2);
             $thisfile["type"] = str_replace("/", "-", $thisfile["type"]);
-            if (isset($thisfile["desc"]))
-            {
+            if (isset($thisfile["desc"])) {
                 $thisfile["desc"] = stripslashes($thisfile["desc"]);
             }
-            if (isset($thisfile["tags"]))
-            {
+            if (isset($thisfile["tags"])) {
                 $thisfile["tags"] = stripslashes($thisfile["tags"]);
             }
-            if (isset($thisfile["title"]))
-            {
+            if (isset($thisfile["title"])) {
                 $thisfile["title"] = stripslashes($thisfile["title"]);
             }
             $set = new settings();
             $settings = $set->getSettings();
             $myfile = "./templates/" . $settings["template"] . "/images/files/" . $thisfile["type"] . ".png";
-            if (stristr($thisfile["type"], "image"))
-            {
+            if (stristr($thisfile["type"], "image")) {
                 $thisfile["imgfile"] = 1;
-            } elseif (stristr($thisfile["type"], "text"))
-            {
+            } elseif (stristr($thisfile["type"], "text")) {
                 $thisfile["imgfile"] = 2;
-            }
-            else
-            {
+            } else {
                 $thisfile["imgfile"] = 0;
             }
 
-            if (!file_exists($myfile))
-            {
+            if (!file_exists($myfile)) {
                 $thisfile["type"] = "none";
             }
             array_push($files, $thisfile);
         }
 
-        if (!empty($files))
-        {
+        if (!empty($files)) {
             return $files;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }

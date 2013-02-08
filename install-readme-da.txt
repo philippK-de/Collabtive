@@ -38,7 +38,7 @@ Se venligst license.txt (engelsk) for de fulde licens betingelser og vilkår.
 
 ### kildeangivelse ###
 - Collabtive er (c) Philipp Kiszka
-- Projekt kordination og support af Eva Kranz
+- Projekt kordination og support af Eva Kiszka
 - Grafisk arbejde af Marcus Fröhner
 - Ikoner er delvist taget fra Oxygen ikonsættet.
 - Mange sprog vedligeholdes af forskellige bidragsydere:

@@ -63,7 +63,7 @@ if ($action == "addform")
         $template->display("error.tpl");
         die();
     }
-    
+
     // format tags properly
     if ($tags)
     {
@@ -134,11 +134,11 @@ if ($action == "addform")
         $template->display("error.tpl");
         die();
     }
-	
+
     // get page title from language file
     $title = $langfile["editmessage"];
 	$template->assign("title", $title);
-    
+
 	// get the message to edit
     $message = $msg->getMessage($mid);
     $template->assign("message", $message);
@@ -208,16 +208,16 @@ if ($action == "addform")
         $template->display("error.tpl");
         die();
     }
-	
+
 	// get page title from language file
     $title = $langfile["reply"];
     $template->assign("title", $title);
-	    
+
     // get all notifiable members
     $myproject = new project();
     $pro = $myproject->getProject($id);
     $members = $myproject->getProjectMembers($id, 10000);
-	
+
     $myfile = new datei();
     $ordner = $myfile->getProjectFiles($id, 1000);
     $message = $msg->getMessage($mid);
@@ -251,7 +251,7 @@ if ($action == "addform")
             // if upload files are set, upload and attach
             $msg->attachFile(0, $themsg, $id);
         }
-        
+
 		if ($settings["mailnotify"])
         {
             $sendto = getArrayVal($_POST, "sendto");
@@ -287,7 +287,7 @@ if ($action == "addform")
                 }
             }
         }
-        
+
         $loc = $url . "managemessage.php?action=showmessage&mid=$mid_post&id=$id&mode=replied";
         header("Location: $loc");
     }
@@ -308,18 +308,25 @@ if ($action == "addform")
             $message = $msg->getProjectMessages($proj["ID"]);
             $ordner = $myfile->getProjectFiles($proj["ID"], 1000);
             $milestones = $objmilestone->getProjectMilestones($proj["ID"], 10000);
-
+		if(!empty($message))
+		{
+			array_push($messages,$message);
+		}
             $myprojects[$cou]["milestones"] = $milestones;
             $myprojects[$cou]["messages"] = $message;
             $myprojects[$cou]["files"] = $ordner;
             $cou = $cou + 1;
         }
     }
+    $emessages = reduceArray($messages);
+
     // print_r($myprojects);
     $title = $langfile['mymessages'];
     $template->assign("title", $title);
     $members = $project->getProjectMembers($id, 10000);
 	$template->assign("members", $members);
+	$template->assign("messages", $emessages);
+	$template->assign("msgnum", count($emessages));
     $template->assign("myprojects", $myprojects);
     $template->display("mymessages.tpl");
 } elseif ($action == "showproject")
@@ -365,14 +372,14 @@ if ($action == "addform")
 
     $myproject = new project();
     $pro = $myproject->getProject($id);
-    
+
     // get all notifiable members
     $members = $myproject->getProjectMembers($id, 10000);
-    
+
 	// get all attachable files
 	$myfile = new datei();
 	$ordner = $myfile->getProjectFiles($id, 1000);
-    
+
     $projectname = $pro['name'];
     $title = $langfile['message'];
 
@@ -454,10 +461,10 @@ if ($action == "addform")
 		<tr><td >$langfile[none] $langfile[messages]</td></tr>
 		";
     }
-    
+
     $pdf->writeHTML($htmltable, true, 0, true, 0);
     $pdf->Output("project-$id-messages.pdf", "D");
-    
+
 } elseif ($action == "export-single")
 {
     $l = Array();

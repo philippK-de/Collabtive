@@ -31,13 +31,13 @@ Przegladarka:
 ### Licencja ###
 Collabtive jest darmowa aplikacja udostepniana na zasadach licencji
 GNU General Public License (GPL) (Version 3).
-Zobacz plik license.txt (wersja angielska) aby zapoznac sie z pelnym tekstem licencji. 
+Zobacz plik license.txt (wersja angielska) aby zapoznac sie z pelnym tekstem licencji.
 Nieoficjalne polskie tlumaczenie licencji GPL (Version 3) znajduje sie pod adresem: http://tinyurl.com/4jhp9r
 
 
 ### Tworcy ###
 - Collabtive tworzy (c) Philipp Kiszka
-- Koordynator projektu oraz wsparcie: Eva Kranz
+- Koordynator projektu oraz wsparcie: Eva Kiszka
 - Artwork: Marcus Fr√∂hner
 - Ikony sa czesciowo zaczerpniete z zestawu ikon Oxygen.
 - Wiele lokalizacji jest utrzymywana przez wspolpracownikow:

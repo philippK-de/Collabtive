@@ -23,6 +23,7 @@ Client:
 	 5. Visitare la pagina install.php e seguire le istruzioni fornite;
 	 6. Se l'installazione va a buon fine, eliminare i files install.php e update.php.
 
+
 ### Istruzione per l'Update  ###
 	 1. Estrarre l'archivio;
 	 2. Prelevare il file config.php dal vostro server;
@@ -31,15 +32,17 @@ Client:
 	 5. Visitare la pagina update.php;
 	 6. Se l'update va a buon fine, elimiare install.php e update.php.
 
+
 ### Condizioni di Licenza ###
 Collabtice è free software secondo i termini e le condizioni della
 GNU General Public License (GPL) (Versione 3).
 Pregasi visionare licese.txt per tutti i termini e le condizioni
 della licenza.
 
+
 ### Crediti ###
 - Collabtive è (c) Philipp Kiszka
-- Coordinatore di progetto e supporto: Eva Kranz
+- Coordinatore di progetto e supporto: Eva Kiszka
 - Grafica: Marcus Fröhner
 - Le icone sono prese in parte dall'iconset di Oxygen.
 - Le versioni localizzate sono mantenute da diversi contribuenti:
