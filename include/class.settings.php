@@ -26,9 +26,10 @@ class settings {
      */
     function getSettings()
     {
-        $sel = mysql_query("SELECT settingsKey,settingsValue FROM settings");
+		global $conn;
+		$sel = $conn->query("SELECT settingsKey,settingsValue FROM settings");
         $settings = array();
-        while ($selSettings = mysql_fetch_array($sel, MYSQL_ASSOC)) {
+        while ($selSettings = $sel->fetch()) {
             $settings[$selSettings["settingsKey"]] = $selSettings["settingsValue"];
         }
         if (!empty($settings)) {
@@ -52,20 +53,14 @@ class settings {
      */
     function editSettings($name, $subtitle, $locale, $timezone, $dateformat, $templ, $rssuser, $rsspass)
     {
-        $name = mysql_real_escape_string($name);
-        $subtitle = mysql_real_escape_string($subtitle);
-        $locale = mysql_real_escape_string($locale);
-        $timezone = mysql_real_escape_string($timezone);
-        $dateformat = mysql_real_escape_string($dateformat);
-        $templ = mysql_real_escape_string($templ);
-        $rssuser = mysql_real_escape_string($rssuser);
-        $rsspass = mysql_real_escape_string($rsspass);
+		global $conn;
 
 		//This is an artifact of refactoring to a key/value table for the settings
         $theSettings = array("name" => $name, "subtitle" => $subtitle, "locale" => $locale, "timezone" => $timezone, "dateformat" => $dateformat, "template" => $templ, "rssuser" => $rssuser, "rsspass" => $rsspass);
 
+		$updStmt = conn->prepare("UPDATE settings SET `settingsValue` = ? WHERE `settingsKey` = ?");
         foreach($theSettings as $setKey => $setVal) {
-            $upd = mysql_query("UPDATE settings SET `settingsValue`='$setVal' WHERE `settingsKey`='$setKey'");
+            $upd = $updStmt->execute($setVal, $setKey);
         }
 
 	     if ($upd) {
@@ -89,15 +84,9 @@ class settings {
      */
     function editMailsettings($onoff, $mailfrom, $mailfromname, $method, $mailhost, $mailuser, $mailpass)
     {
-        $onoff = (int) $onoff;
-        $mailfrom = mysql_real_escape_string($mailfrom);
-        $mailfromname = mysql_real_escape_string($mailfromname);
-        $method = mysql_real_escape_string($method);
-        $mailhost = mysql_real_escape_string($mailhost);
-        $mailuser = mysql_real_escape_string($mailuser);
-        $mailpass = mysql_real_escape_string($mailpass);
-
-        $upd = mysql_query("UPDATE settings SET mailnotify = $onoff, mailfrom = '$mailfrom', mailfromname = '$mailfromname', mailmethod = '$method', mailhost = '$mailhost', mailuser = '$mailuser', mailpass = '$mailpass'");
+		global $conn;
+		$updStmt = $conn->prepare("UPDATE settings SET mailnotify = ? , mailfrom = ?, mailfromname = ?, mailmethod = ?, mailhost = ?, mailuser = ?, mailpass = ?");
+		$upd = $updStmt->execute(array((int) $onoff, $mailfrom, $mailfromname, $method, $mailhost, $mailuser, $mailpass));
 
         if ($upd) {
             return true;
