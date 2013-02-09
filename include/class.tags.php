@@ -131,15 +131,16 @@ class tags
      */
     public function getTagcloud($project)
     {
+				global $conn;
         $project = (int) $project;
 
-        $sel1 = mysql_query("SELECT tags FROM files WHERE tags != '' AND project = $project");
-        $sel2 = mysql_query("SELECT tags FROM messages WHERE tags != '' AND project = $project");
+        $sel1 = $conn->query("SELECT tags FROM files WHERE tags != '' AND project = $project");
+        $sel2 = $conn->query("SELECT tags FROM messages WHERE tags != '' AND project = $project");
 
         $tags1 = array();
         $worktags = "";
 
-        while ($dat = mysql_fetch_row($sel1))
+        while ($dat = $sel1->fetch())
         {
             $tag = $dat[0];
             $tag = ucfirst($tag);
@@ -148,7 +149,7 @@ class tags
                 $worktags .= $tag . ",";
             }
         }
-        while ($dat = mysql_fetch_row($sel2))
+        while ($dat = $sel2->fetch())
         {
             $tag = $dat[0];
             $tag = ucfirst($tag);
@@ -189,25 +190,24 @@ class tags
     }
     private function getFiles($query, $project = 0)
     {
-        $query = mysql_real_escape_string($query);
+				global $conn;
         $project = (int) $project;
 
         if ($project > 0)
         {
-            $sel = mysql_query("SELECT `ID`,`name`,`desc`,`type`,`datei`,`title`,`project`,`tags` FROM `files` WHERE `tags` LIKE '%$query%' HAVING project = $project");
+            $sel = $conn->query("SELECT `ID`,`name`,`desc`,`type`,`datei`,`title`,`project`,`tags` FROM `files` WHERE `tags` LIKE ".$conn->quote("%{$query}%")." HAVING project = $project");
         }
         else
         {
-            $sel = mysql_query("SELECT `ID`,`name`,`desc`,`type`,`datei`,`title`,`project`,`tags` FROM `files` WHERE `tags` LIKE '%$query%'");
+            $sel = $conn->query("SELECT `ID`,`name`,`desc`,`type`,`datei`,`title`,`project`,`tags` FROM `files` WHERE `tags` LIKE ".$conn->quote("%{$query}%"));
         }
 
         $files = array();
-        while ($result = mysql_fetch_array($sel))
+        while ($result = $sel->fetch())
         {
             if (!empty($result))
             {
-                $project = mysql_query("SELECT name FROM projekte WHERE ID = $result[project]");
-                $project = mysql_fetch_row($project);
+                $project = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]")->fetch();
                 $project = $project[0];
 
                 $result["pname"] = $project;
@@ -256,25 +256,24 @@ class tags
 
     private function getMessages($query, $project = 0)
     {
-        $query = mysql_real_escape_string($query);
+				global $conn;
         $project = (int) $project;
 
         if ($project > 0)
         {
-            $sel = mysql_query("SELECT `ID`,`title`,`text`,`posted`,`user`,`username`,`project`,`tags` FROM messages WHERE `tags` LIKE '%$query%'  HAVING project = $project ");
+            $sel = $conn->query("SELECT `ID`,`title`,`text`,`posted`,`user`,`username`,`project`,`tags` FROM messages WHERE `tags` LIKE ".$conn->quote("%{$query}%")." HAVING project = $project ");
         }
         else
         {
-            $sel = mysql_query("SELECT `ID`,`title`,`text`,`posted`,`user`,`username`,`project`,`tags` FROM messages WHERE `tags` LIKE '%$query%'");
+            $sel = $conn->query("SELECT `ID`,`title`,`text`,`posted`,`user`,`username`,`project`,`tags` FROM messages WHERE `tags` LIKE ".$conn->quote("%{$query}%"));
         }
 
         $messages = array();
-        while ($result = mysql_fetch_array($sel))
+        while ($result = $sel->fetch())
         {
             if (!empty($result))
             {
-                $project = mysql_query("SELECT name FROM projekte WHERE ID = $result[project]");
-                $project = mysql_fetch_row($project);
+                $project = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]")->fetch();
                 $project = $project[0];
 
                 $result["pname"] = $project;
@@ -306,12 +305,12 @@ class tags
 
     private function getUser($query)
     {
-        $query = mysql_real_escape_string($query);
+				global $conn;
 
-        $sel = mysql_query("SELECT `ID`,`email`,`name`,`avatar`,`lastlogin`,`tags` FROM user WHERE tags LIKE '%$query%'");
+        $sel = $conn->query("SELECT `ID`,`email`,`name`,`avatar`,`lastlogin`,`tags`, `gender` FROM user WHERE tags LIKE ".$conn->quote("%{$query}%"));
 
         $user = array();
-        while ($result = mysql_fetch_array($sel))
+        while ($result = $sel->fetch())
         {
             if (!empty($result))
             {
@@ -322,7 +321,7 @@ class tags
                 $result["tagsarr"] = $this->splitTagStr($result["tags"]);
                 $result["tagnum"] = count($result["tagsarr"]);
                 $result[3] = "user";
-                $result["icon"] = "user.png";
+                $result["icon"] = ($result['gender'] == "m" ? "user-marker-male.png" : "user-marker-female.png");
                 array_push($user, $result);
             }
         }

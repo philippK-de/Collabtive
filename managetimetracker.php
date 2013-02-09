@@ -228,8 +228,7 @@ if ($action == "add") {
         $template->display("error.tpl");
         die();
     }
-    $sel = mysql_query("SELECT name FROM projekte WHERE ID = $id");
-    $pname = mysql_fetch_row($sel);
+    $pname = $conn->query("SELECT name FROM projekte WHERE ID = $id")->fetch();
     $pname = $pname[0];
 
     $pdf = new MYPDF("P", PDF_UNIT, "A4", true);
@@ -303,9 +302,7 @@ if ($action == "add") {
 
     $totaltime = $tracker->getTotalTrackTime($track);
     $totaltime = str_replace(".", ",", $totaltime);
-    $id = mysql_real_escape_string($id);
-    $sel = mysql_query("SELECT name FROM user WHERE ID = $id");
-    $uname = mysql_fetch_array($sel);
+    $uname = $conn->query("SELECT name FROM user WHERE ID = {$conn->quote($id)}")->fetch();
     $uname = $uname[0];
 
     $pdf = new MYPDF("P", PDF_UNIT, "A4", true);
