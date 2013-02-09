@@ -58,9 +58,9 @@ class settings {
 		//This is an artifact of refactoring to a key/value table for the settings
         $theSettings = array("name" => $name, "subtitle" => $subtitle, "locale" => $locale, "timezone" => $timezone, "dateformat" => $dateformat, "template" => $templ, "rssuser" => $rssuser, "rsspass" => $rsspass);
 
-		$updStmt = conn->prepare("UPDATE settings SET `settingsValue` = ? WHERE `settingsKey` = ?");
+		$updStmt = $conn->prepare("UPDATE settings SET `settingsValue` = ? WHERE `settingsKey` = ?");
         foreach($theSettings as $setKey => $setVal) {
-            $upd = $updStmt->execute($setVal, $setKey);
+            $upd = $updStmt->execute(array($setVal, $setKey));
         }
 
 	     if ($upd) {
