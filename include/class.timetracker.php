@@ -165,7 +165,7 @@ class timetracker
 
         $sel = $conn->query("SELECT * FROM timetracker WHERE ID = $id");
         $track = array();
-        $track = $sel->fetchAll();
+        $track = $sel->fetch();
 
         if (!empty($track))
         {
@@ -254,13 +254,13 @@ class timetracker
         $limi = " LIMIT $start,$lim";
         $sql = $sql . $limi;
 
-        $sel = $conn->$sql;
+        $sel = $conn->query($sql);
         $track = array();
         $ttask = new task();
 
         if (isset($sel))
         {
-            while ($data = @$sel->fetchAll())
+            while ($data = @$sel->fetch())
             {
                 $endstring = date("H:i", $data["ended"]);
                 $startstring = date("H:i", $data["started"]);
@@ -365,7 +365,7 @@ class timetracker
 
         if (isset($sel))
         {
-            while ($data = @$sel->fetchAll())
+            while ($data = @$sel->fetch())
             {
                 $endstring = date("H:i", $data["ended"]);
                 $startstring = date("H:i", $data["started"]);

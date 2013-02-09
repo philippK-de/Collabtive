@@ -207,13 +207,13 @@ class datei
 	 */
 	function getAllProjectFolders($project)
 	{
-				global $conn;
+		global $conn;
 		$project = (int) $project;
 
-        $sel = $conn->query("SELECT * FROM projectfolders WHERE project = $project ORDER BY ID ASC");
+    $sel = $conn->query("SELECT * FROM projectfolders WHERE project = $project ORDER BY ID ASC");
 		$folders = array();
 
-		while ($folder = $sel->fetch()) {
+		while ($folder = $sel->fetch())
 		{
 			$folder["subfolders"] = $this->getSubFolders($folder["ID"]);
 			$folder["abspath"] = $this->getAbsolutePathName($folder);
