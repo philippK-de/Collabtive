@@ -1,4 +1,4 @@
-<?php
+ <?php
 /**
  * This class provides methods to realize tasks
  *
@@ -38,9 +38,7 @@ class task
      */
     function add($end, $title, $text, $liste, $project)
     {
-        $end = mysql_real_escape_string($end);
-        $title = mysql_real_escape_string($title);
-        $text = mysql_real_escape_string($text);
+                                global $conn;
         $liste = (int) $liste;
         $project = (int) $project;
 
@@ -53,10 +51,11 @@ class task
 
         $start = time();
         // write to db
-        $ins = mysql_query("INSERT INTO tasks (start,end,title,text,liste,status,project) VALUES ('$start','$end_fin','$title','$text',$liste,1,$project)");
+        $insStmt = $conn->prepare("INSERT INTO tasks (start,end,title,text,liste,status,project) VALUES (?, ?, ?, ?, ?, 1, ?)");
+                                $ins = $insStmt->execute(array($start, $end_fin, $title, $text, $liste, $project));
         if ($ins)
         {
-            $insid = mysql_insert_id();
+            $insid = $conn->lastInsertId();
             // logentry
             $nameproject = $this->getNameProject($insid);
             $this->mylog->add($nameproject[0], 'task', 1, $nameproject[1]);
@@ -81,18 +80,16 @@ class task
      */
     function edit($id, $end, $title, $text, $liste)
     {
-        $end = mysql_real_escape_string($end);
-        $title = mysql_real_escape_string($title);
-        $text = mysql_real_escape_string($text);
+                                global $conn;
         $id = (int) $id;
         $liste = (int) $liste;
 
         $end = strtotime($end);
 
-        $upd = mysql_query("UPDATE tasks SET `end`='$end',`title`='$title', `text`='$text', `liste`=$liste WHERE ID = $id");
-		mysql_query("DELETE FROM tasks_assigned WHERE `task` = $id");
-
-
+        $upd = $conn->prepare("UPDATE tasks SET `end`=?,`title`=?, `text`=?, `liste`=? WHERE ID = ?");
+                                $conn->query("DELETE FROM tasks_assigned WHERE `task` = $id");
+                                $upd = $updStmt->execute(array($end, $title, $text, $liste, $id));
+                               
         if ($upd)
         {
             $nameproject = $this->getNameProject($id);
@@ -113,13 +110,14 @@ class task
      */
     function del($id)
     {
+                                global $conn;
         $id = (int) $id;
 
         $nameproject = $this->getNameProject($id);
-        $del = mysql_query("DELETE FROM tasks WHERE ID = $id LIMIT 1");
+        $del = $conn->query("DELETE FROM tasks WHERE ID = $id LIMIT 1");
         if ($del)
         {
-            $del2 = mysql_query("DELETE FROM tasks_assigned WHERE task=$id");
+            $del2 = $conn->query("DELETE FROM tasks_assigned WHERE task=$id");
             $this->mylog->add($nameproject[0], 'task', 3, $nameproject[1]);
             return true;
         }
@@ -137,9 +135,10 @@ class task
      */
     function open($id)
     {
+                                global $conn;
         $id = (int) $id;
 
-        $upd = mysql_query("UPDATE tasks SET status = 1 WHERE ID = $id");
+        $upd = $conn->query("UPDATE tasks SET status = 1 WHERE ID = $id");
         if ($upd)
         {
             $nameproject = $this->getNameProject($id);
@@ -160,22 +159,23 @@ class task
      */
     function close($id)
     {
+                                global $conn;
         $id = (int) $id;
 
-        $upd = mysql_query("UPDATE tasks SET status = 0 WHERE ID = $id");
+        $upd = $conn->query("UPDATE tasks SET status = 0 WHERE ID = $id");
 
         /*
-        $sql = mysql_query("SELECT liste FROM tasks WHERE ID = $id");
-        $liste = mysql_fetch_row($sql);
-        $sql2 = mysql_query("SELECT count(*) FROM tasks WHERE liste = $liste[0] AND status = 1");
-        $cou = mysql_fetch_row($sql2);
+        $sql = $conn->query("SELECT liste FROM tasks WHERE ID = $id");
+        $liste = $sql->fetch();
+        $sql2 = $conn->query("SELECT count(*) FROM tasks WHERE liste = $liste[0] AND status = 1");
+        $cou = $sql2->fetch();
         // if this is the last task in its list, close the list too.
         if ($cou[0] == 0)
         {
             $tasklist = new tasklist();
             $tasklist->close_liste($liste[0]);
         }
-		*/
+                */
 
         if ($upd)
         {
@@ -198,10 +198,11 @@ class task
      */
     function assign($task, $id)
     {
+                                global $conn;
         $task = (int) $task;
         $id = (int) $id;
 
-        $upd = mysql_query("INSERT INTO tasks_assigned (user,task) VALUES ($id,$task)");
+        $upd = $conn->query("INSERT INTO tasks_assigned (user,task) VALUES ($id,$task)");
         if ($upd)
         {
             return true;
@@ -221,10 +222,11 @@ class task
      */
     function deassign($task, $id)
     {
+                                global $conn;
         $task = (int) $task;
         $id = (int) $id;
 
-        $upd = mysql_query("DELETE FROM tasks_assigned WHERE user = $id AND task = $task");
+        $upd = $conn->query("DELETE FROM tasks_assigned WHERE user = $id AND task = $task");
         if ($upd)
         {
             return true;
@@ -243,18 +245,18 @@ class task
      */
     function getTask($id)
     {
+                                global $conn;
         $id = (int) $id;
 
-        $sel = mysql_query("SELECT * FROM tasks WHERE ID = $id");
-        $task = mysql_fetch_array($sel, MYSQL_ASSOC);
+        $task = $conn->query("SELECT * FROM tasks WHERE ID = $id")->fetch();
         if (!empty($task))
         {
             // format datestring according to dateformat option
 
             if (is_numeric($task['end'])) {
-            	$endstring = date(CL_DATEFORMAT, $task["end"]);
+                $endstring = date(CL_DATEFORMAT, $task["end"]);
             } else {
-            	$endstring = date(CL_DATEFORMAT, strtotime($task["end"]));
+                $endstring = date(CL_DATEFORMAT, strtotime($task["end"]));
             }
             // get list and projectname of the task
             $details = $this->getTaskDetails($task);
@@ -263,9 +265,9 @@ class task
             // get remainig days until due date
             $tage = $this->getDaysLeft($task['end']);
 
-            $usel = mysql_query("SELECT user FROM tasks_assigned WHERE task = $task[ID]");
+            $usel = $conn->query("SELECT user FROM tasks_assigned WHERE task = $task[ID]");
             $users = array();
-            while ($usr = mysql_fetch_row($usel))
+            while ($usr = $usel->fetch())
             {
                 array_push($users, $usr[0]);
                 $task["user"] = "All";
@@ -273,7 +275,7 @@ class task
             }
             if (count($users) == 1)
             {
-            	$usrobj = new user();
+                $usrobj = new user();
                 $usr = $users[0];
                 $user = $usrobj->getProfile($usr);
                 $task["user"] = stripslashes($user["name"]);
@@ -292,8 +294,8 @@ class task
                 {
                     $usr = $usrobj->getProfile($user);
                     $task["user"] .=  $usr["name"] . " ";
-                	array_push($task["users"],$usr);
-				}
+                        array_push($task["users"],$usr);
+                                }
             }
 
             $task["endstring"] = $endstring;
@@ -320,19 +322,20 @@ class task
      */
     function getProjectTasks($project, $status = 1)
     {
+                                global $conn;
         $project = (int) $project;
         $status = (int) $status;
 
         $lists = array();
         if ($status !== false)
         {
-            $sel2 = mysql_query("SELECT ID FROM tasks WHERE project = $project AND status=$status");
+            $sel2 = $conn->query("SELECT ID FROM tasks WHERE project = $project AND status=$status");
         }
         else
         {
-            $sel2 = mysql_query("SELECT ID FROM tasks WHERE project = $project");
+            $sel2 = $conn->query("SELECT ID FROM tasks WHERE project = $project");
         }
-        while ($tasks = mysql_fetch_array($sel2, MYSQL_ASSOC))
+        while ($tasks = $sel2->fetch())
         {
             $task = $this->getTask($tasks["ID"]);
             array_push($lists, $task);
@@ -357,6 +360,7 @@ class task
      */
     function getMyProjectTasks($project, $limit = 10)
     {
+                                global $conn;
         $project = (int) $project;
         $limit = (int) $limit;
 
@@ -364,11 +368,11 @@ class task
         $lists = array();
         $now = time();
 
-        $sel2 = mysql_query("SELECT ID FROM tasks WHERE project = $project AND status=1 AND end > $now ORDER BY `end` ASC LIMIT $limit");
+        $sel2 = $conn->query("SELECT ID FROM tasks WHERE project = $project AND status=1 AND end > $now ORDER BY `end` ASC LIMIT $limit");
 
-        while ($tasks = mysql_fetch_array($sel2, MYSQL_ASSOC))
+        while ($tasks = $sel2->fetch())
         {
-            $chk = mysql_fetch_row(mysql_query("SELECT ID FROM tasks_assigned WHERE user = $user AND task = $tasks[ID]"));
+            $chk = $conn->query("SELECT ID FROM tasks_assigned WHERE user = $user AND task = $tasks[ID]")->fetch();
             $chk = $chk[0];
             if ($chk)
             {
@@ -397,6 +401,7 @@ class task
      */
     function getAllMyProjectTasks($project, $limit = 10, $user = 0)
     {
+                                global $conn;
         $project = (int) $project;
         $limit = (int) $limit;
         $user = (int) $user;
@@ -408,9 +413,9 @@ class task
         $lists = array();
         $now = time();
 
-        $sel2 = mysql_query("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task HAVING tasks_assigned.user = $user AND tasks.project = $project AND status=1 ORDER BY `end` ASC ");
+        $sel2 = $conn->query("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task HAVING tasks_assigned.user = $user AND tasks.project = $project AND status=1 ORDER BY `end` ASC ");
 
-        while ($tasks = mysql_fetch_array($sel2, MYSQL_ASSOC))
+        while ($tasks = $sel2->fetch())
         {
             $task = $this->getTask($tasks["ID"]);
             array_push($lists, $task);
@@ -435,6 +440,7 @@ class task
      */
     function getMyLateProjectTasks($project, $limit = 10)
     {
+                                global $conn;
         $project = (int) $project;
         $limit = (int) $limit;
 
@@ -443,8 +449,8 @@ class task
         $tod = date("d.m.Y");
         $now = strtotime($tod);
 
-        $sel2 = mysql_query("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task HAVING tasks_assigned.user = $user AND tasks.project = $project  AND status=1 AND end < $now ORDER BY `end` ASC LIMIT $limit");
-        while ($tasks = mysql_fetch_array($sel2, MYSQL_ASSOC))
+        $sel2 = $conn->query("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task HAVING tasks_assigned.user = $user AND tasks.project = $project  AND status=1 AND end < $now ORDER BY `end` ASC LIMIT $limit");
+        while ($tasks = $sel2->fetch())
         {
             $task = $this->getTask($tasks["ID"]);
             array_push($lists, $task);
@@ -469,6 +475,7 @@ class task
      */
     function getMyTodayProjectTasks($project, $limit = 10)
     {
+                                global $conn;
         $project = (int) $project;
         $limit = (int) $limit;
 
@@ -477,9 +484,9 @@ class task
         $lists = array();
         $now = strtotime($tod);
 
-        $sel2 = mysql_query("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task HAVING tasks_assigned.user = $user AND tasks.project = $project  AND status=1 AND end = '$now' ORDER BY `end` ASC LIMIT $limit");
+        $sel2 = $conn->query("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task HAVING tasks_assigned.user = $user AND tasks.project = $project  AND status=1 AND end = '$now' ORDER BY `end` ASC LIMIT $limit");
 
-        while ($tasks = mysql_fetch_array($sel2, MYSQL_ASSOC))
+        while ($tasks = $sel2->fetch())
         {
             $task = $this->getTask($tasks["ID"]);
             array_push($lists, $task);
@@ -504,6 +511,7 @@ class task
      */
     function getMyDoneProjectTasks($project, $limit = 5)
     {
+                                global $conn;
         $project = (int) $project;
         $limit = (int) $limit;
 
@@ -511,9 +519,9 @@ class task
         $lists = array();
         $now = time();
 
-        $sel2 = mysql_query("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task HAVING tasks_assigned.user = $user AND tasks.project = $project AND status=0 ORDER BY `end` ASC LIMIT $limit");
+        $sel2 = $conn->query("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task HAVING tasks_assigned.user = $user AND tasks.project = $project AND status=0 ORDER BY `end` ASC LIMIT $limit");
 
-        while ($tasks = mysql_fetch_array($sel2, MYSQL_ASSOC))
+        while ($tasks = $sel2->fetch())
         {
             $task = $this->getTask($tasks["ID"]);
             array_push($lists, $task);
@@ -529,17 +537,18 @@ class task
         }
     }
 
-	/**
+        /**
      * Return all tasks (from a project) due on the specified date
      *
-	 * @param int $m Month
-	 * @param int $y Year
-	 * @param int $d Day
+         * @param int $m Month
+         * @param int $y Year
+         * @param int $d Day
      * @param int $project Project ID (Default: 0 = all projects)
      * @return array $timeline Tasks
      */
     function getTodayTasks($m, $y, $d, $project = 0)
     {
+                                global $conn;
         $m = (int) $m;
         $y = (int) $y;
 
@@ -562,11 +571,11 @@ class task
         }
         else
         {
-			$sql = "SELECT tasks.*,tasks_assigned.user,projekte.name AS pname FROM tasks,tasks_assigned,projekte WHERE tasks.ID = tasks_assigned.task AND tasks.project = projekte.ID HAVING tasks_assigned.user = $user AND status=1 AND end = '$starttime'";
+                        $sql = "SELECT tasks.*,tasks_assigned.user,projekte.name AS pname FROM tasks,tasks_assigned,projekte WHERE tasks.ID = tasks_assigned.task AND tasks.project = projekte.ID HAVING tasks_assigned.user = $user AND status=1 AND end = '$starttime'";
         }
-        $sel1 = mysql_query($sql);
+        $sel1 = $conn->query($sql);
 
-        while ($stone = mysql_fetch_array($sel1, MYSQL_ASSOC))
+        while ($stone = $sel1->fetch())
         {
             $stone["daysleft"] = $this->getDaysLeft($stone["end"]);
             array_push($timeline, $stone);
@@ -590,15 +599,14 @@ class task
      */
     function getUser($id)
     {
+                                global $conn;
         $id = (int) $id;
 
-        $sql = mysql_query("SELECT user FROM tasks_assigned WHERE task = $id");
-        $user = mysql_fetch_row($sql);
+        $user = $conn->query("SELECT user FROM tasks_assigned WHERE task = $id")->fetch();
 
         if (!empty($user))
         {
-            $sel2 = mysql_query("SELECT name FROM user WHERE ID = $user[0]");
-            $uname = mysql_fetch_row($sel2);
+            $uname = $conn->query("SELECT name FROM user WHERE ID = $user[0]")->fetch();
             $uname = $uname[0];
             $user[1] = stripslashes($uname);
 
@@ -618,17 +626,18 @@ class task
      */
     function getUsers($id)
     {
+                                global $conn;
         $id = (int) $id;
 
-        $sql = mysql_query("SELECT user FROM tasks_assigned WHERE task = $id");
-        if (mysql_num_rows($sql) > 0)
+        $sql = $conn->query("SELECT user FROM tasks_assigned WHERE task = $id");
+        if ($sql->fetchColumn() > 0)
         {
             $result = array();
-            while ($user = mysql_fetch_row($sql)) {
+            while ($user = $sql->fetch()) {
 
 
-                $sel2 = mysql_query("SELECT name FROM user WHERE ID = $user[0]");
-                $uname = mysql_fetch_row($sel2);
+                $sel2 = $conn->query("SELECT name FROM user WHERE ID = $user[0]");
+                $uname = $sel2->fetch();
                 $uname = $uname[0];
                 $user[1] = stripslashes($uname);
 
@@ -725,12 +734,12 @@ class task
      */
     private function getTaskDetails(array $task)
     {
-        $psel = mysql_query("SELECT name FROM projekte WHERE ID = $task[project]");
-        $pname = mysql_fetch_row($psel);
+                                global $conn;
+        $psel = $conn->query("SELECT name FROM projekte WHERE ID = $task[project]");
+        $pname = $psel->fetch();
         $pname = stripslashes($pname[0]);
 
-        $list = mysql_query("SELECT name FROM tasklist WHERE ID = $task[liste]");
-        $list = mysql_fetch_row($list);
+        $list = $conn->query("SELECT name FROM tasklist WHERE ID = $task[liste]")->fetch();
         $list = stripslashes($list[0]);
 
         if (isset($list) or isset($pname))
@@ -771,14 +780,13 @@ class task
      */
     private function getNameProject($id)
     {
+                                global $conn;
         $id = (int) $id;
 
-        $nam = mysql_query("SELECT text,liste,title FROM tasks WHERE ID = $id");
-        $nam = mysql_fetch_row($nam);
+        $nam = $conn->query("SELECT text,liste,title FROM tasks WHERE ID = $id")->fetch();
         $text = stripslashes($nam[2]);
         $list = $nam[1];
-        $sel2 = mysql_query("SELECT project FROM tasklist WHERE ID = $list");
-        $project = mysql_fetch_row($sel2);
+        $project = $conn->query("SELECT project FROM tasklist WHERE ID = $list")->fetch();
         $project = $project[0];
         $nameproject = array($text, $project);
 
@@ -793,4 +801,4 @@ class task
     }
 }
 
-?>
+?> 

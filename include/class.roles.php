@@ -32,7 +32,7 @@ class roles
      */
     function add($name, array $projects, array $tasks, array $milestones, array $messages, array $files, array $timetracker, array $chat, array $admin)
     {
-        $name = mysql_real_escape_string($name);
+				global $conn;
         $projects = serialize($projects);
         $tasks = serialize($tasks);
         $milestones = serialize($milestones);
@@ -42,11 +42,12 @@ class roles
         $chat = serialize($chat);
         $admin = serialize($admin);
 
-        $ins = mysql_query("INSERT INTO roles (name,projects,tasks,milestones,messages,files,timetracker,chat,admin) VALUES ('$name','$projects','$tasks','$milestones','$messages','$files','$timetracker','$chat','$admin')");
+        $insStmt = $conn->prepare("INSERT INTO roles (name,projects,tasks,milestones,messages,files,timetracker,chat,admin) VALUES (?,?,?,?,?,?,?,?,?)");
+				$ins = $insStmt->execute(array($name, $projects, $tasks, $milestones, $messages, $files, $timetracker, $chat, $admin));
 
         if ($ins)
         {
-            $insid = mysql_insert_id();
+            $insid = $conn->lasInsertId();
             return $insid;
         }
         else
@@ -73,8 +74,9 @@ class roles
      */
     function edit($id, $name, array $projects, array $tasks, array $milestones, array $messages, array $files, array $timetracker, array $chat, array $admin)
     {
+		
+				global $conn;
         $id = (int) $id;
-        $name = mysql_real_escape_string($name);
         $projects = serialize($projects);
         $tasks = serialize($tasks);
         $milestones = serialize($milestones);
@@ -84,7 +86,8 @@ class roles
         $chat = serialize($chat);
         $admin = serialize($admin);
 
-        $upd = mysql_query("UPDATE roles SET name='$name',projects='$projects',tasks='$tasks',milestones='$milestones',messages='$messages',files='$files',timetracker='$timetracker',chat='$chat',admin='$admin' WHERE ID = $id");
+        $updStmt = $conn->prepare("UPDATE roles SET name=?,projects=?,tasks=?,milestones=?,messages=?,files=?,timetracker=?,chat=?,admin=? WHERE ID = ?");
+				$upd = $updStmt->execute(array($name, $projects, $tasts, $milestone, $messages, $files, $timetracker, $chat, $admin, $id));
 
         if ($upd)
         {
@@ -106,9 +109,10 @@ class roles
      */
     function del($id)
     {
+				global $conn;
         $id = (int) $id;
-        $del = mysql_query("DELETE FROM roles WHERE ID = $id");
-        $del2 = mysql_query("DELETE FROM roles_assigned WHERE role = $id");
+        $del = $conn->query("DELETE FROM roles WHERE ID = $id");
+        $del2 = $conn->query("DELETE FROM roles_assigned WHERE role = $id");
 
         if ($del)
         {
@@ -130,21 +134,21 @@ class roles
      */
     function assign($role, $user)
     {
+				global $conn;
         $role = (int) $role;
         $user = (int) $user;
         // get the number of roles already assigned to $user
-        $chk = mysql_query("SELECT COUNT(*) FROM roles_assigned WHERE user = $user");
-        $chk = mysql_fetch_row($chk);
+        $chk = $conn->query("SELECT COUNT(*) FROM roles_assigned WHERE user = $user")->fetch();
         $chk = $chk[0];
         // If there already is a role assigned to the user, just update this entry
         // Otherwise create a new entry
         if ($chk > 0)
         {
-            $ins = mysql_query("UPDATE roles_assigned SET role = $role WHERE user = $user");
+            $ins = $conn->query("UPDATE roles_assigned SET role = $role WHERE user = $user");
         }
         else
         {
-            $ins = mysql_query("INSERT INTO roles_assigned (user,role) VALUES ($user,$role)");
+            $ins = $conn->query("INSERT INTO roles_assigned (user,role) VALUES ($user,$role)");
         }
 
         if ($ins)
@@ -167,10 +171,11 @@ class roles
      */
     function deassign($role, $user)
     {
+				global $conn;
         $role = (int) $role;
         $user = (int) $user;
 
-        $del = mysql_query("DELETE FROM roles_assigned WHERE user = $user AND role = $role LIMIT 1");
+        $del = $conn->query("DELETE FROM roles_assigned WHERE user = $user AND role = $role LIMIT 1");
 
         if ($del)
         {
@@ -190,17 +195,18 @@ class roles
      */
     function getAllRoles($limit = false)
     {
+				global $conn;
         $roles = array();
 
         if (!$limit)
         {
-            $sel = mysql_query("SELECT ID FROM roles ORDER BY ID DESC");
+            $sel = $conn->query("SELECT ID FROM roles ORDER BY ID DESC");
         }
         else
         {
-            $sel = mysql_query("SELECT ID FROM roles ORDER BY ID DESC LIMIT $limit");
+            $sel = $conn->query("SELECT ID FROM roles ORDER BY ID DESC LIMIT $limit");
         }
-        while ($role = mysql_fetch_array($sel, MYSQL_ASSOC))
+        while ($role = $sel->fetch())
         {
             /**
              * $role["projects"] = unserialize($role["projects"]);
@@ -249,10 +255,10 @@ class roles
      */
     function getUserRole($user)
     {
+				global $conn;
         $user = (int) $user;
 
-        $sel = mysql_query("SELECT role FROM roles_assigned WHERE user = $user");
-        $usr = mysql_fetch_row($sel);
+        $usr = $conn->query("SELECT role FROM roles_assigned WHERE user = $user")->fetch();
         $usr = $usr[0];
         if ($usr)
         {
@@ -312,10 +318,11 @@ class roles
 
     private function getRole($role)
     {
+				global $conn;
         $role = (int) $role;
 
-        $sel2 = mysql_query("SELECT * FROM roles WHERE ID = $role");
-        $therole = mysql_fetch_array($sel2, MYSQL_ASSOC);
+        $sel2 = $conn->query("SELECT * FROM roles WHERE ID = $role");
+        $therole = $sel2->fetch();
 
         $therole["projects"] = unserialize($therole["projects"]);
         $therole["tasks"] = unserialize($therole["tasks"]);

@@ -68,13 +68,14 @@ class search
     }
 
     function searchProjects($query)
-    {
-        $query = mysql_real_escape_string($query);
+    {		
+				global $conn;
 
-        $sel = mysql_query("SELECT `ID`,`name`,`desc`,`status` FROM projekte WHERE `name` LIKE '%$query%' OR `desc` LIKE '%$query%' OR ID = '$query' HAVING status=1");
-
+        $selStmt = $conn->prepare("SELECT `ID`,`name`,`desc`,`status` FROM projekte WHERE `name` LIKE ? OR `desc` LIKE ? OR ID = ? HAVING status=1");
+				$selStmt->execute(array("%{$query}%", "%{$query}%", $query));
+				
         $projects = array();
-        while ($result = mysql_fetch_array($sel))
+        while ($result = $selStmt->fetch())
         {
             if (!empty($result))
             {
@@ -99,25 +100,26 @@ class search
 
     function searchMilestones($query, $project = 0)
     {
-        $query = mysql_real_escape_string($query);
+				global $conn;
         $project = (int) $project;
 
         if ($project > 0)
         {
-            $sel = mysql_query("SELECT `ID`,`name`,`desc`,`status`,`project` FROM milestones WHERE `name` LIKE '%$query%' OR `desc` LIKE '%$query%' HAVING project = $project AND status=1 ");
+						$sel = $conn->prepare("SELECT `ID`,`name`,`desc`,`status`,`project` FROM milestones WHERE `name` LIKE ? OR `desc` LIKE ? HAVING project = ? AND status=1");
+						$sel->execute(array("%{$query}%", "%{$query}%", $project));
         }
         else
         {
-            $sel = mysql_query("SELECT `ID`,`name`,`desc`,`status`,`project` FROM milestones WHERE `name` LIKE '%$query%' OR `desc` LIKE '%$query%' HAVING status=1");
+						$sel = $conn->prepare("SELECT `ID`,`name`,`desc`,`status`,`project` FROM milestones WHERE `name` LIKE ? OR `desc` LIKE ? HAVING status=1");
+						$sel->execute(array("%{$query}%", "%{$query}%"));
         }
 
         $milestones = array();
-        while ($result = mysql_fetch_array($sel))
+        while ($result = $sel->fetch())
         {
             if (!empty($result))
             {
-                $project = mysql_query("SELECT name FROM projekte WHERE ID = $result[project]");
-                $project = mysql_fetch_row($project);
+                $project = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]")->fetch();
                 $project = $project[0];
 
                 $result["pname"] = $project;
@@ -142,25 +144,26 @@ class search
 
     function searchMessage($query, $project = 0)
     {
-        $query = mysql_real_escape_string($query);
+				global $conn;
         $project = (int) $project;
 
         if ($project > 0)
         {
-            $sel = mysql_query("SELECT `ID`,`title`,`text`,`posted`,`user`,`username`,`project` FROM messages WHERE `title` LIKE '%$query%' OR `text` LIKE '%$query%' HAVING project = $project ");
+            $sel = $conn->prepare("SELECT `ID`,`title`,`text`,`posted`,`user`,`username`,`project` FROM messages WHERE `title` LIKE ? OR `text` LIKE ? HAVING project = ? ");
+						$sel->execute(array("%{$query}%", "%{$query}%", $project));
         }
         else
         {
-            $sel = mysql_query("SELECT `ID`,`title`,`text`,`posted`,`user`,`username`,`project` FROM messages WHERE `title` LIKE '%$query%' OR `text` LIKE '%$query%'");
+            $sel = $conn->prepare("SELECT `ID`,`title`,`text`,`posted`,`user`,`username`,`project` FROM messages WHERE `title` LIKE ? OR `text` LIKE ?");
+						$sel->execute(array("%{$query}%", "%{$query}%"));
         }
 
         $messages = array();
-        while ($result = mysql_fetch_array($sel))
+        while ($result = $sel->fetch())
         {
             if (!empty($result))
             {
-                $project = mysql_query("SELECT name FROM projekte WHERE ID = $result[project]");
-                $project = mysql_fetch_row($project);
+                $project = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]")->fetch();
                 $project = $project[0];
 
                 $result["pname"] = $project;
@@ -188,25 +191,26 @@ class search
 
     function searchTasks($query, $project = 0)
     {
-        $query = mysql_real_escape_string($query);
+				global $conn;
         $project = (int) $project;
 
         if ($project > 0)
         {
-            $sel = mysql_query("SELECT `ID`,`title`,`text`,`status`,`project` FROM tasks WHERE `title` LIKE '%$query%' OR `text` LIKE '%$query%' HAVING project = $project AND status=1");
+            $sel = $conn->prepare("SELECT `ID`,`title`,`text`,`status`,`project` FROM tasks WHERE `title` LIKE ? OR `text` LIKE ? HAVING project = ? AND status=1");
+						$sel->execute(array("%{$query}%", "%{$query}%", $project));
         }
         else
         {
-            $sel = mysql_query("SELECT `ID`,`title`,`text`,`status`,`project` FROM tasks WHERE `title` LIKE '%$query%' OR `text` LIKE '%$query%' HAVING status=1");
+            $sel = $conn->prepare("SELECT `ID`,`title`,`text`,`status`,`project` FROM tasks WHERE `title` LIKE ? OR `text` LIKE ? HAVING status=1");
+						$sel->execute(array("%{$query}%", "%{$query}%"));
         }
 
         $tasks = array();
-        while ($result = mysql_fetch_array($sel))
+        while ($result = $sel->fetch())
         {
             if (!empty($result))
             {
-                $project = mysql_query("SELECT name FROM projekte WHERE ID = $result[project]");
-                $project = mysql_fetch_row($project);
+                $project = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]")->fetch();
                 $project = $project[0];
 
                 $result["pname"] = $project;
@@ -231,25 +235,26 @@ class search
 
     function searchFiles($query, $project = 0)
     {
-        $query = mysql_real_escape_string($query);
+				global $conn;
         $project = (int) $project;
 
         if ($project > 0)
         {
-            $sel = mysql_query("SELECT `ID`,`name`,`desc`,`type`,`datei`,`title`,`project` FROM `files` WHERE `name` LIKE '%$query%' OR `desc` LIKE '%$query%' OR `title` LIKE '%$query%' HAVING project = $project");
+            $sel = $conn->prepare("SELECT `ID`,`name`,`desc`,`type`,`datei`,`title`,`project` FROM `files` WHERE `name` LIKE ? OR `desc` LIKE ? OR `title` LIKE ? HAVING project = ?");
+						$sel->execute(array("%{$query}%", "%{$query}%", "%{$query}%", $project));
         }
         else
         {
-            $sel = mysql_query("SELECT `ID`,`name`,`desc`,`type`,`datei`,`title`,`project` FROM `files` WHERE `name` LIKE '%$query%' OR `desc` LIKE '%$query%' OR `title` LIKE '%$query%'");
+            $sel = $conn->prepare("SELECT `ID`,`name`,`desc`,`type`,`datei`,`title`,`project` FROM `files` WHERE `name` LIKE ? OR `desc` LIKE ? OR `title` LIKE ?");
+						$sel->execute(array("%{$query}%", "%{$query}%", "%{$query}%"));
         }
 
         $files = array();
-        while ($result = mysql_fetch_array($sel))
+        while ($result = $sel->fetch())
         {
             if (!empty($result))
             {
-                $project = mysql_query("SELECT name FROM projekte WHERE ID = $result[project]");
-                $project = mysql_fetch_row($project);
+                $project = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]")->fetch();
                 $project = $project[0];
 
                 $result["pname"] = $project;
@@ -295,12 +300,12 @@ class search
 
     function searchUser($query)
     {
-        $query = mysql_real_escape_string($query);
+				global $conn;
 
-        $sel = mysql_query("SELECT `ID`,`email`,`name`,`avatar`,`lastlogin` FROM user WHERE name LIKE '%$query%'");
+        $sel = $conn->query("SELECT `ID`,`email`,`name`,`avatar`,`lastlogin`, `gender` FROM user WHERE name LIKE ".$conn->quote("%{$query}%"));
 
         $user = array();
-        while ($result = mysql_fetch_array($sel))
+        while ($result = $sel->fetch())
         {
             if (!empty($result))
             {
@@ -309,7 +314,7 @@ class search
                 $result["url"] = "manageuser.php?action=profile&amp;id=$result[ID]";
                 $result["type"] = "user";
                 $result[3] = "user";
-                $result["icon"] = "user.png";
+                $result["icon"] = ($result['gender'] == "m" ? "user-marker-male.png" : "user-marker-female.png");
                 array_push($user, $result);
             }
         }
