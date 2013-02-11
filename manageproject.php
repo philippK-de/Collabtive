@@ -235,9 +235,9 @@ if ($action == "editform") {
 
     $tproject = $project->getProject($id);
     $headstr = $tproject["name"] . " " . $activity;
-    $pdf->setup($headstr,array(235,234,234));
+    $pdf->setup($headstr, array(235, 234, 234));
 
-    $headers = array($langfile["action"],$langfile["day"],$langfile["user"]);
+    $headers = array($langfile["action"], $langfile["day"], $langfile["user"]);
 
     $thelog = new mylog();
     $datlog = array();
@@ -246,7 +246,6 @@ if ($action == "editform") {
     if (!empty($tlog)) {
         $i = 0;
         foreach($tlog as $logged) {
-
             if ($logged["action"] == 1) {
                 $actstr = $langfile["added"];
             } elseif ($logged["action"] == 2) {
@@ -264,10 +263,10 @@ if ($action == "editform") {
 
             $obstr = $logged["name"];
 
-			array_push($datlog,array($obstr . " " . $langfile["was"] . " " . $actstr,$logged["datum"],$logged["username"]));
+            array_push($datlog, array($obstr . " " . $langfile["was"] . " " . $actstr, $logged["datum"], $logged["username"]));
         }
     }
-	$pdf->table($headers,$datlog);
+    $pdf->table($headers, $datlog);
     $pdf->Output("project-$id-log.pdf", "D");
 } elseif ($action == "projectlogxls") {
     if (!$userpermissions["admin"]["add"]) {
@@ -276,11 +275,10 @@ if ($action == "editform") {
         die();
     }
 
-    $excel = new xls(CL_ROOT . "/files/" . CL_CONFIG . "/ics/project-$id-log.xls");
+    $excelFile = fopen(CL_ROOT . "/files/" . CL_CONFIG . "/ics/project-$id-log.csv", "w");
 
     $headline = array(" ", $strtext, $straction, $strdate, $struser);
-    $excel->writeHeadLine($headline, "128");
-
+	fputcsv($excelFile,$headline);
     $thelog = new mylog();
     $datlog = array();
     $tlog = $thelog->getProjectLog($id, 100000);
@@ -315,11 +313,11 @@ if ($action == "editform") {
             $obstr = substr($obstr, 0, 75);
 
             $data = array($icon, $obstr, $actstr, $logged["datum"], $logged["username"]);
-            $excel->writeLine($data);
+            fputcsv($excelFile, $data);
         }
     }
-    $excel->close();
-    $loc = $url . "files/" . CL_CONFIG . "/ics/project-$id-log.xls";
+    fclose($excelFile);
+    $loc = $url . "files/" . CL_CONFIG . "/ics/project-$id-log.csv";
     header("Location: $loc");
 } elseif ($action == "showproject") {
     if (!chkproject($userid, $id)) {

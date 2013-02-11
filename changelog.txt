@@ -10,8 +10,10 @@ Collabtive 1.0
 + Re-enabled permissions checking when deleting a timetracker entry. This got disabled for testing purposes and was commited to trunk. Disabling it posed a possible security risk.
 + Added permissions checking to timetracker:add and timetracker:edit . Permissions set in the useraccount where not properly enforced for the timetracker before.
 + Rewrote the settings functionality to work with a key/value table as the datastore. This makes extensibility easier.
-+ Ported all database access from mysql_ to PDO. This became necessary because mysql_ will be deprecated in future versions of PHP. Also, PDO supports a plethora of databases which should make supporting other databases than mysql much easier than before. (Contributed by Mwirtz)
++ Ported all database access from mysql_ to PDO. This became necessary because mysql_ will be deprecated in future versions of PHP.
+Also, PDO supports a plethora of databases which should make supporting other databases than mysql much easier than before. (Contributed by Mwirtz)
 + Ported install.php and update.php to also use PDO
++ Replaced the Excel Export by a more robust CSV export. The excel export was based on an outdated library and not fully compatible with newer versions of Excel and OpenOffice. With CSV Collabtive can now export to a widely used serialisation format that can easily be read into Excel, OpenOffice, and many more.
 
 
 Collabtive 0.7.6

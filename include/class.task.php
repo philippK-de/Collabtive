@@ -1,4 +1,4 @@
- <?php
+<?php
 /**
  * This class provides methods to realize tasks
  *
@@ -8,11 +8,11 @@
  * @version 0.5.5
  * @link http://www.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
- * @global $mylog
  */
+
 class task {
     private $mylog;
-    private $plugins;
+
 
     /**
      * Constructor

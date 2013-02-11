@@ -39,7 +39,7 @@ class timetracker {
         $username = $_SESSION['username'];
 
         if (!$logday) {
-            $startdate = date("d.m.Y");
+            $startdate = date(CL_DATEFORMAT);
         } else {
             $startdate = $logday;
         }
@@ -58,7 +58,7 @@ class timetracker {
         }
 
         $insStmt = $conn->prepare("INSERT INTO timetracker (user,project,task,comment,started,ended,hours,pstatus) VALUES (?,?,?,?,?,?,?,0)");
-        $ins = $insStmt->execute((int) $user, (int) $project, (int) $task, $comment, $started, $ended, $hours);
+        $ins = $insStmt->execute(array((int) $user, (int) $project, (int) $task, $comment, $started, $ended, $hours));
 
         if ($ins) {
             $insid = $conn->lastInsertId();
@@ -156,7 +156,7 @@ class timetracker {
                 $hours = round($hours, 2);
                 $track["hours"] = $hours;
 
-                $day = date("d.m.Y", $track["started"]);
+                $day = date(CL_DATEFORMAT, $track["started"]);
                 $track["started"] = date("H:i", $track["started"]);
                 $track["ended"] = date("H:i", $track["ended"]);
 
@@ -322,7 +322,7 @@ class timetracker {
             while ($data = @$sel->fetch()) {
                 $endstring = date("H:i", $data["ended"]);
                 $startstring = date("H:i", $data["started"]);
-                $daystring = date("d.m.y", $data["ended"]);
+                $daystring = date(CL_DATEFORMAT, $data["ended"]);
                 $tasks = $ttask->getTask($data["task"]);
 
                 if (!empty($tasks)) {

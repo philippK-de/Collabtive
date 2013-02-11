@@ -5,12 +5,14 @@ if (!isset($_SESSION["userid"])) {
     $template->display("login.tpl");
     die();
 }
+
 $action = getArrayVal($_GET, "action");
 
-$task = new task();
 
 $project = new project();
 if (!$action) {
+
+	$task = new task();
     $myprojects = $project->getMyProjects($userid);
     $milestone = new milestone();
     $milestones = array();
@@ -65,16 +67,12 @@ if (!$action) {
     $messages = array();
     $milestones = array();
     $tasks = array();
-    $cou = 0;
-
     if (!empty($myprojects)) {
         foreach($myprojects as $proj) {
             $task = $mtask->getAllMyProjectTasks($proj["ID"], 100);
             if (!empty($task)) {
                 array_push($tasks, $task);
             }
-
-            $cou = $cou + 1;
         }
     }
 
@@ -84,6 +82,7 @@ if (!$action) {
         array_push($fintasks, array($etask["title"], $etask["pname"], $etask["daysleft"]));
     }
     $pdf->table($headers, $fintasks);
+
     $pdf->Output("my-tasks-$username.pdf", "D");
 }
 

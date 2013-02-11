@@ -20,7 +20,7 @@ require(CL_ROOT . "/include/initfunctions.php");
 // Start database connection
 if (!empty($db_name) and !empty($db_user))
 {
-    $tdb = new datenbank();
+  //  $tdb = new datenbank();
     $conn = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 }

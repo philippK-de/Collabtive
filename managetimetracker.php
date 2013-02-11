@@ -191,10 +191,11 @@ if ($action == "add") {
         $template->display("error.tpl");
         die();
     }
-    $excel = new xls(CL_ROOT . "/files/" . CL_CONFIG . "/ics/timetrack-$id.xls");
+    $excelFile = fopen(CL_ROOT . "/files/" . CL_CONFIG . "/ics/timetrack-$id.csv","w");
 
     $line = array($struser, $strtask, $strcomment, $strday, $strstarted, $strended, $strhours);
-    $excel->writeHeadLine($line, "128");
+    fputcsv($excelFile,$line);
+
     if (!empty($start) and !empty($end)) {
         $track = $tracker->getProjectTrack($id, $usr, $taski, $start, $end, 1000);
     } else {
@@ -206,19 +207,13 @@ if ($action == "add") {
             $hrs = round($tra["hours"], 2);
             $hrs = str_replace(".", ",", $hrs);
             $myArr = array($tra["uname"], $tra["tname"], $tra["comment"], $tra["daystring"], $tra["startstring"], $tra["endstring"], $hrs);
-            $excel->writeLine($myArr);
+            fputcsv($excelFile,$myArr);
         }
 
-        $totaltime = $tracker->getTotalTrackTime($track);
-        $totaltime = str_replace(".", ",", $totaltime);
-        $line = array("Total:", "", "", "", $totaltime);
-        $excel->writeRow();
-        $excel->writeColspan("<b>Total:</b>", 6);
-        $excel->writeCol("<b>$totaltime</b>");
     }
 
-    $excel->close();
-    $loc = $url . "files/" . CL_CONFIG . "/ics/timetrack-$id.xls";
+    fclose($excelFile);
+	$loc = $url . "files/" . CL_CONFIG . "/ics/timetrack-$id.csv";
     header("Location: $loc");
 } elseif ($action == "projectpdf") {
     if (!chkproject($userid, $id)) {
@@ -232,7 +227,8 @@ if ($action == "add") {
     $pname = $pname[0];
 
     $pdf = new MYPDF("P", PDF_UNIT, "A4", true);
-    $pdf->setup($langfile["timetable"] . " " . $pname, array(239, 232, 229));
+    $headstr = $langfile["timetable"] . " " . $pname;
+    $pdf->setup($headstr, array(239, 232, 229));
 
     $headers = array($langfile["user"], $langfile["task"], $langfile["comment"], $langfile["started"] . " - " . $langfile["ended"], $langfile["hours"]);
 
@@ -257,17 +253,14 @@ if ($action == "add") {
             array_push($thetrack, array($tra["uname"], $tra["tname"], $tra["comment"], $tra["daystring"] . "/" . $tra["startstring"] . "-" . $tra["endstring"], $hrs));
         }
 
-        $totaltime = $tracker->getTotalTrackTime($track);
-        $totaltime = str_replace(".", ",", $totaltime);
-
         $pdf->table($headers, $thetrack);
         $pdf->Output("project-$id-timetable.pdf", "D");
     }
 } elseif ($action == "userxls") {
-    $excel = new xls(CL_ROOT . "/files/" . CL_CONFIG . "/ics/user-$id-timetrack.xls");
+    $excelFile = fopen(CL_ROOT . "/files/" . CL_CONFIG . "/ics/user-$id-timetrack.csv","w");
 
     $line = array($strproj, $strtask, $strcomment, $strday, $strstarted, $strended, $strhours);
-    $excel->writeHeadLine($line, "128");
+    fputcsv($excelFile,$line);
     if (!empty($start) and !empty($end)) {
         $track = $tracker->getUserTrack($id, $fproject, $taski, $start, $end);
     } else {
@@ -278,19 +271,13 @@ if ($action == "add") {
             $hrs = round($tra["hours"], 2);
             $hrs = str_replace(".", ",", $hrs);
             $myArr = array($tra["pname"], $tra["tname"], $tra["comment"], $tra["daystring"], $tra["startstring"], $tra["endstring"], $hrs);
-            $excel->writeLine($myArr);
+    		fputcsv($excelFile,$myArr);
         }
 
-        $totaltime = $tracker->getTotalTrackTime($track);
-        $totaltime = str_replace(".", ",", $totaltime);
-        $line = array("Total:", "", "", "" , $totaltime);
-        $excel->writeRow();
-        $excel->writeColspan("<b>Total:</b>", 6);
-        $excel->writeCol("<b>$totaltime</b>");
-    }
 
-    $excel->close();
-    $loc = $url . "files/" . CL_CONFIG . "/ics/user-$id-timetrack.xls";
+    }
+	fclose($excelFile);
+    $loc = $url . "files/" . CL_CONFIG . "/ics/user-$id-timetrack.csv";
     header("Location: $loc");
 } elseif ($action == "userpdf") {
     if (!empty($start) and !empty($end)) {
