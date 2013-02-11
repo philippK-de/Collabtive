@@ -316,8 +316,10 @@ class project {
         global $conn;
         $id = (int) $id;
 
-        $sel = $conn->query("SELECT * FROM projekte WHERE ID = $id");
-        $project = $sel->fetch();
+        $sel = $conn->prepare("SELECT * FROM projekte WHERE ID = ?");
+        $selStmt = $sel->execute(array($id));
+
+		$project = $sel->fetch();
 
         if (!empty($project)) {
             if ($project["end"]) {
@@ -357,7 +359,9 @@ class project {
         $lim = (int) $lim;
 
         $projekte = array();
-        $sel = $conn->query("SELECT ID FROM projekte WHERE `status`={$conn->quote($status)} ORDER BY end ASC LIMIT $lim");
+
+        $sel = $conn->prepare("SELECT `ID` FROM projekte WHERE `status`= ? ORDER BY `end` ASC LIMIT $lim");
+		$selStmt = $sel->execute(array($status));
 
         while ($projekt = $sel->fetch()) {
             $project = $this->getProject($projekt["ID"]);
@@ -383,7 +387,10 @@ class project {
         global $conn;
 
         $myprojekte = array();
-        $sel = $conn->query("SELECT projekt FROM projekte_assigned WHERE user = {$conn->quote((int) $user)} ORDER BY ID ASC");
+        $user = (int) $user;
+
+        $sel = $conn->prepare("SELECT projekt FROM projekte_assigned WHERE user = ? ORDER BY ID ASC");
+        $selStmt = $sel->execute(array($user));
 
         while ($projs = $sel->fetch()) {
             $projekt = $conn->query("SELECT ID FROM projekte WHERE ID = " . $projs[0] . " AND status={$conn->quote((int) $status)}")->fetch();
@@ -418,7 +425,9 @@ class project {
         global $conn;
 
         $myprojekte = array();
-        $sel = $conn->query("SELECT projekt FROM projekte_assigned WHERE user = {$conn->quote((int) $user)} ORDER BY end ASC");
+        $sel = $conn->prepare("SELECT projekt FROM projekte_assigned WHERE user = ? ORDER BY end ASC");
+        $selStmt = $sel->execute(array($user));
+
         if ($sel) {
             while ($projs = $sel->fetch()) {
                 $sel2 = $conn->query("SELECT ID FROM projekte WHERE ID = " . $projs[0]);
@@ -520,7 +529,9 @@ class project {
     {
         global $conn;
         $project = (int) $project;
-        $sel = $conn->query("SELECT * FROM projectfolders WHERE project = $project");
+
+        $sel = $conn->prepare("SELECT * FROM projectfolders WHERE project = ?");
+		$selStmt = $sel->execute(array($project));
 
         $folders = array();
         while ($folder = $sel->fetch()) {
@@ -547,81 +558,7 @@ class project {
         return floor($diff / 86400);
     }
 
-    /**
-     * Copy a project
-     * by: Daniel Tlach <danaketh@gmail.com>,
-     * Philipp Kiszka <info@o-dyn.de>
-     *
-     * @param int $id ID of project to copy
-     * @return int $insid New project's ID
-     */
-    function makecopy($id)
-    {
-        global $conn;
-        // copy project
-        $q = $conn->query("INSERT INTO projekte (`name`, `desc`, `end`, `start`, `status`, `budget`) SELECT `name`, `desc`, `end`, `start`, `status`, `budget` FROM projekte WHERE ID = " . (int)$id);
 
-        $insid = $conn->lastInsertId();
-        $uid = $_SESSION['userid'];
-        $this->assign($uid, $insid);
-
-        $milesobj = new milestone();
-        $objtasklist = new tasklist();
-        $objtask = new task();
-
-        if ($q) {
-            $pname = $this->getProject($insid);
-            $name = $pname["name"] . " Copy";
-            $conn->query("UPDATE projekte SET `name` = '$name' WHERE ID = " . $insid . " LIMIT 1");
-            // now copy the milestones
-            $miles = $milesobj->getAllProjectMilestones($id);
-            if (!empty($miles)) {
-                // go through the milestones
-                foreach ($miles as $ms) {
-                    // copy milestone
-                    $msid = $milesobj->add($insid, $ms["name"] , $ms["desc"] , $ms["end"] , 1);
-                    // get all tasklists for milestone
-                    $qb = $conn->query("SELECT * FROM tasklist WHERE project = $id AND milestone = $ms[ID]");
-                    if ($qb) {
-                        // go through the tasklists
-                        while ($tl = $qb->fetch()) {
-                            // copy tasklist
-                            $tlid = $objtasklist->add_liste($insid, $tl["name"] , $tl["desc"], 0, $msid);
-                            // get tasks for the tasklist
-                            $tasks = $objtasklist->getTasksFromList($tl["ID"]);
-                            if (!empty($tasks)) {
-                                foreach ($tasks as $task) {
-                                    $taskobj->add($task["end"], $task["title"] , $task["text"] , $tlid , $uid , $insid);
-                                } // tasks END
-                            }
-                        } // tasklists END
-                    }
-                } // milestones END
-            }
-            // get all tasklists and tasks that do not belong to a milestone
-            $qb = $conn->query("SELECT * FROM tasklist WHERE project = $id AND milestone = 0");
-            if ($qb) {
-                // go through the tasklists
-                while ($tl = $qb->fetch()) {
-                    // copy tasklist
-                    $tlid = $objtasklist->add_liste($insid, $tl["name"] , $tl["desc"], 0, $msid);
-                    // get tasks for the tasklist
-                    $tasks = $objtasklist->getTasksFromList($tl["ID"]);
-                    if (!empty($tasks)) {
-                        foreach ($tasks as $task) {
-                            $taskobj->add($task["end"], $task["title"] , $task["text"] , $tlid , $uid , $insid);
-                        } // tasks END
-                    }
-                } // tasklists END
-            }
-
-            mkdir(CL_ROOT . "/files/" . CL_CONFIG . "/$insid/", 0777);
-            $this->mylog->add($name, 'projekt', 1, $insid);
-            return $insid;
-        } else {
-            return false;
-        }
-    }
 }
 
 ?>

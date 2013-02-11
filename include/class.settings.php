@@ -27,9 +27,11 @@ class settings {
     function getSettings()
     {
 		global $conn;
-		$sel = $conn->query("SELECT settingsKey,settingsValue FROM settings");
-        $settings = array();
-        while ($selSettings = $sel->fetch()) {
+		$selStmt = $conn->prepare("SELECT settingsKey,settingsValue FROM settings");
+        $sel = $selStmt->execute(array());
+
+		$settings = array();
+        while ($selSettings = $selStmt->fetch()) {
             $settings[$selSettings["settingsKey"]] = $selSettings["settingsValue"];
         }
         if (!empty($settings)) {

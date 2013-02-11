@@ -62,15 +62,14 @@ if (!$action) {
         @chmod(CL_ROOT . "/config/" . CL_CONFIG . "/config.php", 0755);
     }
     // connect database.
-    $db = new datenbank();
-    $conn = $db->connect($db_name, $db_user, $db_pass, $db_host);
+    $conn = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
     if (!($conn)) {
         $template->assign("errortext", "Database connection could not be established. <br>Please check if database exists and check if login credentials are correct.");
         $template->display("error.tpl");
         die();
     }
     // Create MySQL Tables
-    $table1 = mysql_query("CREATE TABLE `company` (
+    $table1 = $conn->query("CREATE TABLE `company` (
   `ID` int(10) NOT NULL auto_increment,
   `name` varchar(255) NOT NULL default '',
   `email` varchar(255) NOT NULL default '',
@@ -84,7 +83,7 @@ if (!$action) {
   KEY `name` (`name`)
 ) ENGINE=MyISAM");
 
-    $table2 = mysql_query("CREATE TABLE `company_assigned` (
+    $table2 = $conn->query("CREATE TABLE `company_assigned` (
   `ID` int(10) NOT NULL auto_increment,
   `user` int(10) NOT NULL default '0',
   `company` int(10) NOT NULL default '0',
@@ -93,7 +92,7 @@ if (!$action) {
   KEY `user` (`user`)
 ) ENGINE=MyISAM");
 
-    $table3 = mysql_query("CREATE TABLE `files` (
+    $table3 = $conn->query("CREATE TABLE `files` (
   `ID` int(10) NOT NULL auto_increment,
   `name` varchar(255) NOT NULL default '',
   `desc` varchar(255) NOT NULL default '',
@@ -115,7 +114,7 @@ if (!$action) {
   KEY `tags` (`tags`)
 ) ENGINE=MyISAM");
 
-    $table4 = mysql_query("CREATE TABLE `log` (
+    $table4 = $conn->query("CREATE TABLE `log` (
   `ID` int(10) NOT NULL auto_increment,
   `user` int(10) NOT NULL default '0',
   `username` varchar(255) NOT NULL default '',
@@ -132,7 +131,7 @@ if (!$action) {
   FULLTEXT KEY `name` (`name`)
 ) ENGINE=MyISAM");
 
-    $table5 = mysql_query("CREATE TABLE `messages` (
+    $table5 = $conn->query("CREATE TABLE `messages` (
   `ID` int(10) NOT NULL auto_increment,
   `project` int(10) NOT NULL default '0',
   `title` varchar(255) NOT NULL default '',
@@ -150,7 +149,7 @@ if (!$action) {
   KEY `tags` (`tags`)
 ) ENGINE=MyISAM");
 
-    $table6 = mysql_query("CREATE TABLE `milestones` (
+    $table6 = $conn->query("CREATE TABLE `milestones` (
   `ID` int(10) NOT NULL auto_increment,
   `project` int(10) NOT NULL default '0',
   `name` varchar(255) NOT NULL default '',
@@ -164,7 +163,7 @@ if (!$action) {
   KEY `project` (`project`)
 ) ENGINE=MyISAM");
 
-    $table7 = mysql_query("CREATE TABLE `milestones_assigned` (
+    $table7 = $conn->query("CREATE TABLE `milestones_assigned` (
   `ID` int(10) NOT NULL auto_increment,
   `user` int(10) NOT NULL default '0',
   `milestone` int(10) NOT NULL default '0',
@@ -173,7 +172,7 @@ if (!$action) {
   KEY `milestone` (`milestone`)
 ) ENGINE=MyISAM");
 
-    $table8 = mysql_query("CREATE TABLE `projekte` (
+    $table8 = $conn->query("CREATE TABLE `projekte` (
   `ID` int(10) NOT NULL auto_increment,
   `name` varchar(255) NOT NULL default '',
   `desc` text NOT NULL,
@@ -185,7 +184,7 @@ if (!$action) {
   KEY `status` (`status`)
 ) ENGINE=MyISAM");
 
-    $table9 = mysql_query("CREATE TABLE `projekte_assigned` (
+    $table9 = $conn->query("CREATE TABLE `projekte_assigned` (
   `ID` int(10) NOT NULL auto_increment,
   `user` int(10) NOT NULL default '0',
   `projekt` int(10) NOT NULL default '0',
@@ -194,14 +193,14 @@ if (!$action) {
   KEY `projekt` (`projekt`)
 ) ENGINE=MyISAM");
 
-    $table10 = mysql_query("CREATE TABLE `settings` (
+    $table10 = $conn->query("CREATE TABLE `settings` (
   `ID` int(10) NOT NULL AUTO_INCREMENT,
   `settingsKey` varchar(50) NOT NULL,
   `settingsValue` varchar(50) NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  ");
 
-    $table11 = mysql_query("CREATE TABLE `tasklist` (
+    $table11 = $conn->query("CREATE TABLE `tasklist` (
   `ID` int(10) NOT NULL auto_increment,
   `project` int(10) NOT NULL default '0',
   `name` varchar(255) NOT NULL default '',
@@ -215,7 +214,7 @@ if (!$action) {
   KEY `milestone` (`milestone`)
 ) ENGINE=MyISAM");
 
-    $table12 = mysql_query("CREATE TABLE `tasks` (
+    $table12 = $conn->query("CREATE TABLE `tasks` (
   `ID` int(10) NOT NULL auto_increment,
   `start` varchar(255) NOT NULL default '',
   `end` varchar(255) NOT NULL default '',
@@ -230,7 +229,7 @@ if (!$action) {
   KEY `end` (`end`)
 ) ENGINE=MyISAM");
 
-    $table13 = mysql_query("CREATE TABLE `tasks_assigned` (
+    $table13 = $conn->query("CREATE TABLE `tasks_assigned` (
   `ID` int(10) NOT NULL auto_increment,
   `user` int(10) NOT NULL default '0',
   `task` int(10) NOT NULL default '0',
@@ -239,7 +238,7 @@ if (!$action) {
   KEY `task` (`task`)
 ) ENGINE=MyISAM");
 
-    $table14 = mysql_query("
+    $table14 = $conn->query("
 CREATE TABLE `user` (
   `ID` int(10)  auto_increment,
   `name` varchar(255) default '',
@@ -266,7 +265,7 @@ CREATE TABLE `user` (
   KEY `locale` (`locale`)
 ) ENGINE=MyISAM");
 
-    $table15 = mysql_query("CREATE TABLE `chat` (
+    $table15 = $conn->query("CREATE TABLE `chat` (
   `ID` int(10) NOT NULL auto_increment,
   `time` varchar(255) NOT NULL default '',
   `ufrom` varchar(255) NOT NULL default '',
@@ -277,7 +276,7 @@ CREATE TABLE `user` (
   PRIMARY KEY  (`ID`)
 ) ENGINE=MyISAM");
 
-    $table16 = mysql_query("CREATE TABLE `files_attached` (
+    $table16 = $conn->query("CREATE TABLE `files_attached` (
   `ID` int(10) unsigned NOT NULL auto_increment,
   `file` int(10) unsigned NOT NULL default '0',
   `message` int(10) unsigned NOT NULL default '0',
@@ -285,7 +284,7 @@ CREATE TABLE `user` (
   KEY `file` (`file`,`message`)
 ) ENGINE=MyISAM");
 
-    $table17 = mysql_query("CREATE TABLE `timetracker` (
+    $table17 = $conn->query("CREATE TABLE `timetracker` (
   `ID` int(10) NOT NULL auto_increment,
   `user` int(10) NOT NULL default '0',
   `project` int(10) NOT NULL default '0',
@@ -301,7 +300,7 @@ CREATE TABLE `user` (
   KEY `ended` (`ended`)
 ) ENGINE=MyISAM");
 
-    $table18 = mysql_query("CREATE TABLE `projectfolders` (
+    $table18 = $conn->query("CREATE TABLE `projectfolders` (
   `ID` int(10) unsigned NOT NULL auto_increment,
   `parent` int(10) unsigned NOT NULL default '0',
   `project` int(11) NOT NULL default '0',
@@ -312,7 +311,7 @@ CREATE TABLE `user` (
   KEY `project` (`project`)
 ) ENGINE=MyISAM");
 
-    $table19 = mysql_query("
+    $table19 = $conn->query("
 CREATE TABLE `roles` (
   `ID` int(10) NOT NULL auto_increment,
   `name` varchar(255) NOT NULL,
@@ -327,7 +326,7 @@ CREATE TABLE `roles` (
   PRIMARY KEY  (`ID`)
 ) ENGINE=MyISAM");
 
-    $table20 = mysql_query("
+    $table20 = $conn->query("
 CREATE TABLE `roles_assigned` (
   `ID` int(10) NOT NULL auto_increment,
   `user` int(10) NOT NULL,
@@ -345,7 +344,7 @@ CREATE TABLE `roles_assigned` (
     // insert default settings
     $defSets = array("name" => "Collabtive", "subtitle" => "Projectmanagement", "locale" => $locale, "timezone" => $timezone, "dateformat" => "d.m.Y", "template" => "standard", "mailnotify" => 1, "mailfrom" => "collabtive@localhost", "mailfromname" => "", "mailmethod" => "mail", "mailuser" => "", "mailpass" => "", "rssuser" => "", "rsspass" => "");
     foreach($defSets as $setKey => $setVal) {
-        $ins = mysql_query("INSERT INTO settings (`settingsKey`,`settingsValue`) VALUES ('$setKey','$setVal')");
+        $ins = $conn->query("INSERT INTO settings (`settingsKey`,`settingsValue`) VALUES ('$setKey','$setVal')");
     }
 
     if (!$ins) {
@@ -361,8 +360,7 @@ CREATE TABLE `roles_assigned` (
 
     require(CL_ROOT . "/config/" . CL_CONFIG . "/config.php");
     // Start database connection
-    $db = new datenbank();
-    $db->connect($db_name, $db_user, $db_pass, $db_host);
+    $conn = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
     $user = $_POST['name'];
     $pass = $_POST['pass'];
     // create the first user
