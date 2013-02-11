@@ -10,8 +10,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
 
-class timetracker
-{
+class timetracker {
     private $mylog;
 
     /**
@@ -36,17 +35,14 @@ class timetracker
      */
     function add($user, $project, $task, $comment, $started, $ended, $logday = "")
     {
-				global $conn;
+        global $conn;
         $username = $_SESSION['username'];
 
-		if(!$logday)
-		{
-        	$startdate = date("d.m.Y");
-		}
-		else
-		{
-			$startdate = $logday;
-		}
+        if (!$logday) {
+            $startdate = date("d.m.Y");
+        } else {
+            $startdate = $logday;
+        }
 
         $started = $startdate . " " . $started;
         $started = strtotime($started);
@@ -57,23 +53,19 @@ class timetracker
         $hours = $hours / 3600;
         $hours = round($hours, 2);
 
-        if ($started >= $ended)
-        {
+        if ($started >= $ended) {
             return false;
         }
 
         $insStmt = $conn->prepare("INSERT INTO timetracker (user,project,task,comment,started,ended,hours,pstatus) VALUES (?,?,?,?,?,?,?,0)");
-				$ins = $insStmt->execute((int) $user, (int) $project, (int) $task, $comment, $started, $ended, $hours);
+        $ins = $insStmt->execute((int) $user, (int) $project, (int) $task, $comment, $started, $ended, $hours);
 
-        if ($ins)
-        {
+        if ($ins) {
             $insid = $conn->lastInsertId();
             $title = $username . " " . $hours . "h";
 
             return $insid;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -90,10 +82,9 @@ class timetracker
      */
     function edit($id, $task, $comment, $started, $ended)
     {
-				global $conn;
+        global $conn;
 
-        if ($started >= $ended)
-        {
+        if ($started >= $ended) {
             return false;
         }
 
@@ -102,14 +93,11 @@ class timetracker
         $hours = round($hours, 2);
 
         $updStmt = $conn->prepare("UPDATE timetracker SET task=?, comment=?, started=?, ended=?, hours=? WHERE ID = ?");
-				$upd = $updStmt->execute(array((int) $task, $comment, (int) $started, (int) $ended, $hours, (int) $id));
+        $upd = $updStmt->execute(array((int) $task, $comment, (int) $started, (int) $ended, $hours, (int) $id));
 
-        if ($upd)
-        {
+        if ($upd) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -121,34 +109,28 @@ class timetracker
      */
     function del($id)
     {
-				global $conn;
+        global $conn;
         $id = (int) $id;
 
         $del = $conn->query("DELETE FROM timetracker WHERE ID = $id");
 
-        if ($del)
-        {
+        if ($del) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
 
     function setPaystatus($pstatus, $id)
     {
-				global $conn;
+        global $conn;
         $pstatus = (int) $pstatus;
         $id = (int) $id;
         $upd = $conn->query("UPDATE timetracker SET pstatus = $pstatus WHERE ID = $id");
 
-        if ($upd)
-        {
+        if ($upd) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -160,17 +142,15 @@ class timetracker
      */
     function getTrack($id)
     {
-				global $conn;
+        global $conn;
         $id = (int) $id;
 
         $sel = $conn->query("SELECT * FROM timetracker WHERE ID = $id");
         $track = array();
         $track = $sel->fetch();
 
-        if (!empty($track))
-        {
-            if (isset($track["started"]) and isset($track["ended"]))
-            {
+        if (!empty($track)) {
+            if (isset($track["started"]) and isset($track["ended"])) {
                 $hours = $track["ended"] - $track["started"];
                 $hours = $hours / 3600;
                 $hours = round($hours, 2);
@@ -183,63 +163,52 @@ class timetracker
                 $track["day"] = $day;
             }
 
-            if (isset($track["comment"]))
-            {
+            if (isset($track["comment"])) {
                 $track["comment"] = stripslashes($track["comment"]);
             }
 
             return $track;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
 
     function getUserTrack($user, $project = 0, $task = 0, $start = 0, $end = 0 , $lim = 50)
     {
-				global $conn;
+        global $conn;
         $start = $conn->quote($start);
         $end = $conn->quote($end);
         $user = (int) $user;
         $project = (int) $project;
         $lim = (int) $lim;
 
-        if ($project > 0)
-        {
+        if ($project > 0) {
             $sql = "SELECT * FROM timetracker WHERE user = $user AND project = $project";
             $num = "SELECT COUNT(*) FROM timetracker WHERE project = $project AND user = $user";
             $order = " ORDER BY ended ASC";
-        }
-        else
-        {
+        } else {
             $sql = "SELECT * FROM timetracker WHERE user = $user";
             $num = "SELECT COUNT(*) FROM timetracker WHERE user = $user";
             $order = " ORDER BY ended ASC";
         }
 
-        if ($task > 0)
-        {
+        if ($task > 0) {
             $sql .= " AND task = $task";
             $num .= " AND task = $task";
         }
 
-        if ($start > 0 and $end > 0)
-        {
+        if ($start > 0 and $end > 0) {
             $start = strtotime($start);
             $end = strtotime($end . " +1 day");
             $end = $end - 1;
-			$sql .= " AND ended >=$start AND ended<=$end ";
+            $sql .= " AND ended >=$start AND ended<=$end ";
             $num .= " AND ended >=$start AND ended<=$end ";
         }
 
-        if ($num)
-        {
+        if ($num) {
             $num = $conn->query($num)->fetch();
             $num = $num[0];
-        }
-        else
-        {
+        } else {
             $num = 0;
         }
 
@@ -258,17 +227,14 @@ class timetracker
         $track = array();
         $ttask = new task();
 
-        if (isset($sel))
-        {
-            while ($data = @$sel->fetch())
-            {
+        if (isset($sel)) {
+            while ($data = @$sel->fetch()) {
                 $endstring = date("H:i", $data["ended"]);
                 $startstring = date("H:i", $data["started"]);
                 $daystring = date("d.m.y", $data["ended"]);
                 $tasks = $ttask->getTask($data["task"]);
 
-                if (!empty($tasks))
-                {
+                if (!empty($tasks)) {
                     $tasks = $tasks["title"];
                     $data["tname"] = $tasks;
                 }
@@ -290,46 +256,38 @@ class timetracker
             }
         }
 
-        if (!empty($track))
-        {
+        if (!empty($track)) {
             return $track;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
 
     function getProjectTrack($project, $user = 0, $task = 0, $start = 0, $end = 0, $lim = 50)
     {
-				global $conn;
+        global $conn;
         $start = $conn->quote($start);
         $end = $conn->quote($end);
         $project = (int) $project;
         $user = (int) $user;
         $lim = (int) $lim;
 
-        if ($user > 0)
-        {
+        if ($user > 0) {
             $sql = "SELECT * FROM timetracker WHERE project = $project AND user = $user";
             $num = "SELECT COUNT(*) FROM timetracker WHERE project = $project AND user = $user";
             $order = " ORDER BY ended ASC";
-        }
-        else
-        {
+        } else {
             $sql = "SELECT * FROM timetracker WHERE project = $project";
             $num = "SELECT COUNT(*) FROM timetracker WHERE project = $project";
             $order = " ORDER BY ended ASC";
         }
 
-        if ($task > 0)
-        {
+        if ($task > 0) {
             $sql .= " AND task = $task";
             $num .= " AND task = $task";
         }
 
-        if ($start > 0 and $end > 0)
-        {
+        if ($start > 0 and $end > 0) {
             $start = strtotime($start);
             $end = strtotime($end . " +1 day");
             $end = $end - 1;
@@ -337,13 +295,10 @@ class timetracker
             $num .= " AND ended >=$start AND ended<=$end ";
         }
 
-        if ($num)
-        {
+        if ($num) {
             $num = $conn->query($num)->fetch();
             $num = $num[0];
-        }
-        else
-        {
+        } else {
             $num = 0;
         }
 
@@ -363,17 +318,14 @@ class timetracker
         $track = array();
         $ttask = new task();
 
-        if (isset($sel))
-        {
-            while ($data = @$sel->fetch())
-            {
+        if (isset($sel)) {
+            while ($data = @$sel->fetch()) {
                 $endstring = date("H:i", $data["ended"]);
                 $startstring = date("H:i", $data["started"]);
                 $daystring = date("d.m.y", $data["ended"]);
                 $tasks = $ttask->getTask($data["task"]);
 
-                if (!empty($tasks))
-                {
+                if (!empty($tasks)) {
                     $tasks = $tasks["title"];
                     $data["tname"] = $tasks;
                 }
@@ -395,12 +347,9 @@ class timetracker
             }
         }
 
-        if (!empty($track))
-        {
+        if (!empty($track)) {
             return $track;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -415,13 +364,11 @@ class timetracker
     {
         $totaltime = 0;
 
-        foreach($track as $data)
-        {
+        foreach($track as $data) {
             $totaltime = $totaltime + $data["hours"];
         }
 
-        if (!($totaltime > 0))
-        {
+        if (!($totaltime > 0)) {
             $totaltime = 0;
         }
 

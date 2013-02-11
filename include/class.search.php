@@ -9,28 +9,22 @@
  * @link http://www.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
-class search
-{
+class search {
     function __construct()
     {
     }
 
     function dosearch($query, $project = 0)
     {
-        if (empty($query))
-        {
+        if (empty($query)) {
             return false;
         }
-        if ($project == 0)
-        {
+        if ($project == 0) {
             $projects = $this->searchProjects($query);
             $milestones = $this->searchMilestones($query);
-            if ($_SESSION["adminstate"] > 0)
-            {
+            if ($_SESSION["adminstate"] > 0) {
                 $messages = $this->searchMessage($query);
-            }
-            else
-            {
+            } else {
                 $messages = array();
             }
             $tasks = $this->searchTasks($query);
@@ -38,16 +32,11 @@ class search
             $user = $this->searchUser($query);
 
             $result = array_merge($projects, $milestones, $tasks, $messages , $files, $user);
-        }
-        else
-        {
+        } else {
             $milestones = $this->searchMilestones($query, $project);
-            if ($_SESSION["adminstate"] > 0)
-            {
-                $messages = $this->searchMessage($query,$project);
-            }
-            else
-            {
+            if ($_SESSION["adminstate"] > 0) {
+                $messages = $this->searchMessage($query, $project);
+            } else {
                 $messages = array();
             }
             $tasks = $this->searchTasks($query, $project);
@@ -57,28 +46,23 @@ class search
             $result = array_merge($milestones, $tasks, $messages , $files, $user);
         }
 
-        if (!empty($result))
-        {
+        if (!empty($result)) {
             return $result;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
 
     function searchProjects($query)
-    {		
-				global $conn;
+    {
+        global $conn;
 
         $selStmt = $conn->prepare("SELECT `ID`,`name`,`desc`,`status` FROM projekte WHERE `name` LIKE ? OR `desc` LIKE ? OR ID = ? HAVING status=1");
-				$selStmt->execute(array("%{$query}%", "%{$query}%", $query));
-				
+        $selStmt->execute(array("%{$query}%", "%{$query}%", $query));
+
         $projects = array();
-        while ($result = $selStmt->fetch())
-        {
-            if (!empty($result))
-            {
+        while ($result = $selStmt->fetch()) {
+            if (!empty($result)) {
                 $result["type"] = "project";
                 $result["icon"] = "projects.png";
                 $result["name"] = stripslashes($result["name"]);
@@ -88,37 +72,29 @@ class search
             }
         }
 
-        if (!empty($projects))
-        {
+        if (!empty($projects)) {
             return $projects;
-        }
-        else
-        {
+        } else {
             return array();
         }
     }
 
     function searchMilestones($query, $project = 0)
     {
-				global $conn;
+        global $conn;
         $project = (int) $project;
 
-        if ($project > 0)
-        {
-						$sel = $conn->prepare("SELECT `ID`,`name`,`desc`,`status`,`project` FROM milestones WHERE `name` LIKE ? OR `desc` LIKE ? HAVING project = ? AND status=1");
-						$sel->execute(array("%{$query}%", "%{$query}%", $project));
-        }
-        else
-        {
-						$sel = $conn->prepare("SELECT `ID`,`name`,`desc`,`status`,`project` FROM milestones WHERE `name` LIKE ? OR `desc` LIKE ? HAVING status=1");
-						$sel->execute(array("%{$query}%", "%{$query}%"));
+        if ($project > 0) {
+            $sel = $conn->prepare("SELECT `ID`,`name`,`desc`,`status`,`project` FROM milestones WHERE `name` LIKE ? OR `desc` LIKE ? HAVING project = ? AND status=1");
+            $sel->execute(array("%{$query}%", "%{$query}%", $project));
+        } else {
+            $sel = $conn->prepare("SELECT `ID`,`name`,`desc`,`status`,`project` FROM milestones WHERE `name` LIKE ? OR `desc` LIKE ? HAVING status=1");
+            $sel->execute(array("%{$query}%", "%{$query}%"));
         }
 
         $milestones = array();
-        while ($result = $sel->fetch())
-        {
-            if (!empty($result))
-            {
+        while ($result = $sel->fetch()) {
+            if (!empty($result)) {
                 $project = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]")->fetch();
                 $project = $project[0];
 
@@ -132,37 +108,29 @@ class search
             }
         }
 
-        if (!empty($milestones))
-        {
+        if (!empty($milestones)) {
             return $milestones;
-        }
-        else
-        {
+        } else {
             return array();
         }
     }
 
     function searchMessage($query, $project = 0)
     {
-				global $conn;
+        global $conn;
         $project = (int) $project;
 
-        if ($project > 0)
-        {
+        if ($project > 0) {
             $sel = $conn->prepare("SELECT `ID`,`title`,`text`,`posted`,`user`,`username`,`project` FROM messages WHERE `title` LIKE ? OR `text` LIKE ? HAVING project = ? ");
-						$sel->execute(array("%{$query}%", "%{$query}%", $project));
-        }
-        else
-        {
+            $sel->execute(array("%{$query}%", "%{$query}%", $project));
+        } else {
             $sel = $conn->prepare("SELECT `ID`,`title`,`text`,`posted`,`user`,`username`,`project` FROM messages WHERE `title` LIKE ? OR `text` LIKE ?");
-						$sel->execute(array("%{$query}%", "%{$query}%"));
+            $sel->execute(array("%{$query}%", "%{$query}%"));
         }
 
         $messages = array();
-        while ($result = $sel->fetch())
-        {
-            if (!empty($result))
-            {
+        while ($result = $sel->fetch()) {
+            if (!empty($result)) {
                 $project = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]")->fetch();
                 $project = $project[0];
 
@@ -179,37 +147,29 @@ class search
             }
         }
 
-        if (!empty($messages))
-        {
+        if (!empty($messages)) {
             return $messages;
-        }
-        else
-        {
+        } else {
             return array();
         }
     }
 
     function searchTasks($query, $project = 0)
     {
-				global $conn;
+        global $conn;
         $project = (int) $project;
 
-        if ($project > 0)
-        {
+        if ($project > 0) {
             $sel = $conn->prepare("SELECT `ID`,`title`,`text`,`status`,`project` FROM tasks WHERE `title` LIKE ? OR `text` LIKE ? HAVING project = ? AND status=1");
-						$sel->execute(array("%{$query}%", "%{$query}%", $project));
-        }
-        else
-        {
+            $sel->execute(array("%{$query}%", "%{$query}%", $project));
+        } else {
             $sel = $conn->prepare("SELECT `ID`,`title`,`text`,`status`,`project` FROM tasks WHERE `title` LIKE ? OR `text` LIKE ? HAVING status=1");
-						$sel->execute(array("%{$query}%", "%{$query}%"));
+            $sel->execute(array("%{$query}%", "%{$query}%"));
         }
 
         $tasks = array();
-        while ($result = $sel->fetch())
-        {
-            if (!empty($result))
-            {
+        while ($result = $sel->fetch()) {
+            if (!empty($result)) {
                 $project = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]")->fetch();
                 $project = $project[0];
 
@@ -223,37 +183,29 @@ class search
             }
         }
 
-        if (!empty($tasks))
-        {
+        if (!empty($tasks)) {
             return $tasks;
-        }
-        else
-        {
+        } else {
             return array();
         }
     }
 
     function searchFiles($query, $project = 0)
     {
-				global $conn;
+        global $conn;
         $project = (int) $project;
 
-        if ($project > 0)
-        {
+        if ($project > 0) {
             $sel = $conn->prepare("SELECT `ID`,`name`,`desc`,`type`,`datei`,`title`,`project` FROM `files` WHERE `name` LIKE ? OR `desc` LIKE ? OR `title` LIKE ? HAVING project = ?");
-						$sel->execute(array("%{$query}%", "%{$query}%", "%{$query}%", $project));
-        }
-        else
-        {
+            $sel->execute(array("%{$query}%", "%{$query}%", "%{$query}%", $project));
+        } else {
             $sel = $conn->prepare("SELECT `ID`,`name`,`desc`,`type`,`datei`,`title`,`project` FROM `files` WHERE `name` LIKE ? OR `desc` LIKE ? OR `title` LIKE ?");
-						$sel->execute(array("%{$query}%", "%{$query}%", "%{$query}%"));
+            $sel->execute(array("%{$query}%", "%{$query}%", "%{$query}%"));
         }
 
         $files = array();
-        while ($result = $sel->fetch())
-        {
-            if (!empty($result))
-            {
+        while ($result = $sel->fetch()) {
+            if (!empty($result)) {
                 $project = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]")->fetch();
                 $project = $project[0];
 
@@ -262,20 +214,15 @@ class search
                 $set = new settings();
                 $settings = $set->getSettings();
                 $myfile = CL_ROOT . "/templates/" . $settings["template"] . "/images/symbols/files/" . $result["ftype"] . ".png";
-                if (stristr($result["type"], "image"))
-                {
+                if (stristr($result["type"], "image")) {
                     $result["imgfile"] = 1;
-                } elseif (stristr($result['type'], "text"))
-                {
+                } elseif (stristr($result['type'], "text")) {
                     $result["imgfile"] = 2;
-                }
-                else
-                {
+                } else {
                     $result["imgfile"] = 0;
                 }
 
-                if (!file_exists($myfile))
-                {
+                if (!file_exists($myfile)) {
                     $result["ftype"] = "none";
                 }
                 $result["title"] = stripslashes($result["title"]);
@@ -288,27 +235,22 @@ class search
             }
         }
 
-        if (!empty($files))
-        {
+        if (!empty($files)) {
             return $files;
-        }
-        else
-        {
+        } else {
             return array();
         }
     }
 
     function searchUser($query)
     {
-				global $conn;
+        global $conn;
 
-        $sel = $conn->query("SELECT `ID`,`email`,`name`,`avatar`,`lastlogin`, `gender` FROM user WHERE name LIKE ".$conn->quote("%{$query}%"));
+        $sel = $conn->query("SELECT `ID`,`email`,`name`,`avatar`,`lastlogin`, `gender` FROM user WHERE name LIKE " . $conn->quote("%{$query}%"));
 
         $user = array();
-        while ($result = $sel->fetch())
-        {
-            if (!empty($result))
-            {
+        while ($result = $sel->fetch()) {
+            if (!empty($result)) {
                 $result["type"] = "user";
                 $result["name"] = stripslashes($result["name"]);
                 $result["url"] = "manageuser.php?action=profile&amp;id=$result[ID]";
@@ -319,12 +261,9 @@ class search
             }
         }
 
-        if (!empty($user))
-        {
+        if (!empty($user)) {
             return $user;
-        }
-        else
-        {
+        } else {
             return array();
         }
     }
@@ -333,19 +272,13 @@ class search
     {
         $finresult = array();
         $userid = (int) $userid;
-        foreach($result as $res)
-        {
-            if ($res["type"] != "project" and $res["type"] != "user")
-            {
-                if (chkproject($userid, $res["project"]))
-                {
+        foreach($result as $res) {
+            if ($res["type"] != "project" and $res["type"] != "user") {
+                if (chkproject($userid, $res["project"])) {
                     array_push($finresult, $res);
                 }
-            }
-            else
-            {
-                if (chkproject($userid, $res["ID"]))
-                {
+            } else {
+                if (chkproject($userid, $res["ID"])) {
                     array_push($finresult, $res);
                 }
             }

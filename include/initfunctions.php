@@ -12,10 +12,11 @@ function cl_autoload($class_name)
 spl_autoload_register('cl_autoload');
 function chkproject($user, $project)
 {
-		global $conn;
+	global $conn;
     $user = (int) $user;
     $project = (int) $project;
     $chk = @$conn->query("SELECT ID FROM projekte_assigned WHERE projekt = $project AND user = $user")->fetch();
+
     $chk = $chk[0];
 
     if ($chk != "") {

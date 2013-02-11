@@ -9,15 +9,14 @@
  * @link http://www.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
-class mylog
-{
+class mylog {
     /*
     * Constructor
     */
     function __construct()
     {
-        $this->userid = getArrayVal($_SESSION,"userid");
-        $this->uname = getArrayVal($_SESSION,"username");
+        $this->userid = getArrayVal($_SESSION, "userid");
+        $this->uname = getArrayVal($_SESSION, "username");
     }
 
     /*
@@ -31,7 +30,7 @@ class mylog
      */
     function add($name, $type, $action, $project)
     {
-				global $conn;
+        global $conn;
         $user = $this->userid;
         $uname = $this->uname;
 
@@ -41,14 +40,11 @@ class mylog
         $now = time();
 
         $insStmt = $conn->prepare("INSERT INTO log (user,username,name,type,action,project,datum) VALUES (?, ?, ?, ?, ?, ?, ?)");
-				$ins = $insStmt->execute(array($user,$uname,$name,$type,$action,$project,$now));
-        if ($ins)
-        {
+        $ins = $insStmt->execute(array($user, $uname, $name, $type, $action, $project, $now));
+        if ($ins) {
             $insid = $conn->lastInsertId();
             return $insid;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -61,16 +57,13 @@ class mylog
      */
     function del($id)
     {
-				global $conn;
+        global $conn;
         $id = (int) $id;
 
         $del = $conn->query("DELETE FROM log WHERE ID = $id LIMIT 1");
-        if ($del)
-        {
+        if ($del) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -84,32 +77,29 @@ class mylog
      */
     function getProjectLog($project, $lim = 10)
     {
-				global $conn;
-        $project =(int) $project;
+        global $conn;
+        $project = (int) $project;
         $lim = (int) $lim;
 
         $sel = $conn->query("SELECT COUNT(*) FROM log WHERE project = $project ");
-				$num = $sel->fetch();
+        $num = $sel->fetch();
         $num = $num[0];
-       	if($num > 200)
-       	{
-		    $num = 200;
-		}
-		SmartyPaginate::connect();
+        if ($num > 200) {
+            $num = 200;
+        }
+        SmartyPaginate::connect();
         // set items per page
         SmartyPaginate::setLimit($lim);
         SmartyPaginate::setTotal($num);
 
-		$start = SmartyPaginate::getCurrentIndex();
+        $start = SmartyPaginate::getCurrentIndex();
         $lim = SmartyPaginate::getLimit();
         $sql = "SELECT * FROM log WHERE project = $project ORDER BY ID DESC LIMIT $start,$lim";
-		$sel2 = $conn->query($sql);
+        $sel2 = $conn->query($sql);
 
         $mylog = array();
-        while ($log = $sel2->fetch())
-        {
-            if (!empty($log))
-            {
+        while ($log = $sel2->fetch()) {
+            if (!empty($log)) {
                 $sel3 = $conn->query("SELECT name FROM projekte WHERE ID = $log[project]");
                 $proname = $sel3->fetch();
                 $proname = $proname[0];
@@ -121,12 +111,9 @@ class mylog
             }
         }
 
-        if (!empty($mylog))
-        {
+        if (!empty($mylog)) {
             return $mylog;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -140,26 +127,22 @@ class mylog
      */
     function getUserLog($user, $limit = 10)
     {
-				global $conn;
+        global $conn;
         $user = (int) $user;
         $limit = (int) $limit;
 
         $sel = $conn->query("SELECT * FROM log WHERE user = $user ORDER BY ID DESC LIMIT $limit");
 
         $mylog = array();
-        while ($log = $sel->fetch())
-        {
+        while ($log = $sel->fetch()) {
             $log["username"] = stripslashes($log["username"]);
             $log["name"] = stripslashes($log["name"]);
             array_push($mylog, $log);
         }
 
-        if (!empty($mylog))
-        {
+        if (!empty($mylog)) {
             return $mylog;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -172,27 +155,24 @@ class mylog
      */
     function getLog($limit = 5)
     {
-				global $conn;
+        global $conn;
         $userid = $_SESSION["userid"];
         $limit = (int) $limit;
 
         $mylog = array();
         $sel3 = $conn->query("SELECT projekt FROM projekte_assigned WHERE user = $userid");
         $prstring = "";
-        while ($upro = $sel3->fetch())
-        {
+        while ($upro = $sel3->fetch()) {
             $projekt = $upro[0];
             $prstring .= $projekt . ",";
         }
 
         $prstring = substr($prstring, 0, strlen($prstring)-1);
 
-        if ($prstring)
-        {
+        if ($prstring) {
             $sel = $conn->query("SELECT * FROM log  WHERE project IN($prstring) OR project = 0 ORDER BY ID DESC LIMIT $limit");
 
-            while ($log = $sel->fetch())
-            {
+            while ($log = $sel->fetch()) {
                 $sel2 = $conn->query("SELECT name FROM projekte WHERE ID = $log[project]");
                 $proname = $sel2->fetch();
                 $proname = $proname[0];
@@ -204,12 +184,9 @@ class mylog
             }
         }
 
-        if (!empty($mylog))
-        {
+        if (!empty($mylog)) {
             return $mylog;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -225,24 +202,20 @@ class mylog
     {
         $cou = 0;
 
-        if ($log)
-        {
-            foreach($log as $thelog)
-            {
+        if ($log) {
+            foreach($log as $thelog) {
                 $datetime = date($format, $thelog[7]);
                 $log[$cou]["datum"] = $datetime;
                 $cou = $cou + 1;
             }
         }
 
-        if (!empty($log))
-        {
+        if (!empty($log)) {
             return $log;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
 }
+
 ?>

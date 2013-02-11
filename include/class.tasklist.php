@@ -9,14 +9,13 @@
  * @link http://www.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
-class tasklist
-{
+class tasklist {
     public $mylog;
 
     /**
-    * Constructor
-    * Initialize the event log
-    */
+     * Constructor
+     * Initialize the event log
+     */
     function __construct()
     {
         $this->mylog = new mylog;
@@ -34,19 +33,16 @@ class tasklist
      */
     function add_liste($project, $name, $desc, $access = 0, $milestone = 0)
     {
-				global $conn;
+        global $conn;
 
         $insStmt = $conn->prepare("INSERT INTO tasklist (`project`, `name`, `desc`, `start`, `status`, `access`, `milestone`) VALUES (?, ?, ?, ?, 1, ?, ?)");
-				$ins = $insStmt->execute(array((int) $project, $name, $desc, time(), (int) $access, (int) $milestone));
+        $ins = $insStmt->execute(array((int) $project, $name, $desc, time(), (int) $access, (int) $milestone));
 
-        if ($ins)
-        {
+        if ($ins) {
             $insid = $conn->lastInsertId();
             $this->mylog->add($name, 'tasklist', 1, $project);
             return $insid;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -62,20 +58,17 @@ class tasklist
      */
     function edit_liste($id, $name, $desc, $milestone)
     {
-				global $conn;
+        global $conn;
 
         $updStmt = $conn->prepare("UPDATE tasklist SET `name` = ?, `desc` = ?, `milestone` = ? WHERE ID = ?");
-				$upd = $updStmt->execute(array($name, $desc, §milestone, $id));
-        if ($upd)
-        {
+        $upd = $updStmt->execute(array($name, $desc, §milestone, $id));
+        if ($upd) {
             $proj = $conn->query("SELECT project FROM tasklist WHERE ID = $id")->fetch();
             $proj = $proj[0];
 
             $this->mylog->add($name, 'tasklist', 2, $proj);
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -88,27 +81,22 @@ class tasklist
      */
     function del_liste($id)
     {
-				global $conn;
+        global $conn;
         $id = (int) $id;
 
         $sel = $conn->query("SELECT project, name FROM tasklist WHERE ID = $id");
         $del = $conn->query("DELETE FROM tasklist WHERE ID = $id LIMIT 1");
-        if ($del)
-        {
+        if ($del) {
             $tasks1 = $this->getTasksFromList($id);
             $taskobj = new task();
-            if (!empty($tasks1))
-            {
-                foreach($tasks1 as $task)
-                {
+            if (!empty($tasks1)) {
+                foreach($tasks1 as $task) {
                     $taskobj->del($task["ID"]);
                 }
             }
             $tasks2 = $this->getTasksFromList($id, 0);
-            if (!empty($tasks2))
-            {
-                foreach($tasks2 as $task)
-                {
+            if (!empty($tasks2)) {
+                foreach($tasks2 as $task) {
                     $taskobj->del($task["ID"]);
                 }
             }
@@ -117,9 +105,7 @@ class tasklist
             $name = $sel1[1];
             $this->mylog->add($name, 'tasklist', 3, $proj);
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -132,22 +118,19 @@ class tasklist
      */
     function open_liste($id)
     {
-				global $conn;
+        global $conn;
         $id = (int) $id;
 
         $upd = $conn->query("UPDATE tasklist SET status = 1 WHERE ID = $id");
 
-        if ($upd)
-        {
+        if ($upd) {
             $nam = $conn->query("SELECT project, name FROM tasklist WHERE ID = $id")->fetch();
             $project = $nam[0];
             $name = $nam[1];
 
             $this->mylog->add($name, 'tasklist', 4, $project);
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -160,43 +143,36 @@ class tasklist
      */
     function close_liste($id)
     {
-				global $conn;
+        global $conn;
         $id = (int) $id;
 
         $upd = $conn->query("UPDATE tasklist SET status = 0 WHERE ID = $id");
         // Close assigned milestone too, if no other open tasklists are assigned to it
         $milestone = $conn->query("SELECT milestone FROM tasklist WHERE ID = $id")->fetch();
-        if ($milestone[0] > 0)
-        {
+        if ($milestone[0] > 0) {
             $cou = $conn->query("SELECT count(*) FROM tasklist WHERE milestone = $milestone[0] AND status = 1")->fetch();
 
-            if ($cou[0] == 0)
-            {
+            if ($cou[0] == 0) {
                 $miles = new milestone();
                 $miles->close($milestone[0]);
             }
         }
         $tasks = $this->getTasksFromList($id);
-        if (!empty($tasks))
-        {
+        if (!empty($tasks)) {
             $taskobj = new task();
-            foreach($tasks as $task)
-            {
+            foreach($tasks as $task) {
                 $taskobj->close($task["ID"]);
             }
         }
         // Log entry
-        if ($upd)
-        {
+        if ($upd) {
             $nam = $conn->query("SELECT project, name FROM tasklist WHERE ID = $id")->fetch();
             $project = $nam[0];
             $name = $nam[1];
 
             $this->mylog->add($name, 'tasklist', 5, $project);
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -210,7 +186,7 @@ class tasklist
      */
     function getProjectTasklists($project, $status = 1)
     {
-				global $conn;
+        global $conn;
         $project = (int) $project;
         $status = (int) $status;
 
@@ -218,31 +194,25 @@ class tasklist
         $tasklists = array();
 
         $taskobj = new task();
-        while ($list = $sel->fetch())
-        {
+        while ($list = $sel->fetch()) {
             $sel2 = $conn->query("SELECT ID FROM tasks WHERE liste = $list[ID] AND status=1 ORDER BY `end`,`title` ASC");
             $list['tasks'] = array();
-            while ($tasks = $sel2->fetch())
-            {
+            while ($tasks = $sel2->fetch()) {
                 array_push($list['tasks'], $taskobj->getTask($tasks["ID"]));
             }
 
             $sel3 = $conn->query("SELECT ID FROM tasks WHERE liste = $list[ID] AND status=0 ORDER BY `end` ASC");
             $list['oldtasks'] = array();
-            while ($oldtasks = $sel3->fetch())
-            {
+            while ($oldtasks = $sel3->fetch()) {
                 array_push($list['oldtasks'], $taskobj->getTask($oldtasks["ID"]));
             }
 
             array_push($tasklists, $list);
         }
 
-        if (!empty($tasklists))
-        {
+        if (!empty($tasklists)) {
             return $tasklists;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -255,23 +225,20 @@ class tasklist
      */
     function getTasklist($id)
     {
-				global $conn;
+        global $conn;
         $id = (int) $id;
 
         $sel = $conn->query("SELECT * FROM tasklist WHERE ID = $id");
         $tasklist = $sel->fetch();
 
-        if (!empty($tasklist))
-        {
+        if (!empty($tasklist)) {
             $startstring = date("d.m.Y", $tasklist["start"]);
             $tasklist["startstring"] = $startstring;
             $tasklist["name"] = stripslashes($tasklist["name"]);
             $tasklist["desc"] = stripslashes($tasklist["desc"]);
 
             return $tasklist;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -285,7 +252,7 @@ class tasklist
      */
     function getTasksFromList($id, $status = 1)
     {
-				global $conn;
+        global $conn;
         $id = (int) $id;
         $status = (int) $status;
 
@@ -293,17 +260,13 @@ class tasklist
 
         $sel = $conn->query("SELECT ID FROM tasks WHERE `liste` = $id AND `status` = $status ORDER BY ID DESC");
         $tasks = array();
-        while ($task = $sel->fetch())
-        {
+        while ($task = $sel->fetch()) {
             array_push($tasks, $taskobj->getTask($task["ID"]));
         }
 
-        if (!empty($tasks))
-        {
+        if (!empty($tasks)) {
             return $tasks;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }

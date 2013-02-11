@@ -9,8 +9,7 @@
  * @link http://www.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
-class roles
-{
+class roles {
     function __construct()
     {
     }
@@ -32,7 +31,7 @@ class roles
      */
     function add($name, array $projects, array $tasks, array $milestones, array $messages, array $files, array $timetracker, array $chat, array $admin)
     {
-				global $conn;
+        global $conn;
         $projects = serialize($projects);
         $tasks = serialize($tasks);
         $milestones = serialize($milestones);
@@ -43,15 +42,12 @@ class roles
         $admin = serialize($admin);
 
         $insStmt = $conn->prepare("INSERT INTO roles (name,projects,tasks,milestones,messages,files,timetracker,chat,admin) VALUES (?,?,?,?,?,?,?,?,?)");
-				$ins = $insStmt->execute(array($name, $projects, $tasks, $milestones, $messages, $files, $timetracker, $chat, $admin));
+        $ins = $insStmt->execute(array($name, $projects, $tasks, $milestones, $messages, $files, $timetracker, $chat, $admin));
 
-        if ($ins)
-        {
-            $insid = $conn->lasInsertId();
+        if ($ins) {
+            $insid = $conn->lastInsertId();
             return $insid;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -74,8 +70,7 @@ class roles
      */
     function edit($id, $name, array $projects, array $tasks, array $milestones, array $messages, array $files, array $timetracker, array $chat, array $admin)
     {
-		
-				global $conn;
+        global $conn;
         $id = (int) $id;
         $projects = serialize($projects);
         $tasks = serialize($tasks);
@@ -87,14 +82,11 @@ class roles
         $admin = serialize($admin);
 
         $updStmt = $conn->prepare("UPDATE roles SET name=?,projects=?,tasks=?,milestones=?,messages=?,files=?,timetracker=?,chat=?,admin=? WHERE ID = ?");
-				$upd = $updStmt->execute(array($name, $projects, $tasts, $milestone, $messages, $files, $timetracker, $chat, $admin, $id));
+        $upd = $updStmt->execute(array($name, $projects, $tasts, $milestone, $messages, $files, $timetracker, $chat, $admin, $id));
 
-        if ($upd)
-        {
+        if ($upd) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -109,17 +101,14 @@ class roles
      */
     function del($id)
     {
-				global $conn;
+        global $conn;
         $id = (int) $id;
         $del = $conn->query("DELETE FROM roles WHERE ID = $id");
         $del2 = $conn->query("DELETE FROM roles_assigned WHERE role = $id");
 
-        if ($del)
-        {
+        if ($del) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -134,7 +123,7 @@ class roles
      */
     function assign($role, $user)
     {
-				global $conn;
+        global $conn;
         $role = (int) $role;
         $user = (int) $user;
         // get the number of roles already assigned to $user
@@ -142,21 +131,15 @@ class roles
         $chk = $chk[0];
         // If there already is a role assigned to the user, just update this entry
         // Otherwise create a new entry
-        if ($chk > 0)
-        {
+        if ($chk > 0) {
             $ins = $conn->query("UPDATE roles_assigned SET role = $role WHERE user = $user");
-        }
-        else
-        {
+        } else {
             $ins = $conn->query("INSERT INTO roles_assigned (user,role) VALUES ($user,$role)");
         }
 
-        if ($ins)
-        {
+        if ($ins) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -171,18 +154,15 @@ class roles
      */
     function deassign($role, $user)
     {
-				global $conn;
+        global $conn;
         $role = (int) $role;
         $user = (int) $user;
 
         $del = $conn->query("DELETE FROM roles_assigned WHERE user = $user AND role = $role LIMIT 1");
 
-        if ($del)
-        {
+        if ($del) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -195,19 +175,14 @@ class roles
      */
     function getAllRoles($limit = false)
     {
-				global $conn;
+        global $conn;
         $roles = array();
 
-        if (!$limit)
-        {
+        if (!$limit) {
             $sel = $conn->query("SELECT ID FROM roles ORDER BY ID DESC");
-        }
-        else
-        {
+        } else {
             $sel = $conn->query("SELECT ID FROM roles ORDER BY ID DESC LIMIT $limit");
-        }
-        while ($role = $sel->fetch())
-        {
+        } while ($role = $sel->fetch()) {
             /**
              * $role["projects"] = unserialize($role["projects"]);
              * $role["tasks"] = unserialize($role["tasks"]);
@@ -222,29 +197,25 @@ class roles
             array_push($roles, $therole);
         }
 
-        if (!empty($roles))
-        {
+        if (!empty($roles)) {
             return $roles;
-        }
-        else
-        {
+        } else {
             return array();
         }
     }
 
-   /**
-    * Translate name of default roles
-    *
-    * Intended for viewing translated list of AllRoles.
-    * Be sure that rolenames in output
-    * are not used for other things than viewing.
-    *
-    * Default Roles are Admin, User, Client
-    *
-    * @param array $roles Array with names to translate
-    * @return array $roles Array with translated role names
-    */
-
+    /**
+     * Translate name of default roles
+     *
+     * Intended for viewing translated list of AllRoles.
+     * Be sure that rolenames in output
+     * are not used for other things than viewing.
+     *
+     * Default Roles are Admin, User, Client
+     *
+     * @param array $roles Array with names to translate
+     * @return array $roles Array with translated role names
+     */
 
     /**
      * Get the role of a user
@@ -255,26 +226,20 @@ class roles
      */
     function getUserRole($user)
     {
-				global $conn;
+        global $conn;
         $user = (int) $user;
 
         $usr = $conn->query("SELECT role FROM roles_assigned WHERE user = $user")->fetch();
         $usr = $usr[0];
-        if ($usr)
-        {
+        if ($usr) {
             $role = $this->getRole($usr);
-        }
-        else
-        {
+        } else {
             return false;
         }
 
-        if (!empty($role))
-        {
+        if (!empty($role)) {
             return $role;
-        }
-        else
-        {
+        } else {
             return array();
         }
     }
@@ -288,28 +253,22 @@ class roles
      */
     function sanitizeArray($inarr)
     {
-        if (!is_array($inarr))
-        {
+        if (!is_array($inarr)) {
             $inarr = array();
         }
-        if (empty($inarr["add"]))
-        {
+        if (empty($inarr["add"])) {
             $inarr["add"] = 0;
         }
-        if (empty($inarr["edit"]))
-        {
+        if (empty($inarr["edit"])) {
             $inarr["edit"] = 0;
         }
-        if (empty($inarr["del"]))
-        {
+        if (empty($inarr["del"])) {
             $inarr["del"] = 0;
         }
-        if (empty($inarr["close"]))
-        {
+        if (empty($inarr["close"])) {
             $inarr["close"] = 0;
         }
-        if (empty($inarr["read"]))
-        {
+        if (empty($inarr["read"])) {
             $inarr["read"] = 0;
         }
 
@@ -318,7 +277,7 @@ class roles
 
     private function getRole($role)
     {
-				global $conn;
+        global $conn;
         $role = (int) $role;
 
         $sel2 = $conn->query("SELECT * FROM roles WHERE ID = $role");
@@ -333,12 +292,9 @@ class roles
         $therole["chat"] = unserialize($therole["chat"]);
         $therole["admin"] = unserialize($therole["admin"]);
 
-        if (!empty($therole))
-        {
+        if (!empty($therole)) {
             return $therole;
-        }
-        else
-        {
+        } else {
             return array();
         }
     }

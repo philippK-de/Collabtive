@@ -9,8 +9,7 @@
  * @link http://www.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or laterg
  */
-class user
-{
+class user {
     public $mylog;
 
     /**
@@ -30,25 +29,22 @@ class user
      * @param string $company Company of the member
      * @param string $pass Password
      * @param string $locale Localisation
-	 * @param float $rate Hourly rate
+     * @param float $rate Hourly rate
      * @return int $insid ID of the newly created member
      */
     function add($name, $email, $company, $pass, $locale = "", $tags = "", $rate = 0.0)
     {
-				global $conn;
+        global $conn;
         $pass = sha1($pass);
 
         $ins1Stmt = $conn->prepare("INSERT INTO user (name,email,company,pass,locale,tags,rate) VALUES (?, ?, ?, ?, ?, ?, ?)");
-				$ins1 = $ins1Stmt->execute(array($name, $email, $company, $pass, $locale, $tags, $rate));
+        $ins1 = $ins1Stmt->execute(array($name, $email, $company, $pass, $locale, $tags, $rate));
 
-        if ($ins1)
-        {
+        if ($ins1) {
             $insid = $conn->lastInsertId();
             $this->mylog->add($name, 'user', 1, 0);
             return $insid;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -75,29 +71,23 @@ class user
      */
     function edit($id, $name, $realname, $email, $tel1, $tel2, $company, $zip, $gender, $url, $address1, $address2, $state, $country, $tags, $locale, $avatar = "", $rate = 0.0)
     {
-				global $conn;
-				
+        global $conn;
+
         $rate = (float) $rate;
         $id = (int) $id;
 
-        if ($avatar != "")
-        {
+        if ($avatar != "") {
             $updStmt = $conn->prepare("UPDATE user SET name=?, email=?, tel1=?, tel2=?, company=?, zip=?, gender=?, url=?, adress=?, adress2=?, state=?, country=?, tags=?, locale=?, avatar=?, rate=? WHERE ID = ?");
-						$upd = $updStmt->execute(array($name, $email, $tel1, $tel2, $company, $zip, $gender, $url, $address1, $address2, $state, $country, $tags, $locale, $avatar, $rate, $id));
-        }
-        else
-        {
+            $upd = $updStmt->execute(array($name, $email, $tel1, $tel2, $company, $zip, $gender, $url, $address1, $address2, $state, $country, $tags, $locale, $avatar, $rate, $id));
+        } else {
             $updStmt = $conn->prepare("UPDATE user SET name=?, email=?, tel1=?, tel2=?, company=?, zip=?, gender=?, url=?, adress=?, adress2=?, state=?, country=?, tags=?, locale=?, rate=? WHERE ID = ?");
-						$upd = $updStmt->execute(array($name, $email, $tel1, $tel2, $company, $zip, $gender, $url, $address1, $address2, $state, $country, $tags, $locale, $rate, $id));
+            $upd = $updStmt->execute(array($name, $email, $tel1, $tel2, $company, $zip, $gender, $url, $address1, $address2, $state, $country, $tags, $locale, $rate, $id));
         }
-				
-        if ($upd)
-        {
+
+        if ($upd) {
             $this->mylog->add($name, 'user', 2, 0);
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -110,43 +100,34 @@ class user
      */
     function resetPassword($email)
     {
-		
-		global $conn;
+        global $conn;
 
-		$user = $conn->query("SELECT ID, email FROM user WHERE email={$conn->quote($email)} LIMIT 1")->fetch();
+        $user = $conn->query("SELECT ID, email FROM user WHERE email={$conn->quote($email)} LIMIT 1")->fetch();
 
-		if ($user["email"] == $email)
-		{
-			$id = $user["ID"];
-		}
+        if ($user["email"] == $email) {
+            $id = $user["ID"];
+        }
 
-		if (isset($id))
-		{
- 			$dummy = array_merge(range('0', '9'), range('a', 'z'), range('A', 'Z'),range('0','9'));
- 			shuffle($dummy);
- 			mt_srand((double)microtime()*1000000);
- 			$newpass = "";
- 			for ($i = 1; $i <= 10; $i++)
- 			{
- 				$swap = mt_rand(0,count($dummy)-1);
- 				$tmp = $dummy[$swap];
- 				$newpass .= $tmp;
- 			}
+        if (isset($id)) {
+            $dummy = array_merge(range('0', '9'), range('a', 'z'), range('A', 'Z'), range('0', '9'));
+            shuffle($dummy);
+            mt_srand((double)microtime() * 1000000);
+            $newpass = "";
+            for ($i = 1; $i <= 10; $i++) {
+                $swap = mt_rand(0, count($dummy)-1);
+                $tmp = $dummy[$swap];
+                $newpass .= $tmp;
+            }
 
-			$sha1pass = sha1($newpass);
+            $sha1pass = sha1($newpass);
 
-			$upd = $conn->query("UPDATE user SET `pass` = '$sha1pass' WHERE ID = $id");
-			if ($upd)
-			{
-				return $newpass;
-			}
-			else
-			{
-				return false;
-			}
-		}
-        else
-        {
+            $upd = $conn->query("UPDATE user SET `pass` = '$sha1pass' WHERE ID = $id");
+            if ($upd) {
+                return $newpass;
+            } else {
+                return false;
+            }
+        } else {
             return false;
         }
     }
@@ -162,11 +143,10 @@ class user
      */
     function editpass($id, $oldpass, $newpass, $repeatpass)
     {
-				global $conn;
+        global $conn;
         $id = (int) $id;
 
-        if ($newpass != $repeatpass)
-        {
+        if ($newpass != $repeatpass) {
             return false;
         }
         $newpass = sha1($newpass);
@@ -175,18 +155,14 @@ class user
         $chk = $conn->query("SELECT ID, name FROM user WHERE ID = $id AND pass = {$conn->quote($oldpass)}")->fetch();
         $chk = $chk[0];
         $name = $chk[1];
-        if (!$chk)
-        {
+        if (!$chk) {
             return false;
         }
 
         $upd = $conn->query("UPDATE user SET pass={$conn->quote($newpass)} WHERE ID = $id");
-        if ($upd)
-        {
+        if ($upd) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -201,22 +177,18 @@ class user
      */
     function admin_editpass($id, $newpass, $repeatpass)
     {
-				global $conn;
-				$id = (int) $id;
+        global $conn;
+        $id = (int) $id;
 
-        if ($newpass != $repeatpass)
-        {
+        if ($newpass != $repeatpass) {
             return false;
         }
         $newpass = sha1($newpass);
 
         $upd = $conn->query("UPDATE user SET pass={$conn->quote($newpass)} WHERE ID = $id");
-        if ($upd)
-        {
+        if ($upd) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -229,7 +201,7 @@ class user
      */
     function del($id)
     {
-				global $conn;
+        global $conn;
         $id = (int) $id;
 
         $chk = $conn->query("SELECT name FROM user WHERE ID = $id")->fetch();
@@ -241,14 +213,11 @@ class user
         $del4 = $conn->query("DELETE FROM tasks_assigned WHERE user = $id");
         $del5 = $conn->query("DELETE FROM log WHERE user = $id");
         $del6 = $conn->query("DELETE FROM timetracker WHERE user = $id");
-		$del7 = $conn->query("DELETE FROM roles_assigned WHERE user = $id");
-        if ($del)
-        {
+        $del7 = $conn->query("DELETE FROM roles_assigned WHERE user = $id");
+        if ($del) {
             $this->mylog->add($name, 'user', 3, 0);
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -261,32 +230,26 @@ class user
      */
     function getProfile($id)
     {
-				global $conn;
+        global $conn;
         $id = (int) $id;
 
         $sel = $conn->query("SELECT * FROM user WHERE ID = $id");
         $profile = $sel->fetch();
-        if (!empty($profile))
-        {
+        if (!empty($profile)) {
             $profile["name"] = stripslashes($profile["name"]);
-            if (isset($profile["company"]))
-            {
+            if (isset($profile["company"])) {
                 $profile["company"] = stripslashes($profile["company"]);
             }
-            if (isset($profile["adress"]))
-            {
+            if (isset($profile["adress"])) {
                 $profile["adress"] = stripslashes($profile["adress"]);
             }
-            if (isset($profile["adress2"]))
-            {
+            if (isset($profile["adress2"])) {
                 $profile["adress2"] = stripslashes($profile["adress2"]);
             }
-            if (isset($profile["state"]))
-            {
+            if (isset($profile["state"])) {
                 $profile["state"] = stripslashes($profile["state"]);
             }
-            if (isset($profile["country"]))
-            {
+            if (isset($profile["country"])) {
                 $profile["country"] = stripslashes($profile["country"]);
             }
             $tagsobj = new tags();
@@ -296,9 +259,7 @@ class user
             $profile["role"] = $rolesobj->getUserRole($profile["ID"]);
 
             return $profile;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -312,17 +273,14 @@ class user
     function getAvatar($id)
     {
         $id = (int) $id;
-				global $conn;
+        global $conn;
         $sel = $conn->query("SELECT avatar FROM user WHERE ID = $id");
         $profile = $sel->fetch();
         $profile = $profile[0];
 
-        if (!empty($profile))
-        {
+        if (!empty($profile)) {
             return $profile;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -336,10 +294,9 @@ class user
      */
     function login($user, $pass)
     {
-				global $conn;
-				
-        if (!$user)
-        {
+        global $conn;
+
+        if (!$user) {
             return false;
         }
         $user = $conn->quote($user);
@@ -347,8 +304,7 @@ class user
 
         $sel1 = $conn->query("SELECT ID,name,locale,lastlogin,gender FROM user WHERE (name = $user OR email = $user) AND pass = '$pass'");
         $chk = $sel1->fetch();
-        if ($chk["ID"] != "")
-        {
+        if ($chk["ID"] != "") {
             $rolesobj = new roles();
             $now = time();
             $_SESSION['userid'] = $chk['ID'];
@@ -362,15 +318,12 @@ class user
             $seid = session_id();
             $staylogged = getArrayVal($_POST, 'staylogged');
 
-            if ($staylogged == 1)
-            {
+            if ($staylogged == 1) {
                 setcookie("PHPSESSID", "$seid", time() + 14 * 24 * 3600);
             }
             $upd1 = $conn->query("UPDATE user SET lastlogin = '$now' WHERE ID = $userid");
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -397,8 +350,8 @@ class user
      */
     function getAllUsers($lim = 10)
     {
-				global $conn;
-		
+        global $conn;
+
         $lim = (int) $lim;
 
         $num = $conn->query("SELECT COUNT(*) FROM `user`")->fetch();
@@ -411,20 +364,16 @@ class user
         $start = SmartyPaginate::getCurrentIndex();
         $lim = SmartyPaginate::getLimit();
 
-       $sel2 = $conn->query("SELECT ID FROM `user` ORDER BY ID DESC LIMIT $start,$lim");
+        $sel2 = $conn->query("SELECT ID FROM `user` ORDER BY ID DESC LIMIT $start,$lim");
 
         $users = array();
-        while ($user = $sel2->fetch())
-        {
+        while ($user = $sel2->fetch()) {
             array_push($users, $this->getProfile($user["ID"]));
         }
 
-        if (!empty($users))
-        {
+        if (!empty($users)) {
             return $users;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -437,8 +386,8 @@ class user
      */
     function getOnlinelist($offset = 300)
     {
-				global $conn;
-		
+        global $conn;
+
         $offset = (int) $offset;
         $time = time();
         $now = $time - $offset;
@@ -447,8 +396,7 @@ class user
 
         $users = array();
 
-        while ($user = $sel->fetch())
-        {
+        while ($user = $sel->fetch()) {
             $user["name"] = stripslashes($user["name"]);
             $user["company"] = stripslashes($user["company"]);
             $user["adress"] = stripslashes($user["adress"]);
@@ -458,12 +406,9 @@ class user
             array_push($users, $user);
         }
 
-        if (!empty($users))
-        {
+        if (!empty($users)) {
             return $users;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -471,14 +416,14 @@ class user
     /**
      * Is the given user logged in?
      *
-	 * @param int $user Member ID
+     * @param int $user Member ID
      * @param int $offset Allowed time from last login
      * @return bool
      */
     function isOnline($user, $offset = 30)
     {
-				global $conn;
-		
+        global $conn;
+
         $user = (int) $user;
         $offset = (int) $offset;
 
@@ -488,12 +433,9 @@ class user
         $sel = $conn->query("SELECT ID FROM user WHERE lastlogin >= $now AND ID = $user");
         $user = $sel->fetch();
 
-        if (!empty($user))
-        {
+        if (!empty($user)) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -504,9 +446,9 @@ class user
      * @param string $user Username
      * @return int $theid
      */
-    function getId($user){
-		
-				global $conn;
+    function getId($user)
+    {
+        global $conn;
 
         $sel = $conn->query("SELECT ID FROM user WHERE name = {$conn->quote($user)}");
         $id = $sel->fetch();
@@ -516,12 +458,9 @@ class user
 
         $theid["ID"] = $id;
 
-        if($id > 0)
-        {
+        if ($id > 0) {
             return $theid;
-        }
-        else
-        {
+        } else {
             return array();
         }
     }

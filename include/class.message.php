@@ -37,10 +37,10 @@ class message {
      */
     function add($project, $title, $text, $tags, $user, $username, $replyto, $milestone)
     {
-				global $conn;
+        global $conn;
 
-        $insStmt = $conn->prepare("INSERT INTO messages (`project`,`title`,`text`,`tags`,`posted`,`user`,`username`,`replyto`,`milestone`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, )");
-				$ins = $insStmt->execute(array((int) $project, $title, $text, $tags, time(), (int) $user, $username, (int) $replyto, (int) $milestone));
+        $insStmt = $conn->prepare("INSERT INTO messages (`project`,`title`,`text`,`tags`,`posted`,`user`,`username`,`replyto`,`milestone`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ? )");
+        $ins = $insStmt->execute(array((int) $project, $title, $text, $tags, time(), (int) $user, $username, (int) $replyto, (int) $milestone));
 
         $insid = $conn->lastInsertId();
         if ($ins) {
@@ -62,10 +62,10 @@ class message {
      */
     function edit($id, $title, $text, $tags)
     {
-				global $conn;
+        global $conn;
 
         $updStmt = $conn->query("UPDATE messages SET title=?, text=?, tags=? WHERE ID = ?");
-				$upd = $updStmt->execute(array($title, $text, $tags, (int) $id));
+        $upd = $updStmt->execute(array($title, $text, $tags, (int) $id));
 
         if ($upd) {
             $proj = $conn->query("SELECT project FROM messages WHERE ID = $id")->fetch();
@@ -85,7 +85,7 @@ class message {
      */
     function del($id)
     {
-				global $conn;
+        global $conn;
         $id = (int) $id;
 
         $msg = $conn->query("SELECT title,project FROM messages WHERE ID = $id")->fetch();
@@ -109,7 +109,7 @@ class message {
      */
     function getMessage($id)
     {
-				global $conn;
+        global $conn;
         $id = (int) $id;
 
         $message = $conn->query("SELECT * FROM messages WHERE ID = $id LIMIT 1")->fetch();
@@ -132,11 +132,9 @@ class message {
             if ($project) {
                 $project["name"] = stripslashes($project["name"]);
                 $message["pname"] = $project;
+            } else {
+                $message["pname"] = "";
             }
-            else
-            {
-				$message["pname"] = "";
-			}
             $posted = date(CL_DATEFORMAT . " - H:i", $message["posted"]);
             $message["postdate"] = $posted;
             $message["endstring"] = $posted;
@@ -172,7 +170,7 @@ class message {
      */
     function getReplies($id)
     {
-				global $conn;
+        global $conn;
         $id = (int) $id;
 
         $sel = $conn->query("SELECT ID FROM messages WHERE replyto = $id ORDER BY posted DESC");
@@ -181,10 +179,8 @@ class message {
         $tagobj = new tags();
         $milesobj = new milestone();
         $user = new user();
-        while ($reply = $sel->fetch())
-        {
-            if (!empty($reply))
-            {
+        while ($reply = $sel->fetch()) {
+            if (!empty($reply)) {
                 $thereply = $this->getMessage($reply["ID"]);
                 array_push($replies, $thereply);
             }
@@ -198,14 +194,13 @@ class message {
 
     function getLatestMessages($limit = 5)
     {
-				global $conn;
+        global $conn;
         $limit = (int) $limit;
 
         $userid = $_SESSION["userid"];
         $sel3 = $conn->query("SELECT projekt FROM projekte_assigned WHERE user = $userid");
         $prstring = "";
-        while ($upro = $sel3->fetch())
-        {
+        while ($upro = $sel3->fetch()) {
             $projekt = $upro[0];
             $prstring .= $projekt . ",";
         }
@@ -217,8 +212,7 @@ class message {
 
             $tagobj = new tags();
             $milesobj = new milestone();
-            while ($message = $sel1->fetch())
-            {
+            while ($message = $sel1->fetch()) {
                 $themessage = $this->getMessage($message["ID"]);
                 array_push($messages, $themessage);
             }
@@ -238,7 +232,7 @@ class message {
      */
     function getProjectMessages($project)
     {
-				global $conn;
+        global $conn;
         $project = (int) $project;
 
         $messages = array();
@@ -247,8 +241,7 @@ class message {
         $tagobj = new tags();
         $milesobj = new milestone();
 
-        while ($message = $sel1->fetch())
-        {
+        while ($message = $sel1->fetch()) {
             $themessage = $this->getMessage($message["ID"]);
             array_push($messages, $themessage);
         }
@@ -262,7 +255,7 @@ class message {
 
     function attachFile($fid, $mid, $id = 0)
     {
-				global $conn;
+        global $conn;
         $fid = (int) $fid;
         $mid = (int) $mid;
         $id = (int) $id;
@@ -274,11 +267,10 @@ class message {
             $num = $_POST["numfiles"];
 
             $chk = 0;
-			$insStmt= $conn->prepare("INSERT INTO files_attached (ID,file,message) VALUES ('',?,?)");
-            for($i = 1;$i <= $num;$i++)
-            {
+            $insStmt = $conn->prepare("INSERT INTO files_attached (ID,file,message) VALUES ('',?,?)");
+            for($i = 1;$i <= $num;$i++) {
                 $fid = $myfile->upload("userfile$i", "files/" . CL_CONFIG . "/$id", $id);
-                $ins = $insStmt->execute(array($fid,$mid));
+                $ins = $insStmt->execute(array($fid, $mid));
             }
         }
         if ($ins) {
@@ -290,13 +282,12 @@ class message {
 
     private function getAttachedFiles($msg)
     {
-				global $conn;
+        global $conn;
         $msg = (int) $msg;
 
         $files = array();
         $sel = $conn->query("SELECT file FROM files_attached WHERE message = $msg");
-        while ($file = $sel->fetch())
-        {
+        while ($file = $sel->fetch()) {
             $sel2 = $conn->query("SELECT * FROM files WHERE ID = $file[0]");
             $thisfile = $sel2->fetch();
             $thisfile["type"] = str_replace("/", "-", $thisfile["type"]);

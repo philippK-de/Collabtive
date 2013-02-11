@@ -10,8 +10,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  * @global $mylog
  */
-class milestone
-{
+class milestone {
     private $mylog;
 
     /**
@@ -35,21 +34,18 @@ class milestone
      */
     function add($project, $name, $desc, $end, $status)
     {
-				global $conn;
+        global $conn;
 
         $end = strtotime($end);
-				
-        $insStmt = $conn->prepare("INSERT INTO milestones (`project`,`name`,`desc`,`start`,`end`,`status`) VALUES (?, ?, ?, ?, ?, ?)");
-				$ins = $insStmt->execute(array((int) $project, $name, $desc, time(), $end, (int) $status));
 
-        if ($ins)
-        {
+        $insStmt = $conn->prepare("INSERT INTO milestones (`project`,`name`,`desc`,`start`,`end`,`status`) VALUES (?, ?, ?, ?, ?, ?)");
+        $ins = $insStmt->execute(array((int) $project, $name, $desc, time(), $end, (int) $status));
+
+        if ($ins) {
             $insid = $conn->lastInsertId();
             $this->mylog->add($name, 'milestone' , 1, $project);
             return $insid;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -65,23 +61,20 @@ class milestone
      */
     function edit($id, $name, $desc, $end)
     {
-				global $conn;
+        global $conn;
         $id = (int) $id;
         $end = strtotime($end);
 
         $updStmt = $conn->prepare("UPDATE milestones SET `name`=?, `desc`=?, `end`=? WHERE ID=?");
-				$upd = $updStmt->execute(array($name, $desc, $end, $id));
-        if ($upd)
-        {
+        $upd = $updStmt->execute(array($name, $desc, $end, $id));
+        if ($upd) {
             $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id")->fetch();
             $project = $nam[0];
             $name = $nam[1];
 
             $this->mylog->add($name, 'milestone' , 2, $project);
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -94,23 +87,20 @@ class milestone
      */
     function del($id)
     {
-				global $conn;
+        global $conn;
         $id = (int) $id;
 
         $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
         $del = $conn->query("DELETE FROM milestones WHERE ID = $id");
         $del1 = $conn->query("DELETE FROM milestones_assigned WHERE milestone = $id");
-        if ($del)
-        {
+        if ($del) {
             $nam = $nam->fetch();
             $project = $nam[0];
             $name = $nam[1];
 
             $this->mylog->add($name, 'milestone', 3, $project);
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -123,13 +113,12 @@ class milestone
      */
     function open($id)
     {
-				global $conn;
+        global $conn;
         $id = (int) $id;
 
         $upd = $conn->query("UPDATE milestones SET status = 1 WHERE ID = $id");
 
-        if ($upd)
-        {
+        if ($upd) {
             $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
             $nam = $nam->fetch();
             $project = $nam[0];
@@ -137,9 +126,7 @@ class milestone
 
             $this->mylog->add($name, 'milestone', 4, $project);
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -152,27 +139,23 @@ class milestone
      */
     function close($id)
     {
-				global $conn;
+        global $conn;
         $id = (int) $id;
 
         $upd = $conn->query("UPDATE milestones SET status = 0 WHERE ID = $id");
         $tasklists = $this->getMilestoneTasklists($id);
-        if (!empty($tasklists))
-        {
-            foreach ($tasklists as $tasklist)
-            {
+        if (!empty($tasklists)) {
+            foreach ($tasklists as $tasklist) {
                 $tl = new tasklist();
                 $tasks = $tl->getTasksFromList($tasklist[ID]);
-                foreach ($tasks as $task)
-                {
+                foreach ($tasks as $task) {
                     $close_task = $conn->query("UPDATE tasks SET status = 0 WHERE ID = $task[ID]");
                 }
                 $close_tasklist = $conn->query("UPDATE tasklist SET status = 0 WHERE ID = $tasklist[ID]");
             }
         }
 
-        if ($upd)
-        {
+        if ($upd) {
             $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
             $nam = $nam->fetch();
             $project = $nam[0];
@@ -180,9 +163,7 @@ class milestone
 
             $this->mylog->add($name, 'milestone', 5, $project);
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -196,13 +177,12 @@ class milestone
      */
     function assign($milestone, $user)
     {
-				global $conn;
+        global $conn;
         $milestone = (int) $milestone;
         $user = (int) $user;
 
         $upd = $conn->query("INSERT INTO milestones_assigned (NULL,$user,$milestone)");
-        if ($upd)
-        {
+        if ($upd) {
             $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
             $nam = $nam->fetch();
             $project = $nam[0];
@@ -210,9 +190,7 @@ class milestone
 
             $this->mylog->add($name, 'milestone', 6, $project);
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -226,13 +204,12 @@ class milestone
      */
     function deassign($milestone, $user)
     {
-				global $conn;
+        global $conn;
         $milestone = (int) $milestone;
         $user = (int) $user;
 
         $upd = $conn->query("DELETE FROM milestones_assigned WHERE user = $user AND milestone = $milestone");
-        if ($upd)
-        {
+        if ($upd) {
             $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
             $nam = $nam->fetch();
             $project = $nam[0];
@@ -240,9 +217,7 @@ class milestone
 
             $this->mylog->add($name, 'milestone', 7, $project);
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -255,14 +230,13 @@ class milestone
      */
     function getMilestone($id)
     {
-				global $conn;
+        global $conn;
         $id = (int) $id;
 
         $sel = $conn->query("SELECT * FROM milestones WHERE ID = $id");
         $milestone = $sel->fetch();
 
-        if (!empty($milestone))
-        {
+        if (!empty($milestone)) {
             $endstring = date(CL_DATEFORMAT, $milestone["end"]);
             $milestone["endstring"] = $endstring;
             $milestone["fend"] = $endstring;
@@ -290,9 +264,7 @@ class milestone
             $milestone["messages"] = $messages;
 
             return $milestone;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -306,7 +278,7 @@ class milestone
      */
     function getMilestones($status = 1, $lim = 100)
     {
-				global $conn;
+        global $conn;
         $status = (int) $status;
         $lim = (int) $lim;
 
@@ -314,18 +286,14 @@ class milestone
 
         $sel = $conn->query("SELECT ID FROM milestones WHERE `status`=$status LIMIT $lim");
 
-        while ($milestone = $sel->fetch())
-        {
+        while ($milestone = $sel->fetch()) {
             $themilestone = $this->getMilestone($milestone["ID"]);
             array_push($milestones, $themilestone);
         }
 
-        if (!empty($milestones))
-        {
+        if (!empty($milestones)) {
             return $milestones;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -338,24 +306,20 @@ class milestone
      */
     function getDoneProjectMilestones($project)
     {
-				global $conn;
+        global $conn;
         $project = (int) $project;
 
         $sel = $conn->query("SELECT ID FROM milestones WHERE project = $project AND status = 0 ORDER BY ID ASC");
         $stones = array();
 
-        while ($milestone = $sel->fetch())
-        {
+        while ($milestone = $sel->fetch()) {
             $themilestone = $this->getMilestone($milestone["ID"]);
             array_push($stones, $themilestone);
         }
 
-        if (!empty($stones))
-        {
+        if (!empty($stones)) {
             return $stones;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -369,7 +333,7 @@ class milestone
      */
     function getLateProjectMilestones($project, $lim = 100)
     {
-				global $conn;
+        global $conn;
         $project = (int) $project;
         $lim = (int) $lim;
 
@@ -380,21 +344,16 @@ class milestone
         $sql = "SELECT ID FROM milestones WHERE project = $project AND end < $now AND status = 1 ORDER BY end ASC LIMIT $lim";
 
         $sel1 = $conn->query($sql);
-        while ($milestone = $sel1->fetch())
-        {
-            if (!empty($milestone))
-            {
+        while ($milestone = $sel1->fetch()) {
+            if (!empty($milestone)) {
                 $themilestone = $this->getMilestone($milestone["ID"]);
                 array_push($milestones, $themilestone);
             }
         }
 
-        if (!empty($milestones))
-        {
+        if (!empty($milestones)) {
             return $milestones;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -408,7 +367,7 @@ class milestone
      */
     function getAllProjectMilestones($project, $lim = 100)
     {
-				global $conn;
+        global $conn;
         $project = (int) $project;
         $lim = (int) $lim;
 
@@ -418,21 +377,16 @@ class milestone
         $sql = "SELECT ID FROM milestones WHERE project = $project AND status = 1 ORDER BY end ASC LIMIT $lim";
 
         $sel1 = $conn->query($sql);
-        while ($milestone = $sel1->fetch())
-        {
-            if (!empty($milestone))
-            {
+        while ($milestone = $sel1->fetch()) {
+            if (!empty($milestone)) {
                 $themilestone = $this->getMilestone($milestone["ID"]);
                 array_push($milestones, $themilestone);
             }
         }
 
-        if (!empty($milestones))
-        {
+        if (!empty($milestones)) {
             return $milestones;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -446,31 +400,27 @@ class milestone
      */
     function getProjectMilestones($project, $lim = 100)
     {
-				global $conn;
+        global $conn;
         $project = (int) $project;
         $lim = (int) $lim;
 
         $now = time();
         $milestones = array();
         $sql = "SELECT * FROM milestones WHERE project = $project AND end > $now AND status = 1 ORDER BY end ASC";
-        
+
         if ($lim > 0) {
-        	$sql .= " LIMIT $lim";
+            $sql .= " LIMIT $lim";
         }
 
         $sel1 = $conn->query($sql);
-        while ($milestone = $sel1->fetch())
-        {
+        while ($milestone = $sel1->fetch()) {
             $themilestone = $this->getMilestone($milestone["ID"]);
             array_push($milestones, $themilestone);
         }
 
-        if (!empty($milestones))
-        {
+        if (!empty($milestones)) {
             return $milestones;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -485,7 +435,7 @@ class milestone
 
     function getTodayProjectMilestones($project, $lim = 100)
     {
-				global $conn;
+        global $conn;
         $project = (int) $project;
         $lim = (int) $lim;
 
@@ -494,18 +444,14 @@ class milestone
         $milestones = array();
 
         $sel1 = $conn->query("SELECT * FROM milestones WHERE project = $project AND end = '$now' AND status = 1 ORDER BY end ASC LIMIT $lim");
-        while ($milestone = $sel1->fetch())
-        {
+        while ($milestone = $sel1->fetch()) {
             $themilestone = $this->getMilestone($milestone["ID"]);
             array_push($milestones, $themilestone);
         }
 
-        if (!empty($milestones))
-        {
+        if (!empty($milestones)) {
             return $milestones;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -521,16 +467,13 @@ class milestone
      */
     function getTodayMilestones($m, $y, $d, $project = 0)
     {
-				global $conn;
+        global $conn;
         $m = (int) $m;
         $y = (int) $y;
 
-        if ($m > 9)
-        {
+        if ($m > 9) {
             $startdate = date($d . "." . $m . "." . $y);
-        }
-        else
-        {
+        } else {
             $startdate = date($d . ".0" . $m . "." . $y);
         }
         $starttime = strtotime($startdate);
@@ -538,27 +481,18 @@ class milestone
 
         $timeline = array();
 
-        if ($project > 0)
-        {
+        if ($project > 0) {
             $sel1 = $conn->query("SELECT * FROM milestones WHERE project =  $project AND status=1 AND end = '$starttime'");
-        }
-        else
-        {
-			$sel1 = $conn->query("SELECT milestones.*,projekte_assigned.user,projekte.name AS pname FROM milestones,projekte_assigned,projekte WHERE milestones.project = projekte_assigned.projekt AND milestones.project = projekte.ID HAVING projekte_assigned.user = $user AND status=1 AND end = '$starttime'");
-        }
-
-        while ($stone = $sel1->fetch())
-        {
+        } else {
+            $sel1 = $conn->query("SELECT milestones.*,projekte_assigned.user,projekte.name AS pname FROM milestones,projekte_assigned,projekte WHERE milestones.project = projekte_assigned.projekt AND milestones.project = projekte.ID HAVING projekte_assigned.user = $user AND status=1 AND end = '$starttime'");
+        } while ($stone = $sel1->fetch()) {
             $stone["daysleft"] = $this->getDaysLeft($stone["end"]);
             array_push($timeline, $stone);
         }
 
-        if (!empty($timeline))
-        {
+        if (!empty($timeline)) {
             return $timeline;
-        }
-        else
-        {
+        } else {
             return array();
         }
     }
@@ -571,42 +505,35 @@ class milestone
      */
     private function getMilestoneTasklists($milestone)
     {
-				global $conn;
+        global $conn;
         $milestone = (int) $milestone;
 
         $sel = $conn->query("SELECT * FROM tasklist WHERE milestone = $milestone AND status = 1");
         $lists = array();
-        if ($milestone)
-        {
-            while ($list = $sel->fetch())
-            {
+        if ($milestone) {
+            while ($list = $sel->fetch()) {
                 $list["name"] = stripslashes($list["name"]);
                 $list["desc"] = stripslashes($list["desc"]);
                 array_push($lists, $list);
             }
         }
-        if (!empty($lists))
-        {
+        if (!empty($lists)) {
             return $lists;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
 
     private function getMilestoneMessages($milestone)
     {
-				global $conn;
+        global $conn;
         $milestone = (int) $milestone;
         $sel = $conn->query("SELECT ID,title FROM messages WHERE milestone = $milestone");
         $msgs = array();
-        while ($msg = $sel->fetch())
-        {
+        while ($msg = $sel->fetch()) {
             array_push($msgs, $msg);
         }
-        if (!empty($msgs))
-        {
+        if (!empty($msgs)) {
             return $msgs;
         }
     }
@@ -637,22 +564,17 @@ class milestone
     {
         $cou = 0;
 
-        if ($milestones)
-        {
-            foreach($milestones as $stone)
-            {
+        if ($milestones) {
+            foreach($milestones as $stone) {
                 $datetime = date(CL_DATEFORMAT, $stone[5]);
                 $milestones[$cou]["due"] = $datetime;
                 $cou = $cou + 1;
             }
         }
 
-        if (!empty($milestones))
-        {
+        if (!empty($milestones)) {
             return $milestones;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }

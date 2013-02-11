@@ -1,7 +1,6 @@
 <?php
 
-class tags
-{
+class tags {
     public $cloudlimit;
     /**
      * Constructor
@@ -13,68 +12,53 @@ class tags
         $this->cloudlimit = 0;
     }
 
-	/**
-	* Formats the an input string to be stored as tags.
-	* Possible format: word1,word2,word / word1, word2, word3 / word1 word2 word3
-	* OR a mix of the preceding
-	* 
-	* Extracts the words from the string, makes the first character uppercase, and reassembles the tagstring
-	*
-	* @param string $ tags Tagstring to be formatted
-	* @return string worktags Formatted tags
-	*/
-	public function formatInputTags($tags)
-	{
-		// Trim string
-		$tags = trim($tags);
-
-		// Compress string internal spaces:
-		$count = 1;
-		while($count) {
-    		$tags = str_replace("  ", " ", $tags, $count);
-		}
-	
-		// String liegt jetzt als "txt1, txt2, txt3" / "txt1,txt2,txt3" / "txt1 txt2 txt3" vor,
-		// bei entsprechender Usereingabe auch als "txt1 txt2,txt3, txt4"
-
-		$tags = str_replace(" ", "," , $tags);
-	
-		// String liegt jetzt als "txt1,,txt2,,txt3" /txt1,txt2,txt3" / "txt1,txt2,txt3" vor,
-		// bei entsprechender Usereingabe auch als "txt1,txt2,txt3,,txt4
-
-   		$tags = str_replace(",,", "," , $tags);
-
-		// String liegt jetzt als "txt1,txt2,txt3" /txt1,txt2,txt3" / "txt1,txt2,txt3" vor,
-		// bei entsprechender Usereingabe auch als "txt1,txt2,txt3,txt4"
-
+    /**
+     * Formats the an input string to be stored as tags.
+     * Possible format: word1,word2,word / word1, word2, word3 / word1 word2 word3
+     * OR a mix of the preceding
+     *
+     * Extracts the words from the string, makes the first character uppercase, and reassembles the tagstring
+     *
+     * @param string $ tags Tagstring to be formatted
+     * @return string worktags Formatted tags
+     */
+    public function formatInputTags($tags)
+    {
+        // Trim string
+        $tags = trim($tags);
+        // Compress string internal spaces:
+        $count = 1;
+        while ($count) {
+            $tags = str_replace("  ", " ", $tags, $count);
+        }
+        // String liegt jetzt als "txt1, txt2, txt3" / "txt1,txt2,txt3" / "txt1 txt2 txt3" vor,
+        // bei entsprechender Usereingabe auch als "txt1 txt2,txt3, txt4"
+        $tags = str_replace(" ", "," , $tags);
+        // String liegt jetzt als "txt1,,txt2,,txt3" /txt1,txt2,txt3" / "txt1,txt2,txt3" vor,
+        // bei entsprechender Usereingabe auch als "txt1,txt2,txt3,,txt4
+        $tags = str_replace(",,", "," , $tags);
+        // String liegt jetzt als "txt1,txt2,txt3" /txt1,txt2,txt3" / "txt1,txt2,txt3" vor,
+        // bei entsprechender Usereingabe auch als "txt1,txt2,txt3,txt4"
         $tags = strtolower($tags);
-        
-        if (!empty($tags))
-        {
+
+        if (!empty($tags)) {
             $tags = explode(",", $tags);
             $worktags = "";
-            foreach($tags as $tag)
-            {
-                if ($tag != "" and $tag != ",")
-                {
+            foreach($tags as $tag) {
+                if ($tag != "" and $tag != ",") {
                     $tag = trim($tag);
                     $tag = ucfirst($tag);
                     $worktags .= $tag . ",";
                 }
             }
             $worktags = substr($worktags, 0, strlen($worktags)-1);
-        }
-        else
-        {
+        } else {
             $worktags = "";
         }
 
-        if (!empty($worktags))
-        {
+        if (!empty($worktags)) {
             return $worktags;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -89,12 +73,9 @@ class tags
     {
         $tags = explode(",", $tagstr);
 
-        if (!empty($tags))
-        {
+        if (!empty($tags)) {
             return $tags;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -113,12 +94,9 @@ class tags
         $user = $this->getUser($tag);
 
         $content = array_merge($files, $messages, $user);
-        if (!empty($content))
-        {
+        if (!empty($content)) {
             return $content;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -131,7 +109,7 @@ class tags
      */
     public function getTagcloud($project)
     {
-				global $conn;
+        global $conn;
         $project = (int) $project;
 
         $sel1 = $conn->query("SELECT tags FROM files WHERE tags != '' AND project = $project");
@@ -140,21 +118,16 @@ class tags
         $tags1 = array();
         $worktags = "";
 
-        while ($dat = $sel1->fetch())
-        {
+        while ($dat = $sel1->fetch()) {
             $tag = $dat[0];
             $tag = ucfirst($tag);
-            if ($tag != "" and $tag != ",")
-            {
+            if ($tag != "" and $tag != ",") {
                 $worktags .= $tag . ",";
             }
-        }
-        while ($dat = $sel2->fetch())
-        {
+        } while ($dat = $sel2->fetch()) {
             $tag = $dat[0];
             $tag = ucfirst($tag);
-            if ($tag != "" and $tag != ",")
-            {
+            if ($tag != "" and $tag != ",") {
                 $worktags .= $tag . ",";
             }
         }
@@ -179,34 +152,26 @@ class tags
     // SELECT * FROM `files` WHERE tags REGEXP ',{0,1}Wort1,{0,1}'
     private function limitcloud($arr)
     {
-        if ($arr > $this->cloudlimit)
-        {
+        if ($arr > $this->cloudlimit) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
     private function getFiles($query, $project = 0)
     {
-				global $conn;
+        global $conn;
         $project = (int) $project;
 
-        if ($project > 0)
-        {
-            $sel = $conn->query("SELECT `ID`,`name`,`desc`,`type`,`datei`,`title`,`project`,`tags` FROM `files` WHERE `tags` LIKE ".$conn->quote("%{$query}%")." HAVING project = $project");
-        }
-        else
-        {
-            $sel = $conn->query("SELECT `ID`,`name`,`desc`,`type`,`datei`,`title`,`project`,`tags` FROM `files` WHERE `tags` LIKE ".$conn->quote("%{$query}%"));
+        if ($project > 0) {
+            $sel = $conn->query("SELECT `ID`,`name`,`desc`,`type`,`datei`,`title`,`project`,`tags` FROM `files` WHERE `tags` LIKE " . $conn->quote("%{$query}%") . " HAVING project = $project");
+        } else {
+            $sel = $conn->query("SELECT `ID`,`name`,`desc`,`type`,`datei`,`title`,`project`,`tags` FROM `files` WHERE `tags` LIKE " . $conn->quote("%{$query}%"));
         }
 
         $files = array();
-        while ($result = $sel->fetch())
-        {
-            if (!empty($result))
-            {
+        while ($result = $sel->fetch()) {
+            if (!empty($result)) {
                 $project = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]")->fetch();
                 $project = $project[0];
 
@@ -215,20 +180,15 @@ class tags
                 $set = new settings();
                 $settings = $set->getSettings();
                 $myfile = CL_ROOT . "/templates/" . $settings["template"] . "/images/symbols/files/" . $result["ftype"] . ".png";
-                if (stristr($result["type"], "image"))
-                {
+                if (stristr($result["type"], "image")) {
                     $result["imgfile"] = 1;
-                } elseif (stristr($result['type'], "text"))
-                {
+                } elseif (stristr($result['type'], "text")) {
                     $result["imgfile"] = 2;
-                }
-                else
-                {
+                } else {
                     $result["imgfile"] = 0;
                 }
 
-                if (!file_exists($myfile))
-                {
+                if (!file_exists($myfile)) {
                     $result["ftype"] = "none";
                 }
                 $result["title"] = stripslashes($result["title"]);
@@ -244,35 +204,27 @@ class tags
             }
         }
 
-        if (!empty($files))
-        {
+        if (!empty($files)) {
             return $files;
-        }
-        else
-        {
+        } else {
             return array();
         }
     }
 
     private function getMessages($query, $project = 0)
     {
-				global $conn;
+        global $conn;
         $project = (int) $project;
 
-        if ($project > 0)
-        {
-            $sel = $conn->query("SELECT `ID`,`title`,`text`,`posted`,`user`,`username`,`project`,`tags` FROM messages WHERE `tags` LIKE ".$conn->quote("%{$query}%")." HAVING project = $project ");
-        }
-        else
-        {
-            $sel = $conn->query("SELECT `ID`,`title`,`text`,`posted`,`user`,`username`,`project`,`tags` FROM messages WHERE `tags` LIKE ".$conn->quote("%{$query}%"));
+        if ($project > 0) {
+            $sel = $conn->query("SELECT `ID`,`title`,`text`,`posted`,`user`,`username`,`project`,`tags` FROM messages WHERE `tags` LIKE " . $conn->quote("%{$query}%") . " HAVING project = $project ");
+        } else {
+            $sel = $conn->query("SELECT `ID`,`title`,`text`,`posted`,`user`,`username`,`project`,`tags` FROM messages WHERE `tags` LIKE " . $conn->quote("%{$query}%"));
         }
 
         $messages = array();
-        while ($result = $sel->fetch())
-        {
-            if (!empty($result))
-            {
+        while ($result = $sel->fetch()) {
+            if (!empty($result)) {
                 $project = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]")->fetch();
                 $project = $project[0];
 
@@ -293,27 +245,22 @@ class tags
             }
         }
 
-        if (!empty($messages))
-        {
+        if (!empty($messages)) {
             return $messages;
-        }
-        else
-        {
+        } else {
             return array();
         }
     }
 
     private function getUser($query)
     {
-				global $conn;
+        global $conn;
 
-        $sel = $conn->query("SELECT `ID`,`email`,`name`,`avatar`,`lastlogin`,`tags`, `gender` FROM user WHERE tags LIKE ".$conn->quote("%{$query}%"));
+        $sel = $conn->query("SELECT `ID`,`email`,`name`,`avatar`,`lastlogin`,`tags`, `gender` FROM user WHERE tags LIKE " . $conn->quote("%{$query}%"));
 
         $user = array();
-        while ($result = $sel->fetch())
-        {
-            if (!empty($result))
-            {
+        while ($result = $sel->fetch()) {
+            if (!empty($result)) {
                 $result["type"] = "user";
                 $result["name"] = stripslashes($result["name"]);
                 $result["url"] = "manageuser.php?action=profile&amp;id=$result[ID]";
@@ -326,19 +273,15 @@ class tags
             }
         }
 
-        if (!empty($user))
-        {
+        if (!empty($user)) {
             return $user;
-        }
-        else
-        {
+        } else {
             return array();
         }
     }
 }
 // end class tags
-class tagcloud extends tags
-{
+class tagcloud extends tags {
     public $rows;
     public $itemsPerRow;
     public $minFontSize;
@@ -361,8 +304,7 @@ class tagcloud extends tags
         $this->itemsPerRow = $rowitems;
         $this->minFontSize = $minfont;
         $this->maxFontSize = $maxfont;
-        if (!empty($this->keywordsArray))
-        {
+        if (!empty($this->keywordsArray)) {
             $this->minTagValue = min($this->keywordsArray);
             $this->maxTagValue = max($this->keywordsArray);
         }
@@ -370,18 +312,14 @@ class tagcloud extends tags
 
     function getCloud()
     {
-        if (isset($this->maxTagValue) and isset($this->minTagValue) and $this->minTagValue > 0 and $this)
-        {
+        if (isset($this->maxTagValue) and isset($this->minTagValue) and $this->minTagValue > 0 and $this) {
             $fsize = $this->maxFontSize - $this->minFontSize;
             $tval = $this->maxTagValue - $this->minTagValue;
-            if ($fsize > 0 and $tval > 0)
-            {
+            if ($fsize > 0 and $tval > 0) {
                 $this->fontRatio = $fsize / $tval;
+            } else {
+                $this->fontRatio = 1;
             }
-            else
-            {
-			$this->fontRatio = 1;
-			}
             $this->fontOffset = $this->maxFontSize - ($this->fontRatio * $this->maxTagValue);
         }
         $htmlCode = "";
@@ -389,14 +327,11 @@ class tagcloud extends tags
 
         reset($this->keywordsArray);
 
-        for ($NumofRows = 1;$NumofRows <= $this->rows;$NumofRows++)
-        {
-            for ($itemsPerRow = 1;$itemsPerRow <= $this->itemsPerRow;$itemsPerRow++)
-            {
+        for ($NumofRows = 1;$NumofRows <= $this->rows;$NumofRows++) {
+            for ($itemsPerRow = 1;$itemsPerRow <= $this->itemsPerRow;$itemsPerRow++) {
                 $AbsoluteIndex++;
                 $currentKey = key($this->keywordsArray);
-                if (!empty($currentKey))
-                {
+                if (!empty($currentKey)) {
                     $currentValue = $this->keywordsArray[$currentKey];
                 }
                 $TagSize = floor(($this->fontRatio * $currentValue) + $this->fontOffset);
