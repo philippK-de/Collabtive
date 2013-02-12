@@ -75,11 +75,13 @@ if ($action == "loginerror") {
 } elseif ($action == "login") {
     $username = getArrayVal($_POST, "username");
     $pass = getArrayVal($_POST, "pass");
+
     // Open ID
     if ((isset($_GET['openid_claimed_id']) || !empty($openid)) && ($user->openIdLogin($openid))) {
         $loc = $url . "index.php?mode=login";
         header("Location: $loc");
     }
+    
     // Normal login
     elseif ($user->login($username, $pass)) {
         $loc = $url . "index.php?mode=login";
