@@ -67,12 +67,12 @@ class user {
      * @param string $country Country
      * @param string $locale Localisation
      * @param string $avatar Avatar
+     * @param string $openid Openid URL
      * @return bool
      */
-    function edit($id, $name, $realname, $email, $tel1, $tel2, $company, $zip, $gender, $url, $address1, $address2, $state, $country, $tags, $locale, $avatar = "", $rate = 0.0)
+    function edit($id, $name, $realname, $email, $tel1, $tel2, $company, $zip, $gender, $url, $address1, $address2, $state, $country, $tags, $locale, $avatar = "", $rate = 0.0, $openid)
     {
         global $conn;
-
         $rate = (float) $rate;
         $id = (int) $id;
 
@@ -83,7 +83,15 @@ class user {
             $updStmt = $conn->prepare("UPDATE user SET name=?, email=?, tel1=?, tel2=?, company=?, zip=?, gender=?, url=?, adress=?, adress2=?, state=?, country=?, tags=?, locale=?, rate=? WHERE ID = ?");
             $upd = $updStmt->execute(array($name, $email, $tel1, $tel2, $company, $zip, $gender, $url, $address1, $address2, $state, $country, $tags, $locale, $rate, $id));
         }
-
+        
+        /* if we have been updating the user data, and an open id also is posted: replace the users openid */
+        if ($upd && (!empty($openid))){        	
+        	$updStmt = $conn->prepare("DELETE FROM openids WHERE ID = ?");// remove this to allow for multiple openids per user
+        	$updStmt->execute(array($id));
+        	$updStmt = $conn->prepare("INSERT INTO openids VALUES (?, ?)");
+        	$updStmt->execute(array($openid,$id));
+        }
+        
         if ($upd) {
             $this->mylog->add($name, 'user', 2, 0);
             return true;
@@ -257,6 +265,13 @@ class user {
 
             $rolesobj = (object) new roles();
             $profile["role"] = $rolesobj->getUserRole($profile["ID"]);
+            
+            
+            $sel=$conn->query("SELECT identity FROM openids WHERE ID = $id LIMIT 1");
+            $res=$sel->fetch();
+            if (!empty($res)){
+            	if (isset($res['identity'])) $profile['openid']=stripslashes($res['identity']);
+            }
 
             return $profile;
         } else {
@@ -329,31 +344,37 @@ class user {
     }
 
     /**
-     * Log a user in
+     * Log a user in using open id
      *
-     * @param string $user User name
-     * @param string $pass Password
+     * @param string $url the openid url that determines the user
      * @return bool
      */
     function openIdLogin($url)
     {
-        /* here the openid auth should take place */
-
+    	global $conn;
+    	
         try {
-            $openid = new LightOpenID($_SERVER['HTTP_HOST']);
+        	/* here the openid auth should take place */
+        	$openid = new LightOpenID($_SERVER['HTTP_HOST']);
             if (!$openid->mode) {
                 $openid->identity = $url;
                 header('Location: ' . $openid->authUrl());
             } elseif ($openid->mode == 'cancel') {
                 return false;
             } else {
+            	
+            	
+            	/* at this point, the openid provides has verified the authenticity of the user. we can now start to actuall log in */
                 $identity = $openid->data['openid_identity'];
 
+                /* here we fetch the user id from the openids table */
                 $sel1 = $conn->query("SELECT ID from openids WHERE identity='$identity'");
                 if ($row = $sel1->fetch()) {
                     $id = $row['ID'];
                 } else return false;
-                // die("SELECT ID,name,locale,lastlogin,gender FROM user WHERE ID=$id");
+                
+                /* now that we habe the user id, we can load the user data */
+                
                 $sel1 = $conn->query("SELECT ID,name,locale,lastlogin,gender FROM user WHERE ID=$id");
                 $chk = $sel1->fetch();
                 if ($chk["ID"] != "") {

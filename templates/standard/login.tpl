@@ -20,6 +20,11 @@
 						<input type="password" class="text" name="pass" id="pass" realname = "{#password#}" />
 					</div>
 
+					<div class="row">
+						<label for="openid" class="openid"></label>
+						<input type="text" class="text" name="openid" id="openid" realname = "{#openid#}" />
+					</div>
+
 
 					<div class="row">
 						<label for="stay" class="keep" onclick = "toggleClass(this,'keep','keep-active');"><span>{#stayloggedin#}</span></label>

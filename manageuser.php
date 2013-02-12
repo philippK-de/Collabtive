@@ -35,6 +35,7 @@ $admin = getArrayVal($_POST, "admin");
 $turl = getArrayVal($_POST, "web");
 $gender = getArrayVal($_POST, "gender");
 $zip = getArrayVal($_POST, "zip");
+$openid = getArrayVal($_POST,"openid");
 $taski = getArrayVal($_GET, "task");
 $fproject = getArrayVal($_GET, "project");
 
@@ -75,11 +76,13 @@ if ($action == "loginerror") {
     $openid = getArrayVal($_POST, "openid");
     $username = getArrayVal($_POST, "username");
     $pass = getArrayVal($_POST, "pass");
+
     // Open ID
     if ((isset($_GET['openid_claimed_id']) || !empty($openid)) && ($user->openIdLogin($openid))) {
         $loc = $url . "index.php?mode=login";
         header("Location: $loc");
     }
+    
     // Normal login
     elseif ($user->login($username, $pass)) {
         $loc = $url . "index.php?mode=login";
@@ -125,7 +128,7 @@ if ($action == "loginerror") {
 } elseif ($action == "edit") {
     $_SESSION['userlocale'] = $locale;
     $_SESSION['username'] = $name;
-
+	$avatar="";
     if (!empty($_FILES['userfile']['name'])) {
         $fname = $_FILES['userfile']['name'];
         $typ = $_FILES['userfile']['type'];
@@ -168,22 +171,13 @@ if ($action == "loginerror") {
         if (move_uploaded_file($tmp_name, $datei_final)) {
             $avatar = $fname;
         }
-
-        if ($user->edit($userid, $name, $realname, $email, $tel1, $tel2, $company, $zip, $gender, $turl, $address1, $address2, $state, $country, "", $locale, $avatar, 0)) {
-            if (!empty($oldpass) and !empty($newpass) and !empty($repeatpass)) {
-                $user->editpass($userid, $oldpass, $newpass, $repeatpass);
-            }
-            $loc = $url . "manageuser.php?action=profile&id=$userid&mode=edited";
-            header("Location: $loc");
+    }
+    if ($user->edit($userid, $name, $realname, $email, $tel1, $tel2, $company, $zip, $gender, $turl, $address1, $address2, $state, $country, "", $locale, $avatar, 0,$openid)) {
+        if (!empty($oldpass) and !empty($newpass) and !empty($repeatpass)) {
+            $user->editpass($userid, $oldpass, $newpass, $repeatpass);
         }
-    } else {
-        if ($user->edit($userid, $name, $realname, $email, $tel1, $tel2, $company, $zip, $gender, $turl, $address1, $address2, $state, $country, "", $locale, "", 0)) {
-            if (isset($oldpass) and isset($newpass) and isset($repeatpass)) {
-                $user->editpass($userid, $oldpass, $newpass, $repeatpass);
-            }
-            $loc = $url . "manageuser.php?action=profile&id=$userid&mode=edited";
-            header("Location: $loc");
-        }
+        $loc = $url . "manageuser.php?action=profile&id=$userid&mode=edited";
+        header("Location: $loc");
     }
 } elseif ($action == "del") {
     if ($user->del($id)) {

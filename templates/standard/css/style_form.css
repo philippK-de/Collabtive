@@ -94,6 +94,10 @@ form.main input {
 	background: url(../images/login-pass.png);
 }
 
+.login .openid {
+	background: url(../images/login-openid.png);
+}
+
 .login .keep, login .keep-active {
 	background: url(../images/login-keeplogged.png);
 }
