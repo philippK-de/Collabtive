@@ -72,14 +72,20 @@ if ($action == "loginerror") {
         $template->display("resetpassword.tpl");
     }
 } elseif ($action == "login") {
-    $mode = getArrayVal($_GET, "openid_mode");
     $username = getArrayVal($_POST, "username");
     $pass = getArrayVal($_POST, "pass");
-    // normal login
-    if ($user->login($username, $pass)) {
+    // Open ID
+    if ((isset($_GET['openid_claimed_id']) || !empty($openid)) && ($user->openIdLogin($openid))) {
         $loc = $url . "index.php?mode=login";
         header("Location: $loc");
-    } else {
+    }
+    // Normal login
+    elseif ($user->login($username, $pass)) {
+        $loc = $url . "index.php?mode=login";
+        header("Location: $loc");
+    }
+    // Login Error
+    else {
         $template->assign("loginerror", 1);
         $template->display("login.tpl");
     }
