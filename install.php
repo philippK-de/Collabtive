@@ -334,7 +334,7 @@ CREATE TABLE `roles_assigned` (
   PRIMARY KEY  (`ID`)
 ) ENGINE=MyISAM");
     
-    $table21 = mysql_query("
+    $table21 = $conn->query("
 CREATE TABLE `openids` (
   `identity` VARCHAR(150) NOT NULL PRIMARY KEY,
   `ID` int(10) NOT NULL

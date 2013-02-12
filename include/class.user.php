@@ -72,7 +72,6 @@ class user {
     function edit($id, $name, $realname, $email, $tel1, $tel2, $company, $zip, $gender, $url, $address1, $address2, $state, $country, $tags, $locale, $avatar = "", $rate = 0.0, $openid)
     {
         global $conn;
-
         $rate = (float) $rate;
         $id = (int) $id;
 
@@ -84,11 +83,11 @@ class user {
             $upd = $updStmt->execute(array($name, $email, $tel1, $tel2, $company, $zip, $gender, $url, $address1, $address2, $state, $country, $tags, $locale, $rate, $id));
         }
         
-        if ($upd && ($openid != "")){
+        if ($upd && (!empty($openid))){
         	$updStmt = $conn->prepare("DELETE FROM openids WHERE ID = ?");// remove this to allow for multiple openids per user
         	$updStmt->execute(array($id));
-        	$updStmt = $conn->prepare("INSERT INTO openids VALUES ('?', ?)");
-        	$updStmt->execute(array($openid,$id));        	 
+        	$updStmt = $conn->prepare("INSERT INTO openids VALUES (?, ?)");
+        	$updStmt->execute(array($openid,$id));
         }
         
         if ($upd) {
@@ -352,7 +351,7 @@ class user {
     function openIdLogin($url)
     {
         /* here the openid auth should take place */
-
+    	global $conn;
         try {
             $openid = new LightOpenID($_SERVER['HTTP_HOST']);
             if (!$openid->mode) {
