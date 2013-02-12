@@ -127,6 +127,12 @@
 												</td>
 											</tr>
 										</tbody>
+										<tbody class="color-a">
+											<tr>
+												<td><strong>{#openid#}:</strong></td>
+												<td class="right"><a href="{$user.openid}">{$user.openid}</a></td>
+											</tr>
+										</tbody>
 									</table>
 
 								</div> {*Block End*}

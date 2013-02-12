@@ -35,6 +35,7 @@ $admin = getArrayVal($_POST, "admin");
 $turl = getArrayVal($_POST, "web");
 $gender = getArrayVal($_POST, "gender");
 $zip = getArrayVal($_POST, "zip");
+$openid = getArrayVal($_POST,"openid");
 $taski = getArrayVal($_GET, "task");
 $fproject = getArrayVal($_GET, "project");
 

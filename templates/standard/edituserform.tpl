@@ -73,6 +73,7 @@
 
 				<tbody class="color-a">
 					<tr>
+					<!-- added field for openid. currently, this is just a single line of text. in order to enable multiple openids per user, this should be altered into a multiline-field or editable dropdown or something like that -->
 						<td><label for="openid">{#openid#}:</label></td>
 						<td class="right"><input type = "text" class="text" value = "{$user.openid}" name = "openid" id="openid"  /></td>
 

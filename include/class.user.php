@@ -264,6 +264,13 @@ class user {
 
             $rolesobj = (object) new roles();
             $profile["role"] = $rolesobj->getUserRole($profile["ID"]);
+            
+            
+            $sel=$conn->query("SELECT identity FROM openids WHERE ID = $id LIMIT 1");
+            $res=$sel->fetch();
+            if (!empty($res)){
+            	if (isset($res['identity'])) $profile['openid']=stripslashes($res['identity']);
+            }
 
             return $profile;
         } else {
