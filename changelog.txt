@@ -22,6 +22,8 @@ With CSV Collabtive can now export to a widely used serialisation format that ca
 + Removed the tabs "my tasks" , "my projects" , "my messages" from the tabbar on the desktop.
 those tabs were redundant for quite some time now. all their information is, in condensed form, also on the desktop. they can be reinstated by editing tabsmenue-deskt.tpl
 + Fixed a bug preventing people from uploading avatar images
++ Changed the truncation of project titles and task titles on the desktop slightly to prevent http://collabtive.o-dyn.de/forum/viewtopic.php?f=11&t=8750#p17251
++ Made timetracker show closed tasks in addition to open tasks when editing a task ( http://collabtive.o-dyn.de/forum/viewtopic.php?f=11&t=8749 )
 
 Collabtive 0.7.6
 + Added Estonian translation
