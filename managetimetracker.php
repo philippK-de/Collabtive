@@ -128,7 +128,13 @@ if ($action == "add") {
     }
     $template->assign("track", $track);
 
-    $tasks = $task->getProjectTasks($id);
+    $newtasks = $task->getProjectTasks($id);
+    $oldtasks = $task->getProjectTasks($id, false);
+    if ($newtasks and $oldtasks) {
+        $tasks = array_merge($newtasks, $oldtasks);
+    } else {
+        $tasks = $newtasks;
+    }
     for ($i = 0; $i < count($tasks); $i++) {
         if (empty($tasks[$i]["title"])) {
             $name = substr($tasks[$i]["text"], 0, 30);
@@ -191,10 +197,10 @@ if ($action == "add") {
         $template->display("error.tpl");
         die();
     }
-    $excelFile = fopen(CL_ROOT . "/files/" . CL_CONFIG . "/ics/timetrack-$id.csv","w");
+    $excelFile = fopen(CL_ROOT . "/files/" . CL_CONFIG . "/ics/timetrack-$id.csv", "w");
 
     $line = array($struser, $strtask, $strcomment, $strday, $strstarted, $strended, $strhours);
-    fputcsv($excelFile,$line);
+    fputcsv($excelFile, $line);
 
     if (!empty($start) and !empty($end)) {
         $track = $tracker->getProjectTrack($id, $usr, $taski, $start, $end, 1000);
@@ -207,13 +213,12 @@ if ($action == "add") {
             $hrs = round($tra["hours"], 2);
             $hrs = str_replace(".", ",", $hrs);
             $myArr = array($tra["uname"], $tra["tname"], $tra["comment"], $tra["daystring"], $tra["startstring"], $tra["endstring"], $hrs);
-            fputcsv($excelFile,$myArr);
+            fputcsv($excelFile, $myArr);
         }
-
     }
 
     fclose($excelFile);
-	$loc = $url . "files/" . CL_CONFIG . "/ics/timetrack-$id.csv";
+    $loc = $url . "files/" . CL_CONFIG . "/ics/timetrack-$id.csv";
     header("Location: $loc");
 } elseif ($action == "projectpdf") {
     if (!chkproject($userid, $id)) {
@@ -257,10 +262,10 @@ if ($action == "add") {
         $pdf->Output("project-$id-timetable.pdf", "D");
     }
 } elseif ($action == "userxls") {
-    $excelFile = fopen(CL_ROOT . "/files/" . CL_CONFIG . "/ics/user-$id-timetrack.csv","w");
+    $excelFile = fopen(CL_ROOT . "/files/" . CL_CONFIG . "/ics/user-$id-timetrack.csv", "w");
 
     $line = array($strproj, $strtask, $strcomment, $strday, $strstarted, $strended, $strhours);
-    fputcsv($excelFile,$line);
+    fputcsv($excelFile, $line);
     if (!empty($start) and !empty($end)) {
         $track = $tracker->getUserTrack($id, $fproject, $taski, $start, $end);
     } else {
@@ -271,12 +276,10 @@ if ($action == "add") {
             $hrs = round($tra["hours"], 2);
             $hrs = str_replace(".", ",", $hrs);
             $myArr = array($tra["pname"], $tra["tname"], $tra["comment"], $tra["daystring"], $tra["startstring"], $tra["endstring"], $hrs);
-    		fputcsv($excelFile,$myArr);
+            fputcsv($excelFile, $myArr);
         }
-
-
     }
-	fclose($excelFile);
+    fclose($excelFile);
     $loc = $url . "files/" . CL_CONFIG . "/ics/user-$id-timetrack.csv";
     header("Location: $loc");
 } elseif ($action == "userpdf") {

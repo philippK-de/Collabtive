@@ -92,10 +92,8 @@ if ($action == "upload") {
     }
     $loc = $url .= "managefile.php?action=showproject&id=$id&mode=added";
     header("Location: $loc");
-}
-elseif($action == "uploadAsync")
-{
-     if ($upfolder) {
+} elseif ($action == "uploadAsync") {
+    if ($upfolder) {
         $thefolder = $myfile->getFolder($upfolder);
         $thefolder = $thefolder["name"];
         $upath = "files/" . CL_CONFIG . "/$id/" . $thefolder;
@@ -103,10 +101,10 @@ elseif($action == "uploadAsync")
         $upath = "files/" . CL_CONFIG . "/$id";
         $upfolder = 0;
     }
-	$num = count($_FILES);
+    $num = count($_FILES);
     $chk = 0;
     foreach($_FILES as $file) {
-        $fid = $myfile->uploadAsync($file["name"],$file["tmp_name"],$file["type"],$file["size"], $upath, $id, $upfolder);
+        $fid = $myfile->uploadAsync($file["name"], $file["tmp_name"], $file["type"], $file["size"], $upath, $id, $upfolder);
         $fileprops = $myfile->getFile($fid);
 
         if ($settings["mailnotify"]) {
@@ -140,10 +138,9 @@ elseif($action == "uploadAsync")
         }
     }
     $loc = $url .= "managefile.php?action=showproject&id=$id&mode=added";
-    //header("Location: $loc");
+    // header("Location: $loc");
     echo "UPLOADED";
-}
-elseif ($action == "editform") {
+} elseif ($action == "editform") {
     if (!$userpermissions["files"]["edit"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
@@ -222,49 +219,13 @@ elseif ($action == "editform") {
     }
 } elseif ($action == "showproject") {
     $files = $myfile->getProjectFiles($id);
-    $finfiles = array();
-    if (!empty($files)) {
-        foreach($files as $file) {
-            if ($file["visible"]) {
-                $filevis = unserialize($file["visible"]);
 
-                if (is_array($filevis)) {
-                    if (in_array($userpermissions["ID"], $filevis)) {
-                        array_push($finfiles, $file);
-                    }
-                } else {
-                    array_push($finfiles, $file);
-                }
-            } else {
-                array_push($finfiles, $file);
-            }
-        }
-    }
-
-    $filenum = count($finfiles);
+    $filenum = count($files);
     if (empty($finfiles)) {
         $filenum = 0;
     }
     $folders = $myfile->getProjectFolders($id);
 
-    $finfolders = array();
-    if (!empty($folders)) {
-        foreach($folders as $folder) {
-            if ($folder["visible"]) {
-                $foldvis = unserialize($folder["visible"]);
-
-                if (is_array($foldvis)) {
-                    if (in_array($userpermissions["ID"], $foldvis)) {
-                        array_push($finfolders, $folder);
-                    }
-                } else {
-                    array_push($finfolders, $folder);
-                }
-            } else {
-                array_push($finfolders, $folder);
-            }
-        }
-    }
     $allfolders = $myfile->getAllProjectFolders($id);
     $myproject = new project();
     $pro = $myproject->getProject($id);
@@ -272,17 +233,15 @@ elseif ($action == "editform") {
     $rolesobj = new roles();
     $allroles = $rolesobj->getAllRoles();
 
-
-
     $projectname = $pro["name"];
     $title = $langfile['files'];
 
     $template->assign("title", $title);
     $template->assign("projectname", $projectname);
     SmartyPaginate::assign($template);
-    $template->assign("files", $finfiles);
+    $template->assign("files", $files);
     $template->assign("filenum", $filenum);
-    $template->assign("folders", $finfolders);
+    $template->assign("folders", $folders);
     $template->assign("members", $members);
     $template->assign("roles", $allroles);
 

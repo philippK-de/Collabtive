@@ -73,6 +73,7 @@ if ($action == "loginerror") {
         $template->display("resetpassword.tpl");
     }
 } elseif ($action == "login") {
+    $openid = getArrayVal($_POST, "openid");
     $username = getArrayVal($_POST, "username");
     $pass = getArrayVal($_POST, "pass");
 
@@ -142,7 +143,7 @@ if ($action == "loginerror") {
         $erweiterung = $teilnamen[$workteile];
 
         $subname = "";
-        if ($erweiterung != "image/jpeg" and $erweiterung != "image/png" and $erweiterung != "image/gif" and $erweiterung != "image/pjpeg") {
+        if ($typ != "image/jpeg" and $typ != "image/png" and $typ != "image/gif" and $typ != "image/pjpeg") {
             $loc = $url . "manageuser.php?action=profile&id=$userid";
             header("Location: $loc");
             die();

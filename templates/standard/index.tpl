@@ -78,7 +78,7 @@
 										<div class="toggle-in">
 											<span id = "desktopprojectstoggle{$myprojects[project].ID}" class="acc-toggle" onclick="javascript:accord_projects.activate($$('#projecthead .accordion_toggle')[{$smarty.section.project.index}]);toggleAccordeon('projecthead',this);"></span>
 											<a href="manageproject.php?action=showproject&amp;id={$myprojects[project].ID}" title="{$myprojects[project].name}">
-												{$myprojects[project].name|truncate:35:"...":true}
+												{$myprojects[project].name|truncate:33:"...":true}
 											</a>
 										</div>
 									</td>
@@ -188,9 +188,9 @@
 											<span id = "desktoptaskstoggle{$tasks[task].ID}" class="acc-toggle" onclick="javascript:accord_tasks.activate($$('#taskhead .accordion_toggle')[{$smarty.section.task.index}]);toggleAccordeon('taskhead',this);"></span>
 											<a href="managetask.php?action=showtask&amp;id={$tasks[task].project}&amp;tid={$tasks[task].ID}" title="{$tasks[task].title}">
 											{if $tasks[task].title != ""}
-												{$tasks[task].title|truncate:35:"...":true}
+												{$tasks[task].title|truncate:33:"...":true}
 											{else}
-												{$tasks[task].text|truncate:35:"...":true}
+												{$tasks[task].text|truncate:33:"...":true}
 											{/if}
 											</a>
 										</div>

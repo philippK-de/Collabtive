@@ -8,6 +8,7 @@ if (!file_exists("./templates_c") or !is_writable("./templates_c")) {
 require("./init.php");
 $action = getArrayVal($_GET, "action");
 $locale = getArrayVal($_GET, "locale");
+
 if (!empty($locale)) {
     $_SESSION['userlocale'] = $locale;
 } else {
@@ -45,31 +46,32 @@ if (!$action) {
     if (!empty($settings)) {
         die("Collabtive seems to be already installed.<br />If this is an error, please clear your database.");
     }
-    $db_host = $_POST['db_host'];
-    $db_name = $_POST['db_name'];
-    $db_user = $_POST['db_user'];
-    $db_pass = $_POST['db_pass'];
-    // write db login data to config file
-    $file = fopen(CL_ROOT . "/config/" . CL_CONFIG . "/config.php", "w+");
-    $str = "<?php
+
+        $db_host = $_POST['db_host'];
+        $db_name = $_POST['db_name'];
+        $db_user = $_POST['db_user'];
+        $db_pass = $_POST['db_pass'];
+        // write db login data to config file
+        $file = fopen(CL_ROOT . "/config/" . CL_CONFIG . "/config.php", "w+");
+        $str = "<?php
 \$db_host = '$db_host';\n
 \$db_name = '$db_name';\n
 \$db_user = '$db_user';\n
 \$db_pass = '$db_pass';\n
 ?>";
-    $put = fwrite($file, "$str");
-    if ($put) {
-        @chmod(CL_ROOT . "/config/" . CL_CONFIG . "/config.php", 0755);
-    }
-    // connect database.
-    $conn = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
-    if (!($conn)) {
-        $template->assign("errortext", "Database connection could not be established. <br>Please check if database exists and check if login credentials are correct.");
-        $template->display("error.tpl");
-        die();
-    }
-    // Create MySQL Tables
-    $table1 = $conn->query("CREATE TABLE `company` (
+        $put = fwrite($file, "$str");
+        if ($put) {
+            @chmod(CL_ROOT . "/config/" . CL_CONFIG . "/config.php", 0755);
+        }
+        // connect database.
+        $conn = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
+        if (!($conn)) {
+            $template->assign("errortext", "Database connection could not be established. <br>Please check if database exists and check if login credentials are correct.");
+            $template->display("error.tpl");
+            die();
+        }
+        // Create MySQL Tables
+        $table1 = $conn->query("CREATE TABLE `company` (
   `ID` int(10) NOT NULL auto_increment,
   `name` varchar(255) NOT NULL default '',
   `email` varchar(255) NOT NULL default '',
@@ -83,7 +85,7 @@ if (!$action) {
   KEY `name` (`name`)
 ) ENGINE=MyISAM");
 
-    $table2 = $conn->query("CREATE TABLE `company_assigned` (
+        $table2 = $conn->query("CREATE TABLE `company_assigned` (
   `ID` int(10) NOT NULL auto_increment,
   `user` int(10) NOT NULL default '0',
   `company` int(10) NOT NULL default '0',
@@ -92,7 +94,7 @@ if (!$action) {
   KEY `user` (`user`)
 ) ENGINE=MyISAM");
 
-    $table3 = $conn->query("CREATE TABLE `files` (
+        $table3 = $conn->query("CREATE TABLE `files` (
   `ID` int(10) NOT NULL auto_increment,
   `name` varchar(255) NOT NULL default '',
   `desc` varchar(255) NOT NULL default '',
@@ -114,7 +116,7 @@ if (!$action) {
   KEY `tags` (`tags`)
 ) ENGINE=MyISAM");
 
-    $table4 = $conn->query("CREATE TABLE `log` (
+        $table4 = $conn->query("CREATE TABLE `log` (
   `ID` int(10) NOT NULL auto_increment,
   `user` int(10) NOT NULL default '0',
   `username` varchar(255) NOT NULL default '',
@@ -131,7 +133,7 @@ if (!$action) {
   FULLTEXT KEY `name` (`name`)
 ) ENGINE=MyISAM");
 
-    $table5 = $conn->query("CREATE TABLE `messages` (
+        $table5 = $conn->query("CREATE TABLE `messages` (
   `ID` int(10) NOT NULL auto_increment,
   `project` int(10) NOT NULL default '0',
   `title` varchar(255) NOT NULL default '',
@@ -149,7 +151,7 @@ if (!$action) {
   KEY `tags` (`tags`)
 ) ENGINE=MyISAM");
 
-    $table6 = $conn->query("CREATE TABLE `milestones` (
+        $table6 = $conn->query("CREATE TABLE `milestones` (
   `ID` int(10) NOT NULL auto_increment,
   `project` int(10) NOT NULL default '0',
   `name` varchar(255) NOT NULL default '',
@@ -163,7 +165,7 @@ if (!$action) {
   KEY `project` (`project`)
 ) ENGINE=MyISAM");
 
-    $table7 = $conn->query("CREATE TABLE `milestones_assigned` (
+        $table7 = $conn->query("CREATE TABLE `milestones_assigned` (
   `ID` int(10) NOT NULL auto_increment,
   `user` int(10) NOT NULL default '0',
   `milestone` int(10) NOT NULL default '0',
@@ -172,7 +174,7 @@ if (!$action) {
   KEY `milestone` (`milestone`)
 ) ENGINE=MyISAM");
 
-    $table8 = $conn->query("CREATE TABLE `projekte` (
+        $table8 = $conn->query("CREATE TABLE `projekte` (
   `ID` int(10) NOT NULL auto_increment,
   `name` varchar(255) NOT NULL default '',
   `desc` text NOT NULL,
@@ -184,7 +186,7 @@ if (!$action) {
   KEY `status` (`status`)
 ) ENGINE=MyISAM");
 
-    $table9 = $conn->query("CREATE TABLE `projekte_assigned` (
+        $table9 = $conn->query("CREATE TABLE `projekte_assigned` (
   `ID` int(10) NOT NULL auto_increment,
   `user` int(10) NOT NULL default '0',
   `projekt` int(10) NOT NULL default '0',
@@ -193,14 +195,14 @@ if (!$action) {
   KEY `projekt` (`projekt`)
 ) ENGINE=MyISAM");
 
-    $table10 = $conn->query("CREATE TABLE `settings` (
+        $table10 = $conn->query("CREATE TABLE `settings` (
   `ID` int(10) NOT NULL AUTO_INCREMENT,
   `settingsKey` varchar(50) NOT NULL,
   `settingsValue` varchar(50) NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  ");
 
-    $table11 = $conn->query("CREATE TABLE `tasklist` (
+        $table11 = $conn->query("CREATE TABLE `tasklist` (
   `ID` int(10) NOT NULL auto_increment,
   `project` int(10) NOT NULL default '0',
   `name` varchar(255) NOT NULL default '',
@@ -214,7 +216,7 @@ if (!$action) {
   KEY `milestone` (`milestone`)
 ) ENGINE=MyISAM");
 
-    $table12 = $conn->query("CREATE TABLE `tasks` (
+        $table12 = $conn->query("CREATE TABLE `tasks` (
   `ID` int(10) NOT NULL auto_increment,
   `start` varchar(255) NOT NULL default '',
   `end` varchar(255) NOT NULL default '',
@@ -229,7 +231,7 @@ if (!$action) {
   KEY `end` (`end`)
 ) ENGINE=MyISAM");
 
-    $table13 = $conn->query("CREATE TABLE `tasks_assigned` (
+        $table13 = $conn->query("CREATE TABLE `tasks_assigned` (
   `ID` int(10) NOT NULL auto_increment,
   `user` int(10) NOT NULL default '0',
   `task` int(10) NOT NULL default '0',
@@ -238,7 +240,7 @@ if (!$action) {
   KEY `task` (`task`)
 ) ENGINE=MyISAM");
 
-    $table14 = $conn->query("
+        $table14 = $conn->query("
 CREATE TABLE `user` (
   `ID` int(10)  auto_increment,
   `name` varchar(255) default '',
@@ -265,7 +267,7 @@ CREATE TABLE `user` (
   KEY `locale` (`locale`)
 ) ENGINE=MyISAM");
 
-    $table15 = $conn->query("CREATE TABLE `chat` (
+        $table15 = $conn->query("CREATE TABLE `chat` (
   `ID` int(10) NOT NULL auto_increment,
   `time` varchar(255) NOT NULL default '',
   `ufrom` varchar(255) NOT NULL default '',
@@ -276,7 +278,7 @@ CREATE TABLE `user` (
   PRIMARY KEY  (`ID`)
 ) ENGINE=MyISAM");
 
-    $table16 = $conn->query("CREATE TABLE `files_attached` (
+        $table16 = $conn->query("CREATE TABLE `files_attached` (
   `ID` int(10) unsigned NOT NULL auto_increment,
   `file` int(10) unsigned NOT NULL default '0',
   `message` int(10) unsigned NOT NULL default '0',
@@ -284,7 +286,7 @@ CREATE TABLE `user` (
   KEY `file` (`file`,`message`)
 ) ENGINE=MyISAM");
 
-    $table17 = $conn->query("CREATE TABLE `timetracker` (
+        $table17 = $conn->query("CREATE TABLE `timetracker` (
   `ID` int(10) NOT NULL auto_increment,
   `user` int(10) NOT NULL default '0',
   `project` int(10) NOT NULL default '0',
@@ -300,7 +302,7 @@ CREATE TABLE `user` (
   KEY `ended` (`ended`)
 ) ENGINE=MyISAM");
 
-    $table18 = $conn->query("CREATE TABLE `projectfolders` (
+        $table18 = $conn->query("CREATE TABLE `projectfolders` (
   `ID` int(10) unsigned NOT NULL auto_increment,
   `parent` int(10) unsigned NOT NULL default '0',
   `project` int(11) NOT NULL default '0',
@@ -311,7 +313,7 @@ CREATE TABLE `user` (
   KEY `project` (`project`)
 ) ENGINE=MyISAM");
 
-    $table19 = $conn->query("
+        $table19 = $conn->query("
 CREATE TABLE `roles` (
   `ID` int(10) NOT NULL auto_increment,
   `name` varchar(255) NOT NULL,
@@ -326,13 +328,14 @@ CREATE TABLE `roles` (
   PRIMARY KEY  (`ID`)
 ) ENGINE=MyISAM");
 
-    $table20 = $conn->query("
+        $table20 = $conn->query("
 CREATE TABLE `roles_assigned` (
   `ID` int(10) NOT NULL auto_increment,
   `user` int(10) NOT NULL,
   `role` int(10) NOT NULL,
   PRIMARY KEY  (`ID`)
 ) ENGINE=MyISAM");
+<<<<<<< HEAD
     
     $table21 = $conn->query("
 CREATE TABLE `openids` (
@@ -346,6 +349,14 @@ CREATE TABLE `openids` (
         $template->display("error.tpl");
         die();
     }
+=======
+        // Checks if tables could be created
+        if (!$table1 or !$table2 or !$table3 or !$table4 or !$table5 or !$table6 or !$table7 or !$table8 or !$table9 or !$table10 or !$table11 or !$table12 or !$table13 or !$table14 or !$table15 or !$table16 or !$table17 or !$table18 or !$table19 or !$table20) {
+            $template->assign("errortext", "Error: Tables could not be created.");
+            $template->display("error.tpl");
+            die();
+        }
+>>>>>>> upstream/master
     // Get the servers default timezone
     $timezone = date_default_timezone_get();
     // insert default settings

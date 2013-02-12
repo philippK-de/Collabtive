@@ -338,7 +338,7 @@ form.main textarea {
 	height:90px;
 	font-size:9pt;
 	padding:2px 3px 2px 3px;
-	background:#fff url(../gfx/input_text_bg.png) repeat-x;
+	background:#fff;
 	border:1px solid;
 	font-family:Arial, helvetica, sans-serif;
 	margin-bottom:6px;
