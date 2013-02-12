@@ -29,6 +29,7 @@ those tabs were redundant for quite some time now. all their information is, in 
 this way you can upload into a folder you just clicked straight away.
 + Fixed adding folders
 + Removed the "visibility" functionality for folders...finally
++ Removed IE7 compatibility
 
 Collabtive 0.7.6
 + Added Estonian translation
