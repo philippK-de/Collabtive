@@ -140,7 +140,7 @@ if ($action == "loginerror") {
         $erweiterung = $teilnamen[$workteile];
 
         $subname = "";
-        if ($erweiterung != "image/jpeg" and $erweiterung != "image/png" and $erweiterung != "image/gif" and $erweiterung != "image/pjpeg") {
+        if ($typ != "image/jpeg" and $typ != "image/png" and $typ != "image/gif" and $typ != "image/pjpeg") {
             $loc = $url . "manageuser.php?action=profile&id=$userid";
             header("Location: $loc");
             die();

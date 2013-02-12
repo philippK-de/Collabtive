@@ -19,7 +19,9 @@ Also, PDO supports a plethora of databases which should make supporting other da
 + Replaced the Excel Export by a more robust CSV export. The excel export was based on an outdated library and not fully compatible with newer versions of Excel and OpenOffice.
 With CSV Collabtive can now export to a widely used serialisation format that can easily be read into Excel, OpenOffice, and many more.
 + Switched to using a precompiled static CSS file in production instead of dynamically compiling it at runtime. This saves many call to the php interpreter.
-+ Removed the tabs "my tasks" , "my projects" , "my messages" from the tabbar on the desktop. those tabs were redundant for quite some time now. all their information is, in condensed form, also on the desktop. they can be reinstated by editing tabsmenue-deskt.tpl
++ Removed the tabs "my tasks" , "my projects" , "my messages" from the tabbar on the desktop.
+those tabs were redundant for quite some time now. all their information is, in condensed form, also on the desktop. they can be reinstated by editing tabsmenue-deskt.tpl
++ Fixed a bug preventing people from uploading avatar images
 
 Collabtive 0.7.6
 + Added Estonian translation
