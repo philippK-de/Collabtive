@@ -72,6 +72,7 @@ if ($action == "loginerror") {
         $template->display("resetpassword.tpl");
     }
 } elseif ($action == "login") {
+    $openid = getArrayVal($_POST, "openid");
     $username = getArrayVal($_POST, "username");
     $pass = getArrayVal($_POST, "pass");
     // Open ID
