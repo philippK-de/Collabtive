@@ -53,9 +53,6 @@ window.onunload = quitchat;
 {/if}
 <link rel="stylesheet" type="text/css" href="templates/standard/css/style_main.css"/>
 
-<!--[if lte IE 7]>
-<link rel="stylesheet" type="text/css" href="templates/standard/css/style_iefix.css"/>
-<![endif]-->
 
 {if $jsload1 == "tinymce"}
 {literal}
