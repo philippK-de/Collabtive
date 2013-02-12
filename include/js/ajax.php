@@ -219,7 +219,7 @@ function confirmfunction(text,toCall)
 
 function selectFolder(folderId)
 {
-    var theOptions = $('parentfolder').options;
+    var theOptions = $('folderparent').options;
     for(i=0;i<theOptions.length;i++)
     {
         if(theOptions[i].value == folderId)
@@ -227,6 +227,15 @@ function selectFolder(folderId)
             theOptions[i].selected = 'selected';
         }
     }
+   var theOptions = $('upfolder').options;
+    for(i=0;i<theOptions.length;i++)
+    {
+        if(theOptions[i].value == folderId)
+        {
+            theOptions[i].selected = 'selected';
+        }
+    }
+    upfolder
 }
 
 function setCookie( name, value, expires, path, domain, secure )

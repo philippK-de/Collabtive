@@ -24,6 +24,9 @@ those tabs were redundant for quite some time now. all their information is, in 
 + Fixed a bug preventing people from uploading avatar images
 + Changed the truncation of project titles and task titles on the desktop slightly to prevent http://collabtive.o-dyn.de/forum/viewtopic.php?f=11&t=8750#p17251
 + Made timetracker show closed tasks in addition to open tasks when editing a task ( http://collabtive.o-dyn.de/forum/viewtopic.php?f=11&t=8749 )
++ Fixed adding folders
++ When clicking on a folder set the folder in the select menu for add file and add folder to the clicked folder. 
+this way you can upload into a folder you just clicked straight away.
 
 Collabtive 0.7.6
 + Added Estonian translation

@@ -11,7 +11,7 @@
 							</div>
 						</td>
 						<td class="thumb">
-							<a href = "javascript:change('manageajax.php?action=fileview&id={$project.ID}&folder={$folders[fold].ID}','filescontent');">
+							<a href = "javascript:change('manageajax.php?action=fileview&id={$project.ID}&folder={$folders[fold].ID}','filescontent');selectFolder({$folders[fold].ID});">
 								<img src="./templates/standard/images/symbols/folder-sub.png" alt="" />
 							</a>
 						</td>
@@ -26,7 +26,7 @@
 					<tr>
 						<td colspan="3">
 							<span class="name">
-								<a href = "javascript:change('manageajax.php?action=fileview&id={$project.ID}&folder={$folders[fold].ID}','filescontent');"{if $myprojects[project].messages[message].files[file].imgfile == 1} rel="lytebox[img{$myprojects[project].messages[message].ID}]" {elseif $myprojects[project].messages[message].files[file].imgfile == 2} rel = "lyteframe[text{$myprojects[project].messages[message].ID}]"{/if} title="{$myprojects[project].messages[message].files[file].name}">
+								<a href = "javascript:change('manageajax.php?action=fileview&id={$project.ID}&folder={$folders[fold].ID}','filescontent');selectFolder({$folders[fold].ID});"  title="{$myprojects[project].messages[message].files[file].name}">
 									{if $folders[fold].name != ""}
 									{$folders[fold].name|truncate:14:"...":true}
 									{else}

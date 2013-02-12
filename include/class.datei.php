@@ -36,9 +36,7 @@ class datei {
         global $conn;
         $project = (int) $project;
         $folderOrig = $folder;
-        if (!empty($visible)) {
-            $visstr = serialize($visible);
-        }
+
         // replace umlauts
         $folder = str_replace("ä", "ae" , $folder);
         $folder = str_replace("ö", "oe" , $folder);
@@ -49,7 +47,7 @@ class datei {
         $folder = preg_replace("/[^-_0-9a-zA-Z]/", "_", $folder);
         // insert the folder into the db
         $insStmt = $conn->prepare("INSERT INTO projectfolders (parent, project, name, description, visible) VALUES (?, ?, ?, ?, ?)");
-        $ins = $insStmt->execute($parent, $project, $folder, $desc, $visstr);
+        $ins = $insStmt->execute(array($parent, $project, $folder, $desc, $visible));
         if ($ins) {
             // create the folder
             $makefolder = CL_ROOT . "/files/" . CL_CONFIG . "/$project/$folder/";
