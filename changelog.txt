@@ -27,6 +27,8 @@ those tabs were redundant for quite some time now. all their information is, in 
 + Fixed adding folders
 + When clicking on a folder set the folder in the select menu for add file and add folder to the clicked folder. 
 this way you can upload into a folder you just clicked straight away.
++ Fixed adding folders
++ Removed the "visibility" functionality for folders...finally
 
 Collabtive 0.7.6
 + Added Estonian translation
