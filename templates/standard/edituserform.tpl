@@ -73,8 +73,9 @@
 
 				<tbody class="color-a">
 					<tr>
-						<td></td>
-						<td class="right"></td>
+						<td><label for="openid">{#openid#}:</label></td>
+						<td class="right"><input type = "text" class="text" value = "{$user.openid}" name = "openid" id="openid"  /></td>
+
 					</tr>
 				</tbody>
 

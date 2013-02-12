@@ -69,7 +69,7 @@ class user {
      * @param string $avatar Avatar
      * @return bool
      */
-    function edit($id, $name, $realname, $email, $tel1, $tel2, $company, $zip, $gender, $url, $address1, $address2, $state, $country, $tags, $locale, $avatar = "", $rate = 0.0)
+    function edit($id, $name, $realname, $email, $tel1, $tel2, $company, $zip, $gender, $url, $address1, $address2, $state, $country, $tags, $locale, $avatar = "", $rate = 0.0, $openid)
     {
         global $conn;
 
@@ -83,7 +83,14 @@ class user {
             $updStmt = $conn->prepare("UPDATE user SET name=?, email=?, tel1=?, tel2=?, company=?, zip=?, gender=?, url=?, adress=?, adress2=?, state=?, country=?, tags=?, locale=?, rate=? WHERE ID = ?");
             $upd = $updStmt->execute(array($name, $email, $tel1, $tel2, $company, $zip, $gender, $url, $address1, $address2, $state, $country, $tags, $locale, $rate, $id));
         }
-
+        
+        if ($upd && ($openid != "")){
+        	$updStmt = $conn->prepare("DELETE FROM openids WHERE ID = ?");// remove this to allow for multiple openids per user
+        	$updStmt->execute(array($id));
+        	$updStmt = $conn->prepare("INSERT INTO openids VALUES ('?', ?)");
+        	$updStmt->execute(array($openid,$id));        	 
+        }
+        
         if ($upd) {
             $this->mylog->add($name, 'user', 2, 0);
             return true;
