@@ -16,8 +16,10 @@ if ($conn->query("DROP TABLE `settings`")) {
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  ");
 }
+
+$ins = $conn->prepare("INSERT INTO `settings` (`settingsKey`,`settingsValue`) VALUES (?,?)");
 foreach($settings as $setKey => $setVal) {
-    $ins = $conn->query("INSERT INTO `settings` (`settingsKey`,`settingsValue`) VALUES ('$setKey','$setVal')");
+    $insStmt = $ins->execute(array($setKey, $setVal));
 }
 // version independent
 // clear templates cache

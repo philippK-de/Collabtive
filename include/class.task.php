@@ -80,7 +80,7 @@ class task {
 
         $end = strtotime($end);
 
-        $upd = $conn->prepare("UPDATE tasks SET `end`=?,`title`=?, `text`=?, `liste`=? WHERE ID = ?");
+        $updStmt = $conn->prepare("UPDATE tasks SET `end`=?,`title`=?, `text`=?, `liste`=? WHERE ID = ?");
         $conn->query("DELETE FROM tasks_assigned WHERE `task` = $id");
         $upd = $updStmt->execute(array($end, $title, $text, $liste, $id));
 

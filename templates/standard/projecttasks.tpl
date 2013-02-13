@@ -44,7 +44,7 @@
 		<span id = "listdeleted" style = "display:none;" class="info_in_red"><img src="templates/standard/images/symbols/tasklist.png" alt=""/>{#tasklistwasdeleted#}</span>
 		<span id = "listopened" style = "display:none;" class="info_in_green"><img src="templates/standard/images/symbols/tasklist.png" alt=""/>{#tasklistwasopened#}</span>
 	</div>
-	
+
 	{literal}
 		<script type = "text/javascript">
 			systemMsg('systemmsg');
@@ -146,13 +146,14 @@
 									</td>
 									<td>
 										{section name=theusers loop=$lists[list].tasks[task].users}
-											<a href="manageuser.php?action=profile&amp;id={$lists[list].tasks[task].users[theusers].ID}">{$lists[list].tasks[task].users[theusers].name|truncate:30:"...":true}</a> 
+											<a href="manageuser.php?action=profile&amp;id={$lists[list].tasks[task].users[theusers].ID}">{$lists[list].tasks[task].users[theusers].name|truncate:30:"...":true}</a>
 										{/section}
 									</td>
 									<td style="text-align:right">{$lists[list].tasks[task].daysleft}&nbsp;&nbsp;</td>
 									<td class="tools">
 										{if $userpermissions.tasks.edit}
-										<a class="tool_edit" href="managetask.php?action=editform&amp;tid={$lists[list].tasks[task].ID}&amp;id={$project.ID}" title="{#edit#}"></a>{/if}
+										<a class="tool_edit" href="javascript:void(0);"  onclick = "change('managetask.php?action=editform&amp;tid={$lists[list].tasks[task].ID}&amp;id={$project.ID}','form_{$lists[list].ID}');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_{$lists[list].ID}');" title="{#edit#}"></a>
+										{/if}
 										{if $userpermissions.tasks.del}
 										<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'task_{$lists[list].tasks[task].ID}\',\'managetask.php?action=del&amp;tid={$lists[list].tasks[task].ID}&amp;id={$project.ID}\')');"  title="{#delete#}"></a>
 										{/if}
@@ -244,7 +245,7 @@
 										</td>
 									</tr>
 								</tbody>
-								
+
 								{literal}
 									<script type = "text/javascript">
 										var accord_done_{/literal}{$lists[list].ID}{literal} = new accordion('done_{/literal}{$lists[list].ID}{literal}');
@@ -266,7 +267,7 @@
 				</div>
 			</div>
 		</div> {*block END*}
-		
+
 		<div class="content-spacer"></div>
 	{/section} {*Tasks End*}
 {/if} {*if $lists[0][0]*}
@@ -340,13 +341,13 @@
 					</tbody>
 				{/section}
 			</table>
-			
+
 			<div class="tablemenue"></div>
 		</div> {*dones End*}
 	</div> {*block End*}
 
 	<div class="content-spacer"></div>
-	
+
 	{literal}
 		<script type = "text/javascript">
 			var accord_donelists = new accordion('block-donelists');
