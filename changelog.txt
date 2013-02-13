@@ -33,6 +33,7 @@ this way you can upload into a folder you just clicked straight away.
 + Files: Made listview / gridview switch respect the currently selected folder when switching views
 + Made the uploader respect the currently selected folder when refreshing. Now after an upload is complete the view will refresh
 the subfolder to which a file has been u ploaded and not always the main folder.
++ When editing tasks or projects in tables (i.e. on the desktop) the edit form is now displayed in the top block where the add project/task form is also displayed. This eliminates the need for a dedicated "edit" page.
 
 
 Collabtive 0.7.6
