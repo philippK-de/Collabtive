@@ -132,5 +132,5 @@
 	{/if}
 	$('filenum').innerHTML = '{$filenum}';
 	new LyteBox();
-	$('dirUp').href = "javascript:change('manageajax.php?action=fileview&id={$project.ID}&folder={$folderid}','filescontent');"
+	$('dirUp').href = "javascript:change('manageajax.php?action=fileview&id={$project.ID}&folder={$folderid}','filescontent');selectFolder({$folderid});"
 </script>

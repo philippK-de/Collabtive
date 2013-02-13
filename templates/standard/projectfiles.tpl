@@ -86,7 +86,7 @@
 						</div>
 						<div style = "float:right;margin-right:3px;">
 						<form id = "typechose">
-							<select id = "fileviewtype" onchange = "changeFileview(this.value);">
+							<select id = "fileviewtype" onchange = "changeFileview(this.value,$('folderparent').value);">
 								<option value = "fileview" selected>Grid View</option>
 								<option value = "fileview_list" >List View</option>
 							</select>
@@ -127,9 +127,13 @@
 </div> {*content-left END*}
 {literal}
 <script type = "text/javascript">
-function changeFileview(viewtype)
+function changeFileview(viewtype, folder)
 {
-	change("manageajax.php?action="+viewtype+"&id={/literal}{$project.ID}{literal}&folder=0","filescontent");
+	if(!folder)
+	{
+		folder = 0;
+	}
+	change("manageajax.php?action="+viewtype+"&id={/literal}{$project.ID}{literal}&folder="+folder,"filescontent");
 }
 </script>
 <script type = "text/javascript">
