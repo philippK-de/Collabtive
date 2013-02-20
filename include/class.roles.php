@@ -271,6 +271,9 @@ class roles {
         if (empty($inarr["read"])) {
             $inarr["read"] = 0;
         }
+        if (empty($inarr["view"])) {
+            $inarr["read"] = 0;
+        }
 
         return (array) $inarr;
     }
