@@ -24,7 +24,6 @@ $id = getArrayVal($_GET, "id");
 $project = array();
 $project['ID'] = $id;
 $template->assign("project", $project);
-
 // define the active tab in the project navigation
 $classes = array("overview" => "overview", "msgs" => "msgs", "tasks" => "tasks_active", "miles" => "miles", "files" => "files", "users" => "users", "tracker" => "tracking");
 $template->assign("classes", $classes);
@@ -257,6 +256,13 @@ if ($action == "addform") {
         $template->assign("deassigntask", 0);
     }
 } elseif ($action == "showproject") {
+    if (!$userpermissions["tasks"]["view"]) {
+        $errtxt = $langfile["nopermission"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
     if (!chkproject($userid, $id)) {
         $errtxt = $langfile["notyourproject"];
         $noperm = $langfile["accessdenied"];
@@ -287,6 +293,13 @@ if ($action == "addform") {
     $template->assign("oldlists", $oldlists);
     $template->display("projecttasks.tpl");
 } elseif ($action == "showtask") {
+    if (!$userpermissions["tasks"]["view"]) {
+        $errtxt = $langfile["nopermission"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
     if (!chkproject($userid, $id)) {
         $errtxt = $langfile["notyourproject"];
         $noperm = $langfile["accessdenied"];

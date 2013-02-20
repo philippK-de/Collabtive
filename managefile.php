@@ -218,6 +218,13 @@ if ($action == "upload") {
         header("Location: $loc");
     }
 } elseif ($action == "showproject") {
+    if (!$userpermissions["files"]["view"]) {
+        $errtxt = $langfile["nopermission"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
     $files = $myfile->getProjectFiles($id);
 
     $filenum = count($files);
