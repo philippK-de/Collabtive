@@ -151,7 +151,7 @@
 
 				<div class="block" id="taskhead" style = "{$taskstyle}">
 					<div id = "form_addmytask" class="addmenue" style = "display:none;">
-						{include file="addmytask.tpl" }
+						{include file="addmytask_index.tpl" }
 					</div>
 					<table id = "desktoptasks" cellpadding="0" cellspacing="0" border="0">
 						<thead>
