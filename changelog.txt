@@ -1,7 +1,8 @@
 Collabtive 1.0
-+ Improved translation(s): Arabic, Brasilian Portuguese, Bulgarian, Hungarian, Italian, Polish
-+ Added translation(s) of install-readme: Hungarian
-+ Improved translation(s) of install-readme: Arabic
++ Added translations: Hebrew, Norwegian (Nynorsk)
++ Improved translations: Arabic, Brasilian Portuguese, Bulgarian, Hungarian, Italian, Polish
++ Added translations of install-readme: Hungarian
++ Improved translations of install-readme: Arabic
 + Changed name of autoload function to cl_autoload and added it with spl_autoload_register() to autoload list, to not interfere other autoloaders
 + Implemented automatic update notification.
 + Completely re-written the PDF export. It now uses a custom subclass of TCPDF to directly draw the tables for the reports from arrays instead of using an HTML intermediate.
