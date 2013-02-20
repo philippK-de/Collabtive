@@ -36,6 +36,7 @@ Collabtive 1.0
 + When editing tasks or projects in tables (i.e. on the desktop) the edit form is now displayed in the top block where the add project/task form is also displayed. This eliminates the need for a dedicated "edit" page.
 + Enabled multi-byte safe truncation for strings (makes PHP extension "mbstring" required)
 + Properly enforce user permissions for uploading files, moving files (file_edit), deleting folders (file_del), adding folders (file_add) on the controller/script level. Not only on the template/view level.
++ Added RTL enabled version of the default theme. Contributed by mrawi.
 
 Collabtive 0.7.6
 + Added Estonian translation
