@@ -39,6 +39,7 @@ Collabtive 1.0
 + Added RTL enabled version of the default theme. Contributed by mrawi.
 + Implemented "view" permission. It enables you to define roles that can only view certain parts of a project. For example a role that can view milestones, tasks and messages,  but not files and the timetracker in a project.
 + Added "Add task" slider to the "my tasks" block on the desktop. This way a user can add tasks to himself straight from the desktop.
++ Fix shading of the content table. When clicking "add task" or "add project" on the desktop the table with existing tasks / projects is now correctly shaded.
 
 Collabtive 0.7.6
 + Added Estonian translation
