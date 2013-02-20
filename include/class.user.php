@@ -441,7 +441,7 @@ class user {
      * @param int $offset Allowed time from last login
      * @return array $users
      */
-    function getOnlinelist($offset = 300)
+    function getOnlinelist($offset = 200)
     {
         global $conn;
 
