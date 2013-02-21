@@ -19,7 +19,7 @@
 				systemMsg('systemmsg');
 			</script>
 		{/literal}
-	{if $isUpdated}
+	{if $isUpdated|default}
 		{include file="updateNotify.tpl"}
 	{/if}
 		<h1>{#desktop#}</h1>

@@ -130,7 +130,7 @@
 					<tr>
 						<td></td>
 						<td colspan="4"><strong>{#totalhours#}:</strong></td>
-						<td style="text-align:right"><strong>{$totaltime}</strong>&nbsp;&nbsp;</td>
+						<td style="text-align:right"><strong>{$totaltime|default}</strong>&nbsp;&nbsp;</td>
 						<td class="tools"></td>
 					</tr>
 				</tbody>
