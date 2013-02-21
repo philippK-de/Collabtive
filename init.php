@@ -27,6 +27,7 @@ if (!empty($db_name) and !empty($db_user))
 
 // Start template engine
 $template = new Smarty();
+
 // get the available languages
 $languages = getAvailableLanguages();
 // get URL to collabtive
@@ -78,12 +79,12 @@ if (isset($conn))
 if (isset($settings['template']))
 {
     $template->template_dir = CL_ROOT . "/templates/$settings[template]/";
-    $template->tname = $settings["template"];
+    //$template->tname = $settings["template"];
 }
 else
 {
     $template->template_dir = CL_ROOT . "/templates/standard/";
-    $template->tname = "standard";
+    //$template->tname = "standard";
 }
 
 if (!isset($locale))

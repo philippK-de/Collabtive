@@ -30,14 +30,14 @@ function smarty_function_paginate_last($params, &$smarty) {
 
     $_id = 'default';
     $_attrs = array();
-
+    
     if (!class_exists('SmartyPaginate')) {
         $smarty->trigger_error("paginate_last: missing SmartyPaginate class");
         return;
     }
     if (!isset($_SESSION['SmartyPaginate'])) {
         $smarty->trigger_error("paginate_last: SmartyPaginate is not initialized, use connect() first");
-        return;
+        return;        
     }
 
     foreach($params as $_key => $_val) {
@@ -45,57 +45,34 @@ function smarty_function_paginate_last($params, &$smarty) {
             case 'id':
                 if (!SmartyPaginate::isConnected($_val)) {
                     $smarty->trigger_error("paginate_last: unknown id '$_val'");
-                    return;
+                    return;        
                 }
                 $_id = $_val;
                 break;
             default:
                 $_attrs[] = $_key . '="' . $_val . '"';
-                break;
+                break;   
         }
     }
-
+    
     if (SmartyPaginate::getTotal($_id) === false) {
         $smarty->trigger_error("paginate_last: total was not set");
-        return;
+        return;        
     }
-
-    $_url = $_SERVER['REQUEST_URI'];
-    $url = explode("?", $_url);
-    $aurl = $url[0];
-    $url = $url[1];
-    $url = explode("&", $url);
-    $_url = "";
-    $i = 0;
-    foreach($url as $uri)
-    {
-        if (!strstr($uri, "next"))
-        {
-            if ($i > 0)
-            {
-                $_url .= "&" . $uri;
-            }
-            else
-            {
-                $_url .= $uri;
-            }
-        }
-        $i = $i + 1;
-    }
-    $_url = $aurl . "?" . $_url;
-
+    
+    $_url = SmartyPaginate::getURL($_id);
     $_total = SmartyPaginate::getTotal($_id);
     $_limit = SmartyPaginate::getLimit($_id);
-
-    $_attrs = !empty($_attrs) ? ' ' . implode(' ', $_attrs) : '';
-
+    
+    $_attrs = !empty($_attrs) ? ' ' . implode(' ', $_attrs) : '';    
+    
     $_text = isset($params['text']) ? $params['text'] : SmartyPaginate::getLastText($_id);
     $_url .= (strpos($_url, '?') === false) ? '?' : '&';
     $_url .= SmartyPaginate::getUrlVar($_id) . '=';
     $_url .= ($_total % $_limit > 0) ? $_total - ( $_total % $_limit ) + 1 : $_total - $_limit + 1;
-
-   // return '<a class = "next" href="' . str_replace('&','&amp;', $_url) . '"' . $_attrs . '>' . $_text . '</a>';
-  return '<a  href="' . str_replace('&','&amp;', $_url) . '"' . $_attrs . '><img src = "templates/' . $smarty->tname . '/images/paging_next.png" alt = ""  /></a>';
+    
+    return '<a href="' . str_replace('&','&amp;', $_url) . '"' . $_attrs . '>' . $_text . '</a>';
+    
 }
 
 ?>
