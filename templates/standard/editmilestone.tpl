@@ -64,7 +64,7 @@
 							<label>&nbsp;</label>
 							<button type="submit" onfocus="this.blur();">{#send#}</button>
 							{if $showhtml == "no"}
-								<button onclick="blindtoggle('form_edit');toggleClass('edit_butn','edit-active','edit');toggleClass('sm_mile','smooth','nosmooth');return false;" onfocus="this.blur();" {if $showhead == "1"} style="display:none;"{/if}>{#cancel#}</button>
+								<button onclick="blindtoggle('form_edit');toggleClass('edit_butn','edit-active','edit');toggleClass('sm_mile','smooth','nosmooth');return false;" onfocus="this.blur();" {if $showhead|default == "1"} style="display:none;"{/if}>{#cancel#}</button>
 							{/if}
 						</div>
 

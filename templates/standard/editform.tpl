@@ -16,7 +16,7 @@
 <h1 class="second"><img src="./templates/standard/images/symbols/projects.png" alt="" />{$project.name}</h1>
 
 {/if}
-{if $async == "yes"}
+{if $async|default == "yes"}
 {*include file="header.tpl"  jsload = "ajax" jsload1 = "tinymce"*}
 {literal}<script type="text/javascript">
 //	theme_advanced_statusbar_location : "bottom",
