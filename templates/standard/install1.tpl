@@ -18,10 +18,10 @@
 									<option value = "es">{#es#}</option>
 									<option value = "fi">{#fi#}</option>
 									<option value = "fr">{#fr#}</option>
+									<option value = "hu">{#hu#}</option>
 									<option value = "it">{#it#}</option>
 									<option value = "nl">{#nl#}</option>
 									<option value = "pl">{#pl#}</option>
-									<option value = "se">{#se#}</option>
 									<option value = "sr">{#sr#}</option>
 								</select>
 							</div>
@@ -38,7 +38,7 @@
 
 					<table cellpadding="0" cellspacing="0" style="font-style:italic;line-height: 23px">
 						<tr>
-							<td style="width:213px;"><strong>{#name#}:</strong></td>
+							<td style="width:300px;"><strong>{#condition#}:</strong></td>
 							<td><strong>{#status#}:</strong></td>
 						</tr>
 						<tr valign="top">
