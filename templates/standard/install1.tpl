@@ -38,47 +38,47 @@
 
 					<table cellpadding="0" cellspacing="0" style="font-style:italic;line-height: 23px">
 						<tr>
-							<td style="width:300px;"><strong>{#condition#}:</strong></td>
+							<td style="width:260px;"><strong>{#condition#}:</strong></td>
 							<td><strong>{#status#}:</strong></td>
 						</tr>
 						<tr valign="top">
 							<td>PHP 5.2</td>
 							{if $phpver >= 5.2}
-							<td><span style = "color:green;font-weight:bold;">OK</span></td>
+							<td><span style = "color:green;font-weight:bold;"><img src="./templates/standard/images/butn-ok.png" alt="OK"></span></td>
 							{else}
-							<td><span style = "color:red;font-weight:bold;">Not OK <br />(PHP {$phpver} - {#phpversion#})</span></td>
+							<td><span style = "color:red;font-weight:bold;"><img src="./templates/standard/images/butn-notok.png" alt="Not OK"><br />(PHP {$phpver} - {#phpversion#})</span></td>
 							{/if}
 						</tr>
 						<tr valign="top">
 							<td>config.php {#iswritable#}</td>
 							{if $configfile == 1}
-							<td><span style = "color:green;font-weight:bold;">OK </span></td>
+							<td><span style = "color:green;font-weight:bold;"><img src="./templates/standard/images/butn-ok.png" alt="OK"></span></td>
 							{else}
-							<td><span style = "color:red;font-weight:bold;">Not OK <br />({#makefilewritable#})</span></td>
+							<td><span style = "color:red;font-weight:bold;"><img src="./templates/standard/images/butn-notok.png" alt="Not OK"><br />{#makefilewritable#}</span></td>
 							{/if}
 						</tr>
 						<tr valign="top">
 							<td>files {#iswritable#}</td>
 							{if $filesdir == 1}
-							<td><span style = "color:green;font-weight:bold;">OK </span></td>
+							<td><span style = "color:green;font-weight:bold;"><img src="./templates/standard/images/butn-ok.png" alt="OK"></span></td>
 							{else}
-							<td><span style = "color:red;font-weight:bold;">Not OK <br />({#makedirwritable#})</span></td>
+							<td><span style = "color:red;font-weight:bold;"><img src="./templates/standard/images/butn-notok.png" alt="Not OK"><br />{#makedirwritable#}</span></td>
 							{/if}
 						</tr>
 						<tr valign="top">
 							<td>templates_c {#iswritable#}</td>
 							{if $templatesdir == 1}
-							<td><span style = "color:green;font-weight:bold;">OK </span></td>
+							<td><span style = "color:green;font-weight:bold;"><img src="./templates/standard/images/butn-ok.png" alt="OK"></span></td>
 							{else}
-							<td><span style = "color:red;font-weight:bold;">Not OK <br />({#makedirwritable#})</span></td>
+							<td><span style = "color:red;font-weight:bold;"><img src="./templates/standard/images/butn-notok.png" alt="Not OK"><br />{#makedirwritable#}</span></td>
 							{/if}
 						</tr>
 						<tr valign="top">
 							<td>{#mb_string_enabled#}</td>
 							{if $is_mbstring_enabled}
-							<td><span style = "color:green;font-weight:bold;">OK </span></td>
+							<td><span style = "color:green;font-weight:bold;"><img src="./templates/standard/images/butn-ok.png" alt="OK"></span></td>
 							{else}
-							<td><span style = "color:red;font-weight:bold;">Not OK <br />({#enable_mb_string#})</span></td>
+							<td><span style = "color:red;font-weight:bold;"><img src="./templates/standard/images/butn-notok.png" alt="Not OK"><br />{#enable_mb_string#}</span></td>
 							{/if}
 						</tr>
 					</table>
@@ -116,7 +116,7 @@
 						</form>
 					</div>
 				{else}
-					<br /><span style = "color: red;font-weight:bold;margin-left: 213px;">{#correctfaults#}</span>
+					<br /><span style = "color: red;font-weight:bold;">{#correctfaults#}</span>
 				{/if}
 
 				<div class="content-spacer"></div>
