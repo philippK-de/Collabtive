@@ -42,7 +42,7 @@ Collabtive 1.0
 + Added "Add task" slider to the "my tasks" block on the desktop. This way a user can add tasks to himself straight from the desktop.
 + Fix shading of the content table. When clicking "add task" or "add project" on the desktop the table with existing tasks / projects is now correctly shaded.
 + Made the page update.php translatable
-+ Made title of page install.php translatable
++ Improved the design of the installer
 
 Collabtive 0.7.6
 + Added Estonian translation
