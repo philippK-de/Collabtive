@@ -321,6 +321,13 @@ if ($action == "add") {
         $pdf->Output("user-$uname-timetable.pdf", "D");
     }
 } elseif ($action == "showproject") {
+    if (!$userpermissions["timetracker"]["view"]) {
+        $errtxt = $langfile["nopermission"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
     if (!chkproject($userid, $id)) {
         $errtxt = $langfile["notyourproject"];
         $noperm = $langfile["accessdenied"];

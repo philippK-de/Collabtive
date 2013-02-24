@@ -100,9 +100,9 @@ if (!$action) {
     // insert default roles
     $rolesobj = new roles();
 
-    $adminrid = $rolesobj->add("Admin", array("add" => 1, "edit" => 1, "del" => 1 , "close" => 1), array("add" => 1, "edit" => 1, "del" => 1, "close" => 1), array("add" => 1, "edit" => 1, "del" => 1, "close" => 1), array("add" => 1, "edit" => 1, "del" => 1, "close" => 1), array("add" => 1, "edit" => 1, "del" => 1), array("add" => 1, "edit" => 1, "del" => 1, "read" => 1), array("add" => 1), array("add" => 1));
+    $adminrid = $rolesobj->add("Admin", array("add" => 1, "edit" => 1, "del" => 1 , "close" => 1, "view" => 1), array("add" => 1, "edit" => 1, "del" => 1, "close" => 1, "view" => 1), array("add" => 1, "edit" => 1, "del" => 1, "close" => 1, "view" => 1), array("add" => 1, "edit" => 1, "del" => 1, "close" => 1, "view" => 1), array("add" => 1, "edit" => 1, "del" => 1, "view" => 1), array("add" => 1, "edit" => 1, "del" => 1, "read" => 1), array("add" => 1), array("add" => 1));
 
-    $userrid = $rolesobj->add("User", array("add" => 1, "edit" => 1, "del" => 0, "close" => 0), array("add" => 1, "edit" => 1, "del" => 0, "close" => 1), array("add" => 1, "edit" => 1, "del" => 1, "close" => 1), array("add" => 1, "edit" => 1, "del" => 1, "close" => 1), array("add" => 1, "edit" => 1, "del" => 1), array("add" => 1, "edit" => 1, "del" => 1, "read" => 0), array("add" => 1), array("add" => 0));
+    $userrid = $rolesobj->add("User", array("add" => 1, "edit" => 1, "del" => 0, "close" => 0, "view" => 1), array("add" => 1, "edit" => 1, "del" => 0, "close" => 1, "view" => 1), array("add" => 1, "edit" => 1, "del" => 1, "close" => 1, "view" => 1), array("add" => 1, "edit" => 1, "del" => 1, "close" => 1, "view" => 1), array("add" => 1, "edit" => 1, "del" => 1, "view" => 1), array("add" => 1, "edit" => 1, "del" => 1, "read" => 0), array("add" => 1), array("add" => 0));
 
     $clientrid = $rolesobj->add("Client", array("add" => 0, "edit" => 0, "del" => 0, "close" => 0), array("add" => 0, "edit" => 0, "del" => 0, "close" => 0), array("add" => 0, "edit" => 0, "del" => 0, "close" => 0), array("add" => 0, "edit" => 0, "del" => 0, "close" => 0), array("add" => 0, "edit" => 0, "del" => 0), array("add" => 0, "edit" => 0, "del" => 0, "read" => 0), array("add" => 0), array("add" => 0));
 

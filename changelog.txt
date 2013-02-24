@@ -1,13 +1,14 @@
 Collabtive 1.0
-+ Improved translation(s): Arabic, Brasilian Portuguese, Bulgarian, Hungarian, Italian, Polish
-+ Added translation(s) of install-readme: Hungarian
-+ Improved translation(s) of install-readme: Arabic
-+ Changed name of the autoload function to cl_autoload and added it with spl_autoload_register() to the autoload list, to not interfere with other autoloaders
++ Added translations: Hebrew, Norwegian (Nynorsk)
++ Improved translations: Albanian, Arabic, Bulgarian, Danish, Greek, Hungarian, Italian, Norwegian (Bokmål), Polish, Portuguese (Brazilian), Slovak, Serbian, Turkish
++ Added translations of install-readme: Hungarian
++ Improved translations of install-readme: Arabic
++ Changed name of autoload function to cl_autoload and added it with spl_autoload_register() to autoload list, to not interfere other autoloaders
 + Implemented automatic update notification.
 + Completely re-written the PDF export. It now uses a custom subclass of TCPDF to directly draw the tables for the reports from arrays instead of using an HTML intermediate.
-  This greatly speeds up PDF generation (esp when many lines are exported) and generates much smaller PDFs. It should also make customizing easier.
+  This greatly speeds up PDF generation (esp when many lines are exported) and generates much smaller PDFs.
 + Fixed problem with missing "webcolor" variable in TCPDF
-+ Improved the Project log PDF Report by merging fields, improving shading and adding automatic font stretching. This makes for better readability.
++ Improved the Project log PDF Report by merging fields, improving shading and adding automatic font stretching.
 + Added new PDF report to the "my tasks" block on the desktop. Now a user can export all his tasks to PDF.
 + Re-enabled permissions checking when deleting a timetracker entry. This got disabled for testing purposes and was commited to trunk. Disabling it posed a possible security risk.
 + Added permissions checking to timetracker:add and timetracker:edit . Permissions set in the useraccount where not properly enforced for the timetracker before.
@@ -35,6 +36,13 @@ Collabtive 1.0
 + Made the uploader respect the currently selected folder when refreshing. Now after an upload is complete the view will refresh the subfolder to which a file has been uploaded and not always the main folder.
 + When editing tasks or projects in tables (i.e. on the desktop) the edit form is now displayed in the top block where the add project/task form is also displayed. This eliminates the need for a dedicated "edit" page.
 + Enabled multi-byte safe truncation for strings (makes PHP extension "mbstring" required)
++ Properly enforce user permissions for uploading files, moving files (file_edit), deleting folders (file_del), adding folders (file_add) on the controller/script level. Not only on the template/view level.
++ Added RTL enabled version of the default theme. Contributed by mrawi.
++ Implemented "view" permission. It enables you to define roles that can only view certain parts of a project. For example a role that can view milestones, tasks and messages,  but not files and the timetracker in a project.
++ Added "Add task" slider to the "my tasks" block on the desktop. This way a user can add tasks to himself straight from the desktop.
++ Fix shading of the content table. When clicking "add task" or "add project" on the desktop the table with existing tasks / projects is now correctly shaded.
++ Made the page update.php translatable
++ Improved the design of the installer
 
 Collabtive 0.7.6
 + Added Estonian translation

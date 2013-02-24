@@ -1,12 +1,14 @@
 <?php
 error_reporting(0);
 require("./init.php");
+
 // 0.7
 $conn->query("ALTER TABLE `files` CHANGE `type` `type` VARCHAR( 255 )");
 // change to new winter template if unmaintained frost template is selected
 if ($settings["template"] == "frost") {
     $conn->query("UPDATE `settings` SET `template` = 'winter'");
 }
+
 // 1.0
 if ($conn->query("DROP TABLE `settings`")) {
     $table = $conn->query("CREATE TABLE `settings` (
@@ -14,22 +16,23 @@ if ($conn->query("DROP TABLE `settings`")) {
   `settingsKey` varchar(50) NOT NULL,
   `settingsValue` varchar(50) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM  ");
+) ENGINE=MyISAM");
 }
 
 $ins = $conn->prepare("INSERT INTO `settings` (`settingsKey`,`settingsValue`) VALUES (?,?)");
 foreach($settings as $setKey => $setVal) {
     $insStmt = $ins->execute(array($setKey, $setVal));
 }
-// version independent
-// clear templates cache
+
+// Version independent
+// Clear templates cache
 $handle = opendir($template->compile_dir);
 while (false !== ($file = readdir($handle))) {
     if ($file != "." and $file != "..") {
         unlink(CL_ROOT . "/" . $template->compile_dir . "/" . $file);
     }
 }
-// optimize tables
+// Optimize tables
 $opt1 = $conn->query("OPTIMIZE TABLE `files`");
 $opt2 = $conn->query("OPTIMIZE TABLE `files_attached`");
 $opt3 = $conn->query("OPTIMIZE TABLE `log`");
@@ -49,5 +52,4 @@ $opt16 = $conn->query("OPTIMIZE TABLE `timetracker`");
 $opt17 = $conn->query("OPTIMIZE TABLE `user`");
 
 $template->display("update.tpl");
-
 ?>

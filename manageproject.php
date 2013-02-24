@@ -454,3 +454,13 @@ if ($action == "editform") {
     $template->assign("id", $id);
     $template->display("calbody_project.tpl");
 }
+elseif($action == "tasklists")
+{
+	$listObj = new tasklist();
+	$theLists = $listObj->getProjectTasklists($id);
+	echo "<option value=\"-1\" selected=\"selected\">$langfile[chooseone]</option>";
+	foreach($theLists as $list)
+	{
+		echo "<option value = \"$list[ID]\">$list[name]</option>";
+	}
+}

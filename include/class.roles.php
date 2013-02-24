@@ -82,7 +82,7 @@ class roles {
         $admin = serialize($admin);
 
         $updStmt = $conn->prepare("UPDATE roles SET name=?,projects=?,tasks=?,milestones=?,messages=?,files=?,timetracker=?,chat=?,admin=? WHERE ID = ?");
-        $upd = $updStmt->execute(array($name, $projects, $tasts, $milestone, $messages, $files, $timetracker, $chat, $admin, $id));
+        $upd = $updStmt->execute(array($name, $projects, $tasks, $milestones, $messages, $files, $timetracker, $chat, $admin, $id));
 
         if ($upd) {
             return true;
@@ -270,6 +270,9 @@ class roles {
         }
         if (empty($inarr["read"])) {
             $inarr["read"] = 0;
+        }
+        if (empty($inarr["view"])) {
+            $inarr["view"] = 0;
         }
 
         return (array) $inarr;

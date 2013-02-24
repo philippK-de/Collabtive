@@ -20,16 +20,8 @@
 			<div class="row">
 			<label for = "folderdesc">{#description#}:</label><input type = "text" class="text" name = "folderdesc" id="folderdesc" />
 			</div>
+			<input type = "hidden" name = "visible[]" value = "" />
 
-			<div class = "row">
-				<label>{#visibility#}:</label>:
-				<select name = "visible[]" multiple style = "height:80px;">
-					<option value = "" selected>{#all#}</option>
-					{section name=role loop=$roles}
-						<option value = "{$roles[role].ID}" >{$roles[role].name}</option>
-					{/section}
-				</select>
-			</div>
 
 			<div class="row-butn-bottom">
 				<label>&nbsp;</label>

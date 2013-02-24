@@ -44,6 +44,13 @@ if (!chkproject($userid, $id)) {
     die();
 }
 if ($action == "upload") {
+    if (!$userpermissions["files"]["add"]) {
+        $errtxt = $langfile["nopermission"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "<h2>$errtxt</h2><br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
     $num = $_POST['numfiles'];
 
     if ($upfolder) {
@@ -93,6 +100,13 @@ if ($action == "upload") {
     $loc = $url .= "managefile.php?action=showproject&id=$id&mode=added";
     header("Location: $loc");
 } elseif ($action == "uploadAsync") {
+    if (!$userpermissions["files"]["add"]) {
+        $errtxt = $langfile["nopermission"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "<h2>$errtxt</h2><br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
     if ($upfolder) {
         $thefolder = $myfile->getFolder($upfolder);
         $thefolder = $thefolder["name"];
@@ -218,6 +232,13 @@ if ($action == "upload") {
         header("Location: $loc");
     }
 } elseif ($action == "showproject") {
+    if (!$userpermissions["files"]["view"]) {
+        $errtxt = $langfile["nopermission"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
     $files = $myfile->getProjectFiles($id);
 
     $filenum = count($files);
@@ -249,6 +270,13 @@ if ($action == "upload") {
     $template->assign("postmax", $POST_MAX_SIZE);
     $template->display("projectfiles.tpl");
 } elseif ($action == "addfolder") {
+    if (!$userpermissions["files"]["add"]) {
+        $errtxt = $langfile["nopermission"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "<h2>$errtxt</h2><br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
     $name = getArrayVal($_POST, "foldertitle");
     $desc = getArrayVal($_POST, "folderdesc");
     $parent = getArrayVal($_POST, "folderparent");
@@ -261,6 +289,13 @@ if ($action == "upload") {
         header("Location: $loc");
     }
 } elseif ($action == "delfolder") {
+    if (!$userpermissions["files"]["del"]) {
+        $errtxt = $langfile["nopermission"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "<h2>$errtxt</h2><br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
     $ajaxreq = $_GET["ajax"];
     $folder = getArrayVal($_GET, "folder");
     if ($myfile->deleteFolder($folder, $id)) {
@@ -272,6 +307,13 @@ if ($action == "upload") {
         }
     }
 } elseif ($action == "movefile") {
+    if (!$userpermissions["files"]["edit"]) {
+        $errtxt = $langfile["nopermission"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "<h2>$errtxt</h2><br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
     $file = $_GET["file"];
     $file = substr($file, 4, strlen($file)-4);
 

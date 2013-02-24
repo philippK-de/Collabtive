@@ -88,7 +88,7 @@
 												<tbody class="color-a">
 													<tr>
 														<td><label for="email">{#email#}:</label></td>
-														<td class="right"><input type = "text class="text" value = "{$user.email}" name = "email" id="email" {literal}regexp="EMAIL"{/literal} required="1" realname ="{#email#}" /></td>
+														<td class="right"><input type = "text" class="text" value = "{$user.email}" name = "email" id="email" {literal}regexp="EMAIL"{/literal} required="1" realname ="{#email#}" /></td>
 													</tr>
 												</tbody>
 
