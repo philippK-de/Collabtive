@@ -331,6 +331,20 @@ if ($action == "addform")
     $template->display("mymessages.tpl");
 } elseif ($action == "showproject")
 {
+    if (!$userpermissions["messages"]["view"]) {
+        $errtxt = $langfile["nopermission"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
+    if (!chkproject($userid, $id)) {
+        $errtxt = $langfile["notyourproject"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
     // get all messages of this project
     $messages = $msg->getProjectMessages($id);
     // get project's name
