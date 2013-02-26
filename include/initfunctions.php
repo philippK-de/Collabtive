@@ -10,6 +10,7 @@ function cl_autoload($class_name)
     }
 }
 spl_autoload_register('cl_autoload');
+
 function chkproject($user, $project)
 {
 	global $conn;
@@ -128,6 +129,7 @@ function getMyUrl()
 
     return $url;
 }
+
 function strip_only_tags($str, $tags, $stripContent = false)
 {
     $content = '';
@@ -142,6 +144,7 @@ function strip_only_tags($str, $tags, $stripContent = false)
     }
     return $str;
 }
+
 function getArrayVal(array $array, $name)
 {
     if (array_key_exists($name, $array)) {
@@ -150,6 +153,7 @@ function getArrayVal(array $array, $name)
         return false;
     }
 }
+
 function delete_directory($dirname)
 {
     if (is_dir($dirname)) {
@@ -182,6 +186,7 @@ function reduceArray(array $arr)
     }
     return $earr;
 }
+
 function getUpdateNotify(){
 	return json_decode(@file_get_contents("http://collabtive.o-dyn.de/update/chk.php"));
 }
