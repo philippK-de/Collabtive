@@ -14,9 +14,7 @@
             <label></label>
             <label>{#projects#}</label>
             </div>
-            <div class = "row">
-            <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_projects[view]" />View
-            </div>
+
             <div class = "row">
             <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_projects[add]" />{#add#}
             </div>
@@ -35,7 +33,7 @@
             <label>{#milestones#}</label>
             </div>
              <div class = "row">
-            <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_milestones[view]" />View
+            <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_milestones[view]" />{#view#}
             </div>
             <div class = "row">
             <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_milestones[add]" />{#add#}
@@ -55,7 +53,7 @@
             <label>{#tasks#}</label>
             </div>
              <div class = "row">
-            <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_tasks[view]" />View
+            <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_tasks[view]" />{#view#}
             </div>
             <div class = "row">
             <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_tasks[add]" />{#add#}
@@ -75,7 +73,7 @@
             <label>{#messages#}</label>
             </div>
              <div class = "row">
-            <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_messages[view]" />View
+            <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_messages[view]" />{#view#}
             </div>
             <div class = "row">
             <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_messages[add]" />{#add#}
@@ -95,7 +93,7 @@
             <label>{#files#}</label>
             </div>
              <div class = "row">
-            <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_files[del]" />View
+            <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_files[del]" />{#view#}
             </div>
             <div class = "row">
             <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_files[add]" />{#add#}
@@ -112,7 +110,7 @@
             <label>{#timetracker#}</label>
             </div>
             <div class = "row">
-            <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_timetracker[view]" />View
+            <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_timetracker[view]" />{#view#}
             </div>
             <div class = "row">
             <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_timetracker[read]" />{#permissionread#}

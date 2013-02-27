@@ -40,7 +40,7 @@
 				{if $project.budget}
 				<li><a>{#budget#}: {$project.budget}</a></li>
 				{/if}{/if}
-				
+
 				{if $project.daysleft != "" || $project.daysleft == "0"}
 					<li {if $project.daysleft < 0}class="red"{elseif $project.daysleft == "0"}class="green"{/if}><a>{$project.daysleft} {#daysleft#}</a></li>
 				{/if}

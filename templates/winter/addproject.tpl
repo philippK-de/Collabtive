@@ -11,7 +11,7 @@
 		<div class="row">
 		<label for="end">{#due#}:</label>
 		{* regexp="{literal}\d{2}.\d{2}.\d{4}{/literal}" *}
-		<input type="text" class="text" name="end"  id="end"  realname="{#due#}"  />
+		<input type="text" class="text" name="end"  id="endP"  realname="{#due#}"  />
 		<br /><br />
 		<label for = "neverdue"></label><input type = "checkbox" class = "checkbox" value = "neverdue" name = "neverdue" id = "neverdue" onclick = "$('end').value='';$('end').disabled='disabled';">{#neverdue#}
 		</div>
@@ -24,7 +24,7 @@
 		  	theCal = new calendar({$theM},{$theY});
 			theCal.dayNames = ["{#monday#}","{#tuesday#}","{#wednesday#}","{#thursday#}","{#friday#}","{#saturday#}","{#sunday#}"];
 			theCal.monthNames = ["{#january#}","{#february#}","{#march#}","{#april#}","{#may#}","{#june#}","{#july#}","{#august#}","{#september#}","{#october#}","{#november#}","{#december#}"];
-			theCal.relateTo = "end";
+			theCal.relateTo = "endP";
 			theCal.dateFormat = "{$settings.dateformat}";
 			theCal.getDatepicker("add_project");
 		</script>

@@ -88,7 +88,7 @@
 						{/if}
 							<tr>
 								<td>
-									{if $userpermissions.messages.add}<a class="butn_reply" href="managemessage.php?action=replyform&amp;mid={$myprojects[project].messages[message].ID}&amp;id={$myprojects[project].ID}" title="{#answer#}"></a>{/if}
+									{if $userpermissions.messages.close}<a class="butn_reply" href="managemessage.php?action=replyform&amp;mid={$myprojects[project].messages[message].ID}&amp;id={$myprojects[project].ID}" title="{#answer#}"></a>{/if}
 								</td>
 								<td>
 									<div class="toggle-in">

@@ -44,6 +44,7 @@
 						{include file="addproject.tpl" myprojects="1"}
 					</div>
 
+				<div class="nosmooth" id="sm_deskprojects">
 					<table id = "desktopprojects" cellpadding="0" cellspacing="0" border="0">
 						<thead>
 							<tr>
@@ -78,7 +79,7 @@
 										<div class="toggle-in">
 											<span id = "desktopprojectstoggle{$myprojects[project].ID}" class="acc-toggle" onclick="javascript:accord_projects.activate($$('#projecthead .accordion_toggle')[{$smarty.section.project.index}]);toggleAccordeon('projecthead',this);"></span>
 											<a href="manageproject.php?action=showproject&amp;id={$myprojects[project].ID}" title="{$myprojects[project].name}">
-												{$myprojects[project].name|truncate:35:"...":true}
+												{$myprojects[project].name|truncate:33:"...":true}
 											</a>
 										</div>
 									</td>
@@ -117,11 +118,12 @@
 					<div class="tablemenue">
 						<div class="tablemenue-in">
 							{if $userpermissions.projects.add}
-								<a class="butn_link" href="javascript:blindtoggle('form_addmyproject');" id="add_butn_myprojects" onclick="toggleClass('add_myprojects','add-active','add');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_myprojects','smooth','nosmooth');">{#addproject#}</a>
+								<a class="butn_link" href="javascript:blindtoggle('form_addmyproject');" id="add_butn_myprojects" onclick="toggleClass('add_myprojects','add-active','add');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_deskprojects','smooth','nosmooth');">{#addproject#}</a>
 							{/if}
 						</div>
 					</div>
 				</div> {*block END*}
+			   </div> {*Smooth end*}
 			</div> {*projects END*}
 			<div class="content-spacer"></div>
 		{/if}{*Projects End*}
@@ -151,8 +153,10 @@
 
 				<div class="block" id="taskhead" style = "{$taskstyle}">
 					<div id = "form_addmytask" class="addmenue" style = "display:none;">
-						{include file="addmytask.tpl" }
+						{include file="addmytask_index.tpl" }
 					</div>
+
+				<div class="nosmooth" id="sm_desktoptasks">
 					<table id = "desktoptasks" cellpadding="0" cellspacing="0" border="0">
 						<thead>
 							<tr>
@@ -188,9 +192,9 @@
 											<span id = "desktoptaskstoggle{$tasks[task].ID}" class="acc-toggle" onclick="javascript:accord_tasks.activate($$('#taskhead .accordion_toggle')[{$smarty.section.task.index}]);toggleAccordeon('taskhead',this);"></span>
 											<a href="managetask.php?action=showtask&amp;id={$tasks[task].project}&amp;tid={$tasks[task].ID}" title="{$tasks[task].title}">
 											{if $tasks[task].title != ""}
-												{$tasks[task].title|truncate:35:"...":true}
+												{$tasks[task].title|truncate:33:"...":true}
 											{else}
-												{$tasks[task].text|truncate:35:"...":true}
+												{$tasks[task].text|truncate:33:"...":true}
 											{/if}
 											</a>
 										</div>
@@ -229,11 +233,12 @@
 					<div class="tablemenue">
 						<div class="tablemenue-in">
 							{if $userpermissions.tasks.add}
-								<a class="butn_link" href="javascript:blindtoggle('form_addmytask');" id="add_butn_mytasks" onclick="toggleClass('add_mytasks','add-active','add');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_mytasks','smooth','nosmooth');">{#addtask#}</a>
+								<a class="butn_link" href="javascript:void(0);" id="add_butn_mytasks" onclick="blindtoggle('form_addmytask');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_desktoptasks','smooth','nosmooth');">{#addtask#}</a>
 							{/if}
 						</div>
 					</div>
 				</div> {*block END*}
+			  </div> {* Smooth end *}
 			</div> {*tasks END*}
 			<div class="content-spacer"></div>
 		{/if}{*Tasks End*}

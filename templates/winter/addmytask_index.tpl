@@ -2,7 +2,7 @@
 
 
 	<h2>{#addtask#}</h2>
-	<form novalidate class="main" method="post" action="managetask.php?action=add&amp;id={$myprojects[project].ID}"  {literal}onsubmit="return validateCompleteForm(this,'input_error');{/literal}">
+	<form novalidate id = "addtaskform" class="main" method="post" action="managetask.php?action=add&amp;id="  {literal}onsubmit="return validateCompleteForm(this,'input_error');{/literal}">
 	<fieldset>
 
 	<div class="row"><label for="title">{#title#}:</label><input type="text" class="text" name="title" id="title" realname = "{#title#}" required = "1"  /></div>
@@ -18,26 +18,24 @@
 		theCal.dayNames = ["{#monday#}","{#tuesday#}","{#wednesday#}","{#thursday#}","{#friday#}","{#saturday#}","{#sunday#}"];
 		theCal.monthNames = ["{#january#}","{#february#}","{#march#}","{#april#}","{#may#}","{#june#}","{#july#}","{#august#}","{#september#}","{#october#}","{#november#}","{#december#}"];
 		theCal.relateTo = "end{$myprojects[project].ID}";
+		theCal.dateFormat = "{$settings.dateformat}";
 		theCal.getDatepicker("datepicker_task{$myprojects[project].ID}");
 	</script>
     <div class="row"><label for="tasklist">{#project#}:</label>
-	    <select name="tasklist" id="tasklist" required = "1" exclude = "-1" realname = "{#tasklist#}">
+	    <select name="project" id="projectTask" required = "1" exclude = "-1" realname = "{#tasklist#}" onchange = "change('manageproject.php?action=tasklists&amp;id='+this.value,'tasklist');$('addtaskform').action += this.value;">
 	    <option value="-1" selected="selected">{#chooseone#}</option>
-	    {section name=tasklist loop=$myprojects[project].lists}
-	    <option value="{$myprojects[project].lists[tasklist].ID}">{$myprojects[project].lists[tasklist].name}</option>
+	    {section name=project loop=$myprojects}
+	    <option value="{$myprojects[project].ID}">{$myprojects[project].name}</option>
 	    {/section}
 	    </select>
     </div>
     <div class="row"><label for="tasklist">{#tasklist#}:</label>
 	    <select name="tasklist" id="tasklist" required = "1" exclude = "-1" realname = "{#tasklist#}">
 	    <option value="-1" selected="selected">{#chooseone#}</option>
-	    {section name=tasklist loop=$myprojects[project].lists}
-	    <option value="{$myprojects[project].lists[tasklist].ID}">{$myprojects[project].lists[tasklist].name}</option>
-	    {/section}
 	    </select>
     </div>
 
-    <input type="hidden" value="{$userid}" name="assigned" />
+    <input type="hidden" value="{$userid}" name="assigned[]" />
 
 	<div class="row-butn-bottom">
 		<label>&nbsp;</label>
