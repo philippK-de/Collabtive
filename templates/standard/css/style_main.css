@@ -1,3 +1,10 @@
+
+/*
+##  Visional Arts CSS Framework 1.1 static
+##  Author & Copyright: Marcus FrÃ¶hner
+##  URL: http://www.visional-arts.de
+*/
+
 @import url("style_form.css");
 
 /* ## Basic-XHTML-Elements ################################ */
@@ -1424,13 +1431,18 @@ body a.butn_link, body a.butn_link_active {
 .message-in ul
 {
 padding-left;
+
 }
+
 message-in li
 {
 list-style-type: disc;
 padding: 0;
 }
-
+.message-in ul, .descript ul {
+list-style-type: disc;
+padding-left: 40px;
+}
 .message-in img {
 	height: auto;
 }
@@ -2736,15 +2748,6 @@ a.tool_edit:hover, a.tool_del:hover {
 	background-position: 0 -22px;
 }
 
-a.tool_edit_active
-{
-	display: block;
-	width: 14px;
-	height: 23px;
-	float: left;
-	margin-right: 4px;
-	background: url(../images/butn-edit.png) no-repeat 0 -22px;
-}
 /* ## ACCORDION ############### Marker ############## */
 
 .marker-late, .marker-late a {
