@@ -268,6 +268,7 @@ class search {
         }
     }
 
+	//Limit search results to objects which the user belongs to
     function limitResult(array $result, $userid)
     {
         $finresult = array();
