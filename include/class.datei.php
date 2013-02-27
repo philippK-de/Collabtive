@@ -424,7 +424,7 @@ class datei {
         $project = $proj[0];
 
         $sql = $conn->prepare("UPDATE files SET `title` = ?, `desc` = ?, `tags` = ? WHERE id = ?");
-        $sql = $sqlStmt->execute(array($title, $desc, $tags, $id));
+        $upd = $sql->execute(array($title, $desc, $tags, $id));
 
         if ($sql) {
             $this->mylog->add($title, 'file' , 2, $project);
