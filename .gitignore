@@ -1,6 +1,7 @@
 config/standard/config.php
 collabtive.sdb
 templates_c/*
+Thumbs.db
 
 //Eclipse
 .settings

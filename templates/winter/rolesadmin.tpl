@@ -82,9 +82,6 @@
             <label>{#projects#}</label>
             </div>
             <div class = "row">
-            <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_projects[view]" {if $roles[role].projects.view}checked{/if}  />View
-            </div>
-            <div class = "row">
             <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_projects[add]" {if $roles[role].projects.add}checked{/if}  />{#add#}
             </div>
             <div class = "row">
@@ -103,7 +100,7 @@
             <label>{#milestones#}</label>
             </div>
              <div class = "row">
-            <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_milestones[view]" {if $roles[role].milestones.view}checked{/if}  />{#add#}
+            <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_milestones[view]" {if $roles[role].milestones.view}checked{/if}  />{#view#}
             </div>
             <div class = "row">
             <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_milestones[add]" {if $roles[role].milestones.add}checked{/if}  />{#add#}
@@ -124,7 +121,7 @@
             <label>{#tasks#}</label>
             </div>
             <div class = "row">
-            <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_tasks[view]" {if $roles[role].tasks.view}checked{/if}  />View
+            <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_tasks[view]" {if $roles[role].tasks.view}checked{/if}  />{#view#}
             </div>
             <div class = "row">
             <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_tasks[add]" {if $roles[role].tasks.add}checked{/if}  />{#add#}
@@ -145,7 +142,7 @@
             <label>{#messages#}</label>
             </div>
             <div class = "row">
-            <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_messages[view]" {if $roles[role].messages.view}checked{/if}  />View
+            <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_messages[view]" {if $roles[role].messages.view}checked{/if}  />{#view#}
             </div>
             <div class = "row">
             <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_messages[add]" {if $roles[role].messages.add}checked{/if}  />{#add#}
@@ -166,7 +163,7 @@
             <label>{#files#}</label>
             </div>
             <div class = "row">
-            <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_files[view]" {if $roles[role].files.view}checked{/if}  />View
+            <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_files[view]" {if $roles[role].files.view}checked{/if}  />{#view#}
             </div>
             <div class = "row">
             <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_files[add]" {if $roles[role].files.add}checked{/if}  />{#add#}
@@ -182,6 +179,9 @@
             <div class = "row">
             <label></label>
             <label>{#timetracker#}</label>
+            </div>
+            <div class = "row">
+            <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_timetracker[view]" {if $roles[role].timetracker.view}checked{/if}  />{#view#}
             </div>
             <div class = "row">
             <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_timetracker[read]" {if $roles[role].timetracker.read}checked{/if}  />{#permissionread#}
