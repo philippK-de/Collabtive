@@ -22,7 +22,7 @@ class search {
         if ($project == 0) {
             $projects = $this->searchProjects($query);
             $milestones = $this->searchMilestones($query);
-            if ($_SESSION["adminstate"] > 0) {
+            if ($_SESSION["userpermissions"]["admin"]["add"]) {
                 $messages = $this->searchMessage($query);
             } else {
                 $messages = array();
@@ -34,7 +34,7 @@ class search {
             $result = array_merge($projects, $milestones, $tasks, $messages , $files, $user);
         } else {
             $milestones = $this->searchMilestones($query, $project);
-            if ($_SESSION["adminstate"] > 0) {
+            if ($_SESSION["userpermissions"]["admin"]["add"]) {
                 $messages = $this->searchMessage($query, $project);
             } else {
                 $messages = array();

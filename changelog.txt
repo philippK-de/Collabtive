@@ -48,6 +48,9 @@ Collabtive 1.0
 + Fixed link in the email notifications for message-replies to point to the replied to message instead of the reply
 + Send email notifications to all assigned users when creating a project, not just when adding users afterwards.
 + Bulleted lists now displayed correctly... finally.
++ Added mimetype icon for PNG images uploaded with IE which is image/x-png and not image/png
++ Fixed a notice when searching
++ Fixed a bug where clicking cancel in admin->projects->assign user would add an empty user (removed the cancel button).
 
 Collabtive 0.7.6
 + Added Estonian translation
