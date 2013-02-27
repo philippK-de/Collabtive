@@ -41,8 +41,10 @@ Collabtive 1.0
 + Fix shading of the content table. When clicking "add task" or "add project" on the desktop the table with existing tasks / projects is now correctly shaded.
 + Made the page update.php translatable
 + Improved the design of the installer
-+ Fixed notice in system administration / user profile when a language string was not translated
-+ Fixed bug that asked for the "add" permission instead of the "reply" permission before posting a reply
++ Fixed a notice in system administration / user profile when a language string was not translated
++ Fixed a bug that asked for the "add" permission instead of the "reply" permission before posting a reply
++ Fixed a bug where the datepicker would not keep the dateformat set in the systemsettings and would revert to d.m.Y when changing months.
++ Fixed a notice when displaying messages
 
 Collabtive 0.7.6
 + Added Estonian translation
@@ -144,7 +146,6 @@ Collabtive 0.7
 + Added title for install script
 + Beautified code of several template files
 + Fixed link in the email notifications for message-replies to point to the replied to message instead of the reply
-+ Fixed a bug where the datepicker would not keep the dateformat set in the systemsettings and would revert to d.m.Y when changing months.
 
 Collabtive 0.6.5
 + Fixed bug when assigning tasks while email notification is deactivated / off
