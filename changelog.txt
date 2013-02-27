@@ -41,6 +41,8 @@ Collabtive 1.0
 + Fix shading of the content table. When clicking "add task" or "add project" on the desktop the table with existing tasks / projects is now correctly shaded.
 + Made the page update.php translatable
 + Improved the design of the installer
++ Fixed notice in system administration / user profile when a language string was not translated
++ Fixed bug that asked for the "add" permission instead of the "reply" permission before posting a reply
 
 Collabtive 0.7.6
 + Added Estonian translation
