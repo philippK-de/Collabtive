@@ -522,14 +522,12 @@ elseif ($action == "addpro")
     $languages_fin = array();
     foreach($languages as $lang)
     {
-        $lang2 = $langfile[$lang];
-        $fin = countLanguageStrings($lang);
-
-        if (!empty($lang2))
-        {
+	   	$fin = countLanguageStrings($lang);
+    	if (!empty($langfile[$lang])) {
+	        $lang2 = $langfile[$lang];
             $lang2 .= " (" . $fin . "%)";
             $fin = array("val" => $lang, "str" => $lang2);
-        }
+	   	}
         else
         {
             $lang2 = $lang . " (" . $fin . "%)";
