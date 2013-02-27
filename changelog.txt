@@ -45,6 +45,9 @@ Collabtive 1.0
 + Fixed a bug that asked for the "add" permission instead of the "reply" permission before posting a reply
 + Fixed a bug where the datepicker would not keep the dateformat set in the systemsettings and would revert to d.m.Y when changing months.
 + Fixed a notice when displaying messages
++ Fixed link in the email notifications for message-replies to point to the replied to message instead of the reply
++ Send email notifications to all assigned users when creating a project, not just when adding users afterwards.
++ Bulleted lists now displayed correctly... finally.
 
 Collabtive 0.7.6
 + Added Estonian translation
@@ -145,9 +148,7 @@ Collabtive 0.7
 + Fixed bug which prevented choosing existing project files as attachments for a reply
 + Added title for install script
 + Beautified code of several template files
-+ Fixed link in the email notifications for message-replies to point to the replied to message instead of the reply
-+ Send email notifications to all assigned users when creating a project, not just when adding users afterwards.
-+ Bulleted lists now displayed correctly... finally.
+
 
 Collabtive 0.6.5
 + Fixed bug when assigning tasks while email notification is deactivated / off
