@@ -128,13 +128,7 @@ class message {
             $message["gender"] = $gender;
 
             $project = $conn->query("SELECT name FROM projekte WHERE ID = $message[project]")->fetch();
-            $project = $project[0];
-            if ($project) {
-                $project["name"] = stripslashes($project["name"]);
-                $message["pname"] = $project;
-            } else {
-                $message["pname"] = "";
-            }
+            $message["pname"] = $project[0];
             $posted = date(CL_DATEFORMAT . " - H:i", $message["posted"]);
             $message["postdate"] = $posted;
             $message["endstring"] = $posted;

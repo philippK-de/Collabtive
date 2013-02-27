@@ -8,7 +8,7 @@ session_start();
 define("CL_ROOT", realpath(dirname(__FILE__)));
 // configuration to load
 define("CL_CONFIG", "standard");
-// collabtive version
+// collabtive version and release date
 define("CL_VERSION", 1.0);
 define("CL_PUBDATE","1351724400");
 // uncomment for debugging
@@ -20,7 +20,7 @@ require(CL_ROOT . "/include/initfunctions.php");
 // Start database connection
 if (!empty($db_name) and !empty($db_user))
 {
-  //  $tdb = new datenbank();
+  //$tdb = new datenbank();
     $conn = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 }

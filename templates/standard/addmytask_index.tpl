@@ -18,6 +18,7 @@
 		theCal.dayNames = ["{#monday#}","{#tuesday#}","{#wednesday#}","{#thursday#}","{#friday#}","{#saturday#}","{#sunday#}"];
 		theCal.monthNames = ["{#january#}","{#february#}","{#march#}","{#april#}","{#may#}","{#june#}","{#july#}","{#august#}","{#september#}","{#october#}","{#november#}","{#december#}"];
 		theCal.relateTo = "end{$myprojects[project].ID}";
+		theCal.dateFormat = "{$settings.dateformat}";
 		theCal.getDatepicker("datepicker_task{$myprojects[project].ID}");
 	</script>
     <div class="row"><label for="tasklist">{#project#}:</label>

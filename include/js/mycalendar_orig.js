@@ -662,6 +662,7 @@ calendar.prototype.getDatepicker = function(theDiv)
 	var dateSeparator = this.dateSeparator;
 	var theYear = this.year;
 	var theRelate = this.relateTo;
+	var theDateFormat = this.dateFormat;
 	$$("#"+theDiv+" .cal .back a").each
 	(
 		function (item)
@@ -674,6 +675,7 @@ calendar.prototype.getDatepicker = function(theDiv)
 					internalCal.keepEmpty = keepEmpty;
 					internalCal.relateTo = theRelate;
 					internalCal.dateSeparator = dateSeparator;
+					internalCal.dateFormat = theDateFormat;
 					internalCal.getDatepicker(theDiv);
 
 			}
@@ -691,6 +693,7 @@ calendar.prototype.getDatepicker = function(theDiv)
 					internalCal.keepEmpty = keepEmpty;
 					internalCal.relateTo = theRelate;
 					internalCal.dateSeparator = dateSeparator;
+					internalCal.dateFormat = theDateFormat;
 					internalCal.getDatepicker(theDiv);
 			}
 		}

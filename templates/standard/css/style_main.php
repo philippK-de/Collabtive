@@ -1299,13 +1299,18 @@ body a.butn_link, body a.butn_link_active {
 .message-in ul
 {
 padding-left;
+
 }
+
 message-in li
 {
 list-style-type: disc;
 padding: 0;
 }
-
+.message-in ul, .descript ul {
+list-style-type: disc;
+padding-left: 40px;
+}
 .message-in img {
 	height: auto;
 }

@@ -42,7 +42,7 @@
 					</div>
 
 					<div class="nosmooth" id="sm_myprojects">
-				
+
 						<table cellpadding="0" cellspacing="0" border="0">
 							<thead>
 								<tr>
@@ -114,7 +114,7 @@
 															{section name = member loop=$opros[opro].members}
 																<li>
 																	<div class="itemwrapper" id="iw_{$opros[opro].ID}_{$opros[opro].members[member].ID}">
-																	
+
 																		<table cellpadding="0" cellspacing="0" border="0">
 																			<tr>
 																				<td class="leftmen" valign="top">
@@ -154,12 +154,12 @@
 																			</div>
 																		{/if}
 																	</div> {*itemwrapper end*}
-																	
+
 																</li>
 															{/section}
 														</ul>
 													</div> {*inwrapper End*}
-													
+
 													<p class="tags-miles"> {*assign users*}
 														<strong>{#adduser#}:</strong>
 													</p>
@@ -180,7 +180,6 @@
 																<div class="row-butn-bottom">
 																	<label>&nbsp;</label>
 																	<button type="submit" onfocus="this.blur();">{#addbutton#}</button>
-																	<button onclick="blindtoggle('form_member');toggleClass('addmember','add-active','add');toggleClass('add_butn_member','butn_link_active','butn_link');toggleClass('sm_member','smooth','nosmooth');return false;" onfocus="this.blur();">{#cancel#}</button>
 																</div>
 															</fieldset>
 														</form>
@@ -196,7 +195,7 @@
 
 						{*Doneprojects*}
 						<div id="doneblock" class="doneblock" style="display: none;">
-							
+
 							<table class="second-thead" cellpadding="0" cellspacing="0" border="0" onclick="blindtoggle('doneblock');toggleClass('donebutn','butn_link_active','butn_link');toggleClass('toggle-done','acc-toggle','acc-toggle-active');">
 								<tr>
 									<td class="a"></td>
@@ -207,9 +206,9 @@
 								</tr>
 							</table>
 
-					
+
 							<div class="toggleblock">
-							
+
 								<table cellpadding="0" cellspacing="0" border="0" id="acc-oldprojects">
 									{section name=clopro loop=$clopros}
 
@@ -260,7 +259,7 @@
 										</tbody>
 									{/section}
 								</table>
-								
+
 							</div> {*toggleblock End*}
 						</div> {*doneblock end*}
 					</div> {*smooth end*}
