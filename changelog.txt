@@ -8,7 +8,7 @@ Collabtive 1.0
 + Completely re-written the PDF export. It now uses a custom subclass of TCPDF to directly draw the tables for the reports from arrays instead of using an HTML intermediate.
   This greatly speeds up PDF generation (esp when many lines are exported) and generates much smaller PDFs.
 + Fixed problem with missing "webcolor" variable in TCPDF
-+ Improved the Project log PDF Report by merging fields, improving shading and adding automatic font stretching.
++ Improved the project log PDF report by merging fields, improving shading and adding automatic font stretching.
 + Added new PDF report to the "my tasks" block on the desktop. Now a user can export all his tasks to PDF.
 + Re-enabled permissions checking when deleting a timetracker entry. This got disabled for testing purposes and was commited to trunk. Disabling it posed a possible security risk.
 + Added permissions checking to timetracker:add and timetracker:edit . Permissions set in the useraccount where not properly enforced for the timetracker before.
@@ -51,6 +51,7 @@ Collabtive 1.0
 + Added mimetype icon for PNG images uploaded with IE which is image/x-png and not image/png
 + Fixed a notice when searching
 + Fixed a bug where clicking cancel in admin->projects->assign user would add an empty user (removed the cancel button).
++ Fixed minor glitch in the form for adding a timetracker entry
 
 Collabtive 0.7.6
 + Added Estonian translation
