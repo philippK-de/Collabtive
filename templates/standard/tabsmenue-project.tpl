@@ -1,11 +1,9 @@
 
 <div class="tabswrapper">
 	<ul class="tabs">
-	{if $userpermissions.projects.view}
 		<li class="projects"><a {if $projecttab == "active" }class="active"{/if} href="manageproject.php?action=showproject&amp;id={$project.ID}"><span>{#project#}</span></a></li>
-	{/if}
 
-	{if $userpermissions.projects.view}
+	{if $userpermissions.milestones.view}
 		<li class="miles"><a {if $milestab == "active" }class="active"{/if} href="managemilestone.php?action=showproject&amp;id={$project.ID}"><span>{#milestones#}</span></a></li>
 	{/if}
 
