@@ -146,6 +146,7 @@ Collabtive 0.7
 + Added title for install script
 + Beautified code of several template files
 + Fixed link in the email notifications for message-replies to point to the replied to message instead of the reply
++ Send email notifications to all assigned users when creating a project, not just when adding users afterwards.
 
 Collabtive 0.6.5
 + Fixed bug when assigning tasks while email notification is deactivated / off
