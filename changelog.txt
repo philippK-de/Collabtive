@@ -52,6 +52,7 @@ Collabtive 1.0
 + Fixed a notice when searching
 + Fixed a bug where clicking cancel in admin->projects->assign user would add an empty user (removed the cancel button).
 + Fixed minor glitch in the form for adding a timetracker entry
++ Substituted deprecated PHP function split() used in e-mail handling by PHP function explode()
 
 Collabtive 0.7.6
 + Added Estonian translation
