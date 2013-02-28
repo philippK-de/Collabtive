@@ -19,9 +19,12 @@
 				systemMsg('systemmsg');
 			</script>
 		{/literal}
-	{if $isUpdated}
-		{include file="updateNotify.tpl"}
-	{/if}
+		
+		{if $isUpdated}
+			{include file="updateNotify.tpl"}
+			<br />
+		{/if}
+		
 		<h1>{#desktop#}</h1>
 
 		{*Projects*}
