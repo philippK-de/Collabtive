@@ -35,12 +35,15 @@
 
 			{if $loginerror == 1}
 				<div class="login-alert timetrack">
-					{#loginerror#}<br /><br />
-					<form id = "blaform" name = "resetform" class = "main" method="post" action="manageuser.php?action=loginerror" >
-						<div class="row" style="text-align:center;">
-							<button  style = "float:none;margin:0 0 0 0;" onclick="$('blaform').submit();" onfocus="this.blur();">{#resetpassword#}</button>
-						</div>
-					</form>
+					{#loginerror#}
+					{if $mailnotify == 1}
+						<br /><br />
+						<form id = "blaform" name = "resetform" class = "main" method="post" action="manageuser.php?action=loginerror" >
+							<div class="row" style="text-align:center;">
+								<button  style = "float:none;margin:0 0 0 0;" onclick="$('blaform').submit();" onfocus="this.blur();">{#resetpassword#}</button>
+							</div>
+						</form>
+					{/if}
 					<div class="clear_both"></div>
 				</div>
 			{/if}
