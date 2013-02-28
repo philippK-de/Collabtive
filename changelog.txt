@@ -1,6 +1,6 @@
 Collabtive 1.0
 + Added translations: Hebrew, Norwegian (Nynorsk), Taiwanese
-+ Improved translations: Albanian, Arabic, Bulgarian, Danish, Greek, Hungarian, Italian, Norwegian (Bokmål), Polish, Portuguese (Brazilian), Slovak, Serbian, Turkish
++ Improved translations: Albanian, Arabic, Bulgarian, Danish, Farsi, French, German, Greek, Hungarian, Italian, Norwegian (Bokmål), Polish, Portuguese (Brazilian), Slovak, Serbian, Turkish
 + Added translations of install-readme: Hungarian
 + Improved translations of install-readme: Arabic
 + Changed name of autoload function to cl_autoload and added it with spl_autoload_register() to autoload list, to not interfere other autoloaders
