@@ -40,7 +40,7 @@ Collabtive 1.0
 + Added "Add task" slider to the "my tasks" block on the desktop. This way a user can add tasks to himself straight from the desktop.
 + Fix shading of the content table. When clicking "add task" or "add project" on the desktop the table with existing tasks / projects is now correctly shaded.
 + Made the page update.php translatable
-+ Improved the design of the installer
++ Improved the design of the installer/updater
 + Fixed a notice in system administration / user profile when a language string was not translated
 + Fixed a bug that asked for the "add" permission instead of the "reply" permission before posting a reply
 + Fixed a bug where the datepicker would not keep the dateformat set in the systemsettings and would revert to d.m.Y when changing months.
@@ -52,6 +52,8 @@ Collabtive 1.0
 + Fixed a notice when searching
 + Fixed a bug where clicking cancel in admin->projects->assign user would add an empty user (removed the cancel button).
 + Fixed minor glitch in the form for adding a timetracker entry
++ Substituted deprecated PHP function split() used in e-mail handling by PHP function explode()
++ Made sure to only offer the password reset function (via e-mail) when e-mail notifications are activated
 
 Collabtive 0.7.6
 + Added Estonian translation
