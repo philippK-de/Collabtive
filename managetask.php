@@ -114,9 +114,10 @@ if ($action == "addform") {
     $thistask['userid'] = $user[0];
 
     $tmp = $task->getUsers($thistask['ID']);
+
     if ($tmp) {
         foreach ($tmp as $value) {
-            $thistask['users'][] = $value[0];
+            $thistask['users'][] = $value[0]["ID"];
         }
     }
     $title = $langfile["edittask"];

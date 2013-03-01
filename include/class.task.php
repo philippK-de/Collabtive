@@ -552,9 +552,10 @@ class task {
         $id = (int) $id;
 
         $sql = $conn->query("SELECT user FROM tasks_assigned WHERE task = $id");
-        if ($sql->fetchColumn() > 0) {
+
             $result = array();
             while ($user = $sql->fetch()) {
+
                 $sel2 = $conn->query("SELECT name FROM user WHERE ID = $user[0]");
                 $uname = $sel2->fetch();
                 $uname = $uname[0];
@@ -563,9 +564,7 @@ class task {
                 $result[] = $user;
             }
             return $result;
-        } else {
-            return false;
-        }
+
     }
 
     /**
