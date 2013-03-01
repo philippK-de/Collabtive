@@ -57,6 +57,7 @@ Collabtive 1.0
 + Made the asynchronous refresh after file upload is complete a bit quicker. the uploader used to wait 1s before refreshing - this is now reduced to 500ms.
 
 
+
 Collabtive 0.7.6
 + Added Estonian translation
 + Fixed timetracker filtering
