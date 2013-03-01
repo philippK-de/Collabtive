@@ -67,6 +67,7 @@ if (!$action) {
     require_once("install_mysql.php");
     // Get the servers default timezone
     $timezone = date_default_timezone_get();
+
     // insert default settings
     $defSets = array("name" => "Collabtive", "subtitle" => "Projectmanagement", "locale" => $locale, "timezone" => $timezone, "dateformat" => "d.m.Y", "template" => "standard", "mailnotify" => 1, "mailfrom" => "collabtive@localhost", "mailfromname" => "", "mailmethod" => "mail", "mailhost" => "", "mailuser" => "", "mailpass" => "", "rssuser" => "", "rsspass" => "");
     foreach($defSets as $setKey => $setVal) {
