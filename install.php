@@ -47,28 +47,29 @@ if (!$action) {
         die("Collabtive seems to be already installed.<br />If this is an error, please clear your database.");
     }
 
-        $db_host = $_POST['db_host'];
-        $db_name = $_POST['db_name'];
-        $db_user = $_POST['db_user'];
-        $db_pass = $_POST['db_pass'];
-        // write db login data to config file
-        $file = fopen(CL_ROOT . "/config/" . CL_CONFIG . "/config.php", "w+");
-        $str = "<?php
+    $db_host = $_POST['db_host'];
+    $db_name = $_POST['db_name'];
+    $db_user = $_POST['db_user'];
+    $db_pass = $_POST['db_pass'];
+    // write db login data to config file
+    $file = fopen(CL_ROOT . "/config/" . CL_CONFIG . "/config.php", "w+");
+    $str = "<?php
 \$db_host = '$db_host';\n
 \$db_name = '$db_name';\n
 \$db_user = '$db_user';\n
 \$db_pass = '$db_pass';\n
 ?>";
-        $put = fwrite($file, "$str");
-        if ($put) {
-            @chmod(CL_ROOT . "/config/" . CL_CONFIG . "/config.php", 0755);
-        }
-        // connect database.
-	require_once("install_mysql.php");
+    $put = fwrite($file, "$str");
+    if ($put) {
+        @chmod(CL_ROOT . "/config/" . CL_CONFIG . "/config.php", 0755);
+    }
+    // connect database.
+    require_once("install_mysql.php");
     // Get the servers default timezone
     $timezone = date_default_timezone_get();
+
     // insert default settings
-    $defSets = array("name" => "Collabtive", "subtitle" => "Projectmanagement", "locale" => $locale, "timezone" => $timezone, "dateformat" => "d.m.Y", "template" => "standard", "mailnotify" => 1, "mailfrom" => "collabtive@localhost", "mailfromname" => "", "mailmethod" => "mail", "mailuser" => "", "mailpass" => "", "rssuser" => "", "rsspass" => "");
+    $defSets = array("name" => "Collabtive", "subtitle" => "Projectmanagement", "locale" => $locale, "timezone" => $timezone, "dateformat" => "d.m.Y", "template" => "standard", "mailnotify" => 1, "mailfrom" => "collabtive@localhost", "mailfromname" => "", "mailmethod" => "mail", "mailhost" => "", "mailuser" => "", "mailpass" => "", "rssuser" => "", "rsspass" => "");
     foreach($defSets as $setKey => $setVal) {
         $ins = $conn->query("INSERT INTO settings (`settingsKey`,`settingsValue`) VALUES ('$setKey','$setVal')");
     }

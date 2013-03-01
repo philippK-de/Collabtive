@@ -26,11 +26,11 @@ class settings {
      */
     function getSettings()
     {
-		global $conn;
-		$selStmt = $conn->prepare("SELECT settingsKey,settingsValue FROM settings");
+        global $conn;
+        $selStmt = $conn->prepare("SELECT settingsKey,settingsValue FROM settings");
         $sel = $selStmt->execute(array());
 
-		$settings = array();
+        $settings = array();
         while ($selSettings = $selStmt->fetch()) {
             $settings[$selSettings["settingsKey"]] = $selSettings["settingsValue"];
         }
@@ -55,17 +55,16 @@ class settings {
      */
     function editSettings($name, $subtitle, $locale, $timezone, $dateformat, $templ, $rssuser, $rsspass)
     {
-		global $conn;
-
-		//This is an artifact of refactoring to a key/value table for the settings
+        global $conn;
+        // This is an artifact of refactoring to a key/value table for the settings
         $theSettings = array("name" => $name, "subtitle" => $subtitle, "locale" => $locale, "timezone" => $timezone, "dateformat" => $dateformat, "template" => $templ, "rssuser" => $rssuser, "rsspass" => $rsspass);
 
-		$updStmt = $conn->prepare("UPDATE settings SET `settingsValue` = ? WHERE `settingsKey` = ?");
+        $updStmt = $conn->prepare("UPDATE settings SET `settingsValue` = ? WHERE `settingsKey` = ?");
         foreach($theSettings as $setKey => $setVal) {
             $upd = $updStmt->execute(array($setVal, $setKey));
         }
 
-	     if ($upd) {
+        if ($upd) {
             return true;
         } else {
             return false;
@@ -86,10 +85,14 @@ class settings {
      */
     function editMailsettings($onoff, $mailfrom, $mailfromname, $method, $mailhost, $mailuser, $mailpass)
     {
-		global $conn;
-		$updStmt = $conn->prepare("UPDATE settings SET mailnotify = ? , mailfrom = ?, mailfromname = ?, mailmethod = ?, mailhost = ?, mailuser = ?, mailpass = ?");
-		$upd = $updStmt->execute(array((int) $onoff, $mailfrom, $mailfromname, $method, $mailhost, $mailuser, $mailpass));
+        global $conn;
 
+        $theSettings = array("mailnotify" => $onoff, "mailfrom" => $mailfrom, "mailfromname" => $mailfromname, "mailmethod" => $method, "mailhost" => $mailhost, "mailuser" => $mailuser, "mailpass" => $mailpass);
+        $updStmt = $conn->prepare("UPDATE settings SET `settingsValue` = ? WHERE `settingsKey` = ?");
+
+        foreach($theSettings as $setKey => $setVal) {
+            $upd = $updStmt->execute(array($setVal, $setKey));
+        }
         if ($upd) {
             return true;
         } else {
