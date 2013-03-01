@@ -228,8 +228,9 @@ if ($action == "add") {
         $template->display("error.tpl");
         die();
     }
-    $pname = $conn->query("SELECT name FROM projekte WHERE ID = $id")->fetch();
-    $pname = $pname[0];
+		global $conn;
+    $pname = $conn->query("SELECT name FROM projekte WHERE ID = $id");
+    $pname = $pname->fetchColumn();
 
     $pdf = new MYPDF("P", PDF_UNIT, "A4", true);
     $headstr = $langfile["timetable"] . " " . $pname;
