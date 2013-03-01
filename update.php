@@ -20,7 +20,7 @@ if ($conn->query("DROP TABLE `settings`")) {
 }
 
 foreach($settings as $setKey => $setVal) {
-    $ins = $conn->query("INSERT INTO `settings` (`settingsKey`,`settingsValue`) VALUES '$setKey','$setVal')");
+    $ins = $conn->query("INSERT INTO `settings` (`settingsKey`,`settingsValue`) VALUES ('$setKey','$setVal')");
 }
 
 // Version independent
