@@ -90,9 +90,9 @@
 										</td>
 										<td style="text-align:right">{$opros[opro].daysleft}&nbsp;&nbsp;</td>
 										<td class="tools">
-											{if $userpermissions.projects.edit}
-												<a class="tool_edit" href="manageproject.php?action=editform&amp;id={$opros[opro].ID}" title="{#edit#}"></a>
-											{/if}
+
+												{if $userpermissions.projects.edit}
+											<a class="tool_edit" href="javascript:void(0);" onclick = "change('manageproject.php?action=editform&amp;id={$opros[opro].ID}','form_addmyproject');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_addmyproject');" title="{#edit#}"></a>{/if}
 											{if $userpermissions.projects.del}
 												<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'proj_{$opros[opro].ID}\',\'manageproject.php?action=del&amp;id={$opros[opro].ID}\')');"  title="{#delete#}"></a>
 											{/if}
@@ -136,7 +136,8 @@
 																				<td class="rightmen" valign="top">
 																					<div class="inmenue">
 																						<a class="del" href="manageproject.php?action=deassign&amp;user={$opros[opro].members[member].ID}&amp;id={$opros[opro].ID}&amp;redir=admin.php?action=projects" title="{#deassignuser#}" onclick="fadeToggle('iw_{$opros[opro].ID}_{$opros[opro].members[member].ID}');"></a>
-																						<a class="edit" href="admin.php?action=editform&amp;id={$opros[opro].members[member].ID}" title="{#edituser#}"></a>
+																					<a class="edit" href="admin.php?action=editform&amp;id={$opros[opro].members[member].ID}" title="{#edituser#}"></a>
+
 																					</div>
 																				</td>
 																			</tr>
