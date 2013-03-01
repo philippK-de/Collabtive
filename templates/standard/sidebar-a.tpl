@@ -74,7 +74,7 @@
 			<h2><a id="onlinelisttoggle" class="win-up" href="javascript:blindtoggle('onlinelist');toggleClass('onlinelisttoggle','win-up','win-down');">{#usersonline#}</a></h2>
 
 			<div id="onlinelist">
-				{$cloud}
+				{$cloud|default}
 			</div>
 	</div>
 

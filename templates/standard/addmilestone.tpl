@@ -1,4 +1,4 @@
-{if $showhtml == "yes"}
+{if $showhtml|default == "yes"}
 {include file="header.tpl" jsload = "ajax" jsload1="tinymce"}
 {include file="tabsmenue-project.tpl" milestab = "active"}
 
@@ -34,7 +34,7 @@
 
 						<div class="row">
 							<label for="end">{#due#}:</label>
-							<input type="text" class="text" name="end" id="end" required="1" realname="{#due#}" {if $day and $month and $year} value = "{$day}.{$month}.{$year}" {/if} />
+							<input type="text" class="text" name="end" id="end" required="1" realname="{#due#}" {if $day|default and $month and $year} value = "{$day}.{$month}.{$year}" {/if} />
 						</div>
 
 						<div class="datepick">
@@ -61,7 +61,7 @@
 
 			</div> {*block_in_wrapper end*}
 
-{if $showhtml == "yes"}
+{if $showhtml|default == "yes"}
 			<div class="content-spacer"></div>
 
 		</div> {*Miles END*}

@@ -148,7 +148,7 @@
 					</h2>
 				</div>
 
-				<div class="block" id="projecthead" style = "{$projectstyle}">
+				<div class="block" id="projecthead" style = "{$projectstyle|default}">
 
 					<table cellpadding="0" cellspacing="0" border="0">
 						<thead>
