@@ -70,6 +70,8 @@ Collabtive 0.7.6
 + Improved file type checking for avatar uploads to prevent non-image files from being uploaded to the avatar directory. This improves security.
 + Removed some dead code paths from manageproject.php
 + Added a security check to install.php to prevent it from being used after Collabtive has already been installed.
++ Fixed a bug where, when clicking "delete" on a folder and answering the "are you sure" prompt with "no", the folder would be faded out as if deleted (though not really deleted)
+
 
 Collabtive 0.7.5
 + Improved code comments
