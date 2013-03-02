@@ -36,7 +36,6 @@ class datei {
         global $conn;
         $project = (int) $project;
         $folderOrig = $folder;
-
         // replace umlauts
         $folder = str_replace("ä", "ae" , $folder);
         $folder = str_replace("ö", "oe" , $folder);
@@ -81,10 +80,13 @@ class datei {
         $id = (int) $id;
         $project = (int) $project;
         $folder = $this->getFolder($id);
+
         $files = $this->getProjectFiles($project, 10000, $id);
         // delete all the files in the folder from the database (and filesystem as well)
-        foreach($files as $file) {
-            $this->loeschen($file["ID"]);
+        if (!empty($files)) {
+            foreach($files as $file) {
+                $this->loeschen($file["ID"]);
+            }
         }
         if (!empty($folder["subfolders"])) {
             foreach($folder["subfolders"] as $sub) {
@@ -383,7 +385,9 @@ class datei {
                      * file did not already exist, was uploaded, and a project is set
                      * add the file to the database, add the upload event to the log and return the file ID.
                      */
-                     if(!$title){$title = $name;}
+                    if (!$title) {
+                        $title = $name;
+                    }
                     chmod($datei_final, 0755);
                     $fid = $this->add_file($name, $desc, $project, 0, "$tags", $datei_final2, "$typ", $title, $folder, $visstr);
                     if (!empty($title)) {
@@ -665,7 +669,9 @@ class datei {
     function add_file($name, $desc, $project, $milestone, $tags, $datei, $type, $title = " ", $folder = 0, $visstr = "")
     {
         global $conn;
-        if(!$desc){$desc = " ";}
+        if (!$desc) {
+            $desc = " ";
+        }
         $project = (int) $project;
         $milestone = (int) $milestone;
         $folder = (int) $folder;
@@ -673,7 +679,7 @@ class datei {
         $now = time();
 
         $insStmt = $conn->prepare("INSERT INTO files (`name`, `desc`, `project`, `milestone`, `user`, `tags`, `added`, `datei`, `type`, `title`, `folder`, `visible`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-          $ins = $insStmt->execute(array($name, $desc, $project, $milestone, $userid, $tags, $now, $datei, $type, $title, $folder, $visstr));
+        $ins = $insStmt->execute(array($name, $desc, $project, $milestone, $userid, $tags, $now, $datei, $type, $title, $folder, $visstr));
         if ($ins) {
             $insid = $conn->lastInsertId();
             return $insid;
