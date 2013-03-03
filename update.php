@@ -37,6 +37,7 @@ if ($conn->query("DROP TABLE `settings`")) {
 foreach($oldSettings as $setKey => $setVal) {
     $conn->query("INSERT INTO `settings` (`settingsKey`,`settingsValue`) VALUES ('$setKey','$setVal')");
 }
+$rolesobj = new roles();
 $allroles = $rolesobj->getAllRoles();
 
 foreach($allroles as $role) {
