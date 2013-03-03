@@ -1,15 +1,30 @@
 <?php
 error_reporting(0);
 require("./init.php");
-
 // 0.7
 $conn->query("ALTER TABLE `files` CHANGE `type` `type` VARCHAR( 255 )");
 // change to new winter template if unmaintained frost template is selected
 if ($settings["template"] == "frost") {
     $conn->query("UPDATE `settings` SET `template` = 'winter'");
 }
-
 // 1.0
+function getOldSettings()
+{
+    global $conn;
+    $sel = $conn->query("SELECT * FROM settings LIMIT 1");
+    $settings = array();
+    $settings = $sel->fetch(PDO::FETCH_ASSOC);
+
+    if (!empty($settings)) {
+        return $settings;
+    } else {
+        return false;
+    }
+}
+
+$oldSettings = getOldSettings();
+array_shift($oldSettings);
+
 if ($conn->query("DROP TABLE `settings`")) {
     $table = $conn->query("CREATE TABLE `settings` (
   `ID` int(10) NOT NULL AUTO_INCREMENT,
@@ -19,10 +34,30 @@ if ($conn->query("DROP TABLE `settings`")) {
 ) ENGINE=MyISAM");
 }
 
-foreach($settings as $setKey => $setVal) {
-    $ins = $conn->query("INSERT INTO `settings` (`settingsKey`,`settingsValue`) VALUES ('$setKey','$setVal')");
+foreach($oldSettings as $setKey => $setVal) {
+    $conn->query("INSERT INTO `settings` (`settingsKey`,`settingsValue`) VALUES ('$setKey','$setVal')");
 }
+$rolesobj = new roles();
+$allroles = $rolesobj->getAllRoles();
 
+foreach($allroles as $role) {
+    $role["projects"]["view"] = 1;
+    $role["tasks"]["view"] = 1;
+    $role["milestones"]["view"] = 1;
+    $role["messages"]["view"] = 1;
+    $role["files"]["view"] = 1;
+    $role["timetracker"]["view"] = 1;
+
+    $rolesobj->edit($role["ID"], $role["name"],
+        $role["projects"],
+        $role["tasks"],
+        $role["milestones"],
+        $role["messages"],
+        $role["files"],
+        $role["timetracker"],
+        $role["chat"], $role["admin"]
+        );
+}
 // Version independent
 // Clear templates cache
 $handle = opendir($template->compile_dir);
@@ -51,4 +86,5 @@ $opt16 = $conn->query("OPTIMIZE TABLE `timetracker`");
 $opt17 = $conn->query("OPTIMIZE TABLE `user`");
 
 $template->display("update.tpl");
+
 ?>

@@ -63,6 +63,7 @@ if (!$action) {
     if ($put) {
         @chmod(CL_ROOT . "/config/" . CL_CONFIG . "/config.php", 0755);
     }
+    $installer_include = "yes";
     // connect database.
     require_once("install_mysql.php");
     // Get the servers default timezone

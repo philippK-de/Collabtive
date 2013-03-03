@@ -350,6 +350,7 @@ if ($action == "add") {
             $usr = 0;
         }
     }
+
     if (!empty($start) and !empty($end)) {
         $track = $tracker->getProjectTrack($id, $usr, $taski, $start, $end, 25);
     } else {

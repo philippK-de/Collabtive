@@ -22,7 +22,7 @@
 		theCal.getDatepicker("datepicker_task{$myprojects[project].ID}");
 	</script>
     <div class="row"><label for="tasklist">{#project#}:</label>
-	    <select name="project" id="projectTask" required = "1" exclude = "-1" realname = "{#tasklist#}" onchange = "change('manageproject.php?action=tasklists&amp;id='+this.value,'tasklist');$('addtaskform').action += this.value;">
+	    <select name="project" id="projectTask" required = "1" exclude = "-1" realname = "{#project#}" onchange = "change('manageproject.php?action=tasklists&amp;id='+this.value,'tasklist');$('addtaskform').action += this.value;">
 	    <option value="-1" selected="selected">{#chooseone#}</option>
 	    {section name=project loop=$myprojects}
 	    <option value="{$myprojects[project].ID}">{$myprojects[project].name}</option>

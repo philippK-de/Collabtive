@@ -2,9 +2,9 @@
 /**
  * This class provides methods to realize timetracking
  *
- * @author Open Dynamics <info@o-dyn.de>
+ * @author Philipp Kiszka <info@o-dyn.de>
  * @name timetracker
- * @version 0.7.5
+ * @version 1.0
  * @package Collabtive
  * @link http://www.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
@@ -176,8 +176,6 @@ class timetracker {
     function getUserTrack($user, $project = 0, $task = 0, $start = 0, $end = 0 , $lim = 50)
     {
         global $conn;
-        $start = $conn->quote($start);
-        $end = $conn->quote($end);
         $user = (int) $user;
         $project = (int) $project;
         $lim = (int) $lim;
@@ -266,8 +264,6 @@ class timetracker {
     function getProjectTrack($project, $user = 0, $task = 0, $start = 0, $end = 0, $lim = 50)
     {
         global $conn;
-        $start = $conn->quote($start);
-        $end = $conn->quote($end);
         $project = (int) $project;
         $user = (int) $user;
         $lim = (int) $lim;

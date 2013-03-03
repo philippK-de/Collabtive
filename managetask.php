@@ -117,7 +117,7 @@ if ($action == "addform") {
 
     if ($tmp) {
         foreach ($tmp as $value) {
-            $thistask['users'][] = $value[0]["ID"];
+            $thistask['users'][] = $value[0];
         }
     }
     $title = $langfile["edittask"];
@@ -278,7 +278,7 @@ if ($action == "addform") {
     $myproject = new project();
     $project_members = $myproject->getProjectMembers($id, $myproject->countMembers($id));
 
-    $milestone = new milestone;
+    $milestone = new milestone();
     $milestones = $milestone->getAllProjectMilestones($id);
 
     $pro = $myproject->getProject($id);

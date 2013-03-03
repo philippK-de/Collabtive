@@ -43,6 +43,7 @@
 							theCal.monthNames = ["{#january#}","{#february#}","{#march#}","{#april#}","{#may#}","{#june#}","{#july#}","{#august#}","{#september#}","{#october#}","{#november#}","{#december#}"];
 							theCal.relateTo = "day";
 							theCal.keepEmpty = true;
+							theCal.dateFormat = "{$settings.dateformat}";
 							theCal.getDatepicker("datepicker_day");
 	   					</script>
 

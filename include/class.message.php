@@ -3,9 +3,9 @@
 /**
  * The class provides methods for the realization of messages and replies.
  *
- * @author Open Dynamics <info@o-dyn.de>
+ * @author Philipp Kiszka <info@o-dyn.de>
  * @name message
- * @version 0.4.6
+ * @version 1.0
  * @package Collabtive
  * @link http://www.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
@@ -64,7 +64,7 @@ class message {
     {
         global $conn;
 
-        $updStmt = $conn->query("UPDATE messages SET title=?, text=?, tags=? WHERE ID = ?");
+        $updStmt = $conn->prepare("UPDATE `messages` SET `title`=?, `text`=?, `tags`=? WHERE ID = ?");
         $upd = $updStmt->execute(array($title, $text, $tags, (int) $id));
 
         if ($upd) {

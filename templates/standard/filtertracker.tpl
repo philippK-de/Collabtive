@@ -55,6 +55,7 @@
 			theCal.monthNames = ["{#january#}","{#february#}","{#march#}","{#april#}","{#may#}","{#june#}","{#july#}","{#august#}","{#september#}","{#october#}","{#november#}","{#december#}"];
 			theCal.relateTo = "start";
 			theCal.keepEmpty = true;
+			theCal.dateFormat = "{$settings.dateformat}";
 			theCal.getDatepicker("datepicker_startfilter");
 	        </script>
 			<script type="text/javascript">
@@ -63,6 +64,7 @@
 			theCal2.monthNames = ["{#january#}","{#february#}","{#march#}","{#april#}","{#may#}","{#june#}","{#july#}","{#august#}","{#september#}","{#october#}","{#november#}","{#december#}"];
 			theCal2.relateTo = "end";
 			theCal2.keepEmpty = true;
+			theCal2.dateFormat = "{$settings.dateformat}";
 			theCal2.getDatepicker("datepicker_endfilter");
         </script>
 
