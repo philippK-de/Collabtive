@@ -10,6 +10,22 @@ if ($settings["template"] == "frost") {
 }
 
 // 1.0
+function getOldSettings() {
+	global $conn;
+    $sel = $conn->query("SELECT * FROM settings LIMIT 1");
+    $settings = array();
+    $settings = $sel->fetch(PDO::FETCH_ASSOC);
+
+    if (!empty($settings)) {
+        return $settings;
+    } else {
+        return false;
+    }
+}
+
+$oldSettings = getOldSettings();
+array_shift($oldSettings);
+
 if ($conn->query("DROP TABLE `settings`")) {
     $table = $conn->query("CREATE TABLE `settings` (
   `ID` int(10) NOT NULL AUTO_INCREMENT,
@@ -19,8 +35,8 @@ if ($conn->query("DROP TABLE `settings`")) {
 ) ENGINE=MyISAM");
 }
 
-foreach($settings as $setKey => $setVal) {
-    $ins = $conn->query("INSERT INTO `settings` (`settingsKey`,`settingsValue`) VALUES ('$setKey','$setVal')");
+foreach($oldSettings as $setKey => $setVal) {
+	$conn->query("INSERT INTO `settings` (`settingsKey`,`settingsValue`) VALUES ('$setKey','$setVal')");
 }
 
 // Version independent
