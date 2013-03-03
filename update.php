@@ -41,13 +41,19 @@ $rolesobj = new roles();
 $allroles = $rolesobj->getAllRoles();
 
 foreach($allroles as $role) {
+    $role["projects"]["view"] = 1;
+    $role["tasks"]["view"] = 1;
+    $role["milestones"]["view"] = 1;
+    $role["messages"]["view"] = 1;
+    $role["files"]["view"] = 1;
+    $role["timetracker"]["view"] = 1;
     $rolesobj->edit($role["ID"], $role["name"],
-        array($role["projects"], "view" => 1),
-        array($role["tasks"], "view" => 1),
-        array($role["milestones"], "view" => 1),
-        array($role["messages"], "view" => 1),
-        array($role["files"], "view" => 1),
-        array($role["timetracker"], "view" => 1),
+        $role["projects"],
+        $role["tasks"],
+        $role["milestones"],
+        $role["messages"],
+        $role["files"],
+        $role["timetracker"],
         $role["chat"], $role["admin"]
         );
 }
