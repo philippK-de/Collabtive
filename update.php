@@ -37,13 +37,19 @@ if ($conn->query("DROP TABLE `settings`")) {
 foreach($oldSettings as $setKey => $setVal) {
     $conn->query("INSERT INTO `settings` (`settingsKey`,`settingsValue`) VALUES ('$setKey','$setVal')");
 }
-// insert default roles
-$rolesobj = new roles();
-$adminrid = $rolesobj->edit(0, "Admin", array("add" => 1, "edit" => 1, "del" => 1 , "close" => 1, "view" => 1), array("add" => 1, "edit" => 1, "del" => 1, "close" => 1, "view" => 1), array("add" => 1, "edit" => 1, "del" => 1, "close" => 1, "view" => 1), array("add" => 1, "edit" => 1, "del" => 1, "close" => 1, "view" => 1), array("add" => 1, "edit" => 1, "del" => 1, "view" => 1), array("add" => 1, "edit" => 1, "del" => 1, "read" => 1, "view" => 1), array("add" => 1), array("add" => 1));
+$allroles = $rolesobj->getAllRoles();
 
-$userrid = $rolesobj->edit(1, "User", array("add" => 1, "edit" => 1, "del" => 0, "close" => 0, "view" => 1), array("add" => 1, "edit" => 1, "del" => 0, "close" => 1, "view" => 1), array("add" => 1, "edit" => 1, "del" => 1, "close" => 1, "view" => 1), array("add" => 1, "edit" => 1, "del" => 1, "close" => 1, "view" => 1), array("add" => 1, "edit" => 1, "del" => 1, "view" => 1), array("add" => 1, "edit" => 1, "del" => 1, "read" => 0, "view" => 1), array("add" => 1), array("add" => 0));
-
-$clientrid = $rolesobj->edit(2, "Client", array("add" => 0, "edit" => 0, "del" => 0, "close" => 0), array("add" => 0, "edit" => 0, "del" => 0, "close" => 0), array("add" => 0, "edit" => 0, "del" => 0, "close" => 0), array("add" => 0, "edit" => 0, "del" => 0, "close" => 0), array("add" => 0, "edit" => 0, "del" => 0), array("add" => 0, "edit" => 0, "del" => 0, "read" => 0), array("add" => 0), array("add" => 0));
+foreach($allroles as $role) {
+    $rolesobj->edit($role["ID"], $role["name"],
+        array($role["projects"], "view" => 1),
+        array($role["tasks"], "view" => 1),
+        array($role["milestones"], "view" => 1),
+        array($role["messages"], "view" => 1),
+        array($role["files"], "view" => 1),
+        array($role["timetracker"], "view" => 1),
+        $role["chat"], $role["admin"]
+        );
+}
 // Version independent
 // Clear templates cache
 $handle = opendir($template->compile_dir);
