@@ -2,9 +2,9 @@
 /**
  * This class provides methods to realize timetracking
  *
- * @author Open Dynamics <info@o-dyn.de>
+ * @author Philipp Kiszka <info@o-dyn.de>
  * @name timetracker
- * @version 0.7.5
+ * @version 1.0
  * @package Collabtive
  * @link http://www.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later

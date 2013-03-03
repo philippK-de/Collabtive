@@ -2,10 +2,10 @@
 /**
  * This class provides methods to realize milestones
  *
- * @author Open Dynamics <info@o-dyn.de>
+ * @author Philipp Kiszka <info@o-dyn.de>
  * @name milestone
  * @package Collabtive
- * @version 0.4.5
+ * @version 1.0
  * @link http://www.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  * @global $mylog
