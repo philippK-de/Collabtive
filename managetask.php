@@ -278,7 +278,7 @@ if ($action == "addform") {
     $myproject = new project();
     $project_members = $myproject->getProjectMembers($id, $myproject->countMembers($id));
 
-    $milestone = new milestone;
+    $milestone = new milestone();
     $milestones = $milestone->getAllProjectMilestones($id);
 
     $pro = $myproject->getProject($id);
