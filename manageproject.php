@@ -282,7 +282,7 @@ if ($action == "editform") {
     $thelog = new mylog();
     $datlog = array();
     $tlog = $thelog->getProjectLog($id, 100000);
-    $tlog = $thelog->formatdate($tlog, "d.m.y");
+    $tlog = $thelog->formatdate($tlog, CL_DATEFORMAT);
     if (!empty($tlog)) {
         foreach($tlog as $logged) {
             if ($logged["type"] == "datei") {
