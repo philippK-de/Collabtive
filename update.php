@@ -1,17 +1,16 @@
 <?php
 error_reporting(0);
 require("./init.php");
-
 // 0.7
 $conn->query("ALTER TABLE `files` CHANGE `type` `type` VARCHAR( 255 )");
 // change to new winter template if unmaintained frost template is selected
 if ($settings["template"] == "frost") {
     $conn->query("UPDATE `settings` SET `template` = 'winter'");
 }
-
 // 1.0
-function getOldSettings() {
-	global $conn;
+function getOldSettings()
+{
+    global $conn;
     $sel = $conn->query("SELECT * FROM settings LIMIT 1");
     $settings = array();
     $settings = $sel->fetch(PDO::FETCH_ASSOC);
@@ -36,9 +35,15 @@ if ($conn->query("DROP TABLE `settings`")) {
 }
 
 foreach($oldSettings as $setKey => $setVal) {
-	$conn->query("INSERT INTO `settings` (`settingsKey`,`settingsValue`) VALUES ('$setKey','$setVal')");
+    $conn->query("INSERT INTO `settings` (`settingsKey`,`settingsValue`) VALUES ('$setKey','$setVal')");
 }
+// insert default roles
+$rolesobj = new roles();
+$adminrid = $rolesobj->edit(0, "Admin", array("add" => 1, "edit" => 1, "del" => 1 , "close" => 1, "view" => 1), array("add" => 1, "edit" => 1, "del" => 1, "close" => 1, "view" => 1), array("add" => 1, "edit" => 1, "del" => 1, "close" => 1, "view" => 1), array("add" => 1, "edit" => 1, "del" => 1, "close" => 1, "view" => 1), array("add" => 1, "edit" => 1, "del" => 1, "view" => 1), array("add" => 1, "edit" => 1, "del" => 1, "read" => 1, "view" => 1), array("add" => 1), array("add" => 1));
 
+$userrid = $rolesobj->edit(1, "User", array("add" => 1, "edit" => 1, "del" => 0, "close" => 0, "view" => 1), array("add" => 1, "edit" => 1, "del" => 0, "close" => 1, "view" => 1), array("add" => 1, "edit" => 1, "del" => 1, "close" => 1, "view" => 1), array("add" => 1, "edit" => 1, "del" => 1, "close" => 1, "view" => 1), array("add" => 1, "edit" => 1, "del" => 1, "view" => 1), array("add" => 1, "edit" => 1, "del" => 1, "read" => 0, "view" => 1), array("add" => 1), array("add" => 0));
+
+$clientrid = $rolesobj->edit(2, "Client", array("add" => 0, "edit" => 0, "del" => 0, "close" => 0), array("add" => 0, "edit" => 0, "del" => 0, "close" => 0), array("add" => 0, "edit" => 0, "del" => 0, "close" => 0), array("add" => 0, "edit" => 0, "del" => 0, "close" => 0), array("add" => 0, "edit" => 0, "del" => 0), array("add" => 0, "edit" => 0, "del" => 0, "read" => 0), array("add" => 0), array("add" => 0));
 // Version independent
 // Clear templates cache
 $handle = opendir($template->compile_dir);
@@ -67,4 +72,5 @@ $opt16 = $conn->query("OPTIMIZE TABLE `timetracker`");
 $opt17 = $conn->query("OPTIMIZE TABLE `user`");
 
 $template->display("update.tpl");
+
 ?>
