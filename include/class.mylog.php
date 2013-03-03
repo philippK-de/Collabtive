@@ -200,10 +200,9 @@ class mylog {
      */
     function formatdate($log, $format = "")
     {
-    	if(!$format)
-    	{
-			$format = CL_DATEFORMAT . " (H:i:s)";
-		}
+        if (!$format) {
+            $format = CL_DATEFORMAT . " (H:i:s)";
+        }
         $cou = 0;
 
         if ($log) {
