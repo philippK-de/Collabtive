@@ -117,7 +117,7 @@ if ($action == "addform") {
 
     if ($tmp) {
         foreach ($tmp as $value) {
-            $thistask['users'][] = $value[0]["ID"];
+            $thistask['users'][] = $value[0];
         }
     }
     $title = $langfile["edittask"];

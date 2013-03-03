@@ -10,7 +10,7 @@
 			<span class="info_in_yellow"><img src="templates/standard/img/symbols/tasklist.png" alt=""/>{#tasklistwasedited#}</span>
 		{/if}
 	</div>
-	
+
 	{literal}
 		<script type = "text/javascript">
 			apperar = new Effect.Appear('systemmsg', { duration: 2.0 })
@@ -45,7 +45,7 @@
 			<li><a>{#start#}: {$tasklist.startstring}</a></li>
 		</ul>
 	</div>
-	
+
 	{*Edit Task*}
 	{if $userpermissions.tasks.edit}
 		<div id = "form_edit" class="addmenue" style = "display:none;clear:both;">
@@ -131,7 +131,8 @@
 								<td style="text-align:right">{$tasks[task].daysleft}&nbsp;&nbsp;</td>
 								<td class="tools">
 									{if $userpermissions.tasks.edit}
-									<a class="tool_edit" href="managetask.php?action=editform&amp;tid={$tasks[task].ID}&amp;id={$project.ID}" title="{#edit#}"></a>{/if}
+										<a class="tool_edit" href="javascript:void(0);"  onclick = "change('managetask.php?action=editform&amp;tid={$tasks[task].ID}&amp;id={$project.ID}','form_addtask');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_addtask');" title="{#edit#}"></a>
+									{/if}
 									{if $userpermissions.tasks.del}
 									<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'task_{$tasks[task].ID}\',\'managetask.php?action=del&amp;tid={$tasks[task].ID}&amp;id={$project.ID}\')');"  title="{#delete#}"></a>
 									{/if}
@@ -168,7 +169,7 @@
 			{*Tasks donetasks*}
 			{if $tasklist.donetasknum > 0}
 				<div id="done_2" class="doneblock">
-					
+
 					<table class="second-thead" cellpadding="0" cellspacing="0" border="0" onclick="blindtoggle('doneblock_{$project.ID}');toggleClass('donebutn_{$project.ID}','butn_link_active','butn_link');toggleClass('toggle-done-{$project.ID}','acc-toggle','acc-toggle-active');">
 						<tr>
 							<td class="a"></td>
@@ -180,7 +181,7 @@
 					</table>
 
 					<div class="toggleblock">
-					
+
 						<table cellpadding="0" cellspacing="0" border="0" id = "done_{$project.ID}">
 							{section name=donetask loop=$donetasks}
 								{if $smarty.section.donetask.index % 2 == 0}
@@ -228,7 +229,7 @@
 								</tbody>
 							{/section} {*Tasks donetasks END*}
 						</table>
-						
+
 					</div> {*toggleblock End*}
 				</div> {*done_block End*}
 			{/if} {*If if $tasklist.donetasknum > 0*}
