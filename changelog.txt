@@ -1,3 +1,6 @@
+Collabtive 1.1
++ Fixed bug in tasklist editing, which would automatically remove the tasklist's assignment to a given milestone
+
 Collabtive 1.0
 + Added translations: Hebrew, Norwegian (Nynorsk), Taiwanese
 + Improved translations: Albanian, Arabic, Bulgarian, Danish, Farsi, French, German, Greek, Hungarian, Italian, Norwegian (Bokmål), Polish, Portuguese (Brazilian), Slovak, Serbian, Turkish
