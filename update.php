@@ -47,6 +47,7 @@ foreach($allroles as $role) {
     $role["messages"]["view"] = 1;
     $role["files"]["view"] = 1;
     $role["timetracker"]["view"] = 1;
+
     $rolesobj->edit($role["ID"], $role["name"],
         $role["projects"],
         $role["tasks"],

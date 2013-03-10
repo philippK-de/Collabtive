@@ -79,6 +79,7 @@ tinyMCE.init({
 		theCal{$lists[list].ID} = new calendar({$theM},{$theY});
 		theCal{$lists[list].ID}.dayNames = ["{$langfile.monday}","{$langfile.tuesday}","{$langfile.wednesday}","{$langfile.thursday}","{$langfile.friday}","{$langfile.saturday}","{$langfile.sunday}"];
 		theCal{$lists[list].ID}.monthNames = ["{$langfile.january}","{$langfile.february}","{$langfile.march}","{$langfile.april}","{$langfile.may}","{$langfile.june}","{$langfile.july}","{$langfile.august}","{$langfile.september}","{$langfile.october}","{$langfile.november}","{$langfile.december}"];
+		theCal{$lists[list].ID}.dateFormat = "{$settings.dateformat}";
 		theCal{$lists[list].ID}.relateTo = "end";
 		theCal{$lists[list].ID}.getDatepicker("datepicker_project");
 	</script>

@@ -176,8 +176,6 @@ class timetracker {
     function getUserTrack($user, $project = 0, $task = 0, $start = 0, $end = 0 , $lim = 50)
     {
         global $conn;
-        $start = $conn->quote($start);
-        $end = $conn->quote($end);
         $user = (int) $user;
         $project = (int) $project;
         $lim = (int) $lim;
@@ -266,8 +264,6 @@ class timetracker {
     function getProjectTrack($project, $user = 0, $task = 0, $start = 0, $end = 0, $lim = 50)
     {
         global $conn;
-        $start = $conn->quote($start);
-        $end = $conn->quote($end);
         $project = (int) $project;
         $user = (int) $user;
         $lim = (int) $lim;

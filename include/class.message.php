@@ -64,7 +64,7 @@ class message {
     {
         global $conn;
 
-        $updStmt = $conn->query("UPDATE messages SET title=?, text=?, tags=? WHERE ID = ?");
+        $updStmt = $conn->prepare("UPDATE `messages` SET `title`=?, `text`=?, `tags`=? WHERE ID = ?");
         $upd = $updStmt->execute(array($title, $text, $tags, (int) $id));
 
         if ($upd) {

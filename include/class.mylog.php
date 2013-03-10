@@ -198,8 +198,11 @@ class mylog {
      * @param string $format Wanted format
      * @return array $log Entry with the formatted time
      */
-    function formatdate($log, $format = "d.m.y (H:i:s)")
+    function formatdate($log, $format = "")
     {
+        if (!$format) {
+            $format = CL_DATEFORMAT . " (H:i:s)";
+        }
         $cou = 0;
 
         if ($log) {
