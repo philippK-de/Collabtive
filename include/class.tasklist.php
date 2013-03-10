@@ -61,7 +61,7 @@ class tasklist {
         global $conn;
 
         $updStmt = $conn->prepare("UPDATE tasklist SET `name` = ?, `desc` = ?, `milestone` = ? WHERE ID = ?");
-        $upd = $updStmt->execute(array($name, $desc, §milestone, $id));
+        $upd = $updStmt->execute(array($name, $desc, $milestone, $id));
         if ($upd) {
             $proj = $conn->query("SELECT project FROM tasklist WHERE ID = $id")->fetch();
             $proj = $proj[0];
