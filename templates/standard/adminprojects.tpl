@@ -43,7 +43,7 @@
 
 					<div class="nosmooth" id="sm_myprojects">
 
-						<table cellpadding="0" cellspacing="0" border="0">
+						<table id="adminprojects" cellpadding="0" cellspacing="0" border="0">
 							<thead>
 								<tr>
 									<th class="a"></th>
