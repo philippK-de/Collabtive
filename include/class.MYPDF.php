@@ -22,7 +22,7 @@ class MYPDF extends TCPDF {
         // TCPDF boilerplate setup
         $this->SetMargins(15, $this->headerMargin, 15);
         $this->SetFooterMargin(PDF_MARGIN_FOOTER);
-   		$this->SetFont(PDF_FONT_NAME_DATA, "", 11);
+        $this->SetFont(PDF_FONT_NAME_DATA, "", 11);
 
         $this->SetAutoPageBreak(true, PDF_MARGIN_FOOTER);
         $this->AliasNbPages();
@@ -76,7 +76,7 @@ class MYPDF extends TCPDF {
         foreach($data as $row) {
             for($i = 0;$i < $num_headers;$i++) {
                 if ($i > 0) {
-                    $this->Cell($awidth, 6,$row[$i], 1, 0, 'LR', $doFill, "", 1);
+                    $this->Cell($awidth, 6, $row[$i], 1, 0, 'LR', $doFill, "", 1);
                 } else {
                     $this->Cell($awidth + 5, 6, $row[$i], 1, 0, 'LR', $doFill, "", 1);
                 }
