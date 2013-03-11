@@ -107,7 +107,7 @@ if ($action == "loginerror") {
 
         $lang2 .= " (" . $fin . "%)";
         $fin = array("val" => $lang, "str" => $lang2);
-        }
+        
         array_push($languages_fin, $fin);
     }
     $template->assign("languages_fin", $languages_fin);
