@@ -29,8 +29,8 @@
 							<li class="admin"><a class = "{$mainclasses.admin}" href="admin.php?action=projects"><span>{#administration#}</span><span class="submenarrow"></span></a>
 								<div class="submen">
 									<ul>
-										<li class="project-settings"><a class="{$classes.overview}" href="admin.php?action=projects"><span>{#projectadministration#}</span></a></li>
-										<li class="user-settings"><a class="{$classes.users}" href="admin.php?action=users"><span>{#useradministration#}</span></a></li>
+										<li class="project-settings"><a class="{$classes.overview|default}" href="admin.php?action=projects"><span>{#projectadministration#}</span></a></li>
+										<li class="user-settings"><a class="{$classes.users|default}" href="admin.php?action=users"><span>{#useradministration#}</span></a></li>
 										<li class="system-settings"><a class="{$classes.system|default}" href="admin.php?action=system"><span>{#systemadministration#}</span></a></li>
 									</ul>
 								</div>
