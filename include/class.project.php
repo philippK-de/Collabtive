@@ -27,10 +27,11 @@ class project {
      * @param string $name Name des Projekts
      * @param string $desc Projektbeschreibung
      * @param string $end Date on which the project is due
+   	 * @param int $customerID
      * @param int $assignme Assign yourself to the project
      * @return int $insid ID des neu angelegten Projekts
      */
-    function add($name, $desc, $end, $budget, $assignme = 0)
+    function add($name, $desc, $end, $budget, $customerID, $assignme = 0)
     {
         global $conn;
 
@@ -50,7 +51,14 @@ class project {
         if ($ins1) {
             mkdir(CL_ROOT . "/files/" . CL_CONFIG . "/$insid/", 0777);
             $this->mylog->add($name, 'projekt', 1, $insid);
-            return $insid;
+            if(is_numeric($customerID) AND $customerID>0){
+	            if($this->assignCustomer($insid,$customerID))
+	            	 return $insid;
+	            else
+	            	return false;
+            }
+            else
+          		return $insid;
         } else {
             return false;
         }
@@ -96,9 +104,10 @@ class project {
      * @param string $name Name des Projekts
      * @param string $desc Beschreibungstext
      * @param string $end Date on which the project is due
+     * @param int $customerID id of a customer
      * @return bool
      */
-    function edit($id, $name, $desc, $end, $budget)
+    function edit($id, $name, $desc, $end, $budget, $customerID)
     {
         global $conn;
         $end = strtotime($end);
@@ -107,13 +116,20 @@ class project {
 
         $updStmt = $conn->prepare("UPDATE projekte SET name=?,`desc`=?,`end`=?,budget=? WHERE ID = ?");
         $upd = $updStmt->execute(array($name, $desc, $end, $budget, $id));
-
+		
         if ($upd) {
             $this->mylog->add($name, 'projekt' , 2, $id);
-            return true;
-        } else {
+            if(is_numeric($customerID) AND $customerID>0){
+	            if($this->assignCustomer($id,$customerID))
+	            	return true;
+	            else
+	            	return false;
+            }
+            else
+            	return true;
+        } else
             return false;
-        }
+        
     }
 
     /**
@@ -316,7 +332,7 @@ class project {
         global $conn;
         $id = (int) $id;
 
-        $sel = $conn->prepare("SELECT * FROM projekte WHERE ID = ?");
+        $sel = $conn->prepare("SELECT a.*, c.*, a.ID AS ID, a.desc AS `desc`, c.ID AS customerID, c.desc AS customerDesc FROM projekte AS a LEFT JOIN customer_assigned AS b ON a.ID=b.project_ID LEFT JOIN customer AS c ON b.customer_ID=c.ID WHERE a.ID = ?");
         $selStmt = $sel->execute(array($id));
 
 		$project = $sel->fetch();
@@ -557,7 +573,29 @@ class project {
         $diff = $end - $start;
         return floor($diff / 86400);
     }
+    
+    /**
+     * Assigns or update a customer to a project
+     * 
+     * @param int $projectID
+     * @param int $customerID
+     * @return bool
+     */
+	private function assignCustomer($projectID,$customerID){
+		global $conn;
+		
+		$del = $conn->query("DELETE FROM customer_assigned WHERE project_ID = $projectID");
+		
+		if ($del) {
+			$ins1Stmt = $conn->prepare("INSERT INTO customer_assigned (`customer_ID`, `project_ID`) VALUES (?,?)");
+			$ins1 = $ins1Stmt->execute(array($customerID,$projectID));
 
+			if ($ins1)
+				return TRUE;
+			else
+				return FALSE;
+		}
+	}
 
 }
 

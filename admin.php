@@ -4,6 +4,7 @@ require("./init.php");
 $action = getArrayVal($_GET, "action");
 $mode = getArrayVal($_GET, "mode");
 $id = getArrayVal($_GET, "id");
+$customerID = getArrayVal($_POST, "customerlist");
 $name = getArrayVal($_POST, "name");
 $subtitle = getArrayVal($_POST, "subtitle");
 $isadmin = getArrayVal($_POST, "isadmin");
@@ -45,6 +46,7 @@ $template->assign("languages", $languages);
 
 $user = new user();
 $project = new project();
+$customer = new customer();
 $theset = new settings();
 $mainclasses = array("desktop" => "",
     "profil" => "",
@@ -365,6 +367,7 @@ if ($action == "index") {
     $template->assign("title", $title);
     $template->assign("classes", $classes);
     $opros = $project->getProjects(1, 10000);
+    $customerlist = $customer->getCustomers(10000);
     $clopros = $project->getProjects(0, 10000);
     $i = 0;
     $users = $user->getAllUsers(1000000);
@@ -379,6 +382,7 @@ if ($action == "index") {
 
     $template->assign("users", $users);
     $template->assign("clopros", $clopros);
+    $template->assign("customers", $customerlist);
     $template->display("adminprojects.tpl");
 } elseif ($action == "addpro") {
     if (!$userpermissions["projects"]["add"]) {
@@ -393,7 +397,7 @@ if ($action == "index") {
         $end = 0;
     }
 
-    $add = $project->add($name, $desc, $end, $budget, 0);
+    $add = $project->add($name, $desc, $end, $budget, $customerID, 0);
     if ($add) {
         foreach ($assignto as $member) {
             $project->assign($member, $add);
@@ -429,6 +433,59 @@ if ($action == "index") {
         // header("Location: admin.php?action=projects&mode=deleted");
         echo "ok";
     }
+} elseif ($action == "customers") {
+    $classes = array("overview" => "overview",
+        "customer" => "active",
+        "system" => "system",
+        "users" => "users"
+        );
+    $title = $langfile['customeradministration'];
+    $template->assign("title", $title);
+    $template->assign("classes", $classes);
+    $allcust = $customer->getCustomers(1, 10000);   
+    //$clopros = $project->getProjects(0, 10000);
+   /* $i = 0;
+    $users = $user->getAllUsers(1000000);
+    if (!empty($opros)) {
+        foreach($opros as $opro) {
+            $membs = $project->getProjectMembers($opro["ID"], 1000);
+            $opros[$i]['members'] = $membs;
+            $i = $i + 1;
+        }
+        $template->assign("opros", $opros);
+    }*/
+
+    $template->assign("allcust", $allcust);
+    $template->display("admincustomers.tpl");
+} elseif ($action == "addcust") {
+	if (!$userpermissions["customers"]["add"]) {
+		$errtxt = $langfile["nopermission"];
+		$noperm = $langfile["accessdenied"];
+		$template->assign("errortext", "$errtxt<br>$noperm");
+		$template->display("error.tpl");
+		die();
+	}
+	
+	if (!$end) {
+		$end = 0;
+	}
+	$data = array(
+			'company' => getArrayVal($_POST, "company"),
+			'contact' => getArrayVal($_POST, "contact"),
+			'email' => getArrayVal($_POST, "email"),
+			'phone' => getArrayVal($_POST, "tel1"),
+			'mobile' => getArrayVal($_POST, "tel2"),
+			'url' => getArrayVal($_POST, "web"),
+			'address' => getArrayVal($_POST, "address"),
+			'zip' => getArrayVal($_POST, "zip"),
+			'city' => getArrayVal($_POST, "city"),
+			'country' => getArrayVal($_POST, "country"),
+			'state' => getArrayVal($_POST, "state"),
+			'desc' => getArrayVal($_POST, "desc")
+	);
+	$add = $customer->add($data);
+	if ($add)
+		header("Location: admin.php?action=customers&mode=added");
 } elseif ($action == "system") {
     $classes = array("overview" => "overview",
         "system" => "active",

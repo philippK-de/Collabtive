@@ -27,7 +27,7 @@
 				<a href="javascript:void(0);" id="acc-projects_toggle" class="win_none" onclick = "toggleBlock('acc-projects');"></a>
 					{if $userpermissions.projects.add}
 						<div class="wintools">
-							<a class="add" href="javascript:blindtoggle('form_addmyproject');" id="add_myprojects" onclick="toggleClass(this,'add-active','add');toggleClass('add_butn_myprojects','butn_link_active','butn_link');toggleClass('sm_myprojects','smooth','nosmooth');"><span>{#addproject#}</span></a>
+							<a class="add" href="javascript:blindtoggle('form_addmyproject');" id="add_myprojects" onclick="Effect.BlindUp('form_edit');toggleClass(this,'add-active','add');toggleClass('add_butn_myprojects','butn_link_active','butn_link');toggleClass('sm_myprojects','smooth','nosmooth');"><span>{#addproject#}</span></a>
 						</div>
 					{/if}
 
@@ -40,7 +40,7 @@
 					<div id = "form_addmyproject" class="addmenue" style = "display:none;">
 						{include file="addproject.tpl" myprojects="1"}
 					</div>
-
+					<div id = "form_edit" class="addmenue" style = "display:none;"></div>
 					<div class="nosmooth" id="sm_myprojects">
 
 						<table id="adminprojects" cellpadding="0" cellspacing="0" border="0">
@@ -48,6 +48,7 @@
 								<tr>
 									<th class="a"></th>
 									<th class="b">{#project#}</th>
+									<th class="d">{#customer#}</th>
 									<th class="c">{#done#}</th>
 									<th class="days" style="text-align:right">{#daysleft#}&nbsp;&nbsp;</th>
 									<th class="tools"></th>
@@ -83,6 +84,18 @@
 											</div>
 										</td>
 										<td>
+											{if $opros[opro].company != ""}
+											<div class="toggle-in">
+												<span id="acc-toggler{$myprojects[project].ID}" class="acc-toggle" onclick="javascript:accord_projects.activate($$('#accord_customer .accordion_toggle')[{$smarty.section.opro.index}]);toggleAccordeon('accord_customer',this);"></span>
+												<a href="#" onclick="javascript:accord_projects.activate($$('#accord_customer .accordion_toggle')[{$smarty.section.opro.index}]);toggleAccordeon('accord_customer',$('acc-toggler{$myprojects[project].ID}'));">
+													{$opros[opro].company|truncate:30:"...":true}
+												</a>
+											</div>
+											{else}
+												---
+											{/if}
+										</td>
+										<td>
 											<div class="statusbar_b">
 												<div class="complete" id = "completed" style="width:{$opros[opro].done}%;"></div>
 											</div>
@@ -92,7 +105,7 @@
 										<td class="tools">
 
 												{if $userpermissions.projects.edit}
-											<a class="tool_edit" href="javascript:void(0);" onclick = "change('manageproject.php?action=editform&amp;id={$opros[opro].ID}','form_addmyproject');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_addmyproject');" title="{#edit#}"></a>{/if}
+											<a id="edit_butn{$opros[opro].ID}" class="tool_edit" href="javascript:void(0);" onclick = "change('manageproject.php?action=editform&amp;id={$opros[opro].ID}','form_edit');Effect.BlindUp('form_addmyproject');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_edit');" title="{#edit#}"></a>{/if}
 											{if $userpermissions.projects.del}
 												<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'proj_{$opros[opro].ID}\',\'manageproject.php?action=del&amp;id={$opros[opro].ID}\')');"  title="{#delete#}"></a>
 											{/if}
@@ -100,7 +113,7 @@
 									</tr>
 
 									<tr class="acc">
-										<td colspan="5">
+										<td colspan="6">
 											<div class="accordion_toggle"></div>
 											<div class="accordion_content">
 												<div class="acc-in">
@@ -190,6 +203,42 @@
 											</div>
 										</td>
 									</tr>
+									<tr class="acc" id="accord_customer">
+										<td colspan="6">
+											<div class="accordion_toggle"></div>
+											<div class="accordion_content">
+												<div class="acc-in">
+													<table id="admincustomers" cellpadding="0" cellspacing="0" border="0">
+														<tr>
+															<td>{#contactperson#}:</td>
+															<td>{$opros[opro].contact}</td>
+															<td rowspan="3" style="vertical-align:top;">{#address#}:</td>
+															<td>{$opros[opro].address}</td>
+														</tr><tr>
+															<td>{#phone#}:</td>
+															<td>{$opros[opro].phone}</td>
+															<td>{$opros[opro].zip} {$allcust[cust].city}</td>
+														</tr>
+														<tr>
+															<td>{#cellphone#}:</td>
+															<td>{$opros[opro].mobile}</td>
+															<td>{$opros[opro].country}</td>
+														</tr>
+														<tr>
+															<td>{#email#}:</td>
+															<td><a href="{$opros[opro].email}" target="_blank">{$opros[opro].email}</a></td>
+														</tr>
+														<tr>
+															<td>{#url#}:</td>
+															<td><a href="{$opros[opro].url}" target="_blank">{$opros[opro].url}</a></td>
+														</tr>
+													</table>
+												</div>{*assign users end*}
+
+												</div>
+											</div>
+										</td>
+									</tr>	
 								</tbody>
 							{/section}
 						</table> {*Projects End*}
@@ -247,7 +296,7 @@
 											</tr>
 
 											<tr class="acc">
-												<td colspan="5">
+												<td colspan="6">
 													<div class="accordion_toggle"></div>
 													<div class="accordion_content">
 														<div class="acc-in">
@@ -268,7 +317,7 @@
 					<div class="tablemenue">
 						<div class="tablemenue-in">
 							{if $userpermissions.projects.add}
-								<a class="butn_link" href="javascript:blindtoggle('form_addmyproject');" id="add_butn_myprojects" onclick="toggleClass('add_myprojects','add-active','add');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_myprojects','smooth','nosmooth');">{#addproject#}</a>
+								<a class="butn_link" href="javascript:blindtoggle('form_addmyproject');" id="add_butn_myprojects" onclick="Effect.BlindUp('form_edit');toggleClass('add_myprojects','add-active','add');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_myprojects','smooth','nosmooth');">{#addproject#}</a>
 							{/if}
 							<a class="butn_link" href="javascript:blindtoggle('doneblock');" id="donebutn" onclick="toggleClass(this,'butn_link_active','butn_link');toggleClass('toggle-done','acc-toggle','acc-toggle-active');">{#closedprojects#}</a>
 						</div>
@@ -279,6 +328,7 @@
 				<script type = "text/javascript">
 					var accord_projects = new accordion('acc-projects');
 					var accord_oldprojects = new accordion('acc-oldprojects');
+					var accord_customer = new accordion('accord_customer');
 				</script>
 			{/literal}
 

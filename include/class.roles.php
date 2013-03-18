@@ -19,30 +19,32 @@ class roles {
      * This method takes an array with permissions, serializes it to string, and saves it to the Database
      *
      * @param string $name Name of the role (for display)
+     * @param array $projects Role permissions for projects
      * @param array $tasks Role permissions for tasks
      * @param array $milestones Role permissions for milestones
+     * @param array $customers Role permissions for customers
      * @param array $messages Role permissions for messages
      * @param array $files Role permissions for files
      * @param array $timetracker Role permissions for timetracker
      * @param array $admin
      * @param array $chat
-     * @param array $files Role permissions for admin area
      * @return bool
      */
-    function add($name, array $projects, array $tasks, array $milestones, array $messages, array $files, array $timetracker, array $chat, array $admin)
+    function add($name, array $projects, array $tasks, array $milestones, array $customers, array $messages, array $files, array $timetracker, array $chat, array $admin)
     {
         global $conn;
         $projects = serialize($projects);
         $tasks = serialize($tasks);
         $milestones = serialize($milestones);
+        $customers = serialize($customers);
         $messages = serialize($messages);
         $files = serialize($files);
         $timetracker = serialize($timetracker);
         $chat = serialize($chat);
         $admin = serialize($admin);
 
-        $insStmt = $conn->prepare("INSERT INTO roles (name,projects,tasks,milestones,messages,files,timetracker,chat,admin) VALUES (?,?,?,?,?,?,?,?,?)");
-        $ins = $insStmt->execute(array($name, $projects, $tasks, $milestones, $messages, $files, $timetracker, $chat, $admin));
+        $insStmt = $conn->prepare("INSERT INTO roles (name,projects,tasks,milestones,customers,messages,files,timetracker,chat,admin) VALUES (?,?,?,?,?,?,?,?,?,?)");
+        $ins = $insStmt->execute(array($name, $projects, $tasks, $milestones, $customers, $messages, $files, $timetracker, $chat, $admin));
 
         if ($ins) {
             $insid = $conn->lastInsertId();
@@ -59,30 +61,33 @@ class roles {
      *
      * @param int $id ID of the role to edit
      * @param string $name Name of the role (for display)
+     * @param array $projects Role permissions for projects
      * @param array $tasks Role permissions for tasks
      * @param array $milestones Role permissions for milestones
+     * @param array $customers Role permissions for customers
      * @param array $messages Role permissions for messages
      * @param array $files Role permissions for files
      * @param array $timetracker Role permissions for timetracker
+     * @param array $chat
      * @param array $admin
-     * @param array $files Role permissions for admin area
      * @return bool
      */
-    function edit($id, $name, array $projects, array $tasks, array $milestones, array $messages, array $files, array $timetracker, array $chat, array $admin)
+    function edit($id, $name, array $projects, array $tasks, array $milestones, array $customers, array $messages, array $files, array $timetracker, array $chat, array $admin)
     {
         global $conn;
         $id = (int) $id;
         $projects = serialize($projects);
         $tasks = serialize($tasks);
         $milestones = serialize($milestones);
+        $customers = serialize($customers);
         $messages = serialize($messages);
         $files = serialize($files);
         $timetracker = serialize($timetracker);
         $chat = serialize($chat);
         $admin = serialize($admin);
 
-        $updStmt = $conn->prepare("UPDATE roles SET name=?,projects=?,tasks=?,milestones=?,messages=?,files=?,timetracker=?,chat=?,admin=? WHERE ID = ?");
-        $upd = $updStmt->execute(array($name, $projects, $tasks, $milestones, $messages, $files, $timetracker, $chat, $admin, $id));
+        $updStmt = $conn->prepare("UPDATE roles SET name=?,projects=?,tasks=?,milestones=?,customers=?,messages=?,files=?,timetracker=?,chat=?,admin=? WHERE ID = ?");
+        $upd = $updStmt->execute(array($name, $projects, $tasks, $milestones, $customers, $messages, $files, $timetracker, $chat, $admin, $id));
 
         if ($upd) {
             return true;
@@ -289,6 +294,7 @@ class roles {
         $therole["projects"] = unserialize($therole["projects"]);
         $therole["tasks"] = unserialize($therole["tasks"]);
         $therole["milestones"] = unserialize($therole["milestones"]);
+        $therole["customers"] = unserialize($therole["customers"]);
         $therole["messages"] = unserialize($therole["messages"]);
         $therole["files"] = unserialize($therole["files"]);
         $therole["timetracker"] = unserialize($therole["timetracker"]);
