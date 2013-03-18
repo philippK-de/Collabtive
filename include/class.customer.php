@@ -76,7 +76,7 @@ class customer {
       
         $id = (int) $id;
 
-        $del_assigns = $conn->query("DELETE FROM customer_assigned WHERE customer_ID = $id");
+        $del_assigns = $conn->query("DELETE FROM customer_assigned WHERE customer = $id");
         $del = $conn->query("DELETE FROM customer WHERE ID = $id");
 
         if ($del) {

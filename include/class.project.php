@@ -332,7 +332,7 @@ class project {
         global $conn;
         $id = (int) $id;
 
-        $sel = $conn->prepare("SELECT a.*, c.*, a.ID AS ID, a.desc AS `desc`, c.ID AS customerID, c.desc AS customerDesc FROM projekte AS a LEFT JOIN customer_assigned AS b ON a.ID=b.project_ID LEFT JOIN customer AS c ON b.customer_ID=c.ID WHERE a.ID = ?");
+        $sel = $conn->prepare("SELECT a.*, c.*, a.ID AS ID, a.desc AS `desc`, c.ID AS customerID, c.desc AS customerDesc FROM projekte AS a LEFT JOIN customer_assigned AS b ON a.ID=b.project LEFT JOIN customer AS c ON b.customer=c.ID WHERE a.ID = ?");
         $selStmt = $sel->execute(array($id));
 
 		$project = $sel->fetch();
@@ -584,10 +584,10 @@ class project {
 	private function assignCustomer($projectID,$customerID){
 		global $conn;
 		
-		$del = $conn->query("DELETE FROM customer_assigned WHERE project_ID = $projectID");
+		$del = $conn->query("DELETE FROM customer_assigned WHERE project = $projectID");
 		
 		if ($del) {
-			$ins1Stmt = $conn->prepare("INSERT INTO customer_assigned (`customer_ID`, `project_ID`) VALUES (?,?)");
+			$ins1Stmt = $conn->prepare("INSERT INTO customer_assigned (`customer`, `project`) VALUES (?,?)");
 			$ins1 = $ins1Stmt->execute(array($customerID,$projectID));
 
 			if ($ins1)

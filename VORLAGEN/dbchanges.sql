@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `customer` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `customer_assigned` (
-  `customer_ID` int(10) unsigned NOT NULL,
-  `project_ID` int(10) NOT NULL,
-  UNIQUE KEY `customerXproject` (`customer_ID`,`project_ID`)
+  `customer` int(10) unsigned NOT NULL,
+  `project` int(10) NOT NULL,
+  UNIQUE KEY `customerXproject` (`customer`,`project`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
