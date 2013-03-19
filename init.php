@@ -12,7 +12,7 @@ define("CL_CONFIG", "standard");
 define("CL_VERSION", 1.0);
 define("CL_PUBDATE","1365026400");
 // uncomment for debugging
-//error_reporting(E_ALL | E_STRICT);
+error_reporting(E_ALL | E_STRICT);
 // include config file , pagination and global functions
 require(CL_ROOT . "/config/" . CL_CONFIG . "/config.php");
 require(CL_ROOT . "/include/SmartyPaginate.class.php");
@@ -21,7 +21,7 @@ require(CL_ROOT . "/include/initfunctions.php");
 if (!empty($db_name) and !empty($db_user))
 {
   //$tdb = new datenbank();
-    $conn = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
+    $conn = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''));
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 }
 
