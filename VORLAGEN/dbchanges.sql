@@ -20,3 +20,5 @@ CREATE TABLE IF NOT EXISTS `customer_assigned` (
   `project` int(10) NOT NULL,
   UNIQUE KEY `customerXproject` (`customer`,`project`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+ALTER TABLE `roles` ADD `customers` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER `milestones`
