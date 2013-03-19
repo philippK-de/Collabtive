@@ -62,6 +62,14 @@ tinyMCE.init({
 
 	<div class="row"><label for="name">{$langfile.name}:</label><input type="text" class="text" name="name" id="name" required="1" realname="{$langfile.name}" value = "{$project.name}" /></div>
 	<div class="row"><label for="desc">{$langfile.description}:</label><div class="editor"><textarea name="desc" id="desc"  rows="3" cols="1">{$project.desc}</textarea></div></div>
+	<div class="row"><label for="customerlist">{$langfile.customer}:</label>
+		<select name="customerlist" id="customerlist" exclude = "-1" realname = "{#customer#}">
+	    <option value="-1">{$langfile.chooseone}</option>
+	    {section name=customerlist loop=$customers}
+	    <option value="{$customers[customerlist].ID}" {if $project.customerID == $customers[customerlist].ID}selected = "selected"{/if}>{$customers[customerlist].company}</option>
+	    {/section}
+	    </select>
+	</div>
 	<div class="row"><label for="budget">{$langfile.budget}:</label><input type="text" class="text" name="budget" id="budget"  realname="{$langfile.budget}" value = "{$project.budget}" /></div>
 
 	<div class="row">
@@ -88,7 +96,7 @@ tinyMCE.init({
 	<div class="row-butn-bottom">
 		<label>&nbsp;</label>
 		<button type="submit" onfocus="this.blur();">{$langfile.send}</button>
-		<button onclick="blindtoggle('form_edit');toggleClass('edit_butn','edit-active','edit');toggleClass('sm_project','smooth','nosmooth');toggleClass('sm_project_desc','smooth','nosmooth');return false;" onfocus="this.blur();" {if $showhtml != "no"} style="display:none;"{/if}>{$langfile.cancel}</button>
+		<button type="button" onclick="blindtoggle('form_edit');{if $projectov == "no"} toggleClass('edit_butn','edit-active','edit');toggleClass('sm_project','smooth','nosmooth');toggleClass('sm_project_desc','smooth','nosmooth');{else}toggleClass('edit_butn{$project.ID}','tool_edit_active','tool_edit');{/if} return false;" onfocus="this.blur();" {if $showhtml != "no"} style="display:none;"{/if}>{$langfile.cancel}</button>
 	</div>
 
 	</fieldset>
