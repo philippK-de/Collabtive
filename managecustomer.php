@@ -6,8 +6,7 @@ if (!isset($_SESSION['userid'])) {
     die();
 }
 
-$project = (object) new project();
-$custclass = (object) new customer();
+$customer = (object) new customer();
 
 $action = getArrayVal($_GET, "action");
 $redir = getArrayVal($_GET, "redir");
@@ -21,11 +20,10 @@ $status = getArrayVal($_POST, "status");
 $user = getArrayVal($_POST, "user");
 $assign = getArrayVal($_POST, "assginme");
 $budget = getArrayVal($_POST, "budget");
-$customerID = getArrayVal($_POST, "customerlist");
 
 $projectid = array();
-$projectid['ID'] = $id;
-$template->assign("project", $projectid);
+$customerid['ID'] = $id;
+$template->assign("customer", $customerid);
 
 $strproj = utf8_decode($langfile["project"]);
 $struser = utf8_decode($langfile["user"]);
@@ -53,7 +51,7 @@ $classes = array("overview" => "overview_active", "msgs" => "msgs", "tasks" => "
 $template->assign("classes", $classes);
 
 if ($action == "editform") {
-    if (!$userpermissions["projects"]["edit"]) {
+    if (!$userpermissions["customers"]["edit"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
         $template->assign("errortext", "$errtxt<br>$noperm");
@@ -61,20 +59,17 @@ if ($action == "editform") {
         $template->display("error.tpl");
         die();
     }
-    $customers = $custclass->getCustomers(10000);
-    $thisproject = $project->getProject($id);
-    $title = $langfile["editproject"];
+    $thiscustomer = $customer->getCustomer($id);
+    $title = $langfile["editcustomer"];
 
     $template->assign("title", $title);
-    $template->assign("project", $thisproject);
-    $template->assign("customers", $customers);
-    $template->assign("showhtml", "no");
-    $template->assign("showheader", "no");
-    $template->assign("projectov", "yes");
+    $template->assign("customer", $thiscustomer);
+    /*$template->assign("showhtml", "no");
+    $template->assign("showheader", "no");*/
     $template->assign("async", "yes");
-    $template->display("editform.tpl");
+    $template->display("editcustomer.tpl");
 } elseif ($action == "edit") {
-    if (!$userpermissions["projects"]["edit"]) {
+    if (!$userpermissions["customers"]["edit"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
         $template->assign("errortext", "$errtxt<br>$noperm");
@@ -86,14 +81,28 @@ if ($action == "editform") {
     if (!$end) {
         $end = 0;
     }
-
-    if ($project->edit($id, $name, $desc, $end, $budget, $customerID)) {
-        header("Location: manageproject.php?action=showproject&id=$id&mode=edited");
+    $data = array(
+    		'id' => $id,
+    		'company' => getArrayVal($_POST, "company"),
+    		'contact' => getArrayVal($_POST, "contact"),
+    		'email' => getArrayVal($_POST, "email"),
+    		'phone' => getArrayVal($_POST, "tel1"),
+    		'mobile' => getArrayVal($_POST, "tel2"),
+    		'url' => getArrayVal($_POST, "web"),
+    		'address' => getArrayVal($_POST, "address"),
+    		'zip' => getArrayVal($_POST, "zip"),
+    		'city' => getArrayVal($_POST, "city"),
+    		'country' => getArrayVal($_POST, "country"),
+    		'state' => getArrayVal($_POST, "state"),
+    		'desc' => getArrayVal($_POST, "desc")
+    );
+    if ($customer->edit($data)) {
+        header("Location: admin.php?action=customers&mode=edited");
     } else {
-        $template->assign("editproject", 0);
+        $template->assign("editcustomer", 0);
     }
 } elseif ($action == "del") {
-    if (!$userpermissions["projects"]["del"]) {
+    if (!$userpermissions["customers"]["del"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
         $template->assign("errortext", "$errtxt<br>$noperm");
@@ -101,7 +110,7 @@ if ($action == "editform") {
         $template->display("error.tpl");
         die();
     }
-    if ($project->del($id)) {
+    if ($customer->del($id)) {
         if ($redir) {
             $redir = $url . $redir;
             header("Location: $redir");
@@ -109,10 +118,10 @@ if ($action == "editform") {
             echo "ok";
         }
     } else {
-        $template->assign("delproject", 0);
+        $template->assign("delcustomer", 0);
     }
 } elseif ($action == "open") {
-    if (!$userpermissions["projects"]["close"]) {
+    if (!$userpermissions["customers"]["close"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
         $template->assign("errortext", "$errtxt<br>$noperm");
@@ -121,10 +130,10 @@ if ($action == "editform") {
         die();
     }
     $id = $_GET['id'];
-    if ($project->open($id)) {
-        header("Location: manageproject.php?action=showproject&id=$id");
+    if ($customer->open($id)) {
+        header("Location: managecustomer.php?action=showcustomert&id=$id");
     } else {
-        $template->assign("openproject", 0);
+        $template->assign("opencustomer", 0);
     }
 } elseif ($action == "close") {
     if (!$userpermissions["projects"]["close"]) {
@@ -324,7 +333,7 @@ if ($action == "editform") {
     fclose($excelFile);
     $loc = $url . "files/" . CL_CONFIG . "/ics/project-$id-log.csv";
     header("Location: $loc");
-} elseif ($action == "showproject") {
+} elseif ($action == "showcustomer") {
     if (!chkproject($userid, $id)) {
         $errtxt = $langfile["notyourproject"];
         $noperm = $langfile["accessdenied"];
@@ -366,8 +375,6 @@ if ($action == "editform") {
     $template->assign("trackbar", $trackbar);
     $template->assign("logbar", $logbar);
     $template->assign("statbar", $statbar);
-    $template->assign("projectov", "no");
-    
     $milestone = (object) new milestone();
     $mylog = (object) new mylog();
     $task = new task();
@@ -376,8 +383,7 @@ if ($action == "editform") {
 
     $log = $mylog->getProjectLog($id);
     $log = $mylog->formatdate($log);
-    
-    $customers = $custclass->getCustomers(10000);
+
     $tproject = $project->getProject($id);
     $done = $project->getProgress($id);
 
@@ -392,7 +398,6 @@ if ($action == "editform") {
     $title = $title . " " . $tproject["name"];
     $template->assign("title", $title);
 
-    $template->assign("customers", $customers);
     $template->assign("project", $tproject);
     $template->assign("done", $done);
 
