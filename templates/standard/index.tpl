@@ -19,12 +19,12 @@
 				systemMsg('systemmsg');
 			</script>
 		{/literal}
-		
+
 		{if $isUpdated}
 			{include file="updateNotify.tpl"}
 			<br />
 		{/if}
-		
+
 		<h1>{#desktop#}</h1>
 
 		{*Projects*}
@@ -53,7 +53,6 @@
 							<tr>
 								<th class="a"></th>
 								<th class="b" style="cursor:pointer;" onclick = "sortBlock('desktopprojects','');">{#project#}</th>
-								<th class="d">{#customer#}</th>
 								<th class="c" style="cursor:pointer" onclick = "sortBlock('desktopprojects','done');">{#done#}</th>
 								<th style="text-align:right" onclick = "sortBlock('desktopprojects','daysleft');">{#daysleft#}&nbsp;&nbsp;</th>
 								<th class="tools"></th>
@@ -87,18 +86,7 @@
 											</a>
 										</div>
 									</td>
-									<td>
-										{if $myprojects[project].company != ""}
-										<div class="toggle-in">
-											<span id="acc-toggler{$myprojects[project].ID}" class="acc-toggle" onclick="javascript:accord_projects.activate($$('#accord_customer .accordion_toggle')[{$smarty.section.project.index}]);toggleAccordeon('accord_customer',this);"></span>
-											<a href="#" onclick="javascript:accord_projects.activate($$('#accord_customer .accordion_toggle')[{$smarty.section.project.index}]);toggleAccordeon('accord_customer',$('acc-toggler{$myprojects[project].ID}'));" title="{$myprojects[project].company}">
-												{$myprojects[project].company|truncate:30:"...":true}
-											</a>
-										</div>
-										{else}
-											---
-										{/if}
-									</td>
+
 									<td>
 										<div class="statusbar_b">
 											<div class="complete" id = "completed" style="width:{$myprojects[project].done}%;"></div>
