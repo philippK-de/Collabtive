@@ -10,19 +10,22 @@
             die();
         }
         // Create MySQL Tables
-        $table1 = $conn->query("CREATE TABLE `company` (
-  `ID` int(10) NOT NULL auto_increment,
-  `name` varchar(255) NOT NULL default '',
-  `email` varchar(255) NOT NULL default '',
-  `phone` varchar(255) NOT NULL default '',
-  `address1` varchar(255) NOT NULL default '',
-  `address2` varchar(255) NOT NULL default '',
-  `state` varchar(255) NOT NULL default '',
-  `country` varchar(255) NOT NULL default '',
-  `logo` varchar(255) NOT NULL default '',
-  PRIMARY KEY  (`ID`),
-  KEY `name` (`name`)
-) ENGINE=MyISAM");
+        $table1 = $conn->query("CREATE TABLE IF NOT EXISTS `company` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `company` varchar(255) NOT NULL,
+  `contact` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `phone` varchar(64) NOT NULL,
+  `mobile` varchar(64) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `zip` varchar(16) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `country` varchar(255) NOT NULL,
+  `state` varchar(255) NOT NULL,
+  `desc` text NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;");
 
         $table2 = $conn->query("CREATE TABLE `company_assigned` (
   `ID` int(10) NOT NULL auto_increment,
@@ -274,6 +277,7 @@ CREATE TABLE `roles_assigned` (
   `role` int(10) NOT NULL,
   PRIMARY KEY  (`ID`)
 ) ENGINE=MyISAM");
+
         // Checks if tables could be created
         if (!$table1 or !$table2 or !$table3 or !$table4 or !$table5 or !$table6 or !$table7 or !$table8 or !$table9 or !$table10 or !$table11 or !$table12 or !$table13 or !$table14 or !$table15 or !$table16 or !$table17 or !$table18 or !$table19 or !$table20) {
             $template->assign("errortext", "Error: Tables could not be created.");
