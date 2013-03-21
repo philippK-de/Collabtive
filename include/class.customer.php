@@ -3,6 +3,7 @@
  * Die Klasse stellt Methoden bereit um Kunden zu bearbeiten
  *
  * @author Electric Solutions GbR <info@electric-solutions.de>
+ * @author Philipp Kiszka
  * @name project
  * @package Collabtive
  * @version 1.0
@@ -35,10 +36,11 @@ class customer {
         $ins1 = $ins1Stmt->execute(array($data['company'], $data['contact'], $data['email'], $data['phone'], $data['mobile'], $data['url'], $data['address'], $data['zip'], $data['city'], $data['country'], $data['state'], $data['desc']));
 
         $insid = $conn->lastInsertId();
-        if ($ins1)
+        if ($ins1) {
             return $insid;
-        else
-           return false;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -51,13 +53,12 @@ class customer {
     {
         global $conn;
         $id = (int) $data['id'];
-        
 
         $updStmt = $conn->prepare("UPDATE customer SET `company`=?, `contact`=?, `email`=?, `phone`=?, `mobile`=?, `url`=?, `address`=?, `zip`=?, `city`=?, `country`=?, `state`=?, `desc`=? WHERE ID = ?");
         $upd = $updStmt->execute(array($data['company'], $data['contact'], $data['email'], $data['phone'], $data['mobile'], $data['url'], $data['address'], $data['zip'], $data['city'], $data['country'], $data['state'], $data['desc'], $id));
 
         if ($upd) {
-           // $this->mylog->add($name, 'customer' , 2, $id);
+            // $this->mylog->add($name, 'customer' , 2, $id);
             return true;
         } else {
             return false;
@@ -65,7 +66,7 @@ class customer {
     }
 
     /**
-     * Deletes a customer and disconnect every project which was assigned to this customer 
+     * Deletes a customer and disconnect every project which was assigned to this customer
      *
      * @param int $id customer ID
      * @return bool
@@ -73,20 +74,20 @@ class customer {
     function del($id)
     {
         global $conn;
-      
+
         $id = (int) $id;
 
         $del_assigns = $conn->query("DELETE FROM customer_assigned WHERE customer = $id");
         $del = $conn->query("DELETE FROM customer WHERE ID = $id");
 
         if ($del) {
-          //  $this->mylog->add($userid, 'customer', 3, $id);
+            // $this->mylog->add($userid, 'customer', 3, $id);
             return true;
         } else {
             return false;
         }
     }
-    
+
     /**
      * Gibt alle Daten eines Kunden aus
      *
@@ -101,10 +102,10 @@ class customer {
         $sel = $conn->prepare("SELECT * FROM customer WHERE ID = ?");
         $selStmt = $sel->execute(array($id));
 
-		$customer = $sel->fetch();
+        $customer = $sel->fetch();
 
         if (!empty($customer)) {
-           /* $project["name"] = stripslashes($project["name"]);
+            /* $project["name"] = stripslashes($project["name"]);
             $project["desc"] = stripslashes($project["desc"]);
             $project["done"] = $this->getProgress($project["ID"]);
 			*/
@@ -118,7 +119,7 @@ class customer {
      * Listet alle Kunden auf
      *
      * @param int $lim Anzahl der anzuzeigenden Kunden
-     * @return array $customers 
+     * @return array $customers
      */
     function getCustomers($lim = 10)
     {
@@ -127,19 +128,20 @@ class customer {
         $lim = (int) $lim;
 
         $sel = $conn->prepare("SELECT * FROM customer ORDER BY `company` ASC LIMIT $lim");
-		$selStmt = $sel->execute();
-		
+        $selStmt = $sel->execute();
+
         $customers = $sel->fetchAll();
-        
-       /* while ($customer = $sel->fetch()) {
+
+        /* while ($customer = $sel->fetch()) {
             $customer = $this->getProject($customer["ID"]);
             array_push($customers, $customer);
         }*/
 
-        if (!empty($customers))
+        if (!empty($customers)) {
             return $customers;
-        else
-  			return false;
+        } else {
+            return false;
+        }
     }
 }
 
