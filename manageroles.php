@@ -24,7 +24,6 @@ $rolename = getArrayVal($_POST, "name");
 $projectperms = getArrayVal($_POST, "permissions_projects");
 $mileperms = getArrayVal($_POST, "permissions_milestones");
 $taskperms = getArrayVal($_POST, "permissions_tasks");
-$customerperms = getArrayVal($_POST, "permissions_customers");
 $messageperms = getArrayVal($_POST, "permissions_messages");
 $fileperms = getArrayVal($_POST, "permissions_files");
 $trackerperms = getArrayVal($_POST, "permissions_timetracker");
@@ -38,14 +37,13 @@ if ($action == "addrole")
     $projectperms = $roleobj->sanitizeArray($projectperms);
     $mileperms = $roleobj->sanitizeArray($mileperms);
     $taskperms = $roleobj->sanitizeArray($taskperms);
-    $customerperms = $roleobj->sanitizeArray($customerperms);
     $messageperms = $roleobj->sanitizeArray($messageperms);
     $fileperms = $roleobj->sanitizeArray($fileperms);
     $trackerperms = $roleobj->sanitizeArray($trackerperms);
     $chatperms = $roleobj->sanitizeArray($chatperms);
     $adminperms = $roleobj->sanitizeArray($adminperms);
 
-    if ($roleobj->add($rolename, $projectperms, $taskperms, $mileperms, $customerperms, $messageperms, $fileperms, $trackerperms, $chatperms, $adminperms))
+    if ($roleobj->add($rolename, $projectperms, $taskperms, $mileperms, $messageperms, $fileperms, $trackerperms, $chatperms, $adminperms))
     {
         $loc = $url . "admin.php?action=users&mode=roleadded";
         header("Location: $loc");
@@ -66,14 +64,13 @@ elseif ($action == "editrole")
     $projectperms = $roleobj->sanitizeArray($projectperms);
     $mileperms = $roleobj->sanitizeArray($mileperms);
     $taskperms = $roleobj->sanitizeArray($taskperms);
-    $customerperms = $roleobj->sanitizeArray($customerperms);
     $messageperms = $roleobj->sanitizeArray($messageperms);
     $fileperms = $roleobj->sanitizeArray($fileperms);
     $trackerperms = $roleobj->sanitizeArray($trackerperms);
     $chatperms = $roleobj->sanitizeArray($chatperms);
     $adminperms = $roleobj->sanitizeArray($adminperms);
 
-    if ($roleobj->edit($id, $rolename, $projectperms, $taskperms, $mileperms,  $customerperms, $messageperms, $fileperms, $trackerperms, $chatperms, $adminperms))
+    if ($roleobj->edit($id, $rolename, $projectperms, $taskperms, $mileperms, $messageperms, $fileperms, $trackerperms, $chatperms, $adminperms))
     {
         $loc = $url . "admin.php?action=users&mode=roleedited";
         header("Location: $loc");

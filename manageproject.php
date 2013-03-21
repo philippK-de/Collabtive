@@ -61,13 +61,12 @@ if ($action == "editform") {
         $template->display("error.tpl");
         die();
     }
-    $customers = $custclass->getCustomers(10000);
+
     $thisproject = $project->getProject($id);
     $title = $langfile["editproject"];
 
     $template->assign("title", $title);
     $template->assign("project", $thisproject);
-    $template->assign("customers", $customers);
     $template->assign("showhtml", "no");
     $template->assign("showheader", "no");
     $template->assign("projectov", "yes");
@@ -87,7 +86,7 @@ if ($action == "editform") {
         $end = 0;
     }
 
-    if ($project->edit($id, $name, $desc, $end, $budget, $customerID)) {
+    if ($project->edit($id, $name, $desc, $end, $budget)) {
         header("Location: manageproject.php?action=showproject&id=$id&mode=edited");
     } else {
         $template->assign("editproject", 0);
@@ -367,7 +366,7 @@ if ($action == "editform") {
     $template->assign("logbar", $logbar);
     $template->assign("statbar", $statbar);
     $template->assign("projectov", "no");
-    
+
     $milestone = (object) new milestone();
     $mylog = (object) new mylog();
     $task = new task();
@@ -376,7 +375,7 @@ if ($action == "editform") {
 
     $log = $mylog->getProjectLog($id);
     $log = $mylog->formatdate($log);
-    
+
     $customers = $custclass->getCustomers(10000);
     $tproject = $project->getProject($id);
     $done = $project->getProgress($id);

@@ -4,7 +4,6 @@ require("./init.php");
 $action = getArrayVal($_GET, "action");
 $mode = getArrayVal($_GET, "mode");
 $id = getArrayVal($_GET, "id");
-$customerID = getArrayVal($_POST, "customerlist");
 $name = getArrayVal($_POST, "name");
 $subtitle = getArrayVal($_POST, "subtitle");
 $isadmin = getArrayVal($_POST, "isadmin");
@@ -397,7 +396,7 @@ if ($action == "index") {
         $end = 0;
     }
 
-    $add = $project->add($name, $desc, $end, $budget, $customerID, 0);
+    $add = $project->add($name, $desc, $end, $budget, 0);
     if ($add) {
         foreach ($assignto as $member) {
             $project->assign($member, $add);
@@ -442,7 +441,7 @@ if ($action == "index") {
     $title = $langfile['customeradministration'];
     $template->assign("title", $title);
     $template->assign("classes", $classes);
-    $allcust = $customer->getCustomers(1, 10000);   
+    $allcust = $customer->getCustomers(1, 10000);
     //$clopros = $project->getProjects(0, 10000);
    /* $i = 0;
     $users = $user->getAllUsers(1000000);
@@ -465,7 +464,7 @@ if ($action == "index") {
 		$template->display("error.tpl");
 		die();
 	}
-	
+
 	if (!$end) {
 		$end = 0;
 	}
