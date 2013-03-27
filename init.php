@@ -21,7 +21,7 @@ require(CL_ROOT . "/include/initfunctions.php");
 if (!empty($db_name) and !empty($db_user))
 {
   //$tdb = new datenbank();
-    $conn = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''));
+    $conn = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8", $db_user, $db_pass);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 }
 
