@@ -23,7 +23,7 @@ $template->assign("mainclasses", $mainclasses);
 
 //create objects
 $project = new project();
-$customer = new customer();
+$customer = new company();
 $milestone = new milestone();
 $mtask = new task();
 $msg = new message();
@@ -57,8 +57,7 @@ if ($userpermissions["projects"]["add"]) {
     $user = new user();
     $users = $user->getAllUsers(1000000);
     $template->assign("users", $users);
-    $customerlist = $customer->getCustomers(10000);
-    $template->assign("customers", $customerlist);
+
 }
 
 //by default the arrays have a level for each project, whcih contains arrays for each message/task . reduce array flattens this to have all messages/tasks of all projects in one structure

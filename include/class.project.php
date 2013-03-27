@@ -317,7 +317,7 @@ class project {
         global $conn;
         $id = (int) $id;
 
-        $sel = $conn->prepare("SELECT a.*, c.*, a.ID AS ID, a.desc AS `desc`, c.ID AS customerID, c.desc AS customerDesc FROM projekte AS a LEFT JOIN customer_assigned AS b ON a.ID=b.project LEFT JOIN customer AS c ON b.customer=c.ID WHERE a.ID = ?");
+        $sel = $conn->prepare("SELECT * FROM projekte WHERE ID = ?");
         $selStmt = $sel->execute(array($id));
 
         $project = $sel->fetch();

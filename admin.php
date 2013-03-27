@@ -45,7 +45,7 @@ $template->assign("languages", $languages);
 
 $user = new user();
 $project = new project();
-$customer = new customer();
+$company = new company();
 $theset = new settings();
 $mainclasses = array("desktop" => "",
     "profil" => "",
@@ -366,7 +366,6 @@ if ($action == "index") {
     $template->assign("title", $title);
     $template->assign("classes", $classes);
     $opros = $project->getProjects(1, 10000);
-    $customerlist = $customer->getCustomers(10000);
     $clopros = $project->getProjects(0, 10000);
     $i = 0;
     $users = $user->getAllUsers(1000000);
@@ -381,7 +380,6 @@ if ($action == "index") {
 
     $template->assign("users", $users);
     $template->assign("clopros", $clopros);
-    $template->assign("customers", $customerlist);
     $template->display("adminprojects.tpl");
 } elseif ($action == "addpro") {
     if (!$userpermissions["projects"]["add"]) {
@@ -441,7 +439,7 @@ if ($action == "index") {
     $title = $langfile['customeradministration'];
     $template->assign("title", $title);
     $template->assign("classes", $classes);
-    $allcust = $customer->getCustomers(1, 10000);
+    $allcust = $company->getAllCompanies();
     //$clopros = $project->getProjects(0, 10000);
    /* $i = 0;
     $users = $user->getAllUsers(1000000);
@@ -482,7 +480,7 @@ if ($action == "index") {
 			'state' => getArrayVal($_POST, "state"),
 			'desc' => getArrayVal($_POST, "desc")
 	);
-	$add = $customer->add($data);
+	$add = $company->add($data);
 	if ($add)
 		header("Location: admin.php?action=customers&mode=added");
 } elseif ($action == "system") {

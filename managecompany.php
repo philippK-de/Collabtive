@@ -6,7 +6,7 @@ if (!isset($_SESSION['userid'])) {
     die();
 }
 
-$customer = (object) new customer();
+$customer = (object) new company();
 
 $action = getArrayVal($_GET, "action");
 $redir = getArrayVal($_GET, "redir");
