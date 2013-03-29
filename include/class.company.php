@@ -1,178 +1,182 @@
 <?php
 /**
- * This class provides methods to realize a company.
+ * Die Klasse stellt Methoden bereit um Kunden zu bearbeiten
  *
- * @author Open Dynamics / Philipp Kiszka <info@o-dyn.de>
- * @name company
+ * @author Electric Solutions GbR <info@electric-solutions.de>
+ * @author Philipp Kiszka
+ * @name project
  * @package Collabtive
  * @version 1.0
  * @link http://www.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
-class company
-{
-	/**
-	 * Constructor
-	 *
-	 * @access protected
-	 */
-	function company()
-	{
-	}
+class company {
+    private $mylog;
 
-	/**
-	 * Add a new company
-	 *
-	 * @param string $name Name of the company
-	 * @param string $email Email-address
-	 * @param string $phone Phonenumber
-	 * @param string $address1 Main address
-	 * @param string $address2 Second address
-	 * @param string $state State
-	 * @param string $country Country
-	 * @param string $logo Company's logo
-	 * @return bool
-	 */
-	function add($name, $email, $phone, $address1, $address2, $state, $country, $logo)
-	{
-				global $conn;
+    /**
+     * Konstruktor
+     * Initialisiert den Eventlog
+     */
+    function __construct()
+    {
+        $this->mylog = new mylog;
+    }
 
-        $ins1Stmt = $conn->prepare("INSERT INTO company (ID, name, email, phone, address1, address2, state, country, logo) VALUES ('', ?, ?, ?, ?, ?, ?, ?, ? )");
-				$ins1 = $ins1Stmt->execute(array($name, $email, $phone, $address1, $address2, $state, $country, $logo));
+    /**
+     * Add a customer
+     *
+     * @param array $data
+     * @return int $insid ID of the insert customer
+     */
+    function add($data)
+    {
+        global $conn;
 
-		if ($ins1)
-		{
-			$this->mylog->add('company' , 1);
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
+        $ins1Stmt = $conn->prepare("INSERT INTO company (`company`, `contact`, `email`, `phone`, `mobile`, `url`, `address`, `zip`, `city`, `country`, `state`, `desc`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+        $ins1 = $ins1Stmt->execute(array($data['company'], $data['contact'], $data['email'], $data['phone'], $data['mobile'], $data['url'], $data['address'], $data['zip'], $data['city'], $data['country'], $data['state'], $data['desc']));
 
-	/**
-	 * Edit a company
-	 *
-	 * @param int $id Company ID
-	 * @param string $name Company's name
-	 * @param string $email Email address
-	 * @param string $phone Telephone number
-	 * @param string $address1 Main address
-	 * @param string $address2 Second address
-	 * @param string $state State
-	 * @param string $country Country
-	 * @param string $logo Company's logo
-	 * @return bool
-	 */
-	function edit($id, $name, $email, $phone, $address1, $address2, $state, $country, $logo)
-	{
-				global $conn;
+        $insid = $conn->lastInsertId();
+        if ($ins1) {
+            return $insid;
+        } else {
+            return false;
+        }
+    }
 
-        $updStmt = $conn->prepare("UPDATE company SET name=?, email=?, phone=?, address1=?, address2=?, state=?, country=?, logo=? WHERE ID = ?");
-				$upd = $updStmt->execute(array($name, $email, $phone, $address1, $address2, $state, $country, $logo, (int) $id));
-		if ($upd)
-		{
-			$this->mylog->add('company' , 2);
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
+    /**
+     * Bearbeitet eines Kunden
+     *
+     * @param array $data all customer data
+     * @return bool
+     */
+    function edit($data)
+    {
+        global $conn;
+        $id = (int) $data['id'];
 
-	/**
-	 * Delete a company
-	 *
-	 * @param int $id Company ID
-	 * @return bool
-	 */
-	function del($id)
-	{
-		global $conn;
-		$id = (int) $id;
-        $del = $conn->query("DELETE FROM company WHERE ID = $id");
-		if ($del)
-		{
-			$this->mylog->add('company', 3);
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
+        $updStmt = $conn->prepare("UPDATE company SET `company`=?, `contact`=?, `email`=?, `phone`=?, `mobile`=?, `url`=?, `address`=?, `zip`=?, `city`=?, `country`=?, `state`=?, `desc`=? WHERE ID = ?");
+        $upd = $updStmt->execute(array($data['company'], $data['contact'], $data['email'], $data['phone'], $data['mobile'], $data['url'], $data['address'], $data['zip'], $data['city'], $data['country'], $data['state'], $data['desc'], $id));
 
-	/**
-	 * Assign a user to a company
-	 *
-	 * @param int $company Company ID
-	 * @param int $user User ID
-	 * @return bool
-	 */
-	function assign($company, $user)
-	{
-		global $conn;
-		$company = (int) $company;
-		$user = (int) $user;
+        if ($upd) {
+            // $this->mylog->add($name, 'customer' , 2, $id);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-		$ins = $conn->query("UPDATE user SET company = $company WHERE ID = $id");
-		if($ins)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
+    /**
+     * Deletes a customer and disconnect every project which was assigned to this customer
+     *
+     * @param int $id customer ID
+     * @return bool
+     */
+    function del($id)
+    {
+        global $conn;
 
-	/**
-	 * Remove a user from a company
-	 *
-	 * @param int $company Company ID
-	 * @param int $user User ID
-	 * @return bool
-	 */
-	function deassign($company, $user)
-	{
-		global $conn;
-		$company = (int) $company;
-		$user = (int) $user;
+        $id = (int) $id;
 
-		$ins = $conn->query("UPDATE user SET company = 0 WHERE ID = $id");
-		if ($ins)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
+        $del_assigns = $conn->query("DELETE FROM company_assigned WHERE customer = $id");
+        $del = $conn->query("DELETE FROM customer WHERE ID = $id");
 
-	/**
-	 * Return the profile of a company
-	 *
-	 * @param int $id Company ID
-	 * @return bool
-	 */
-	function getProfile($id)
-	{
-				global $conn;
-		$id = (int) $id;
+        if ($del) {
+            // $this->mylog->add($userid, 'customer', 3, $id);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-        $profile = $conn->query("SELECT * FROM company WHERE ID = $id")->fetch();
-		if (!empty($profile))
-		{
-			return $profile;
-		}
-		else
-		{
-			return false;
-		}
-	}
+/**
+     * Assign a company to a user
+     *
+     * @param int $task Task ID
+     * @param int $id User ID
+     * @return bool
+     */
+    function assign($company, $id)
+    {
+        global $conn;
+        $company = (int) $company;
+        $id = (int) $id;
+
+        $upd = $conn->query("INSERT INTO company_assigned (user,company) VALUES ($id,$company)");
+        if ($upd) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Delete the assignment of a company to a user
+     *
+     * @param int $task Task ID
+     * @param int $id User ID
+     * @return bool
+     */
+    function deassign($company, $id)
+    {
+        global $conn;
+        $company = (int) $company;
+        $id = (int) $id;
+
+        $upd = $conn->query("DELETE FROM company_assigned WHERE user = $id AND company = $company");
+        if ($upd) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Gibt alle Daten eines Kunden aus
+     *
+     * @param int $id Eindeutige Kundennummer
+     * @return array $customer Kundendaten
+     */
+    function getCompany($id)
+    {
+        global $conn;
+        $id = (int) $id;
+
+        $sel = $conn->prepare("SELECT * FROM company WHERE ID = ?");
+        $selStmt = $sel->execute(array($id));
+
+        $company = $sel->fetch();
+
+        if (!empty($company)) {
+            return $company;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Listet alle Kunden auf
+     *
+     * @param int $lim Anzahl der anzuzeigenden Kunden
+     * @return array $customers
+     */
+    function getCompanies($lim = 10)
+    {
+        global $conn;
+
+        $lim = (int) $lim;
+
+        $sel = $conn->prepare("SELECT * FROM company ORDER BY `company` ASC LIMIT $lim");
+        $selStmt = $sel->execute();
+
+        $customers = $sel->fetchAll();
+
+
+        if (!empty($customers)) {
+            return $customers;
+        } else {
+            return false;
+        }
+    }
 
 	/**
 	 * Get a list of all companies
@@ -199,19 +203,7 @@ class company
 			return false;
 		}
 	}
-
-	/**
-	 * Get a user's company
-	 *
-	 * @param int $user User ID
-	 * @return array $company The user's company
-	 */
-	function getUserCompany($user)
-	{
-		// @todo
-	}
-
-	/**
+    /**
 	 * Get all members of a company
 	 *
 	 * @param int $id Company ID

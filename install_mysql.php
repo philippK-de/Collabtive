@@ -25,16 +25,14 @@
   `state` varchar(255) NOT NULL,
   `desc` text NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;");
+) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
-        $table2 = $conn->query("CREATE TABLE `company_assigned` (
-  `ID` int(10) NOT NULL auto_increment,
-  `user` int(10) NOT NULL default '0',
-  `company` int(10) NOT NULL default '0',
-  PRIMARY KEY  (`ID`),
-  KEY `company` (`company`),
-  KEY `user` (`user`)
-) ENGINE=MyISAM");
+        $table2 = $conn->query("CREATE TABLE IF NOT EXISTS `company_assigned` (
+	`ID` int(10) NOT NULL auto_increment,
+  `user` int(10)  NOT NULL,
+  `company` int(10) NOT NULL,
+    PRIMARY KEY (`ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
         $table3 = $conn->query("CREATE TABLE `files` (
   `ID` int(10) NOT NULL auto_increment,

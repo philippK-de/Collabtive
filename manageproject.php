@@ -7,7 +7,7 @@ if (!isset($_SESSION['userid'])) {
 }
 
 $project = (object) new project();
-$custclass = (object) new customer();
+$company = (object) new company();
 
 $action = getArrayVal($_GET, "action");
 $redir = getArrayVal($_GET, "redir");
@@ -376,7 +376,7 @@ if ($action == "editform") {
     $log = $mylog->getProjectLog($id);
     $log = $mylog->formatdate($log);
 
-    $customers = $custclass->getCustomers(10000);
+
     $tproject = $project->getProject($id);
     $done = $project->getProgress($id);
 
@@ -391,7 +391,7 @@ if ($action == "editform") {
     $title = $title . " " . $tproject["name"];
     $template->assign("title", $title);
 
-    $template->assign("customers", $customers);
+
     $template->assign("project", $tproject);
     $template->assign("done", $done);
 
