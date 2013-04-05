@@ -136,11 +136,11 @@
 ) ENGINE=MyISAM");
 
         $table10 = $conn->query("CREATE TABLE `settings` (
-  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `ID` int(10) NOT NULL auto_increment,
   `settingsKey` varchar(50) NOT NULL,
   `settingsValue` varchar(50) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM  ");
+) ENGINE=MyISAM");
 
         $table11 = $conn->query("CREATE TABLE `tasklist` (
   `ID` int(10) NOT NULL auto_increment,
