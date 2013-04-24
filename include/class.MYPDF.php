@@ -25,7 +25,7 @@ class MYPDF extends TCPDF {
         $this->SetFont(PDF_FONT_NAME_DATA, "", 11);
 
         $this->SetAutoPageBreak(true, PDF_MARGIN_FOOTER);
-        $this->AliasNbPages();
+        $this->getAliasNbPages();
         $this->AddPage();
         // Set string for display above table
         $this->headerName = $headerName;
