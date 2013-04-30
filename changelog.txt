@@ -1,6 +1,8 @@
 Collabtive 1.1
 + Fixed bug in tasklist editing, which would automatically remove the tasklist's assignment to a given milestone
 + Fixed notice in user editing form which showed up when an available language's name was not translated in the selected language
++ Updated the template engine to smarty3 (mwirtz)
++ Updated the bundled tcpdf to 6.0 (mwirtz)
 
 Collabtive 1.0
 + Added translations: Hebrew, Norwegian (Nynorsk), Taiwanese
