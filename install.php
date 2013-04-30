@@ -4,7 +4,11 @@ error_reporting(0);
 if (!file_exists("./templates_c") or !is_writable("./templates_c")) {
     die("Required folder templates_c does not exist or is not writable. <br>Please create the folder or make it writable in order to proceed.");
 }
-
+session_start();
+session_destroy();
+session_unset();
+setcookie("PHPSESSID", "");
+date_default_timezone_set("Europe/Berlin");
 require("./init.php");
 $action = getArrayVal($_GET, "action");
 $locale = getArrayVal($_GET, "locale");
@@ -68,7 +72,6 @@ if (!$action) {
     require_once("install_mysql.php");
     // Get the servers default timezone
     $timezone = date_default_timezone_get();
-
     // insert default settings
     $defSets = array("name" => "Collabtive", "subtitle" => "Projectmanagement", "locale" => $locale, "timezone" => $timezone, "dateformat" => "d.m.Y", "template" => "standard", "mailnotify" => 1, "mailfrom" => "collabtive@localhost", "mailfromname" => "", "mailmethod" => "mail", "mailhost" => "", "mailuser" => "", "mailpass" => "", "rssuser" => "", "rsspass" => "");
     foreach($defSets as $setKey => $setVal) {

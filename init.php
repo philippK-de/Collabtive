@@ -12,7 +12,7 @@ define("CL_CONFIG", "standard");
 define("CL_VERSION", 1.0);
 define("CL_PUBDATE","1365026400");
 // uncomment for debugging
-//error_reporting(E_ALL | E_STRICT);
+error_reporting(E_ALL | E_STRICT);
 // include config file , pagination and global functions
 require(CL_ROOT . "/config/" . CL_CONFIG . "/config.php");
 require(CL_ROOT . "/include/SmartyPaginate.class.php");
@@ -74,6 +74,7 @@ if (isset($conn))
     date_default_timezone_set($settings["timezone"]);
     $template->assign("settings", $settings);
 }
+
 // Set Template directory
 // If no directory is set in the system settings, default to the standard theme
 if (isset($settings['template']))
