@@ -118,7 +118,7 @@ if ($action == "index") {
     }
     $sysloc = $settings["locale"];
 
-    $newid = $user->add($name, $email, $company, $pass, $sysloc, $tags, $rate);
+    $newid = $user->add($name, $email, "", $pass, $sysloc, $tags, $rate);
     if ($newid) {
         if (!empty($assignto)) {
             foreach ($assignto as $proj) {
