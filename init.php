@@ -134,6 +134,6 @@ if (isset($userid))
 }
 
 // clear session data for pagination
-SmartyPaginate::reset();
+SmartyPaginate::disconnect();
 
 ?>
