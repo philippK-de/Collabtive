@@ -1,4 +1,4 @@
-{if $showhtml != "no"}
+{if $showhtml|default != "no"}
 
 {include file="header.tpl" jsload="ajax" jsload1="tinymce"}
 {include file="tabsmenue-project.tpl" milestab = "active"}
@@ -17,7 +17,7 @@
 
 			<div class="block_in_wrapper">
 
-			{if $showhtml == "no"}
+			{if $showhtml|default == "no"}
 				<h2>{#editmilestone#}</h2>
 			{else}
 				<h2>&nbsp;</h2>
@@ -63,8 +63,8 @@
 						<div class="row-butn-bottom">
 							<label>&nbsp;</label>
 							<button type="submit" onfocus="this.blur();">{#send#}</button>
-							{if $showhtml == "no"}
-								<button onclick="blindtoggle('form_edit');toggleClass('edit_butn','edit-active','edit');toggleClass('sm_mile','smooth','nosmooth');return false;" onfocus="this.blur();" {if $showhead == "1"} style="display:none;"{/if}>{#cancel#}</button>
+							{if $showhtml|default == "no"}
+								<button onclick="blindtoggle('form_edit');toggleClass('edit_butn','edit-active','edit');toggleClass('sm_mile','smooth','nosmooth');return false;" onfocus="this.blur();" {if $showhead|default == "1"} style="display:none;"{/if}>{#cancel#}</button>
 							{/if}
 						</div>
 
@@ -72,7 +72,7 @@
 				</form>
 			</div> {*block_in_wrapper end*}
 
-{if $showhtml != "no"}
+{if $showhtml|default != "no"}
 		<div class="content-spacer"></div>
 
 		</div> {*Miles END*}

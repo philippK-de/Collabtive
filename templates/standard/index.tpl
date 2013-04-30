@@ -20,7 +20,7 @@
 			</script>
 		{/literal}
 		
-		{if $isUpdated}
+		{if $isUpdated|default}
 			{include file="updateNotify.tpl"}
 			<br />
 		{/if}
@@ -42,7 +42,7 @@
 					</h2>
 				</div>
 
-				<div class="block" id="projecthead" style = "{$projectstyle}">{*Add Project*}
+				<div class="block" id="projecthead" style = "{$projectstyle|default}">{*Add Project*}
 					<div id = "form_addmyproject" class="addmenue" style = "display:none;">
 						{include file="addproject.tpl" myprojects="1"}
 					</div>

@@ -143,7 +143,7 @@
 					{*place for whatever*}
 
 				</div>
-					<div class="staterowin_right"> <span >{$langfile.page} {paginate_prev} {paginate_middle} {paginate_next}</span></div>
+					<div class="staterowin_right"> <span >{$langfile.page|default} {paginate_prev} {paginate_middle} {paginate_next}</span></div>
 			</div>
 
 

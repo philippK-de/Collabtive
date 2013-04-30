@@ -176,7 +176,7 @@
 							{/if}
 								<tr {if $opros[opro].daysleft < 0} class="marker-late"{elseif $opros[opro].daysleft == 0} class="marker-today"{/if}>
 									<td>
-										{if $adminstate > 4}
+										{if $adminstate|default > 4}
 											<a class="butn_check" href="javascript:closeElement('proj_{$opros[opro].ID}','manageproject.php?action=close&amp;id={$opros[opro].ID}');" title="{#close#}"></a>
 										{/if}
 									</td>

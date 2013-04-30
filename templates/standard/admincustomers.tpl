@@ -25,7 +25,7 @@
 
 			<div class="headline">
 				<a href="javascript:void(0);" id="acc-customers_toggle" class="win_none" onclick = "toggleBlock('acc-customers');"></a>
-					{if $userpermissions.customers.add}
+					{if $userpermissions.customers.add|default}
 						<div class="wintools">
 							<a class="add" href="javascript:blindtoggle('form_addcustomer');" id="add_customers" onclick="Effect.BlindUp('form_editcustomer');toggleClass(this,'add-active','add');toggleClass('add_butn_customers','butn_link_active','butn_link');toggleClass('sm_customers','smooth','nosmooth');"><span>{#addcustomer#}</span></a>
 						</div>
@@ -126,7 +126,7 @@
 
 					<div class="tablemenue">
 						<div class="tablemenue-in">
-							{if $userpermissions.customers.add}
+							{if $userpermissions.customers.add|default}
 								<a class="butn_link" href="javascript:blindtoggle('form_addcustomer');" id="add_butn_customers" onclick="Effect.BlindUp('form_editcustomer');toggleClass('add_customers','add-active','add');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_customers','smooth','nosmooth');">{#addcustomer#}</a>
 							{/if}
 						</div>

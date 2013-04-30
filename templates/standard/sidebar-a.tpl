@@ -40,8 +40,8 @@
 
 
 	{*Tag Cloud*}
-	{if $showcloud == "1"}
-		{if $cloud != ""}
+	{if $showcloud|default == "1"}
+		{if $cloud|default != ""}
 		<div class="content-right-in">
 			<h2><a id="tagcloudtoggle" class="win-up" href="javascript:blindtoggle('tagcloud');toggleClass('tagcloudtoggle','win-up','win-down');">{#tags#}</a></h2>
 			<div id = "tagcloud" class="cloud">
@@ -74,7 +74,7 @@
 			<h2><a id="onlinelisttoggle" class="win-up" href="javascript:blindtoggle('onlinelist');toggleClass('onlinelisttoggle','win-up','win-down');">{#usersonline#}</a></h2>
 
 			<div id="onlinelist">
-				{$cloud}
+				{$cloud|default}
 			</div>
 	</div>
 

@@ -1,20 +1,20 @@
-{config_load file=lng.conf section = "strings" scope="global" }
+{config_load file="lng.conf" section = "strings" scope="global" }
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <title>{$title} @ {$settings.name}</title>
 <link rel="shortcut icon" href="templates/standard/images/favicon.ico" type="image/x-icon" />
-{if $stage != "project" and $loggedin}
+{if $stage|default != "project" and $loggedin}
 <link rel="search" type="application/opensearchdescription+xml" title="{$settings.name} {#search#}" href="manageajax.php?action=addfx-all" />
-{elseif $stage == "project" and $loggedin}
+{elseif $stage|default == "project" and $loggedin}
 <link rel="search" type="application/opensearchdescription+xml" title="{$project.name} {#search#}" href="manageajax.php?action=addfx-project&amp;project={$project.ID}" />
 {/if}
 {if $loggedin}
 <link rel="alternate" type="application/rss+xml" title="{#mymessages#}" href="managerss.php?action=mymsgs-rss&amp;user={$userid}" />
 <link rel="alternate" type="application/rss+xml" title="{#mytasks#}" href="managerss.php?action=rss-tasks&amp;user={$userid}" />
 {/if}
-{if $jsload == "ajax"}
+{if $jsload|default == "ajax"}
 {literal}
 
 <script type = "text/javascript">
@@ -38,7 +38,7 @@ deleteEndcolor = '#c62424';
 <script type="text/javascript" src="include/js/mycalendar.js"></script>
 {/literal}
 {/if}
-{if $jsload2 == "chat"}
+{if $jsload2|default == "chat"}
 {literal}
 <script type="text/javascript">
 window.onunload = quitchat;
@@ -47,14 +47,14 @@ window.onunload = quitchat;
 {/literal}
 {/if}
 
-{if $jsload3 == "lightbox"}
+{if $jsload3|default == "lightbox"}
 <link rel="stylesheet" href="templates/winter/css/lytebox.css" type="text/css"  />
 <script type="text/javascript" src="include/js/lytebox.php"></script>
 {/if}
 <link rel="stylesheet" type="text/css" href="templates/winter/css/style_main.php"/>
 
 
-{if $jsload1 == "tinymce"}
+{if $jsload1|default == "tinymce"}
 {literal}
 <script type="text/javascript" src="include/js/tiny_mce/tiny_mce.js"></script>
 
@@ -98,6 +98,6 @@ tinyMCE.init({
 
 <!--<div id = "jslog" style = "color:red;position:absolute;top:60%;right:5%;width:300px;border:1px solid;background-color:grey;"></div>-->
 
-{if $showheader != "no"}
+{if $showheader|default != "no"}
 	{include file="header_main.tpl"}
 {/if}

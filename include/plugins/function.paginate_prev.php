@@ -26,87 +26,54 @@
  * @version 1.6-dev
  */
 
-function smarty_function_paginate_prev($params, &$smarty)
-{
+function smarty_function_paginate_prev($params, &$smarty) {
+
     $_id = 'default';
     $_attrs = array();
-
-    if (!class_exists('SmartyPaginate'))
-    {
+    
+    if (!class_exists('SmartyPaginate')) {
         $smarty->trigger_error("paginate_prev: missing SmartyPaginate class");
         return;
     }
-    if (!isset($_SESSION['SmartyPaginate']))
-    {
+    if (!isset($_SESSION['SmartyPaginate'])) {
         $smarty->trigger_error("paginate_prev: SmartyPaginate is not initialized, use connect() first");
-        return;
+        return;        
     }
 
-    foreach($params as $_key => $_val)
-    {
-        switch ($_key)
-        {
+    foreach($params as $_key => $_val) {
+        switch($_key) {
             case 'id':
-                if (!SmartyPaginate::isConnected($_val))
-                {
+                if (!SmartyPaginate::isConnected($_val)) {
                     $smarty->trigger_error("paginate_prev: unknown id '$_val'");
-                    return;
+                    return;        
                 }
                 $_id = $_val;
                 break;
             default:
                 $_attrs[] = $_key . '="' . $_val . '"';
-                break;
+                break;   
         }
     }
-
-    if (SmartyPaginate::getTotal($_id) === false)
-    {
+    
+    if (SmartyPaginate::getTotal($_id) === false) {
         $smarty->trigger_error("paginate_prev: total was not set");
-        return;
+        return;        
     }
-    // $_url = SmartyPaginate::getURL($_id);
-    // print_r($_SERVER);
-    $_url = $_SERVER['REQUEST_URI'];
-    $url = explode("?", $_url);
-    $aurl = $url[0];
-    $url = $url[1];
-    $url = explode("&", $url);
-    $_url = "";
-    $i = 0;
-    foreach($url as $uri)
-    {
-        if (!strstr($uri, "next"))
-        {
-            if ($i > 0)
-            {
-                $_url .= "&" . $uri;
-            }
-            else
-            {
-                $_url .= $uri;
-            }
-        }
-        $i = $i + 1;
-    }
-    $_url = $aurl . "?" . $_url;
-
-    $_attrs = !empty($_attrs) ? ' ' . implode(' ', $_attrs) : '';
-
-    if (($_item = SmartyPaginate::_getPrevPageItem($_id)) !== false)
-    {
+    
+    $_url = SmartyPaginate::getURL($_id);
+    
+    $_attrs = !empty($_attrs) ? ' ' . implode(' ', $_attrs) : '';    
+    
+    if(($_item = SmartyPaginate::_getPrevPageItem($_id)) !== false) {
         $_show = true;
         $_text = isset($params['text']) ? $params['text'] : SmartyPaginate::getPrevText($_id);
         $_url .= (strpos($_url, '?') === false) ? '?' : '&';
         $_url .= SmartyPaginate::getUrlVar($_id) . '=' . $_item;
+    } else {
+        $_show = false;   
     }
-    else
-    {
-        $_show = false;
-    }
-
-    //return $_show ? '<a class = "last" href="' . str_replace('&', '&amp;', $_url) . '"' . $_attrs . '>' . $_text . '</a>' : '';
-    return $_show ? '<a href="' . str_replace('&', '&amp;', $_url) . '"' . $_attrs . '><img src = "templates/'. $smarty->tname . '/images/paging_last.png" alt = "" />' : '';
+    
+    return $_show ? '<a href="' . str_replace('&','&amp;', $_url) . '"' . $_attrs . '>' . $_text . '</a>' : '';
 }
 
 ?>
