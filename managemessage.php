@@ -427,7 +427,7 @@ if ($action == "addform")
     $pdf->SetAutoPageBreak(true, PDF_MARGIN_BOTTOM);
     $pdf->setLanguageArray($l);
 
-    $pdf->AliasNbPages();
+    $pdf->getAliasNbPages();
     $pdf->AddPage();
     // check if the user is allowed to edit messages
     if (!$userpermissions["messages"]["add"])

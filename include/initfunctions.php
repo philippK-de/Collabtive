@@ -6,7 +6,7 @@ function cl_autoload($class_name)
     if (file_exists($pfad)) {
         require_once($pfad);
     } else {
-        die("<b>Fatal Error. Class $class_name could not be located.</b>");
+        return false;
     }
 }
 spl_autoload_register('cl_autoload');

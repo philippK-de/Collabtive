@@ -148,7 +148,7 @@
 		<div class="row-butn-bottom">
 		<label>&nbsp;</label>
 		<button type="submit" onfocus="this.blur();">{#addbutton#}</button>
-		{if $myprojects == "1"}
+		{if $myprojects|default == "1"}
 		<button onclick="blindtoggle('form_addmyroles');toggleClass('add_myprojects','add-active','add');toggleClass('add_butn_myprojects','butn_link_active','butn_link');toggleClass('sm_myprojects','smooth','nosmooth');return false;" onfocus="this.blur();">{#cancel#}</button>
 		{else}
 		<button onclick="blindtoggle('form_addmyroles');toggleClass('addrolelink','add-active','add');return false;">{#cancel#}</button>

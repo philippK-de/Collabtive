@@ -20,7 +20,7 @@
 			</script>
 		{/literal}
 		
-		{if $isUpdated}
+		{if $isUpdated|default}
 			{include file="updateNotify.tpl"}
 			<br />
 		{/if}

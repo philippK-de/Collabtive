@@ -138,7 +138,7 @@
 		</div> {*User END*}
 		<div class="content-spacer"></div>
 
-		{if $userpermissions.admin.add}{if $opros}{*Projects*}
+		{if $userpermissions.admin.add}{if $opros|default}{*Projects*}
 			<div class="projects">
 				<div class="headline">
 					<a href="javascript:void(0);" id="projecthead_toggle" class="win_block" onclick = "toggleBlock('projecthead');"></a>
@@ -148,7 +148,7 @@
 					</h2>
 				</div>
 
-				<div class="block" id="projecthead" style = "{$projectstyle}">
+				<div class="block" id="projecthead" style = "{$projectstyle|default}">
 
 					<table cellpadding="0" cellspacing="0" border="0">
 						<thead>
@@ -176,7 +176,7 @@
 							{/if}
 								<tr {if $opros[opro].daysleft < 0} class="marker-late"{elseif $opros[opro].daysleft == 0} class="marker-today"{/if}>
 									<td>
-										{if $adminstate > 4}
+										{if $adminstate|default > 4}
 											<a class="butn_check" href="javascript:closeElement('proj_{$opros[opro].ID}','manageproject.php?action=close&amp;id={$opros[opro].ID}');" title="{#close#}"></a>
 										{/if}
 									</td>

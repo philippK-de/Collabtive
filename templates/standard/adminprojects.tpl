@@ -60,7 +60,7 @@
 								</tr>
 							</tfoot>
 
-							{section name=opro loop=$opros}
+							{section name=opro loop=$opros|default}
 
 								{*Color-Mix*}
 								{if $smarty.section.opro.index % 2 == 0}
