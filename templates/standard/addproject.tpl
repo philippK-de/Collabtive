@@ -12,7 +12,7 @@
 		{* regexp="{literal}\d{2}.\d{2}.\d{4}{/literal}" *}
 		<input type="text" class="text" name="end"  id="endP"  realname="{#due#}"  />
 		<br /><br />
-		<label for = "neverdue"></label><input type = "checkbox" class = "checkbox" value = "neverdue" name = "neverdue" id = "neverdue" onclick = "$('endP').value='';$('endP').disabled='disabled';">{#neverdue#}
+		<label for = "neverdue"></label><input type = "checkbox" class = "checkbox" value = "neverdue" name = "neverdue" id = "neverdue" onclick = "onclick="$('endP').value='';$('endP').disabled=!$('endP').disabled;">{#neverdue#}
 		</div>
 
 		<div class="datepick">
