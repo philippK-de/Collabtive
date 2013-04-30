@@ -10,7 +10,6 @@ session_unset();
 setcookie("PHPSESSID", "");
 date_default_timezone_set("Europe/Berlin");
 require("./init.php");
-error_reporting(0);
 $action = getArrayVal($_GET, "action");
 $locale = getArrayVal($_GET, "locale");
 
