@@ -107,7 +107,7 @@ if ($action == "loginerror") {
 
         $lang2 .= " (" . $fin . "%)";
         $fin = array("val" => $lang, "str" => $lang2);
-        
+
         array_push($languages_fin, $fin);
     }
     $template->assign("languages_fin", $languages_fin);
@@ -166,7 +166,7 @@ if ($action == "loginerror") {
             $avatar = $fname;
         }
 
-        if ($user->edit($userid, $name, $realname, $email, $tel1, $tel2, $company, $zip, $gender, $turl, $address1, $address2, $state, $country, "", $locale, $avatar, 0)) {
+        if ($user->edit($userid, $name, $realname, $email, $tel1, $tel2, "", $zip, $gender, $turl, $address1, $address2, $state, $country, "", $locale, $avatar, 0)) {
             if (!empty($oldpass) and !empty($newpass) and !empty($repeatpass)) {
                 $user->editpass($userid, $oldpass, $newpass, $repeatpass);
             }
