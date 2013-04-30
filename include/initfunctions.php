@@ -190,4 +190,12 @@ function reduceArray(array $arr)
 function getUpdateNotify(){
 	return json_decode(@file_get_contents("http://collabtive.o-dyn.de/update/chk.php"));
 }
+function full_url()
+{
+    $s = empty($_SERVER["HTTPS"]) ? '' : ($_SERVER["HTTPS"] == "on") ? "s" : "";
+    $sp = strtolower($_SERVER["SERVER_PROTOCOL"]);
+    $protocol = substr($sp, 0, strpos($sp, "/")) . $s;
+    $port = ($_SERVER["SERVER_PORT"] == "80") ? "" : (":".$_SERVER["SERVER_PORT"]);
+    return $_SERVER['REQUEST_URI'];
+}
 ?>

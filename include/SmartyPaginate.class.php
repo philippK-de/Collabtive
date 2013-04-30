@@ -76,7 +76,7 @@ class SmartyPaginate
             'item_total' => null,
             'current_item' => 1,
             'urlvar' => 'next',
-            'url' => $_SERVER['PHP_SELF'],
+            'url' => full_url(),
             'prev_text' => 'prev',
             'next_text' => 'next',
             'first_text' => 'first',
