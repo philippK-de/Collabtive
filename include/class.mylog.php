@@ -75,7 +75,7 @@ class mylog {
      * @param int $limit Number of entries to return
      * @return array $mylog Log entries
      */
-    function getProjectLog($project, $lim = 10)
+    function getProjectLog($project, $lim = 25)
     {
         global $conn;
         $project = (int) $project;
@@ -125,7 +125,7 @@ class mylog {
      * @param int $limit Number of entries to return
      * @return array $mylog Latest entries
      */
-    function getUserLog($user, $limit = 10)
+    function getUserLog($user, $limit = 25)
     {
         global $conn;
         $user = (int) $user;
