@@ -136,5 +136,4 @@ if (!$action) {
 
     $template->display("install3.tpl");
 }
-
 ?>

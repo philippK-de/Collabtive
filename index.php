@@ -150,5 +150,4 @@ $template->assign("tasknum", $tasknum);
 $template->assign("messages", $messages);
 $template->assign("msgnum", $msgnum);
 $template->display("index.tpl");
-
 ?>
