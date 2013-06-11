@@ -73,11 +73,11 @@ if (!$action) {
     // Get the servers default timezone
     $timezone = date_default_timezone_get();
     // insert default settings
-    /*$defSets = array("name" => "Collabtive", "subtitle" => "Projectmanagement", "locale" => $locale, "timezone" => $timezone, "dateformat" => "d.m.Y", "template" => "standard", "mailnotify" => 1, "mailfrom" => "collabtive@localhost", "mailfromname" => "", "mailmethod" => "mail", "mailhost" => "", "mailuser" => "", "mailpass" => "", "rssuser" => "", "rsspass" => "");
+    $defSets = array("name" => "Collabtive", "subtitle" => "Projectmanagement", "locale" => $locale, "timezone" => $timezone, "dateformat" => "d.m.Y", "template" => "standard", "mailnotify" => 1, "mailfrom" => "collabtive@localhost", "mailfromname" => "", "mailmethod" => "mail", "mailhost" => "", "mailuser" => "", "mailpass" => "", "rssuser" => "", "rsspass" => "");
     foreach($defSets as $setKey => $setVal) {
         $ins = $conn->query("INSERT INTO settings (`settingsKey`,`settingsValue`) VALUES ('$setKey','$setVal')");
     }
-*/
+
 	$conn->query("INSERT INTO `settings` (`ID`, `settingsKey`, `settingsValue`) VALUES
 (1, 'name', 'Collabtive'),
 (2, 'subtitle', 'Collabtive'),
