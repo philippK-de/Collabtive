@@ -8,3 +8,5 @@ files/*
 .settings
 .project
 .buildpath
+*.swp
+*.swo
