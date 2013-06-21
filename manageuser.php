@@ -120,6 +120,7 @@ if ($action == "loginerror") {
 
     $template->display("edituserform.tpl");
 } elseif ($action == "edit") {
+
     $_SESSION['userlocale'] = $locale;
     $_SESSION['username'] = $name;
 
@@ -183,6 +184,14 @@ if ($action == "loginerror") {
         }
     }
 } elseif ($action == "del") {
+    if (!$userpermissions["admin"]["add"]) {
+        $errtxt = $langfile["nopermission"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->assign("mode", "error");
+        $template->display("error.tpl");
+        die();
+    }
     if ($user->del($id)) {
         $loc = $url . "admin.php?action=users&mode=deleted";
         header("Location: $loc");
