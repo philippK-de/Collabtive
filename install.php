@@ -13,22 +13,16 @@ require("./init.php");
 $action = getArrayVal($_GET, "action");
 $locale = getArrayVal($_GET, "locale");
 
-if (!empty($locale) && isLangExist($locale)) {
-	$_SESSION['userlocale'] = $locale;
-	$langfile = readLangfile($locale);
+if (!empty($locale)) {
+    $_SESSION['userlocale'] = $locale;
 } else {
     $locale = $_SESSION['userlocale'];
 }
 if (empty($locale)) {
     $locale = "en";
 }
-
-
-
 $template->assign("locale", $locale);
-$template->assign("langfile", $langfile);
 $template->config_dir = "./language/$locale/";
-
 $title = $langfile['installcollabtive'];
 $template->assign("title", $title);
 $template->template_dir = "./templates/standard/";
@@ -79,11 +73,11 @@ if (!$action) {
     // Get the servers default timezone
     $timezone = date_default_timezone_get();
     // insert default settings
-	 $defSets = array("name" => "Collabtive", "subtitle" => "Projectmanagement", "locale" => $locale, "timezone" => $timezone, "dateformat" => "d.m.Y", "template" => "standard", "mailnotify" => 1, "mailfrom" => "collabtive@localhost", "mailfromname" => "", "mailmethod" => "mail", "mailhost" => "", "mailuser" => "", "mailpass" => "", "rssuser" => "", "rsspass" => "");
-	 foreach($defSets as $setKey => $setVal) {
-		  $ins = $conn->query("INSERT INTO settings (`settingsKey`,`settingsValue`) VALUES ('$setKey','$setVal')");
-	 }
-
+    /*$defSets = array("name" => "Collabtive", "subtitle" => "Projectmanagement", "locale" => $locale, "timezone" => $timezone, "dateformat" => "d.m.Y", "template" => "standard", "mailnotify" => 1, "mailfrom" => "collabtive@localhost", "mailfromname" => "", "mailmethod" => "mail", "mailhost" => "", "mailuser" => "", "mailpass" => "", "rssuser" => "", "rsspass" => "");
+    foreach($defSets as $setKey => $setVal) {
+        $ins = $conn->query("INSERT INTO settings (`settingsKey`,`settingsValue`) VALUES ('$setKey','$setVal')");
+    }
+*/
 	$conn->query("INSERT INTO `settings` (`ID`, `settingsKey`, `settingsValue`) VALUES
 (1, 'name', 'Collabtive'),
 (2, 'subtitle', 'Collabtive'),

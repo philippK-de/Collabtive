@@ -19,7 +19,6 @@
 									<option value = "fi">{#fi#}</option>
 									<option value = "fr">{#fr#}</option>
 									<option value = "hu">{#hu#}</option>
-									<option value = "id">{#id#}</option>
 									<option value = "it">{#it#}</option>
 									<option value = "nl">{#nl#}</option>
 									<option value = "pl">{#pl#}</option>

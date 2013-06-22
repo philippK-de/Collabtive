@@ -73,39 +73,24 @@ function countLanguageStrings($locale)
     }
 }
 
-function isLangExist($locale) {
-	if (!file_exists(CL_ROOT . "/language/$locale/lng.conf")) {
-		return false;
-	} else {
-		return true;
-	}
-}
-
 function readLangfile($locale)
 {
-	//add locale file detection
-	//revert back to english when no locale file found
-	//donixo 20130620
-	if (!file_exists(CL_ROOT . "/language/$locale/lng.conf")) {
-		$locale = 'en';
-	}
-
-   $langfile = file("./language/$locale/lng.conf");
-   $langkeys = array();
-   $langvalues = array();
-   foreach($langfile as $lang) {
-       if (strstr($lang, "=")) {
-           $slang = explode("=", $lang);
-           array_push($langkeys, trim($slang[0]));
-           array_push($langvalues, trim($slang[1]));
-       }
-   }
-   $langfile = array_combine($langkeys, $langvalues);
-   if (!empty($langfile)) {
-       return $langfile;
-   } else {
-       return false;
-   }
+    $langfile = file("./language/$locale/lng.conf");
+    $langkeys = array();
+    $langvalues = array();
+    foreach($langfile as $lang) {
+        if (strstr($lang, "=")) {
+            $slang = explode("=", $lang);
+            array_push($langkeys, trim($slang[0]));
+            array_push($langvalues, trim($slang[1]));
+        }
+    }
+    $langfile = array_combine($langkeys, $langvalues);
+    if (!empty($langfile)) {
+        return $langfile;
+    } else {
+        return false;
+    }
 }
 
 function detectSSL()
