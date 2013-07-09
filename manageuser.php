@@ -83,7 +83,7 @@ if ($action == "loginerror") {
     // Login Error
     else {
         $template->assign("loginerror", 1);
-		$template->assign("mailnotify", $settings["mailnotify"]);
+        $template->assign("mailnotify", $settings["mailnotify"]);
         $template->display("login.tpl");
     }
 } elseif ($action == "logout") {
@@ -99,11 +99,11 @@ if ($action == "loginerror") {
     foreach($languages as $lang) {
         $fin = countLanguageStrings($lang);
 
-    	if (!($langfile[$lang] == "")) {
-        	$lang2 = $langfile[$lang];
-		} else {
-			$lang2 = $lang;
-		}
+        if (!($langfile[$lang] == "")) {
+            $lang2 = $langfile[$lang];
+        } else {
+            $lang2 = $lang;
+        }
 
         $lang2 .= " (" . $fin . "%)";
         $fin = array("val" => $lang, "str" => $lang2);
@@ -120,7 +120,6 @@ if ($action == "loginerror") {
 
     $template->display("edituserform.tpl");
 } elseif ($action == "edit") {
-
     $_SESSION['userlocale'] = $locale;
     $_SESSION['username'] = $name;
 
@@ -139,6 +138,12 @@ if ($action == "loginerror") {
 
         $subname = "";
         if ($typ != "image/jpeg" and $typ != "image/png" and $typ != "image/gif" and $typ != "image/pjpeg") {
+            $loc = $url . "manageuser.php?action=profile&id=$userid";
+            header("Location: $loc");
+            die();
+        }
+        // don't upload php scripts
+        if ($erweiterung == "php" or $erweiterung == "pl") {
             $loc = $url . "manageuser.php?action=profile&id=$userid";
             header("Location: $loc");
             die();
