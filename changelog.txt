@@ -5,6 +5,9 @@ Collabtive 1.1
 + Updated the bundled tcpdf to 6.0 (mwirtz)
 + Change class.mylog to show 25 entries per log page instead of 10
 + Change inserting of default values to settings table to a single query (from a foreach loop) in install.php
++ Fix an error where any registered user could delete other users' profiles
++ Fix an error where other files than pictures (for example php scripts) could be uploaded as the users avatar 
++ Fix a possible sql injection in the timetracker reporting
 
 Collabtive 1.0
 + Added translations: Hebrew, Norwegian (Nynorsk), Taiwanese
