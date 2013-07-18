@@ -78,7 +78,7 @@ if (!$action) {
         $ins = $conn->query("INSERT INTO settings (`settingsKey`,`settingsValue`) VALUES ('$setKey','$setVal')");
     }
 */
-	$conn->query("INSERT INTO `settings` (`ID`, `settingsKey`, `settingsValue`) VALUES
+$ins =	$conn->query("INSERT INTO `settings` (`ID`, `settingsKey`, `settingsValue`) VALUES
 (1, 'name', 'Collabtive'),
 (2, 'subtitle', 'Collabtive'),
 (3, 'locale', 'en'),
