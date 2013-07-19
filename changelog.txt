@@ -2,7 +2,7 @@ Collabtive 1.1
 + Fixed bug in tasklist editing, which would automatically remove the tasklist's assignment to a given milestone
 + Fixed notice in user editing form which showed up when an available language's name was not translated in the selected language
 + Updated the template engine to Smarty3 (mwirtz)
-+ Updated the bundled tcpdf to 6.0 (mwirtz)
++ Updated the bundled TCPDF to 6.0 (mwirtz)
 + Change class.mylog to show 25 entries per log page instead of 10
 + Change inserting of default values to settings table to a single query (from a foreach loop) in install.php
 + Fix an error where any registered user could delete other users' profiles
