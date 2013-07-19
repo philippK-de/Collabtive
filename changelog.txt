@@ -8,6 +8,7 @@ Collabtive 1.1
 + Fix an error where any registered user could delete other users' profiles
 + Fix an error where other files than pictures (for example php scripts) could be uploaded as the users avatar 
 + Fix a possible sql injection in the timetracker reporting
++ Fixed text in empty project message PDF export
 
 Collabtive 1.0
 + Added translations: Hebrew, Norwegian (Nynorsk), Taiwanese

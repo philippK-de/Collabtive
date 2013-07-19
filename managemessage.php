@@ -472,7 +472,7 @@ if ($action == "addform")
 		}
 	 } else {
 		$htmltable .= "
-		<tr><td >$langfile[none] $langfile[messages]</td></tr>
+		<tr><td >0 $langfile[messages]</td></tr>
 		";
     }
 
