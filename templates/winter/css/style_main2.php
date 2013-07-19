@@ -2686,7 +2686,7 @@ span.acc-toggle-active:hover, .second-thead:hover span.acc-toggle-active  {
 .toggle-in {
 	position: relative;
 	width: 100%;
-	height: 100%;
+	height: 27px;
 }
 
 .toggle-in a, .toggle-in.acc-toggle-active a {
@@ -2705,7 +2705,7 @@ span.acc-toggle-active:hover, .second-thead:hover span.acc-toggle-active  {
 a.butn_check, a.butn_checked, a.butn_reply {
 	display: block;
 	width: 100%;
-	height: 100%;
+	height: 27px;
 	background: url(../images_frost/butn-check.png) no-repeat 4px 6px;
 }
 

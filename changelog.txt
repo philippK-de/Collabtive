@@ -11,6 +11,7 @@ Collabtive 1.1
 + Fixed text in empty project message PDF export
 + Fixed bug with empty timetracker PDF exports
 + Improved replying to messages by putting as editable default title "Re: <title of orig. message>"
++ Fixed UI bug in project's tasklist view for tasks with multiple users
 
 Collabtive 1.0
 + Added translations: Hebrew, Norwegian (Nynorsk), Taiwanese
