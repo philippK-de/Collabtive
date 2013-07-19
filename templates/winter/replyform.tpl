@@ -22,7 +22,7 @@
 						
 						<div class="row">
 							<label for="title">{#title#}:</label>
-							<input type="text" name="title" id="title" required="1" realname="{#title#}" />
+							<input type="text" name="title" id="title" required="1" realname="{#title#}" value="Re: {$message.title}" />
 						</div>
 						<div class="row">
 							<label for="text">{#text#}:</label>
