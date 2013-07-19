@@ -228,7 +228,8 @@ if ($action == "add") {
         $template->display("error.tpl");
         die();
     }
-		global $conn;
+	global $conn;
+    
     $pname = $conn->query("SELECT name FROM projekte WHERE ID = $id");
     $pname = $pname->fetchColumn();
 
@@ -258,10 +259,10 @@ if ($action == "add") {
             $i = $i + 1;
             array_push($thetrack, array($tra["uname"], $tra["tname"], $tra["comment"], $tra["daystring"] . "/" . $tra["startstring"] . "-" . $tra["endstring"], $hrs));
         }
-
-        $pdf->table($headers, $thetrack);
-        $pdf->Output("project-$id-timetable.pdf", "D");
-    }
+	}
+ 
+    $pdf->table($headers, $thetrack);
+    $pdf->Output("project-$id-timetable.pdf", "D");
 } elseif ($action == "userxls") {
     $excelFile = fopen(CL_ROOT . "/files/" . CL_CONFIG . "/ics/user-$id-timetrack.csv", "w");
 

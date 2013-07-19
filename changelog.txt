@@ -9,6 +9,7 @@ Collabtive 1.1
 + Fix an error where other files than pictures (for example php scripts) could be uploaded as the users avatar 
 + Fix a possible sql injection in the timetracker reporting
 + Fixed text in empty project message PDF export
++ Fixed bug with empty timetracker PDF exports
 
 Collabtive 1.0
 + Added translations: Hebrew, Norwegian (Nynorsk), Taiwanese
