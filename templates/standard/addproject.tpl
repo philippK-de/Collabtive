@@ -8,11 +8,14 @@
 	    <div class="clear_both_b"></div>
 
 		<div class="row">
-		<label for="end">{#due#}:</label>
-		{* regexp="{literal}\d{2}.\d{2}.\d{4}{/literal}" *}
-		<input type="text" class="text" name="end"  id="endP"  realname="{#due#}"  />
-		<br /><br />
-		<label for = "neverdue"></label><input type = "checkbox" class = "checkbox" value = "neverdue" name = "neverdue" id = "neverdue" onclick = "onclick="$('endP').value='';$('endP').disabled=!$('endP').disabled;">{#neverdue#}
+			<label for="end">{#due#}:</label>
+			{* regexp="{literal}\d{2}.\d{2}.\d{4}{/literal}" *}
+			<input type="text" class="text" name="end" id="endP" realname="{#due#}" />
+			<br /><br />
+		</div>
+		<div class="row">
+			<label for="neverdue"></label>
+			<input type="checkbox" class="checkbox" value="neverdue" name="neverdue" id="neverdue" onclick="onclick="$('endP').value='';$('endP').disabled=!$('endP').disabled;">{#neverdue#}
 		</div>
 
 		<div class="datepick">
