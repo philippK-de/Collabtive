@@ -17,6 +17,7 @@ Collabtive 1.1
 + Fixed links in e-mail notifications for new project / message
 + When editing closed tasks/projects in tables, the edit form is now displayed in the top block, like for open tasks/projects
 + Fixed UI glitches with "Never due" field in project add/edit forms
++ Updated image handling to remain compatible with PHP 5.4+
 
 Collabtive 1.0
 + Added translations: Hebrew, Norwegian (Nynorsk), Taiwanese
