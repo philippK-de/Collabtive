@@ -1,5 +1,5 @@
-{include file="header.tpl" jsload = "ajax"  jsload1 = "tinymce"}
-{include file="tabsmenue-admin.tpl" projecttab = "active"}
+{include file="header.tpl" jsload="ajax" jsload1="tinymce"}
+{include file="tabsmenue-admin.tpl" projecttab="active"}
 
 <div id="content-left">
 	<div id="content-left-in">
@@ -90,9 +90,9 @@
 										</td>
 										<td style="text-align:right">{$opros[opro].daysleft}&nbsp;&nbsp;</td>
 										<td class="tools">
-
-												{if $userpermissions.projects.edit}
-											<a class="tool_edit" href="javascript:void(0);" onclick = "change('manageproject.php?action=editform&amp;id={$opros[opro].ID}','form_addmyproject');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_addmyproject');" title="{#edit#}"></a>{/if}
+											{if $userpermissions.projects.edit}
+												<a class="tool_edit" href="javascript:void(0);" onclick = "change('manageproject.php?action=editform&amp;id={$opros[opro].ID}','form_addmyproject');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_addmyproject');" title="{#edit#}"></a>
+											{/if}
 											{if $userpermissions.projects.del}
 												<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'proj_{$opros[opro].ID}\',\'manageproject.php?action=del&amp;id={$opros[opro].ID}\')');"  title="{#delete#}"></a>
 											{/if}
@@ -238,7 +238,7 @@
 												<td class="days" style="text-align:right">{$clopros[clopro].daysleft}&nbsp;&nbsp;</td>
 												<td class="tools">
 													{if $userpermissions.projects.edit}
-													<a class="tool_edit" href="manageproject.php?action=editform&amp;id={$clopros[clopro].ID}" title="{#edit#}"></a>
+														<a class="tool_edit" href="javascript:void(0);" onclick="change('manageproject.php?action=editform&amp;id={$clopros[clopro].ID}','form_addmyproject');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_addmyproject');" title="{#edit#}"></a>
 													{/if}
 													{if $userpermissions.projects.del}
 														<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'proj_{$clopros[clopro].ID}\',\'manageproject.php?action=del&amp;id={$clopros[clopro].ID}\')');"  title="{#delete#}"></a>
@@ -252,7 +252,6 @@
 													<div class="accordion_content">
 														<div class="acc-in">
 															{$clopros[clopro].desc}
-
 														</div>
 													</div>
 												</td>

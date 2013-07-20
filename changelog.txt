@@ -15,6 +15,7 @@ Collabtive 1.1
 + Changed UI string "Send" to "Save"
 + Made sure the database uses UTF-8 for the connection
 + Fixed links in e-mail notifications for new project / message
++ When editing closed tasks/projects in tables, the edit form is now displayed in the top block, like for open tasks/projects
 
 Collabtive 1.0
 + Added translations: Hebrew, Norwegian (Nynorsk), Taiwanese
