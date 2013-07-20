@@ -6,7 +6,7 @@
 <div class="tasks">
 
 	{*System Message*}
-	<div class="infowin_left" style = "display:none;" id = "systemmsg">
+	<div class="infowin_left" style="display:none;" id="systemmsg">
 		{if $mode == "added"}
 			<span class="info_in_green"><img src="templates/standard/images/symbols/task.png" alt=""/>{#taskwasadded#}</span>
 		{elseif $mode == "edited"}
@@ -152,10 +152,10 @@
 									<td style="text-align:right">{$lists[list].tasks[task].daysleft}&nbsp;&nbsp;</td>
 									<td class="tools">
 										{if $userpermissions.tasks.edit}
-										<a class="tool_edit" href="javascript:void(0);"  onclick = "change('managetask.php?action=editform&amp;tid={$lists[list].tasks[task].ID}&amp;id={$project.ID}','form_{$lists[list].ID}');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_{$lists[list].ID}');" title="{#edit#}"></a>
+											<a class="tool_edit" href="javascript:void(0);" onclick="change('managetask.php?action=editform&amp;tid={$lists[list].tasks[task].ID}&amp;id={$project.ID}','form_{$lists[list].ID}');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_{$lists[list].ID}');" title="{#edit#}"></a>
 										{/if}
 										{if $userpermissions.tasks.del}
-										<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'task_{$lists[list].tasks[task].ID}\',\'managetask.php?action=del&amp;tid={$lists[list].tasks[task].ID}&amp;id={$project.ID}\')');"  title="{#delete#}"></a>
+											<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'task_{$lists[list].tasks[task].ID}\',\'managetask.php?action=del&amp;tid={$lists[list].tasks[task].ID}&amp;id={$project.ID}\')');"  title="{#delete#}"></a>
 										{/if}
 									</td>
 								</tr>
@@ -224,7 +224,7 @@
 										<td class="days" style="text-align:right">{$lists[list].oldtasks[oldtask].daysleft}&nbsp;&nbsp;</td>
 										<td class="tools">
 											{if $userpermissions.tasks.edit}
-												<a class="tool_edit" href="managetask.php?action=editform&amp;tid={$lists[list].oldtasks[oldtask].ID}&amp;id={$project.ID}" title="{#edit#}"></a>
+												<a class="tool_edit" href="javascript:void(0);" onclick="change('managetask.php?action=editform&amp;tid={$lists[list].oldtasks[oldtask].ID}&amp;id={$project.ID}','form_{$lists[list].ID}');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_{$lists[list].ID}');" title="{#edit#}"></a>
 											{/if}
 											{if $userpermissions.tasks.del}
 												<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'task_{$lists[list].oldtasks[oldtask].ID}\',\'managetask.php?action=del&amp;tid={$lists[list].oldtasks[oldtask].ID}&amp;id={$project.ID}\')');"  title="{#delete#}"></a>
