@@ -45,7 +45,7 @@ $template->assign("languages", $languages);
 
 $user = new user();
 $project = new project();
-$company = new company();
+$companyObj = new company();
 $theset = new settings();
 $mainclasses = array("desktop" => "",
     "profil" => "",
@@ -118,7 +118,7 @@ if ($action == "index") {
     }
     $sysloc = $settings["locale"];
 
-    $newid = $user->add($name, $email, "", $pass, $sysloc, $tags, $rate);
+    $newid = $user->add($name, $email, $company, $pass, $sysloc, $tags, $rate);
     if ($newid) {
         if (!empty($assignto)) {
             foreach ($assignto as $proj) {
@@ -228,7 +228,7 @@ if ($action == "index") {
             $avatar = $fname;
         }
 
-        if ($user->edit($id, $name, "" , $email, $tel1, $tel2, "", $zip, $gender, $turl, $address1, $address2, $state, $country, $tags, $locale, $avatar, $rate)) {
+        if ($user->edit($id, $name, "" , $email, $tel1, $tel2, $company, $zip, $gender, $turl, $address1, $address2, $state, $country, $tags, $locale, $avatar, $rate)) {
             if (!empty($newpass) and !empty($repeatpass)) {
                 $user->admin_editpass($id, $newpass, $repeatpass);
             }
@@ -439,7 +439,7 @@ if ($action == "index") {
     $title = $langfile['customeradministration'];
     $template->assign("title", $title);
     $template->assign("classes", $classes);
-    $allcust = $company->getAllCompanies();
+    $allcust = $companyObj->getAllCompanies();
     //$clopros = $project->getProjects(0, 10000);
    /* $i = 0;
     $users = $user->getAllUsers(1000000);
@@ -480,7 +480,7 @@ if ($action == "index") {
 			'state' => getArrayVal($_POST, "state"),
 			'desc' => getArrayVal($_POST, "desc")
 	);
-	$add = $company->add($data);
+	$add = $companyObj->add($data);
 	if ($add)
 		header("Location: admin.php?action=customers&mode=added");
 } elseif ($action == "system") {
