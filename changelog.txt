@@ -18,6 +18,9 @@ Collabtive 1.1
 + When editing closed tasks/projects in tables, the edit form is now displayed in the top block, like for open tasks/projects
 + Fixed UI glitches with "Never due" field in project add/edit forms
 + Updated image handling to remain compatible with PHP 5.4+
++ Removed unused field "folder description" from form for adding folders
++ Made field "folder name" required in form for adding folders
++ Made installer more secure by checking for pre-existing installation in each step of installation (not only on 1st)
 
 //TODO
 + Evaluate / Add start date patch by someperson

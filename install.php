@@ -4,6 +4,12 @@ error_reporting(0);
 if (!file_exists("./templates_c") or !is_writable("./templates_c")) {
     die("Required folder templates_c does not exist or is not writable. <br>Please create the folder or make it writable in order to proceed.");
 }
+
+// check if the settings table / object is present. if yes, assume collabtive is already installed and abort
+if (!empty($settings)) {
+    die("Collabtive seems to be already installed.<br />If this is an error, please clear your database.");
+}
+
 session_start();
 session_destroy();
 session_unset();
@@ -26,11 +32,8 @@ $template->config_dir = "./language/$locale/";
 $title = $langfile['installcollabtive'];
 $template->assign("title", $title);
 $template->template_dir = "./templates/standard/";
+
 if (!$action) {
-    // check if the settings table / object is present. if yes, assume collabtive is already installed and abort
-    if (!empty($settings)) {
-        die("Collabtive seems to be already installed.<br />If this is an error, please clear your database.");
-    }
     // check if required directories are writable
     $configfilechk = is_writable(CL_ROOT . "/config/" . CL_CONFIG . "/config.php");
     $filesdir = is_writable(CL_ROOT . "/files/");
