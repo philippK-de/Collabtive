@@ -19,6 +19,13 @@ Collabtive 1.1
 + Fixed UI glitches with "Never due" field in project add/edit forms
 + Updated image handling to remain compatible with PHP 5.4+
 
+//TODO
++ Evaluate / Add start date patch by someperson
+http://collabtive.o-dyn.de/forum/viewtopic.php?f=8&t=10186
+http://collabtive.o-dyn.de/forum/viewtopic.php?f=8&t=10058
++ Fix edit user / remove company stuff from UI
+
+
 Collabtive 1.0
 + Added translations: Hebrew, Norwegian (Nynorsk), Taiwanese
 + Improved translations: Albanian, Arabic, Bulgarian, Danish, Farsi, French, German, Greek, Hungarian, Italian, Norwegian (Bokmål), Polish, Portuguese (Brazilian), Slovak, Serbian, Turkish
