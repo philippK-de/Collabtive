@@ -3,25 +3,29 @@
 
 	<form novalidate class="main" action="managefile.php?action=addfolder&amp;id={$project.ID}" method="post" {literal} onsubmit="return validateCompleteForm(this,'input_error');"{/literal}>
 		<fieldset>
-			<div class = "row">
-				<label for = "folderparent">{#parent#}:</label>
-				<select name = "folderparent" id = "folderparent">
-				<option value = "0">{#rootdir#}</option>
+			<div class="row">
+				<label for="folderparent">{#parent#}:</label>
+				<select name="folderparent" id="folderparent">
+				<option value="0">{#rootdir#}</option>
 				{section name=fold loop=$allfolders}
-					<option value = "{$allfolders[fold].ID}">{$allfolders[fold].abspath}</option>
+					<option value="{$allfolders[fold].ID}">{$allfolders[fold].abspath}</option>
 				{/section}
 				</select>
 			</div>
 
 			<div class="row">
-			<label for = "foldertitle">{#title#}:</label><input type = "text" class="text" name = "foldertitle" id="foldertitle" />
+				<label for="foldertitle">{#title#}:</label>
+				<input type="text" class="text" name="foldertitle" id="foldertitle" required="1" />
 			</div>
 
+			<!-- Folder description is currently not used anywhere (v 1.1)
 			<div class="row">
-			<label for = "folderdesc">{#description#}:</label><input type = "text" class="text" name = "folderdesc" id="folderdesc" />
+				<label for="folderdesc">{#description#}:</label>
+				<input type="text" class="text" name="folderdesc" id="folderdesc" />
 			</div>
-			<input type = "hidden" name = "visible[]" value = "" />
-
+			-->
+			
+			<input type="hidden" name="visible[]" value="" />
 
 			<div class="row-butn-bottom">
 				<label>&nbsp;</label>
