@@ -115,6 +115,14 @@ $ins =	$conn->query("INSERT INTO `settings` (`ID`, `settingsKey`, `settingsValue
     $pass = $_POST['pass'];
     // create the first user
     $usr = new user();
+
+    $installChk = $usr->getAllUsers();
+    if(count($installChk > 0))
+    {
+		//There already are users. abort install.
+		  die("Collabtive seems to be already installed.<br />If this is an error, please clear your database.");
+	}
+
     $usrid = $usr->add($user, "", 0, $pass);
     if (!$usrid) {
         $template->assign("errortext", "Error: Failed to create first user.");
