@@ -4,7 +4,6 @@ error_reporting(0);
 if (!file_exists("./templates_c") or !is_writable("./templates_c")) {
     die("Required folder templates_c does not exist or is not writable. <br>Please create the folder or make it writable in order to proceed.");
 }
-
 // check if the settings table / object is present. if yes, assume collabtive is already installed and abort
 if (!empty($settings)) {
     die("Collabtive seems to be already installed.<br />If this is an error, please clear your database.");
@@ -81,7 +80,7 @@ if (!$action) {
         $ins = $conn->query("INSERT INTO settings (`settingsKey`,`settingsValue`) VALUES ('$setKey','$setVal')");
     }
 */
-$ins =	$conn->query("INSERT INTO `settings` (`ID`, `settingsKey`, `settingsValue`) VALUES
+    $ins = $conn->query("INSERT INTO `settings` (`ID`, `settingsKey`, `settingsValue`) VALUES
 (1, 'name', 'Collabtive'),
 (2, 'subtitle', 'Collabtive'),
 (3, 'locale', 'en'),
@@ -117,11 +116,10 @@ $ins =	$conn->query("INSERT INTO `settings` (`ID`, `settingsKey`, `settingsValue
     $usr = new user();
 
     $installChk = $usr->getAllUsers();
-    if(count($installChk > 0))
-    {
-		//There already are users. abort install.
-		  die("Collabtive seems to be already installed.<br />If this is an error, please clear your database.");
-	}
+    if (count($installChk) > 0) {
+        // There already are users. abort install.
+        die("Collabtive seems to be already installed.<br />If this is an error, please clear your database.");
+    }
 
     $usrid = $usr->add($user, "", 0, $pass);
     if (!$usrid) {
@@ -147,4 +145,5 @@ $ins =	$conn->query("INSERT INTO `settings` (`ID`, `settingsKey`, `settingsValue
 
     $template->display("install3.tpl");
 }
+
 ?>
