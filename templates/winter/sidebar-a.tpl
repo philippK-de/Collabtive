@@ -74,7 +74,7 @@
 			<h2><a id="onlinelisttoggle" class="win-up" href="javascript:blindtoggle('onlinelist');toggleClass('onlinelisttoggle','win-up','win-down');">{#usersonline#}</a></h2>
 
 			<div id="onlinelist">
-				{$cloud}
+				{$cloud|default}
 			</div>
 	</div>
 
@@ -82,7 +82,7 @@
 		{literal}
 			  <script type = "text/javascript">
 			  new Ajax.Autocompleter('query', 'choices', 'managesearch.php?action=ajaxsearch', {paramName:'query',minChars: 2,indicator: 'indicator1'});
-				 var on = new Ajax.PeriodicalUpdater("onlinelist","manageuser.php?action=onlinelist",{method:'get',evalScripts:true,frequency:45,decay:1.5});
+				 var on = new Ajax.PeriodicalUpdater("onlinelist","manageuser.php?action=onlinelist",{method:'get',evalScripts:true,frequency:35,decay:1.5});
 
 
 			</script>

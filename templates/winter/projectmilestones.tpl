@@ -82,7 +82,7 @@
 										<td class="a">{if $userpermissions.milestones.close}<a class="butn_check" href="managemilestone.php?action=close&amp;mid={$milestones[stone].ID}&amp;id={$project.ID}" title="{#close#}"></a>{/if}</td>
 										<td class="b">
 											<div class="toggle-in">
-												<span class="acc-toggle" onclick="javascript:accord_miles_new.activate($$('#accordion_miles_new .accordion_toggle')[{$smarty.section.stone.index}]);toggleAccordeon('done_{$myprojects[project].ID}',this);"></span>
+												<span class="acc-toggle" onclick="javascript:accord_miles_new.activate($$('#accordion_miles_new .accordion_toggle')[{$smarty.section.stone.index}]);toggleAccordeon('done_{$myprojects[project].ID|default}',this);"></span>
 												<a href="managemilestone.php?action=showmilestone&amp;msid={$milestones[stone].ID}&amp;id={$project.ID}" title="{$milestones[stone].name}">{$milestones[stone].name|truncate:30:"...":true}</a>
 											</div>
 										</td>

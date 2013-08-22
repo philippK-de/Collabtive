@@ -116,7 +116,7 @@ if (!$action) {
     $usr = new user();
 
     $installChk = $usr->getAllUsers();
-    if (count($installChk) > 0) {
+    if ($installChk) {
         // There already are users. abort install.
         die("Collabtive seems to be already installed.<br />If this is an error, please clear your database.");
     }

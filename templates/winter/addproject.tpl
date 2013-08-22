@@ -5,15 +5,16 @@
 	<fieldset>
 		<div class="row"><label for="name">{#name#}:</label><input type="text" class="text" name="name" id="name" required="1" realname="{#name#}" /></div>
 		<div class="row"><label for="desc">{#description#}:</label><div class="editor"><textarea name="desc" id="desc"  rows="3" cols="1" ></textarea></div></div>
-
 	    <div class="clear_both_b"></div>
 
 		<div class="row">
-		<label for="end">{#due#}:</label>
-		{* regexp="{literal}\d{2}.\d{2}.\d{4}{/literal}" *}
-		<input type="text" class="text" name="end"  id="endP"  realname="{#due#}"  />
-		<br /><br />
-		<label for = "neverdue"></label><input type = "checkbox" class = "checkbox" value = "neverdue" name = "neverdue" id = "neverdue" onclick = "$('endP').value='';$('endP').disabled='disabled';">{#neverdue#}
+			<label for="end">{#due#}:</label>
+			<input type="text" class="text" name="end" id="endP" realname="{#due#}" />
+		</div>
+		<div class="row">
+			<label for="neverdue"></label>
+			<input type="checkbox" class="checkbox" value="neverdue" name="neverdue" id="neverdue" onclick="$('endP').value='';$('endP').disabled=!$('endP').disabled;">
+			<label>{#neverdue#}</label>
 		</div>
 
 		<div class="datepick">

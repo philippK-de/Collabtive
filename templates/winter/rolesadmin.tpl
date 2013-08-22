@@ -136,6 +136,7 @@
             <label></label><input type = "checkbox" class = "checkbox" value = "1" name = "permissions_tasks[close]" {if $roles[role].tasks.close}checked{/if}  />{#close#}
             </div>
 
+
             {* Permissions for messages, close = reply *}
             <div class = "row">
             <label></label>
@@ -219,7 +220,7 @@
 
 		<div class="row-butn-bottom">
     	<label>&nbsp;</label>
-		<button type="submit" onfocus="this.blur();">{#edit#}</button>
+		<button type="submit" onfocus="this.blur();">{#save#}</button>
 		<button onclick="javascript:accord_roles.activate($$('#acc-roles .accordion_toggle')[{$smarty.section.role.index}]);toggleAccordeon('acc-roles',this);return false;">{#cancel#}</button>
 		</div>
 

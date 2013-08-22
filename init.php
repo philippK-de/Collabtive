@@ -10,7 +10,7 @@ define("CL_ROOT", realpath(dirname(__FILE__)));
 define("CL_CONFIG", "standard");
 // collabtive version and release date
 define("CL_VERSION", 1.0);
-define("CL_PUBDATE","1365026400");
+define("CL_PUBDATE","1377122400");
 // uncomment for debugging
 error_reporting(E_ALL | E_STRICT);
 // include config file , pagination and global functions
