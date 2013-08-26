@@ -259,7 +259,7 @@ class milestone {
             $milestone["daysleft"] = $dayslate;
 
             $tasks = $this->getMilestoneTasklists($milestone["ID"]);
-            $milestone["tasks"] = $tasks;
+            $milestone["tasklists"] = $tasks;
             $messages = $this->getMilestoneMessages($milestone["ID"]);
             $milestone["messages"] = $messages;
 
@@ -284,7 +284,7 @@ class milestone {
 
         $milestones = array();
 
-        $sel = $conn->query("SELECT ID FROM milestones WHERE `status`=$status LIMIT $lim");
+        $sel = $conn->query("SELECT ID FROM milestones WHERE `status`=$status  ORDER BY `end` ASC LIMIT $lim");
 
         while ($milestone = $sel->fetch()) {
             $themilestone = $this->getMilestone($milestone["ID"]);
@@ -309,7 +309,7 @@ class milestone {
         global $conn;
         $project = (int) $project;
 
-        $sel = $conn->query("SELECT ID FROM milestones WHERE project = $project AND status = 0 ORDER BY ID ASC");
+        $sel = $conn->query("SELECT ID FROM milestones WHERE project = $project AND status = 0 ORDER BY `end` ASC");
         $stones = array();
 
         while ($milestone = $sel->fetch()) {
@@ -482,7 +482,7 @@ class milestone {
         $timeline = array();
 
         if ($project > 0) {
-            $sel1 = $conn->query("SELECT * FROM milestones WHERE project =  $project AND status=1 AND end = '$starttime'");
+            $sel1 = $conn->query("SELECT * FROM milestones WHERE project =  $project AND status=1 AND end = '$starttime' ORDER BY `end` ASC");
         } else {
             $sel1 = $conn->query("SELECT milestones.*,projekte_assigned.user,projekte.name AS pname FROM milestones,projekte_assigned,projekte WHERE milestones.project = projekte_assigned.projekt AND milestones.project = projekte.ID HAVING projekte_assigned.user = $user AND status=1 AND end = '$starttime'");
         } while ($stone = $sel1->fetch()) {
@@ -508,13 +508,13 @@ class milestone {
         global $conn;
         $milestone = (int) $milestone;
 
-        $sel = $conn->query("SELECT * FROM tasklist WHERE milestone = $milestone AND status = 1");
+		$objtasklist = new tasklist();
+
+        $sel = $conn->query("SELECT ID FROM tasklist WHERE milestone = $milestone AND status = 1 ORDER BY ID ASC");
         $lists = array();
         if ($milestone) {
-            while ($list = $sel->fetch()) {
-                $list["name"] = stripslashes($list["name"]);
-                $list["desc"] = stripslashes($list["desc"]);
-                array_push($lists, $list);
+            while ($listId = $sel->fetch()) {
+                array_push($lists, $objtasklist->getTasklist($listId["ID"]));
             }
         }
         if (!empty($lists)) {

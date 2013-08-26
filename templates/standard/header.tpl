@@ -5,10 +5,12 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <title>{$title} @ {$settings.name}</title>
 <link rel="shortcut icon" href="templates/standard/images/favicon.ico" type="image/x-icon" />
-{if $stage|default != "project" and $loggedin|default}
+{if $stage != "project" and $loggedin|default}
 <link rel="search" type="application/opensearchdescription+xml" title="{$settings.name} {#search#}" href="manageajax.php?action=addfx-all" />
-{elseif $stage|default == "project" and $loggedin}
+{elseif $stage == "project" and $loggedin}
 <link rel="search" type="application/opensearchdescription+xml" title="{$project.name} {#search#}" href="manageajax.php?action=addfx-project&amp;project={$project.ID}" />
+<link rel="stylesheet" href="templates/standard/css/dtree.css" type="text/css"  />
+<script type="text/javascript" src="include/js/dtree.js"></script>
 {/if}
 {if $loggedin}
 <link rel="alternate" type="application/rss+xml" title="{#mymessages#}" href="managerss.php?action=mymsgs-rss&amp;user={$userid}" />
@@ -38,7 +40,7 @@ deleteEndcolor = '#c62424';
 <script type="text/javascript" src="include/js/mycalendar.js"></script>
 {/literal}
 {/if}
-{if $jsload2|default == "chat"}
+{if $jsload2 == "chat"}
 {literal}
 <script type="text/javascript">
 window.onunload = quitchat;
@@ -47,14 +49,14 @@ window.onunload = quitchat;
 {/literal}
 {/if}
 
-{if $jsload3|default == "lightbox"}
+{if $jsload3 == "lightbox"}
 <link rel="stylesheet" href="templates/standard/css/lytebox.css" type="text/css"  />
 <script type="text/javascript" src="include/js/lytebox.php"></script>
 {/if}
 <link rel="stylesheet" type="text/css" href="templates/standard/css/style_main.css"/>
 
 
-{if $jsload1|default == "tinymce"}
+{if $jsload1 == "tinymce"}
 {literal}
 <script type="text/javascript" src="include/js/tiny_mce/tiny_mce.js"></script>
 
@@ -86,7 +88,7 @@ tinyMCE.init({
 	force_p_newlines : false,
 	convert_newlines_to_brs : false,
 	forced_root_block : false,
-	external_image_list_url: 'manageajax.php?action=jsonfiles&id={/literal}{$project.ID|default}{literal}'
+	external_image_list_url: 'manageajax.php?action=jsonfiles&id={/literal}{$project.ID}{literal}'
 
 });
 
@@ -98,6 +100,6 @@ tinyMCE.init({
 
 <!--<div id = "jslog" style = "color:red;position:absolute;top:60%;right:5%;width:300px;border:1px solid;background-color:grey;"></div>-->
 
-{if $showheader|default != "no"}
+{if $showheader != "no"}
 	{include file="header_main.tpl"}
 {/if}

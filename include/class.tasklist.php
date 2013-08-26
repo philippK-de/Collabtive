@@ -191,6 +191,8 @@ class tasklist {
         $status = (int) $status;
 
         $sel = $conn->query("SELECT * FROM tasklist WHERE project = $project AND status=$status");
+
+
         $tasklists = array();
 
         $taskobj = new task();
@@ -226,16 +228,18 @@ class tasklist {
     function getTasklist($id)
     {
         global $conn;
-        $id = (int) $id;
 
-        $sel = $conn->query("SELECT * FROM tasklist WHERE ID = $id");
-        $tasklist = $sel->fetch();
+		$selStmt = $conn->prepare("SELECT * FROM `tasklist` WHERE ID = ?");
+		$sel = $selStmt->execute(array($id));
+       // $sel = $conn->query("SELECT * FROM tasklist WHERE ID = $id");
+        $tasklist = $selStmt->fetch();
 
         if (!empty($tasklist)) {
-            $startstring = date("d.m.Y", $tasklist["start"]);
+            $startstring = date(CL_DATEFORMAT, $tasklist["start"]);
             $tasklist["startstring"] = $startstring;
             $tasklist["name"] = stripslashes($tasklist["name"]);
             $tasklist["desc"] = stripslashes($tasklist["desc"]);
+            $tasklist["tasks"] = $this->getTasksFromList($tasklist["ID"]);
 
             return $tasklist;
         } else {

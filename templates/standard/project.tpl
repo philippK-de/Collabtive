@@ -73,6 +73,49 @@
 <div class="nosmooth" id="sm_project">
 
 
+<div class="dtree miles">
+	<div class="headline">
+		<a href="javascript:void(0);" id="milehead_toggle" class="win_block" onclick = "toggleBlock('milehead');"></a>
+				<h2>
+					<img src="./templates/standard/images/symbols/miles.png" alt="" />Tree
+				</h2>
+
+	</div>
+
+	<div class = "block">
+
+	<script type="text/javascript">
+		d = new dTree('d');
+		d.config.useCookies = false;
+		d.config.useSelection = false;
+
+			d.add(0,-1,'');
+		{section name = titem loop = $tree}
+		d.add("m"+{$tree[titem].ID},0,'{$tree[titem].name}','managemilestone.php?action=showmilestone&msid={$tree[titem].ID}&id={$project.ID}','','','templates/standard/images/symbols/miles.png','templates/standard/images/symbols/miles.png');
+
+				{section name = tlist loop=$tree[titem].tasklists }
+								d.add("tl"+{$tree[titem].tasklists[tlist].ID},"m"+{$tree[titem].tasklists[tlist].milestone},'{$tree[titem].tasklists[tlist].name}','managetasklist.php?action=showtasklist&id={$project.ID}&tlid={$tree[titem].tasklists[tlist].ID}','','','templates/standard/images/symbols/tasklist.png','templates/standard/images/symbols/tasklist.png');
+
+						{section name = ttask loop=$tree[titem].tasklists[tlist].tasks}
+								d.add("ta"+{$tree[titem].tasklists[tlist].tasks[ttask].ID},"tl"+{$tree[titem].tasklists[tlist].tasks[ttask].liste},'{$tree[titem].tasklists[tlist].tasks[ttask].title}','managetask.php?action=showtask&tid={$tree[titem].tasklists[tlist].tasks[ttask].ID}&id={$project.ID}','','','templates/standard/images/symbols/task.png','templates/standard/images/symbols/task.png');
+						{/section}
+
+			{/section}
+
+	{/section}
+
+		document.write(d);
+
+	</script>
+	<br />
+	<form id = "treecontrol" action = "#">
+	<button type = "reset" id = "openall" onclick = "d.openAll();" >Open all</button>
+	<button type = "reset" id = "closeall" onclick = "d.closeAll();" >Close all</button>
+	</form>
+	</div>
+</div>
+<div class="content-spacer"></div>
+
 {*Milestones*}
 <div class="miles" >
 			<div class="headline">

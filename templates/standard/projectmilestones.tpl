@@ -40,7 +40,7 @@
 			</div>
 
 			<div class="block" id="milehead">
-			
+
 				{*Add Milestone*}
 				{if $userpermissions.milestones.add}
 					<div id = "addstone" class="addmenue" style = "display:none;">
@@ -70,7 +70,7 @@
 
 					{*new Miles*}
 					<div id="togglenew" class="toggleblock">
-						
+
 						<table id="accordion_miles_new" cellpadding="0" cellspacing="0" border="0" style="clear:both;">
 							{section name=stone loop=$milestones}
 								{if $smarty.section.stone.index % 2 == 0}
@@ -105,6 +105,62 @@
 												<div class="acc-in">
 													<div class="message-in">
 														{$milestones[stone].desc}
+
+	{*Tasklists*}
+	{if $milestones[stone].tasklists[0][0]}
+		<div class="content-spacer-b"></div>
+				<h2>{#tasklists#}</h2>
+
+						<div class="inwrapper">
+							<ul style = "list-style-type:none;"	>
+							{section name=task loop=$milestones[stone].tasklists}
+								<li>
+									<div class="itemwrapper">
+
+											<table cellpadding="0" cellspacing="0" border="0">
+												<tr>
+													<td class="leftmen" valign="top">
+														<div class="inmenue">
+																<!-- <a class="more" href="javascript:fadeToggle('info_{$members[member].ID}');"></a>	-->
+														</div>
+													</td>
+													<td class="thumb">
+														<a href="managetasklist.php?action=showtasklist&amp;tlid={$milestones[stone].tasklists[task].ID}&amp;id={$project.ID}" title="{$milestones[stone].tasklists[task].name}">
+																<img src = "./templates/standard/images/symbols/tasklist.png" style="width: 32px; height: auto;" alt="" />
+														</a>
+													</td>
+													<td class="rightmen" valign="top">
+														<div class="inmenue">
+														<!--
+															<a class="del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'files_focus{$ordner[file].ID}\',\'managefile.php?action=delete&amp;id={$project.ID}&amp;file={$folders[fold].ID}\')');" title="{#delete#}" onclick="fadeToggle('iw_{$folders[fold].ID}');"></a>
+															<a class="edit" href="#" title="{#editfile#}"></a>
+														-->
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<td colspan="3">
+														<span class="name">
+															<a href = "managetasklist.php?action=showtasklist&amp;tlid={$milestones[stone].tasklists[task].ID}&amp;id={$project.ID}" title="{$milestones[stone].tasklists[task].name}">
+																{if $milestones[stone].tasklists[task].name != ""}
+																	{$milestones[stone].tasklists[task].name|truncate:13:"...":true}
+																{else}
+																	{#tasklist#}
+																{/if}
+															</a>
+														</span>
+													</td>
+												<tr/>
+											</table>
+
+									</div> {*itemwrapper End*}
+								</li>
+							{/section} {*loop Tasklists End*}
+
+							</ul>
+						</div> {*inwrapper End*}
+
+				{/if}
 													</div>
 												</div>
 											</div>
@@ -117,7 +173,7 @@
 
 					{*late Miles*}
 					{if $countlate > 0}
-					
+
 						<table class="second-thead" cellpadding="0" cellspacing="0" border="0" onclick="blindtoggle('togglelate');toggleClass('togglemileslate','acc-toggle','acc-toggle-active');">
 							<tr>
 								<td class="a"></td>
@@ -129,7 +185,7 @@
 						</table>
 
 						<div id="togglelate" class="toggleblock">
-							
+
 							<table id="accordion_miles_late" cellpadding="0" cellspacing="0" border="0">
 								{section name=latestone loop=$latemilestones}
 									{if $smarty.section.latestone.index % 2 == 0}
@@ -176,13 +232,13 @@
 									</tbody>
 								{/section}
 							</table>
-						
+
 						</div> {*toggleblock End*}
 					{/if} {*late Miles End*}
-				
+
 					{*finished Miles*}
 					<div id="doneblock" class="doneblock" style="display: none;">
-						
+
 						<table class="second-thead" cellpadding="0" cellspacing="0" border="0" onclick="blindtoggle('doneblock');toggleClass('donebutn','butn_link_active','butn_link');toggleClass('togglemilesdone','acc-toggle','acc-toggle-active');">
 							<tr>
 								<td class="a"></td>
@@ -194,7 +250,7 @@
 						</table>
 
 						<div class="toggleblock">
-						
+
 							<table id="accordion_miles_done" cellpadding="0" cellspacing="0" border="0">
 								{section name=stone loop=$donemilestones}
 									{if $smarty.section.stone.index % 2 == 0}
