@@ -192,7 +192,7 @@ if ($action == "timeline1next") {
     }
 
     $myfile = new datei();
-    $ordner = $myfile->getProjectFiles($id);
+    $ordner = $myfile->getAllProjectFiles($id);
     if (!empty($ordner)) {
         $json = "var tinyMCEImageList = new Array(\n";
         foreach($ordner as $file) {
