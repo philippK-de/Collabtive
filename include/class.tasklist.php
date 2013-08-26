@@ -262,7 +262,7 @@ class tasklist {
 
         $taskobj = new task();
 
-        $sel = $conn->query("SELECT ID FROM tasks WHERE `liste` = $id AND `status` = $status ORDER BY ID DESC");
+        $sel = $conn->query("SELECT ID FROM tasks WHERE `liste` = $id AND `status` = $status ORDER BY `end`,`title` ASC");
         $tasks = array();
         while ($task = $sel->fetch()) {
             array_push($tasks, $taskobj->getTask($task["ID"]));

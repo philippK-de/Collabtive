@@ -86,7 +86,7 @@
 
 	<script type="text/javascript">
 		d = new dTree('d');
-		d.config.useCookies = false;
+		d.config.useCookies = true;
 		d.config.useSelection = false;
 
 			d.add(0,-1,'');
