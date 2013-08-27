@@ -254,9 +254,10 @@ class milestone {
             $milestone["pname"] = stripslashes($milestone["pname"]);
 
             $dayslate = $this->getDaysLeft($milestone["end"]);
+            $milestone["daysleft"] = $dayslate;
             $dayslate = str_replace("-", "" , $dayslate);
             $milestone["dayslate"] = $dayslate;
-            $milestone["daysleft"] = $dayslate;
+
 
             $tasks = $this->getMilestoneTasklists($milestone["ID"]);
             $milestone["tasklists"] = $tasks;
@@ -528,7 +529,9 @@ class milestone {
     {
         global $conn;
         $milestone = (int) $milestone;
-        $sel = $conn->query("SELECT ID,title FROM messages WHERE milestone = $milestone");
+        $objmessage = new message();
+
+        $sel = $conn->query("SELECT title,ID,milestone FROM messages WHERE milestone = $milestone");
         $msgs = array();
         while ($msg = $sel->fetch()) {
             array_push($msgs, $msg);

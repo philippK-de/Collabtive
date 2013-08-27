@@ -1,6 +1,6 @@
 
 // Node object
-function Node(id, pid, name, url, title, target, icon, iconOpen, open) {
+function Node(id, pid, name, url, title, target, icon, iconOpen, open, daysLeft) {
 	this.id = id;
 	this.pid = pid;
 	this.name = name;
@@ -8,6 +8,9 @@ function Node(id, pid, name, url, title, target, icon, iconOpen, open) {
 	this.title = title;
 	this.target = target;
 	this.icon = icon;
+
+	this.daysLeft = daysLeft;
+
 	this.iconOpen = iconOpen;
 	this._io = open || false;
 	this._is = false;
@@ -31,7 +34,7 @@ function dTree(objName) {
 		inOrder					: false
 	}
 	this.icon = {
-		root				: 'templates/standard/images/symbols/base.gif',
+		root				: 'templates/standard/images/symbols/empty.gif',
 		folder			: 'templates/standard/images/symbols/folder.gif',
 		folderOpen	: 'templates/standard/images/symbols/folderopen.gif',
 		node				: 'templates/standard/images/symbols/page.gif',
@@ -56,8 +59,8 @@ function dTree(objName) {
 };
 
 // Adds a new node to the node array
-dTree.prototype.add = function(id, pid, name, url, title, target, icon, iconOpen, open) {
-	this.aNodes[this.aNodes.length] = new Node(id, pid, name, url, title, target, icon, iconOpen, open);
+dTree.prototype.add = function(id, pid, name, url, title, target, icon, iconOpen, open, daysLeft) {
+	this.aNodes[this.aNodes.length] = new Node(id, pid, name, url, title, target, icon, iconOpen, open, daysLeft);
 };
 
 // Open/close all nodes
@@ -109,7 +112,11 @@ dTree.prototype.addNode = function(pNode) {
 
 // Creates the node icon, url and text
 dTree.prototype.node = function(node, nodeId) {
-	var str = '<div class="dTreeNode">' + this.indent(node, nodeId);
+	var str;
+
+
+	str = '<div class="dTreeNode">' + this.indent(node, nodeId);
+
 	if (this.config.useIcons) {
 		if (!node.icon) node.icon = (this.root.id == node.pid) ? this.icon.root : ((node._hc) ? this.icon.folder : this.icon.node);
 		if (!node.iconOpen) node.iconOpen = (node._hc) ? this.icon.folderOpen : this.icon.node;
@@ -117,7 +124,12 @@ dTree.prototype.node = function(node, nodeId) {
 			node.icon = this.icon.root;
 			node.iconOpen = this.icon.root;
 		}
-		str += '<img id="i' + this.obj + nodeId + '" src="' + ((node._io) ? node.iconOpen : node.icon) + '" alt="" style = "height:26px;width:26px;" />';
+
+		//dont display root node we dont need it
+		if(this.root.id != node.pid)
+		{
+		str += '<img id="i' + this.obj + nodeId + '" src="' + ((node._io) ? node.iconOpen : node.icon) + '" alt="" style = "height:27px;width:27px;" />';
+		}
 	}
 	if (node.url) {
 		str += '<a id="s' + this.obj + nodeId + '" class="' + ((this.config.useSelection) ? ((node._is ? 'nodeSel' : 'node')) : 'node') + '" href="' + node.url + '"';
@@ -126,6 +138,15 @@ dTree.prototype.node = function(node, nodeId) {
 		if (this.config.useStatusText) str += ' onmouseover="window.status=\'' + node.name + '\';return true;" onmouseout="window.status=\'\';return true;" ';
 		if (this.config.useSelection && ((node._hc && this.config.folderLinks) || !node._hc))
 			str += ' onclick="javascript: ' + this.obj + '.s(' + nodeId + ');"';
+
+	if(typeof node.daysLeft == "number")
+	{
+		if(node.daysLeft < 0)
+		{
+		str += ' style = "color:#be4c43 "';
+		console.log(node.daysLeft);
+		}
+	}
 		str += '>';
 	}
 	else if ((!this.config.folderLinks || !node.url) && node._hc && node.pid != this.root.id)
@@ -154,7 +175,7 @@ dTree.prototype.indent = function(node, nodeId) {
 			if (!this.config.useLines) str += (node._io) ? this.icon.nlMinus : this.icon.nlPlus;
 			else str += ( (node._io) ? ((node._ls && this.config.useLines) ? this.icon.minusBottom : this.icon.minus) : ((node._ls && this.config.useLines) ? this.icon.plusBottom : this.icon.plus ) );
 			str += '" alt="" style = "height:26px;width:26px;"  /></a>';
-		} else str += '<img src="' + ( (this.config.useLines) ? ((node._ls) ? this.icon.joinBottom : this.icon.join ) : this.icon.empty) + '" alt="" style = "height:24px;width:24px;" />';
+		} else str += '<img src="' + ( (this.config.useLines) ? ((node._ls) ? this.icon.joinBottom : this.icon.join ) : this.icon.empty) + '" alt="" style = "height:26px;width:26px;" />';
 	}
 	return str;
 };

@@ -73,7 +73,7 @@
 <div class="nosmooth" id="sm_project">
 
 
-<div class="dtree miles">
+<div class="neutral dtree">
 	<div class="headline">
 		<a href="javascript:void(0);" id="milehead_toggle" class="win_block" onclick = "toggleBlock('milehead');"></a>
 				<h2>
@@ -89,18 +89,30 @@
 		d.config.useCookies = true;
 		d.config.useSelection = false;
 
-			d.add(0,-1,'');
+		d.add(0,-1,'');
+		//milestones
 		{section name = titem loop = $tree}
-		d.add("m"+{$tree[titem].ID},0,'{$tree[titem].name}','managemilestone.php?action=showmilestone&msid={$tree[titem].ID}&id={$project.ID}','','','templates/standard/images/symbols/miles.png','templates/standard/images/symbols/miles.png');
+			d.add("m"+{$tree[titem].ID},0,'{$tree[titem].name}','managemilestone.php?action=showmilestone&msid={$tree[titem].ID}&id={$project.ID}','','','templates/standard/images/symbols/miles.png','templates/standard/images/symbols/miles.png','',{$tree[titem].daysleft});
 
+				//tasklists
 				{section name = tlist loop=$tree[titem].tasklists }
 								d.add("tl"+{$tree[titem].tasklists[tlist].ID},"m"+{$tree[titem].tasklists[tlist].milestone},'{$tree[titem].tasklists[tlist].name}','managetasklist.php?action=showtasklist&id={$project.ID}&tlid={$tree[titem].tasklists[tlist].ID}','','','templates/standard/images/symbols/tasklist.png','templates/standard/images/symbols/tasklist.png');
 
+						//Tasks from lists
 						{section name = ttask loop=$tree[titem].tasklists[tlist].tasks}
-								d.add("ta"+{$tree[titem].tasklists[tlist].tasks[ttask].ID},"tl"+{$tree[titem].tasklists[tlist].tasks[ttask].liste},'{$tree[titem].tasklists[tlist].tasks[ttask].title}','managetask.php?action=showtask&tid={$tree[titem].tasklists[tlist].tasks[ttask].ID}&id={$project.ID}','','','templates/standard/images/symbols/task.png','templates/standard/images/symbols/task.png');
+									d.add("ta"+{$tree[titem].tasklists[tlist].tasks[ttask].ID},"tl"+{$tree[titem].tasklists[tlist].tasks[ttask].liste},'{$tree[titem].tasklists[tlist].tasks[ttask].title}','managetask.php?action=showtask&tid={$tree[titem].tasklists[tlist].tasks[ttask].ID}&id={$project.ID}','','','templates/standard/images/symbols/task.png','templates/standard/images/symbols/task.png','',{$tree[titem].tasklists[tlist].tasks[ttask].daysleft});
 						{/section}
 
-			{/section}
+				//End tasklists
+				{/section}
+
+				//Messages
+				{section name = tmsg loop=$tree[titem].messages}
+					{if $tree[titem].messages[tmsg].milestone > 0}
+									d.add("msg"+{$tree[titem].messages[tmsg].ID},"m"+{$tree[titem].messages[tmsg].milestone},'{$tree[titem].messages[tmsg].title}','managemessage.php?action=showmessage&id={$project.ID}&mid={$tree[titem].messages[tmsg].ID}','','','templates/standard/images/symbols/msgs.png','templates/standard/images/symbols/msgs.png');
+					{/if}
+
+				{/section}
 
 	{/section}
 
