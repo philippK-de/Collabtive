@@ -13,7 +13,6 @@
 class task {
     private $mylog;
 
-
     /**
      * Constructor
      * Initializes the event log
@@ -81,7 +80,9 @@ class task {
         $end = strtotime($end);
 
         $updStmt = $conn->prepare("UPDATE tasks SET `end`=?,`title`=?, `text`=?, `liste`=? WHERE ID = ?");
+        // Remove all the users from the task. Done to ensure no double assigns occur since the handler scripts call this::assign() on their own.
         $conn->query("DELETE FROM tasks_assigned WHERE `task` = $id");
+
         $upd = $updStmt->execute(array($end, $title, $text, $liste, $id));
 
         if ($upd) {
@@ -238,14 +239,16 @@ class task {
             $pname = $details["pname"];
             // get remainig days until due date
             $tage = $this->getDaysLeft($task['end']);
-
+            // Get the user(s) assigned to the task from the db
             $usel = $conn->query("SELECT user FROM tasks_assigned WHERE task = $task[ID]");
             $users = array();
             while ($usr = $usel->fetch()) {
+                // push the assigned users to an array
                 array_push($users, $usr[0]);
                 $task["user"] = "All";
                 $task["user_id"] = $users;
             }
+            // If only one user is assigned , get his profile and add him to users, user_id fields
             if (count($users) == 1) {
                 $usrobj = new user();
                 $usr = $users[0];
@@ -254,6 +257,7 @@ class task {
                 $task["users"] = array($user);
                 $task["user_id"] = $user["ID"];
             } elseif (count($users) > 1) {
+                // if there is more than one user push them to the users field. no user or user_id field is present.
                 $usrobj = new user();
                 $task["users"] = array();
                 $task["user"] = "";
@@ -309,7 +313,7 @@ class task {
     }
 
     /**
-     * Return all active / open tasks of a given project
+     * Return all active / open tasks of a given project and user
      *
      * @param int $project Project ID
      * @param int $limit Number of tasks to return
@@ -320,7 +324,7 @@ class task {
         global $conn;
         $project = (int) $project;
         $limit = (int) $limit;
-
+        // Get the id of the currently logged in user.
         $user = $_SESSION['userid'];
         $lists = array();
         $now = time();
@@ -357,7 +361,7 @@ class task {
         $project = (int) $project;
         $limit = (int) $limit;
         $user = (int) $user;
-
+        // If no user is given, use the currently logged in one.
         if ($user < 1) {
             $user = $_SESSION['userid'];
         }
@@ -553,18 +557,16 @@ class task {
 
         $sql = $conn->query("SELECT user FROM tasks_assigned WHERE task = $id");
 
-            $result = array();
-            while ($user = $sql->fetch()) {
+        $result = array();
+        while ($user = $sql->fetch()) {
+            $sel2 = $conn->query("SELECT name FROM user WHERE ID = $user[0]");
+            $uname = $sel2->fetch();
+            $uname = $uname[0];
+            $user[1] = stripslashes($uname);
 
-                $sel2 = $conn->query("SELECT name FROM user WHERE ID = $user[0]");
-                $uname = $sel2->fetch();
-                $uname = $uname[0];
-                $user[1] = stripslashes($uname);
-
-                $result[] = $user;
-            }
-            return $result;
-
+            $result[] = $user;
+        }
+        return $result;
     }
 
     /**

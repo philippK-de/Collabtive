@@ -32,6 +32,7 @@ class settings {
 
         $settings = array();
         while ($selSettings = $selStmt->fetch()) {
+            // Create a key/value array
             $settings[$selSettings["settingsKey"]] = $selSettings["settingsValue"];
         }
         if (!empty($settings)) {
@@ -57,10 +58,13 @@ class settings {
     {
         global $conn;
         // This is an artifact of refactoring to a key/value table for the settings
+        // Create an arrray containing the settings fields as keys and new values from the user as values
         $theSettings = array("name" => $name, "subtitle" => $subtitle, "locale" => $locale, "timezone" => $timezone, "dateformat" => $dateformat, "template" => $templ, "rssuser" => $rssuser, "rsspass" => $rsspass);
-
+        // Now prepare a statement to edit one settings row
         $updStmt = $conn->prepare("UPDATE settings SET `settingsValue` = ? WHERE `settingsKey` = ?");
+        // Loop through the array containing the key/value pairs, writing the database field to $setKey and the value to $setVal
         foreach($theSettings as $setKey => $setVal) {
+            // Execute the prepared statement by binding the current settings field and values
             $upd = $updStmt->execute(array($setVal, $setKey));
         }
 
@@ -86,7 +90,7 @@ class settings {
     function editMailsettings($onoff, $mailfrom, $mailfromname, $method, $mailhost, $mailuser, $mailpass)
     {
         global $conn;
-
+        // This is an artifact of refactoring to a key/value table for the settings
         $theSettings = array("mailnotify" => $onoff, "mailfrom" => $mailfrom, "mailfromname" => $mailfromname, "mailmethod" => $method, "mailhost" => $mailhost, "mailuser" => $mailuser, "mailpass" => $mailpass);
         $updStmt = $conn->prepare("UPDATE settings SET `settingsValue` = ? WHERE `settingsKey` = ?");
 
@@ -109,7 +113,7 @@ class settings {
     {
         $handle = opendir(CL_ROOT . "/templates");
         $templates = array();
-
+        // Iterate through the templates directory and count each subdirectory within it as a template
         while (false !== ($file = readdir($handle))) {
             $type = filetype(CL_ROOT . "/templates/" . $file);
 
