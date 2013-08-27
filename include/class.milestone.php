@@ -36,6 +36,7 @@ class milestone {
     {
         global $conn;
 
+		//Convert end date to timestamp
         $end = strtotime($end);
 
         $insStmt = $conn->prepare("INSERT INTO milestones (`project`,`name`,`desc`,`start`,`end`,`status`) VALUES (?, ?, ?, ?, ?, ?)");
@@ -143,8 +144,10 @@ class milestone {
         $id = (int) $id;
 
         $upd = $conn->query("UPDATE milestones SET status = 0 WHERE ID = $id");
+        //Get attached tasklists
         $tasklists = $this->getMilestoneTasklists($id);
-        if (!empty($tasklists)) {
+        //Loop through tasklists , close all tasks in them, then close tasklist itself
+		if (!empty($tasklists)) {
             foreach ($tasklists as $tasklist) {
                 $tl = new tasklist();
                 $tasks = $tl->getTasksFromList($tasklist[ID]);
@@ -237,6 +240,7 @@ class milestone {
         $milestone = $sel->fetch();
 
         if (!empty($milestone)) {
+        	//Format start and end date for display
             $endstring = date(CL_DATEFORMAT, $milestone["end"]);
             $milestone["endstring"] = $endstring;
             $milestone["fend"] = $endstring;
@@ -247,18 +251,20 @@ class milestone {
             $milestone["name"] = stripslashes($milestone["name"]);
             $milestone["desc"] = stripslashes($milestone["desc"]);
 
+			//Get the name of the project where the message was posted for display
             $psel = $conn->query("SELECT name FROM projekte WHERE ID = $milestone[project]");
             $pname = $psel->fetch();
             $pname = $pname[0];
             $milestone["pname"] = $pname;
             $milestone["pname"] = stripslashes($milestone["pname"]);
 
+			//Daysleft contains a signed number, dayslate an unsigned one that only applies if the milestone is late
             $dayslate = $this->getDaysLeft($milestone["end"]);
             $milestone["daysleft"] = $dayslate;
             $dayslate = str_replace("-", "" , $dayslate);
             $milestone["dayslate"] = $dayslate;
 
-
+			//Get attached tasklists and messages
             $tasks = $this->getMilestoneTasklists($milestone["ID"]);
             $milestone["tasklists"] = $tasks;
             $messages = $this->getMilestoneMessages($milestone["ID"]);
