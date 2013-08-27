@@ -186,13 +186,20 @@ class message {
         }
     }
 
-    function getLatestMessages($limit = 5)
+    /**
+     * Returns the most recent messages of a user, from the projects he is assigned to
+     *
+     * @param int $limit Limits the number of messages to return.
+     * @return array $message Eigenschaften der Nachricht
+     */
+    function getLatestMessages($limit = 25)
     {
         global $conn;
         $limit = (int) $limit;
-
+        // Get the id of the logged in user and get his projects
         $userid = $_SESSION["userid"];
         $sel3 = $conn->query("SELECT projekt FROM projekte_assigned WHERE user = $userid");
+        // Assemble a string of project IDs the user belongs to for IN() query.
         $prstring = "";
         while ($upro = $sel3->fetch()) {
             $projekt = $upro[0];
@@ -247,6 +254,14 @@ class message {
         }
     }
 
+    /**
+     * Attach a file to a message
+     *
+     * @param int $fid ID of the file to be attached
+     * @param int $mid ID of the message where the file will be attached
+     * @param int $id optional param denoting the project ID where the file will be uploaded to (if so)
+     * @return bool
+     */
     function attachFile($fid, $mid, $id = 0)
     {
         global $conn;
@@ -255,6 +270,8 @@ class message {
         $id = (int) $id;
 
         $myfile = new datei();
+        // If a file ID is given, the given file will be attached
+        // If no file ID is given, the file will be uploaded to the project defined by $id and then attached
         if ($fid > 0) {
             $ins = $conn->query("INSERT INTO files_attached (ID,file,message) VALUES ('',$fid,$mid)");
         } else {
@@ -274,6 +291,12 @@ class message {
         }
     }
 
+    /**
+     * Get files attached to a message
+     *
+     * @param int $msg ID of the message
+     * @return array $files Attached files
+     */
     private function getAttachedFiles($msg)
     {
         global $conn;
