@@ -93,9 +93,9 @@ class project {
     /**
      * Bearbeitet ein Projekt
      *
-     * @param int $id Eindeutige Projektnummer
-     * @param string $name Name des Projekts
-     * @param string $desc Beschreibungstext
+     * @param int $id Project ID
+     * @param string $name Name of the project
+     * @param string $desc Description of the project
      * @param string $end Date on which the project is due
      * @param int $customerID id of a customer
      * @return bool
@@ -233,10 +233,10 @@ class project {
     }
 
     /**
-     * Weist ein Projekt einem bestimmten Mitglied zu
+     * Asssigns a user to a project
      *
-     * @param int $user Eindeutige Mitgliedsnummer
-     * @param int $id Eindeutige Projektnummer
+     * @param int $user ID of user to be assigned
+     * @param int $id ID of project to assign to
      * @return bool
      */
     function assign($user, $id)
@@ -256,10 +256,10 @@ class project {
     }
 
     /**
-     * Entfernt ein Projekt aus der Zuweisung an ein bestimmtes Mitglied
+     * Removes a user from a project
      *
-     * @param int $user User ID
-     * @param int $id Project ID
+     * @param int $user User ID of user to remove
+     * @param int $id Project ID of project to remove from
      * @return bool
      */
     function deassign($user, $id)
@@ -269,6 +269,7 @@ class project {
         $sqlStmt = $conn->prepare("DELETE FROM projekte_assigned WHERE user = ? AND projekt = ?");
 
         $milestone = new milestone();
+        // Delete the users assignments to closed milestones
         $donemiles = $milestone->getDoneProjectMilestones($id);
         if (!empty($donemiles)) {
             $sql1Stmt = $conn->prepare("DELETE FROM milestones_assigned WHERE user = ? AND milestone = ?");
@@ -276,7 +277,7 @@ class project {
                 $sql1 = $sql1Stmt->execute(array((int) $user, $dm['ID']));
             }
         }
-
+        // Delete the users assignments to open milestones
         $openmiles = $milestone->getAllProjectMilestones($id, 100000);
         if (!empty($openmiles)) {
             $sql2Stmt = $conn->prepare("DELETE FROM milestones_assigned WHERE user = ? AND milestone = ?");
@@ -287,13 +288,14 @@ class project {
 
         $task = new task();
         $tasks = $task->getProjectTasks($id);
+        // Delete tasks assignments of the user
         if (!empty($tasks)) {
             $sql3Stmt = $conn->prepare("DELETE FROM tasks_assigned WHERE user = ? AND task = ?");
             foreach ($tasks as $t) {
                 $sql3 = $sql3Stmt->execute(array((int) $user, $t['ID']));
             }
         }
-
+        // Finally remove the user from the project
         $del = $sqlStmt->execute(array((int) $user, (int) $id));
         if ($del) {
             $userObj = new user();
@@ -416,10 +418,10 @@ class project {
     }
 
     /**
-     * Listet alle IDs der Projekte eines Mitglieds auf
+     * Lists all project IDs assigned to a user
      *
-     * @param int $user Eindeutige Mitgliedsnummer
-     * @return array $myprojekte Projekt-Nummern
+     * @param int $user ID of the user
+     * @return array $myprojekte Project IDs for user
      */
     function getMyProjectIds($user)
     {
@@ -446,7 +448,7 @@ class project {
     }
 
     /**
-     * Listet alle einem bestimmen Projekt zugewiesenen Mitglieder auf
+     * Lists all the users in a project
      *
      * @param int $project Eindeutige Projektnummer
      * @param int $lim Maximum auszugebender Mitglieder
@@ -491,6 +493,12 @@ class project {
         }
     }
 
+    /**
+     * Count members in a project
+     *
+     * @param int $project Project ID
+     * @return int $num Number of members
+     */
     function countMembers($project)
     {
         global $conn;
@@ -526,6 +534,12 @@ class project {
         return $done;
     }
 
+    /**
+     * Liste the folders in a project
+     *
+     * @param int $project Project ID
+     * @return array $folders Folders in the project
+     */
     function getProjectFolders($project)
     {
         global $conn;
@@ -546,10 +560,10 @@ class project {
         }
     }
     /**
-     * Gibt die verbleibenden Tage von einem gegeben Zeitpunkt bis heute zur?ck
+     * Get days until a specified date
      *
-     * @param int $end Zu vergleichender Zeitpunkt
-     * @return int Verbleibende volle Tage
+     * @param int $end End date to compare with
+     * @return int Remaining days
      */
     private function getDaysLeft($end)
     {

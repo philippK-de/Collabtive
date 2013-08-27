@@ -10,7 +10,7 @@ define("CL_ROOT", realpath(dirname(__FILE__)));
 define("CL_CONFIG", "standard");
 // collabtive version and release date
 define("CL_VERSION", 1.0);
-define("CL_PUBDATE","1377122400");
+define("CL_PUBDATE", "1377122400");
 // uncomment for debugging
 error_reporting(E_ALL | E_STRICT);
 // include config file , pagination and global functions
@@ -18,17 +18,15 @@ require(CL_ROOT . "/config/" . CL_CONFIG . "/config.php");
 require(CL_ROOT . "/include/SmartyPaginate.class.php");
 require(CL_ROOT . "/include/initfunctions.php");
 // Start database connection
-if (!empty($db_name) and !empty($db_user))
-{
-  //$tdb = new datenbank();
+if (!empty($db_name) and !empty($db_user)) {
+    // $tdb = new datenbank();
     $conn = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8", $db_user, $db_pass);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 }
-
 // Start template engine
 $template = new Smarty();
-//STOP smarty from spewing notices all over the html code
-$template->error_reporting = E_ALL & ~E_NOTICE;
+// STOP smarty from spewing notices all over the html code
+$template->error_reporting = E_ALL &~E_NOTICE;
 // get the available languages
 $languages = getAvailableLanguages();
 // get URL to collabtive
@@ -38,8 +36,7 @@ $template->assign("languages", $languages);
 $template->assign("myversion", "1.0");
 $template->assign("cl_config", CL_CONFIG);
 // Assign globals to all templates
-if (isset($_SESSION["userid"]))
-{
+if (isset($_SESSION["userid"])) {
     // unique ID of the user
     $userid = $_SESSION["userid"];
     // name of the user
@@ -59,14 +56,11 @@ if (isset($_SESSION["userid"]))
     $template->assign("usergender", $gender);
     $template->assign("userpermissions", $userpermissions);
     $template->assign("loggedin", 1);
-}
-else
-{
+} else {
     $template->assign("loggedin", 0);
 }
 // get system settings
-if (isset($conn))
-{
+if (isset($conn)) {
     $set = (object) new settings();
     $settings = $set->getSettings();
 
@@ -75,36 +69,27 @@ if (isset($conn))
     date_default_timezone_set($settings["timezone"]);
     $template->assign("settings", $settings);
 }
-
 // Set Template directory
 // If no directory is set in the system settings, default to the standard theme
-if (isset($settings['template']))
-{
+if (isset($settings['template'])) {
     $template->template_dir = CL_ROOT . "/templates/$settings[template]/";
-    //$template->tname = $settings["template"];
-}
-else
-{
+    // $template->tname = $settings["template"];
+} else {
     $template->template_dir = CL_ROOT . "/templates/standard/";
-    //$template->tname = "standard";
+    // $template->tname = "standard";
 }
 
-if (!isset($locale))
-{
-    if (isset($settings["locale"]))
-    {
+if (!isset($locale)) {
+    if (isset($settings["locale"])) {
         $locale = $settings['locale'];
-    }
-    else
-    {
+    } else {
         $locale = "en";
     }
     $_SESSION['userlocale'] = $locale;
 }
 // if detected locale doesnt have a corresponding langfile , use system default locale
 // if, for whatever reason, no system default language is set, default to english as a last resort
-if (!file_exists(CL_ROOT . "/language/$locale/lng.conf"))
-{
+if (!file_exists(CL_ROOT . "/language/$locale/lng.conf")) {
     $locale = $settings['locale'];
     $_SESSION['userlocale'] = $locale;
 }
@@ -126,13 +111,11 @@ $them = date("n");
 $template->assign("theM", $them);
 $template->assign("theY", $they);
 // Get the user's projects for the quickfinder in the sidebar
-if (isset($userid))
-{
-	$project = new project();
-	$myOpenProjects = $project->getMyProjects($userid);
-	$template->assign("openProjects", $myOpenProjects);
+if (isset($userid)) {
+    $project = new project();
+    $myOpenProjects = $project->getMyProjects($userid);
+    $template->assign("openProjects", $myOpenProjects);
 }
-
 // clear session data for pagination
 SmartyPaginate::disconnect();
 

@@ -281,14 +281,20 @@ class roles {
         return (array) $inarr;
     }
 
+    /**
+     * Get an array for a role
+     *
+     * @param int $role Role ID
+     * @return array $therole Role as array
+     */
     private function getRole($role)
     {
         global $conn;
         $role = (int) $role;
-
+        // Get the serialized strings from the db
         $sel2 = $conn->query("SELECT * FROM roles WHERE ID = $role");
         $therole = $sel2->fetch();
-
+        // Unserialize to an array
         $therole["projects"] = unserialize($therole["projects"]);
         $therole["tasks"] = unserialize($therole["tasks"]);
         $therole["milestones"] = unserialize($therole["milestones"]);
