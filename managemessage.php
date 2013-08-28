@@ -1,8 +1,7 @@
 <?php
 require("./init.php");
 // check if user is logged in
-if (!isset($_SESSION["userid"]))
-{
+if (!isset($_SESSION["userid"])) {
     $template->assign("loginerror", 0);
     $template->display("login.tpl");
     die();
@@ -35,11 +34,9 @@ $template->assign("mode", $mode);
 $classes = array("overview" => "overview", "msgs" => "msgs_active", "tasks" => "tasks", "miles" => "miles", "files" => "files", "users" => "users", "tracker" => "tracking");
 $template->assign("classes", $classes);
 
-if ($action != "mymsgs" and $action != "mymsgs-pdf")
-{
+if ($action != "mymsgs" and $action != "mymsgs-pdf") {
     // check if the user belongs to the current project. die if he/she doesn't
-    if (!chkproject($userid, $id))
-    {
+    if (!chkproject($userid, $id)) {
         $errtxt = $langfile["notyourproject"];
         $noperm = $langfile["accessdenied"];
         $template->assign("errortext", "$errtxt<br>$noperm");
@@ -48,106 +45,83 @@ if ($action != "mymsgs" and $action != "mymsgs-pdf")
     }
 }
 
-if ($action == "addform")
-{
+if ($action == "addform") {
     // display addform
     $template->display("addmessageform.tpl");
-} elseif ($action == "add")
-{
+} elseif ($action == "add") {
     // check if the user is allowed to add messages
-    if (!$userpermissions["messages"]["add"])
-    {
+    if (!$userpermissions["messages"]["add"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
         $template->assign("errortext", "<h2>$errtxt</h2><br>$noperm");
         $template->display("error.tpl");
         die();
     }
-
     // format tags properly
-    if ($tags)
-    {
+    if ($tags) {
         $tagobj = new tags();
         $tags = $tagobj->formatInputTags($tags);
     }
     // add message
     $themsg = $msg->add($id, $title, $message, $tags, $userid, $username, 0, $milestone);
 
-    if ($themsg)
-    {
-        if ($thefiles > 0)
-        {
-			// attach existing file
+    if ($themsg) {
+        if ($thefiles > 0) {
+            // attach existing file
             $msg->attachFile($thefiles, $themsg);
-        } elseif ($thefiles == 0 and $numfiles > 0)
-        {
+        } elseif ($thefiles == 0 and $numfiles > 0) {
             // if upload files are set, upload and attach
             $msg->attachFile(0, $themsg, $id);
         }
 
-        if ($settings["mailnotify"])
-        {
+        if ($settings["mailnotify"]) {
             $sendto = getArrayVal($_POST, "sendto");
             $usr = (object) new project();
             $users = $usr->getProjectMembers($id, 10000);
-            if ($sendto[0] == "all")
-            {
+            if ($sendto[0] == "all") {
                 $sendto = $users;
                 $sendto = reduceArray($sendto);
-            } elseif ($sendto[0] == "none")
-            {
+            } elseif ($sendto[0] == "none") {
                 $sendto = array();
             }
-            foreach($users as $user)
-            {
-                if (!empty($user["email"]))
-                {
-                    if (is_array($sendto))
-                    {
-                        if (in_array($user["ID"], $sendto))
-                        {
+            foreach($users as $user) {
+                if (!empty($user["email"])) {
+                    if (is_array($sendto)) {
+                        if (in_array($user["ID"], $sendto)) {
                             // send email
                             $themail = new emailer($settings);
-							$themail->send_mail($user["email"], $langfile["messagewasaddedsubject"], $langfile["hello"] . ",<br /><br/>" . $langfile["messagewasaddedtext"] . "<br /><br />". $message . "<br /><br /><a href = \"" . $url . "managemessage.php?action=showmessage&id=$id&mid=$themsg\">$title</a>");
+                            $themail->send_mail($user["email"], $langfile["messagewasaddedsubject"], $langfile["hello"] . ",<br /><br/>" . $langfile["messagewasaddedtext"] . "<br /><br />" . $message . "<br /><br /><a href = \"" . $url . "managemessage.php?action=showmessage&id=$id&mid=$themsg\">$title</a>");
                         }
-                    }
-                    else
-                    {
+                    } else {
                         // send email
                         $themail = new emailer($settings);
-						$themail->send_mail($user["email"], $langfile["messagewasaddedsubject"], $langfile["hello"] . ",<br /><br/>" . $langfile["messagewasaddedtext"] . "<br /><br />". $message . "<br /><br /><a href = \"" . $url . "managemessage.php?action=showmessage&id=$id&mid=$themsg\">$title</a>");
+                        $themail->send_mail($user["email"], $langfile["messagewasaddedsubject"], $langfile["hello"] . ",<br /><br/>" . $langfile["messagewasaddedtext"] . "<br /><br />" . $message . "<br /><br /><a href = \"" . $url . "managemessage.php?action=showmessage&id=$id&mid=$themsg\">$title</a>");
                     }
                 }
             }
         }
         $loc = $url . "managemessage.php?action=showproject&id=$id&mode=added";
-       header("Location: $loc");
+        header("Location: $loc");
     }
-} elseif ($action == "editform")
-{
+} elseif ($action == "editform") {
     // check if the user is allowed to edit messages
-    if (!$userpermissions["messages"]["edit"])
-    {
+    if (!$userpermissions["messages"]["edit"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
         $template->assign("errortext", "<h2>$errtxt</h2><br>$noperm");
         $template->display("error.tpl");
         die();
     }
-
     // get page title from language file
     $title = $langfile["editmessage"];
-	$template->assign("title", $title);
-
-	// get the message to edit
+    $template->assign("title", $title);
+    // get the message to edit
     $message = $msg->getMessage($mid);
     $template->assign("message", $message);
     $template->display("editmessageform.tpl");
-} elseif ($action == "edit")
-{
+} elseif ($action == "edit") {
     // check if the user is allowed to edit messages
-    if (!$userpermissions["messages"]["edit"])
-    {
+    if (!$userpermissions["messages"]["edit"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
         $template->assign("errortext", "<h2>$errtxt</h2><br>$noperm");
@@ -158,24 +132,18 @@ if ($action == "addform")
     $tagobj = new tags();
     $tags = $tagobj->formatInputTags($tags);
     // edit the msg
-    if ($msg->edit($mid_post, $title, $text, $tags))
-    {
-        if ($redir)
-        {
+    if ($msg->edit($mid_post, $title, $text, $tags)) {
+        if ($redir) {
             $redir = $url . $redir;
             header("Location: $redir");
-        }
-        else
-        {
+        } else {
             $loc = $url . "managemessage.php?action=showproject&id=$id&mode=edited";
             header("Location: $loc");
         }
     }
-} elseif ($action == "del")
-{
+} elseif ($action == "del") {
     // check if the user is allowed to delete messages
-    if (!$userpermissions["messages"]["del"])
-    {
+    if (!$userpermissions["messages"]["del"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
         $template->assign("errortext", "<h2>$errtxt</h2><br>$noperm");
@@ -183,41 +151,33 @@ if ($action == "addform")
         die();
     }
     // delete the message
-    if ($msg->del($mid))
-    {
+    if ($msg->del($mid)) {
         // if a redir target is given, redirect to it. else redirect to standard target.
-        if ($redir)
-        {
+        if ($redir) {
             echo "ok";
             $redir = $url . $redir;
             header("Location: $redir");
-        }
-        else
-        {
+        } else {
             echo "ok";
         }
     }
-} elseif ($action == "replyform")
-{
+} elseif ($action == "replyform") {
     // check if the user is allowed to add messages
-    if (!$userpermissions["messages"]["add"])
-    {
+    if (!$userpermissions["messages"]["add"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
         $template->assign("errortext", "<h2>$errtxt</h2><br>$noperm");
         $template->display("error.tpl");
         die();
     }
-
-	// get page title from language file
+    // get page title from language file
     $title = $langfile["reply"];
     $template->assign("title", $title);
-
     // get all notifiable members
     $myproject = new project();
     $pro = $myproject->getProject($id);
     $members = $myproject->getProjectMembers($id, 10000);
-
+    // Get attachable files
     $myfile = new datei();
     $ordner = $myfile->getProjectFiles($id, 1000);
     $message = $msg->getMessage($mid);
@@ -225,11 +185,9 @@ if ($action == "addform")
     $template->assign("members", $members);
     $template->assign("files", $ordner);
     $template->display("replyform.tpl");
-} elseif ($action == "reply")
-{
+} elseif ($action == "reply") {
     // check if the user is allowed to edit messages
-    if (!$userpermissions["messages"]["add"])
-    {
+    if (!$userpermissions["messages"]["add"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
         $template->assign("errortext", "<h2>$errtxt</h2><br>$noperm");
@@ -240,49 +198,37 @@ if ($action == "addform")
     $tagobj = new tags();
     $tags = $tagobj->formatInputTags($tags);
     $themsg = $msg->add($id, $title, $message, $tags, $userid, $username, $mid_post, $milestone);
-    if ($themsg)
-    {
-        if ($thefiles > 0)
-        {
-			// attach existing file
+    if ($themsg) {
+        if ($thefiles > 0) {
+            // attach existing file
             $msg->attachFile($thefiles, $themsg);
-        } elseif ($thefiles == 0 and $numfiles > 0)
-        {
+        } elseif ($thefiles == 0 and $numfiles > 0) {
             // if upload files are set, upload and attach
             $msg->attachFile(0, $themsg, $id);
         }
 
-		if ($settings["mailnotify"])
-        {
+        if ($settings["mailnotify"]) {
             $sendto = getArrayVal($_POST, "sendto");
             $usr = (object) new project();
             $users = $usr->getProjectMembers($id, 10000);
-            if ($sendto[0] == "all")
-            {
+            if ($sendto[0] == "all") {
                 $sendto = $users;
                 $sendto = reduceArray($sendto);
-            } elseif ($sendto[0] == "none")
-            {
+            } elseif ($sendto[0] == "none") {
                 $sendto = array();
             }
-            foreach($users as $user)
-            {
-                if (!empty($user["email"]))
-                {
-                    if (is_array($sendto))
-                    {
-                        if (in_array($user["ID"], $sendto))
-                        {
+            foreach($users as $user) {
+                if (!empty($user["email"])) {
+                    if (is_array($sendto)) {
+                        if (in_array($user["ID"], $sendto)) {
                             // send email
                             $themail = new emailer($settings);
-							$themail->send_mail($user["email"], $langfile["messagewasaddedsubject"], $langfile["hello"] . ",<br /><br/>" . $langfile["messagewasaddedtext"] . "<br /><br />" . $message . "<br /><br /><a href = \"" . $url . "managemessage.php?action=showmessage&id=$id&mid=$mid_post\">$title</a>");
+                            $themail->send_mail($user["email"], $langfile["messagewasaddedsubject"], $langfile["hello"] . ",<br /><br/>" . $langfile["messagewasaddedtext"] . "<br /><br />" . $message . "<br /><br /><a href = \"" . $url . "managemessage.php?action=showmessage&id=$id&mid=$mid_post\">$title</a>");
                         }
-                    }
-                    else
-                    {
+                    } else {
                         // send email
                         $themail = new emailer($settings);
-						$themail->send_mail($user["email"], $langfile["messagewasaddedsubject"], $langfile["hello"] . ",<br /><br/>" . $langfile["messagewasaddedtext"] . "<br /><br />". $message . "<br /><br /><a href = \"" . $url . "managemessage.php?action=showmessage&id=$id&mid=$mid_post\">$title</a>");
+                        $themail->send_mail($user["email"], $langfile["messagewasaddedsubject"], $langfile["hello"] . ",<br /><br/>" . $langfile["messagewasaddedtext"] . "<br /><br />" . $message . "<br /><br /><a href = \"" . $url . "managemessage.php?action=showmessage&id=$id&mid=$mid_post\">$title</a>");
                     }
                 }
             }
@@ -291,46 +237,7 @@ if ($action == "addform")
         $loc = $url . "managemessage.php?action=showmessage&mid=$mid_post&id=$id&mode=replied";
         header("Location: $loc");
     }
-} elseif ($action == "mymsgs")
-{
-    // create new project and file objects
-    $project = new project();
-    $myfile = new datei();
-    // get all uof the users projects
-    $myprojects = $project->getMyProjects($userid);
-    $cou = 0;
-    $messages = array();
-    // loop through the projects and get messages and files for each project
-    if (!empty($myprojects))
-    {
-        foreach($myprojects as $proj)
-        {
-            $message = $msg->getProjectMessages($proj["ID"]);
-            $ordner = $myfile->getProjectFiles($proj["ID"], 1000);
-            $milestones = $objmilestone->getProjectMilestones($proj["ID"], 10000);
-		if(!empty($message))
-		{
-			array_push($messages,$message);
-		}
-            $myprojects[$cou]["milestones"] = $milestones;
-            $myprojects[$cou]["messages"] = $message;
-            $myprojects[$cou]["files"] = $ordner;
-            $cou = $cou + 1;
-        }
-    }
-    $emessages = reduceArray($messages);
-
-    // print_r($myprojects);
-    $title = $langfile['mymessages'];
-    $template->assign("title", $title);
-    $members = $project->getProjectMembers($id, 10000);
-	$template->assign("members", $members);
-	$template->assign("messages", $emessages);
-	$template->assign("msgnum", count($emessages));
-    $template->assign("myprojects", $myprojects);
-    $template->display("mymessages.tpl");
-} elseif ($action == "showproject")
-{
+} elseif ($action == "showproject") {
     if (!$userpermissions["messages"]["view"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
@@ -357,12 +264,9 @@ if ($action == "addform")
     $title = $langfile['messages'];
     $template->assign("title", $title);
 
-    if (!empty($messages))
-    {
+    if (!empty($messages)) {
         $mcount = count($messages);
-    }
-    else
-    {
+    } else {
         $mcount = 0;
     }
     // get files of the project
@@ -378,21 +282,18 @@ if ($action == "addform")
     $template->assign("members", $members);
     $template->assign("messagenum", $mcount);
     $template->display("projectmessages.tpl");
-} elseif ($action == "showmessage")
-{
+} elseif ($action == "showmessage") {
     // get the message and its replies
     $message = $msg->getMessage($mid);
     $replies = $msg->getReplies($mid);
 
     $myproject = new project();
     $pro = $myproject->getProject($id);
-
     // get all notifiable members
     $members = $myproject->getProjectMembers($id, 10000);
-
-	// get all attachable files
-	$myfile = new datei();
-	$ordner = $myfile->getProjectFiles($id, 1000);
+    // get all attachable files
+    $myfile = new datei();
+    $ordner = $myfile->getProjectFiles($id, 1000);
 
     $projectname = $pro['name'];
     $title = $langfile['message'];
@@ -406,8 +307,7 @@ if ($action == "addform")
     $template->assign("files", $ordner);
     $template->assign("members", $members);
     $template->display("message.tpl");
-} elseif ($action == "export-project")
-{
+} elseif ($action == "export-project") {
     $l = Array();
     $l['a_meta_charset'] = 'UTF-8';
     $l['a_meta_dir'] = 'ltr';
@@ -430,8 +330,7 @@ if ($action == "addform")
     $pdf->getAliasNbPages();
     $pdf->AddPage();
     // check if the user is allowed to edit messages
-    if (!$userpermissions["messages"]["add"])
-    {
+    if (!$userpermissions["messages"]["add"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
         $template->assign("errortext", "<h2>$errtxt</h2><br>$noperm");
@@ -448,39 +347,32 @@ if ($action == "addform")
     // get the page title
     $title = $langfile['messages'];
 
-    if (!empty($messages))
-    {
+    if (!empty($messages)) {
         $mcount = count($messages);
-    }
-    else
-    {
+    } else {
         $mcount = 0;
     }
 
     $htmltable = "<h1>$projectname / $langfile[messages]</h1><table border=\"1\" bordercolor = \"#d9dee8\" >";
 
-	 if (!empty($messages))
-	 {
-		foreach($messages as $message)
-		{
-		$htmltable .= "
+    if (!empty($messages)) {
+        foreach($messages as $message) {
+            $htmltable .= "
 		<tr bgcolor=\"#d9dee8\" style=\"font-weight:bold;\">
 		<th align=\"left\">$langfile[message]: $message[title] $langfile[by]: $message[username] ($message[postdate])</th>
 		</tr>
 		<tr><td >$message[text]</td></tr>
 		";
-		}
-	 } else {
-		$htmltable .= "
+        }
+    } else {
+        $htmltable .= "
 		<tr><td >0 $langfile[messages]</td></tr>
 		";
     }
 
     $pdf->writeHTML($htmltable, true, 0, true, 0);
     $pdf->Output("project-$id-messages.pdf", "D");
-
-} elseif ($action == "export-single")
-{
+} elseif ($action == "export-single") {
     $l = Array();
     $l['a_meta_charset'] = 'UTF-8';
     $l['a_meta_dir'] = 'ltr';
@@ -503,8 +395,7 @@ if ($action == "addform")
     $pdf->AliasNbPages();
     $pdf->AddPage();
     // check if the user is allowed to edit messages
-    if (!$userpermissions["messages"]["add"])
-    {
+    if (!$userpermissions["messages"]["add"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
         $template->assign("errortext", "<h2>$errtxt</h2><br>$noperm");
@@ -528,8 +419,7 @@ if ($action == "addform")
     <tr><td >$message[text]</td></tr></table>";
     $pdf->writeHTML($htmltable, true, 0, true, 0);
     $pdf->Output("message$mid.pdf", "D");
-} elseif ($action == "mymsgs-pdf")
-{
+} elseif ($action == "mymsgs-pdf") {
     $l = Array();
     $l['a_meta_charset'] = 'UTF-8';
     $l['a_meta_dir'] = 'ltr';
@@ -553,8 +443,7 @@ if ($action == "addform")
     $pdf->AliasNbPages();
     $pdf->AddPage();
     // check if the user is allowed to edit messages
-    if (!$userpermissions["messages"]["add"])
-    {
+    if (!$userpermissions["messages"]["add"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
         $template->assign("errortext", "<h2>$errtxt</h2><br>$noperm");
@@ -577,10 +466,8 @@ if ($action == "addform")
     $cou = 0;
     $messages = array();
     // loop through the projects and get messages and files for each project
-    if (!empty($myprojects))
-    {
-        foreach($myprojects as $proj)
-        {
+    if (!empty($myprojects)) {
+        foreach($myprojects as $proj) {
             $message = $msg->getProjectMessages($proj["ID"]);
             array_push($messages, $message);
         }
@@ -588,36 +475,30 @@ if ($action == "addform")
     // flatten array
     $messages = reduceArray($messages);
 
-    if (!empty($messages))
-    {
+    if (!empty($messages)) {
         $mcount = count($messages);
-    }
-    else
-    {
+    } else {
         $mcount = 0;
     }
     // construct html table for pdf export
     $htmltable = "<table border=\"1\" bordercolor = \"#d9dee8\" >";
 
-	 if (!empty($messages))
-    {
-    	foreach($messages as $message)
-    	{
-      	$htmltable .= "
+    if (!empty($messages)) {
+        foreach($messages as $message) {
+            $htmltable .= "
       	<tr bgcolor=\"#d9dee8\" style=\"font-weight:bold;\">
       	<th align=\"left\">$langfile[message]: $message[title] $langfile[by]: $message[username] ($message[postdate])</th>
       	</tr>
       	<tr><td >$message[text]</td></tr>
       	";
-		}
-	 } else {
-	 	$htmltable .= "
+        }
+    } else {
+        $htmltable .= "
 	 	<tr><td >$langfile[none] $langfile[messages]</td></tr>
 	 	";
-	 }
+    }
 
     $htmltable .= "</table>";
-
     // write it to PDF
     $pdf->writeHTML($htmltable, true, 0, true, 0);
     $pdf->Output("mymessages-$id.pdf", "D");

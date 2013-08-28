@@ -82,6 +82,7 @@ if ($action == "editform") {
         die();
     }
 
+	//If no end is set, default to 0
     if (!$end) {
         $end = 0;
     }
