@@ -16,7 +16,6 @@ $classes=null;
 
 function starthtmltable($handle,$columns){
 	global $classes;
-	fwrite($handle, '<a href="http://kommune10.dyndns.info:815/PMS/managetimetracker.php?action=projecthtml&id=2">reload</a>');
 	
 	fwrite($handle, '    <table>');
 	fwrite($handle, '      <tr>');
