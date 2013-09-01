@@ -270,7 +270,13 @@ class timetracker {
         $project = (int) $project;
         $user = (int) $user;
         $lim = (int) $lim;
-        $task = (int) $task;
+        
+        if (!is_array($task)) $task = array($task);
+        
+        for ($index=0; $index<count($task);$index++) $task[$index]=(int) $task[$index];
+        
+        $task=join(',',$task);
+        
         $start = (int) $start;
         $end = (int) $end;
 
@@ -286,8 +292,8 @@ class timetracker {
         }
 
         if ($task > 0) {
-            $sql .= " AND task = $task";
-            $num .= " AND task = $task";
+            $sql .= " AND task in ($task)";
+            $num .= " AND task in ($task)";
         }
 
         if ($start > 0 and $end > 0) {
