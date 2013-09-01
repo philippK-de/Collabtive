@@ -197,10 +197,10 @@ if ($action == "add") {
         $template->display("error.tpl");
         die();
     }
-    $excelFile = fopen(CL_ROOT . "/files/" . CL_CONFIG . "/ics/timetrack-$id.csv", "w");
+    $htmlfile = fopen(CL_ROOT . "/files/" . CL_CONFIG . "/ics/timetrack-$id.csv", "w");
 
     $line = array($struser, $strtask, $strcomment, $strday, $strstarted, $strended, $strhours);
-    fputcsv($excelFile, $line);
+    fputcsv($htmlfile, $line);
 
     if (!empty($start) and !empty($end)) {
         $track = $tracker->getProjectTrack($id, $usr, $taski, $start, $end, 1000);
@@ -213,11 +213,11 @@ if ($action == "add") {
             $hrs = round($tra["hours"], 2);
             $hrs = str_replace(".", ",", $hrs);
             $myArr = array($tra["uname"], $tra["tname"], $tra["comment"], $tra["daystring"], $tra["startstring"], $tra["endstring"], $hrs);
-            fputcsv($excelFile, $myArr);
+            fputcsv($htmlfile, $myArr);
         }
     }
 
-    fclose($excelFile);
+    fclose($htmlfile);
     $loc = $url . "files/" . CL_CONFIG . "/ics/timetrack-$id.csv";
     header("Location: $loc");
 } elseif ($action == "projectxls") {
