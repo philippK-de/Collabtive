@@ -1,10 +1,15 @@
 <?php
 function starthtmldocument($handle){
-	fwrite($handle, '<html>');
-	fwrite($handle, '  <head>');
+	fwrite($handle,
+'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+');
 	fwrite($handle, css());
-	fwrite($handle, '  </head>');
-	fwrite($handle, '  <body>');
+	fwrite($handle, '
+  </head>
+  <body>');
 }
 
 $classes=null;
@@ -53,26 +58,11 @@ function closehtmldocument($handle){
 
 function css(){
 	return '<style type="text/css">
-			*{
-			  font-size: 11px;
-			}
-			.stunden{
-				max-width: 40px;
-				overflow: hidden;
-			}
-			.begonnen,
-			.beendet{
-				max-width: 40px;
-				overflow: hidden;
-			}
-			.odd{
-				background-color: #ddd;
-			}
-			table{
-			  border-collapse:collapse
-			}
-			td{
-			  border: 1px solid black;
-			}
+			*{ font-size: 11px;	}
+			.stunden{ max-width: 40px; overflow: hidden; }
+			.begonnen, .beendet{ max-width: 40px; overflow: hidden;	}
+			.odd{ background-color: #ddd; }
+			table{ border-collapse:collapse	}
+			td{ border: 1px solid black; }
 			</style>';
 }
