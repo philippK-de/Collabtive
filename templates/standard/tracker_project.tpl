@@ -31,7 +31,7 @@
 				<div class="export-main">
 					<a class="export"><span>{#export#}</span></a>
 					<div class="export-in"  style="width:69px;left: -69px;"> {*at one item*}
-						<a class="html" href="managetimetracker.php?action=projecthtml&amp;id={$project.ID}{if $start != "" and $end != ""}&amp;start={$start}&amp;end={$end}{/if}{if $usr > 0}&amp;usr={$usr}{/if}{if $task > 0}&amp;task={$task}{/if}{if $fproject|default > 0}&amp;project={$fproject|default}{/if}"><span>{#excelexport#}</span></a>
+						<a class="html" target="_blank" href="managetimetracker.php?action=projecthtml&amp;id={$project.ID}{if $start != "" and $end != ""}&amp;start={$start}&amp;end={$end}{/if}{if $usr > 0}&amp;usr={$usr}{/if}{if $task > 0}&amp;task={$task}{/if}{if $fproject|default > 0}&amp;project={$fproject|default}{/if}"><span>{#excelexport#}</span></a>
 						<a class="pdf" href="managetimetracker.php?action=projectpdf&amp;id={$project.ID}{if $start != "" and $end != ""}&amp;start={$start}&amp;end={$end}{/if}{if $usr > 0}&amp;usr={$usr}{/if}{if $task > 0}&amp;task={$task}{/if}{if $fproject|default > 0}&amp;project={$fproject|default}{/if}"><span>{#pdfexport#}</span></a>
 						<a class="excel" href="managetimetracker.php?action=projectxls&amp;id={$project.ID}{if $start != "" and $end != ""}&amp;start={$start}&amp;end={$end}{/if}{if $usr > 0}&amp;usr={$usr}{/if}{if $task > 0}&amp;task={$task}{/if}{if $fproject|default > 0}&amp;project={$fproject|default}{/if}"><span>{#excelexport#}</span></a>
 					</div>
