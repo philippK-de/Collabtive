@@ -271,13 +271,9 @@ class timetracker {
         $user = (int) $user;
         $lim = (int) $lim;
         
-        if (!is_array($task)){
-        	$task = array($task);
-        }
+        if (!is_array($task)) $task = array($task);
         
-        for ($index=0; $index<count($task);$index++){
-        	$task[$index]=(int) $task[$index];
-        }
+        for ($index=0; $index<count($task);$index++) $task[$index]=(int) $task[$index];
         
         $task=join(',',$task);
         
