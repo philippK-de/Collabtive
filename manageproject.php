@@ -402,8 +402,6 @@ if ($action == "editform") {
     $template->assign("log", $log);
     SmartyPaginate::assign($template);
     $template->display("project.tpl");
-    echo "<pre>";
-    print_r($milestone->getAllProjectMilestones($id));
 } elseif ($action == "cal") {
     if (!chkproject($userid, $id)) {
         $errtxt = $langfile["notyourproject"];
