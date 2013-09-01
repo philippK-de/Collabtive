@@ -188,6 +188,38 @@ if ($action == "add") {
             echo "ok";
         }
     }
+} elseif ($action == "projecthtml") {
+    if (!chkproject($userid, $id)) {
+        $errtxt = $langfile["notyourproject"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->assign("mode", "error");
+        $template->display("error.tpl");
+        die();
+    }
+    $excelFile = fopen(CL_ROOT . "/files/" . CL_CONFIG . "/ics/timetrack-$id.csv", "w");
+
+    $line = array($struser, $strtask, $strcomment, $strday, $strstarted, $strended, $strhours);
+    fputcsv($excelFile, $line);
+
+    if (!empty($start) and !empty($end)) {
+        $track = $tracker->getProjectTrack($id, $usr, $taski, $start, $end, 1000);
+    } else {
+        $track = $tracker->getProjectTrack($id, $usr , $taski, 0, 0, 1000);
+    }
+
+    if (!empty($track)) {
+        foreach($track as $tra) {
+            $hrs = round($tra["hours"], 2);
+            $hrs = str_replace(".", ",", $hrs);
+            $myArr = array($tra["uname"], $tra["tname"], $tra["comment"], $tra["daystring"], $tra["startstring"], $tra["endstring"], $hrs);
+            fputcsv($excelFile, $myArr);
+        }
+    }
+
+    fclose($excelFile);
+    $loc = $url . "files/" . CL_CONFIG . "/ics/timetrack-$id.csv";
+    header("Location: $loc");
 } elseif ($action == "projectxls") {
     if (!chkproject($userid, $id)) {
         $errtxt = $langfile["notyourproject"];
