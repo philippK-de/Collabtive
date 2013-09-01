@@ -342,7 +342,7 @@ if ($action == "add") {
     $taski = getArrayVal($_POST, "task");
 
     $task = new task();
-    $ptasks = $task->getProjectTasks($id, 1);
+    $ptasks = $task->getProjectTasks($id,false);
     $tracker = (object) new timetracker();
     if (!$usr) {
         if (!$userpermissions["timetracker"]["read"]) {
