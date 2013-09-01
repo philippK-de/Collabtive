@@ -747,11 +747,11 @@ td.message ul {
 }
 
 .export-main a.pdf {
-	background-position: -23px 0;
+	background-position: -46px 0;
 }
 
 .export-main a.pdf:hover {
-	background-position: -23px -31px;
+	background-position: -46px -31px;
 }
 
 .export-main a.rss {
@@ -763,11 +763,19 @@ td.message ul {
 }
 
 .export-main a.excel {
-	background-position: -69px 0;
+	background-position: -92px 0;
 }
 
 .export-main a.excel:hover {
-	background-position: -69px -31px;
+	background-position: -92px -31px;
+}
+
+.export-main a.html {
+	background-position: 0 0;
+}
+
+.export-main a.html:hover {
+	background-position: 0 -31px;
 }
 
 .export-main a.vcardmale {

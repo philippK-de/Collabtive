@@ -198,7 +198,7 @@ if ($action == "add") {
         $template->display("error.tpl");
         die();
     }
-    $htmlfile = fopen(CL_ROOT . "/files/" . CL_CONFIG . "/ics/timetrack-$id.csv", "w");
+    $htmlfile = fopen(CL_ROOT . "/files/" . CL_CONFIG . "/ics/timetrack-$id.html", "w");
 
     $line = array($struser, $strtask, $strcomment, $strday, $strstarted, $strended, $strhours);
     starthtmldocument($htmlfile);
