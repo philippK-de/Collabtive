@@ -72,17 +72,18 @@
 
 <div class="nosmooth" id="sm_project">
 
-
-<div class="neutral dtree">
+{*Miles tree*}
+<div class="miles dtree">
 	<div class="headline">
-		<a href="javascript:void(0);" id="milehead_toggle" class="win_block" onclick = "toggleBlock('milehead');"></a>
+		<a href="javascript:void(0);" id="treehead_toggle" class="win_block" onclick = "toggleBlock('treehead');"></a>
 				<h2>
 					<img src="./templates/standard/images/symbols/miles.png" alt="" />Tree
 				</h2>
 
 	</div>
 
-	<div class = "block">
+	<div class = "block" id = "treehead">
+		<div class="block_in_wrapper" style="padding-top:0px;">
 
 	<script type="text/javascript">
 		d = new dTree('d');
@@ -112,8 +113,10 @@
 									d.add("msg"+{$tree[titem].messages[tmsg].ID},"m"+{$tree[titem].messages[tmsg].milestone},'{$tree[titem].messages[tmsg].title}','managemessage.php?action=showmessage&id={$project.ID}&mid={$tree[titem].messages[tmsg].ID}','','','templates/standard/images/symbols/msgs.png','templates/standard/images/symbols/msgs.png');
 					{/if}
 
+				//End Messages
 				{/section}
 
+	//End milestones
 	{/section}
 
 		document.write(d);
@@ -121,12 +124,18 @@
 	</script>
 	<br />
 	<form id = "treecontrol" action = "#">
-	<button type = "reset" id = "openall" onclick = "d.openAll();" >Open all</button>
-	<button type = "reset" id = "closeall" onclick = "d.closeAll();" >Close all</button>
+		<fieldset>
+			<div class="row-butn-bottom">
+				<button type = "reset" id = "openall" onclick = "d.openAll();" >Open all</button>
+				<button type = "reset" id = "closeall" onclick = "d.closeAll();" >Close all</button>
+			</div>
+		</fieldset>
 	</form>
-	</div>
+	{*block end*}</div>
+	{*block in wrapper end*}</div>
 </div>
 <div class="content-spacer"></div>
+{*Tree end*}
 
 {*Milestones*}
 <div class="miles" >
