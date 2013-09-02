@@ -377,7 +377,7 @@ class milestone {
         $now = strtotime($tod);
         $milestones = array();
 
-        $sql = "SELECT ID FROM milestones WHERE project = $project  AND start >= $now AND status = 1 ORDER BY end ASC LIMIT $lim";
+        $sql = "SELECT ID FROM milestones WHERE project = $project  AND start > $now AND status = 1 ORDER BY end ASC LIMIT $lim";
 
         $sel1 = $conn->query($sql);
         while ($milestone = $sel1->fetch()) {

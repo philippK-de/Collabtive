@@ -16,6 +16,8 @@
 				{elseif $mode == "closed"}
 					<span class="info_in_red"><img src="templates/standard/images/symbols/miles.png" alt=""/>{#milestonewasclosed#}</span>
 				{/if}
+
+				<span id = "deleted" class="info_in_red" style = "display:none;"><img src="templates/standard/images/symbols/miles.png" alt=""/>{#milestonewasdeleted#}</span>
 			</div>
 
 			{literal}
@@ -167,7 +169,8 @@
 												<a class="tool_edit" href="managemilestone.php?action=editform&amp;mid={$milestones[stone].ID}&amp;id={$project.ID}" title="{#edit#}"></a>
 											{/if}
 											{if $userpermissions.milestones.del}
-												<a class="tool_del" href="javascript:confirmit('{#confirmdel#}','managemilestone.php?action=del&amp;mid={$milestones[stone].ID}&amp;id={$project.ID}');" title="{#delete#}"></a>
+											<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'miles_{$milestones[stone].ID}\',\'managemilestone.php?action=del&amp;mid={$milestones[stone].ID}&amp;id={$project.ID}\')');" title="{#delete#}"></a>
+
 											{/if}
 										</td>
 									</tr>
@@ -282,7 +285,7 @@
 												<a class="tool_edit" href="managemilestone.php?action=editform&amp;mid={$upcomingStones[ustone].ID}&amp;id={$project.ID}" title="{#edit#}"></a>
 											{/if}
 											{if $userpermissions.milestones.del}
-												<a class="tool_del" href="javascript:confirmit('{#confirmdel#}','managemilestone.php?action=del&amp;mid={$upcomingStones[ustone].ID}&amp;id={$project.ID}');" title="{#delete#}"></a>
+												<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'miles_{$upcomingStones[ustone].ID}\',\'managemilestone.php?action=del&amp;mid={$upcomingStones[ustone].ID}&amp;id={$project.ID}\')');" title="{#delete#}"></a>
 											{/if}
 										</td>
 									</tr>
@@ -413,7 +416,7 @@
 													<a class="tool_edit" href="managemilestone.php?action=editform&amp;mid={$donemilestones[stone].ID}&amp;id={$project.ID}"  title="{#edit#}"></a>
 													{/if}
 													{if $userpermissions.milestones.del}
-													<a class="tool_del" href="javascript:confirmit('{#confirmdel#}','managemilestone.php?action=del&amp;mid={$donemilestones[stone].ID}&amp;id={$project.ID}');"  title="{#delete#}"></a>
+													<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'miles_{$donemilestones[stone].ID}\',\'managemilestone.php?action=del&amp;mid={$donemilestones[stone].ID}&amp;id={$project.ID}\')');" title="{#delete#}"></a>
 												{/if}
 											</td>
 										</tr>
