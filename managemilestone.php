@@ -71,6 +71,8 @@ if ($action == "addform") {
         $template->display("error.tpl");
         die();
     }
+
+    //Get start date from form
     $start = getArrayVal($_POST, "start");
     $status = 1;
     if ($milestone->add($id, $name, $desc, $start, $end, $status)) {
@@ -92,6 +94,7 @@ if ($action == "addform") {
     $title = $langfile['editmilestone'];
     $template->assign("title", $title);
 
+	//Get milestone info
     $milestone = $milestone->getMilestone($mid);
 
     $template->assign("projectname", $projectname);
@@ -105,8 +108,12 @@ if ($action == "addform") {
         $template->display("error.tpl");
         die();
     }
+
+    //Get milestone ID and start date from form
     $mid = $_POST['mid'];
     $start = getArrayVal($_POST, "start");
+
+	//Edit the milestone
     if ($milestone->edit($mid, $name, $desc, $start, $end)) {
         $loc = $url . "managemilestone.php?action=showproject&id=$id&mode=edited";
         header("Location: $loc");
@@ -123,6 +130,8 @@ if ($action == "addform") {
     }
 
     $project = $_GET['project'];
+
+    //Delete the milestone
     if ($milestone->del($mid)) {
         $loc = $url . "managemilestone.php?action=showproject&id=$id&mode=deleted";
         header("Location: $loc");
@@ -167,6 +176,8 @@ if ($action == "addform") {
         $template->display("error.tpl");
         die();
     }
+
+    //Check if the current user belongs to the project
     if (!chkproject($userid, $id)) {
         $errtxt = $langfile["notyourproject"];
         $noperm = $langfile["accessdenied"];
@@ -236,34 +247,6 @@ if ($action == "addform") {
     }
     $template->assign("milestones", $stones);
     $template->display("mileslist.tpl");
-} elseif ($action == "milescal") {
-    $pro = new project();
-    $timeline1 = $pro->getTimeline($id, 0, 7);
-    $timeline2 = $pro->getTimeline($id, 7, 14);
-    $timeline3 = $pro->getTimeline($id, 14, 21);
-    $timeline4 = $pro->getTimeline($id, 21, 28);
-    $timestr = $pro->getTimestr();
-    $today = date("d");
-    $timestring = array();
-    foreach($timestr as $times) {
-        $times = $langfile[$times];
-        array_push($timestring, $times);
-    }
-    $tpro = $pro->getProject($id);
-    $projectname = $tpro["name"];
-    $title = $langfile['milestones'];
-
-    if (!empty($timeline1)) {
-        $template->assign("timeline1", $timeline1);
-        $template->assign("timeline2", $timeline2);
-        $template->assign("timeline3", $timeline3);
-        $template->assign("timeline4", $timeline4);
-        $template->assign("timestr", $timestring);
-        $template->assign("today", $today);
-    }
-
-    $template->assign("title", $title);
-    $template->display("milescal.tpl");
 } elseif ($action == "showmilestone") {
     $msid = $_GET['msid'];
 
