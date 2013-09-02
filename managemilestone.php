@@ -106,7 +106,7 @@ if ($action == "addform") {
         die();
     }
     $mid = $_POST['mid'];
-    $start = getArrayVal($_POST,"start" );
+    $start = getArrayVal($_POST, "start");
     if ($milestone->edit($mid, $name, $desc, $start, $end)) {
         $loc = $url . "managemilestone.php?action=showproject&id=$id&mode=edited";
         header("Location: $loc");
@@ -187,6 +187,11 @@ if ($action == "addform") {
         $countlate = count($latestones);
     }
 
+    $upcomingStones = $milestone->getUpcomingProjectMilestones($id);
+    if (!empty($upcomingStones)) {
+        $countUpcoming = count($upcomingStones);
+    }
+
     $tpro = $pro->getProject($id);
     $projectname = $tpro["name"];
     $title = $langfile['milestones'];
@@ -206,6 +211,8 @@ if ($action == "addform") {
     $template->assign("title", $title);
     $template->assign("projectname", $projectname);
     $template->assign("latemilestones", $latestones);
+    $template->assign("upcomingStones", $upcomingStones);
+    $template->assign("upcomingcount", $countUpcoming);
     $template->assign("donemilestones", $donestones);
     $template->assign("countlate", $countlate);
     $template->assign("project", $project);

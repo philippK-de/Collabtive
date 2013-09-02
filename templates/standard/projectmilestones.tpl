@@ -68,109 +68,6 @@
 						</tfoot>
 					</table>
 
-					{*new Miles*}
-					<div id="togglenew" class="toggleblock">
-
-						<table id="accordion_miles_new" cellpadding="0" cellspacing="0" border="0" style="clear:both;">
-							{section name=stone loop=$milestones}
-								{if $smarty.section.stone.index % 2 == 0}
-								<tbody class="color-a" id="miles_{$milestones[stone].ID}">
-								{else}
-								<tbody class="color-b" id="miles_{$milestones[stone].ID}">
-								{/if}
-									<tr{if $milestones[stone].daysleft == 0} class="marker-today"{/if}>
-										<td class="a">{if $userpermissions.milestones.close}<a class="butn_check" href="managemilestone.php?action=close&amp;mid={$milestones[stone].ID}&amp;id={$project.ID}" title="{#close#}"></a>{/if}</td>
-										<td class="b">
-											<div class="toggle-in">
-												<span class="acc-toggle" onclick="javascript:accord_miles_new.activate($$('#accordion_miles_new .accordion_toggle')[{$smarty.section.stone.index}]);toggleAccordeon('done_{$myprojects[project].ID|default}',this);"></span>
-												<a href="managemilestone.php?action=showmilestone&amp;msid={$milestones[stone].ID}&amp;id={$project.ID}" title="{$milestones[stone].name}">{$milestones[stone].name|truncate:30:"...":true}</a>
-											</div>
-										</td>
-										<td class="c">{$milestones[stone].fend}</td>
-										<td class="days" style="text-align:right">{$milestones[stone].dayslate}&nbsp;&nbsp;</td>
-										<td class="tools">
-											{if $userpermissions.milestones.edit}
-												<a class="tool_edit" href="managemilestone.php?action=editform&amp;mid={$milestones[stone].ID}&amp;id={$project.ID}" title="{#edit#}"></a>
-											{/if}
-											{if $userpermissions.milestones.del}
-												<a class="tool_del" href="javascript:confirmit('{#confirmdel#}','managemilestone.php?action=del&amp;mid={$milestones[stone].ID}&amp;id={$project.ID}');" title="{#delete#}"></a>
-											{/if}
-										</td>
-									</tr>
-
-									<tr class="acc">
-										<td colspan="5">
-											<div class="accordion_toggle"></div>
-											<div class="accordion_content">
-												<div class="acc-in">
-													<div class="message-in">
-														{$milestones[stone].desc}
-
-	{*Tasklists*}
-	{if $milestones[stone].tasklists[0][0]}
-		<div class="content-spacer-b"></div>
-				<h2>{#tasklists#}</h2>
-
-						<div class="inwrapper">
-							<ul style = "list-style-type:none;"	>
-							{section name=task loop=$milestones[stone].tasklists}
-								<li>
-									<div class="itemwrapper">
-
-											<table cellpadding="0" cellspacing="0" border="0">
-												<tr>
-													<td class="leftmen" valign="top">
-														<div class="inmenue">
-																<!-- <a class="more" href="javascript:fadeToggle('info_{$members[member].ID}');"></a>	-->
-														</div>
-													</td>
-													<td class="thumb">
-														<a href="managetasklist.php?action=showtasklist&amp;tlid={$milestones[stone].tasklists[task].ID}&amp;id={$project.ID}" title="{$milestones[stone].tasklists[task].name}">
-																<img src = "./templates/standard/images/symbols/tasklist.png" style="width: 32px; height: auto;" alt="" />
-														</a>
-													</td>
-													<td class="rightmen" valign="top">
-														<div class="inmenue">
-														<!--
-															<a class="del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'files_focus{$ordner[file].ID}\',\'managefile.php?action=delete&amp;id={$project.ID}&amp;file={$folders[fold].ID}\')');" title="{#delete#}" onclick="fadeToggle('iw_{$folders[fold].ID}');"></a>
-															<a class="edit" href="#" title="{#editfile#}"></a>
-														-->
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td colspan="3">
-														<span class="name">
-															<a href = "managetasklist.php?action=showtasklist&amp;tlid={$milestones[stone].tasklists[task].ID}&amp;id={$project.ID}" title="{$milestones[stone].tasklists[task].name}">
-																{if $milestones[stone].tasklists[task].name != ""}
-																	{$milestones[stone].tasklists[task].name|truncate:13:"...":true}
-																{else}
-																	{#tasklist#}
-																{/if}
-															</a>
-														</span>
-													</td>
-												<tr/>
-											</table>
-
-									</div> {*itemwrapper End*}
-								</li>
-							{/section} {*loop Tasklists End*}
-
-							</ul>
-						</div> {*inwrapper End*}
-
-				{/if}
-													</div>
-												</div>
-											</div>
-										</td>
-									</tr>
-								</tbody>
-							{/section}
-						</table>
-					</div> {*toggleblock End*}{*new Miles End*}
-
 					{*late Miles*}
 					{if $countlate > 0}
 
@@ -235,6 +132,237 @@
 
 						</div> {*toggleblock End*}
 					{/if} {*late Miles End*}
+
+					{*new Miles*}
+							<table class="second-thead" cellpadding="0" cellspacing="0" border="0" onclick="blindtoggle('togglenew');toggleClass('togglemiles','acc-toggle','acc-toggle-active');">
+							<tr>
+								<td class="a"></td>
+								<td class="b"><span id="togglemiles" class="acc-toggle-active">Current milestones</span></td>
+								<td class="c"></td>
+								<td class="days"></td>
+								<td class="tools"></td>
+							</tr>
+						</table>
+					<div id="togglenew" class="toggleblock">
+
+						<table id="accordion_miles_new" cellpadding="0" cellspacing="0" border="0" style="clear:both;">
+							{section name=stone loop=$milestones}
+								{if $smarty.section.stone.index % 2 == 0}
+								<tbody class="color-a" id="miles_{$milestones[stone].ID}">
+								{else}
+								<tbody class="color-b" id="miles_{$milestones[stone].ID}">
+								{/if}
+									<tr{if $milestones[stone].daysleft == 0} class="marker-today"{/if}>
+										<td class="a">{if $userpermissions.milestones.close}<a class="butn_check" href="managemilestone.php?action=close&amp;mid={$milestones[stone].ID}&amp;id={$project.ID}" title="{#close#}"></a>{/if}</td>
+										<td class="b">
+											<div class="toggle-in">
+												<span class="acc-toggle" onclick="javascript:accord_miles_new.activate($$('#accordion_miles_new .accordion_toggle')[{$smarty.section.stone.index}]);toggleAccordeon('done_{$myprojects[project].ID|default}',this);"></span>
+												<a href="managemilestone.php?action=showmilestone&amp;msid={$milestones[stone].ID}&amp;id={$project.ID}" title="{$milestones[stone].name}">{$milestones[stone].name|truncate:30:"...":true}</a>
+											</div>
+										</td>
+										<td class="c">{$milestones[stone].fend}</td>
+										<td class="days" style="text-align:right">{$milestones[stone].dayslate}&nbsp;&nbsp;</td>
+										<td class="tools">
+											{if $userpermissions.milestones.edit}
+												<a class="tool_edit" href="managemilestone.php?action=editform&amp;mid={$milestones[stone].ID}&amp;id={$project.ID}" title="{#edit#}"></a>
+											{/if}
+											{if $userpermissions.milestones.del}
+												<a class="tool_del" href="javascript:confirmit('{#confirmdel#}','managemilestone.php?action=del&amp;mid={$milestones[stone].ID}&amp;id={$project.ID}');" title="{#delete#}"></a>
+											{/if}
+										</td>
+									</tr>
+
+									<tr class="acc">
+										<td colspan="5">
+											<div class="accordion_toggle"></div>
+											<div class="accordion_content">
+												<div class="acc-in">
+													<div class="message-in">
+														{$milestones[stone].desc}
+
+										{*Tasklists*}
+										{if $milestones[stone].tasklists[0][0]}
+											<div class="content-spacer-b"></div>
+													<h2>{#tasklists#}</h2>
+
+															<div class="inwrapper">
+																<ul style = "list-style-type:none;"	>
+																{section name=task loop=$milestones[stone].tasklists}
+																	<li>
+																		<div class="itemwrapper">
+
+																				<table cellpadding="0" cellspacing="0" border="0">
+																					<tr>
+																						<td class="leftmen" valign="top">
+																							<div class="inmenue">
+																									<!-- <a class="more" href="javascript:fadeToggle('info_{$members[member].ID}');"></a>	-->
+																							</div>
+																						</td>
+																						<td class="thumb">
+																							<a href="managetasklist.php?action=showtasklist&amp;tlid={$milestones[stone].tasklists[task].ID}&amp;id={$project.ID}" title="{$milestones[stone].tasklists[task].name}">
+																									<img src = "./templates/standard/images/symbols/tasklist.png" style="width: 32px; height: auto;" alt="" />
+																							</a>
+																						</td>
+																						<td class="rightmen" valign="top">
+																							<div class="inmenue">
+																							<!--
+																								<a class="del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'files_focus{$ordner[file].ID}\',\'managefile.php?action=delete&amp;id={$project.ID}&amp;file={$folders[fold].ID}\')');" title="{#delete#}" onclick="fadeToggle('iw_{$folders[fold].ID}');"></a>
+																								<a class="edit" href="#" title="{#editfile#}"></a>
+																							-->
+																							</div>
+																						</td>
+																					</tr>
+																					<tr>
+																						<td colspan="3">
+																							<span class="name">
+																								<a href = "managetasklist.php?action=showtasklist&amp;tlid={$milestones[stone].tasklists[task].ID}&amp;id={$project.ID}" title="{$milestones[stone].tasklists[task].name}">
+																									{if $milestones[stone].tasklists[task].name != ""}
+																										{$milestones[stone].tasklists[task].name|truncate:13:"...":true}
+																									{else}
+																										{#tasklist#}
+																									{/if}
+																								</a>
+																							</span>
+																						</td>
+																					<tr/>
+																				</table>
+
+																		</div> {*itemwrapper End*}
+																	</li>
+																{/section} {*loop Tasklists End*}
+
+																</ul>
+															</div> {*inwrapper End*}
+
+													{/if}
+													</div>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							{/section}
+						</table>
+					</div> {*toggleblock End*}{*new Miles End*}
+
+
+			{if $upcomingcount > 0}
+					{*Upcoming miles*}
+							<table class="second-thead" cellpadding="0" cellspacing="0" border="0" onclick="blindtoggle('toggleupcoming');toggleClass('togglemilesupcoming','acc-toggle','acc-toggle-active');">
+							<tr>
+								<td class="a"></td>
+								<td class="b"><span id="togglemilesupcoming" class="acc-toggle-active">Upcoming milestones</span></td>
+								<td class="c"></td>
+								<td class="days"></td>
+								<td class="tools"></td>
+							</tr>
+						</table>
+						<div id="toggleupcoming" class="toggleblock">
+
+						<table id="accordion_miles_new" cellpadding="0" cellspacing="0" border="0" style="clear:both;">
+							{section name=ustone loop=$upcomingStones}
+								{if $smarty.section.ustone.index % 2 == 0}
+								<tbody class="color-a" id="miles_{$upcomingStones[ustone].ID}">
+								{else}
+								<tbody class="color-b" id="miles_{$upcomingStones[ustone].ID}">
+								{/if}
+									<tr{if $upcomingStones[ustone].daysleft == 0} class="marker-today"{/if}>
+										<td class="a">{if $userpermissions.milestones.close}<a class="butn_check" href="managemilestone.php?action=close&amp;mid={$upcomingStones[ustone].ID}&amp;id={$project.ID}" title="{#close#}"></a>{/if}</td>
+										<td class="b">
+											<div class="toggle-in">
+												<span class="acc-toggle" onclick="javascript:accord_miles_new.activate($$('#accordion_miles_new .accordion_toggle')[{$smarty.section.stone.index}]);toggleAccordeon('done_{$myprojects[project].ID|default}',this);"></span>
+												<a href="managemilestone.php?action=showmilestone&amp;msid={$upcomingStones[ustone].ID}&amp;id={$project.ID}" title="{$upcomingStones[ustone].name}">{$upcomingStones[ustone].name|truncate:30:"...":true}</a>
+											</div>
+										</td>
+
+										<td class="c">{$upcomingStones[ustone].startstring} - {$upcomingStones[ustone].endstring}</td>
+										<td class="days" style="text-align:right">{$upcomingStones[ustone].dayslate}&nbsp;&nbsp;</td>
+										<td class="tools">
+											{if $userpermissions.milestones.edit}
+												<a class="tool_edit" href="managemilestone.php?action=editform&amp;mid={$upcomingStones[ustone].ID}&amp;id={$project.ID}" title="{#edit#}"></a>
+											{/if}
+											{if $userpermissions.milestones.del}
+												<a class="tool_del" href="javascript:confirmit('{#confirmdel#}','managemilestone.php?action=del&amp;mid={$upcomingStones[ustone].ID}&amp;id={$project.ID}');" title="{#delete#}"></a>
+											{/if}
+										</td>
+									</tr>
+
+									<tr class="acc">
+										<td colspan="5">
+											<div class="accordion_toggle"></div>
+											<div class="accordion_content">
+												<div class="acc-in">
+													<div class="message-in">
+														{$upcomingStones[ustone].desc}
+
+										{*Tasklists*}
+										{if $upcomingStones[ustone].tasklists[0][0]}
+											<div class="content-spacer-b"></div>
+													<h2>{#tasklists#}</h2>
+
+															<div class="inwrapper">
+																<ul style = "list-style-type:none;"	>
+																{section name=task loop=$upcomingStones[ustone].tasklists}
+																	<li>
+																		<div class="itemwrapper">
+
+																				<table cellpadding="0" cellspacing="0" border="0">
+																					<tr>
+																						<td class="leftmen" valign="top">
+																							<div class="inmenue">
+																									<!-- <a class="more" href="javascript:fadeToggle('info_{$members[member].ID}');"></a>	-->
+																							</div>
+																						</td>
+																						<td class="thumb">
+																							<a href="managetasklist.php?action=showtasklist&amp;tlid={$upcomingStones[ustone].tasklists[task].ID}&amp;id={$project.ID}" title="{$upcomingStones[ustone].tasklists[task].name}">
+																									<img src = "./templates/standard/images/symbols/tasklist.png" style="width: 32px; height: auto;" alt="" />
+																							</a>
+																						</td>
+																						<td class="rightmen" valign="top">
+																							<div class="inmenue">
+																							<!--
+																								<a class="del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'files_focus{$ordner[file].ID}\',\'managefile.php?action=delete&amp;id={$project.ID}&amp;file={$folders[fold].ID}\')');" title="{#delete#}" onclick="fadeToggle('iw_{$folders[fold].ID}');"></a>
+																								<a class="edit" href="#" title="{#editfile#}"></a>
+																							-->
+																							</div>
+																						</td>
+																					</tr>
+																					<tr>
+																						<td colspan="3">
+																							<span class="name">
+																								<a href = "managetasklist.php?action=showtasklist&amp;tlid={$upcomingStones[ustone].tasklists[task].ID}&amp;id={$project.ID}" title="{$upcomingStones[ustone].tasklists[task].name}">
+																									{if $upcomingStones[ustone].tasklists[task].name != ""}
+																										{$upcomingStones[ustone].tasklists[task].name|truncate:13:"...":true}
+																									{else}
+																										{#tasklist#}
+																									{/if}
+																								</a>
+																							</span>
+																						</td>
+																					<tr/>
+																				</table>
+
+																		</div> {*itemwrapper End*}
+																	</li>
+																{/section} {*loop Tasklists End*}
+
+																</ul>
+															</div> {*inwrapper End*}
+
+													{/if}
+													</div>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							{/section}
+						</table>
+					</div> {*toggleblock End*}
+					{/if}
+					{*Upcoming miles end*}
+
+
 
 					{*finished Miles*}
 					<div id="doneblock" class="doneblock" style="display: none;">

@@ -35,8 +35,7 @@ class milestone {
     function add($project, $name, $desc, $start, $end, $status = 1)
     {
         global $conn;
-
-		//Convert end date to timestamp
+        // Convert end date to timestamp
         $end = strtotime($end);
         $start = strtotime($start);
 
@@ -146,10 +145,10 @@ class milestone {
         $id = (int) $id;
 
         $upd = $conn->query("UPDATE milestones SET status = 0 WHERE ID = $id");
-        //Get attached tasklists
+        // Get attached tasklists
         $tasklists = $this->getMilestoneTasklists($id);
-        //Loop through tasklists , close all tasks in them, then close tasklist itself
-		if (!empty($tasklists)) {
+        // Loop through tasklists , close all tasks in them, then close tasklist itself
+        if (!empty($tasklists)) {
             foreach ($tasklists as $tasklist) {
                 $tl = new tasklist();
                 $tasks = $tl->getTasksFromList($tasklist[ID]);
@@ -242,7 +241,7 @@ class milestone {
         $milestone = $sel->fetch();
 
         if (!empty($milestone)) {
-        	//Format start and end date for display
+            // Format start and end date for display
             $endstring = date(CL_DATEFORMAT, $milestone["end"]);
             $milestone["endstring"] = $endstring;
             $milestone["fend"] = $endstring;
@@ -252,21 +251,18 @@ class milestone {
 
             $milestone["name"] = stripslashes($milestone["name"]);
             $milestone["desc"] = stripslashes($milestone["desc"]);
-
-			//Get the name of the project where the message was posted for display
+            // Get the name of the project where the message was posted for display
             $psel = $conn->query("SELECT name FROM projekte WHERE ID = $milestone[project]");
             $pname = $psel->fetch();
             $pname = $pname[0];
             $milestone["pname"] = $pname;
             $milestone["pname"] = stripslashes($milestone["pname"]);
-
-			//Daysleft contains a signed number, dayslate an unsigned one that only applies if the milestone is late
+            // Daysleft contains a signed number, dayslate an unsigned one that only applies if the milestone is late
             $dayslate = $this->getDaysLeft($milestone["end"]);
             $milestone["daysleft"] = $dayslate;
             $dayslate = str_replace("-", "" , $dayslate);
             $milestone["dayslate"] = $dayslate;
-
-			//Get attached tasklists and messages
+            // Get attached tasklists and messages
             $tasks = $this->getMilestoneTasklists($milestone["ID"]);
             $milestone["tasklists"] = $tasks;
             $messages = $this->getMilestoneMessages($milestone["ID"]);
@@ -366,6 +362,39 @@ class milestone {
             return false;
         }
     }
+    /**
+     * Return all late milestones of a given project
+     *
+     * @param int $project Project ID
+     * @param int $lim Number of milestones to return
+     * @return array $milestones Dateils of the late milestones
+     */
+    function getUpcomingProjectMilestones($project, $lim = 100)
+    {
+        global $conn;
+        $project = (int) $project;
+        $lim = (int) $lim;
+
+        $tod = date("d.m.Y");
+        $now = strtotime($tod);
+        $milestones = array();
+
+        $sql = "SELECT ID FROM milestones WHERE project = $project  AND start >= $now AND status = 1 ORDER BY end ASC LIMIT $lim";
+
+        $sel1 = $conn->query($sql);
+        while ($milestone = $sel1->fetch()) {
+            if (!empty($milestone)) {
+                $themilestone = $this->getMilestone($milestone["ID"]);
+                array_push($milestones, $themilestone);
+            }
+        }
+
+        if (!empty($milestones)) {
+            return $milestones;
+        } else {
+            return false;
+        }
+    }
 
     /**
      * Return all open milestones of a given project
@@ -415,7 +444,7 @@ class milestone {
 
         $now = time();
         $milestones = array();
-        $sql = "SELECT * FROM milestones WHERE project = $project AND end > $now AND status = 1 ORDER BY end ASC";
+        $sql = "SELECT * FROM milestones WHERE project = $project AND start <= $now AND end > $now AND status = 1 ORDER BY end ASC";
 
         if ($lim > 0) {
             $sql .= " LIMIT $lim";
@@ -517,7 +546,7 @@ class milestone {
         global $conn;
         $milestone = (int) $milestone;
 
-		$objtasklist = new tasklist();
+        $objtasklist = new tasklist();
 
         $sel = $conn->query("SELECT ID FROM tasklist WHERE milestone = $milestone AND status = 1 ORDER BY ID ASC");
         $lists = array();
