@@ -18,6 +18,7 @@
 				{/if}
 
 				<span id = "deleted" class="info_in_red" style = "display:none;"><img src="templates/standard/images/symbols/miles.png" alt=""/>{#milestonewasdeleted#}</span>
+				<span id = "closed" class="info_in_green" style = "display:none;"><img src="templates/standard/images/symbols/miles.png" alt=""/>{#milestonewasclosed#}</span>
 			</div>
 
 			{literal}
@@ -155,7 +156,11 @@
 								<tbody class="color-b" id="miles_{$milestones[stone].ID}">
 								{/if}
 									<tr{if $milestones[stone].daysleft == 0} class="marker-today"{/if}>
-										<td class="a">{if $userpermissions.milestones.close}<a class="butn_check" href="managemilestone.php?action=close&amp;mid={$milestones[stone].ID}&amp;id={$project.ID}" title="{#close#}"></a>{/if}</td>
+										<td class="a">
+										{if $userpermissions.milestones.close}
+										<a class="butn_check" href="javascript:closeElement('miles_{$milestones[stone].ID}','managemilestone.php?action=close&amp;mid={$milestones[stone].ID}&amp;id={$project.ID}');" title="{#close#}"></a>
+										<a class="butn_check" href="managemilestone.php?action=close&amp;mid={$milestones[stone].ID}&amp;id={$project.ID}" title="{#close#}"></a>
+										{/if}</td>
 										<td class="b">
 											<div class="toggle-in">
 												<span class="acc-toggle" onclick="javascript:accord_miles_new.activate($$('#accordion_miles_new .accordion_toggle')[{$smarty.section.stone.index}]);toggleAccordeon('done_{$myprojects[project].ID|default}',this);"></span>

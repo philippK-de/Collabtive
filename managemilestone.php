@@ -149,8 +149,9 @@ if ($action == "addform") {
 } elseif ($action == "close") {
     $project = $_GET['project'];
     if ($milestone->close($mid)) {
-        $loc = $url . "managemilestone.php?action=showproject&id=$id&mode=closed";
-        header("Location: $loc");
+        //$loc = $url . "managemilestone.php?action=showproject&id=$id&mode=closed";
+        //header("Location: $loc");
+        echo "ok";
     } else {
         $template->assign("closemilestone", 0);
     }
