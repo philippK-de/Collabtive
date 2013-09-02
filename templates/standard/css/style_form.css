@@ -276,7 +276,7 @@ form.main select {
 	font-size: 9pt;
 }
 
-form.main select#ttask{
+#acc-tracker form.main select#ttask{
 	height: 150px;
 }
 
