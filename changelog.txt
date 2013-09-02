@@ -2,6 +2,7 @@ Collabtive 1.2
 + Added Collapsible tree showing the structure of a project (milestones, tasklists, tasks, messages)
 + Removed basecamp importer (didn't work in a long time, see https://github.com/philippK-de/Collabtive/issues/2
 + Milestones can now have a start date set when created. start date can also be edited.
++ Removed links to the my-projects/tasks/messages blocks in block titles on the desktop
 
 Collabtive 1.1
 + Fixed bug in tasklist editing, which would automatically remove the tasklist's assignment to a given milestone
