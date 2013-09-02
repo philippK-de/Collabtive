@@ -126,8 +126,8 @@
 	<form id = "treecontrol" action = "#">
 		<fieldset>
 			<div class="row-butn-bottom">
-				<button type = "reset" id = "openall" onclick = "d.openAll();" >Open all</button>
-				<button type = "reset" id = "closeall" onclick = "d.closeAll();" >Close all</button>
+				<button type = "reset" id = "openall" onclick = "d{$project.ID}.openAll();" >Open all</button>
+				<button type = "reset" id = "closeall" onclick = "d{$project.ID}.closeAll();" >Close all</button>
 			</div>
 		</fieldset>
 	</form>
