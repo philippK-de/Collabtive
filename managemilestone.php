@@ -177,25 +177,8 @@ if ($action == "addform") {
     $pro = new project();
 
     $today = date("d");
-    $latestones = $milestone->getLateProjectMilestones($id);
-    $donestones = $milestone->getDoneProjectMilestones($id);
-    if (!empty($latestones)) {
-        $latestones = $milestone->formatdate($latestones);
-    }
-    $countlate = 0;
-    if (!empty($latestones)) {
-        $countlate = count($latestones);
-    }
 
-    $upcomingStones = $milestone->getUpcomingProjectMilestones($id);
-    if (!empty($upcomingStones)) {
-        $countUpcoming = count($upcomingStones);
-    }
-
-    $tpro = $pro->getProject($id);
-    $projectname = $tpro["name"];
-    $title = $langfile['milestones'];
-
+	//Get projects milestones, and todays project milestones
     $stones = $milestone->getProjectMilestones($id);
     $stones2 = $milestone->getTodayProjectMilestones($id);
 
@@ -205,7 +188,33 @@ if ($action == "addform") {
     if (empty($stones)) {
         $stones = array();
     }
+    //merge the current milestones
     $stones = array_merge($stones, $stones2);
+
+    //Get closed milestones and milestones that are late
+	$donestones = $milestone->getDoneProjectMilestones($id);
+
+	$latestones = $milestone->getLateProjectMilestones($id);
+    //Count late milestones
+    if (!empty($latestones)) {
+        $latestones = $milestone->formatdate($latestones);
+    }
+    $countlate = 0;
+    if (!empty($latestones)) {
+        $countlate = count($latestones);
+    }
+
+	//Get upcoming milestones, that is milestones with a start date in the future
+    $upcomingStones = $milestone->getUpcomingProjectMilestones($id);
+    $countUpcoming = 0;
+    if (!empty($upcomingStones)) {
+        $countUpcoming = count($upcomingStones);
+    }
+
+	//Get the project name
+    $tpro = $pro->getProject($id);
+    $projectname = $tpro["name"];
+    $title = $langfile['milestones'];
 
     $template->assign("milestones", $stones);
     $template->assign("title", $title);

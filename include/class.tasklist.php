@@ -138,25 +138,31 @@ class tasklist {
     /**
      * Finish / close a tasklist
      *
+     *
      * @param int $id Tasklist ID
+     * @param bool $closeMilestones Determines if the parent milestone is closed too if $id is the last assigned tasklist to that ms
      * @return bool
      */
-    function close_liste($id)
+    function close_liste($id, $closeMilestones = true)
     {
         global $conn;
         $id = (int) $id;
 
         $upd = $conn->query("UPDATE tasklist SET status = 0 WHERE ID = $id");
-        // Close assigned milestone too, if no other open tasklists are assigned to it
-        $milestone = $conn->query("SELECT milestone FROM tasklist WHERE ID = $id")->fetch();
-        if ($milestone[0] > 0) {
-            $cou = $conn->query("SELECT count(*) FROM tasklist WHERE milestone = $milestone[0] AND status = 1")->fetch();
 
-            if ($cou[0] == 0) {
-                $miles = new milestone();
-                $miles->close($milestone[0]);
+        if ($closeMilestones) {
+            // Close assigned milestone too, if no other open tasklists are assigned to it
+            $milestone = $conn->query("SELECT milestone FROM tasklist WHERE ID = $id")->fetch();
+            if ($milestone[0] > 0) {
+                $cou = $conn->query("SELECT count(*) FROM tasklist WHERE milestone = $milestone[0] AND status = 1")->fetch();
+
+                if ($cou[0] == 0) {
+                    $miles = new milestone();
+                    $miles->close($milestone[0]);
+                }
             }
         }
+        // Close tasks in this list
         $tasks = $this->getTasksFromList($id);
         if (!empty($tasks)) {
             $taskobj = new task();
@@ -191,7 +197,6 @@ class tasklist {
         $status = (int) $status;
 
         $sel = $conn->query("SELECT * FROM tasklist WHERE project = $project AND status=$status");
-
 
         $tasklists = array();
 
@@ -229,9 +234,9 @@ class tasklist {
     {
         global $conn;
 
-		$selStmt = $conn->prepare("SELECT * FROM `tasklist` WHERE ID = ?");
-		$sel = $selStmt->execute(array($id));
-       // $sel = $conn->query("SELECT * FROM tasklist WHERE ID = $id");
+        $selStmt = $conn->prepare("SELECT * FROM `tasklist` WHERE ID = ?");
+        $sel = $selStmt->execute(array($id));
+        // $sel = $conn->query("SELECT * FROM tasklist WHERE ID = $id");
         $tasklist = $selStmt->fetch();
 
         if (!empty($tasklist)) {

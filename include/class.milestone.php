@@ -135,6 +135,7 @@ class milestone {
 
     /**
      * Marka milestone as finished
+     * Also closes all tasklist assigned to this milestone
      *
      * @param int $id Milestone ID
      * @return bool
@@ -149,14 +150,10 @@ class milestone {
         $tasklists = $this->getMilestoneTasklists($id);
         // Loop through tasklists , close all tasks in them, then close tasklist itself
         if (!empty($tasklists)) {
+		$tl = new tasklist();
             foreach ($tasklists as $tasklist) {
-                $tl = new tasklist();
-                $tasks = $tl->getTasksFromList($tasklist[ID]);
-                foreach ($tasks as $task) {
-                    $close_task = $conn->query("UPDATE tasks SET status = 0 WHERE ID = $task[ID]");
-                }
-                $close_tasklist = $conn->query("UPDATE tasklist SET status = 0 WHERE ID = $tasklist[ID]");
-            }
+            	$tl->close_liste($tasklist["ID"],false);
+			}
         }
 
         if ($upd) {
@@ -363,7 +360,8 @@ class milestone {
         }
     }
     /**
-     * Return all late milestones of a given project
+     * Return all upcoming milestones of a given project
+     * Upcoming milestones are milestones where the start date is in the future
      *
      * @param int $project Project ID
      * @param int $lim Number of milestones to return
