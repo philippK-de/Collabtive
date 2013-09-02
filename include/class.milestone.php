@@ -32,15 +32,16 @@ class milestone {
      * @param int $status Status (0 = finished, 1 = open)
      * @return bool
      */
-    function add($project, $name, $desc, $end, $status)
+    function add($project, $name, $desc, $start, $end, $status = 1)
     {
         global $conn;
 
 		//Convert end date to timestamp
         $end = strtotime($end);
+        $start = strtotime($start);
 
         $insStmt = $conn->prepare("INSERT INTO milestones (`project`,`name`,`desc`,`start`,`end`,`status`) VALUES (?, ?, ?, ?, ?, ?)");
-        $ins = $insStmt->execute(array((int) $project, $name, $desc, time(), $end, (int) $status));
+        $ins = $insStmt->execute(array((int) $project, $name, $desc, $start, $end, (int) $status));
 
         if ($ins) {
             $insid = $conn->lastInsertId();
@@ -60,14 +61,15 @@ class milestone {
      * @param string $end Day it is due
      * @return bool
      */
-    function edit($id, $name, $desc, $end)
+    function edit($id, $name, $desc, $start, $end)
     {
         global $conn;
         $id = (int) $id;
+        $start = strtotime($start);
         $end = strtotime($end);
 
-        $updStmt = $conn->prepare("UPDATE milestones SET `name`=?, `desc`=?, `end`=? WHERE ID=?");
-        $upd = $updStmt->execute(array($name, $desc, $end, $id));
+        $updStmt = $conn->prepare("UPDATE milestones SET `name`=?, `desc`=?, `start`=?, `end`=? WHERE ID=?");
+        $upd = $updStmt->execute(array($name, $desc, $start, $end, $id));
         if ($upd) {
             $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id")->fetch();
             $project = $nam[0];
