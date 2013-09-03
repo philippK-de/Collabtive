@@ -19,12 +19,12 @@
 				systemMsg('systemmsg');
 			</script>
 		{/literal}
-
+		
 		{if $isUpdated|default}
 			{include file="updateNotify.tpl"}
 			<br />
 		{/if}
-
+		
 		<h1>{#desktop#}</h1>
 
 		{*Projects*}
@@ -38,7 +38,7 @@
 							</div>
 						{/if}
 					<h2>
-						<img src="./templates/standard/images/symbols/projects.png" alt="" />{#myprojects#}
+						<a href="myprojects.php" title="{#myprojects#}"><img src="./templates/standard/images/symbols/projects.png" alt="" />{#myprojects#}</a>
 					</h2>
 				</div>
 
@@ -150,7 +150,7 @@
 					</div>
 
 					<h2>
-					<img src="./templates/standard/images/symbols/tasklist.png" alt="" />{#mytasks#}
+						<a href="mytasks.php" title="{#mytasks#}"><img src="./templates/standard/images/symbols/tasklist.png" alt="" />{#mytasks#}</a>
 					</h2>
 				</div>
 
@@ -287,7 +287,7 @@
 					</div>
 
 					<h2>
-						<img src="./templates/standard/images/symbols/msgs.png" alt="" />{#mymessages#}
+						<a href="managemessage.php?action=mymsgs" title="{#mymessages#}"><img src="./templates/standard/images/symbols/msgs.png" alt="" />{#mymessages#}</a>
 					</h2>
 				</div>
 

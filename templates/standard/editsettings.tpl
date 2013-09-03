@@ -35,6 +35,45 @@
 				<div class="tablemenue"></div>
 			</div> {*Block End*}
 
+<div class="content-spacer"></div>
+
+			<div class="headline">
+				<a href="javascript:void(0);" id="block_import_toggle" class="win_block" onclick = "toggleBlock('block_import');"></a>
+				<h2>
+					<img src="./templates/standard/images/symbols/basecamp.png" alt="" />{#import#}</a>
+				</h2>
+			</div>
+
+			<div id="block_import" class="block">
+				<div class="block_in_wrapper">
+					<form novalidate class="main" method="post" action="manageimport.php?action=basecamp" enctype="multipart/form-data" {literal}onsubmit="return validateCompleteForm(this);"{/literal}>
+					<fieldset>
+
+					<div class="row">
+						<label for="file">{#file#}:</label>
+						<div class="fileinput" >
+								<input type="file" class="file" name="importfile" id="importfile"  realname="{#file#}" size="19" onchange = "file.value = this.value;" />
+								<table class = "faux" cellpadding="0" cellspacing="0" border="0" style="padding:0;margin:0;border:none;">
+									<tr>
+									<td><input type="text" class="text-file" name = "userfile1" id="file" required="1" realname="{#file#}"></td>
+									<td class="choose"><button class="inner" onclick="return false;">{#chooseone#}</button></td>
+									</tr>
+								</table>
+						</div>
+					</div>
+
+					<div class="row-butn-bottom">
+						<label>&nbsp;</label>
+						<button type="submit" onfocus="this.blur();">{#send#}</button>
+					</div>
+
+
+					</fieldset>
+					</form>
+				</div>
+
+				<div class="tablemenue"></div>
+			</div> {*Block End*}
 
 <div class="content-spacer"></div>
 
