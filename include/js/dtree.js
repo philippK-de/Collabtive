@@ -144,7 +144,7 @@ dTree.prototype.node = function(node, nodeId) {
 		if(node.daysLeft < 0)
 		{
 		str += ' style = "color:#be4c43 "';
-		console.log(node.daysLeft);
+		//console.log(node.daysLeft);
 		}
 	}
 		str += '>';

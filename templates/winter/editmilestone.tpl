@@ -40,6 +40,25 @@
 
 						<div class="clear_both_b"></div>
 
+
+						<div class="row">
+							<label for="end">Starts on:</label>
+							<input type="text" value="{$milestone.startstring}" name="start" id="start" required="1" realname="{#end#}" />
+						</div>
+
+						<div class="datepick">
+							<div id = "datepicker_mile_start" class="picker" style = "display:none;"></div>
+						</div>
+
+						<script type="text/javascript">
+							theCal{$lists[list].ID} = new calendar({$theM},{$theY});
+							theCal{$lists[list].ID}.dayNames = ["{#monday#}","{#tuesday#}","{#wednesday#}","{#thursday#}","{#friday#}","{#saturday#}","{#sunday#}"];
+							theCal{$lists[list].ID}.monthNames = ["{#january#}","{#february#}","{#march#}","{#april#}","{#may#}","{#june#}","{#july#}","{#august#}","{#september#}","{#october#}","{#november#}","{#december#}"];
+							theCal{$lists[list].ID}.relateTo = "start";
+							theCal{$lists[list].ID}.dateFormat = "{$settings.dateformat}";
+							theCal{$lists[list].ID}.getDatepicker("datepicker_mile_start");
+						</script>
+
 						<div class="row">
 							<label for="end">{#end#}:</label>
 							<input type="text" value="{$milestone.endstring}" name="end" id="end" required="1" realname="{#end#}" />

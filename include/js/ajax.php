@@ -308,72 +308,7 @@ function addEngine(url)
 	window.external.AddSearchProvider(url);
 }
 
-/*timetracker object
-function timetracker(taskId,projectId)
-{
-	this.working = false;
-	this.startTime = 0;
-	this.endTime = 0;
 
-	this.taskId = taskId;
-	this.projectId = projectId;
-}
-
-timetracker.prototype.toggleTracker = function()
-{
-	if(this.working)
-	{
-		this.stopWork();
-	}
-	else
-	{
-		this.startWork();
-	}
-}
-
-timetracker.prototype.startWork = function()
-{
-	if(this.working)
-	{
-		this.stopWork();
-	}
-	var date = new Date();
-
-	this.working = true;
-
-	this.startTime = date.getTime();
-	this.startTime = Math.round(this.startTime / 1000);
-}
-
-timetracker.prototype.stopWork = function()
-{
-	var date = new Date();
-
-	this.working = false;
-
-	this.endTime = date.getTime();
-	this.endTime = Math.round(this.endTime / 1000);
-	this.workTime = this.endTime - this.startTime;
-
-	this.saveWork();
-}
-
-timetracker.prototype.saveWork = function()
-{
-	var theUrl = "managetimetracker.php?action=add&ajaxreq=1";
-	var thePost = "project="+this.projectId+"&ttask="+this.taskId+"&started="+this.startTime+"&ended="+this.endTime;
-	new Ajax.Request(theUrl, {
-		  method: 'post',
-		  postBody:thePost,
-		  onSuccess:function(payload) {
-		    if (payload.responseText == "ok")
-		    	{
-				}
-		   }
-		});
-
-}
-*/
 function sortit()
 {
 

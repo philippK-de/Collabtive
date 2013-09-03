@@ -1,3 +1,11 @@
+Collabtive 1.2
++ Added Collapsible tree showing the structure of a project (milestones, tasklists, tasks, messages)
++ Removed basecamp importer (didn't work in a long time, see https://github.com/philippK-de/Collabtive/issues/2
++ Milestones can now have a start date set when created. start date can also be edited.
++ Removed links to the my-projects/tasks/messages blocks in block titles on the desktop
++ Milestones can now be deleted asynchronously
++ Milestones can now be deleted asynchronously
+
 Collabtive 1.1
 + Fixed bug in tasklist editing, which would automatically remove the tasklist's assignment to a given milestone
 + Fixed notice in user editing form which showed up when an available language's name was not translated in the selected language
@@ -6,7 +14,7 @@ Collabtive 1.1
 + Changed class.mylog to show 25 entries per log page instead of 10
 + Changed inserting of default values to settings table to a single query (from a foreach loop) in install.php
 + Fixed an error where any registered user could delete other users' profiles
-+ Fixed an error where other files than pictures (for example PHP scripts) could be uploaded as the user's avatar 
++ Fixed an error where other files than pictures (for example PHP scripts) could be uploaded as the user's avatar
 + Fixed a possible SQL injection in the timetracker reporting
 + Fixed text in empty project message PDF export
 + Fixed bug with empty timetracker PDF exports

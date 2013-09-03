@@ -70,20 +70,25 @@ if ($action == "index") {
     $title = $langfile['admin'];
     $template->display("admin.tpl");
 } elseif ($action == "users") {
+    // Set the users tab active
     $classes = array("overview" => "overview",
         "system" => "system",
         "users" => "active"
         );
     $template->assign("classes", $classes);
-    $users = $user->getAllUsers(14);
-    $projects = $project->getProjects(1, 10000);
     $roleobj = (object) new roles();
+    // Get 25 users
+    $users = $user->getAllUsers(25);
+    // Get All Projects
+    $projects = $project->getProjects(1, 10000);
+
     $roles = $roleobj->getAllRoles();
     $i2 = 0;
+
     if (!empty($users)) {
         foreach($users as $usr) {
             $i = 0;
-            // $projects = $project->getProjects(1, 10000);
+            // Check if a user is assigned to a project
             if (!empty($projects)) {
                 foreach ($projects as $pro) {
                     if (chkproject($usr["ID"], $pro["ID"])) {
@@ -95,9 +100,11 @@ if ($action == "index") {
                     $i = $i + 1;
                 }
             }
+
             $users[$i2]['projects'] = $projects;
+            // Format the lastlogin timestamp to a string for display
             if (!empty($users[$i2]['lastlogin'])) {
-                $users[$i2]["lastlogin"] = date("d.m.y / H:i:s", $users[$i2]['lastlogin']);
+                $users[$i2]["lastlogin"] = date(CL_DATEFORMAT . " / H:i:s", $users[$i2]['lastlogin']);
             }
             $i2 = $i2 + 1;
         }
@@ -112,15 +119,13 @@ if ($action == "index") {
 } elseif ($action == "adduser") {
     $thetag = new tags();
     $tags = $thetag->formatInputTags($tags);
-    $admin = $isadmin;
-    if (!isset($admin)) {
-        $admin = 1;
-    }
+    // Get the system locale and set it as the default locale for the new user
     $sysloc = $settings["locale"];
-
+    // Add the user
     $newid = $user->add($name, $email, $company, $pass, $sysloc, $tags, $rate);
     if ($newid) {
         if (!empty($assignto)) {
+            // Assign the user to all selected projects
             foreach ($assignto as $proj) {
                 $project->assign($newid, $proj);
             }
@@ -137,12 +142,15 @@ if ($action == "index") {
         }
         header("Location: admin.php?action=users&mode=added");
     } else {
+        // There has been an error, go back
         $goback = $langfile["goback"];
         $endafterstart = $langfile["endafterstart"];
         $template->assign("errortext", "The email address $email or the username $name already exists in the user database.<br>$goback");
         $template->display("error.tpl");
     }
 } elseif ($action == "editform") {
+	//This is for editing any user as an admin. This provides more options than the normal user edit
+
     $roleobj = (object) new roles();
     $roles = $roleobj->getAllRoles();
 
@@ -184,6 +192,7 @@ if ($action == "index") {
     if (!isset($isadmin)) {
         $isadmin = 1;
     }
+    //Upload of avatar
     if (!empty($_FILES['userfile']['name'])) {
         $fname = $_FILES['userfile']['name'];
         $typ = $_FILES['userfile']['type'];
@@ -440,8 +449,8 @@ if ($action == "index") {
     $template->assign("title", $title);
     $template->assign("classes", $classes);
     $allcust = $companyObj->getAllCompanies();
-    //$clopros = $project->getProjects(0, 10000);
-   /* $i = 0;
+    // $clopros = $project->getProjects(0, 10000);
+    /* $i = 0;
     $users = $user->getAllUsers(1000000);
     if (!empty($opros)) {
         foreach($opros as $opro) {
@@ -455,34 +464,33 @@ if ($action == "index") {
     $template->assign("allcust", $allcust);
     $template->display("admincustomers.tpl");
 } elseif ($action == "addcust") {
-	if (!$userpermissions["customers"]["add"]) {
-		$errtxt = $langfile["nopermission"];
-		$noperm = $langfile["accessdenied"];
-		$template->assign("errortext", "$errtxt<br>$noperm");
-		$template->display("error.tpl");
-		die();
-	}
+    if (!$userpermissions["customers"]["add"]) {
+        $errtxt = $langfile["nopermission"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
 
-	if (!$end) {
-		$end = 0;
-	}
-	$data = array(
-			'company' => getArrayVal($_POST, "company"),
-			'contact' => getArrayVal($_POST, "contact"),
-			'email' => getArrayVal($_POST, "email"),
-			'phone' => getArrayVal($_POST, "tel1"),
-			'mobile' => getArrayVal($_POST, "tel2"),
-			'url' => getArrayVal($_POST, "web"),
-			'address' => getArrayVal($_POST, "address"),
-			'zip' => getArrayVal($_POST, "zip"),
-			'city' => getArrayVal($_POST, "city"),
-			'country' => getArrayVal($_POST, "country"),
-			'state' => getArrayVal($_POST, "state"),
-			'desc' => getArrayVal($_POST, "desc")
-	);
-	$add = $companyObj->add($data);
-	if ($add)
-		header("Location: admin.php?action=customers&mode=added");
+    if (!$end) {
+        $end = 0;
+    }
+    $data = array('company' => getArrayVal($_POST, "company"),
+        'contact' => getArrayVal($_POST, "contact"),
+        'email' => getArrayVal($_POST, "email"),
+        'phone' => getArrayVal($_POST, "tel1"),
+        'mobile' => getArrayVal($_POST, "tel2"),
+        'url' => getArrayVal($_POST, "web"),
+        'address' => getArrayVal($_POST, "address"),
+        'zip' => getArrayVal($_POST, "zip"),
+        'city' => getArrayVal($_POST, "city"),
+        'country' => getArrayVal($_POST, "country"),
+        'state' => getArrayVal($_POST, "state"),
+        'desc' => getArrayVal($_POST, "desc")
+        );
+    $add = $companyObj->add($data);
+    if ($add)
+        header("Location: admin.php?action=customers&mode=added");
 } elseif ($action == "system") {
     $classes = array("overview" => "overview",
         "system" => "active",
