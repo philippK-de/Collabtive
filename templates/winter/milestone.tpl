@@ -60,13 +60,13 @@
 
 
 		{*Tasklists*}
-	{if $milestone.tasks[0][0]}
+	{if $milestone.tasklists[0][0]}
 		<div class="content-spacer-b"></div>
 				<h2>{#tasklists#}</h2>
 
 						<div class="inwrapper">
 							<ul>
-							{section name=task loop=$milestone.tasks}
+							{section name=task loop=$milestone.tasklists}
 								<li>
 									<div class="itemwrapper">
 
@@ -78,7 +78,7 @@
 														</div>
 													</td>
 													<td class="thumb">
-														<a href="managetasklist.php?action=showtasklist&amp;tlid={$milestone.tasks[task].ID}&amp;id={$project.ID}" title="{$milestone.tasks[task].name}">
+														<a href="managetasklist.php?action=showtasklist&amp;tlid={$milestone.tasklists[task].ID}&amp;id={$project.ID}" title="{$milestone.tasklists[task].name}">
 																<img src = "./templates/standard/images/symbols/tasklist.png" style="width: 32px; height: auto;" alt="" />
 														</a>
 													</td>
@@ -94,9 +94,9 @@
 												<tr>
 													<td colspan="3">
 														<span class="name">
-															<a href = "managetasklist.php?action=showtasklist&amp;tlid={$milestone.tasks[task].ID}&amp;id={$project.ID}" title="{$milestone.tasks[task].name}">
-																{if $milestone.tasks[task].name != ""}
-																	{$milestone.tasks[task].name|truncate:13:"...":true}
+															<a href = "managetasklist.php?action=showtasklist&amp;tlid={$milestone.tasklists[task].ID}&amp;id={$project.ID}" title="{$milestone.tasklists[task].name}">
+																{if $milestone.tasklists[task].name != ""}
+																	{$milestone.tasklists[task].name|truncate:13:"...":true}
 																{else}
 																	{#tasklist#}
 																{/if}

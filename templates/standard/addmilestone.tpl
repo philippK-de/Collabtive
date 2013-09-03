@@ -33,6 +33,25 @@
 						<div class="clear_both_b"></div>
 
 						<div class="row">
+							<label for="end">Starts on:</label>
+							<input type="text" class="text" name="start" id="start" required="1" realname="{#due#}"  />
+						</div>
+
+						<div class="datepick">
+							<div id = "datepicker_miles_start" class="picker" style = "display:none;"></div>
+						</div>
+
+						<script type="text/javascript">
+							theCal = new calendar({$theM},{$theY});
+							theCal.dayNames = ["{#monday#}","{#tuesday#}","{#wednesday#}","{#thursday#}","{#friday#}","{#saturday#}","{#sunday#}"];
+							theCal.monthNames = ["{#january#}","{#february#}","{#march#}","{#april#}","{#may#}","{#june#}","{#july#}","{#august#}","{#september#}","{#october#}","{#november#}","{#december#}"];
+							theCal.relateTo = "start";
+							theCal.dateFormat = "{$settings.dateformat}";
+							theCal.getDatepicker("datepicker_miles_start");
+						</script>
+
+
+						<div class="row">
 							<label for="end">{#due#}:</label>
 							<input type="text" class="text" name="end" id="end" required="1" realname="{#due#}" {if $day|default and $month and $year} value = "{$day}.{$month}.{$year}" {/if} />
 						</div>

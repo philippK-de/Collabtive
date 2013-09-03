@@ -19,12 +19,12 @@
 				systemMsg('systemmsg');
 			</script>
 		{/literal}
-		
+
 		{if $isUpdated|default}
 			{include file="updateNotify.tpl"}
 			<br />
 		{/if}
-		
+
 		<h1>{#desktop#}</h1>
 
 		{*Projects*}
@@ -297,7 +297,7 @@
 						<thead>
 							<tr>
 								<th class="a"></th>
-								<th class="b">{#message#}</th>
+								<th class="b" >{#message#}</th>
 								<th class="ce">{#project#}</th>
 								<th class="de">{#by#}</th>
 								<th class="e">{#on#}</th>
@@ -314,9 +314,9 @@
 						{section name=message loop=$messages}
 							{*Color-Mix*}
 							{if $smarty.section.message.index % 2 == 0}
-							<tbody class="color-a" id="messages_{$messages[message].ID}">
+							<tbody class="color-a" id="messages_{$messages[message].ID}" rel = "{$messages[message].ID},{$messages[message].title},{$messages[message].posted},0,0,0">
 							{else}
-							<tbody class="color-b" id="messages_{$messages[message].ID}">
+							<tbody class="color-b" id="messages_{$messages[message].ID}" rel = "{$messages[message].ID},{$messages[message].title},{$messages[message].posted},0,0,0">
 							{/if}
 								<tr>
 									<td>
