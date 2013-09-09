@@ -73,11 +73,11 @@
 <div class="nosmooth" id="sm_project">
 
 {*Miles tree*}
-<div class="timetrack dtree">
+<div class="projects dtree">
 	<div class="headline">
 		<a href="javascript:void(0);" id="treehead_toggle" class="win_block" onclick = "toggleBlock('treehead');"></a>
 				<h2>
-					<img src="./templates/standard/images/symbols/miles.png" alt="" />Tree
+					<img src="./templates/standard/images/symbols/projects.png" alt="" />Project Tree
 				</h2>
 
 	</div>
