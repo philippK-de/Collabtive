@@ -129,12 +129,13 @@ if ($action == "addform") {
         die();
     }
 
-    $project = $_GET['project'];
+   // $project = $_GET['project'];
 
     //Delete the milestone
     if ($milestone->del($mid)) {
-        $loc = $url . "managemilestone.php?action=showproject&id=$id&mode=deleted";
-        header("Location: $loc");
+     echo "ok";
+	 //   $loc = $url . "managemilestone.php?action=showproject&id=$id&mode=deleted";
+     //   header("Location: $loc");
     } else {
         $template->assign("delmilestone", 0);
     }

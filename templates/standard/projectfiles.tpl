@@ -107,7 +107,7 @@
 						<div class="staterowin">
 							<span id = "filenum">{$filenum}</span> {#files#}
 						</div>
-						<div class="staterowin_right"><span >{$langfile.page} {paginate_prev} {paginate_middle} {paginate_next}</span></div>
+
 					</div>
 				</div> {*nosmooth End*}
 
