@@ -287,6 +287,7 @@ if ($action == "timeline1next") {
     if ($folder == 0) {
         $folders = $myfile->getProjectFolders($id);
         $foldername = "";
+        $thefolder["parent"] = 0;
     } else {
         $folders = $myfile->getProjectFolders($id, $folder);
         $thefolder = $myfile->getFolder($folder);
