@@ -150,7 +150,7 @@ class task {
 
         $upd = $conn->query("UPDATE tasks SET status = 0 WHERE ID = $id");
 
-        /*
+        
         $sql = $conn->query("SELECT liste FROM tasks WHERE ID = $id");
         $liste = $sql->fetch();
         $sql2 = $conn->query("SELECT count(*) FROM tasks WHERE liste = $liste[0] AND status = 1");
@@ -161,7 +161,6 @@ class task {
             $tasklist = new tasklist();
             $tasklist->close_liste($liste[0]);
         }
-                */
 
         if ($upd) {
             $nameproject = $this->getNameProject($id);
