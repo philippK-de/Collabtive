@@ -236,7 +236,6 @@ class milestone {
 
         $sel = $conn->query("SELECT * FROM milestones WHERE ID = $id");
         $milestone = $sel->fetch();
-
         if (!empty($milestone)) {
             // Format start and end date for display
             $endstring = date(CL_DATEFORMAT, $milestone["end"]);
@@ -395,6 +394,49 @@ class milestone {
     }
 
     /**
+     * Return a milestone with its tasklists
+     *
+     * @param int $id Milestone ID
+     * @return array $milestone Milestone details
+     */
+    function dummyMilestone($project)
+    {
+        global $conn;
+        $project = (int) $project;
+        $id = 0;
+	$milestone = array();
+
+        // Format start and end date for display
+
+        $tod = date("d.m.Y");
+        $now = strtotime($tod);
+        $time = date(CL_DATEFORMAT, $now);
+	$milestone['ID'] = $id;
+        $milestone["endstring"] = $time;
+        $milestone["fend"] = $time;
+        $milestone["startstring"] = $time;
+
+        $milestone["name"] = 'unassigned task lists';
+        $milestone["desc"] = 'task lists not assigned to any milestone';
+        // Get the name of the project where the message was posted for display
+        $psel = $conn->query("SELECT name FROM projekte WHERE ID = $project");
+        $pname = $psel->fetch();
+        $pname = $pname[0];
+        $milestone["pname"] = $pname;
+        $milestone["pname"] = stripslashes($milestone["pname"]);
+        // Daysleft contains a signed number, dayslate an unsigned one that only applies if the milestone is late
+        $dayslate = 0;
+        $milestone["daysleft"] = $dayslate;
+        $milestone["dayslate"] = $dayslate;
+        // Get attached tasklists and messages
+        $tasks = $this->getMilestoneTasklists($milestone["ID"]);
+        $milestone["tasklists"] = $tasks;
+        $messages = $this->getMilestoneMessages($milestone["ID"]);
+        $milestone["messages"] = $messages;
+        return $milestone;
+    }
+
+    /**
      * Return all open milestones of a given project
      *
      * @param int $project Project ID
@@ -420,7 +462,13 @@ class milestone {
             }
         }
 
+	$themilestone = $this->dummyMilestone($project);
+//	print_r($themilestone);
+	array_push($milestones, $themilestone);
+
         if (!empty($milestones)) {
+//	print_r($milestones);
+//	die(0);
             return $milestones;
         } else {
             return false;
