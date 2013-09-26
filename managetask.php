@@ -11,11 +11,18 @@ if (!isset($_SESSION["userid"])) {
         header('WWW-Authenticate: Basic realm="Collabtive"');
         header('HTTP/1.0 401 Unauthorized');
         echo 'Error 401: Not authorized!';
-        exit;
       } else {
 	// try login with given credentials
-	die('not implemented');
+	$user = (object) new user();
+	if ($user->login($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])) {
+          $loc = $url . "managetask.php?mode=ical";
+          header("Location: $loc");
+        } else {
+          header('HTTP/1.0 401 Unauthorized');
+          echo 'Error 401: Not authorized!';
+        }	
       }
+      exit;
     } else {
       $template->assign("loginerror", 0);
       $template->display("login.tpl");
