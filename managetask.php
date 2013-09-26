@@ -7,6 +7,8 @@ if (!isset($_SESSION["userid"])) {
 
     if ($action == "ical" || $action == "icalshort"){
       // spawn basic auth request here
+      // most probably this is not the best location for this basic auth code. feel free to move it to whereever it should be.
+      // in the ideal case, this kind of basic auth should also be available for the rss feed!
       if (!isset($_SERVER['PHP_AUTH_USER'])) {
         header('WWW-Authenticate: Basic realm="Collabtive"');
         header('HTTP/1.0 401 Unauthorized');
