@@ -5,7 +5,7 @@ $action = getArrayVal($_GET, "action");
 
 if (!isset($_SESSION["userid"])) {
 
-    if ($action == "ical"){
+    if ($action == "ical" || $action == "icalshort"){
       // spawn basic auth request here
       if (!isset($_SERVER['PHP_AUTH_USER'])) {
         header('WWW-Authenticate: Basic realm="Collabtive"');
@@ -15,7 +15,7 @@ if (!isset($_SESSION["userid"])) {
 	// try login with given credentials
 	$user = (object) new user();
 	if ($user->login($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])) {
-          $loc = $url . "managetask.php?mode=ical";
+          $loc = $url . "managetask.php?mode=" . $action;
           header("Location: $loc");
         } else {
           header('HTTP/1.0 401 Unauthorized');
@@ -373,4 +373,7 @@ if ($action == "addform") {
 } elseif ($action == "ical") {
     $mytask = new task();
     $task = $mytask->getIcal($userid);
+} elseif ($action == "icalshort") {
+    $mytask = new task();
+    $task = $mytask->getIcal($userid,false);
 }
