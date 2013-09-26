@@ -7,6 +7,15 @@ if (!isset($_SESSION["userid"])) {
 
     if ($action == "ical"){
       // spawn basic auth request here
+      if (!isset($_SERVER['PHP_AUTH_USER'])) {
+        header('WWW-Authenticate: Basic realm="Collabtive"');
+        header('HTTP/1.0 401 Unauthorized');
+        echo 'Error 401: Not authorized!';
+        exit;
+      } else {
+	// try login with given credentials
+	die('not implemented');
+      }
     } else {
       $template->assign("loginerror", 0);
       $template->display("login.tpl");
