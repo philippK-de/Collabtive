@@ -465,7 +465,9 @@ class milestone {
 
 	if ($showdummy) {
 	  $themilestone = $this->dummyMilestone($project);
-	  array_push($milestones, $themilestone);
+	  if (!empty($themilestone['tasklists'])) {
+	    array_push($milestones, $themilestone);
+	  }
 	}
 
         if (!empty($milestones)) {
