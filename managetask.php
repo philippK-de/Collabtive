@@ -1,14 +1,21 @@
 <?php
 require("./init.php");
+
+$action = getArrayVal($_GET, "action");
+
 if (!isset($_SESSION["userid"])) {
-    $template->assign("loginerror", 0);
-    $template->display("login.tpl");
-    die();
+
+    if ($action == "ical"){
+      // spawn basic auth request here
+    } else {
+      $template->assign("loginerror", 0);
+      $template->display("login.tpl");
+      die();
+    }
 }
 
 $task = (object) new task();
 
-$action = getArrayVal($_GET, "action");
 $tasklist = getArrayVal($_GET, "tasklist");
 $mode = getArrayVal($_GET, "mode");
 $tid = getArrayVal($_GET, "tid");
