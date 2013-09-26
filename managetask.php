@@ -10,7 +10,11 @@ if (!isset($_SESSION["userid"])) {
       // most probably this is not the best location for this basic auth code. feel free to move it to whereever it should be.
       // in the ideal case, this kind of basic auth should also be available for the rss feed!
       if (!isset($_SERVER['PHP_AUTH_USER'])) {
-        header('WWW-Authenticate: Basic realm="Collabtive"');
+	$msg="Collabtive";
+	if ($action == "ical") {
+	  $msg .=". Also try action=icalshort for alternative display.";
+	}
+        header('WWW-Authenticate: Basic realm="'.$msg.'"');
         header('HTTP/1.0 401 Unauthorized');
         echo 'Error 401: Not authorized!';
       } else {
