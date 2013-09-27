@@ -394,9 +394,9 @@ class milestone {
     }
 
     /**
-     * Return a milestone with its tasklists
+     * Return a dummy milestone, which is used to collect task lists not assinged to any other milestone
      *
-     * @param int $id Milestone ID
+     * @param int $project the id of the project for which it is used
      * @return array $milestone Milestone details
      */
     function dummyMilestone($project)
@@ -441,6 +441,7 @@ class milestone {
      *
      * @param int $project Project ID
      * @param int $lim Number of milestones to return
+     * @param $showdummy if set to true, the method will add a dummy milestone for all task lists not assinged to a milestone
      * @return array $milestones Details of the open milestones
      */
     function getAllProjectMilestones($project, $lim = 100,$showdummy = false)
@@ -587,6 +588,7 @@ class milestone {
      * Return all open tasklists associated to a given milestones
      *
      * @param int $milestone Milestone ID
+     * @param project if set to a nonzero value (project id) it will search for tasks by project assignment, which can be used when no milestone is assigned, i.e. when $milestone=0 
      * @return array $lists Details of the tasklists
      */
     private function getMilestoneTasklists($milestone,$project = 0)
@@ -613,6 +615,13 @@ class milestone {
         }
     }
 
+    /**
+     * Return all messages associated to a given milestones
+     *
+     * @param int $milestone Milestone ID
+     * @param project if set to a nonzero value (project id) it will search for tasks by project assignment, which can be used when no milestone is assigned, i.e. when $milestone=0 
+     * @return array $lists messages of the milestone
+     */
     private function getMilestoneMessages($milestone,$project = 0)
     {
         global $conn;
