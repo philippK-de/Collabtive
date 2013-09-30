@@ -1,4 +1,5 @@
 ﻿Collabtive 1.2
++ Improved translations: Spanish
 + Added Collapsible tree showing the structure of a project (milestones, tasklists, tasks, messages)
 + Removed basecamp importer (didn't work in a long time, see https://github.com/philippK-de/Collabtive/issues/2
 + Milestones can now have a start date set when created. start date can also be edited.
