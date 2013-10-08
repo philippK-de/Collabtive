@@ -159,10 +159,12 @@ class timetracker {
                 $track["hours"] = $hours;
 
                 $day = date(CL_DATEFORMAT, $track["started"]);
+		$endday = date(CL_DATEFORMAT, $track["ended"]);
                 $track["started"] = date("H:i", $track["started"]);
                 $track["ended"] = date("H:i", $track["ended"]);
 
                 $track["day"] = $day;
+		$track["endday"] = $endday;
             }
 
             if (isset($track["comment"])) {
