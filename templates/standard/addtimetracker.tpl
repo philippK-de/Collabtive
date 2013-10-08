@@ -35,7 +35,7 @@
 	
 		 	<div class="row">
 		  		<label for="ttendday">{#endday#}:</label>
-		  		<input type="text" class="text" style="width:80px;margin:0 6px 0 0;" id="ttday" name="ttday" realname="{#date#}" />
+		  		<input type="text" class="text" style="width:80px;margin:0 6px 0 0;" id="ttendday" name="ttendday" realname="{#date#}" />
 			</div>
 	
 			<div class="datepick">
