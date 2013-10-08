@@ -6,7 +6,7 @@
 		  <input type="hidden" name="project" value="{$project.ID}" />
 	
 		 	<div class="row">
-		  		<label for="ttday">{#day#}:</label>
+		  		<label for="ttday">{#startday#}:</label>
 		  		<input type="text" class="text" style="width:80px;margin:0 6px 0 0;" id="ttday" name="ttday" realname="{#date#}" />
 			</div>
 	
@@ -30,6 +30,27 @@
 	
 		  		<button onclick="getnow('started');return false;" onfocus="this.blur();" title="{#inserttime#}">hh:mm</button>
 			</div>
+
+		  <input type="hidden" name="project" value="{$project.ID}" />
+	
+		 	<div class="row">
+		  		<label for="ttendday">{#endday#}:</label>
+		  		<input type="text" class="text" style="width:80px;margin:0 6px 0 0;" id="ttday" name="ttday" realname="{#date#}" />
+			</div>
+	
+			<div class="datepick">
+				<div id="datepicker_addttend" class="picker" style="display:none;"></div>
+			</div>
+			<script type="text/javascript">
+				theCal = new calendar({$theM},{$theY});
+				theCal.dayNames = ["{#monday#}","{#tuesday#}","{#wednesday#}","{#thursday#}","{#friday#}","{#saturday#}","{#sunday#}"];
+				theCal.monthNames = ["{#january#}","{#february#}","{#march#}","{#april#}","{#may#}","{#june#}","{#july#}","{#august#}","{#september#}","{#october#}","{#november#}","{#december#}"];
+				theCal.relateTo = "ttendday";
+				theCal.keepEmpty = false;
+				theCal.dateFormat = "{$settings.dateformat}";
+				theCal.getDatepicker("datepicker_addttend");
+	        </script>
+	
 	
 		  	<div class="row">
 		  		<label for="ended">{#ended#}:</label>
