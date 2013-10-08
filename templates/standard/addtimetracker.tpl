@@ -21,7 +21,7 @@
 				theCal.keepEmpty = false;
 				theCal.dateFormat = "{$settings.dateformat}";
 				theCal.getDatepicker("datepicker_addtt");
-	        </script>
+		        </script>
 	        	        
 	
 		  	<div class="row">
@@ -42,14 +42,14 @@
 				<div id="datepicker_addttend" class="picker" style="display:none;"></div>
 			</div>
 			<script type="text/javascript">
-				theCal = new calendar({$theM},{$theY});
-				theCal.dayNames = ["{#monday#}","{#tuesday#}","{#wednesday#}","{#thursday#}","{#friday#}","{#saturday#}","{#sunday#}"];
-				theCal.monthNames = ["{#january#}","{#february#}","{#march#}","{#april#}","{#may#}","{#june#}","{#july#}","{#august#}","{#september#}","{#october#}","{#november#}","{#december#}"];
-				theCal.relateTo = "ttendday";
-				theCal.keepEmpty = false;
-				theCal.dateFormat = "{$settings.dateformat}";
-				theCal.getDatepicker("datepicker_addttend");
-	        </script>
+				theCal2 = new calendar({$theM},{$theY});
+				theCal2.dayNames = ["{#monday#}","{#tuesday#}","{#wednesday#}","{#thursday#}","{#friday#}","{#saturday#}","{#sunday#}"];
+				theCal2.monthNames = ["{#january#}","{#february#}","{#march#}","{#april#}","{#may#}","{#june#}","{#july#}","{#august#}","{#september#}","{#october#}","{#november#}","{#december#}"];
+				theCal2.relateTo = "ttendday";
+				theCal2.keepEmpty = false;
+				theCal2.dateFormat = "{$settings.dateformat}";
+				theCal2.getDatepicker("datepicker_addttend");
+		        </script>
 	
 	
 		  	<div class="row">
