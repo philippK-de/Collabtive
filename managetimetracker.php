@@ -17,6 +17,7 @@ $tracker = new timetracker();
 
 $action = getArrayVal($_GET, "action");
 $day = getArrayVal($_POST, "day");
+$endday = getArrayVal($_POST, "endday");
 $started = getArrayVal($_POST, "started");
 $ended = getArrayVal($_POST, "ended");
 $tproject = getArrayVal($_POST, "project");
@@ -160,7 +161,7 @@ if ($action == "add") {
 
     $started = $day . " " . $started;
     $started = strtotime($started);
-    $ended = $day . " " . $ended;
+    $ended = $endday . " " . $ended;
     $ended = strtotime($ended);
     if ($tracker->edit($tid, $task, $comment, $started, $ended)) {
         if ($redir) {
