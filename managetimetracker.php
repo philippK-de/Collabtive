@@ -21,7 +21,8 @@ $started = getArrayVal($_POST, "started");
 $ended = getArrayVal($_POST, "ended");
 $tproject = getArrayVal($_POST, "project");
 $task = getArrayVal($_POST, "ttask");
-$logdate = getArrayVal($_POST, "ttday");
+$startdate = getArrayVal($_POST, "ttday");
+$enddate = getArrayVal($_POST, "ttendday");
 $comment = getArrayVal($_POST, "comment");
 $redir = getArrayVal($_GET, "redir");
 $mode = getArrayVal($_GET, "mode");
@@ -83,7 +84,7 @@ if ($action == "add") {
         $comment = "";
     }
 
-    if ($tracker->add($userid, $tproject, $task, $comment , $started, $ended, $logdate)) {
+    if ($tracker->add($userid, $tproject, $task, $comment , $started, $ended, $startdate, $enddate)) {
         $redir = urldecode($redir);
         if ($redir) {
             $redir = $url . $redir;
