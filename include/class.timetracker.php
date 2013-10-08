@@ -33,20 +33,22 @@ class timetracker {
      * @param string $ended Enddate of the tracked time period
      * @return int $insid Mysql ID of the inserted timetrack
      */
-    function add($user, $project, $task, $comment, $started, $ended, $logday = "")
+    function add($user, $project, $task, $comment, $started, $ended, $startday = "", $endday = "")
     {
         global $conn;
         $username = $_SESSION['username'];
 
-        if (!$logday) {
-            $startdate = date(CL_DATEFORMAT);
-        } else {
-            $startdate = $logday;
+        if (!$startday) {
+            $startday = date(CL_DATEFORMAT);
         }
 
-        $started = $startdate . " " . $started;
+	if (!$endday) {
+	    $endday = $startday;
+	}
+
+        $started = $startday . " " . $started;
         $started = strtotime($started);
-        $ended = $startdate . " " . $ended;
+        $ended = $endday . " " . $ended;
         $ended = strtotime($ended);
 
         $hours = $ended - $started;
