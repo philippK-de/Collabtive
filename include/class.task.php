@@ -36,6 +36,7 @@ class task {
     function add($end, $title, $text, $liste, $project)
     {
         global $conn;
+        $title = htmlspecialchars($title);
         $liste = (int) $liste;
         $project = (int) $project;
 
@@ -76,7 +77,8 @@ class task {
         global $conn;
         $id = (int) $id;
         $liste = (int) $liste;
-
+        $title = htmlspecialchars($title);
+        
         $end = strtotime($end);
 
         $updStmt = $conn->prepare("UPDATE tasks SET `end`=?,`title`=?, `text`=?, `liste`=? WHERE ID = ?");
