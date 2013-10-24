@@ -255,8 +255,13 @@ if ($action == "addform") {
 
             if (!empty($user["email"])) {
                 // send email
+
+                $subject = $langfile["taskassignedsubject"] . ' (' . $langfile['by'] .' '. $username . ')';
+                $mailcontent = $langfile["hello"] . ",<br /><br/>" .
+                               $langfile["taskassignedtext"] . " <a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a>";
+
                 $themail = new emailer($settings);
-                $themail->send_mail($user["email"], $langfile["taskassignedsubject"] , $langfile["hello"] . ",<br /><br/>" . $langfile["taskassignedtext"] . " <a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a>");
+                $themail->send_mail($user["email"], $subject , $mailcontent);
             }
         }
         $template->assign("assigntask", 1);
