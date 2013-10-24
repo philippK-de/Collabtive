@@ -89,13 +89,13 @@ if ($action == "addform") {
                            $langfile["messagewasaddedtext"] . "<br /><br />" . 
                            "<h3><a href = \"" . $url . "managemessage.php?action=showmessage&id=$id&mid=$themsg\">$title</a></h3>". // no need for line break after heading
                            $message;
-                           
 
             $subject = $langfile["messagewasaddedsubject"] . ' ("' . $title . '" - ' . $langfile['by'] . ' ' . $username . ')'; // added message title and author  to subject
+
             foreach($users as $user) {
                 if (!empty($user["email"])) {
                     if (is_array($sendto)) {
-                        if (in_array($user["ID"], $sendto)) {
+                        if (in_array($user["ID"], $sendto) && $userid != $user["ID"]) {
                             // send email
                             $themail = new emailer($settings);
                             $themail->send_mail($user["email"], $subject, $mailcontent);
@@ -236,7 +236,7 @@ if ($action == "addform") {
             foreach($users as $user) {
                 if (!empty($user["email"])) {
                     if (is_array($sendto)) {
-                        if (in_array($user["ID"], $sendto)) {
+                        if (in_array($user["ID"], $sendto) && $userid != $user["ID"]) {
                             // send email
                             $themail = new emailer($settings);
                             $themail->send_mail($user["email"], $subject, $mailcontent);
