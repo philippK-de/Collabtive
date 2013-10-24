@@ -135,9 +135,17 @@ if ($action == "index") {
 
         if ($settings["mailnotify"]) {
             if (!empty($email)) {
+
+                $subject = $langfile["profileaddedsubject"] . ' (' . $langfile['by'] . ' ' .$username.')';
+                $mailcontent = $langfile["hello"] . ",<br /><br/>" . 
+                               $langfile["profileaddedtext"] . "<br /><br />" . 
+                               $langfile["profileusername"] . ":&nbsp;" . "$name<br />" . 
+                               $langfile["profilepass"] . ":&nbsp;" . "$pass<br /><br />" .
+                               "<a href = \"$url\">$url</a>";
+
                 // send email
                 $themail = new emailer($settings);
-                $themail->send_mail($email, $langfile["profileaddedsubject"], $langfile["hello"] . ",<br /><br/>" . $langfile["profileaddedtext"] . "<br /><br />" . $langfile["profileusername"] . ":&nbsp;" . "$name<br />" . $langfile["profilepass"] . ":&nbsp;" . "$pass<br /><br />" . "<a href = \"$url\">$url</a>");
+                $themail->send_mail($email, $subject, $mailcontent);
             }
         }
         header("Location: admin.php?action=users&mode=added");
@@ -343,6 +351,9 @@ if ($action == "index") {
     }
 
     if (!empty($projects)) {
+
+        $subject = $langfile["projectassignedsubject"] . ' (' . $langfile['by'] . ' ' . $username .')';
+
         foreach($projects as $pro) {
             if (!chkproject($user, $pro)) {
                 if ($settings["mailnotify"]) {
@@ -350,9 +361,14 @@ if ($action == "index") {
                     $tuser = $usr->getProfile($user);
 
                     if (!empty($tuser["email"])) {
+                        
+                        $mailcontent = $langfile["hello"] . ",<br /><br/>" . 
+                                       $langfile["projectassignedtext"] .
+                                       " <a href = \"" . $url . "manageproject.php?action=showproject&id=$pro\">" . $url . "manageproject.php?action=showproject&id=$pro</a>";
+
                         // send email
                         $themail = new emailer($settings);
-                        $themail->send_mail($tuser["email"], $langfile["projectassignedsubject"] , $langfile["hello"] . ",<br /><br/>" . $langfile["projectassignedtext"] . " <a href = \"" . $url . "manageproject.php?action=showproject&id=$pro\">" . $url . "manageproject.php?action=showproject&id=$pro</a>");
+                        $themail->send_mail($tuser["email"], $subject , $mailcontent);
                     }
                 }
                 $project->assign($user, $pro);
@@ -405,6 +421,12 @@ if ($action == "index") {
 
     $add = $project->add($name, $desc, $end, $budget, 0);
     if ($add) {
+
+        $subject = $langfile["projectassignedsubject"] . ' (' . $langfile['by'] . ' ' .$username.')';
+        $mailcontent = $langfile["hello"] . ",<br /><br/>" . 
+                       $langfile["projectassignedtext"] .
+                       " <a href = \"" . $url . "manageproject.php?action=showproject&id=$add\">" . $url . "manageproject.php?action=showproject&id=$add</a>";
+
         foreach ($assignto as $member) {
             $project->assign($member, $add);
 
@@ -415,7 +437,7 @@ if ($action == "index") {
                 if (!empty($user["email"])) {
                     // send email
                     $themail = new emailer($settings);
-                    $themail->send_mail($user["email"], $langfile["projectassignedsubject"] , $langfile["hello"] . ",<br /><br/>" . $langfile["projectassignedtext"] . " <a href = \"" . $url . "manageproject.php?action=showproject&id=$add\">" . $url . "manageproject.php?action=showproject&id=$add</a>");
+                    $themail->send_mail($user["email"], $subject , $mailcontent);
                 }
             }
         }
