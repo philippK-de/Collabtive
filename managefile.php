@@ -79,13 +79,11 @@ if ($action == "upload") {
                 $sendto = array();
             }
 
-
             // check if subfolder exists, else root folder
             $whichfolder = (!empty($thefolder)) ? $thefolder : $langfile["rootdir"];
 
             // assemble content only once. no need to do this repeatedly
             $mailcontent = $langfile["hello"] . ",<br /><br/>" .
-                           $langfile["filecreatedtext"] . "<br /><br />" .
                            $langfile["filecreatedtext"] . "<br /><br />" .
                            $langfile["project"] . ": " . $pname["name"] . "<br />" .
                            $langfile["folder"] . ": " . $whichfolder . "<br />" .
