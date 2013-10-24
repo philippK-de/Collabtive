@@ -84,18 +84,26 @@ if ($action == "addform") {
             } elseif ($sendto[0] == "none") {
                 $sendto = array();
             }
+
+            $mailcontent = $langfile["hello"] . ",<br /><br/>" . 
+                           $langfile["messagewasaddedtext"] . "<br /><br />" . 
+                           "<h3><a href = \"" . $url . "managemessage.php?action=showmessage&id=$id&mid=$themsg\">$title</a></h3>". // no need for line break after heading
+                           $message;
+                           
+
+            $subject = $langfile["messagewasaddedsubject"] . ' ("' . $title . '" - ' . $langfile['by'] . ' ' . $username . ')'; // added message title and author  to subject
             foreach($users as $user) {
                 if (!empty($user["email"])) {
                     if (is_array($sendto)) {
                         if (in_array($user["ID"], $sendto)) {
                             // send email
                             $themail = new emailer($settings);
-                            $themail->send_mail($user["email"], $langfile["messagewasaddedsubject"], $langfile["hello"] . ",<br /><br/>" . $langfile["messagewasaddedtext"] . "<br /><br />" . $message . "<br /><br /><a href = \"" . $url . "managemessage.php?action=showmessage&id=$id&mid=$themsg\">$title</a>");
+                            $themail->send_mail($user["email"], $subject, $mailcontent);
                         }
                     } else {
                         // send email
                         $themail = new emailer($settings);
-                        $themail->send_mail($user["email"], $langfile["messagewasaddedsubject"], $langfile["hello"] . ",<br /><br/>" . $langfile["messagewasaddedtext"] . "<br /><br />" . $message . "<br /><br /><a href = \"" . $url . "managemessage.php?action=showmessage&id=$id&mid=$themsg\">$title</a>");
+                        $themail->send_mail($user["email"], $subject, $mailcontent);
                     }
                 }
             }
@@ -217,18 +225,26 @@ if ($action == "addform") {
             } elseif ($sendto[0] == "none") {
                 $sendto = array();
             }
+
+            $mailcontent = $langfile["hello"] . ",<br /><br/>" .
+                           $langfile["messagewasaddedtext"] . "<br /><br />" .
+                           "<h3><a href = \"" . $url . "managemessage.php?action=showmessage&id=$id&mid=$themsg\">$title</a></h3>". // no need for line break after heading
+                           $message;
+
+            $subject = $langfile["messagewasaddedsubject"] . ' ("' . $title . '" - ' . $langfile['by'] . ' ' . $username . ')'; // added message title and author  to subject
+
             foreach($users as $user) {
                 if (!empty($user["email"])) {
                     if (is_array($sendto)) {
                         if (in_array($user["ID"], $sendto)) {
                             // send email
                             $themail = new emailer($settings);
-                            $themail->send_mail($user["email"], $langfile["messagewasaddedsubject"], $langfile["hello"] . ",<br /><br/>" . $langfile["messagewasaddedtext"] . "<br /><br />" . $message . "<br /><br /><a href = \"" . $url . "managemessage.php?action=showmessage&id=$id&mid=$mid_post\">$title</a>");
+                            $themail->send_mail($user["email"], $subject, $mailcontent);
                         }
                     } else {
                         // send email
                         $themail = new emailer($settings);
-                        $themail->send_mail($user["email"], $langfile["messagewasaddedsubject"], $langfile["hello"] . ",<br /><br/>" . $langfile["messagewasaddedtext"] . "<br /><br />" . $message . "<br /><br /><a href = \"" . $url . "managemessage.php?action=showmessage&id=$id&mid=$mid_post\">$title</a>");
+                        $themail->send_mail($user["email"], $subject, $mailcontent);
                     }
                 }
             }
