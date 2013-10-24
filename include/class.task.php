@@ -575,11 +575,13 @@ class task {
      * Export all tasks of a user via iCal
      *
      * @param int $user User ID
+     * @param bool $show_long
      * @return bool
      */
-    function getIcal($user)
+    function getIcal($user,$show_long = true)
     {
         $user = (int) $user;
+	$show_long = (bool) $show_long;
 
         $username = $_SESSION["username"];
         $project = new project();
@@ -626,7 +628,17 @@ class task {
 
             $e = new vevent();
             $e->setProperty('categories' , $etask['list']);
-            $e->setProperty('dtstart' , $jahr, $monat, $tag, $std, $min); // 24 dec 2007 19.30
+            if ($show_long){
+
+              // if we have a task lasting 10 month, normally it will be displayed every day within this time span.
+              $e->setProperty('dtstart' , $jahr, $monat, $tag, $std, $min); // 24 dec 2007 19.30
+
+            } else {
+
+              // if the show_long flag is set, it will only be shown at the due date
+              $e->setProperty('dtstart' , $ejahr, $emonat, $etag, $estd, $emin);
+
+            }
             $e->setProperty('due' , $ejahr, $emonat, $etag, $estd, $emin); // 24 dec 2007 19.30
             $e->setProperty('dtend' , $ejahr, $emonat, $etag, $estd, $emin);
             $e->setProperty('description' , $etask["text"]);
