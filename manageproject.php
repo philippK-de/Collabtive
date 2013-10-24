@@ -155,9 +155,11 @@ if ($action == "editform") {
 
             if (!empty($user["email"])) {
 
-                $subject = $langfile["projectassignedsubject"] . ' (' .$langfile['by'].' '.$username.')';
-                $mailcontent = $langfile["hello"] . ",<br /><br/>" . 
-                               $langfile["projectassignedtext"] .
+                $userlang = readLangfile($user['locale']);
+
+                $subject = $userlang["projectassignedsubject"] . ' (' .$userlang['by'].' '.$username.')';
+                $mailcontent = $userlang["hello"] . ",<br /><br/>" . 
+                               $userlang["projectassignedtext"] .
                                " <a href = \"" . $url . "manageproject.php?action=showproject&id=$id\">" . $url . "manageproject.php?action=showproject&id=$id</a>";
                 // send email
                 $themail = new emailer($settings);
