@@ -79,20 +79,22 @@ if ($action == "upload") {
                 $sendto = array();
             }
 
-            // check if subfolder exists, else root folder
-            $whichfolder = (!empty($thefolder)) ? $thefolder : $langfile["rootdir"];
-
-            // assemble content only once. no need to do this repeatedly
-            $mailcontent = $langfile["hello"] . ",<br /><br/>" .
-                           $langfile["filecreatedtext"] . "<br /><br />" .
-                           $langfile["project"] . ": " . $pname["name"] . "<br />" .
-                           $langfile["folder"] . ": " . $whichfolder . "<br />" .
-                           $langfile["file"] . ":  <a href = \"" . $url . $fileprops["datei"] . "\">" . $url . $fileprops["datei"] . "</a>";
-
-            $subject = $langfile["filecreatedsubject"] . " (". $langfile['by'] . ' '. $username . ")";
-
             foreach($users as $user) {
                 if (!empty($user["email"])) {
+                    $userlang=readLangfile($user['locale']);
+
+                    // check if subfolder exists, else root folder
+                    $whichfolder = (!empty($thefolder)) ? $thefolder : $userlang["rootdir"];
+
+                    // assemble content only once. no need to do this repeatedly
+                    $mailcontent = $userlang["hello"] . ",<br /><br/>" .
+                                   $userlang["filecreatedtext"] . "<br /><br />" .
+                                   $userlang["project"] . ": " . $pname["name"] . "<br />" .
+                                   $userlang["folder"] . ": " . $whichfolder . "<br />" .
+                                   $userlang["file"] . ":  <a href = \"" . $url . $fileprops["datei"] . "\">" . $url . $fileprops["datei"] . "</a>";
+
+                    $subject = $userlang["filecreatedsubject"] . " (". $userlang['by'] . ' '. $username . ")";
+
                     if (is_array($sendto)) {
                         if (in_array($user["ID"], $sendto)) {
                             // send email
@@ -144,6 +146,8 @@ if ($action == "upload") {
                 $sendto = array();
             }
 
+            $userlang=readLangfile($user['locale']);
+
             // check if subfolder exists, else root folder
             $whichfolder = (!empty($thefolder)) ? $thefolder : $langfile["rootdir"];
 
@@ -156,11 +160,23 @@ if ($action == "upload") {
             $subject = $langfile["filecreatedsubject"] . " (" . $langfile['by'] . ' ' . $username . ")";
 
             foreach($users as $user) {
+
                 if (!empty($user["email"])) {
-                    if (is_array($sendto)) {
+                
+                    $userlang=readLangfile($user['locale']);
+
+                    // check if subfolder exists, else root folder
+                    $whichfolder = (!empty($thefolder)) ? $thefolder : $userlang["rootdir"];
+                    
+                    // assemble content only once. no need to do this repeatedly
+                    $mailcontent = $userlang["hello"] . ",<br /><br/>" .
+                                   $userlang["filecreatedtext"] . "<br /><br />" .
+                                   $userlang["project"] . ": " . $pname["name"] . "<br />" .
+                                   $userlang["folder"] . ": " . $whichfolder . "<br />" .
+                                   $userlang["file"] . ":  <a href = \"" . $url . $fileprops["datei"] . "\">" . $url . $fileprops["datei"] . "</a>";
+                                                                                                                                                                                                        $subject = $userlang["filecreatedsubject"] . " (". $userlang['by'] . ' '. $username . ")";
+                                                                                                                                                                                                        if (is_array($sendto)) {
                         if (in_array($user["ID"], $sendto)) {
-                            // check if subfolder exists, else root folder
-                            $whichfolder = (!empty($thefolder)) ? $thefolder : $langfile["rootdir"];
                             // send email
                             $themail = new emailer($settings);
                             $themail->send_mail($user["email"], $subject, $mailcontent);
