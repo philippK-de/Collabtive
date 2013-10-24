@@ -39,6 +39,8 @@ class project {
             $end = strtotime($end);
         }
         $now = time();
+        
+        $name = htmlspecialchars($name);
 
         $ins1Stmt = $conn->prepare("INSERT INTO projekte (`name`, `desc`, `end`, `start`, `status`, `budget`) VALUES (?,?,?,?,1,?)");
         $ins1 = $ins1Stmt->execute(array($name, $desc, $end, $now, (float) $budget));
@@ -106,6 +108,7 @@ class project {
         $end = strtotime($end);
         $id = (int) $id;
         $budget = (float) $budget;
+        $name = htmlspecialchars($name);
 
         $updStmt = $conn->prepare("UPDATE projekte SET name=?,`desc`=?,`end`=?,budget=? WHERE ID = ?");
         $upd = $updStmt->execute(array($name, $desc, $end, $budget, $id));
