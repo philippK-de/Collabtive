@@ -91,18 +91,20 @@ if ($action == "upload") {
                            $langfile["folder"] . ": " . $whichfolder . "<br />" .
                            $langfile["file"] . ":  <a href = \"" . $url . $fileprops["datei"] . "\">" . $url . $fileprops["datei"] . "</a>";
 
+            $subject = $langfile["filecreatedsubject"] . " (". $langfile['by'] . ' '. $username . ")";
+
             foreach($users as $user) {
                 if (!empty($user["email"])) {
                     if (is_array($sendto)) {
                         if (in_array($user["ID"], $sendto)) {
                             // send email
                             $themail = new emailer($settings);
-                            $themail->send_mail($user["email"], $langfile["filecreatedsubject"], $mailcontent);
+                            $themail->send_mail($user["email"], $subject, $mailcontent);
                         }
                     } else {
                         // send email
                         $themail = new emailer($settings);
-                        $themail->send_mail($user["email"], $langfile["filecreatedsubject"], $mailcontent); // why was there no content before?
+                        $themail->send_mail($user["email"], $subject, $mailcontent); // why was there no content before?
                     }
                 }
             }
@@ -143,6 +145,18 @@ if ($action == "upload") {
             } elseif ($sendto[0] == "none") {
                 $sendto = array();
             }
+
+            // check if subfolder exists, else root folder
+            $whichfolder = (!empty($thefolder)) ? $thefolder : $langfile["rootdir"];
+
+            $mailcontent = $langfile["hello"] . ",<br /><br/>" .
+                           $langfile["filecreatedtext"] . "<br /><br />" .
+                           $langfile["project"] . ": " . $pname["name"] . "<br />" .
+                           $langfile["folder"] . ": " . $whichfolder . "<br />" .
+                           $langfile["file"] . ":  <a href = \"" . $url . $fileprops["datei"] . "\">" . $url . $fileprops["datei"] . "</a>";
+
+            $subject = $langfile["filecreatedsubject"] . " (" . $langfile['by'] . ' ' . $username . ")";
+
             foreach($users as $user) {
                 if (!empty($user["email"])) {
                     if (is_array($sendto)) {
@@ -151,18 +165,12 @@ if ($action == "upload") {
                             $whichfolder = (!empty($thefolder)) ? $thefolder : $langfile["rootdir"];
                             // send email
                             $themail = new emailer($settings);
-                            $themail->send_mail($user["email"],                       // reciepent 
-                                                $langfile["filecreatedsubject"],      // subject
-                                                $langfile["hello"] . ",<br /><br/>" . // content
-                                                $langfile["filecreatedtext"] . "<br /><br />" . 
-                                                $langfile["project"] . ": " . $pname["name"] . "<br />" . 
-                                                $langfile["folder"] . ": " . $whichfolder . "<br />" . 
-                                                $langfile["file"] . ":  <a href = \"" . $url . $fileprops["datei"] . "\">" . $url . $fileprops["datei"] . "</a>");
+                            $themail->send_mail($user["email"], $subject, $mailcontent);
                         }
                     } else {
                         // send email
                         $themail = new emailer($settings);
-                        $themail->send_mail($user["email"], $langfile["filecreatedsubject"], "");
+                        $themail->send_mail($user["email"], $subject, $mailcontent);
                     }
                 }
             }
