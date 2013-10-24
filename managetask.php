@@ -73,6 +73,12 @@ if ($action == "addform") {
         foreach($assigned as $member) {
             $task->assign($tid, $member);
         }
+
+        $subject = $langfile["taskassignedsubject"] . ' (' . $langfile['by'] . ' ' . $username . ')';
+
+        $mailcontent = $langfile["hello"] . ",<br /><br/>" . 
+                       $langfile["taskassignedtext"] . " <a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a>";
+
         // if tasks was added and mailnotify is activated, send an email
         if ($settings["mailnotify"]) {
             foreach($assigned as $member) {
@@ -82,7 +88,7 @@ if ($action == "addform") {
                     // send email
                     $themail = new emailer($settings);
 
-                    $themail->send_mail($user["email"], $langfile["taskassignedsubject"] , $langfile["hello"] . ",<br /><br/>" . $langfile["taskassignedtext"] . " <a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a>");
+                    $themail->send_mail($user["email"], $subject , $mailcontent);
                 }
             }
         }
@@ -146,6 +152,13 @@ if ($action == "addform") {
     if ($task->edit($tid, $end, $title, $text, $tasklist)) {
         $redir = urldecode($redir);
         if (!empty($assigned)) {
+
+            $subject = $langfile["taskassignedsubject"] . ' (' . $langfile['by'] . ' ' . $username . ')';
+
+            $mailcontent = $langfile["hello"] . ",<br /><br/>" . 
+                           $langfile["taskassignedtext"] . " <a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a>";
+
+
             foreach($assigned as $assignee) {
                 $assignChk = $task->assign($tid, $assignee);
                 if ($assignChk) {
@@ -156,7 +169,7 @@ if ($action == "addform") {
                         if (!empty($user["email"])) {
                             // send email
                             $themail = new emailer($settings);
-                            $themail->send_mail($user["email"], $langfile["taskassignedsubject"] , $langfile["hello"] . ",<br /><br/>" . $langfile["taskassignedtext"] . " <a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a>");
+                            $themail->send_mail($user["email"], $subject , $mailcontent);
                         }
                     }
                 }
