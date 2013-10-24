@@ -77,7 +77,9 @@ if ($action == "addform") {
         $subject = $langfile["taskassignedsubject"] . ' (' . $langfile['by'] . ' ' . $username . ')';
 
         $mailcontent = $langfile["hello"] . ",<br /><br/>" . 
-                       $langfile["taskassignedtext"] . " <a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a>";
+                       $langfile["taskassignedtext"] . 
+                       "<h3><a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a></h3>".
+                       $text;
 
         // if tasks was added and mailnotify is activated, send an email
         if ($settings["mailnotify"]) {
@@ -155,8 +157,10 @@ if ($action == "addform") {
 
             $subject = $langfile["taskassignedsubject"] . ' (' . $langfile['by'] . ' ' . $username . ')';
 
-            $mailcontent = $langfile["hello"] . ",<br /><br/>" . 
-                           $langfile["taskassignedtext"] . " <a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a>";
+            $mailcontent = $langfile["hello"] . ",<br /><br/>" .
+                           $langfile["taskassignedtext"] .
+                           "<h3><a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a></h3>".
+                           $text;
 
 
             foreach($assigned as $assignee) {
@@ -258,7 +262,9 @@ if ($action == "addform") {
 
                 $subject = $langfile["taskassignedsubject"] . ' (' . $langfile['by'] .' '. $username . ')';
                 $mailcontent = $langfile["hello"] . ",<br /><br/>" .
-                               $langfile["taskassignedtext"] . " <a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a>";
+                               $langfile["taskassignedtext"] .
+                               "<h3><a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a></h3>".
+                               $text;
 
                 $themail = new emailer($settings);
                 $themail->send_mail($user["email"], $subject , $mailcontent);
