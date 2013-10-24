@@ -351,9 +351,6 @@ if ($action == "index") {
     }
 
     if (!empty($projects)) {
-
-        $subject = $langfile["projectassignedsubject"] . ' (' . $langfile['by'] . ' ' . $username .')';
-
         foreach($projects as $pro) {
             if (!chkproject($user, $pro)) {
                 if ($settings["mailnotify"]) {
@@ -362,8 +359,11 @@ if ($action == "index") {
 
                     if (!empty($tuser["email"])) {
                         
-                        $mailcontent = $langfile["hello"] . ",<br /><br/>" . 
-                                       $langfile["projectassignedtext"] .
+                        $userlang = readLangfile($tuser['locale']);
+
+                        $subject = $userlang["projectassignedsubject"] . ' (' . $userlang['by'] . ' ' . $username .')';
+                        $mailcontent = $userlang["hello"] . ",<br /><br/>" . 
+                                       $userlang["projectassignedtext"] .
                                        " <a href = \"" . $url . "manageproject.php?action=showproject&id=$pro\">" . $url . "manageproject.php?action=showproject&id=$pro</a>";
 
                         // send email
@@ -422,11 +422,6 @@ if ($action == "index") {
     $add = $project->add($name, $desc, $end, $budget, 0);
     if ($add) {
 
-        $subject = $langfile["projectassignedsubject"] . ' (' . $langfile['by'] . ' ' .$username.')';
-        $mailcontent = $langfile["hello"] . ",<br /><br/>" . 
-                       $langfile["projectassignedtext"] .
-                       " <a href = \"" . $url . "manageproject.php?action=showproject&id=$add\">" . $url . "manageproject.php?action=showproject&id=$add</a>";
-
         foreach ($assignto as $member) {
             $project->assign($member, $add);
 
@@ -435,6 +430,15 @@ if ($action == "index") {
                 $user = $usr->getProfile($member);
 
                 if (!empty($user["email"])) {
+                    
+                    $userlang = readLangfile($user['locale']);
+
+                    $subject = $userlang["projectassignedsubject"] . ' (' . $userlang['by'] . ' ' .$username.')';
+                    $mailcontent = $userlang["hello"] . ",<br /><br/>" . 
+                                   $userlang["projectassignedtext"] .
+                                   " <a href = \"" . $url . "manageproject.php?action=showproject&id=$add\">" . $url . "manageproject.php?action=showproject&id=$add</a>";
+
+
                     // send email
                     $themail = new emailer($settings);
                     $themail->send_mail($user["email"], $subject , $mailcontent);
