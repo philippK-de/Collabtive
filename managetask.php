@@ -166,7 +166,7 @@ if ($action == "addform") {
                         $usr = (object) new user();
                         $user = $usr->getProfile($assignee);
 
-                        if (!empty($user["email"])) {
+                        if (!empty($user["email"]) && $userid != $user["ID"]) {
                             // send email
                             $themail = new emailer($settings);
                             $themail->send_mail($user["email"], $subject , $mailcontent);
