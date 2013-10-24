@@ -154,9 +154,14 @@ if ($action == "editform") {
             $user = $usr->getProfile($user);
 
             if (!empty($user["email"])) {
+
+                $subject = $langfile["projectassignedsubject"] . ' (' .$langfile['by'].' '.$username.')';
+                $mailcontent = $langfile["hello"] . ",<br /><br/>" . 
+                               $langfile["projectassignedtext"] .
+                               " <a href = \"" . $url . "manageproject.php?action=showproject&id=$id\">" . $url . "manageproject.php?action=showproject&id=$id</a>";
                 // send email
                 $themail = new emailer($settings);
-                $themail->send_mail($user["email"], $langfile["projectassignedsubject"] , $langfile["hello"] . ",<br /><br/>" . $langfile["projectassignedtext"] . " <a href = \"" . $url . "manageproject.php?action=showproject&id=$id\">" . $url . "manageproject.php?action=showproject&id=$id</a>");
+                $themail->send_mail($user["email"], $subject , $mailcontent);
             }
         }
         if ($redir) {
