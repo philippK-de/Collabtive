@@ -87,16 +87,17 @@ if ($action == "addform") {
 
             foreach($users as $user) {
 
-                $userlang = readLangfile($user['locale']);
-
-                $subject = $userlang["messagewasaddedsubject"] . ' ("' . $title . '" - ' . $userlang['by'] . ' ' . $username . ')'; // added message title and author  to subject
-
-                $mailcontent = $userlang["hello"] . ",<br /><br/>" .
-                               $userlang["messagewasaddedtext"] . "<br /><br />" .
-                               "<h3><a href = \"" . $url . "managemessage.php?action=showmessage&id=$id&mid=$themsg\">$title</a></h3>". // no need for line break after heading
-                               $message;
-
                 if (!empty($user["email"])) {
+
+                    $userlang = readLangfile($user['locale']);
+
+                    $subject = $userlang["messagewasaddedsubject"] . ' ("' . $title . '" - ' . $userlang['by'] . ' ' . $username . ')'; // added message title and author  to subject
+
+                    $mailcontent = $userlang["hello"] . ",<br /><br/>" .
+                                   $userlang["messagewasaddedtext"] . "<br /><br />" .
+                                   "<h3><a href = \"" . $url . "managemessage.php?action=showmessage&id=$id&mid=$themsg\">$title</a></h3>". // no need for line break after heading
+                                   $message;
+
                     if (is_array($sendto)) {
                         if (in_array($user["ID"], $sendto) && $userid != $user["ID"]) {
 
@@ -232,16 +233,17 @@ if ($action == "addform") {
 
             foreach($users as $user) {
 
-                $userlang = readLangfile($user['locale']);
-
-                $subject = $userlang["messagewasaddedsubject"] . ' ("' . $title . '" - ' . $userlang['by'] . ' ' . $username . ')'; // added message title and author  to subject
-
-                $mailcontent = $userlang["hello"] . ",<br /><br/>" .
-                               $userlang["messagewasaddedtext"] . "<br /><br />" .
-                               "<h3><a href = \"" . $url . "managemessage.php?action=showmessage&id=$id&mid=$themsg\">$title</a></h3>". // no need for line break after heading
-                               $message;
-
                 if (!empty($user["email"])) {
+                    
+                    $userlang = readLangfile($user['locale']);
+
+                    $subject = $userlang["messagewasaddedsubject"] . ' ("' . $title . '" - ' . $userlang['by'] . ' ' . $username . ')'; // added message title and author  to subject
+
+                    $mailcontent = $userlang["hello"] . ",<br /><br/>" .
+                                   $userlang["messagewasaddedtext"] . "<br /><br />" .
+                                   "<h3><a href = \"" . $url . "managemessage.php?action=showmessage&id=$id&mid=$themsg\">$title</a></h3>". // no need for line break after heading
+                                   $message;
+
                     if (is_array($sendto)) {
                         if (in_array($user["ID"], $sendto) && $userid != $user["ID"]) {
                             // send email
