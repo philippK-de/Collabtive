@@ -78,7 +78,6 @@ if ($action == "upload") {
             } elseif ($sendto[0] == "none") {
                 $sendto = array();
             }
-
             foreach($users as $user) {
                 if (!empty($user["email"])) {
                     $userlang=readLangfile($user['locale']);
@@ -145,24 +144,8 @@ if ($action == "upload") {
             } elseif ($sendto[0] == "none") {
                 $sendto = array();
             }
-
-            $userlang=readLangfile($user['locale']);
-
-            // check if subfolder exists, else root folder
-            $whichfolder = (!empty($thefolder)) ? $thefolder : $langfile["rootdir"];
-
-            $mailcontent = $langfile["hello"] . ",<br /><br/>" .
-                           $langfile["filecreatedtext"] . "<br /><br />" .
-                           $langfile["project"] . ": " . $pname["name"] . "<br />" .
-                           $langfile["folder"] . ": " . $whichfolder . "<br />" .
-                           $langfile["file"] . ":  <a href = \"" . $url . $fileprops["datei"] . "\">" . $url . $fileprops["datei"] . "</a>";
-
-            $subject = $langfile["filecreatedsubject"] . " (" . $langfile['by'] . ' ' . $username . ")";
-
             foreach($users as $user) {
-
                 if (!empty($user["email"])) {
-                
                     $userlang=readLangfile($user['locale']);
 
                     // check if subfolder exists, else root folder
@@ -174,8 +157,10 @@ if ($action == "upload") {
                                    $userlang["project"] . ": " . $pname["name"] . "<br />" .
                                    $userlang["folder"] . ": " . $whichfolder . "<br />" .
                                    $userlang["file"] . ":  <a href = \"" . $url . $fileprops["datei"] . "\">" . $url . $fileprops["datei"] . "</a>";
-                                                                                                                                                                                                        $subject = $userlang["filecreatedsubject"] . " (". $userlang['by'] . ' '. $username . ")";
-                                                                                                                                                                                                        if (is_array($sendto)) {
+                    
+                    $subject = $userlang["filecreatedsubject"] . " (". $userlang['by'] . ' '. $username . ")";
+
+                    if (is_array($sendto)) {                                                                                                                                        
                         if (in_array($user["ID"], $sendto)) {
                             // send email
                             $themail = new emailer($settings);

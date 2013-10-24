@@ -84,11 +84,8 @@ if ($action == "addform") {
             } elseif ($sendto[0] == "none") {
                 $sendto = array();
             }
-
             foreach($users as $user) {
-
                 if (!empty($user["email"])) {
-
                     $userlang = readLangfile($user['locale']);
 
                     $subject = $userlang["messagewasaddedsubject"] . ' ("' . $title . '" - ' . $userlang['by'] . ' ' . $username . ')'; // added message title and author  to subject
@@ -100,7 +97,6 @@ if ($action == "addform") {
 
                     if (is_array($sendto)) {
                         if (in_array($user["ID"], $sendto) && $userid != $user["ID"]) {
-
                           // send email
                           $themail = new emailer($settings);
                           $themail->send_mail($user["email"], $subject, $mailcontent);
@@ -230,11 +226,8 @@ if ($action == "addform") {
             } elseif ($sendto[0] == "none") {
                 $sendto = array();
             }
-
             foreach($users as $user) {
-
                 if (!empty($user["email"])) {
-                    
                     $userlang = readLangfile($user['locale']);
 
                     $subject = $userlang["messagewasaddedsubject"] . ' ("' . $title . '" - ' . $userlang['by'] . ' ' . $username . ')'; // added message title and author  to subject

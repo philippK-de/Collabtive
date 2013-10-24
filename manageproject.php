@@ -154,10 +154,10 @@ if ($action == "editform") {
             $user = $usr->getProfile($user);
 
             if (!empty($user["email"])) {
-
                 $userlang = readLangfile($user['locale']);
 
                 $subject = $userlang["projectassignedsubject"] . ' (' .$userlang['by'].' '.$username.')';
+
                 $mailcontent = $userlang["hello"] . ",<br /><br/>" . 
                                $userlang["projectassignedtext"] .
                                " <a href = \"" . $url . "manageproject.php?action=showproject&id=$id\">" . $url . "manageproject.php?action=showproject&id=$id</a>";

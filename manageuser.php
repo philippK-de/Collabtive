@@ -62,6 +62,7 @@ if ($action == "loginerror") {
     $newpass = $user->resetPassword($email);
     if ($newpass !== false) {
         $langFile=readLangfile($newpass['locale']);
+
         $subject = $langfile["projectpasswordsubject"];
 
         $mailcontent = $langfile["hello"] . ",<br /><br/>" .

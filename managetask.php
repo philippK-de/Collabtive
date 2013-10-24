@@ -73,7 +73,6 @@ if ($action == "addform") {
         foreach($assigned as $member) {
             $task->assign($tid, $member);
         }
-
         // if tasks was added and mailnotify is activated, send an email
         if ($settings["mailnotify"]) {
             foreach($assigned as $member) {
@@ -81,7 +80,6 @@ if ($action == "addform") {
                 $user = $usr->getProfile($member);
                 if (!empty($user["email"]) && $userid != $user["ID"]) {
                     // send email
-
                     $userlang = readLangfile($user['locale']);
 
                     $subject = $userlang["taskassignedsubject"] . ' (' . $userlang['by'] . ' ' . $username . ')';
@@ -157,8 +155,6 @@ if ($action == "addform") {
     if ($task->edit($tid, $end, $title, $text, $tasklist)) {
         $redir = urldecode($redir);
         if (!empty($assigned)) {
-
-
             foreach($assigned as $assignee) {
                 $assignChk = $task->assign($tid, $assignee);
                 if ($assignChk) {
@@ -167,7 +163,6 @@ if ($action == "addform") {
                         $user = $usr->getProfile($assignee);
 
                         if (!empty($user["email"]) && $userid != $user["ID"]) {
-
                             $userlang = readLangfile($user['locale']);
 
                             $subject = $userlang["taskassignedsubject"] . ' (' . $userlang['by'] . ' ' . $username . ')';
@@ -265,7 +260,6 @@ if ($action == "addform") {
 
             if (!empty($user["email"])) {
                 // send email
-
                 $userlang = readLangfile($user['locale']);
 
                 $subject = $userlang["taskassignedsubject"] . ' (' . $userlang['by'] .' '. $username . ')';
