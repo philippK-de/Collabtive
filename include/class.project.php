@@ -382,7 +382,7 @@ class project {
     }
 
     /**
-     * Lists all projects assigned to a given member ordered by due date ascending
+     * Lists all projects assigned to a given member ordered by name ascending
      *
      * @param int $user Eindeutige Mitgliedsnummer
      * @param int $status Bearbeitungsstatus von Projekten (1 = offenes Projekt)
@@ -394,26 +394,18 @@ class project {
 
         $myprojekte = array();
         $user = (int) $user;
+        $status = (int) $status;
 
-        $sel = $conn->prepare("SELECT projekt FROM projekte_assigned WHERE user = ? ORDER BY ID ASC");
+        //$sel = $conn->prepare("SELECT projekt FROM projekte_assigned WHERE user = ? ORDER BY ID ASC");
+        $sel = $conn->prepare("SELECT projekte.ID FROM projekte LEFT join projekte_assigned ON projekte.ID=projekte_assigned.projekt WHERE user=? and status=$status order by name");
         $selStmt = $sel->execute(array($user));
 
-        while ($projs = $sel->fetch()) {
-            $projekt = $conn->query("SELECT ID FROM projekte WHERE ID = " . $projs[0] . " AND status={$conn->quote((int) $status)}")->fetch();
-            if ($projekt) {
-                $project = $this->getProject($projekt["ID"]);
-                array_push($myprojekte, $project);
-            }
+        while ($proj = $sel->fetch()) {
+        	$project = $this->getProject($proj["ID"]);
+            array_push($myprojekte, $project);
         }
 
         if (!empty($myprojekte)) {
-            // Sort projects by due date ascending
-            $date = array();
-            foreach ($myprojekte as $key => $row) {
-                $date[$key] = $row['end'];
-            }
-            array_multisort($date, SORT_ASC, $myprojekte);
-
             return $myprojekte;
         } else {
             return false;
