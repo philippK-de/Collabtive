@@ -397,49 +397,22 @@ class project {
         $status = (int) $status;
 
         //$sel = $conn->prepare("SELECT projekt FROM projekte_assigned WHERE user = ? ORDER BY ID ASC");
-        $sel = $conn->prepare("SELECT projekte.ID FROM projekte LEFT join projekte_assigned ON projekte.ID=projekte_assigned.projekt WHERE user=? and status=$status order by name");
+        $sel = $conn->prepare("SELECT projekte.ID
+                               FROM projekte LEFT join projekte_assigned
+                               ON projekte.ID=projekte_assigned.projekt
+        		                   WHERE user=? AND status=$status
+        		                   ORDER BY name"); // you may apply id here, but i prefere sorting by name
         $selStmt = $sel->execute(array($user));
 
         while ($proj = $sel->fetch()) {
         	$project = $this->getProject($proj["ID"]);
-            array_push($myprojekte, $project);
+          array_push($myprojekte, $project);
         }
 
         if (!empty($myprojekte)) {
             return $myprojekte;
-        } else {
-            return false;
         }
-    }
-
-    /**
-     * Lists all project IDs assigned to a user
-     *
-     * @param int $user ID of the user
-     * @return array $myprojekte Project IDs for user
-     */
-    function getMyProjectIds($user)
-    {
-        global $conn;
-
-        $myprojekte = array();
-        $sel = $conn->prepare("SELECT projekt FROM projekte_assigned WHERE user = ? ORDER BY end ASC");
-        $selStmt = $sel->execute(array($user));
-
-        if ($sel) {
-            while ($projs = $sel->fetch()) {
-                $sel2 = $conn->query("SELECT ID FROM projekte WHERE ID = " . $projs[0]);
-                $projekt = $sel2->fetch();
-                if ($projekt) {
-                    array_push($myprojekte, $projekt);
-                }
-            }
-        }
-        if (!empty($myprojekte)) {
-            return $myprojekte;
-        } else {
-            return false;
-        }
+        return false;
     }
 
     /**
