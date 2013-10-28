@@ -370,8 +370,7 @@ class project {
         $selStmt = $sel->execute(array($status));
 
         while ($projekt = $sel->fetch()) {
-            $project = $this->getProject($projekt["ID"]);
-            array_push($projekte, $project);
+            $projekte[]=$this->getProject($projekt["ID"]); // unneeded array_push would create overhead
         }
 
         if (!empty($projekte)) {
@@ -405,8 +404,7 @@ class project {
         $selStmt = $sel->execute(array($user));
 
         while ($proj = $sel->fetch()) {
-        	$project = $this->getProject($proj["ID"]);
-          array_push($myprojekte, $project);
+        	$myprojekte[] = $this->getProject($proj["ID"]); // useless array_push would create overhead
         }
 
         if (!empty($myprojekte)) {
