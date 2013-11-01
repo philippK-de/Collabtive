@@ -89,7 +89,10 @@ class datei {
         $del = $conn->query("DELETE FROM projectfolders WHERE ID = $id");
         if ($del) {
             // remove directory
-            $foldstr = CL_ROOT . "/files/" . CL_CONFIG . "/$project/" . $folder["name"] . "/";
+            $foldstr = CL_ROOT . "/files/" . CL_CONFIG . "/$project/_" . $id . "_/";
+            if (!file_exists($foldstr)){ // for compatibility with folders created in previous versions of collabtive
+              $foldstr = CL_ROOT . "/files/" . CL_CONFIG . "/$project/" . $folder["name"] . "/";
+            }
             delete_directory($foldstr);
             $this->mylog->add($folder["name"], 'folder', 3, $project);
             return true;
