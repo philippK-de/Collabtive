@@ -35,25 +35,17 @@ class datei {
     {
         global $conn;
         $project = (int) $project;
-        $folderOrig = $folder;
-        // replace umlauts
-        $folder = str_replace("ä", "ae" , $folder);
-        $folder = str_replace("ö", "oe" , $folder);
-        $folder = str_replace("ü", "ue" , $folder);
-        $folder = str_replace("ß", "ss" , $folder);
-        // remove whitespace
-        $folder = preg_replace("/\W/", "", $folder);
-        $folder = preg_replace("/[^-_0-9a-zA-Z]/", "_", $folder);
         // insert the folder into the db
         $insStmt = $conn->prepare("INSERT INTO projectfolders (parent, project, name, description, visible) VALUES (?, ?, ?, ?, ?)");
         $ins = $insStmt->execute(array($parent, $project, $folder, $desc, $visible));
         if ($ins) {
+            $id = $conn->lastInsertId();
             // create the folder
-            $makefolder = CL_ROOT . "/files/" . CL_CONFIG . "/$project/$folder/";
+            $makefolder = CL_ROOT . "/files/" . CL_CONFIG . "/$project/_{$id}_/";
             if (!file_exists($makefolder)) {
                 if (mkdir($makefolder, 0777, true)) {
                     // folder created
-                    $this->mylog->add($folderOrig, 'folder', 1, $project);
+                    $this->mylog->add($folder, 'folder', 1, $project);
                     return true;
                 }
             } else {

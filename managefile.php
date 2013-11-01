@@ -54,9 +54,14 @@ if ($action == "upload") {
     $num = $_POST['numfiles'];
 
     if ($upfolder) {
-        $thefolder = $myfile->getFolder($upfolder);
-        $thefolder = $thefolder["name"];
-        $upath = "files/" . CL_CONFIG . "/$id/" . $thefolder;
+        
+        $upath = "files/" . CL_CONFIG . "/$id/_" . $upfolder . '_';
+        
+        if (!file_exists($upath)){ // those lines are for compatibility with former versions, which created named folders
+          $thefolder = $myfile->getFolder($upfolder);
+          $thefolder = $thefolder["name"];
+          $upath = "files/" . CL_CONFIG . "/$id/" . $thefolder;
+        }
     } else {
         $upath = "files/" . CL_CONFIG . "/$id";
         $upfolder = 0;
@@ -108,9 +113,13 @@ if ($action == "upload") {
         die();
     }
     if ($upfolder) {
-        $thefolder = $myfile->getFolder($upfolder);
-        $thefolder = $thefolder["name"];
-        $upath = "files/" . CL_CONFIG . "/$id/" . $thefolder;
+        $upath = "files/" . CL_CONFIG . "/$id/_" . $upfolder . '_';
+
+        if (!file_exists($upath)){ // those lines are for compatibility with former versions, which created named folders
+          $thefolder = $myfile->getFolder($upfolder);
+          $thefolder = $thefolder["name"];
+          $upath = "files/" . CL_CONFIG . "/$id/" . $thefolder;
+        }
     } else {
         $upath = "files/" . CL_CONFIG . "/$id";
         $upfolder = 0;
