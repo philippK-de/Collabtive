@@ -224,16 +224,16 @@ class datei {
      * Also adds the file to the database using add_file()
      *
      * @param string $fname Name of the HTML form field POSTed from
-     * @param string $ziel Destination directory
+     * @param string $dest_dir Destination directory
      * @param int $project Project ID of the associated project
      * @param int $folder
      * @return bool
      */
-    function upload($fname, $ziel, $project, $folder = 0)
+    function upload($fname, $dest_dir, $project, $folder = 0)
     {
         // Get data from form
         $name = $_FILES[$fname]['name'];
-        $typ = $_FILES[$fname]['type'];
+        $mimetype = $_FILES[$fname]['type'];
         $size = $_FILES[$fname]['size'];
         $tmp_name = $_FILES[$fname]['tmp_name'];
         $tstr = $fname . "-title";
@@ -262,19 +262,19 @@ class datei {
         $tagobj = new tags();
         $tags = $tagobj->formatInputTags($tags);
         // find the extension
-        $teilnamen = explode(".", $name);
-        $teile = count($teilnamen);
-        $workteile = $teile - 1;
-        $erweiterung = $teilnamen[$workteile];
+        $name_parts = explode(".", $name);
+        $part_count = count($name_parts);
+        $dummy = $part_count - 1;
+        $extension = $name_parts[$dummy];
         $subname = "";
         // if its a php file, treat it as plaintext so its not executed when opened in the browser.
-        if (stristr($erweiterung, "php")) {
-            $erweiterung = "txt";
-            $typ = "text/plain";
+        if (stristr($extension, "php")) {
+            $extension = "txt";
+            $mimetype = "text/plain";
         }
         // Re assemble the file name from the exploded array, without the extension
-        for ($i = 0; $i < $workteile; $i++) {
-            $subname .= $teilnamen[$i];
+        for ($i = 0; $i < $dummy; $i++) {
+            $subname .= $name_parts[$i];
         }
         // Create a random number
         $randval = mt_rand(1, 99999);
@@ -292,20 +292,20 @@ class datei {
         }
         // Assemble the final filename from the original name plus the random value.
         // This is to ensure that files with the same name do not overwrite each other.
-        $name = $subname . "_" . $randval . "." . $erweiterung;
+        $name = $subname . "_" . $randval . "." . $extension;
         // Absolute file system path used to move the file to its final location
-        $datei_final = $root . "/" . $ziel . "/" . $name;
+        $path = $root . "/" . $dest_dir . "/" . $name;
         // Relative path, used for display / url construction in the file manager
-        $datei_final2 = $ziel . "/" . $name;
+        $relative_path = $dest_dir . "/" . $name;
 
-        if (!file_exists($datei_final)) {
-            if (move_uploaded_file($tmp_name, $datei_final)) {
-                // $filesize = filesize($datei_final);
+        if (!file_exists($path)) {
+            if (move_uploaded_file($tmp_name, $path)) {
+                // $filesize = filesize($path);
                 if ($project > 0) {
                     // file did not already exist, was uploaded, and a project is set
                     // add the file to the database, add the upload event to the log and return the file ID.
-                    chmod($datei_final, 0755);
-                    $fid = $this->add_file($name, $desc, $project, 0, "$tags", $datei_final2, "$typ", $title, $folder, $visstr);
+                    chmod($path, 0755);
+                    $fid = $this->add_file($name, $desc, $project, 0, "$tags", $relative_path, "$mimetype", $title, $folder, $visstr);
                     if (!empty($title)) {
                         $this->mylog->add($title, 'file', 1, $project);
                     } else {
