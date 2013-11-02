@@ -224,19 +224,22 @@ if ($action == "upload") {
     }
 } elseif ($action == "folderexport") {
     $thefolder = $myfile->getFolder($thisfile);
+    $foldername = $thefolder["name"];
+    $secure_name=$thisfile.'.'.$myfile->secure_name($foldername);
+    
+    $relativePath="/files/" . CL_CONFIG . "/$id/$secure_name.zip";
+    $zipPath = CL_ROOT . $relativePath;
+    $zip = new PclZip($zipPath);
 
-    $topfad = CL_ROOT . "/files/" . CL_CONFIG . "/$id" . "/folder" . $thefolder["ID"] . ".zip";
-    $zip = new PclZip($topfad);
-
-    if (file_exists($topfad)) {
-        if (unlink($topfad)) {
-            $create = $zip->create(CL_ROOT . "/files/" . CL_CONFIG . "/$id/$thefolder[name]/", PCLZIP_OPT_REMOVE_ALL_PATH);
+    if (file_exists($zipPath)) {
+        if (unlink($zipPath)) {
+            $create = $zip->create(CL_ROOT . "/files/" . CL_CONFIG . "/$id/$secure_name/", PCLZIP_OPT_REMOVE_ALL_PATH);
         }
     } else {
-        $create = $zip->create(CL_ROOT . "/files/" . CL_CONFIG . "/$id/$thefolder[name]/", PCLZIP_OPT_REMOVE_ALL_PATH);
+        $create = $zip->create(CL_ROOT . "/files/" . CL_CONFIG . "/$id/$secure_name/", PCLZIP_OPT_REMOVE_ALL_PATH);
     }
     if ($create != 0) {
-        $loc = $url . "/files/" . CL_CONFIG . "/$id" . "/folder" . $thefolder["ID"] . ".zip";
+    	$loc=$url.$relativePath;
         header("Location: $loc");
     }
 } elseif ($action == "showproject") {
