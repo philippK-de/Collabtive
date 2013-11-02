@@ -217,6 +217,27 @@ class datei {
             return $this->getAbsolutePathName($parent) . "/" . $folder['name'];
         }
     }
+    
+    /**
+     * replaces umlauts and any non-alphabetic characters
+     * @param String $filename a file name
+     * @return String the converted filename
+     */
+    function secure_name($filename){
+    	
+    	$map=array(
+        'Ä' => 'Ae',
+        'ä' => 'ae',
+    		'Ö' => 'Oe',
+        'ö' => 'oe',
+        'Ü' => 'Ue',
+        'ü' => 'ue',
+        'ß' => 'ss');
+    	$filename=strtr($filename, $map);
+    	$filename = preg_replace("/\W/", "", $filename);    	// remove whitespace
+    	return $filename; 
+    }
+    
     // FILE METHODS
     /**
      * Upload a file
@@ -264,7 +285,7 @@ class datei {
         
         $pathinfo = pathinfo($name);
         $extension= $pathinfo['extension'];
-        $subname = $pathinfo['filename'];
+        $subname = $this->secure_name($pathinfo['filename']);
         
         // if its a php file, treat it as plaintext so its not executed when opened in the browser.
         if (stristr($extension, "php")) {
@@ -274,14 +295,6 @@ class datei {
         
         // Create a random number
         $randval = mt_rand(1, 99999);
-        // only allow a-z , 0-9 in filenames, substitute other chars with _
-        $subname = str_replace("ä", "ae" , $subname);
-        $subname = str_replace("ö", "oe" , $subname);
-        $subname = str_replace("ü", "ue" , $subname);
-        $subname = str_replace("ß", "ss" , $subname);
-        $subname = preg_replace("/[^-_0-9a-zA-Z]/", "_", $subname);
-        // remove whitespace
-        $subname = preg_replace("/\W/", "", $subname);
         // if filename is longer than 200 chars, cut it.
         if (strlen($subname) > 200) {
             $subname = substr($subname, 0, 200);
@@ -348,7 +361,7 @@ class datei {
         
         $pathinfo = pathinfo($name);
         $extension= $pathinfo['extension'];
-        $subname = $pathinfo['filename'];
+        $subname = $this->secure_name($pathinfo['filename']);
 
         // if its a php file, treat it as plaintext so its not executed when opened in the browser.
         if (stristr($extension, "php")) {
@@ -357,14 +370,6 @@ class datei {
         }
         
         $randval = mt_rand(1, 99999);
-        // only allow a-z , 0-9 in filenames, substitute other chars with _
-        $subname = str_replace("ä", "ae" , $subname);
-        $subname = str_replace("ö", "oe" , $subname);
-        $subname = str_replace("ü", "ue" , $subname);
-        $subname = str_replace("ß", "ss" , $subname);
-        $subname = preg_replace("/[^-_0-9a-zA-Z]/", "_", $subname);
-        // remove whitespace
-        $subname = preg_replace("/\W/", "", $subname);
         // if filename is longer than 200 chars, cut it.
         if (strlen($subname) > 200) {
             $subname = substr($subname, 0, 200);
