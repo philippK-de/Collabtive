@@ -40,8 +40,9 @@ class datei {
         $ins = $insStmt->execute(array($parent, $project, $folder, $desc, $visible));
         if ($ins) {
             $id = $conn->lastInsertId();
+            $secure_name=$id.'.'.$this->secure_name($folder);
             // create the folder
-            $makefolder = CL_ROOT . "/files/" . CL_CONFIG . "/$project/_{$id}_/";
+            $makefolder = CL_ROOT . "/files/" . CL_CONFIG . "/$project/$secure_name/";
             if (!file_exists($makefolder)) {
                 if (mkdir($makefolder, 0777, true)) {
                     // folder created
@@ -86,10 +87,13 @@ class datei {
                 $this->deleteFolder($sub["ID"], $sub["project"]);
             }
         }
+        
+				$secure_name=$id.'.'.$this->secure_name($folder['name']);
+        
         $del = $conn->query("DELETE FROM projectfolders WHERE ID = $id");
         if ($del) {
             // remove directory
-            $foldstr = CL_ROOT . "/files/" . CL_CONFIG . "/$project/_" . $id . "_/";
+            $foldstr = CL_ROOT . "/files/" . CL_CONFIG . "/$project/$secure_name/";
             if (!file_exists($foldstr)){ // for compatibility with folders created in previous versions of collabtive
               $foldstr = CL_ROOT . "/files/" . CL_CONFIG . "/$project/" . $folder["name"] . "/";
             }
@@ -199,7 +203,7 @@ class datei {
     }
 
     /**
-     * Get an absolute path name
+     * Get an VIRTUAL absolute path name. This does not reflect the real file storage location, but the location as displayed on the web interface.
      * Returns the absolute name (relative to the root-directory of the project) of a folder.
      *
      * @param array $folder The folder to be inspected
