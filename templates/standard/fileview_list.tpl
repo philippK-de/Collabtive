@@ -57,15 +57,15 @@
 						<tr >
 							<td style = "border-right:0px;"><a href = "{$files[file].datei}" {if $files[file].imgfile == 1} rel="lytebox[]" {elseif $files[file].imgfile == 2} rel = "lyteframe[text]" rev="width: 650px; height: 500px;"{/if}>
 													 		{if $files[file].imgfile == 1}
-													 		<img src = "thumb.php?pic={$files[file].datei}&amp;width=32" alt="{$files[file].name}" />
+													 		<img src = "thumb.php?pic={$files[file].datei}&amp;width=32" alt="{$files[file].title}" />
 													 		{else}
-													 		<img src = "templates/standard/images/files/{$files[file].type}.png" alt="{$files[file].name}" />
+													 		<img src = "templates/standard/images/files/{$files[file].type}.png" alt="{$files[file].title}" />
 													 		{/if}
 													 	</a></td>
 							<td style = "border-left:0px;">
                                         <a href = "{$files[file].datei}" {if $files[file].imgfile == 1} rel="lytebox[]" {elseif $files[file].imgfile == 2} rel = "lyteframe[text]" rev="width: 650px; height: 500px;"{/if}>
 
-										{$files[file].name|truncate:75:"...":true}
+										{$files[file].title|truncate:75:"...":true}
 
                                         </a>
 

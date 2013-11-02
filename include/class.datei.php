@@ -369,7 +369,7 @@ class datei {
         if (strlen($subname) > 200) {
             $subname = substr($subname, 0, 200);
         }
-
+        $title = $name;        
         $name = $subname . "_" . $randval . "." . $extension;
         $relative_path = $target . "/" . $name;
         $path = $root . "/" . $relative_path;
@@ -382,7 +382,6 @@ class datei {
                      * file did not already exist, was uploaded, and a project is set
                      * add the file to the database, add the upload event to the log and return the file ID.
                      */
-                    $title = $name;
                     chmod($path, 0755);
                     $fid = $this->add_file($name, " ", $project, 0, "", $relative_path, $mimetype, $title, $folder, $visstr);
                     $this->mylog->add($name, 'file', 1, $project);

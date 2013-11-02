@@ -54,9 +54,9 @@
 						<td class="thumb">
 							<a href = "{$files[file].datei}" {if $files[file].imgfile == 1} rel="lytebox[]" {elseif $files[file].imgfile == 2} rel = "lyteframe[text]" rev="width: 650px; height: 500px;"{/if}>
 								{if $files[file].imgfile == 1}
-								<img src = "thumb.php?pic={$files[file].datei}&amp;width=32" alt="{$files[file].name}" />
+								<img src = "thumb.php?pic={$files[file].datei}&amp;width=32" alt="{$files[file].title}" />
 								{else}
-								<img src = "templates/standard/images/files/{$files[file].type}.png" alt="{$files[file].name}" />
+								<img src = "templates/standard/images/files/{$files[file].type}.png" alt="{$files[file].title}" />
 								{/if}
 							</a>
 						</td>
@@ -74,7 +74,7 @@
 					<tr>
 						<td colspan="3">
 							<span class="name">
-								<a href = "{$files[file].datei}"{if $files[file].imgfile == 1} rel="lytebox[img{$files[file].ID}]" {elseif $files[file].imgfile == 2} rel = "lyteframe[text{$files[file].ID}]"{/if} title="{$files[file].name}" onmousedown = "change('managefile.php?action=makeseen&file={$files[file].ID}&id={$project.ID}','jslog');">
+								<a href = "{$files[file].datei}"{if $files[file].imgfile == 1} rel="lytebox[img{$files[file].ID}]" {elseif $files[file].imgfile == 2} rel = "lyteframe[text{$files[file].ID}]"{/if} title="{$files[file].title}" onmousedown = "change('managefile.php?action=makeseen&file={$files[file].ID}&id={$project.ID}','jslog');">
 									{if $files[file].title != ""}
 									{$files[file].title|truncate:14:"...":true}
 									{else}
