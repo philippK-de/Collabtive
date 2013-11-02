@@ -73,7 +73,9 @@ class datei {
         $id = (int) $id;
         $project = (int) $project;
         $folder = $this->getFolder($id);
-
+        if ($folder === false){
+        	return true; // this looks weird. but if the folder, we want to delete is gone (however this happened), the deletion is somehow successfull
+        }
         $files = $this->getProjectFiles($project, 10000, $id);
         // delete all the files in the folder from the database (and filesystem as well)
         if (!empty($files)) {
@@ -114,6 +116,9 @@ class datei {
         global $conn;
         $id = (int) $id;
         $folder = $conn->query("SELECT * FROM projectfolders WHERE ID = $id LIMIT 1")->fetch();
+        if ($folder===false){
+        	return false; // otherwise you will get all subfolders having parent = "", i.e. all upper level folders of all projects, which is especially bad if you are going to delete those!
+        }
         $folder["subfolders"] = $this->getSubFolders($folder["ID"]);
         $folder["abspath"] = $this->getAbsolutePathName($folder);
 
@@ -392,7 +397,7 @@ class datei {
                      * add the file to the database, add the upload event to the log and return the file ID.
                      */
                     chmod($path, 0755);
-                    $fid = $this->add_file($name, " ", $project, 0, "", $relative_path, $mimetype, $title, $folder, $visstr);
+                    $fid = $this->add_file($name, " ", $project, 0, "", $relative_path, $mimetype, $title, $folder, $visstr); // empty tags and description
                     $this->mylog->add($name, 'file', 1, $project);
                     return $fid;
                 } else {
@@ -553,6 +558,10 @@ class datei {
         $thefile = $this->getFile($file);
         // Get the target folder
         $thefolder = $this->getFolder($target);
+        
+        if ($thefolder===false){
+        	return false;
+        }
         // Build filesystem paths
         $targetstr = "files/" . CL_CONFIG . "/" . $thefile["project"] . "/" . $thefolder["name"] . "/" . $thefile["name"];
         $rootstr = CL_ROOT . "/" . $thefile["datei"];
