@@ -261,21 +261,17 @@ class datei {
 
         $tagobj = new tags();
         $tags = $tagobj->formatInputTags($tags);
-        // find the extension
-        $name_parts = explode(".", $name);
-        $part_count = count($name_parts);
-        $dummy = $part_count - 1;
-        $extension = $name_parts[$dummy];
-        $subname = "";
+        
+        $pathinfo = pathinfo($name);
+        $extension= $pathinfo['extension'];
+        $subname = $pathinfo['filename'];
+        
         // if its a php file, treat it as plaintext so its not executed when opened in the browser.
         if (stristr($extension, "php")) {
             $extension = "txt";
             $mimetype = "text/plain";
         }
-        // Re assemble the file name from the exploded array, without the extension
-        for ($i = 0; $i < $dummy; $i++) {
-            $subname .= $name_parts[$i];
-        }
+        
         // Create a random number
         $randval = mt_rand(1, 99999);
         // only allow a-z , 0-9 in filenames, substitute other chars with _
@@ -293,10 +289,10 @@ class datei {
         // Assemble the final filename from the original name plus the random value.
         // This is to ensure that files with the same name do not overwrite each other.
         $name = $subname . "_" . $randval . "." . $extension;
-        // Absolute file system path used to move the file to its final location
-        $path = $root . "/" . $dest_dir . "/" . $name;
         // Relative path, used for display / url construction in the file manager
         $relative_path = $dest_dir . "/" . $name;
+        // Absolute file system path used to move the file to its final location
+        $path = $root . "/" . $relative_path;
 
         if (!file_exists($path)) {
             if (move_uploaded_file($tmp_name, $path)) {
@@ -305,7 +301,7 @@ class datei {
                     // file did not already exist, was uploaded, and a project is set
                     // add the file to the database, add the upload event to the log and return the file ID.
                     chmod($path, 0755);
-                    $fid = $this->add_file($name, $desc, $project, 0, "$tags", $relative_path, "$mimetype", $title, $folder, $visstr);
+                    $fid = $this->add_file($name, $desc, $project, 0, "$tags", $relative_path, "$mimetype", $title, $folder, $visstr);                    
                     if (!empty($title)) {
                         $this->mylog->add($title, 'file', 1, $project);
                     } else {
@@ -350,22 +346,16 @@ class datei {
             return false;
         }
         
-        // find the extension
-        $name_parts = explode(".", $name);
-        $part_count = count($name_parts);
-        $dummy = $part_count - 1;
-        $extension = $name_parts[$dummy];
-        $subname = "";
+        $pathinfo = pathinfo($name);
+        $extension= $pathinfo['extension'];
+        $subname = $pathinfo['filename'];
+
         // if its a php file, treat it as plaintext so its not executed when opened in the browser.
         if (stristr($extension, "php")) {
             $extension = "txt";
             $mimetype = "text/plain";
         }
-
-        for ($i = 0; $i < $dummy; $i++) {
-            $subname .= $name_parts[$i];
-        }
-
+        
         $randval = mt_rand(1, 99999);
         // only allow a-z , 0-9 in filenames, substitute other chars with _
         $subname = str_replace("ä", "ae" , $subname);
@@ -381,8 +371,8 @@ class datei {
         }
 
         $name = $subname . "_" . $randval . "." . $extension;
-        $path = $root . "/" . $target . "/" . $name;
         $relative_path = $target . "/" . $name;
+        $path = $root . "/" . $relative_path;
 
         if (!file_exists($path)) {
             if (move_uploaded_file($tmp_name, $path)) {
@@ -392,16 +382,10 @@ class datei {
                      * file did not already exist, was uploaded, and a project is set
                      * add the file to the database, add the upload event to the log and return the file ID.
                      */
-                    if (!$title) {
-                        $title = $name;
-                    }
+                    $title = $name;
                     chmod($path, 0755);
-                    $fid = $this->add_file($name, $desc, $project, 0, $tags, $relative_path, $mimetype, $title, $folder, $visstr);
-                    if (!empty($title)) {
-                        $this->mylog->add($title, 'file', 1, $project);
-                    } else {
-                        $this->mylog->add($name, 'file', 1, $project);
-                    }
+                    $fid = $this->add_file($name, " ", $project, 0, "", $relative_path, $mimetype, $title, $folder, $visstr);
+                    $this->mylog->add($name, 'file', 1, $project);
                     return $fid;
                 } else {
                     // no project means the file is not added to the database wilfully. return file name.
