@@ -331,12 +331,16 @@ class datei {
      * Does filename sanitizing as well as MIME-type determination
      * Also adds the file to the database using add_file()
      *
-     * @param string $fname Name of the HTML form field POSTed from
-     * @param string $ziel Destination directory
+     * @param string $name original name of the uploaded file
+     * @param string $tmp_name path to temporary file after upload
+     * @param string $mimetype determines the file type 
+     * @param int $size the size of the file
+     * @param $target the folder in which the file shall be stored
      * @param int $project Project ID of the associated project
+     * @param $folder the id of the folder
      * @return bool
      */
-    function uploadAsync($name, $tmp_name, $typ, $size, $ziel, $project, $folder = 0)
+    function uploadAsync($name, $tmp_name, $mimetype, $size, $target, $project, $folder = 0)
     {
         $visible = "";
         $visstr = "";
@@ -345,20 +349,21 @@ class datei {
         if (empty($name)) {
             return false;
         }
+        
         // find the extension
-        $teilnamen = explode(".", $name);
-        $teile = count($teilnamen);
-        $workteile = $teile - 1;
-        $erweiterung = $teilnamen[$workteile];
+        $name_parts = explode(".", $name);
+        $part_count = count($name_parts);
+        $dummy = $part_count - 1;
+        $extension = $name_parts[$dummy];
         $subname = "";
         // if its a php file, treat it as plaintext so its not executed when opened in the browser.
-        if (stristr($erweiterung, "php")) {
-            $erweiterung = "txt";
-            $typ = "text/plain";
+        if (stristr($extension, "php")) {
+            $extension = "txt";
+            $mimetype = "text/plain";
         }
 
-        for ($i = 0; $i < $workteile; $i++) {
-            $subname .= $teilnamen[$i];
+        for ($i = 0; $i < $dummy; $i++) {
+            $subname .= $name_parts[$i];
         }
 
         $randval = mt_rand(1, 99999);
@@ -375,13 +380,13 @@ class datei {
             $subname = substr($subname, 0, 200);
         }
 
-        $name = $subname . "_" . $randval . "." . $erweiterung;
-        $datei_final = $root . "/" . $ziel . "/" . $name;
-        $datei_final2 = $ziel . "/" . $name;
+        $name = $subname . "_" . $randval . "." . $extension;
+        $path = $root . "/" . $target . "/" . $name;
+        $relative_path = $target . "/" . $name;
 
-        if (!file_exists($datei_final)) {
-            if (move_uploaded_file($tmp_name, $datei_final)) {
-                // $filesize = filesize($datei_final);
+        if (!file_exists($path)) {
+            if (move_uploaded_file($tmp_name, $path)) {
+                // $filesize = filesize($path);
                 if ($project > 0) {
                     /**
                      * file did not already exist, was uploaded, and a project is set
@@ -390,8 +395,8 @@ class datei {
                     if (!$title) {
                         $title = $name;
                     }
-                    chmod($datei_final, 0755);
-                    $fid = $this->add_file($name, $desc, $project, 0, "$tags", $datei_final2, "$typ", $title, $folder, $visstr);
+                    chmod($path, 0755);
+                    $fid = $this->add_file($name, $desc, $project, 0, $tags, $relative_path, $mimetype, $title, $folder, $visstr);
                     if (!empty($title)) {
                         $this->mylog->add($title, 'file', 1, $project);
                     } else {
