@@ -228,7 +228,7 @@ if ($action == "upload") {
     $secure_name=$thisfile.'.'.$myfile->secure_name($foldername);    
     $relativePath='/files/' . CL_CONFIG . "/$id/$secure_name";
     if (!file_exists(CL_ROOT . $relativePath)){
-    	$relativePath='/files/' . CL_CONFIG . "/$id/$thefolder['name']"; // for compatibility with files/folders created with former versions
+    	$relativePath='/files/' . CL_CONFIG . "/$id/$thefolder[name]"; // for compatibility with files/folders created with former versions
     }
     
     $zipPath = CL_ROOT . $relativePath . '.zip';
