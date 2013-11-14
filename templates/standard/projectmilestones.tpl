@@ -143,7 +143,7 @@
 							<table class="second-thead" cellpadding="0" cellspacing="0" border="0" onclick="blindtoggle('togglenew');toggleClass('togglemiles','acc-toggle','acc-toggle-active');">
 							<tr>
 								<td class="a"></td>
-								<td class="b"><span id="togglemiles" class="acc-toggle-active">Current milestones</span></td>
+								<td class="b"><span id="togglemiles" class="acc-toggle-active">{#currentmiles#}</span></td>
 								<td class="c"></td>
 								<td class="days"></td>
 								<td class="tools"></td>
