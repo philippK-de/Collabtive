@@ -109,9 +109,18 @@ if ($action == "addform") {
                 $user = $usr->getProfile($member);
                 if (!empty($user["email"]) && $userid != $user["ID"]) {
                     // send email
+                    $userlang = readLangfile($user['locale']);
+
+                    $subject = $userlang["taskassignedsubject"] . ' (' . $userlang['by'] . ' ' . $username . ')';
+
+                    $mailcontent = $userlang["hello"] . ",<br /><br/>" . 
+                                   $userlang["taskassignedtext"] . 
+                                   "<h3><a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a></h3>".
+                                   $text;
+
                     $themail = new emailer($settings);
 
-                    $themail->send_mail($user["email"], $langfile["taskassignedsubject"] , $langfile["hello"] . ",<br /><br/>" . $langfile["taskassignedtext"] . " <a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a>");
+                    $themail->send_mail($user["email"], $subject , $mailcontent);
                 }
             }
         }
@@ -182,10 +191,19 @@ if ($action == "addform") {
                         $usr = (object) new user();
                         $user = $usr->getProfile($assignee);
 
-                        if (!empty($user["email"])) {
+                        if (!empty($user["email"]) && $userid != $user["ID"]) {
+                            $userlang = readLangfile($user['locale']);
+
+                            $subject = $userlang["taskassignedsubject"] . ' (' . $userlang['by'] . ' ' . $username . ')';
+
+                            $mailcontent = $userlang["hello"] . ",<br /><br/>" .
+                                           $userlang["taskassignedtext"] .
+                                           "<h3><a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a></h3>".
+                                           $text;
+
                             // send email
                             $themail = new emailer($settings);
-                            $themail->send_mail($user["email"], $langfile["taskassignedsubject"] , $langfile["hello"] . ",<br /><br/>" . $langfile["taskassignedtext"] . " <a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a>");
+                            $themail->send_mail($user["email"], $subject , $mailcontent);
                         }
                     }
                 }
@@ -271,8 +289,16 @@ if ($action == "addform") {
 
             if (!empty($user["email"])) {
                 // send email
+                $userlang = readLangfile($user['locale']);
+
+                $subject = $userlang["taskassignedsubject"] . ' (' . $userlang['by'] .' '. $username . ')';
+                $mailcontent = $userlang["hello"] . ",<br /><br/>" .
+                               $userlang["taskassignedtext"] .
+                               "<h3><a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a></h3>".
+                               $text;
+
                 $themail = new emailer($settings);
-                $themail->send_mail($user["email"], $langfile["taskassignedsubject"] , $langfile["hello"] . ",<br /><br/>" . $langfile["taskassignedtext"] . " <a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a>");
+                $themail->send_mail($user["email"], $subject , $mailcontent);
             }
         }
         $template->assign("assigntask", 1);

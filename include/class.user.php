@@ -102,10 +102,11 @@ class user {
     {
         global $conn;
 
-        $user = $conn->query("SELECT ID, email FROM user WHERE email={$conn->quote($email)} LIMIT 1")->fetch();
+        $user = $conn->query("SELECT ID, email, locale FROM user WHERE email={$conn->quote($email)} LIMIT 1")->fetch();
 
         if ($user["email"] == $email) {
             $id = $user["ID"];
+            $locale = $user['locale'];
         }
 
         if (isset($id)) {
@@ -123,7 +124,7 @@ class user {
 
             $upd = $conn->query("UPDATE user SET `pass` = '$sha1pass' WHERE ID = $id");
             if ($upd) {
-                return $newpass;
+                return array('newpass'=>$newpass, 'locale'=>$locale);
             } else {
                 return false;
             }
