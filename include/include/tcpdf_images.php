@@ -1,11 +1,11 @@
 <?php
 //============================================================+
 // File name   : tcpdf_images.php
-// Version     : 1.0.000
+// Version     : 1.0.002
 // Begin       : 2002-08-03
-// Last Update : 2013-03-16
+// Last Update : 2013-11-24
 // Author      : Nicola Asuni - Tecnick.com LTD - www.tecnick.com - info@tecnick.com
-// License     : http://www.tecnick.com/pagefiles/tcpdf/LICENSE.TXT GNU-LGPLv3
+// License     : GNU-LGPL v3 (http://www.gnu.org/copyleft/lesser.html)
 // -------------------------------------------------------------------
 // Copyright (C) 2002-2013 Nicola Asuni - Tecnick.com LTD
 //
@@ -38,7 +38,7 @@
  * This is a PHP class that contains static image methods for the TCPDF class.<br>
  * @package com.tecnick.tcpdf
  * @author Nicola Asuni
- * @version 1.0.000
+ * @version 1.0.002
  */
 
 /**
@@ -46,7 +46,7 @@
  * Static image methods used by the TCPDF class.
  * @package com.tecnick.tcpdf
  * @brief PHP class for generating PDF documents without requiring external extensions.
- * @version 1.0.000
+ * @version 1.0.002
  * @author Nicola Asuni - info@tecnick.com
  */
 class TCPDF_IMAGES {
@@ -121,7 +121,7 @@ class TCPDF_IMAGES {
 	 */
 	public static function _toPNG($image) {
 		// set temporary image file name
-		$tempname = TCPDF_STATIC::getObjFilename('png');
+		$tempname = TCPDF_STATIC::getObjFilename('img');
 		// turn off interlaced mode
 		imageinterlace($image, 0);
 		// create temporary PNG image
@@ -144,7 +144,7 @@ class TCPDF_IMAGES {
 	 * @public static
 	 */
 	public static function _toJPEG($image, $quality) {
-		$tempname = TCPDF_STATIC::getObjFilename('jpg');
+		$tempname = TCPDF_STATIC::getObjFilename('img');
 		imagejpeg($image, $tempname, $quality);
 		imagedestroy($image);
 		$retvars = self::_parsejpeg($tempname);
@@ -235,7 +235,7 @@ class TCPDF_IMAGES {
 	 * @public static
 	 */
 	public static function _parsepng($file) {
-		$f = fopen($file, 'rb');
+		$f = @fopen($file, 'rb');
 		if ($f === false) {
 			// Can't open image file
 			return false;
@@ -254,11 +254,6 @@ class TCPDF_IMAGES {
 		$w = TCPDF_STATIC::_freadint($f);
 		$h = TCPDF_STATIC::_freadint($f);
 		$bpc = ord(fread($f, 1));
-		if ($bpc > 8) {
-			// 16-bit depth not supported
-			fclose($f);
-			return false;
-		}
 		$ct = ord(fread($f, 1));
 		if ($ct == 0) {
 			$colspace = 'DeviceGray';
@@ -353,7 +348,7 @@ class TCPDF_IMAGES {
 		return array('w' => $w, 'h' => $h, 'ch' => $channels, 'icc' => $icc, 'cs' => $colspace, 'bpc' => $bpc, 'f' => 'FlateDecode', 'parms' => $parms, 'pal' => $pal, 'trns' => $trns, 'data' => $data);
 	}
 
-} // END OF TCPDF_STATIC CLASS
+} // END OF TCPDF_IMAGES CLASS
 
 //============================================================+
 // END OF FILE

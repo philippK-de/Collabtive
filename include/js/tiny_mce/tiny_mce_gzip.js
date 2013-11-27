@@ -17,11 +17,15 @@ var tinyMCE_GZ = {
 
 		s = t.settings;
 
-		for (i=0; i<nl.length; i++) {
-			n = nl[i];
+		if (window.tinyMCEPreInit) {
+			t.baseURL = tinyMCEPreInit.base;
+		} else {
+			for (i=0; i<nl.length; i++) {
+				n = nl[i];
 
-			if (n.src && n.src.indexOf('tiny_mce') != -1)
-				t.baseURL = n.src.substring(0, n.src.lastIndexOf('/'));
+				if (n.src && n.src.indexOf('tiny_mce') != -1)
+					t.baseURL = n.src.substring(0, n.src.lastIndexOf('/'));
+			}
 		}
 
 		if (!t.coreLoaded)
@@ -77,79 +81,28 @@ var tinyMCE_GZ = {
 	},
 
 	start : function() {
-		var t = this, each = tinymce.each, s = t.settings, sl, ln = s.languages.split(',');
+		var t = this, each = tinymce.each, s = t.settings, ln = s.languages.split(',');
 
 		tinymce.suffix = s.suffix;
 
-		// Extend script loader
-		tinymce.create('tinymce.compressor.ScriptLoader:tinymce.dom.ScriptLoader', {
-			loadScripts : function(sc, cb, s) {
-				var ti = this, th = [], pl = [], la = [];
-
-				each(sc, function(o) {
-					var u = o.url;
-
-					if ((!ti.lookup[u] || ti.lookup[u].state != 2) && u.indexOf(t.baseURL) === 0) {
-						// Collect theme
-						if (u.indexOf('editor_template') != -1) {
-							th.push(/\/themes\/([^\/]+)/.exec(u)[1]);
-							load(u, 1);
-						}
-
-						// Collect plugin
-						if (u.indexOf('editor_plugin') != -1) {
-							pl.push(/\/plugins\/([^\/]+)/.exec(u)[1]);
-							load(u, 1);
-						}
-
-						// Collect language
-						if (u.indexOf('/langs/') != -1) {
-							la.push(/\/langs\/([^.]+)/.exec(u)[1]);
-							load(u, 1);
-						}
-					}
-				});
-
-				if (th.length + pl.length + la.length > 0) {
-					if (sl.settings.strict_mode) {
-						// Async
-						t.loadScripts(0, th.join(','), pl.join(','), la.join(','), cb, s);
-						return;
-					} else
-						t.loadScripts(0, th.join(','), pl.join(','), la.join(','), cb, s);
-				}
-
-				return ti.parent(sc, cb, s);
-			}
-		});
-
-		sl = tinymce.ScriptLoader = new tinymce.compressor.ScriptLoader();
-
-		function load(u, sp) {
-			var o;
-
-			if (!sp)
-				u = t.baseURL + u;
-
-			o = {url : u, state : 2};
-			sl.queue.push(o);
-			sl.lookup[o.url] = o;
+		function load(u) {
+			tinymce.ScriptLoader.markDone(tinyMCE.baseURI.toAbsolute(u));
 		};
 
 		// Add core languages
-		each (ln, function(c) {
+		each(ln, function(c) {
 			if (c)
-				load('/langs/' + c + '.js');
+				load('langs/' + c + '.js');
 		});
 
 		// Add themes with languages
 		each(s.themes.split(','), function(n) {
 			if (n) {
-				load('/themes/' + n + '/editor_template' + s.suffix + '.js');
+				load('themes/' + n + '/editor_template' + s.suffix + '.js');
 
 				each (ln, function(c) {
 					if (c)
-						load('/themes/' + n + '/langs/' + c + '.js');
+						load('themes/' + n + '/langs/' + c + '.js');
 				});
 			}
 		});
@@ -157,11 +110,11 @@ var tinyMCE_GZ = {
 		// Add plugins with languages
 		each(s.plugins.split(','), function(n) {
 			if (n) {
-				load('/plugins/' + n + '/editor_plugin' + s.suffix + '.js');
+				load('plugins/' + n + '/editor_plugin' + s.suffix + '.js');
 
-				each (ln, function(c) {
+				each(ln, function(c) {
 					if (c)
-						load('/plugins/' + n + '/langs/' + c + '.js');
+						load('plugins/' + n + '/langs/' + c + '.js');
 				});
 			}
 		});
@@ -171,15 +124,14 @@ var tinyMCE_GZ = {
 	},
 
 	eval : function(co) {
-		var w = window;
+		var se = document.createElement('script');
 
-		// Evaluate script
-		if (!w.execScript) {
-			if (/Gecko/.test(navigator.userAgent))
-				eval(co, w); // Firefox 3.0
-			else
-				eval.call(w, co);
-		} else
-			w.execScript(co); // IE
+		// Create script
+		se.type = 'text/javascript';
+		se.text = co;
+
+		// Add it to evaluate it and remove it
+		(document.getElementsByTagName('head')[0] || document.documentElement).appendChild(se);
+		se.parentNode.removeChild(se);
 	}
 };
