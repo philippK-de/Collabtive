@@ -231,7 +231,8 @@ if ($action == "add") {
         die();
     }
 	global $conn;
-    
+
+	$id = (int) $id;
     $pname = $conn->query("SELECT name FROM projekte WHERE ID = $id");
     $pname = $pname->fetchColumn();
 
@@ -262,7 +263,7 @@ if ($action == "add") {
             array_push($thetrack, array($tra["uname"], $tra["tname"], $tra["comment"], $tra["daystring"] . "/" . $tra["startstring"] . "-" . $tra["endstring"], $hrs));
         }
 	}
- 
+
     $pdf->table($headers, $thetrack);
     $pdf->Output("project-$id-timetable.pdf", "D");
 } elseif ($action == "userxls") {
