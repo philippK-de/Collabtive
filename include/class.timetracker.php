@@ -184,8 +184,9 @@ class timetracker {
         $project = (int) $project;
         $lim = (int) $lim;
         $task = (int) $task;
-        $start = (int) $start;
-        $end = (int) $end;
+        //$start = (int) $start; // those are strings, not numbers
+        //$end = (int) $end;
+        
 
         if ($project > 0) {
             $sql = "SELECT * FROM timetracker WHERE user = $user AND project = $project";
@@ -281,8 +282,8 @@ class timetracker {
         
         $task=join(',',$task);
         
-        $start = (int) $start;
-        $end = (int) $end;
+        //$start = (int) $start; // those are strings, not numbers
+        //$end = (int) $end; // those are strings, not numbers
 
 
         if ($user > 0) {
