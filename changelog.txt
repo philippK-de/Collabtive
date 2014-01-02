@@ -9,7 +9,9 @@
 + Milestones can now be closed asynchronously
 + Closed tasklists now receive their own white bg block in projects->tasklists. better sets the block apart from active TLs
 + Remove tags from the add message form. Tags will be removed from Collabtive in order to simplify things.
-+ Remove file upload from the add message form. now only already uploaded files can be attached to messages. 
++ Remove file upload from the add message form. now only already uploaded files can be attached to messages.
++ Implemented tree view for projects
++ Fixed display problem with smarty, where pages weren't listed as before.
 
 Collabtive 1.1
 + Fixed bug in tasklist editing, which would automatically remove the tasklist's assignment to a given milestone

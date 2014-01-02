@@ -25,6 +25,7 @@ if (!empty($db_name) and !empty($db_user)) {
 }
 // Start template engine
 $template = new Smarty();
+
 // STOP smarty from spewing notices all over the html code
 $template->error_reporting = E_ALL &~E_NOTICE;
 // get the available languages
