@@ -40,7 +40,7 @@ class emailer
 		$mailer->Subject = $subject;
 		$mailer->Body = $text;
 		//send mail as HTML
-		$mailer->IsHTML(true);
+		$mailer->isHTML(true);
 		//set charset
 		$mailer->CharSet = "utf-8";
 		//set mailing method... mail, smtp or sendmail
@@ -59,7 +59,7 @@ class emailer
 
 		}
 
-        if ($mailer->Send())
+        if ($mailer->send())
         {
             return true;
         }
