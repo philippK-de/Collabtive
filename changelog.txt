@@ -1,20 +1,20 @@
 ﻿Collabtive 1.2
 + Added translations: Vietnamese
 + Improved translations: Spanish
-+ Added Collapsible tree showing the structure of a project (milestones, tasklists, tasks, messages)
-+ Removed basecamp importer (didn't work in a long time, see https://github.com/philippK-de/Collabtive/issues/2
-+ Milestones can now have a start date set when created. start date can also be edited.
++ Added collapsible tree showing the structure of a project (milestones, tasklists, tasks, messages)
++ Removed Basecamp importer (didn't work in a long time, see https://github.com/philippK-de/Collabtive/issues/2 )
++ Milestones can now have a start date set when created. Start date can also be edited.
 + Removed links to the my-projects/tasks/messages blocks in block titles on the desktop
 + Milestones can now be deleted asynchronously
 + Milestones can now be closed asynchronously
-+ Closed tasklists now receive their own white bg block in projects->tasklists. better sets the block apart from active TLs
-+ Remove tags from the add message form. Tags will be removed from Collabtive in order to simplify things.
-+ Remove file upload from the add message form. now only already uploaded files can be attached to messages.
++ Closed tasklists now receive their own white bg block in projects->tasklists. Better sets the block apart from active tl's
++ Removed tags from the add message form. Tags will be removed from Collabtive in order to simplify things.
++ Removed file upload from the add message form. Now only previously uploaded files can be attached to messages.
 + Implemented tree view for projects
-+ Fixed display problem with smarty, where pages weren't listed as before.
-+ Improved notification emails. they are now much more informative / localized (StephanRichter)
-+ Implemented ical auth (StephanRichter)
-+ Fixed bug where certain dates (like 1.9.2013) could not be selected (StephanRichter)
++ Fixed display problem with Smarty where pages weren't listed as before
++ Improved notification emails. They are now much more informative / better localized (StephanRichter)
++ Implemented iCal auth (StephanRichter)
++ Fixed bug where certain dates (like 1.9.2013) could not be selected in date picker (StephanRichter)
 
 Collabtive 1.1
 + Fixed bug in tasklist editing, which would automatically remove the tasklist's assignment to a given milestone
