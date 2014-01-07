@@ -25,6 +25,7 @@ if (!empty($db_name) and !empty($db_user)) {
 }
 // Start template engine
 $template = new Smarty();
+
 // STOP smarty from spewing notices all over the html code
 $template->error_reporting = E_ALL &~E_NOTICE;
 // get the available languages
@@ -96,10 +97,7 @@ if (!file_exists(CL_ROOT . "/language/$locale/lng.conf")) {
 // Set locale directory
 $template->config_dir = CL_ROOT . "/language/$locale/";
 //Smarty 3 seems to have a problem with re-compiling the templates if the config changes. this forces a compile of the templates if the user has a different locale than the system locale.
-if ($locale != $settings["locale"]) {
-
-}
- $template->force_compile = true;
+$template->force_compile = true;
 // read language file into PHP array
 $langfile = readLangfile($locale);
 $template->assign("langfile", $langfile);

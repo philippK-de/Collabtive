@@ -41,6 +41,7 @@ function smarty_function_paginate_prev($params, &$smarty) {
     }
 
     foreach($params as $_key => $_val) {
+
         switch($_key) {
             case 'id':
                 if (!SmartyPaginate::isConnected($_val)) {
