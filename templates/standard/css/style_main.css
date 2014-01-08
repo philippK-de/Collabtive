@@ -19,7 +19,8 @@ html, body {
 
 body {
 	color:#082343;
-	background:#2d6e98;
+#	background:#2d6e98;
+	background:#28648b;
 	background-attachment: fixed;
 }
 
@@ -280,10 +281,6 @@ td.message ul {
 
 #mainmenue .submen li.system-settings a {
 	background: url(../images/main-admin-c.png) no-repeat 0 0;
-}
-
-#mainmenue .submen li.customer-settings a {
-	background: url(../images/main-admin-d.png) no-repeat 0 0;
 }
 
 #mainmenue li:hover a, #mainmenue li a.active, #mainmenue .submen li:hover a, #mainmenue .submen li a.active {
@@ -582,9 +579,9 @@ td.message ul {
 	top: -34px;
 	right: 0;
 	z-index: 9;
-	color: #001e40;
+	color: <? echo $colorMain; ?>;
 	font-size: 12px;
-	background: #fff;
+	background: <? echo $leftBlockBg; ?>;
 	padding: 0 7px 0 7px;
 	-moz-border-radius-topleft: 2px;
 	-moz-border-radius-topright: 2px;
@@ -594,7 +591,7 @@ td.message ul {
 
 .wintools .export-main a:hover span, .wintools .export-main .export-in a:hover span, .wintools a:hover span {
 	top: -28px;
-	color: #fff;
+	color: <? echo $leftBlockBg; ?>;
 	font-weight: bold;
 }
 
@@ -647,7 +644,7 @@ td.message ul {
 }
 
 .projects .wintools .export-main a:hover span, .projects .wintools a:hover span {
-	background: #3f7174;
+	background: <? echo $projectsMain; ?>;
 }
 
 .tasks .export-main, .tasks .export-main a {
@@ -659,7 +656,7 @@ td.message ul {
 }
 
 .tasks .wintools .export-main a:hover span, .tasks .wintools a:hover span, .wintools a:hover span {
-	background: #365a76;
+	background: <? echo $tasksMain; ?>;
 }
 
 .msgs .export-main, .msgs .export-main a {
@@ -671,7 +668,7 @@ td.message ul {
 }
 
 .msgs .wintools .export-main a:hover span, .msgs .wintools a:hover span {
-	background: #65635e;
+	background: <? echo $msgsMain; ?>;
 }
 
 .user .export-main, .user .export-main a {
@@ -683,7 +680,7 @@ td.message ul {
 }
 
 .user .wintools .export-main a:hover span, .user .wintools a:hover span {
-	background: #576d5a;
+	background: <? echo $userMain; ?>;
 }
 
 .timetrack .wintools .export-main, .timetrack .wintools .export-main a {
@@ -691,7 +688,7 @@ td.message ul {
 }
 
 .timetrack .wintools .export-main a:hover span, .timetrack .wintools a:hover span {
-	background: #8f5f45;
+	background: <? echo $timetrackMain; ?>;
 }
 
 .miles .wintools .export-main, .miles .wintools .export-main a {
@@ -699,7 +696,7 @@ td.message ul {
 }
 
 .miles .wintools .export-main a:hover span, .miles .wintools a:hover span {
-	background: #824e48;
+	background: <? echo $milesMain; ?>;
 }
 
 .neutral .wintools .export-main, .neutral .wintools .export-main a {
@@ -707,7 +704,7 @@ td.message ul {
 }
 
 .neutral .wintools .export-main a:hover span, .neutral .wintools a:hover span {
-	background: #6f6d6e;
+	background: <? echo $neutralMain; ?>;
 }
 
 .files .wintools .addmen .export-main, .files .wintools .addmen .export-main a {
@@ -719,7 +716,7 @@ td.message ul {
 }
 
 .files .wintools .export-main a:hover span, .files .wintools a:hover span {
-	background: #484f64;
+	background: <? echo $filesMain; ?>;
 }
 
 .export-main a.export, .wintools .export-main a.export, .files .wintools .addmen .export-main a.export {
@@ -1101,6 +1098,7 @@ td.message ul {
 	line-height: 22px;
 	margin: 0 0 1px 0;
 	padding: 0 8px 0 8px;
+
 	white-space: nowrap;
 	color: #fff;
 	font-size: 11px;
@@ -1609,10 +1607,6 @@ ul.tabs li.projects a {
 	background-image: url(../images/symbols/tab-projects.png);
 }
 
-ul.tabs li.customers a {
-	background-image: url(../images/symbols/tab-customers.png);
-}
-
 ul.tabs li.tasks a {
 	background-image: url(../images/symbols/tab-tasklist.png);
 }
@@ -1875,6 +1869,7 @@ ul.tabs li.system-settings a {
 }
 
 .status {
+
 	width: 130px;
 	height:	56px;
 	position: relative;
@@ -1927,6 +1922,7 @@ ul.tabs li.system-settings a {
 	height: 25px;
 	padding: 12px 7px 0 6px;
 }
+
 
 .contenttitle_in {
 	float: left;
@@ -2756,7 +2752,6 @@ a.tool_edit_active
 	background: url(../images/butn-edit.png) no-repeat 0 -22px;
 
 }
-
 a.tool_del {
 	background-image: url(../images/butn-del.png);
 	margin: 0;

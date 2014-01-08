@@ -130,7 +130,8 @@ html, body {
 
 body {
 	color:#082343;
-	background:#2d6e98;
+#	background:#2d6e98;
+	background:#28648b;
 	background-attachment: fixed;
 }
 
@@ -959,6 +960,7 @@ td.message ul {
 	line-height: 22px;
 	margin: 0 0 1px 0;
 	padding: 0 8px 0 8px;
+
 	white-space: nowrap;
 	color: <?php echo $leftBlockBg;
 ?>;
@@ -1750,6 +1752,7 @@ ul.tabs li.system-settings a {
 }
 
 .status {
+
 	width: 130px;
 	height:	56px;
 	position: relative;
@@ -1802,6 +1805,7 @@ ul.tabs li.system-settings a {
 	height: 25px;
 	padding: 12px 7px 0 6px;
 }
+
 
 .contenttitle_in {
 	float: left;
