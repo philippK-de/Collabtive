@@ -9,7 +9,7 @@ define("CL_ROOT", realpath(dirname(__FILE__)));
 // configuration to load
 define("CL_CONFIG", "standard");
 // collabtive version and release date
-define("CL_VERSION", 1.0);
+define("CL_VERSION", 1.2);
 define("CL_PUBDATE", "1377122400");
 // uncomment for debugging
 error_reporting(E_ALL | E_STRICT);
@@ -34,7 +34,7 @@ $languages = getAvailableLanguages();
 $url = getMyUrl();
 $template->assign("url", $url);
 $template->assign("languages", $languages);
-$template->assign("myversion", "1.1");
+$template->assign("myversion", "1.2");
 $template->assign("cl_config", CL_CONFIG);
 // Assign globals to all templates
 if (isset($_SESSION["userid"])) {
