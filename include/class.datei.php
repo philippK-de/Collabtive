@@ -2,7 +2,7 @@
 /**
  * class datei (file) provides methods to handle files and folders
  *
- * @author Open Dynamics / Philipp Kiszka <info@o-dyn.de>
+ * @author Philipp Kiszka <info@o-dyn.de>
  * @name datei
  * @package Collabtive
  * @version 1.0
@@ -317,6 +317,7 @@ class datei {
                         $this->mylog->add($name, 'file', 1, $project);
                     }
                     return $fid;
+
                 } else {
                     // no project means the file is not added to the database wilfully. return file name.
                     return $name;
