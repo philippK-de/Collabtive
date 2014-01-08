@@ -19,7 +19,7 @@
 + Switched from a background-color gradient to a solid color
 + Fixed a bug where the timetracker report would return a server error (http://collabtive.o-dyn.de/forum/viewtopic.php?f=11&t=11505)
 + Start date for a timetracker entry can now be set manually
-
++ Fixed a mssing (int) typecast in managetimetracker.php.
 
 Collabtive 1.1
 + Fixed bug in tasklist editing, which would automatically remove the tasklist's assignment to a given milestone
