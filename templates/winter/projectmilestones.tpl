@@ -18,6 +18,8 @@
 				{/if}
 
 				<span id = "deleted" class="info_in_red" style = "display:none;"><img src="templates/standard/images/symbols/miles.png" alt=""/>{#milestonewasdeleted#}</span>
+				<span class="info_in_green" id = "closed" style = "display:none;"><img src="templates/standard/images/symbols/miles.png" alt=""/>{#milestonewasclosed#}</span>
+
 			</div>
 
 			{literal}
@@ -96,7 +98,8 @@
 										<tr class="marker-late">
 											<td class="a">
 												{if $userpermissions.milestones.close}
-													<a class="butn_check" href="managemilestone.php?action=close&amp;mid={$latemilestones[latestone].ID}&amp;id={$project.ID}" title="{#close#}"></a>
+												<a class="butn_check" href="javascript:closeElement('miles_late_{$latemilestones[latestone].ID}','managemilestone.php?action=close&amp;mid={$latemilestones[latestone].ID}&amp;id={$project.ID}');" title="{#close#}"></a>
+
 												{/if}
 											</td>
 											<td class="b">
@@ -112,7 +115,8 @@
 													<a class="tool_edit" href="managemilestone.php?action=editform&amp;mid={$latemilestones[latestone].ID}&amp;id={$project.ID}" title="{#edit#}"></a>
 												{/if}
 												{if $userpermissions.milestones.del}
-													<a class="tool_del" href="javascript:confirmit('{#confirmdel#}','managemilestone.php?action=del&amp;mid={$latemilestones[latestone].ID}&amp;id={$project.ID}');" title="{#delete#}"></a>
+														<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'miles_late_{$latemilestones[latestone].ID}\',\'managemilestone.php?action=del&amp;mid={$latemilestones[latestone].ID}&amp;id={$project.ID}\')');" title="{#delete#}"></a>
+
 												{/if}
 											</td>
 										</tr>
@@ -139,7 +143,7 @@
 							<table class="second-thead" cellpadding="0" cellspacing="0" border="0" onclick="blindtoggle('togglenew');toggleClass('togglemiles','acc-toggle','acc-toggle-active');">
 							<tr>
 								<td class="a"></td>
-								<td class="b"><span id="togglemiles" class="acc-toggle-active">Current milestones</span></td>
+								<td class="b"><span id="togglemiles" class="acc-toggle-active">{#currentmiles#}</span></td>
 								<td class="c"></td>
 								<td class="days"></td>
 								<td class="tools"></td>
@@ -155,7 +159,10 @@
 								<tbody class="color-b" id="miles_{$milestones[stone].ID}">
 								{/if}
 									<tr{if $milestones[stone].daysleft == 0} class="marker-today"{/if}>
-										<td class="a">{if $userpermissions.milestones.close}<a class="butn_check" href="managemilestone.php?action=close&amp;mid={$milestones[stone].ID}&amp;id={$project.ID}" title="{#close#}"></a>{/if}</td>
+										<td class="a">
+										{if $userpermissions.milestones.close}
+									<a class="butn_check" href="javascript:closeElement('miles_{$milestones[stone].ID}','managemilestone.php?action=close&amp;mid={$milestones[stone].ID}&amp;id={$project.ID}');" title="{#close#}"></a>
+										{/if}</td>
 										<td class="b">
 											<div class="toggle-in">
 												<span class="acc-toggle" onclick="javascript:accord_miles_new.activate($$('#accordion_miles_new .accordion_toggle')[{$smarty.section.stone.index}]);toggleAccordeon('done_{$myprojects[project].ID|default}',this);"></span>
@@ -265,12 +272,15 @@
 						<table id="accordion_miles_new" cellpadding="0" cellspacing="0" border="0" style="clear:both;">
 							{section name=ustone loop=$upcomingStones}
 								{if $smarty.section.ustone.index % 2 == 0}
-								<tbody class="color-a" id="miles_{$upcomingStones[ustone].ID}">
+								<tbody class="color-a" id="miles_upcoming_{$upcomingStones[ustone].ID}">
 								{else}
-								<tbody class="color-b" id="miles_{$upcomingStones[ustone].ID}">
+								<tbody class="color-b" id="miles_upcoming_{$upcomingStones[ustone].ID}">
 								{/if}
 									<tr{if $upcomingStones[ustone].daysleft == 0} class="marker-today"{/if}>
-										<td class="a">{if $userpermissions.milestones.close}<a class="butn_check" href="managemilestone.php?action=close&amp;mid={$upcomingStones[ustone].ID}&amp;id={$project.ID}" title="{#close#}"></a>{/if}</td>
+										<td class="a">
+										{if $userpermissions.milestones.close}
+										<a class="butn_check" href="javascript:closeElement('miles_upcoming_{$upcomingStones[ustone].ID}','managemilestone.php?action=close&amp;mid={$upcomingStones[ustone].ID}&amp;id={$project.ID}');" title="{#close#}"></a>
+										{/if}</td>
 										<td class="b">
 											<div class="toggle-in">
 												<span class="acc-toggle" onclick="javascript:accord_miles_new.activate($$('#accordion_miles_new .accordion_toggle')[{$smarty.section.stone.index}]);toggleAccordeon('done_{$myprojects[project].ID|default}',this);"></span>
