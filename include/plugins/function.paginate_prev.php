@@ -67,7 +67,8 @@ function smarty_function_paginate_prev($params, &$smarty) {
 
     if(($_item = SmartyPaginate::_getPrevPageItem($_id)) !== false) {
         $_show = true;
-        $_text = isset($params['text']) ? $params['text'] : SmartyPaginate::getPrevText($_id);
+        //$_text = isset($params['text']) ? $params['text'] : SmartyPaginate::getPrevText($_id);
+        $_text = "<<";
         $_url .= (strpos($_url, '?') === false) ? '?' : '&';
         $_url .= SmartyPaginate::getUrlVar($_id) . '=' . $_item;
     } else {
