@@ -205,9 +205,9 @@ if ($action == "add") {
     fputcsv($excelFile, $line);
 
     if (!empty($start) and !empty($end)) {
-        $track = $tracker->getProjectTrack($id, $usr, $taski, $start, $end, 1000);
+        $track = $tracker->getProjectTrack($id, $usr, $taski, $start, $end, false);
     } else {
-        $track = $tracker->getProjectTrack($id, $usr , $taski, 0, 0, 1000);
+        $track = $tracker->getProjectTrack($id, $usr , $taski, 0, 0, false);
     }
 
     if (!empty($track)) {
@@ -243,9 +243,9 @@ if ($action == "add") {
     $headers = array($langfile["user"], $langfile["task"], $langfile["comment"], $langfile["started"] . " - " . $langfile["ended"], $langfile["hours"]);
 
     if (!empty($start) and !empty($end)) {
-        $track = $tracker->getProjectTrack($id, $usr, $taski, $start, $end, 1000);
+        $track = $tracker->getProjectTrack($id, $usr, $taski, $start, $end, false);
     } else {
-        $track = $tracker->getProjectTrack($id, $usr , $taski, 0, 0, 1000);
+        $track = $tracker->getProjectTrack($id, $usr , $taski, 0, 0, false);
     }
     $thetrack = array();
     if (!empty($track)) {
@@ -272,9 +272,9 @@ if ($action == "add") {
     $line = array($strproj, $strtask, $strcomment, $strday, $strstarted, $strended, $strhours);
     fputcsv($excelFile, $line);
     if (!empty($start) and !empty($end)) {
-        $track = $tracker->getUserTrack($id, $fproject, $taski, $start, $end);
+        $track = $tracker->getUserTrack($id, $fproject, $taski, $start, $end, false);
     } else {
-        $track = $tracker->getUserTrack($id, $fproject, $taski, 0, 0 , 1000);
+        $track = $tracker->getUserTrack($id, $fproject, $taski, 0, 0 , false);
     }
     if (!empty($track)) {
         foreach($track as $tra) {
@@ -289,9 +289,9 @@ if ($action == "add") {
     header("Location: $loc");
 } elseif ($action == "userpdf") {
     if (!empty($start) and !empty($end)) {
-        $track = $tracker->getUserTrack($id, $fproject, $taski, $start, $end);
+        $track = $tracker->getUserTrack($id, $fproject, $taski, $start, $end, false);
     } else {
-        $track = $tracker->getUserTrack($id, $fproject, $taski, 0, 0, 1000);
+        $track = $tracker->getUserTrack($id, $fproject, $taski, 0, 0, false);
     }
     $thetrack = array();
 
