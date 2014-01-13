@@ -10,9 +10,9 @@ define("CL_ROOT", realpath(dirname(__FILE__)));
 define("CL_CONFIG", "standard");
 // collabtive version and release date
 define("CL_VERSION", 1.2);
-define("CL_PUBDATE", "1377122400");
+define("CL_PUBDATE", "1389567600");
 // uncomment for debugging
-error_reporting(E_ALL | E_STRICT);
+error_reporting(E_ALL || E_STRICT);
 // include config file , pagination and global functions
 require(CL_ROOT . "/config/" . CL_CONFIG . "/config.php");
 require(CL_ROOT . "/include/SmartyPaginate.class.php");
