@@ -188,7 +188,6 @@ if ($action == "addform") {
         die();
     }
     $pro = new project();
-
     $today = date("d");
     // Get projects milestones, and todays project milestones
     $stones = $milestone->getProjectMilestones($id);
