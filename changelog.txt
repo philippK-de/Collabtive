@@ -7,6 +7,7 @@
 + Removed links to the my-projects/tasks/messages blocks in block titles on the desktop
 + Milestones can now be deleted asynchronously
 + Milestones can now be closed asynchronously
++ Milestones are now grouped into "current" , "late"  and "upcoming" milestones in project->milestones
 + Closed tasklists now receive their own white bg block in projects->tasklists. Better sets the block apart from active tl's
 + Removed tags from the add message form. Tags will be removed from Collabtive in order to simplify things.
 + Removed file upload from the add message form. Now only previously uploaded files can be attached to messages.
