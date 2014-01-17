@@ -1,4 +1,7 @@
-﻿Collabtive 1.2
+﻿Collabtive 2.0
++Fixed notice on desktop that resulted from missing network connection during update check
+
+Collabtive 1.2
 + Added translations: Vietnamese
 + Improved translations: Spanish
 + Added collapsible tree showing the structure of a project (milestones, tasklists, tasks, messages)
