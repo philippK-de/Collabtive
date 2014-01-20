@@ -18,15 +18,7 @@
 			</div>
 
 
-			<div class="row">
-				<label>{#files#}:</label>
-				<button class="inner" onclick="blindtoggle('files-add');toggleClass(this,'inner-active','inner');return false;" onfocus="this.blur()">{#addbutton#}</button>
-				<button class="inner" onclick="blindtoggle('files-attach');toggleClass(this,'inner-active','inner');return false;" onfocus="this.blur()">{#attachbutton#}</button>
-			</div>
-
-
 			{*Attach*}
-			<div id = "files-attach" class="blinded" style = "display:none;clear:both;">
 				<div class="row">
 					<label for = "thefiles">{#attachfile#}:</label>
 					<select name = "thefiles" id = "thefiles">
@@ -39,10 +31,10 @@
 						{/section}
 					</select>
 				</div>
-			</div>
+
 
 			{*Add*}
-			<div id = "files-add" class="blinded" style = "display:none;">
+		<!--	<div id = "files-add" class="blinded" style = "display:none;">
 				<div class="row">
 					<label for = "numfiles{$myprojects[project].ID}">{#count#}:</label>
 					<select name = "numfiles" id = "numfiles{$myprojects[project].ID}" onchange = "make_inputs(this.value);">
@@ -84,8 +76,8 @@
 				<label for="tags">{#tags#}:</label>
 				<input type="text" name="tags" id="tags" realname="{#tags#}" />
 			</div>
-
-
+-->
+	<input type="hidden" name="tags" id="tags" realname="{#tags#}" />
 			<div class="row">
 				<label for="milestone">{#milestone#}:</label>
 				<select name="milestone" id="milestone"  realname="{#milestone#}">

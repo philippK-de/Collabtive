@@ -2,7 +2,7 @@
 /**
  * Class to provide a calendar with additional data (tasks, milestones) as array
  *
- * @author Open Dynamics / Philipp Kiszka <info@o-dyn.de>
+ * @author Philipp Kiszka <info@o-dyn.de>
  * @name calendar
  * @package Collabtive
  * @version 1.0

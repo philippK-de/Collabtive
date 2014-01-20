@@ -271,15 +271,40 @@
 		<div class="content-spacer"></div>
 	{/section} {*Tasks End*}
 {/if} {*if $lists[0][0]*}
+{if !$lists[0][0] and !$oldlists[0][0]}
+	<tbody class="color-a">
+		<tr>
+			<td></td>
+			<td colspan="3" class="info">{#notasklists#}</td>
+			<td class="tools"></td>
+		</tr>
+	</tbody>
+{/if}
+
+</div> {*Tasks END*}
+</div> {*content-left-in END*}
+</div> {*content-left END*}
+{* current tasklists end*}
+{*right sidebar*}
+{include file="sidebar-a.tpl"}
 
 {if $oldlists[0][0]} {*only show the block if there are closed tasklists*} {*Done Tasklists*}
+<div class="content-spacer"></div>
+{*closed tasklists*}
+<div id="content-left">
+<div id="content-left-in">
+<div class="tasks">
+	<h1>{$projectname|truncate:45:"...":true}<span>/ {#donetasklists#}</span></h1>
+
 	<div class="headline">
 		<a href="javascript:void(0);" id="block-donelists_toggle" class="win_block" onclick = "toggleBlock('block-donelists');"></a>
 		<h2>
-			<img src="./templates/standard/images/symbols/tasklist-done.png" alt="" />{#donetasklists#}
+			<img src="./templates/standard/images/symbols/tasklist-done.png" alt="" />
 		</h2>
 	</div>
 
+
+{* Closed tasklists *}
 	<div id="block-donelists" class="block">
 		<div class="dones">
 			<table id="acc_donelists" cellpadding="0" cellspacing="0" border="0">
@@ -353,21 +378,14 @@
 			var accord_donelists = new accordion('block-donelists');
 		</script>
 	{/literal}
-{/if} {*Done Tasklists End*}
-
-{if !$lists[0][0] and !$oldlists[0][0]}
-	<tbody class="color-a">
-		<tr>
-			<td></td>
-			<td colspan="3" class="info">{#notasklists#}</td>
-			<td class="tools"></td>
-		</tr>
-	</tbody>
-{/if}
 
 </div> {*Tasks END*}
 </div> {*content-left-in END*}
 </div> {*content-left END*}
 
-{include file="sidebar-a.tpl"}
+{/if} {*Done Tasklists End*}
+
+
+
+
 {include file="footer.tpl"}

@@ -2,7 +2,6 @@
 /**
  * Die Klasse stellt Methoden bereit um Kunden zu bearbeiten
  *
- * @author Electric Solutions GbR <info@electric-solutions.de>
  * @author Philipp Kiszka
  * @name project
  * @package Collabtive
@@ -191,6 +190,7 @@ class company {
 
 		while($company = $sel->fetch())
 		{
+
 			array_push($companies,$company);
 		}
 

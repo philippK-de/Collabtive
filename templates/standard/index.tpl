@@ -38,7 +38,7 @@
 							</div>
 						{/if}
 					<h2>
-						<a href="myprojects.php" title="{#myprojects#}"><img src="./templates/standard/images/symbols/projects.png" alt="" />{#myprojects#}</a>
+					<img src="./templates/standard/images/symbols/projects.png" alt="" />{#myprojects#}
 					</h2>
 				</div>
 
@@ -150,7 +150,7 @@
 					</div>
 
 					<h2>
-						<a href="mytasks.php" title="{#mytasks#}"><img src="./templates/standard/images/symbols/tasklist.png" alt="" />{#mytasks#}</a>
+					<img src="./templates/standard/images/symbols/tasklist.png" alt="" />{#mytasks#}
 					</h2>
 				</div>
 
