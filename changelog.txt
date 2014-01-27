@@ -1,5 +1,10 @@
 ﻿Collabtive 2.0
 +Fixed notice on desktop that resulted from missing network connection during update check
++Fixed deactivation of error reporting during update
++Merge existing members and new members when adding project
++Error reporting globally set to E_WARNING
++Changed redirection after project creation from desktop or project administration to project dashboard
++Removed English strings from Farsi translation file
 
 Collabtive 1.2
 + Added translations: Vietnamese
