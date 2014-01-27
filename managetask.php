@@ -26,7 +26,7 @@ if (!isset($_SESSION["userid"])) {
         } else {
           header('HTTP/1.0 401 Unauthorized');
           echo 'Error 401: Not authorized!';
-        }	
+        }
       }
       exit;
     } else {
@@ -104,25 +104,31 @@ if ($action == "addform") {
         }
         // if tasks was added and mailnotify is activated, send an email
         if ($settings["mailnotify"]) {
-            foreach($assigned as $member) {
-                $usr = (object) new user();
-                $user = $usr->getProfile($member);
-                if (!empty($user["email"]) && $userid != $user["ID"]) {
-                    // send email
-                    $userlang = readLangfile($user['locale']);
+			$projobj = new project();
+			$theproject = $projobj->getProject($project["ID"]);
+			// Check project status
+			if ($theproject["status"] != 2)
+			{
+				foreach($assigned as $member) {
+					$usr = (object) new user();
+					$user = $usr->getProfile($member);
+					if (!empty($user["email"]) && $userid != $user["ID"]) {
+						// send email
+						$userlang = readLangfile($user['locale']);
 
-                    $subject = $userlang["taskassignedsubject"] . ' (' . $userlang['by'] . ' ' . $username . ')';
+						$subject = $userlang["taskassignedsubject"] . ' (' . $userlang['by'] . ' ' . $username . ')';
 
-                    $mailcontent = $userlang["hello"] . ",<br /><br/>" . 
-                                   $userlang["taskassignedtext"] . 
-                                   "<h3><a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a></h3>".
-                                   $text;
+						$mailcontent = $userlang["hello"] . ",<br /><br/>" .
+									$userlang["taskassignedtext"] .
+									"<h3><a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a></h3>".
+									$text;
 
-                    $themail = new emailer($settings);
+						$themail = new emailer($settings);
 
-                    $themail->send_mail($user["email"], $subject , $mailcontent);
-                }
-            }
+						$themail->send_mail($user["email"], $subject , $mailcontent);
+					}
+				}
+			}
         }
         $loc = $url . "managetask.php?action=showproject&id=$id&mode=added";
         header("Location: $loc");
