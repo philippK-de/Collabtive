@@ -88,7 +88,7 @@ class company {
         }
     }
 
-     /**
+    /**
      * Assign a company to a user
      *
      * @param int $task Company ID
