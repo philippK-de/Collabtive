@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class to provide methods for handling customer companies
  *
@@ -68,7 +69,7 @@ class company {
     /**
      * Delete a company and disconnect all assigned projects
      *
-     * @param int $id Customer ID
+     * @param int $id Company ID
      * @return bool
      */
     function del($id)
