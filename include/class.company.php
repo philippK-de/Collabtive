@@ -88,7 +88,7 @@ class company {
         }
     }
 
-	/**
+     /**
      * Assign a company to a user
      *
      * @param int $task Company ID
@@ -183,32 +183,32 @@ class company {
         }
     }
 
-	/**
-	 * Get a list of all companies
-	 *
-	 * @return array $companies List of all companies
-	 */
-	function getAllCompanies()
-	{
-		global $conn;
-		
-		$sel = $conn->query("SELECT * FROM company");
-		$companies = array();
-
-		while($company = $sel->fetch())
-		{
-			array_push($companies,$company);
-		}
-
-		if(!empty($companies))
-		{
-			return $companies;
-		}
-		else
-		{
-			return false;
-		}
-	}
+     /**
+      * Get a list of all companies
+      *
+      * @return array $companies List of all companies
+      */
+    function getAllCompanies()
+    {
+        global $conn;
+        
+        $sel = $conn->query("SELECT * FROM company");
+        $companies = array();
+        
+        while($company = $sel->fetch())
+        {
+            array_push($companies,$company);
+        }
+        
+        if(!empty($companies))
+        {
+            return $companies;
+        }
+        else
+        {
+            return false;
+        }
+    }
 	
     /**
 	 * Get a company including all of its members
