@@ -1,20 +1,21 @@
 <?php
 /**
- * Die Klasse stellt Methoden bereit um Kunden zu bearbeiten
+ * Class to provide methods for handling customer companies
  *
  * @author Philipp Kiszka
  * @name project
  * @package Collabtive
- * @version 1.0
+ * @version 2.0
  * @link http://www.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
 class company {
+	
     private $mylog;
 
     /**
-     * Konstruktor
-     * Initialisiert den Eventlog
+     * Constructor
+     * Initializes the event log
      */
     function __construct()
     {
@@ -22,10 +23,10 @@ class company {
     }
 
     /**
-     * Add a customer
+     * Add a company
      *
      * @param array $data
-     * @return int $insid ID of the insert customer
+     * @return int $insid ID of the inserted company
      */
     function add($data)
     {
@@ -33,8 +34,8 @@ class company {
 
         $ins1Stmt = $conn->prepare("INSERT INTO company (`company`, `contact`, `email`, `phone`, `mobile`, `url`, `address`, `zip`, `city`, `country`, `state`, `desc`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
         $ins1 = $ins1Stmt->execute(array($data['company'], $data['contact'], $data['email'], $data['phone'], $data['mobile'], $data['url'], $data['address'], $data['zip'], $data['city'], $data['country'], $data['state'], $data['desc']));
-
-        $insid = $conn->lastInsertId();
+		$insid = $conn->lastInsertId();
+        
         if ($ins1) {
             return $insid;
         } else {
@@ -43,21 +44,21 @@ class company {
     }
 
     /**
-     * Bearbeitet eines Kunden
+     * Edit a company
      *
-     * @param array $data all customer data
+     * @param array $data Company data
      * @return bool
      */
     function edit($data)
     {
         global $conn;
+        
         $id = (int) $data['id'];
 
         $updStmt = $conn->prepare("UPDATE company SET `company`=?, `contact`=?, `email`=?, `phone`=?, `mobile`=?, `url`=?, `address`=?, `zip`=?, `city`=?, `country`=?, `state`=?, `desc`=? WHERE ID = ?");
         $upd = $updStmt->execute(array($data['company'], $data['contact'], $data['email'], $data['phone'], $data['mobile'], $data['url'], $data['address'], $data['zip'], $data['city'], $data['country'], $data['state'], $data['desc'], $id));
 
         if ($upd) {
-            // $this->mylog->add($name, 'customer' , 2, $id);
             return true;
         } else {
             return false;
@@ -65,9 +66,9 @@ class company {
     }
 
     /**
-     * Deletes a customer and disconnect every project which was assigned to this customer
+     * Delete a company and disconnect all assigned projects
      *
-     * @param int $id customer ID
+     * @param int $id Customer ID
      * @return bool
      */
     function del($id)
@@ -80,27 +81,28 @@ class company {
         $del = $conn->query("DELETE FROM customer WHERE ID = $id");
 
         if ($del) {
-            // $this->mylog->add($userid, 'customer', 3, $id);
             return true;
         } else {
             return false;
         }
     }
 
-/**
+	/**
      * Assign a company to a user
      *
-     * @param int $task Task ID
+     * @param int $task Company ID
      * @param int $id User ID
      * @return bool
      */
     function assign($company, $id)
     {
         global $conn;
+        
         $company = (int) $company;
         $id = (int) $id;
 
-        $upd = $conn->query("INSERT INTO company_assigned (user,company) VALUES ($id,$company)");
+        $upd = $conn->query("INSERT INTO company_assigned (user, company) VALUES ($id, $company)");
+        
         if ($upd) {
             return true;
         } else {
@@ -109,19 +111,21 @@ class company {
     }
 
     /**
-     * Delete the assignment of a company to a user
+     * Disconnect a company from a user
      *
-     * @param int $task Task ID
+     * @param int $task Company ID
      * @param int $id User ID
      * @return bool
      */
     function deassign($company, $id)
     {
         global $conn;
+        
         $company = (int) $company;
         $id = (int) $id;
 
         $upd = $conn->query("DELETE FROM company_assigned WHERE user = $id AND company = $company");
+        
         if ($upd) {
             return true;
         } else {
@@ -130,14 +134,15 @@ class company {
     }
 
     /**
-     * Gibt alle Daten eines Kunden aus
+     * Get a company
      *
-     * @param int $id Eindeutige Kundennummer
-     * @return array $customer Kundendaten
+     * @param int $id Company ID
+     * @return array $company Company
      */
     function getCompany($id)
     {
         global $conn;
+        
         $id = (int) $id;
 
         $sel = $conn->prepare("SELECT * FROM company WHERE ID = ?");
@@ -153,10 +158,10 @@ class company {
     }
 
     /**
-     * Listet alle Kunden auf
+     * Get a list of companies
      *
-     * @param int $lim Anzahl der anzuzeigenden Kunden
-     * @return array $customers
+     * @param int $lim Maximum number of companies to return (default: 10)
+     * @return array $companies List of companies
      */
     function getCompanies($lim = 10)
     {
@@ -167,11 +172,11 @@ class company {
         $sel = $conn->prepare("SELECT * FROM company ORDER BY `company` ASC LIMIT $lim");
         $selStmt = $sel->execute();
 
-        $customers = $sel->fetchAll();
+        $companies = $sel->fetchAll();
 
 
-        if (!empty($customers)) {
-            return $customers;
+        if (!empty($companies)) {
+            return $companies;
         } else {
             return false;
         }
@@ -180,17 +185,17 @@ class company {
 	/**
 	 * Get a list of all companies
 	 *
-	 * @return array $companies Array of all companies
+	 * @return array $companies List of all companies
 	 */
 	function getAllCompanies()
 	{
 		global $conn;
+		
 		$sel = $conn->query("SELECT * FROM company");
 		$companies = array();
 
 		while($company = $sel->fetch())
 		{
-
 			array_push($companies,$company);
 		}
 
@@ -203,26 +208,31 @@ class company {
 			return false;
 		}
 	}
+	
     /**
-	 * Get all members of a company
+	 * Get a company including all of its members
 	 *
 	 * @param int $id Company ID
-	 * @return array $company Company including a list of all its members
+	 * @return array $company Company including all of its members
 	 */
 	function getCompanyMembers($id)
 	{
-				global $conn;
+		global $conn;
+		
 		$id = (int) $id;
 
         $sel = $conn->query("SELECT user, company FROM company_assigned WHERE company = $id");
+		
 		$staff = array();
 		$userobj = (object) new user();
 		$company = $this->getProfile($member[1]);
+        
         while($member = $sel->fetch())
 		{
 			$user = $userobj->getProfile($member[0]);
 			array_push($staff,$user);
 		}
+		
 		$company["staff"] = $staff;
 
 		if (!empty($company))
