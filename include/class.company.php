@@ -211,40 +211,40 @@ class company {
     }
 	
     /**
-	 * Get a company including all of its members
-	 *
-	 * @param int $id Company ID
-	 * @return array $company Company including all of its members
-	 */
-	function getCompanyMembers($id)
-	{
-		global $conn;
-		
-		$id = (int) $id;
-
+     * Get a company including all of its members
+     *
+     * @param int $id Company ID
+     * @return array $company Company including all of its members
+     */
+    function getCompanyMembers($id)
+    {
+        global $conn;
+        
+        $id = (int) $id;
+        
         $sel = $conn->query("SELECT user, company FROM company_assigned WHERE company = $id");
-		
-		$staff = array();
-		$userobj = (object) new user();
-		$company = $this->getProfile($member[1]);
+        
+        $staff = array();
+        $userobj = (object) new user();
+        $company = $this->getProfile($member[1]);
         
         while($member = $sel->fetch())
-		{
-			$user = $userobj->getProfile($member[0]);
-			array_push($staff,$user);
-		}
-		
-		$company["staff"] = $staff;
-
-		if (!empty($company))
-		{
-			return $company;
-		}
-		else
-		{
-			return false;
-		}
-	}
+        {
+            $user = $userobj->getProfile($member[0]);
+            array_push($staff,$user);
+        }
+        
+        $company["staff"] = $staff;
+        
+        if (!empty($company))
+        {
+            return $company;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
 
 ?>
