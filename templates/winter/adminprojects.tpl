@@ -43,7 +43,7 @@
 
 					<div class="nosmooth" id="sm_myprojects">
 
-						<table cellpadding="0" cellspacing="0" border="0">
+						<table id="adminprojects" cellpadding="0" cellspacing="0" border="0">
 							<thead>
 								<tr>
 									<th class="a"></th>
@@ -76,7 +76,7 @@
 										</td>
 										<td>
 											<div class="toggle-in">
-												<span class="acc-toggle" onclick="javascript:accord_projects.activate($$('#acc-projects .accordion_toggle')[{$smarty.section.opro.index}]);toggleAccordeon('acc-projects',this);"></span>
+												<span id="adminprojectstoggle{$opros[opro].ID}" class="acc-toggle" onclick="javascript:accord_projects.activate($$('#acc-projects .accordion_toggle')[{$smarty.section.opro.index}]);toggleAccordeon('acc-projects',this);"></span>
 												<a href="manageproject.php?action=showproject&amp;id={$opros[opro].ID}" title="{$opros[opro].name}">
 													{$opros[opro].name|truncate:30:"...":true}
 												</a>

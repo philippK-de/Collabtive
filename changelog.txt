@@ -6,6 +6,7 @@
 + Changed redirection after project creation from desktop or project administration to project dashboard
 + Removed English strings from Farsi translation file
 + Improved translations: German
++ Improved project tree's handling for special characters
 
 Collabtive 1.2
 + Added translations: Vietnamese
