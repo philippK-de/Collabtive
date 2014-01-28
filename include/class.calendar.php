@@ -1,11 +1,11 @@
 <?php
 /**
- * Class to provide a calendar with additional data (tasks, milestones) as array
+ * Class to provide a calendar with additional data (tasks, milestones)
  *
  * @author Philipp Kiszka <info@o-dyn.de>
  * @name calendar
  * @package Collabtive
- * @version 1.0
+ * @version 2.0
  * @link http://www.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
@@ -33,7 +33,7 @@ class calendar
 	/**
 	 * Get the calendar array for a given month and year (and project)
 	 *
-	 * @param int $month Month without leading zero (e.g. 5 for march)
+	 * @param int $month Month without leading zero (e.g. 5 for March)
 	 * @param int $year Year in the format yyyy (e.g. 2008)
 	 * @param int $project Project ID (default: 0 => no project selected, so get the calendar for all projects)
 	 * @return array
@@ -42,7 +42,7 @@ class calendar
 		$this->month = $month;
 		$this->year = $year;
 
-		//get number of days in the given and the previous month
+		// get number of days in the given and the previous month
 		$this->daysInMonth = date("t",mktime(0,0,0,$month,1,$year));
 		$this->daysLastMonth = date("t",mktime(0,0,0,$month-1,1,$year));
 
@@ -57,7 +57,8 @@ class calendar
 	}
 
 	 /**
-	 * Private function to populate the array of calendar information
+	 * Populates the array of calendar information
+	 * 
 	 * @return array
 	 */
 	private function buildCal()
@@ -92,13 +93,13 @@ class calendar
 					$tasksnum = count($tasks);
 
 					$this->calendar[$j][$i] = array(
-												"val"=>$theday,
-												"milestones"=>$miles,
-												"milesnum"=>$milesnum,
-												"tasks"=>$tasks,
-												"tasksnum"=>$tasksnum,
-												"currmonth"=>1
-												);
+										"val"=>$theday,
+										"milestones"=>$miles,
+										"milesnum"=>$milesnum,
+										"tasks"=>$tasks,
+										"tasksnum"=>$tasksnum,
+										"currmonth"=>1
+									);
 				}
 			}
 		}
