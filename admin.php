@@ -430,7 +430,7 @@ if ($action == "index") {
                     $userlang = readLangfile($user['locale']);
 
                     $subject = $userlang["projectassignedsubject"] . ' (' . $userlang['by'] . ' ' .$username.')';
-                    $mailcontent = $userlang["hello"] . ",<br /><br/>" . 
+                    $mailcontent = $userlang["hello"] . ",<br /><br/>" .
                                    $userlang["projectassignedtext"] .
                                    " <a href = \"" . $url . "manageproject.php?action=showproject&id=$add\">" . $url . "manageproject.php?action=showproject&id=$add</a>";
 
@@ -440,11 +440,7 @@ if ($action == "index") {
                 }
             }
         }
-        if ($userpermissions["admin"]["add"]) {
-            header("Location: admin.php?action=projects&mode=added");
-        } else {
-            header("Location: index.php?mode=projectadded");
-        }
+        header("Location: manageproject.php?action=showproject&id=$add");
     }
 } elseif ($action == "closepro") {
     if ($project->close($id)) {

@@ -1,6 +1,6 @@
 <?php
-error_reporting(0);
 require("./init.php");
+error_reporting(0);
 // Version independent
 // Clear templates cache
 $handle = opendir($template->compile_dir);
