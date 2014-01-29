@@ -7,6 +7,7 @@
 + Removed English strings from Farsi translation file
 + Improved translations: German
 + Improved project tree's handling for special characters
++ Removed file upload from the add reply form. Now only previously uploaded files can be attached to replies.
 
 Collabtive 1.2
 + Added translations: Vietnamese
