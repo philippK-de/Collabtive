@@ -40,7 +40,7 @@
 						<div class="clear_both_b"></div>
 						
 						<div class="row">
-							<label for="end">Starts on:</label>
+							<label for="end">{#start#}:</label>
 							<input type="text" class="text" name="start" id="start" required="1" realname="{#due#}" />
 						</div>
 						
