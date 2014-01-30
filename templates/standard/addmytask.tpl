@@ -44,17 +44,18 @@
 			    </select>
 		    </div>
 		    
-		    <div class="row"><label for="tasklist">{#tasklist#}:</label>
-			    <select name="tasklist" id="tasklist" required = "1" exclude = "-1" realname = "{#tasklist#}">
-			    <option value="-1" selected="selected">{#chooseone#}</option>
-			    {section name=tasklist loop=$myprojects[project].lists}
-			    <option value="{$myprojects[project].lists[tasklist].ID}">{$myprojects[project].lists[tasklist].name}</option>
-			    {/section}
+		    <div class="row">
+		    	<label for="tasklist">{#tasklist#}:</label>
+			    <select name="tasklist" id="tasklist" required="1" exclude="-1" realname="{#tasklist#}">
+				    <option value="-1" selected="selected">{#chooseone#}</option>
+				    {section name=tasklist loop=$myprojects[project].lists}
+				    	<option value="{$myprojects[project].lists[tasklist].ID}">{$myprojects[project].lists[tasklist].name}</option>
+				    {/section}
 			    </select>
 		    </div>
-		
+			
 		    <input type="hidden" value="{$userid}" name="assigned" />
-		
+			
 			<div class="row-butn-bottom">
 				<label>&nbsp;</label>
 				<button type="submit" onfocus="this.blur();">{#addbutton#}</button>
