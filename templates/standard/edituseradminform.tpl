@@ -1,102 +1,119 @@
-{include file="header.tpl" jsload = "ajax"}
-{include file="tabsmenue-admin.tpl" usertab = "active"}
+{include file="header.tpl" jsload="ajax"}
+{include file="tabsmenue-admin.tpl" usertab="active"}
 
 <div id="content-left">
 	<div id="content-left-in">
 		<div class="user">
-
+			
 			<h1>{#edituser#}<span>/ {$user.name}</span></h1>
-
+			
 			<div class="userwrapper">
-				<form novalidate class="main" method="post" action="admin.php?action=edituser&amp;id={$user.ID}" enctype="multipart/form-data" {literal}onsubmit="return validateCompleteForm(this,'input_error');"{/literal}>
+				
+				<form novalidate class="main" method="post" action="admin.php?action=edituser&amp;id={$user.ID}" enctype="multipart/form-data" {literal} onsubmit="return validateCompleteForm(this,'input_error');" {/literal} >
 					<fieldset>
-
+						
 						<table cellpadding="0" cellspacing="0" border="0">
+							
 							<tr>
 								<td class="avatarcell" valign="top">
+									
 									{if $user.avatar != ""}
 										<a href="#avatarbig" id="ausloeser">
-											<div class="avatar-profile"><img src = "thumb.php?pic=files/{$cl_config}/avatar/{$user.avatar}&amp;width=122;" alt="" /></div>
+											<div class="avatar-profile">
+												<img src="thumb.php?pic=files/{$cl_config}/avatar/{$user.avatar}&amp;width=122;" alt="" />
+											</div>
 										</a>
 									{else}
 										{if $user.gender == "f"}
-											<div class="avatar-profile"><img src = "thumb.php?pic=templates/standard/images/no-avatar-female.jpg&amp;width=122;" alt="" /></div>
+											<div class="avatar-profile">
+												<img src="thumb.php?pic=templates/standard/images/no-avatar-female.jpg&amp;width=122;" alt="" />
+											</div>
 										{else}
-											<div class="avatar-profile"><img src = "thumb.php?pic=templates/standard/images/no-avatar-male.jpg&amp;width=122;" alt="" /></div>
+											<div class="avatar-profile">
+												<img src="thumb.php?pic=templates/standard/images/no-avatar-male.jpg&amp;width=122;" alt="" />
+											</div>
 										{/if}
 									{/if}
-
+									
 									<div id="avatarbig" style="display:none;">
-										<a href="javascript:Control.Modal.close();"><img src = "thumb.php?pic=files/{$cl_config}/avatar/{$user.avatar}&amp;width=480&amp;height=480;" alt="" /></a>
+										<a href="javascript:Control.Modal.close();">
+											<img src="thumb.php?pic=files/{$cl_config}/avatar/{$user.avatar}&amp;width=480&amp;height=480;" alt="" />
+										</a>
 									</div>
 								</td>
-
+								
 								<td>
 									<div class="message">
 										<div class="block">
+											
 											<table cellpadding="0" cellspacing="0" border="0">
-
+												
 												<colgroup>
 													<col class="a" />
 													<col class="b" />
 												</colgroup>
-
+												
 												<thead><tr><th colspan="2"></th></tr></thead>
 												<tfoot><tr><td colspan="2"></td></tr></tfoot>
-
+												
 												<tbody class="color-a">
 													<tr>
 														<td><label for = "name">{#user#}:</label></td>
-														<td class="right"><input type = "text" class="text" value = "{$user.name}" name = "name" id="name" required="1" realname="{#name#}" tabindex="1" /></td>
+														<td class="right">
+															<input type="text" class="text" value="{$user.name}" name="name" id="name" required="1" realname="{#name#}" tabindex="1" />
+														</td>
 													</tr>
 												</tbody>
-
+												
 												<tbody class="color-b">
 													<tr>
-														<td><label for = "avatar">{#avatar#}:</label></td>
+														<td><label for="avatar">{#avatar#}:</label></td>
 														<td class="right">
-
-															<div class="fileinput" >
-																<input type="file" class="file" name = "userfile" id="avatar"  realname="{#file#}" size="19" onchange = "thefile.value = this.value;"  tabindex="2" />
-																<table class = "faux" cellpadding="0" cellspacing="0" border="0">
+															<div class="fileinput">
+																<input type="file" class="file" name="userfile" id="avatar" realname="{#file#}" size="19" onchange="thefile.value = this.value;" tabindex="2" />
+																
+																<table class="faux" cellpadding="0" cellspacing="0" border="0">
+																
 																	<tr>
-																		<td><input type="text" class="text-file" name = "thefile" id="thefile"></td>
+																		<td><input type="text" class="text-file" name="thefile" id="thefile"></td>
 																		<td class="choose"><button class="inner" onclick="return false;">{#chooseone#}</button></td>
 																	</tr>
+																	
 																</table>
+																
 															</div>
 														</td>
 													</tr>
 												</tbody>
-
+												
 												<tbody class="color-a">
 													<tr>
 														<td></td>
 														<td class="right"></td>
 													</tr>
 												</tbody>
-
+												
 												<tbody class="color-b">
 													<tr>
-														<td><label for = "company">{#company#}:</label></td>
+														<td><label for="company">{#company#}:</label></td>
 														<td class="right">
-															<input type = "text" name = "company" id = "company" value = "{$user.company}" />
+															<input type="text" name="company" id="company" value="{$user.company}" />
 														</td>
 													</tr>
 												</tbody>
-
+												
 												<tbody class="color-a">
 													<tr>
 														<td><label for="email">{#email#}:</label></td>
-														<td class="right"><input type = "text" class="text" value = "{$user.email}" name = "email" id="email" {literal}regexp="EMAIL"{/literal} required="1" realname ="{#email#}" /></td>
+														<td class="right"><input type="text" class="text" value="{$user.email}" name="email" id="email" {literal} regexp="EMAIL" {/literal} required="1" realname="{#email#}" /></td>
 													</tr>
 												</tbody>
-
+												
 												<tbody class="color-b">
-												<tr>
-													<td><label for="rate">{#rate#}:</label></td>
-													<td class="right"><input type = "text" class="text" value = "{$user.rate}" name = "rate" id="rate" /></td>
-												</tr>
+													<tr>
+														<td><label for="rate">{#rate#}:</label></td>
+														<td class="right"><input type = "text" class="text" value = "{$user.rate}" name = "rate" id="rate" /></td>
+													</tr>
 												</tbody>
 
 												<tbody class="color-a">
