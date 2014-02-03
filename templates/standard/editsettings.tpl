@@ -38,7 +38,7 @@
 			<div id="block_system" class="block">
 				{include file="settings_system.tpl"}
 				<div class="tablemenue"></div>
-			</div> {*Block End*}
+			</div> {* block_system END *}
 			
 			<div class="content-spacer"></div>
 			
@@ -52,13 +52,13 @@
 			<div id="block_email" class="block">
 				{include file="settings_email.tpl"}
 				<div class="tablemenue"></div>
-			</div> {*Block End*}
+			</div> {* Block END *}
 			
 			<div class="content-spacer"></div>
 			
-		</div> {*Neutral END*}
-	</div> {*content-left-in END*}
-</div> {*content-left END*}
+		</div> {* neutral END *}
+	</div> {* content-left-in END *}
+</div> {* content-left END *}
 
 {include file="sidebar-a.tpl"}
 {include file="footer.tpl"}
