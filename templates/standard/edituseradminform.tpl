@@ -59,9 +59,7 @@
 												<tbody class="color-a">
 													<tr>
 														<td><label for = "name">{#user#}:</label></td>
-														<td class="right">
-															<input type="text" class="text" value="{$user.name}" name="name" id="name" required="1" realname="{#name#}" tabindex="1" />
-														</td>
+														<td class="right"><input type="text" class="text" value="{$user.name}" name="name" id="name" required="1" realname="{#name#}" tabindex="1" /></td>
 													</tr>
 												</tbody>
 												
@@ -96,9 +94,7 @@
 												<tbody class="color-b">
 													<tr>
 														<td><label for="company">{#company#}:</label></td>
-														<td class="right">
-															<input type="text" name="company" id="company" value="{$user.company}" />
-														</td>
+														<td class="right"><input type="text" name="company" id="company" value="{$user.company}" /></td>
 													</tr>
 												</tbody>
 												
@@ -112,159 +108,159 @@
 												<tbody class="color-b">
 													<tr>
 														<td><label for="rate">{#rate#}:</label></td>
-														<td class="right"><input type = "text" class="text" value = "{$user.rate}" name = "rate" id="rate" /></td>
+														<td class="right"><input type="text" class="text" value="{$user.rate}" name="rate" id="rate" /></td>
 													</tr>
 												</tbody>
-
+												
 												<tbody class="color-a">
 													<tr>
 														<td><label for="web">{#url#}:</label></td>
-														<td class="right"><input type = "text" class="text" name = "web" id = "web" realname = "{#url#}" value = "{$user.url}" /></td>
+														<td class="right"><input type="text" class="text" name="web" id="web" realname="{#url#}" value="{$user.url}" /></td>
 													</tr>
 												</tbody>
-
+												
 												<tbody class="color-b">
 													<tr>
 														<td><label for="tel1">{#phone#}:</label></td>
-														<td class="right"><input type = "text" class="text" value = "{$user.tel1}" name = "tel1" id="tel1" /></td>
+														<td class="right"><input type="text" class="text" value="{$user.tel1}" name="tel1" id="tel1" /></td>
 													</tr>
 												</tbody>
-
+												
 												<tbody class="color-a">
 													<tr>
 														<td><label for="tel2">{#cellphone#}:</label></td>
-														<td class="right"><input type = "text" class="text" value = "{$user.tel2}" name = "tel2" id="tel2" /></td>
+														<td class="right"><input type="text" class="text" value="{$user.tel2}" name="tel2" id="tel2" /></td>
 													</tr>
 												</tbody>
-
+												
 												<tbody class="color-b">
 													<tr>
 														<td></td>
 														<td class="right"></td>
 													</tr>
 												</tbody>
-
+												
 												<tbody class="color-a">
 													<tr>
 														<td><label for="address1">{#address#}:</label></td>
-														<td class="right"><input type = "text" value = "{$user.adress}" name = "address1" id="address1" /></td>
+														<td class="right"><input type="text" value="{$user.adress}" name="address1" id="address1" /></td>
 													</tr>
 												</tbody>
-
+												
 												<tbody class="color-b">
 													<tr>
 														<td><label for="zip">{#zip#}:</label></td>
-														<td class="right"><input type = "text" name = "zip" id = "zip" realname = "{#zip#}" value = "{$user.zip}" /></td>
+														<td class="right"><input type="text" name="zip" id="zip" realname="{#zip#}" value="{$user.zip}" /></td>
 													</tr>
 												</tbody>
-
+												
 												<tbody class="color-a">
 													<tr>
 														<td><label for="address2">{#city#}:</label></td>
-														<td class="right"><input type = "text" class="text" value = "{$user.adress2}" name = "address2" id="address2" /></td>
+														<td class="right"><input type="text" class="text" value="{$user.adress2}" name="address2" id="address2" /></td>
 													</tr>
 												</tbody>
-
+												
 												<tbody class="color-b">
 													<tr>
 														<td><label for="country">{#country#}:</label></td>
-														<td class="right"><input type = "text" class="text" value = "{$user.country}" name = "country" id="country" /></td>
+														<td class="right"><input type="text" class="text" value="{$user.country}" name="country" id="country" /></td>
 													</tr>
 												</tbody>
-
+												
 												<tbody class="color-a">
 													<tr>
 														<td><label for="state">{#state#}:</label></td>
-														<td class="right"><input type = "text" class="text" value = "{$user.state}" name = "state" id="state" autocomplete="off" /></td>
+														<td class="right"><input type="text" class="text" value="{$user.state}" name="state" id="state" autocomplete="off" /></td>
 													</tr>
 												</tbody>
-
+												
 												<tbody class="color-b">
 													<tr>
 														<td></td>
 														<td class="right"></td>
 													</tr>
 												</tbody>
-
+												
 												<tbody class="color-a">
 													<tr>
 														<td><label for="gender">{#gender#}:</label></td>
 														<td class="right">
-															<select name = "gender" id = "gender" realname = "{#gender#}" />
+															<select name="gender" id="gender" realname="{#gender#}" />
 																{if $user.gender == ""}
-																<option value = "" selected>{#chooseone#}</option>
+																	<option value="" selected>{#chooseone#}</option>
 																{/if}
-																<option {if $user.gender == "m"}selected="selected"{/if} value = "m">{#male#}</option>
-																<option {if $user.gender == "f"}selected="selected"{/if} value = "f">{#female#}</option>
+																<option {if $user.gender == "m"} selected="selected" {/if} value = "m">{#male#}</option>
+																<option {if $user.gender == "f"} selected="selected" {/if} value = "f">{#female#}</option>
 															</select>
 														</td>
 													</tr>
 												</tbody>
-
+												
 												<tbody class="color-b">
 													<tr>
 														<td><label for="locale">{#locale#}:</label></td>
 														<td class="right">
-															<select name = "locale"  id="locale">
-															<option value = "" {if $user.locale == ""}selected="selected"{/if}>{#systemdefault#}</option>
-															{section name = lang loop=$languages_fin}
-																<option value = "{$languages_fin[lang].val}" {if $languages_fin[lang].val == $user.locale}selected="selected"{/if}>{$languages_fin[lang].str}</option>
-															{/section}
-															</select>
-														</td>
-													</tr>
-												</tbody>
-
-												<input type = "hidden" name = "admin" value = "{$user.admin}" />
-
-												<tbody class="color-a">
-													<tr>
-														<td><label for="newpass">{#newpass#}:</label></td>
-														<td class="right"><input type = "password" name = "newpass" id = "newpass" autocomplete="off" /></td>
-													</tr>
-												</tbody>
-
-												<tbody class="color-b">
-													<tr>
-														<td><label for="repeatpass">{#repeatpass#}:</label></td>
-														<td class="right"><input type = "password" name = "repeatpass" id = "repeatpass" autocomplete="off" /></td>
-													</tr>
-												</tbody>
-
-												<tbody class="color-a">
-													<tr>
-														<td></td>
-														<td class="right"></td>
-													</tr>
-												</tbody>
-
-												<tbody class="color-b">
-													<tr>
-														<td><label for="tags">{#tags#}:</label></td>
-														<td class="right"><input type = "text" name = "tags" id = "tags" realname = "{#tags#}" value = "{$user.tags}" /></td>
-													</tr>
-												</tbody>
-
-												<tbody class="color-a">
-													<tr>
-														<td><label>{#permissions#}:</label></td>
-														<td class="right">
-															<select name = "role">
-																{section name = role loop=$roles}
-																	<option value = "{$roles[role].ID}" {if $roles[role].ID == $user.role.ID}selected{/if}>{$roles[role].name}</option>
+															<select name="locale" id="locale">
+																<option value="" {if $user.locale == ""} selected="selected" {/if} >{#systemdefault#}</option>
+																{section name=lang loop=$languages_fin}
+																	<option value="{$languages_fin[lang].val}" {if $languages_fin[lang].val == $user.locale} selected="selected" {/if} >{$languages_fin[lang].str}</option>
 																{/section}
 															</select>
 														</td>
 													</tr>
 												</tbody>
-
+												
+												<input type="hidden" name="admin" value="{$user.admin}" />
+												
+												<tbody class="color-a">
+													<tr>
+														<td><label for="newpass">{#newpass#}:</label></td>
+														<td class="right"><input type="password" name="newpass" id="newpass" autocomplete="off" /></td>
+													</tr>
+												</tbody>
+												
+												<tbody class="color-b">
+													<tr>
+														<td><label for="repeatpass">{#repeatpass#}:</label></td>
+														<td class="right"><input type="password" name="repeatpass" id="repeatpass" autocomplete="off" /></td>
+													</tr>
+												</tbody>
+												
+												<tbody class="color-a">
+													<tr>
+														<td></td>
+														<td class="right"></td>
+													</tr>
+												</tbody>
+												
+												<tbody class="color-b">
+													<tr>
+														<td><label for="tags">{#tags#}:</label></td>
+														<td class="right"><input type="text" name="tags" id="tags" realname="{#tags#}" value="{$user.tags}" /></td>
+													</tr>
+												</tbody>
+												
+												<tbody class="color-a">
+													<tr>
+														<td><label>{#permissions#}:</label></td>
+														<td class="right">
+															<select name="role">
+																{section name=role loop=$roles}
+																	<option value="{$roles[role].ID}" {if $roles[role].ID == $user.role.ID} selected {/if} >{$roles[role].name}</option>
+																{/section}
+															</select>
+														</td>
+													</tr>
+												</tbody>
+												
 												<tbody class="color-b">
 													<tr>
 														<td></td>
 														<td class="right"></td>
 													</tr>
 												</tbody>
-
+												
 												<tbody class="color-a">
 													<tr>
 														<td></td>
@@ -273,18 +269,21 @@
 														</td>
 													</tr>
 												</tbody>
-
+											
 											</table>
-										</div> {*Block End*}
-									</div> {*Message End*}
+											
+										</div> {* block END *}
+									</div> {* message END *}
 								</td>
 							</tr>
+							
 						</table>
+						
 					</fieldset>
 				</form>
-
+				
 				{literal}
-					<script type = "text/javascript">
+					<script type="text/javascript">
 						new Control.Modal('ausloeser',{
 						opacity: 0.8,
 						position: 'absolute',
@@ -296,13 +295,14 @@
 						});
 					</script>
 				{/literal}
-
-			</div> {*UserWrapper End*}
-
+				
+			</div> {* UserWrapper END *}
+			
 			<div class="content-spacer"></div>
-		</div> {*User END*}
-	</div> {*content-left-in END*}
-</div> {*Content_left end*}
+			
+		</div> {* user END *}
+	</div> {* content-left-in END *}
+</div> {* content_left END *}
 
 {include file="sidebar-a.tpl"}
 {include file="footer.tpl"}
