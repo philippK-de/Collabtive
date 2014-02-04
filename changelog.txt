@@ -1,14 +1,38 @@
-﻿Collabtive 1.2
+﻿Collabtive 2.0
++ Fixed notice on desktop that resulted from missing network connection during update check
++ Fixed deactivation of error reporting during update
++ Merge existing members and new members when adding project
++ Error reporting globally set to E_WARNING
++ Changed redirection after project creation from desktop or project administration to project dashboard
++ Removed English strings from Farsi translation file
++ Improved translations: German
++ Improved project tree's handling for special characters
++ Removed file upload from the add reply form. Now only previously uploaded files can be attached to replies.
+
+Collabtive 1.2
++ Added translations: Vietnamese
 + Improved translations: Spanish
-+ Added Collapsible tree showing the structure of a project (milestones, tasklists, tasks, messages)
-+ Removed basecamp importer (didn't work in a long time, see https://github.com/philippK-de/Collabtive/issues/2
-+ Milestones can now have a start date set when created. start date can also be edited.
++ Added collapsible tree showing the structure of a project (milestones, tasklists, tasks, messages)
++ Removed Basecamp importer (didn't work in a long time, see https://github.com/philippK-de/Collabtive/issues/2 )
++ Milestones can now have a start date set when created. Start date can also be edited.
 + Removed links to the my-projects/tasks/messages blocks in block titles on the desktop
 + Milestones can now be deleted asynchronously
 + Milestones can now be closed asynchronously
-+ Closed tasklists now receive their own white bg block in projects->tasklists. better sets the block apart from active TLs
-+ Remove tags from the add message form. Tags will be removed from Collabtive in order to simplify things.
-+ Remove file upload from the add message form. now only already uploaded files can be attached to messages. 
++ Milestones are now grouped into "current" , "late"  and "upcoming" milestones in project->milestones
++ Closed tasklists now receive their own white bg block in projects->tasklists. Better sets the block apart from active tl's
++ Removed tags from the add message form. Tags will be removed from Collabtive in order to simplify things.
++ Removed file upload from the add message form. Now only previously uploaded files can be attached to messages.
++ Implemented tree view for projects
++ Fixed display problem with Smarty where pages weren't listed as before
++ Improved notification emails. They are now much more informative / better localized (StephanRichter)
++ Implemented iCal auth (StephanRichter)
++ Fixed bug where certain dates (like 1.9.2013) could not be selected in date picker (StephanRichter)
++ Added htaccess file to deny folder listing in the file folder (StephanRichter)
++ Switched from a background-color gradient to a solid color
++ Fixed a bug where the timetracker report would return a server error (http://collabtive.o-dyn.de/forum/viewtopic.php?f=11&t=11505)
++ Start date for a timetracker entry can now be set manually
++ Fixed a mssing (int) typecast in managetimetracker.php.
++ Timetracker start date can now be manually set
 
 Collabtive 1.1
 + Fixed bug in tasklist editing, which would automatically remove the tasklist's assignment to a given milestone
