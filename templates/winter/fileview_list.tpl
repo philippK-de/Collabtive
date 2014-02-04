@@ -1,4 +1,4 @@
-
+{config_load file='lng.conf' section = "strings" scope="global" }
 
 						<table id = "desktopprojects" cellpadding="3px" cellspacing="0" border = "1" style = "border-left:0px solid;border-collapse:collapse;width:100%">
 
@@ -6,8 +6,8 @@
 						<tr>
 							<th class="a" style = "text-align:center;width:5%;border-right:0px;"></th>
 							<th class="b" style = "text-align:left;width:50%;border-left:0px;">Name</th>
-							<th class="c" style = "text-align:left;width:20%">Uploaded on / by</th>
-							<th class="d" style = "text-align:left;width:10%;">Size</th>
+							<th class="c" style = "text-align:left;width:20%">{#uploaded#}</th>
+							<th class="d" style = "text-align:left;width:10%;">{#filesize#}</th>
 
 							<th class="tools" style = "width:3%;"></th>
 						</tr>

@@ -18,11 +18,13 @@ $tracker = new timetracker();
 
 $action = getArrayVal($_GET, "action");
 $day = getArrayVal($_POST, "day");
+$endday = getArrayVal($_POST, "endday");
 $started = getArrayVal($_POST, "started");
 $ended = getArrayVal($_POST, "ended");
 $tproject = getArrayVal($_POST, "project");
 $task = getArrayVal($_POST, "ttask");
-$logdate = getArrayVal($_POST, "ttday");
+$startdate = getArrayVal($_POST, "ttday");
+$enddate = getArrayVal($_POST, "ttendday");
 $comment = getArrayVal($_POST, "comment");
 $redir = getArrayVal($_GET, "redir");
 $mode = getArrayVal($_GET, "mode");
@@ -84,7 +86,7 @@ if ($action == "add") {
         $comment = "";
     }
 
-    if ($tracker->add($userid, $tproject, $task, $comment , $started, $ended, $logdate)) {
+    if ($tracker->add($userid, $tproject, $task, $comment , $started, $ended, $startdate, $enddate)) {
         $redir = urldecode($redir);
         if ($redir) {
             $redir = $url . $redir;
@@ -160,7 +162,7 @@ if ($action == "add") {
 
     $started = $day . " " . $started;
     $started = strtotime($started);
-    $ended = $day . " " . $ended;
+    $ended = $endday . " " . $ended;
     $ended = strtotime($ended);
     if ($tracker->edit($tid, $task, $comment, $started, $ended)) {
         if ($redir) {
@@ -240,9 +242,9 @@ if ($action == "add") {
     fputcsv($excelFile, $line);
 
     if (!empty($start) and !empty($end)) {
-        $track = $tracker->getProjectTrack($id, $usr, $taski, $start, $end, 1000);
+        $track = $tracker->getProjectTrack($id, $usr, $taski, $start, $end, false);
     } else {
-        $track = $tracker->getProjectTrack($id, $usr , $taski, 0, 0, 1000);
+        $track = $tracker->getProjectTrack($id, $usr , $taski, 0, 0, false);
     }
 
     if (!empty($track)) {
@@ -266,7 +268,8 @@ if ($action == "add") {
         die();
     }
 	global $conn;
-    
+
+	$id = (int) $id;
     $pname = $conn->query("SELECT name FROM projekte WHERE ID = $id");
     $pname = $pname->fetchColumn();
 
@@ -277,9 +280,9 @@ if ($action == "add") {
     $headers = array($langfile["user"], $langfile["task"], $langfile["comment"], $langfile["started"] . " - " . $langfile["ended"], $langfile["hours"]);
 
     if (!empty($start) and !empty($end)) {
-        $track = $tracker->getProjectTrack($id, $usr, $taski, $start, $end, 1000);
+        $track = $tracker->getProjectTrack($id, $usr, $taski, $start, $end, false);
     } else {
-        $track = $tracker->getProjectTrack($id, $usr , $taski, 0, 0, 1000);
+        $track = $tracker->getProjectTrack($id, $usr , $taski, 0, 0, false);
     }
     $thetrack = array();
     if (!empty($track)) {
@@ -297,7 +300,7 @@ if ($action == "add") {
             array_push($thetrack, array($tra["uname"], $tra["tname"], $tra["comment"], $tra["daystring"] . "/" . $tra["startstring"] . "-" . $tra["endstring"], $hrs));
         }
 	}
- 
+
     $pdf->table($headers, $thetrack);
     $pdf->Output("project-$id-timetable.pdf", "D");
 } elseif ($action == "userxls") {
@@ -306,9 +309,9 @@ if ($action == "add") {
     $line = array($strproj, $strtask, $strcomment, $strday, $strstarted, $strended, $strhours);
     fputcsv($excelFile, $line);
     if (!empty($start) and !empty($end)) {
-        $track = $tracker->getUserTrack($id, $fproject, $taski, $start, $end);
+        $track = $tracker->getUserTrack($id, $fproject, $taski, $start, $end, false);
     } else {
-        $track = $tracker->getUserTrack($id, $fproject, $taski, 0, 0 , 1000);
+        $track = $tracker->getUserTrack($id, $fproject, $taski, 0, 0 , false);
     }
     if (!empty($track)) {
         foreach($track as $tra) {
@@ -323,9 +326,9 @@ if ($action == "add") {
     header("Location: $loc");
 } elseif ($action == "userpdf") {
     if (!empty($start) and !empty($end)) {
-        $track = $tracker->getUserTrack($id, $fproject, $taski, $start, $end);
+        $track = $tracker->getUserTrack($id, $fproject, $taski, $start, $end, false);
     } else {
-        $track = $tracker->getUserTrack($id, $fproject, $taski, 0, 0, 1000);
+        $track = $tracker->getUserTrack($id, $fproject, $taski, 0, 0, false);
     }
     $thetrack = array();
 

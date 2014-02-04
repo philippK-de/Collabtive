@@ -71,12 +71,18 @@ if ($action == "addform") {
         $template->display("error.tpl");
         die();
     }
-
-    //Get start date from form
+    // Get start date from form
     $start = getArrayVal($_POST, "start");
     $status = 1;
-    if ($milestone->add($id, $name, $desc, $start, $end, $status)) {
-        $loc = $url . "managemilestone.php?action=showproject&id=$id&mode=added";
+    $milestone_id = $milestone->add($id, $name, $desc, $start, $end, $status);
+    if ($milestone_id) {
+        $liste = (object) new tasklist();
+        if ($liste->add_liste($id, $name, $desc, 0, $milestone_id)) {
+            //$loc = $url . "managetask.php?action=showproject&id=$id&mode=listadded";
+        	$loc = $url . "managemilestone.php?action=showproject&id=$id&mode=added";
+        } else {
+            $loc = $url . "managemilestone.php?action=showproject&id=$id&mode=added";
+        }
         header("Location: $loc");
     }
 } elseif ($action == "editform") {
@@ -93,8 +99,7 @@ if ($action == "addform") {
 
     $title = $langfile['editmilestone'];
     $template->assign("title", $title);
-
-	//Get milestone info
+    // Get milestone info
     $milestone = $milestone->getMilestone($mid);
 
     $template->assign("projectname", $projectname);
@@ -108,12 +113,10 @@ if ($action == "addform") {
         $template->display("error.tpl");
         die();
     }
-
-    //Get milestone ID and start date from form
+    // Get milestone ID and start date from form
     $mid = $_POST['mid'];
     $start = getArrayVal($_POST, "start");
-
-	//Edit the milestone
+    // Edit the milestone
     if ($milestone->edit($mid, $name, $desc, $start, $end)) {
         $loc = $url . "managemilestone.php?action=showproject&id=$id&mode=edited";
         header("Location: $loc");
@@ -128,13 +131,12 @@ if ($action == "addform") {
         $template->display("error.tpl");
         die();
     }
-
-    $project = $_GET['project'];
-
-    //Delete the milestone
+    // $project = $_GET['project'];
+    // Delete the milestone
     if ($milestone->del($mid)) {
-        $loc = $url . "managemilestone.php?action=showproject&id=$id&mode=deleted";
-        header("Location: $loc");
+        echo "ok";
+        // $loc = $url . "managemilestone.php?action=showproject&id=$id&mode=deleted";
+        // header("Location: $loc");
     } else {
         $template->assign("delmilestone", 0);
     }
@@ -147,10 +149,10 @@ if ($action == "addform") {
         $template->assign("openmilestone", 0);
     }
 } elseif ($action == "close") {
-   // $project = $_GET['project'];
+    // $project = $_GET['project'];
     if ($milestone->close($mid)) {
-        //$loc = $url . "managemilestone.php?action=showproject&id=$id&mode=closed";
-        //header("Location: $loc");
+        // $loc = $url . "managemilestone.php?action=showproject&id=$id&mode=closed";
+        // header("Location: $loc");
         echo "ok";
     } else {
         $template->assign("closemilestone", 0);
@@ -177,8 +179,7 @@ if ($action == "addform") {
         $template->display("error.tpl");
         die();
     }
-
-    //Check if the current user belongs to the project
+    // Check if the current user belongs to the project
     if (!chkproject($userid, $id)) {
         $errtxt = $langfile["notyourproject"];
         $noperm = $langfile["accessdenied"];
@@ -187,10 +188,8 @@ if ($action == "addform") {
         die();
     }
     $pro = new project();
-
     $today = date("d");
-
-	//Get projects milestones, and todays project milestones
+    // Get projects milestones, and todays project milestones
     $stones = $milestone->getProjectMilestones($id);
     $stones2 = $milestone->getTodayProjectMilestones($id);
 
@@ -200,14 +199,13 @@ if ($action == "addform") {
     if (empty($stones)) {
         $stones = array();
     }
-    //merge the current milestones
+    // merge the current milestones
     $stones = array_merge($stones, $stones2);
+    // Get closed milestones and milestones that are late
+    $donestones = $milestone->getDoneProjectMilestones($id);
 
-    //Get closed milestones and milestones that are late
-	$donestones = $milestone->getDoneProjectMilestones($id);
-
-	$latestones = $milestone->getLateProjectMilestones($id);
-    //Count late milestones
+    $latestones = $milestone->getLateProjectMilestones($id);
+    // Count late milestones
     if (!empty($latestones)) {
         $latestones = $milestone->formatdate($latestones);
     }
@@ -215,15 +213,13 @@ if ($action == "addform") {
     if (!empty($latestones)) {
         $countlate = count($latestones);
     }
-
-	//Get upcoming milestones, that is milestones with a start date in the future
+    // Get upcoming milestones, that is milestones with a start date in the future
     $upcomingStones = $milestone->getUpcomingProjectMilestones($id);
     $countUpcoming = 0;
     if (!empty($upcomingStones)) {
         $countUpcoming = count($upcomingStones);
     }
-
-	//Get the project name
+    // Get the project name
     $tpro = $pro->getProject($id);
     $projectname = $tpro["name"];
     $title = $langfile['milestones'];

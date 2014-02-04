@@ -38,6 +38,7 @@ class milestone {
         // Convert end date to timestamp
         $end = strtotime($end);
         $start = strtotime($start);
+        $name = htmlspecialchars($name);
 
         $insStmt = $conn->prepare("INSERT INTO milestones (`project`,`name`,`desc`,`start`,`end`,`status`) VALUES (?, ?, ?, ?, ?, ?)");
         $ins = $insStmt->execute(array((int) $project, $name, $desc, $start, $end, (int) $status));
@@ -66,6 +67,7 @@ class milestone {
         $id = (int) $id;
         $start = strtotime($start);
         $end = strtotime($end);
+        $name = htmlspecialchars($name);
 
         $updStmt = $conn->prepare("UPDATE milestones SET `name`=?, `desc`=?, `start`=?, `end`=? WHERE ID=?");
         $upd = $updStmt->execute(array($name, $desc, $start, $end, $id));
@@ -494,6 +496,7 @@ class milestone {
 
     /**
      * Return all milestones of that belong to the loggedin user, due on a given day.
+
      * This method is needed for populating the calendar widget with data.
      *
      * @param int $m Month Month, without leading zero (e.g. 5 for march)
@@ -520,7 +523,7 @@ class milestone {
         if ($project > 0) {
             $sel1 = $conn->query("SELECT * FROM milestones WHERE project =  $project AND status=1 AND end = '$starttime' ORDER BY `end` ASC");
         } else {
-            $sel1 = $conn->query("SELECT milestones.*,projekte_assigned.user,projekte.name AS pname FROM milestones,projekte_assigned,projekte WHERE milestones.project = projekte_assigned.projekt AND milestones.project = projekte.ID HAVING projekte_assigned.user = $user AND status=1 AND end = '$starttime'");
+        	$sel1 = $conn->query("SELECT milestones.*,projekte_assigned.user,projekte.name AS pname,projekte.status AS pstatus FROM milestones,projekte_assigned,projekte WHERE milestones.project = projekte_assigned.projekt AND milestones.project = projekte.ID HAVING projekte_assigned.user = $user AND status=1 AND pstatus != 2 AND end = '$starttime'");
         } while ($stone = $sel1->fetch()) {
             $stone["daysleft"] = $this->getDaysLeft($stone["end"]);
             array_push($timeline, $stone);

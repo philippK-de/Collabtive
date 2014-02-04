@@ -41,7 +41,7 @@ function smarty_function_paginate_last($params, &$smarty)
     }
 
     foreach($params as $_key => $_val) {
-        switch ($_key) {
+    	switch ($_key) {
             case 'id':
                 if (!SmartyPaginate::isConnected($_val)) {
                     $smarty->trigger_error("paginate_last: unknown id '$_val'");

@@ -19,7 +19,7 @@ html, body {
 
 body {
 	color:#082343;
-	background:#2d6e98 url(../images/main-bg.jpg) repeat-x 0 0;
+	background:#28648b;
 	background-attachment: fixed;
 }
 
@@ -906,6 +906,7 @@ td.message ul {
 .inmenue a.more:hover {
 	background-position: 1px -13px;
 }
+
 
 .inmenue a.export {
 	background-position: -13px 1px;
@@ -2640,6 +2641,7 @@ th.tools, td.tools {
 
 .files thead, .files .contenttitle {
 	background: url(../images/tables-files-thead.png);
+
 }
 
 .files .second-thead, .files .second-thead:hover td, .files .block_in_wrapper, .files .inwrapper li:hover {

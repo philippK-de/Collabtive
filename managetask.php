@@ -1,14 +1,43 @@
 <?php
 require("./init.php");
+
+$action = getArrayVal($_GET, "action");
+
 if (!isset($_SESSION["userid"])) {
-    $template->assign("loginerror", 0);
-    $template->display("login.tpl");
-    die();
+
+    if ($action == "ical" || $action == "icalshort"){
+      // spawn basic auth request here
+      // most probably this is not the best location for this basic auth code. feel free to move it to whereever it should be.
+      // in the ideal case, this kind of basic auth should also be available for the rss feed!
+      if (!isset($_SERVER['PHP_AUTH_USER'])) {
+	$msg="Collabtive";
+	if ($action == "ical") {
+	  $msg .=". Also try action=icalshort for alternative display.";
+	}
+        header('WWW-Authenticate: Basic realm="'.$msg.'"');
+        header('HTTP/1.0 401 Unauthorized');
+        echo 'Error 401: Not authorized!';
+      } else {
+	// try login with given credentials
+	$user = (object) new user();
+	if ($user->login($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])) {
+          $loc = $url . "managetask.php?action=" . $action;
+          header("Location: $loc");
+        } else {
+          header('HTTP/1.0 401 Unauthorized');
+          echo 'Error 401: Not authorized!';
+        }
+      }
+      exit;
+    } else {
+      $template->assign("loginerror", 0);
+      $template->display("login.tpl");
+      die();
+    }
 }
 
 $task = (object) new task();
 
-$action = getArrayVal($_GET, "action");
 $tasklist = getArrayVal($_GET, "tasklist");
 $mode = getArrayVal($_GET, "mode");
 $tid = getArrayVal($_GET, "tid");
@@ -75,16 +104,31 @@ if ($action == "addform") {
         }
         // if tasks was added and mailnotify is activated, send an email
         if ($settings["mailnotify"]) {
-            foreach($assigned as $member) {
-                $usr = (object) new user();
-                $user = $usr->getProfile($member);
-                if (!empty($user["email"]) && $userid != $user["ID"]) {
-                    // send email
-                    $themail = new emailer($settings);
+			$projobj = new project();
+			$theproject = $projobj->getProject($project["ID"]);
+			// Check project status
+			if ($theproject["status"] != 2)
+			{
+				foreach($assigned as $member) {
+					$usr = (object) new user();
+					$user = $usr->getProfile($member);
+					if (!empty($user["email"]) && $userid != $user["ID"]) {
+						// send email
+						$userlang = readLangfile($user['locale']);
 
-                    $themail->send_mail($user["email"], $langfile["taskassignedsubject"] , $langfile["hello"] . ",<br /><br/>" . $langfile["taskassignedtext"] . " <a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a>");
-                }
-            }
+						$subject = $userlang["taskassignedsubject"] . ' (' . $userlang['by'] . ' ' . $username . ')';
+
+						$mailcontent = $userlang["hello"] . ",<br /><br/>" .
+									$userlang["taskassignedtext"] .
+									"<h3><a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a></h3>".
+									$text;
+
+						$themail = new emailer($settings);
+
+						$themail->send_mail($user["email"], $subject , $mailcontent);
+					}
+				}
+			}
         }
         $loc = $url . "managetask.php?action=showproject&id=$id&mode=added";
         header("Location: $loc");
@@ -153,10 +197,19 @@ if ($action == "addform") {
                         $usr = (object) new user();
                         $user = $usr->getProfile($assignee);
 
-                        if (!empty($user["email"])) {
+                        if (!empty($user["email"]) && $userid != $user["ID"]) {
+                            $userlang = readLangfile($user['locale']);
+
+                            $subject = $userlang["taskassignedsubject"] . ' (' . $userlang['by'] . ' ' . $username . ')';
+
+                            $mailcontent = $userlang["hello"] . ",<br /><br/>" .
+                                           $userlang["taskassignedtext"] .
+                                           "<h3><a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a></h3>".
+                                           $text;
+
                             // send email
                             $themail = new emailer($settings);
-                            $themail->send_mail($user["email"], $langfile["taskassignedsubject"] , $langfile["hello"] . ",<br /><br/>" . $langfile["taskassignedtext"] . " <a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a>");
+                            $themail->send_mail($user["email"], $subject , $mailcontent);
                         }
                     }
                 }
@@ -242,8 +295,16 @@ if ($action == "addform") {
 
             if (!empty($user["email"])) {
                 // send email
+                $userlang = readLangfile($user['locale']);
+
+                $subject = $userlang["taskassignedsubject"] . ' (' . $userlang['by'] .' '. $username . ')';
+                $mailcontent = $userlang["hello"] . ",<br /><br/>" .
+                               $userlang["taskassignedtext"] .
+                               "<h3><a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a></h3>".
+                               $text;
+
                 $themail = new emailer($settings);
-                $themail->send_mail($user["email"], $langfile["taskassignedsubject"] , $langfile["hello"] . ",<br /><br/>" . $langfile["taskassignedtext"] . " <a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a>");
+                $themail->send_mail($user["email"], $subject , $mailcontent);
             }
         }
         $template->assign("assigntask", 1);
@@ -350,4 +411,7 @@ if ($action == "addform") {
 } elseif ($action == "ical") {
     $mytask = new task();
     $task = $mytask->getIcal($userid);
+} elseif ($action == "icalshort") {
+    $mytask = new task();
+    $task = $mytask->getIcal($userid,false);
 }

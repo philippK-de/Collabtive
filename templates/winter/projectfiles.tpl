@@ -87,8 +87,8 @@
 						<div style = "float:right;margin-right:3px;">
 						<form id = "typechose">
 							<select id = "fileviewtype" onchange = "changeFileview(this.value,$('folderparent').value);">
-								<option value = "fileview" selected>Grid View</option>
-								<option value = "fileview_list" >List View</option>
+								<option value = "fileview">{#gridview#}</option>
+								<option value = "fileview_list" selected>{#listview#}</option>
 							</select>
 						</form>
 						</div>
@@ -107,7 +107,7 @@
 						<div class="staterowin">
 							<span id = "filenum">{$filenum}</span> {#files#}
 						</div>
-						<div class="staterowin_right"><span >{$langfile.page} {paginate_prev} {paginate_middle} {paginate_next}</span></div>
+
 					</div>
 				</div> {*nosmooth End*}
 

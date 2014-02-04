@@ -115,7 +115,8 @@
 													<a class="tool_edit" href="managemilestone.php?action=editform&amp;mid={$latemilestones[latestone].ID}&amp;id={$project.ID}" title="{#edit#}"></a>
 												{/if}
 												{if $userpermissions.milestones.del}
-													<a class="tool_del" href="javascript:confirmit('{#confirmdel#}','managemilestone.php?action=del&amp;mid={$latemilestones[latestone].ID}&amp;id={$project.ID}');" title="{#delete#}"></a>
+														<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'miles_late_{$latemilestones[latestone].ID}\',\'managemilestone.php?action=del&amp;mid={$latemilestones[latestone].ID}&amp;id={$project.ID}\')');" title="{#delete#}"></a>
+
 												{/if}
 											</td>
 										</tr>
@@ -142,7 +143,7 @@
 							<table class="second-thead" cellpadding="0" cellspacing="0" border="0" onclick="blindtoggle('togglenew');toggleClass('togglemiles','acc-toggle','acc-toggle-active');">
 							<tr>
 								<td class="a"></td>
-								<td class="b"><span id="togglemiles" class="acc-toggle-active">Current milestones</span></td>
+								<td class="b"><span id="togglemiles" class="acc-toggle-active">{#currentmiles#}</span></td>
 								<td class="c"></td>
 								<td class="days"></td>
 								<td class="tools"></td>

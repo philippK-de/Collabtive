@@ -29,11 +29,7 @@
 							</div>
 						</div>
 
-						<div class="row">
-							<label for="tags">{#tags#}:</label>
-							<input type="text" value="{$message.tags}" name="tags" id="tags" realname="{#tags#}"/>
-						</div>
-
+<input type="hidden" value="{$message.tags}" name="tags" id="tags" realname="{#tags#}"/>
 						<input type="hidden" name="mid" value="{$message.ID}" />
 
 						<div class="row-butn-bottom">

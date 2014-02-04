@@ -267,8 +267,11 @@ class SmartyPaginate
             $_paginate['url'] = SmartyPaginate::getUrl($id);
             $_paginate['urlvar'] = SmartyPaginate::getUrlVar($id);
             $_paginate['current_item'] = SmartyPaginate::getCurrentItem($id);
-            $_paginate['prev_text'] = SmartyPaginate::getPrevText($id);
-            $_paginate['next_text'] = SmartyPaginate::getNextText($id);
+           // $_paginate['prev_text'] = SmartyPaginate::getPrevText($id);
+           // $_paginate['next_text'] = SmartyPaginate::getNextText($id);
+        	 $_paginate['prev_text'] = "<<";
+        	 $_paginate['next_text'] = ">>";
+
             $_paginate['limit'] = SmartyPaginate::getLimit($id);
 
             $_item = 1;
