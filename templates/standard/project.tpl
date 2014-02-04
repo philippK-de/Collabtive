@@ -1,6 +1,6 @@
-{include file="header.tpl" jsload = "ajax" stage = "project" jsload1 = "tinymce"}
+{include file="header.tpl" jsload="ajax" stage="project" jsload1="tinymce"}
+{include file="tabsmenue-project.tpl" projecttab="active"}
 
-{include file="tabsmenue-project.tpl" projecttab = "active"}
 <div id="content-left">
 <div id="content-left-in">
 <div class="projects">
@@ -52,78 +52,78 @@
 			</div>
 	</div>
 
-			{*Edit Task*}
-			{if $userpermissions.projects.edit}
-				<div id = "form_edit" class="addmenue" style = "display:none;clear:both;">
-					<div class="content-spacer"></div>
-					{include file="editform.tpl" showhtml="no" }
-				</div>
-			{/if}
+		{*Edit Task*}
+		{if $userpermissions.projects.edit}
+			<div id = "form_edit" class="addmenue" style = "display:none;clear:both;">
+				<div class="content-spacer"></div>
+				{include file="editform.tpl" showhtml="no" }
+			</div>
+		{/if}
 
-<div class="nosmooth" id="sm_project_desc">
-		<div id="descript" class="descript" style="display:none;">
-		<div class="content-spacer"></div>
-			{$project.desc}
+		<div class="nosmooth" id="sm_project_desc">
+			<div id="descript" class="descript" style="display:none;">
+				<div class="content-spacer"></div>
+				{$project.desc}
+			</div>
 		</div>
-</div>
+	</div> {*Projects END*}
 
-</div> {*Projects END*}
-<div class="content-spacer"></div>
-
-<div class="nosmooth" id="sm_project">
+	<div class="content-spacer"></div>
+	<div class="nosmooth" id="sm_project">
 
 {*Miles tree*}
+{if $tree[0][0] > 0}
 <div class="projects dtree">
 	<div class="headline">
 		<a href="javascript:void(0);" id="treehead_toggle" class="win_block" onclick = "toggleBlock('treehead');"></a>
-				<h2>
-					<img src="./templates/standard/images/symbols/projects.png" alt="" />Project Tree
-				</h2>
-
+		<h2>
+			<img src="./templates/standard/images/symbols/projects.png" alt="" />Project Tree
+		</h2>
 	</div>
 
-	<div class = "block" id = "treehead">
+	<div class="block" id="treehead">
 		<div class="block_in_wrapper" style="padding-top:0px;">
 
 	<script type="text/javascript">
+	
 		d{$project.ID} = new dTree('d{$project.ID}');
 		d{$project.ID}.config.useCookies = true;
 		d{$project.ID}.config.useSelection = false;
-
 		d{$project.ID}.add(0,-1,'');
-		//milestones
-		{section name = titem loop = $tree}
-			d{$project.ID}.add("m"+{$tree[titem].ID},0,'{$tree[titem].name}','managemilestone.php?action=showmilestone&msid={$tree[titem].ID}&id={$project.ID}','','','templates/standard/images/symbols/miles.png','templates/standard/images/symbols/miles.png','',{$tree[titem].daysleft});
+		
+		// Milestones
+		{section name=titem loop=$tree}
+			d{$project.ID}.add("m"+{$tree[titem].ID}, 0, "{$tree[titem].name}", "managemilestone.php?action=showmilestone&msid={$tree[titem].ID}&id={$project.ID}", "", "", "templates/standard/images/symbols/miles.png", "templates/standard/images/symbols/miles.png", "", {$tree[titem].daysleft});
 
-				//tasklists
-				{section name = tlist loop=$tree[titem].tasklists }
-								d{$project.ID}.add("tl"+{$tree[titem].tasklists[tlist].ID},"m"+{$tree[titem].tasklists[tlist].milestone},'{$tree[titem].tasklists[tlist].name}','managetasklist.php?action=showtasklist&id={$project.ID}&tlid={$tree[titem].tasklists[tlist].ID}','','','templates/standard/images/symbols/tasklist.png','templates/standard/images/symbols/tasklist.png');
+			// Task lists
+			{section name=tlist loop=$tree[titem].tasklists}
+				d{$project.ID}.add("tl"+{$tree[titem].tasklists[tlist].ID}, "m"+{$tree[titem].tasklists[tlist].milestone}, "{$tree[titem].tasklists[tlist].name}", "managetasklist.php?action=showtasklist&id={$project.ID}&tlid={$tree[titem].tasklists[tlist].ID}", "", "", "templates/standard/images/symbols/tasklist.png", "templates/standard/images/symbols/tasklist.png");
 
-						//Tasks from lists
-						{section name = ttask loop=$tree[titem].tasklists[tlist].tasks}
-									d{$project.ID}.add("ta"+{$tree[titem].tasklists[tlist].tasks[ttask].ID},"tl"+{$tree[titem].tasklists[tlist].tasks[ttask].liste},'{$tree[titem].tasklists[tlist].tasks[ttask].title}','managetask.php?action=showtask&tid={$tree[titem].tasklists[tlist].tasks[ttask].ID}&id={$project.ID}','','','templates/standard/images/symbols/task.png','templates/standard/images/symbols/task.png','',{$tree[titem].tasklists[tlist].tasks[ttask].daysleft});
-						{/section}
-
-				//End tasklists
+				// Tasks from lists
+				{section name=ttask loop=$tree[titem].tasklists[tlist].tasks}
+					d{$project.ID}.add("ta"+{$tree[titem].tasklists[tlist].tasks[ttask].ID}, "tl"+{$tree[titem].tasklists[tlist].tasks[ttask].liste}, "{$tree[titem].tasklists[tlist].tasks[ttask].title}", "managetask.php?action=showtask&tid={$tree[titem].tasklists[tlist].tasks[ttask].ID}&id={$project.ID}", "", "", "templates/standard/images/symbols/task.png", "templates/standard/images/symbols/task.png", "",{$tree[titem].tasklists[tlist].tasks[ttask].daysleft});
 				{/section}
 
-				//Messages
-				{section name = tmsg loop=$tree[titem].messages}
-					{if $tree[titem].messages[tmsg].milestone > 0}
-									d{$project.ID}.add("msg"+{$tree[titem].messages[tmsg].ID},"m"+{$tree[titem].messages[tmsg].milestone},'{$tree[titem].messages[tmsg].title}','managemessage.php?action=showmessage&id={$project.ID}&mid={$tree[titem].messages[tmsg].ID}','','','templates/standard/images/symbols/msgs.png','templates/standard/images/symbols/msgs.png');
-					{/if}
+			// End task lists
+			{/section}
 
-				//End Messages
-				{/section}
+			// Messages
+			{section name=tmsg loop=$tree[titem].messages}
+				{if $tree[titem].messages[tmsg].milestone > 0}
+					d{$project.ID}.add("msg"+{$tree[titem].messages[tmsg].ID}, "m"+{$tree[titem].messages[tmsg].milestone}, "{$tree[titem].messages[tmsg].title}", "managemessage.php?action=showmessage&id={$project.ID}&mid={$tree[titem].messages[tmsg].ID}", "", "", "templates/standard/images/symbols/msgs.png", "templates/standard/images/symbols/msgs.png");
+				{/if}
 
-	//End milestones
-	{/section}
-
+			{/section}
+			// End Messages
+		{/section}
+		// End milestones
+	
 		document.write(d{$project.ID});
 
 	</script>
+	
 	<br />
-	<form id = "treecontrol" action = "#">
+	<form id="treecontrol" action="#">
 		<fieldset>
 			<div class="row-butn-bottom">
 				<button type = "reset" id = "openall" onclick = "d{$project.ID}.openAll();" >Open all</button>
@@ -136,6 +136,7 @@
 </div>
 <div class="content-spacer"></div>
 {*Tree end*}
+{/if}
 
 {*Milestones*}
 <div class="miles" >

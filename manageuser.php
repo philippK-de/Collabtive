@@ -60,10 +60,18 @@ if ($action == "loginerror") {
     $template->display("resetpassword.tpl");
 } elseif ($action == "resetpassword") {
     $newpass = $user->resetPassword($email);
-    if ($newpass != "") {
+    if ($newpass !== false) {
+        $langFile=readLangfile($newpass['locale']);
+
+        $subject = $langfile["projectpasswordsubject"];
+
+        $mailcontent = $langfile["hello"] . ",<br /><br/>" .
+                       $langfile["projectpasswordtext"] . "<br /><br />" .
+                       $langfile["newpass"] . ": " . $newpass['newpass'] ."<br />" . 
+                       $langfile["login"] . ": <a href = \"$url\">$url</a>";
         // Send e-mail with new password
         $themail = new emailer($settings);
-        $themail->send_mail($email, $langfile["projectpasswordsubject"], $langfile["hello"] . ",<br /><br/>" . $langfile["projectpasswordtext"] . "<br /><br />" . $langfile["newpass"] . ": " . "$newpass<br />" . $langfile["login"] . ": <a href = \"$url\">$url</a>");
+        $themail->send_mail($email, $subject, $mailcontent);
 
         $template->assign("success", 1);
         $template->display("resetpassword.tpl");

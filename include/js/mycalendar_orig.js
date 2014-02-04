@@ -432,6 +432,7 @@ function calendar(theMonth,theYear,options)
 	this.daysLastMonth = this.getDaysInMonth(this.month-1,this.year);
 	var firstDay = new Date(this.year, this.month, 1);
 	this.startDay = firstDay.getDay()-1;
+	if(this.startDay<0)this.startDay+=7;
 	var tempDays = this.startDay + this.daysInMonth;
 	this.weeksInMonth = Math.ceil(tempDays/7);
 

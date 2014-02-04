@@ -2,10 +2,10 @@
 /**
  * Die Klasse stellt Methoden bereit um Projekte zu bearbeiten
  *
- * @author Open Dynamics <info@o-dyn.de>
+ * @author Philipp Kiszka <info@o-dyn.de>
  * @name project
  * @package Collabtive
- * @version 0.6
+ * @version 1.2
  * @link http://www.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
@@ -38,7 +38,10 @@ class project {
         if ($end > 0) {
             $end = strtotime($end);
         }
+
         $now = time();
+
+        $name = htmlspecialchars($name);
 
         $ins1Stmt = $conn->prepare("INSERT INTO projekte (`name`, `desc`, `end`, `start`, `status`, `budget`) VALUES (?,?,?,?,1,?)");
         $ins1 = $ins1Stmt->execute(array($name, $desc, $end, $now, (float) $budget));
@@ -106,6 +109,7 @@ class project {
         $end = strtotime($end);
         $id = (int) $id;
         $budget = (float) $budget;
+        $name = htmlspecialchars($name);
 
         $updStmt = $conn->prepare("UPDATE projekte SET name=?,`desc`=?,`end`=?,budget=? WHERE ID = ?");
         $upd = $updStmt->execute(array($name, $desc, $end, $budget, $id));

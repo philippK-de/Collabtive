@@ -34,7 +34,7 @@
 
 		<div class = "row">
 			<label for = "ttask">{#task#}:</label>
-			<select name = "task" id = "ttask" multiple>
+			<select name = "task[]" id = "ttask" multiple>
 		  		<option value = "" >{#chooseone#}</option>
 			  	{section name = task loop=$ptasks}
 			  		{if $ptasks[task].title != ""}
