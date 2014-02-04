@@ -86,16 +86,25 @@ if ($action == "addform") {
             }
             foreach($users as $user) {
                 if (!empty($user["email"])) {
+                    $userlang = readLangfile($user['locale']);
+
+                    $subject = $userlang["messagewasaddedsubject"] . ' ("' . $title . '" - ' . $userlang['by'] . ' ' . $username . ')'; // added message title and author  to subject
+
+                    $mailcontent = $userlang["hello"] . ",<br /><br/>" .
+                                   $userlang["messagewasaddedtext"] . "<br /><br />" .
+                                   "<h3><a href = \"" . $url . "managemessage.php?action=showmessage&id=$id&mid=$themsg\">$title</a></h3>". // no need for line break after heading
+                                   $message;
+
                     if (is_array($sendto)) {
-                        if (in_array($user["ID"], $sendto)) {
-                            // send email
-                            $themail = new emailer($settings);
-                            $themail->send_mail($user["email"], $langfile["messagewasaddedsubject"], $langfile["hello"] . ",<br /><br/>" . $langfile["messagewasaddedtext"] . "<br /><br />" . $message . "<br /><br /><a href = \"" . $url . "managemessage.php?action=showmessage&id=$id&mid=$themsg\">$title</a>");
+                        if (in_array($user["ID"], $sendto) && $userid != $user["ID"]) {
+                          // send email
+                          $themail = new emailer($settings);
+                          $themail->send_mail($user["email"], $subject, $mailcontent);
                         }
                     } else {
                         // send email
                         $themail = new emailer($settings);
-                        $themail->send_mail($user["email"], $langfile["messagewasaddedsubject"], $langfile["hello"] . ",<br /><br/>" . $langfile["messagewasaddedtext"] . "<br /><br />" . $message . "<br /><br /><a href = \"" . $url . "managemessage.php?action=showmessage&id=$id&mid=$themsg\">$title</a>");
+                        $themail->send_mail($user["email"], $subject, $mailcontent);
                     }
                 }
             }
@@ -219,16 +228,25 @@ if ($action == "addform") {
             }
             foreach($users as $user) {
                 if (!empty($user["email"])) {
+                    $userlang = readLangfile($user['locale']);
+
+                    $subject = $userlang["messagewasaddedsubject"] . ' ("' . $title . '" - ' . $userlang['by'] . ' ' . $username . ')'; // added message title and author  to subject
+
+                    $mailcontent = $userlang["hello"] . ",<br /><br/>" .
+                                   $userlang["messagewasaddedtext"] . "<br /><br />" .
+                                   "<h3><a href = \"" . $url . "managemessage.php?action=showmessage&id=$id&mid=$themsg\">$title</a></h3>". // no need for line break after heading
+                                   $message;
+
                     if (is_array($sendto)) {
-                        if (in_array($user["ID"], $sendto)) {
+                        if (in_array($user["ID"], $sendto) && $userid != $user["ID"]) {
                             // send email
                             $themail = new emailer($settings);
-                            $themail->send_mail($user["email"], $langfile["messagewasaddedsubject"], $langfile["hello"] . ",<br /><br/>" . $langfile["messagewasaddedtext"] . "<br /><br />" . $message . "<br /><br /><a href = \"" . $url . "managemessage.php?action=showmessage&id=$id&mid=$mid_post\">$title</a>");
+                            $themail->send_mail($user["email"], $subject, $mailcontent);
                         }
                     } else {
                         // send email
                         $themail = new emailer($settings);
-                        $themail->send_mail($user["email"], $langfile["messagewasaddedsubject"], $langfile["hello"] . ",<br /><br/>" . $langfile["messagewasaddedtext"] . "<br /><br />" . $message . "<br /><br /><a href = \"" . $url . "managemessage.php?action=showmessage&id=$id&mid=$mid_post\">$title</a>");
+                        $themail->send_mail($user["email"], $subject, $mailcontent);
                     }
                 }
             }
@@ -419,7 +437,47 @@ if ($action == "addform") {
     <tr><td >$message[text]</td></tr></table>";
     $pdf->writeHTML($htmltable, true, 0, true, 0);
     $pdf->Output("message$mid.pdf", "D");
-} elseif ($action == "mymsgs-pdf") {
+}
+elseif ($action == "mymsgs")
+{
+	// create new project and file objects
+	$project = new project();
+	$myfile = new datei();
+	// get all uof the users projects
+	$myprojects = $project->getMyProjects($userid);
+	$cou = 0;
+	$messages = array();
+	// loop through the projects and get messages and files for each project
+	if (!empty($myprojects))
+	{
+		foreach($myprojects as $proj)
+		{
+			$message = $msg->getProjectMessages($proj["ID"]);
+			$ordner = $myfile->getProjectFiles($proj["ID"], 1000);
+			$milestones = $objmilestone->getProjectMilestones($proj["ID"], 10000);
+			if(!empty($message))
+			{
+				array_push($messages,$message);
+			}
+			$myprojects[$cou]["milestones"] = $milestones;
+			$myprojects[$cou]["messages"] = $message;
+			$myprojects[$cou]["files"] = $ordner;
+			$cou = $cou + 1;
+		}
+	}
+	$emessages = reduceArray($messages);
+
+	// print_r($myprojects);
+	$title = $langfile['mymessages'];
+	$template->assign("title", $title);
+	$members = $project->getProjectMembers($id, 10000);
+	$template->assign("members", $members);
+	$template->assign("messages", $emessages);
+	$template->assign("msgnum", count($emessages));
+	$template->assign("myprojects", $myprojects);
+	$template->display("mymessages.tpl");
+}
+elseif ($action == "mymsgs-pdf") {
     $l = Array();
     $l['a_meta_charset'] = 'UTF-8';
     $l['a_meta_dir'] = 'ltr';

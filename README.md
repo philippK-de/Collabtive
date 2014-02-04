@@ -1,16 +1,16 @@
-What is it ?
-==============
-Collabtive is a web-based project management software published as free software. It provides an open source alternative to proprietary tools like Basecamp or ActiveCollab.
+What is it?
+===========
+Collabtive is a web-based project management software. It provides a free, open source alternative to proprietary tools like Basecamp or ActiveCollab.
 
 Features
-==============
-- to-do lists
+===========
+- Task lists
 - Milestones
-- Messaging / instant messaging
+- Messaging / Instant messaging
 - Calendaring
 - File management
 - Role-based user permissions
-- Timetracking
+- Time tracking
 - Reporting (Excel, PDF)
 - Exporting (ZIP, XML, RSS, iCal)
-- Multi-language interface
+- Multilingual interface

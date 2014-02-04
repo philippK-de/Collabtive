@@ -114,10 +114,12 @@ if ($mode == "login") {
         $chkLim = mt_rand(1, 2);
         if ($chkLim == 1) {
             $updateChk = getUpdateNotify();
-            if ($updateChk->pubDate > CL_PUBDATE) {
-                $template->assign("isUpdated", true);
-                $template->assign("updateNotify", $updateChk);
-            }
+            if (!empty($updateChk)) {
+				if ($updateChk->pubDate > CL_PUBDATE) {
+					$template->assign("isUpdated", true);
+					$template->assign("updateNotify", $updateChk);
+				}
+			}
         }
     }
 }

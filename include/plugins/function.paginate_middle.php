@@ -46,6 +46,7 @@ function smarty_function_paginate_middle($params, &$smarty) {
     }
 
     foreach($params as $_key => $_val) {
+
         switch($_key) {
             case 'id':
                 if (!SmartyPaginate::isConnected($_val)) {
@@ -115,15 +116,19 @@ function smarty_function_paginate_middle($params, &$smarty) {
         if(isset($params['format']) && $params['format'] == 'page') {
             $_text = $_prefix . $_page . $_suffix;
         } else {
-            $_text = $_prefix . $_item . '-';
-            $_text .= ($_item + $_limit - 1 <= $_total) ? $_item + $_limit - 1 : $_total;
-            $_text .= $_suffix;
-        }
+          //  $_text = $_prefix . $_item . '-';
+          //  $_text .= ($_item + $_limit - 1 <= $_total) ? $_item + $_limit - 1 : $_total;
+          //  $_text .= $_suffix;
+        	//$_text = $_prefix . $_page . $_suffix;
+        	$_text = $_page . " ";
+
+		}
         if($_item != $_curr_item) {
             $_this_url = $_url;
             $_this_url .= (strpos($_url, '?') == false) ? '?' : '&';
             $_this_url .= SmartyPaginate::getUrlVar($_id) . '=' . $_item;
             $_ret .= $_link_prefix . '<a href="' . str_replace('&', '&amp;', $_this_url) . '"' . $_attrs . '>' . $_text . '</a>' . $_link_suffix;
+
         } else {
             $_ret .= $_link_prefix . $_text . $_link_suffix;
         }

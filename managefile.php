@@ -84,18 +84,30 @@ if ($action == "upload") {
             }
             foreach($users as $user) {
                 if (!empty($user["email"])) {
+                    $userlang=readLangfile($user['locale']);
+
+                    // check if subfolder exists, else root folder
+                    $whichfolder = (!empty($thefolder)) ? $thefolder : $userlang["rootdir"];
+
+                    // assemble content only once. no need to do this repeatedly
+                    $mailcontent = $userlang["hello"] . ",<br /><br/>" .
+                                   $userlang["filecreatedtext"] . "<br /><br />" .
+                                   $userlang["project"] . ": " . $pname["name"] . "<br />" .
+                                   $userlang["folder"] . ": " . $whichfolder . "<br />" .
+                                   $userlang["file"] . ":  <a href = \"" . $url . $fileprops["datei"] . "\">" . $url . $fileprops["datei"] . "</a>";
+
+                    $subject = $userlang["filecreatedsubject"] . " (". $userlang['by'] . ' '. $username . ")";
+
                     if (is_array($sendto)) {
                         if (in_array($user["ID"], $sendto)) {
-                            // check if subfolder exists, else root folder
-                            $whichfolder = (!empty($thefolder)) ? $thefolder : $langfile["rootdir"];
                             // send email
                             $themail = new emailer($settings);
-                            $themail->send_mail($user["email"], $langfile["filecreatedsubject"], $langfile["hello"] . ",<br /><br/>" . $langfile["filecreatedtext"] . "<br /><br />" . $langfile["project"] . ": " . $pname["name"] . "<br />" . $langfile["folder"] . ": " . $whichfolder . "<br />" . $langfile["file"] . ":  <a href = \"" . $url . $fileprops["datei"] . "\">" . $url . $fileprops["datei"] . "</a>");
+                            $themail->send_mail($user["email"], $subject, $mailcontent);
                         }
                     } else {
                         // send email
                         $themail = new emailer($settings);
-                        $themail->send_mail($user["email"], $langfile["filecreatedsubject"], "");
+                        $themail->send_mail($user["email"], $subject, $mailcontent); // why was there no content before?
                     }
                 }
             }
@@ -142,18 +154,30 @@ if ($action == "upload") {
             }
             foreach($users as $user) {
                 if (!empty($user["email"])) {
-                    if (is_array($sendto)) {
+                    $userlang=readLangfile($user['locale']);
+
+                    // check if subfolder exists, else root folder
+                    $whichfolder = (!empty($thefolder)) ? $thefolder : $userlang["rootdir"];
+                    
+                    // assemble content only once. no need to do this repeatedly
+                    $mailcontent = $userlang["hello"] . ",<br /><br/>" .
+                                   $userlang["filecreatedtext"] . "<br /><br />" .
+                                   $userlang["project"] . ": " . $pname["name"] . "<br />" .
+                                   $userlang["folder"] . ": " . $whichfolder . "<br />" .
+                                   $userlang["file"] . ":  <a href = \"" . $url . $fileprops["datei"] . "\">" . $url . $fileprops["datei"] . "</a>";
+                    
+                    $subject = $userlang["filecreatedsubject"] . " (". $userlang['by'] . ' '. $username . ")";
+
+                    if (is_array($sendto)) {                                                                                                                                        
                         if (in_array($user["ID"], $sendto)) {
-                            // check if subfolder exists, else root folder
-                            $whichfolder = (!empty($thefolder)) ? $thefolder : $langfile["rootdir"];
                             // send email
                             $themail = new emailer($settings);
-                            $themail->send_mail($user["email"], $langfile["filecreatedsubject"], $langfile["hello"] . ",<br /><br/>" . $langfile["filecreatedtext"] . "<br /><br />" . $langfile["project"] . ": " . $pname["name"] . "<br />" . $langfile["folder"] . ": " . $whichfolder . "<br />" . $langfile["file"] . ":  <a href = \"" . $url . $fileprops["datei"] . "\">" . $url . $fileprops["datei"] . "</a>");
+                            $themail->send_mail($user["email"], $subject, $mailcontent);
                         }
                     } else {
                         // send email
                         $themail = new emailer($settings);
-                        $themail->send_mail($user["email"], $langfile["filecreatedsubject"], "");
+                        $themail->send_mail($user["email"], $subject, $mailcontent);
                     }
                 }
             }
