@@ -9,7 +9,7 @@
 			
 			<div class="userwrapper">
 				
-				<form novalidate class="main" method="post" action="manageuser.php?action=edit" enctype="multipart/form-data" {literal onsubmit="return validateCompleteForm(this,'input_error');" {/literal} >
+				<form novalidate class="main" method="post" action="manageuser.php?action=edit" enctype="multipart/form-data" {literal} onsubmit="return validateCompleteForm(this,'input_error');" {/literal} >
 					<fieldset>
 					
 						<table cellpadding="0" cellspacing="0" border="0">
