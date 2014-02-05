@@ -440,11 +440,7 @@ if ($action == "index") {
                 }
             }
         }
-        if ($userpermissions["admin"]["add"]) {
-            header("Location: admin.php?action=projects&mode=added");
-        } else {
-            header("Location: index.php?mode=projectadded");
-        }
+        header("Location: manageproject.php?action=showproject&id=$add");
     }
 } elseif ($action == "closepro") {
     if ($project->close($id)) {
