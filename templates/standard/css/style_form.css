@@ -177,7 +177,6 @@ form.main input {
 	background: url(../images/search-butn-side.png) no-repeat 0 0;
 	float: left;
 	margin: 0;
-	-moz-border-radius: 0px;
 	-webkit-border-radius: 0px;
 	border-radius: 0px;
 }
@@ -237,7 +236,6 @@ button, button.inner, button.inner-active {
 	height: 22px;
 	line-height: 22px;
 	color: #fff;
-	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
 	font-size: 11px;
@@ -258,7 +256,6 @@ button:hover {
 button[disabled] {
 	opacity:.6;
 	filter:alpha(opacity=60);
-	-moz-opacity:.6;
 }
 
 button[disabled]:hover {
@@ -321,7 +318,6 @@ form.main option {
 
 form.main input.file {
 	position: relative;
-	-moz-opacity: 0 ;
 	filter: alpha(opacity: 0);
 	opacity: 0;
 	z-index: 2;
