@@ -1,4 +1,4 @@
-{config_load file='lng.conf' section = "strings" scope="global" }
+{config_load file='lng.conf' section="strings" scope="global"}
 
 						<table id = "desktopprojects" cellpadding="3px" cellspacing="0" border = "1" style = "border-left:0px solid;border-collapse:collapse;width:100%">
 
@@ -107,13 +107,13 @@
 <script type = "text/javascript">
 	{literal}
 	parentFolder = $("parentfolder").innerHTML;
-			Droppables.add('dropDirUp',{
-						onDrop: function(element) {
-								//alert('managefile.php?action=movefile&id={/literal}{$project.ID}{literal}&file='+element.id+'&target='+parentFolder);
-								change('managefile.php?action=movefile&id={/literal}{$project.ID}{literal}&file='+element.id+'&target='+parentFolder,'jslog');
-								element.hide();
-					}
-					});
+	Droppables.add('dropDirUp',{
+		onDrop: function(element) {
+			//alert('managefile.php?action=movefile&id={/literal}{$project.ID}{literal}&file='+element.id+'&target='+parentFolder);
+			change('managefile.php?action=movefile&id={/literal}{$project.ID}{literal}&file='+element.id+'&target='+parentFolder,'jslog');
+			element.hide();
+		}
+	});
 	{/literal}
 	{if $foldername}
 	$('dirname').innerHTML = '{$foldername}';
