@@ -1,4 +1,4 @@
-{include file="header.tpl" jsload = "ajax" }
+{include file="header.tpl" jsload="ajax"}
 
 {$flashstr}
 

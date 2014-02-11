@@ -1,11 +1,11 @@
 <div class="headline">
-	<a href="javascript:void(0);" id="loghead_toggle" class="win_block" onclick = "toggleBlock('loghead');"></a>
-
+	<a href="javascript:void(0);" id="loghead_toggle" class="win_block" onclick="toggleBlock('loghead');"></a>
+	
 	{if $userpermissions.admin.add}
 		<div class="wintools">
 			<div class="export-main">
 				<a class="export"><span>{#export#}</span></a>
-				<div class="export-in"  style="width:46px;left: -46px;"> {*at one item*}
+				<div class="export-in" style="width:46px;left: -46px;"> {* at one item *}
 					<a class="pdf" href="manageproject.php?action=projectlogpdf&amp;id={$project.ID}"><span>{#pdfexport#}</span></a>
 					<a class="excel" href="manageproject.php?action=projectlogxls&amp;id={$project.ID}"><span>{#excelexport#}</span></a>
 				</div>
@@ -18,10 +18,10 @@
 	</h2>
 </div>
 
-
-<div class="block" id = "loghead" style = "{$logstyle}">
+<div class="block" id="loghead" style="{$logstyle}">
+	
 	<table class="log" cellpadding="0" cellspacing="0" border="0">
-
+		
 		<thead>
 			<tr>
 				<th class="a"></th>
@@ -41,10 +41,11 @@
 
 			{*Color-Mix*}
 			{if $smarty.section.logitem.index % 2 == 0}
-			<tbody class="color-a" id="log_{$log[logitem].ID}">
+				<tbody class="color-a" id="log_{$log[logitem].ID}">
 			{else}
-			<tbody class="color-b" id="log_{$log[logitem].ID}">
+				<tbody class="color-b" id="log_{$log[logitem].ID}">
 			{/if}
+			
 				<tr>
 					<td style="padding:0" class="symbols">
 						{if $log[logitem].type == "tasklist"}
@@ -70,6 +71,7 @@
 					<td>
 						<div class="toggle-in">
 							<strong>{$log[logitem].name|truncate:55:"...":true}</strong><br />
+							
 							<span class="info">{#was#}
 								{if $log[logitem].action == 1}
 									{#added#}
@@ -91,7 +93,7 @@
 						</div>
 					</td>
 					<td>
-						<a href = "manageuser.php?action=profile&amp;id={$log[logitem].user}">{$log[logitem].username|truncate:25:"...":true}</a>
+						<a href="manageuser.php?action=profile&amp;id={$log[logitem].user}">{$log[logitem].username|truncate:25:"...":true}</a>
 					</td>
 					<td class="tools"></td>
 				</tr>
@@ -109,6 +111,7 @@
 				<td class="tools"></td>
 			</tr>
 		</tbody>
+		
 	</table>
 
 	<div class="tablemenue"></div>
