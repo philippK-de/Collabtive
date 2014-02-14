@@ -91,8 +91,12 @@ function readLangfile($locale) {
 function detectSSL() {
     if (getArrayVal($_SERVER, "https") == "on") {
         return true;
+    } elseif (getArrayVal($_SERVER, 'HTTPS') == "on") {
+        return true;
     } elseif (getArrayVal($_SERVER, "https") == 1) {
         return true;
+    } elseif (getArrayVal($_SERVER, 'HTTPS') == 1) {
+            return true;
     } elseif (getArrayVal($_SERVER, "SERVER_PORT") == 443) {
         return true;
     } else {
