@@ -430,7 +430,7 @@ if ($action == "index") {
                     $userlang = readLangfile($user['locale']);
 
                     $subject = $userlang["projectassignedsubject"] . ' (' . $userlang['by'] . ' ' .$username.')';
-                    $mailcontent = $userlang["hello"] . ",<br /><br/>" .
+                    $mailcontent = $userlang["hello"] . ",<br /><br/>" . 
                                    $userlang["projectassignedtext"] .
                                    " <a href = \"" . $url . "manageproject.php?action=showproject&id=$add\">" . $url . "manageproject.php?action=showproject&id=$add</a>";
 

@@ -1,7 +1,14 @@
 <?php
+
 require("./init.php");
+
 error_reporting(0);
-// Version independent
+
+// VERSION-DEPENDENT
+
+
+// VERSION-INDEPENDENT
+
 // Clear templates cache
 $handle = opendir($template->compile_dir);
 while (false !== ($file = readdir($handle))) {
@@ -9,6 +16,7 @@ while (false !== ($file = readdir($handle))) {
         unlink(CL_ROOT . "/" . $template->compile_dir . "/" . $file);
     }
 }
+
 // Optimize tables
 $opt1 = $conn->query("OPTIMIZE TABLE `files`");
 $opt2 = $conn->query("OPTIMIZE TABLE `files_attached`");
