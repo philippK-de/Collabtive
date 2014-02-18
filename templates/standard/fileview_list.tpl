@@ -1,5 +1,6 @@
 {config_load file='lng.conf' section="strings" scope="global"}
 
+
 <table id="desktopprojects" cellpadding="3px" cellspacing="0" border="1" style="border-left:0px solid;border-collapse:collapse;width:100%">
 	
 	<thead>
@@ -20,23 +21,25 @@
 		{else}
 			<tbody class="color-b" id="thefold_{$folders[folder].ID}">
 		{/if}
-		
-			<tr>
-				<td style="border-right:0px;"><img src="templates/standard/images/symbols/folder-sub.png" /></td>
-				<td style="border-left:0px;">
-					<a href="javascript:change('manageajax.php?action=fileview_list&id={$project.ID}&folder={$folders[folder].ID}','filescontent');">
-						{if $folders[folder].name != ""}
-							{$folders[folder].name|truncate:100:"...":true}
-						{/if}
-					</a>
-				</td>
-				<td>{$folders[folder].description|truncate:30:"...":true}</td>
-				<td></td>
-				<td class="tools">
-					{if $userpermissions.files.del}
-						<a class="tool_del" href="javascript:confirmfunction('{$langfile.confirmdel}','deleteElement(\'thefold_{$folders[folder].ID}\',\'managefile.php?action=delfolder&amp;id={$project.ID}&amp;folder={$folders[folder].ID}&ajax=1\')');" onclick="fadeToggle('thefold_{$folders[folder].ID}');" title="{#delete#}"></a>
-					{/if}
-				</td>
+						<tr >
+							<td style = "border-right:0px;"><img src = "templates/standard/images/symbols/folder-sub.png" /></td>
+							<td style = "border-left:0px;">
+<a href = "javascript:change('manageajax.php?action=fileview_list&id={$project.ID}&folder={$folders[folder].ID}','filescontent');">
+										{if $folders[folder].name != ""}
+										{$folders[folder].name|truncate:100:"...":true}
+										{/if}
+										</a>
+
+							</td>
+							<td>{$folders[folder].description|truncate:30:"...":true}</td>
+							<td></td>
+							<td class="tools">
+
+							{if $userpermissions.files.del}
+															<a class="tool_del" href="javascript:confirmfunction('{$langfile.confirmdel}','deleteElement(\'thefold_{$folders[folder].ID}\',\'managefile.php?action=delfolder&amp;id={$project.ID}&amp;folder={$folders[folder].ID}&ajax=1\')');" onclick="fadeToggle('thefold_{$folders[folder].ID}');" title="{#delete#}" ></a>
+															<!-- <a class="edit" href="#" title="{#editfile#}"></a>-->
+								{/if}
+							</td>
 			</tr>
 			
 		</tbody>
@@ -56,15 +59,15 @@
 				<td style="border-right:0px;">
 					<a href="{$files[file].datei}" {if $files[file].imgfile == 1} rel="lytebox[]" {elseif $files[file].imgfile == 2} rel = "lyteframe[text]" rev="width: 650px; height: 500px;" {/if} >
 			 			{if $files[file].imgfile == 1}
-				 			<img src="thumb.php?pic={$files[file].datei}&amp;width=32" alt="{$files[file].name}" />
+				 			<img src="thumb.php?pic={$files[file].datei}&amp;width=32" alt="{$files[file].title}" />
 				 		{else}
-				 			<img src="templates/standard/images/files/{$files[file].type}.png" alt="{$files[file].name}" />
+				 			<img src="templates/standard/images/files/{$files[file].type}.png" alt="{$files[file].title}" />
 				 		{/if}
 					 </a>
 				</td>
 				<td style="border-left:0px;">
 					<a href="{$files[file].datei}" {if $files[file].imgfile == 1} rel="lytebox[]" {elseif $files[file].imgfile == 2} rel = "lyteframe[text]" rev="width: 650px; height: 500px;" {/if} >
-						{$files[file].name|truncate:75:"...":true}
+						{$files[file].title|truncate:75:"...":true}
 					</a>
 				</td>
 				<td>
@@ -78,6 +81,7 @@
 			</tr>
 		</tbody>
 		
+
 		{literal}
             <script type="text/javascript">
                 new Draggable('{/literal}fli_{$files[file].ID}{literal}');
@@ -102,7 +106,6 @@
 {/section}
 
 <div id="parentfolder" style="display:none;">{$folderid}</div>
-
 <script type="text/javascript">
 	{literal}
 		parentFolder = $("parentfolder").innerHTML;

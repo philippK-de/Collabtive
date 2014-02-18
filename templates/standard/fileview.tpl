@@ -40,9 +40,9 @@
 					
 				</table>
 
-			</div> {* itemwrapper END *}
+			</div> {*itemwrapper End*}
 		</li>
-	{/section} {* loop folder END *}
+	{/section} {*lop folder End*}
 	
 	{section name=file loop=$files}
 		<li id="fli_{$files[file].ID}">
@@ -57,9 +57,9 @@
 						<td class="thumb">
 							<a href="{$files[file].datei}" {if $files[file].imgfile == 1} rel="lytebox[]" {elseif $files[file].imgfile == 2} rel = "lyteframe[text]" rev="width: 650px; height: 500px;" {/if} >
 								{if $files[file].imgfile == 1}
-									<img src="thumb.php?pic={$files[file].datei}&amp;width=32" alt="{$files[file].name}" />
+								<img src = "thumb.php?pic={$files[file].datei}&amp;width=32" alt="{$files[file].title}" />
 								{else}
-									<img src="templates/standard/images/files/{$files[file].type}.png" alt="{$files[file].name}" />
+								<img src = "templates/standard/images/files/{$files[file].type}.png" alt="{$files[file].title}" />
 								{/if}
 							</a>
 						</td>
@@ -77,7 +77,7 @@
 					<tr>
 						<td colspan="3">
 							<span class="name">
-								<a href="{$files[file].datei}" {if $files[file].imgfile == 1} rel="lytebox[img{$files[file].ID}]" {elseif $files[file].imgfile == 2} rel="lyteframe[text{$files[file].ID}]" {/if} title="{$files[file].name}" onmousedown="change('managefile.php?action=makeseen&file={$files[file].ID}&id={$project.ID}','jslog');">
+								<a href = "{$files[file].datei}"{if $files[file].imgfile == 1} rel="lytebox[img{$files[file].ID}]" {elseif $files[file].imgfile == 2} rel = "lyteframe[text{$files[file].ID}]"{/if} title="{$files[file].title}" onmousedown = "change('managefile.php?action=makeseen&file={$files[file].ID}&id={$project.ID}','jslog');">
 									{if $files[file].title != ""}
 										{$files[file].title|truncate:14:"...":true}
 									{else}
@@ -97,14 +97,14 @@
 				new Draggable('{/literal}fli_{$files[file].ID}{literal}',{revert:true});
 			</script>
 		{/literal}
-		
-	{/section} {* files in fldes END *}
+	{/section} {*files in fldes End*}
 </ul>
 
 {section name=fold loop=$folders}
 	{literal}
 		<script type="text/javascript">
-			try {
+			try
+			{
 				Droppables.add('{/literal}fdli_{$folders[fold].ID}{literal}',{
 					onDrop: function(element) {
 					change('managefile.php?action=movefile&id={/literal}{$project.ID}{literal}&file='+element.id+'&target={/literal}{$folders[fold].ID}{literal}','jslog');
@@ -113,6 +113,7 @@
 				});
 			}
 			catch(e){}
+
 		</script>
 	{/literal}
 {/section}

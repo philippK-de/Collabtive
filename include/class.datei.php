@@ -38,29 +38,19 @@ class datei {
         global $conn;
         
         $project = (int) $project;
-        $folderOrig = $folder;
-        
-        // Replace umlauts
-        $folder = str_replace("ä", "ae" , $folder);
-        $folder = str_replace("ö", "oe" , $folder);
-        $folder = str_replace("ü", "ue" , $folder);
-        $folder = str_replace("ß", "ss" , $folder);
-        
-        // Remove whitespace
-        $folder = preg_replace("/\W/", "", $folder);
-        $folder = preg_replace("/[^-_0-9a-zA-Z]/", "_", $folder);
-        
-        // Insert folder into database
+        // insert the folder into the db
         $insStmt = $conn->prepare("INSERT INTO projectfolders (parent, project, name, description, visible) VALUES (?, ?, ?, ?, ?)");
         $ins = $insStmt->execute(array($parent, $project, $folder, $desc, $visible));
         
         if ($ins) {
+            $id = $conn->lastInsertId();
+            $secure_name=$id.'.'.$this->secure_name($folder);
             // Create the folder
-            $makefolder = CL_ROOT . "/files/" . CL_CONFIG . "/$project/$folder/";
+            $makefolder = CL_ROOT . "/files/" . CL_CONFIG . "/$project/$secure_name/";
             if (!file_exists($makefolder)) {
                 if (mkdir($makefolder, 0777, true)) {
                     // Folder created
-                    $this->mylog->add($folderOrig, 'folder', 1, $project);
+                    $this->mylog->add($folder, 'folder', 1, $project);
                     return true;
                 }
             } else {
@@ -89,6 +79,9 @@ class datei {
         $project = (int) $project;
         
         $folder = $this->getFolder($id);
+        if ($folder === false){
+        	return true; // this looks weird. but if the folder, we want to delete is gone (however this happened), the deletion is somehow successfull
+        }
         $files = $this->getProjectFiles($project, 10000, $id);
         
         // Delete all files in the folder from database and filesystem
@@ -105,11 +98,15 @@ class datei {
             }
         }
         
-        $del = $conn->query("DELETE FROM projectfolders WHERE ID = $id");
+				$secure_name=$id.'.'.$this->secure_name($folder['name']);
         
+        $del = $conn->query("DELETE FROM projectfolders WHERE ID = $id");
         if ($del) {
-            // Remove directory
-            $foldstr = CL_ROOT . "/files/" . CL_CONFIG . "/$project/" . $folder["name"] . "/";
+            // remove directory
+            $foldstr = CL_ROOT . "/files/" . CL_CONFIG . "/$project/$secure_name/";
+            if (!file_exists($foldstr)){ // for compatibility with folders created in previous versions of collabtive
+              $foldstr = CL_ROOT . "/files/" . CL_CONFIG . "/$project/" . $folder["name"] . "/";
+            }
             delete_directory($foldstr);
             $this->mylog->add($folder["name"], 'folder', 3, $project);
             
@@ -130,7 +127,9 @@ class datei {
         $id = (int) $id;
         
         $folder = $conn->query("SELECT * FROM projectfolders WHERE ID = $id LIMIT 1")->fetch();
-        
+        if ($folder===false){
+        	return false; // otherwise you will get all subfolders having parent = "", i.e. all upper level folders of all projects, which is especially bad if you are going to delete those!
+        }
         $folder["subfolders"] = $this->getSubFolders($folder["ID"]);
         $folder["abspath"] = $this->getAbsolutePathName($folder);
 
@@ -229,8 +228,8 @@ class datei {
     }
 
     /**
-     * Get an absolute path name of a folder
-     * Returns the absolute name (relative to the root directory of the project) of a folder.
+     * Get a VIRTUAL absolute path name. This does not reflect the real file storage location, but the location as displayed on the web interface.
+     * Returns the absolute name (relative to the root-directory of the project) of a folder.
      *
      * @param array $folder The folder to be inspected
      * @return string Absolute path/name of the folder
@@ -248,29 +247,57 @@ class datei {
         }
     }
     
-    // FILE METHODS
+    /**
+     * replaces umlauts and any non-alphabetic characters
+     * @param String $filename a file name
+     * @return String the converted filename
+     */
+    function secure_name($filename){
+    	
+    	$map=array(
+        'Ä' => 'Ae',
+        'ä' => 'ae',
+    		'Ö' => 'Oe',
+        'ö' => 'oe',
+        'Ü' => 'Ue',
+        'ü' => 'ue',
+        'ß' => 'ss');
+    	$filename=strtr($filename, $map);
+    	$filename = preg_replace("/\W/", "", $filename);    	// remove whitespace
+    	return $filename; 
+    }
     
+    // FILE METHODS
     /**
      * Upload a file
      * Does filename sanitizing as well as MIME-type determination
      * Also adds the file to the database using add_file()
      *
      * @param string $fname Name of the HTML form field POSTed from
-     * @param string $ziel Destination directory
-     * @param int $project Project ID of the associated project (default: 0 => root folder)
+     * @param string $dest_dir Destination directory
+     * @param int $project Project ID of the associated project
      * @param int $folder
      * @return bool
      */
-    function upload($fname, $ziel, $project, $folder = 0)
+    function upload($fname, $dest_dir, $project, $folder = 0)
     {
         // Get data from form
         $name = $_FILES[$fname]['name'];
-        $typ = $_FILES[$fname]['type'];
+        $mimetype = $_FILES[$fname]['type'];
         $size = $_FILES[$fname]['size'];
         $tmp_name = $_FILES[$fname]['tmp_name'];
         $tstr = $fname . "-title";
         $tastr = $fname . "-tags";
 
+        /* Remove ?!
+		$visible = $_POST["visible"];
+
+        if (!empty($visible[0])) {
+            $visstr = serialize($visible);
+        } else {
+            $visstr = "";
+        }
+		*/
         $title = $_POST[$tstr];
         $tags = $_POST[$tastr];
         $error = $_FILES[$fname]['error'];
@@ -286,60 +313,39 @@ class datei {
         $tagobj = new tags();
         $tags = $tagobj->formatInputTags($tags);
         
-        // Find the extension
-        $teilnamen = explode(".", $name);
-        $teile = count($teilnamen);
-        $workteile = $teile - 1;
-        $erweiterung = $teilnamen[$workteile];
-        $subname = "";
+        $pathinfo = pathinfo($name);
+        $extension= $pathinfo['extension'];
+        $subname = $this->secure_name($pathinfo['filename']);
         
-        // If it is a PHP file, treat it as plain text so it is not executed when opened in the browser
-        if (stristr($erweiterung, "php")) {
-            $erweiterung = "txt";
-            $typ = "text/plain";
-        }
-        // Reassemble the file name from the exploded array, without the extension
-        for ($i = 0; $i < $workteile; $i++) {
-            $subname .= $teilnamen[$i];
+        // if its a php file, treat it as plaintext so its not executed when opened in the browser.
+        if (stristr($extension, "php")) {
+            $extension = "txt";
+            $mimetype = "text/plain";
         }
         
         // Create a random number
         $randval = mt_rand(1, 99999);
-        
-        // Only allow a-z, 0-9 in filenames, substitute other chars with _
-        $subname = str_replace("ä", "ae" , $subname);
-        $subname = str_replace("ö", "oe" , $subname);
-        $subname = str_replace("ü", "ue" , $subname);
-        $subname = str_replace("ß", "ss" , $subname);
-        $subname = preg_replace("/[^-_0-9a-zA-Z]/", "_", $subname);
-        
-        // Remove whitespace
-        $subname = preg_replace("/\W/", "", $subname);
-        
-        // If filename is longer than 200 chars, cut it
+        // if filename is longer than 200 chars, cut it.
         if (strlen($subname) > 200) {
             $subname = substr($subname, 0, 200);
         }
         
         // Assemble the final filename from the original name plus the random value.
         // This is to ensure that files with the same name do not overwrite each other.
-        $name = $subname . "_" . $randval . "." . $erweiterung;
-        
+        $name = $subname . "_" . $randval . "." . $extension;
+        // Relative path, used for display / url construction in the file manager
+        $relative_path = $dest_dir . "/" . $name;
         // Absolute file system path used to move the file to its final location
-        $datei_final = $root . "/" . $ziel . "/" . $name;
-        
-        // Relative path used for display / URL construction in the file manager
-        $datei_final2 = $ziel . "/" . $name;
+        $path = $root . "/" . $relative_path;
 
-        if (!file_exists($datei_final)) {
-            if (move_uploaded_file($tmp_name, $datei_final)) {
+        if (!file_exists($path)) {
+            if (move_uploaded_file($tmp_name, $path)) {
+                // $filesize = filesize($path);
                 if ($project > 0) {
                     // File did not already exist, was uploaded, and a project is set
                     // Now add the file to the database, log the upload event and return the file ID
-                    chmod($datei_final, 0755);
-                    
-                    $fid = $this->add_file($name, $desc, $project, 0, "$tags", $datei_final2, "$typ", $title, $folder, $visstr);
-                    
+                    chmod($path, 0755);
+                    $fid = $this->add_file($name, $desc, $project, 0, "$tags", $relative_path, "$mimetype", $title, $folder, $visstr);                    
                     if (!empty($title)) {
                         $this->mylog->add($title, 'file', 1, $project);
                     } else {
@@ -367,12 +373,16 @@ class datei {
      * Does filename sanitizing as well as MIME-type determination
      * Also adds the file to the database using add_file()
      *
-     * @param string $fname Name of the HTML form field POSTed from
-     * @param string $ziel Destination directory
+     * @param string $name original name of the uploaded file
+     * @param string $tmp_name path to temporary file after upload
+     * @param string $mimetype determines the file type 
+     * @param int $size the size of the file
+     * @param $target the folder in which the file shall be stored
      * @param int $project Project ID of the associated project
+     * @param $folder the id of the folder
      * @return bool
      */
-    function uploadAsync($name, $tmp_name, $typ, $size, $ziel, $project, $folder = 0)
+    function uploadAsync($name, $tmp_name, $mimetype, $size, $target, $project, $folder = 0)
     {
         $visible = "";
         $visstr = "";
@@ -382,62 +392,37 @@ class datei {
             return false;
         }
         
-        // Find the extension
-        $teilnamen = explode(".", $name);
-        $teile = count($teilnamen);
-        $workteile = $teile - 1;
-        $erweiterung = $teilnamen[$workteile];
-        $subname = "";
+        $pathinfo = pathinfo($name);
+        $extension= $pathinfo['extension'];
+        $subname = $this->secure_name($pathinfo['filename']);
+
+        // if its a php file, treat it as plaintext so its not executed when opened in the browser.
+        if (stristr($extension, "php")) {
+            $extension = "txt";
+            $mimetype = "text/plain";
+        }
         
-        // If it is a PHP file, treat as plain text so it is not executed when opened in the browser
-        if (stristr($erweiterung, "php")) {
-            $erweiterung = "txt";
-            $typ = "text/plain";
-        }
-
-        for ($i = 0; $i < $workteile; $i++) {
-            $subname .= $teilnamen[$i];
-        }
-
         $randval = mt_rand(1, 99999);
-        
-        // Only allow a-z, 0-9 in filenames, substitute other chars with _
-        $subname = str_replace("ä", "ae" , $subname);
-        $subname = str_replace("ö", "oe" , $subname);
-        $subname = str_replace("ü", "ue" , $subname);
-        $subname = str_replace("ß", "ss" , $subname);
-        $subname = preg_replace("/[^-_0-9a-zA-Z]/", "_", $subname);
-        
-        // Remove whitespace
-        $subname = preg_replace("/\W/", "", $subname);
-        // If filename is longer than 200 chars, cut it
+        // if filename is longer than 200 chars, cut it.
         if (strlen($subname) > 200) {
             $subname = substr($subname, 0, 200);
         }
+        $title = $name;        
+        $name = $subname . "_" . $randval . "." . $extension;
+        $relative_path = $target . "/" . $name;
+        $path = $root . "/" . $relative_path;
 
-        $name = $subname . "_" . $randval . "." . $erweiterung;
-        $datei_final = $root . "/" . $ziel . "/" . $name;
-        $datei_final2 = $ziel . "/" . $name;
-
-        if (!file_exists($datei_final)) {
-            if (move_uploaded_file($tmp_name, $datei_final)) {
+        if (!file_exists($path)) {
+            if (move_uploaded_file($tmp_name, $path)) {
+                // $filesize = filesize($path);
                 if ($project > 0) {
-                     // File did not already exist, was uploaded, and a project is set
-                     // Now add the file to the database, log the upload event and return the file ID.
-                    if (!$title) {
-                        $title = $name;
-                    }
-                    
-                    chmod($datei_final, 0755);
-                    
-                    $fid = $this->add_file($name, $desc, $project, 0, "$tags", $datei_final2, "$typ", $title, $folder, $visstr);
-                    
-                    if (!empty($title)) {
-                        $this->mylog->add($title, 'file', 1, $project);
-                    } else {
-                        $this->mylog->add($name, 'file', 1, $project);
-                    }
-                    
+                    /**
+                     * file did not already exist, was uploaded, and a project is set
+                     * add the file to the database, add the upload event to the log and return the file ID.
+                     */
+                    chmod($path, 0755);
+                    $fid = $this->add_file($name, " ", $project, 0, "", $relative_path, $mimetype, $title, $folder, $visstr); // empty tags and description
+                    $this->mylog->add($name, 'file', 1, $project);
                     return $fid;
                 } else {
                     // No project means the file is not added to the database wilfully. Return file name
@@ -495,7 +480,7 @@ class datei {
         global $conn;
         $datei = (int) $datei;
 
-        $thisfile = $conn->query("SELECT datei, name, project, title FROM files WHERE ID = $datei")->fetch();
+        $thisfile = $conn->query("SELECT datei,name,project,title FROM files WHERE ID = $datei")->fetch();
         
         if (!empty($thisfile)) {
             $fname = $thisfile[1];
@@ -614,7 +599,10 @@ class datei {
         // Get the target folder
         $thefolder = $this->getFolder($target);
         
-        // Build file system paths
+        if ($thefolder===false){
+        	return false;
+        }
+        // Build filesystem paths
         $targetstr = "files/" . CL_CONFIG . "/" . $thefile["project"] . "/" . $thefolder["name"] . "/" . $thefile["name"];
         $rootstr = CL_ROOT . "/" . $thefile["datei"];
         
@@ -723,7 +711,7 @@ class datei {
     /**
      * Add a file to the database
      *
-     * @param string $name File name
+     * @param string $name Filename
      * @param string $desc Description
      * @param int $project ID of the associated project
      * @param int $milestone ID of the associated milestone

@@ -54,9 +54,13 @@ if ($action == "upload") {
     $num = $_POST['numfiles'];
 
     if ($upfolder) {
-        $thefolder = $myfile->getFolder($upfolder);
-        $thefolder = $thefolder["name"];
-        $upath = "files/" . CL_CONFIG . "/$id/" . $thefolder;
+    		$thefolder = $myfile->getFolder($upfolder);
+    		$thefolder = $thefolder["name"];
+    		$secure_name=$upfolder.'.'.$myfile->secure_name($thefolder);
+        $upath = "files/" . CL_CONFIG . "/$id/$secure_name";
+        if (!file_exists($upath)){ // those lines are for compatibility with former versions, which created named folders
+          $upath = "files/" . CL_CONFIG . "/$id/" . $thefolder;
+        }
     } else {
         $upath = "files/" . CL_CONFIG . "/$id";
         $upfolder = 0;
@@ -120,9 +124,13 @@ if ($action == "upload") {
         die();
     }
     if ($upfolder) {
-        $thefolder = $myfile->getFolder($upfolder);
-        $thefolder = $thefolder["name"];
-        $upath = "files/" . CL_CONFIG . "/$id/" . $thefolder;
+      	$thefolder = $myfile->getFolder($upfolder);
+      	$thefolder = $thefolder["name"];
+    	  $secure_name=$upfolder.'.'.$myfile->secure_name($thefolder);
+      	$upath = "files/" . CL_CONFIG . "/$id/$secure_name";
+      	if (!file_exists($upath)){ // those lines are for compatibility with former versions, which created named folders
+    		  $upath = "files/" . CL_CONFIG . "/$id/" . $thefolder;
+    	  }
     } else {
         $upath = "files/" . CL_CONFIG . "/$id";
         $upfolder = 0;
@@ -240,19 +248,25 @@ if ($action == "upload") {
     }
 } elseif ($action == "folderexport") {
     $thefolder = $myfile->getFolder($thisfile);
+    $foldername = $thefolder['name'];
+    $secure_name=$thisfile.'.'.$myfile->secure_name($foldername);    
+    $relativePath='/files/' . CL_CONFIG . "/$id/$secure_name";
+    if (!file_exists(CL_ROOT . $relativePath)){
+    	$relativePath='/files/' . CL_CONFIG . "/$id/$thefolder[name]"; // for compatibility with files/folders created with former versions
+    }
+    
+    $zipPath = CL_ROOT . $relativePath . '.zip';
+    $zip = new PclZip($zipPath);
 
-    $topfad = CL_ROOT . "/files/" . CL_CONFIG . "/$id" . "/folder" . $thefolder["ID"] . ".zip";
-    $zip = new PclZip($topfad);
-
-    if (file_exists($topfad)) {
-        if (unlink($topfad)) {
-            $create = $zip->create(CL_ROOT . "/files/" . CL_CONFIG . "/$id/$thefolder[name]/", PCLZIP_OPT_REMOVE_ALL_PATH);
+    if (file_exists($zipPath)) {
+        if (unlink($zipPath)) {
+            $create = $zip->create(CL_ROOT . $relativePath, PCLZIP_OPT_REMOVE_ALL_PATH);
         }
     } else {
-        $create = $zip->create(CL_ROOT . "/files/" . CL_CONFIG . "/$id/$thefolder[name]/", PCLZIP_OPT_REMOVE_ALL_PATH);
+        $create = $zip->create(CL_ROOT . $relativePath, PCLZIP_OPT_REMOVE_ALL_PATH);
     }
     if ($create != 0) {
-        $loc = $url . "/files/" . CL_CONFIG . "/$id" . "/folder" . $thefolder["ID"] . ".zip";
+    	$loc=$url.$relativePath.'.zip';
         header("Location: $loc");
     }
 } elseif ($action == "showproject") {
