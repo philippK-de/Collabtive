@@ -107,7 +107,6 @@
 						<div class="staterowin">
 							<span id = "filenum">{$filenum}</span> {#files#}
 						</div>
-
 					</div>
 				</div> {*nosmooth End*}
 

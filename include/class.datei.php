@@ -58,7 +58,7 @@ class datei {
         // Insert folder into database
         $insStmt = $conn->prepare("INSERT INTO projectfolders (parent, project, name, description) VALUES (?, ?, ?, ?)");
         $ins = $insStmt->execute(array($parent, $project, $folder, $desc));
-echo $thepath;
+
         if ($ins) {
            // Create the folder
             //$makefolder = CL_ROOT . "/files/" . CL_CONFIG . "/$project/$folder/";
@@ -626,9 +626,15 @@ echo $thepath;
 
         // Get the target folder
         $thefolder = $this->getFolder($target);
+    	$abspath = $this->getAbsolutePathName($thefolder);
+    	if($abspath == "/")
+    	{
+    		$abspath = "";
+    	}
 
         // Build file system paths
-        $targetstr = "files/" . CL_CONFIG . "/" . $thefile["project"] . "/" . $thefolder["name"] . "/" . $thefile["name"];
+        //$targetstr = "files/" . CL_CONFIG . "/" . $thefile["project"] . "/" . $thefolder["name"] . "/" . $thefile["name"];
+        $targetstr = "files/" . CL_CONFIG . "/" . $thefile["project"] . $abspath . "/" . $thefile["name"];
         $rootstr = CL_ROOT . "/" . $thefile["datei"];
 
         // Update database
@@ -646,7 +652,7 @@ echo $thepath;
      * @param int $folder Folder
      * @return array $files Found files
      */
-    function getProjectFiles($id, $lim = 25, $folder = "")
+    function getProjectFiles($id, $lim = 5000, $folder = "")
     {
         global $conn;
 
@@ -671,7 +677,6 @@ echo $thepath;
 
         $start = SmartyPaginate::getCurrentIndex();
         $lim = SmartyPaginate::getLimit();
-
         $files = array();
 
         if ($folder > 0) {
