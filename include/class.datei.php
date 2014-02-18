@@ -33,13 +33,18 @@ class datei {
      * @param strin $visible Visibility of the new folder
      * @return bool
      */
-    function addFolder($parent, $project, $folder, $desc, $visible = "")
+    function addFolder($parent, $project, $folder, $desc)
     {
         global $conn;
 
         $project = (int) $project;
         $folderOrig = $folder;
-
+		$thepath = $this->getAbsolutePathName($this->getFolder($parent));
+    	//if its the root path, don't append any slashes
+		if($thepath == "/")
+    	{
+    		$thepath = "";
+    	}
         // Replace umlauts
         $folder = str_replace("ä", "ae" , $folder);
         $folder = str_replace("ö", "oe" , $folder);
@@ -51,12 +56,16 @@ class datei {
         $folder = preg_replace("/[^-_0-9a-zA-Z]/", "_", $folder);
 
         // Insert folder into database
-        $insStmt = $conn->prepare("INSERT INTO projectfolders (parent, project, name, description, visible) VALUES (?, ?, ?, ?, ?)");
-        $ins = $insStmt->execute(array($parent, $project, $folder, $desc, $visible));
-
+        $insStmt = $conn->prepare("INSERT INTO projectfolders (parent, project, name, description) VALUES (?, ?, ?, ?)");
+        $ins = $insStmt->execute(array($parent, $project, $folder, $desc));
+echo $thepath;
         if ($ins) {
-            // Create the folder
-            $makefolder = CL_ROOT . "/files/" . CL_CONFIG . "/$project/$folder/";
+           // Create the folder
+            //$makefolder = CL_ROOT . "/files/" . CL_CONFIG . "/$project/$folder/";
+
+            $makefolder = CL_ROOT . "/files/" . CL_CONFIG . "/$project" . $thepath . "/" . $folder . "/";
+
+			//echo "<br><br>" .  $makefolder . "<br>" . $makefolder2;
             if (!file_exists($makefolder)) {
                 if (mkdir($makefolder, 0777, true)) {
                     // Folder created
