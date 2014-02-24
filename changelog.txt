@@ -9,6 +9,10 @@
 + Improved project tree's handling for special characters
 + Removed file upload from the add reply form. Now only previously uploaded files can be attached to replies.
 + Lots of code beautification in templates files
++ Make filemanager behave more like explorer (i.e. no pagination - show all files in each folder at once)
++ Revert to gridview as the default file view (this was changed in 1.2 b/c of issues)
++ Added edge case for SSL detection
++ Removed .htaccess file as it was causing trouble with some servers
 
 Collabtive 1.2
 + Added translations: Vietnamese

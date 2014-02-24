@@ -54,9 +54,14 @@ if ($action == "upload") {
     $num = $_POST['numfiles'];
 
     if ($upfolder) {
-        $thefolder = $myfile->getFolder($upfolder);
-        $thefolder = $thefolder["name"];
-        $upath = "files/" . CL_CONFIG . "/$id/" . $thefolder;
+    	$thefolder = $myfile->getFolder($upfolder);
+    	$absfolder = $myfile->getAbsolutePathName($thefolder);
+    	if($absfolder == "/")
+    	{
+    		$absfolder = "";
+    	}
+    	$thefolder = $thefolder["name"];
+    	$upath = "files/" . CL_CONFIG . "/$id" . $absfolder;
     } else {
         $upath = "files/" . CL_CONFIG . "/$id";
         $upfolder = 0;
@@ -121,8 +126,13 @@ if ($action == "upload") {
     }
     if ($upfolder) {
         $thefolder = $myfile->getFolder($upfolder);
+    	$absfolder = $myfile->getAbsolutePathName($thefolder);
+    	if($absfolder == "/")
+    	{
+    		$absfolder = "";
+    	}
         $thefolder = $thefolder["name"];
-        $upath = "files/" . CL_CONFIG . "/$id/" . $thefolder;
+        $upath = "files/" . CL_CONFIG . "/$id" . $absfolder;
     } else {
         $upath = "files/" . CL_CONFIG . "/$id";
         $upfolder = 0;
@@ -150,17 +160,17 @@ if ($action == "upload") {
 
                     // check if subfolder exists, else root folder
                     $whichfolder = (!empty($thefolder)) ? $thefolder : $userlang["rootdir"];
-                    
+
                     // assemble content only once. no need to do this repeatedly
                     $mailcontent = $userlang["hello"] . ",<br /><br/>" .
                                    $userlang["filecreatedtext"] . "<br /><br />" .
                                    $userlang["project"] . ": " . $pname["name"] . "<br />" .
                                    $userlang["folder"] . ": " . $whichfolder . "<br />" .
                                    $userlang["file"] . ":  <a href = \"" . $url . $fileprops["datei"] . "\">" . $url . $fileprops["datei"] . "</a>";
-                    
+
                     $subject = $userlang["filecreatedsubject"] . " (". $userlang['by'] . ' '. $username . ")";
 
-                    if (is_array($sendto)) {                                                                                                                                        
+                    if (is_array($sendto)) {
                         if (in_array($user["ID"], $sendto)) {
                             // send email
                             $themail = new emailer($settings);
@@ -304,11 +314,8 @@ if ($action == "upload") {
     $name = getArrayVal($_POST, "foldertitle");
     $desc = getArrayVal($_POST, "folderdesc");
     $parent = getArrayVal($_POST, "folderparent");
-    $visible = getArrayVal($_POST, "visible");
-    if (empty($visible[0])) {
-        $visible = "";
-    }
-    if ($myfile->addFolder($parent, $id, $name, $desc, $visible)) {
+
+    if ($myfile->addFolder($parent, $id, $name, $desc)) {
         $loc = $url .= "managefile.php?action=showproject&id=$id&mode=folderadded";
         header("Location: $loc");
     }
