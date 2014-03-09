@@ -85,7 +85,7 @@ if ($action == "add") {
         $comment = "";
     }
 
-    if ($tracker->add($userid, $tproject, $task, $comment , $started, $ended, $startdate, $enddate)) {
+    if ($tracker->add($userid, $tproject, $task, $comment, $started, $ended, $startdate, $enddate)) {
         $redir = urldecode($redir);
         if ($redir) {
             $redir = $url . $redir;
