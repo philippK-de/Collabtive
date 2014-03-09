@@ -3,9 +3,10 @@
  * This class provides methods to realize tasks
  *
  * @author Philipp Kiszka <info@o-dyn.de>
+ * @author Eva Kiszka <eva@o-dyn.de>
  * @name task
  * @package Collabtive
- * @version 0.5.5
+ * @version 1.2
  * @link http://www.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
@@ -25,6 +26,7 @@ class task {
     /**
      * Add a task
      *
+     * @param string $start Start date of the task
      * @param string $end Date the task is due
      * @param string $title Title of the task (optional)
      * @param string $text Description of the task
@@ -33,23 +35,26 @@ class task {
      * @param int $project ID of the project the task is associated with
      * @return int $insid New task's ID
      */
-    function add($end, $title, $text, $liste, $project)
+    function add($start, $end, $title, $text, $liste, $project)
     {
         global $conn;
         $title = htmlspecialchars($title);
         $liste = (int) $liste;
         $project = (int) $project;
 
+		$start_fin = strtotime($start);
         $end_fin = strtotime($end);
 
+        if (empty($start_fin)) {
+            $start_fin = $start;
+        }
         if (empty($end_fin)) {
             $end_fin = $end;
         }
 
-        $start = time();
         // write to db
-        $insStmt = $conn->prepare("INSERT INTO tasks (start,end,title,text,liste,status,project) VALUES (?, ?, ?, ?, ?, 1, ?)");
-        $ins = $insStmt->execute(array($start, $end_fin, $title, $text, $liste, $project));
+        $insStmt = $conn->prepare("INSERT INTO tasks (start, end, title, text, liste, status, project) VALUES (?, ?, ?, ?, ?, 1, ?)");
+        $ins = $insStmt->execute(array($start_fin, $end_fin, $title, $text, $liste, $project));
         if ($ins) {
             $insid = $conn->lastInsertId();
             // logentry
@@ -65,6 +70,7 @@ class task {
      * Edit a task
      *
      * @param int $id Task ID
+     * @param string $start Start date
      * @param string $end Due date
      * @param string $title Title of the task
      * @param string $text Task description
@@ -72,20 +78,21 @@ class task {
      * @param int $assigned ID of the user who has to complete the task
      * @return bool
      */
-    function edit($id, $end, $title, $text, $liste)
+    function edit($id, $start, $end, $title, $text, $liste)
     {
         global $conn;
         $id = (int) $id;
         $liste = (int) $liste;
         $title = htmlspecialchars($title);
-        
+
+        $start = strtotime($start);
         $end = strtotime($end);
 
-        $updStmt = $conn->prepare("UPDATE tasks SET `end`=?,`title`=?, `text`=?, `liste`=? WHERE ID = ?");
+        $updStmt = $conn->prepare("UPDATE tasks SET `start`=?, `end`=?, `title`=?, `text`=?, `liste`=? WHERE ID = ?");
         // Remove all the users from the task. Done to ensure no double assigns occur since the handler scripts call this::assign() on their own.
         $conn->query("DELETE FROM tasks_assigned WHERE `task` = $id");
 
-        $upd = $updStmt->execute(array($end, $title, $text, $liste, $id));
+        $upd = $updStmt->execute(array($start, $end, $title, $text, $liste, $id));
 
         if ($upd) {
             $nameproject = $this->getNameProject($id);
@@ -152,19 +159,6 @@ class task {
 
         $upd = $conn->query("UPDATE tasks SET status = 0 WHERE ID = $id");
 
-        /*
-        $sql = $conn->query("SELECT liste FROM tasks WHERE ID = $id");
-        $liste = $sql->fetch();
-        $sql2 = $conn->query("SELECT count(*) FROM tasks WHERE liste = $liste[0] AND status = 1");
-        $cou = $sql2->fetch();
-        // if this is the last task in its list, close the list too.
-        if ($cou[0] == 0)
-        {
-            $tasklist = new tasklist();
-            $tasklist->close_liste($liste[0]);
-        }
-                */
-
         if ($upd) {
             $nameproject = $this->getNameProject($id);
             $this->mylog->add($nameproject[0], 'task', 5, $nameproject[1]);
@@ -230,11 +224,17 @@ class task {
         $task = $conn->query("SELECT * FROM tasks WHERE ID = $id")->fetch();
         if (!empty($task)) {
             // format datestring according to dateformat option
+            if (is_numeric($task['start'])) {
+                $startstring = date(CL_DATEFORMAT, $task["start"]);
+            } else {
+                $startstring = date(CL_DATEFORMAT, strtotime($task["start"]));
+            }
             if (is_numeric($task['end'])) {
                 $endstring = date(CL_DATEFORMAT, $task["end"]);
             } else {
                 $endstring = date(CL_DATEFORMAT, strtotime($task["end"]));
             }
+
             // get list and projectname of the task
             $details = $this->getTaskDetails($task);
             $list = $details["list"];
@@ -271,6 +271,7 @@ class task {
                 }
             }
 
+            $task["startstring"] = $startstring;
             $task["endstring"] = $endstring;
 
             $task["title"] = stripslashes($task["title"]);

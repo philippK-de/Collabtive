@@ -12,6 +12,7 @@
 + Revert to gridview as the default file view (this was changed in 1.2 b/c of issues)
 + Added edge case for SSL detection
 + Removed .htaccess file as it was causing trouble with some servers
++ Added start date functionality for tasks (TODO: turn into optional parameter by debugging required="0" and presenting field as empty on form open;)
 
 Collabtive 1.2
 + Added translations: Vietnamese
