@@ -3,9 +3,10 @@
 require("./init.php");
 
 error_reporting(0);
+//2.0
+$conn->query("INSERT INTO `settings` (`ID` ,`settingsKey` ,`settingsValue`) VALUES (NULL , 'theme', 'standard');");
 
 // VERSION-DEPENDENT
-
 
 // VERSION-INDEPENDENT
 
