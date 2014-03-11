@@ -4,7 +4,7 @@
 + Merge existing members and new members when adding project
 + Error reporting globally set to E_WARNING
 + Changed redirection after project creation from desktop or project administration to project dashboard
-+ Improved translations: German, Polish, Farsi
++ Improved translations: German, Polish, Farsi, Norwegian (Bokmal)
 + Improved project tree's handling for special characters
 + Removed file upload from the add reply form. Now only previously uploaded files can be attached to replies.
 + Lots of code beautification in templates files
