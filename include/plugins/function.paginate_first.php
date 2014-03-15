@@ -35,15 +35,14 @@ function smarty_function_paginate_first($params, &$smarty) {
         $smarty->trigger_error("paginate_first: missing SmartyPaginate class");
         return;
     }
+	
     if (!isset($_SESSION['SmartyPaginate'])) {
         $smarty->trigger_error("paginate_first: SmartyPaginate is not initialized, use connect() first");
         return;
     }
 
-    foreach($params as $_key => $_val)
-
+    foreach($params as $_key => $_val) {
         switch($_key) {
-
             case 'id':
                 if (!SmartyPaginate::isConnected($_val)) {
                     $smarty->trigger_error("paginate_first: unknown id '$_val'");

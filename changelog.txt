@@ -13,6 +13,8 @@
 + Added edge case for SSL detection
 + Removed .htaccess file as it was causing trouble with some servers
 + Added start date functionality for tasks (TODO: turn into optional parameter by debugging required="0" and presenting field as empty on form open;)
++ Fixed several typos in style_form.css
++ Fixed typo in paginate-first function
 
 Collabtive 1.2
 + Added translations: Vietnamese
