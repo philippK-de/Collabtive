@@ -83,7 +83,7 @@ form.main input {
 	height: 23px;
 	margin-right: 1px;
 	background-position: 0 0;
-	background-prepeat: no-repeat;
+	background-repeat: no-repeat;
 }
 
 .login .username {
@@ -344,37 +344,6 @@ form.main .checkbox{
 	width:auto;
 	float:left;
 	margin: 1px 25px 0 0;
-	border:none;
-}
-
-form.main .radio{
-	float:left;
-	width: auto;
-	border:none;
-	position: relative;
-	top: 6px;
-	margin: 0;
-}
-
-
-form.main .input_error {
-	border-color: #be4c43;
-	color: #be4c43;
-}
-
-
-
-
-/* ## Editor ## start */
-
-form.main .row .editor {
-	float: left;
-	margin-bottom:6px;
-	border: 1px solid #000;
-}
-
-/* ## Editor ## end */
-in: 1px 25px 0 0;
 	border:none;
 }
 
