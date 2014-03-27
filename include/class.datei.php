@@ -346,9 +346,9 @@ class datei {
         $datei_final2 = $ziel . "/" . $name;
 
         if (!file_exists($datei_final)) {
-        	echo "chk1";
+
             if (move_uploaded_file($tmp_name, $datei_final)) {
-                echo "chk2";
+
 				if ($project > 0) {
                     // File did not already exist, was uploaded, and a project is set
                     // Now add the file to the database, log the upload event and return the file ID
