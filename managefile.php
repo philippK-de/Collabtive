@@ -66,10 +66,9 @@ if ($action == "upload") {
         $upath = "files/" . CL_CONFIG . "/$id";
         $upfolder = 0;
     }
-
     $chk = 0;
     for($i = 1;$i <= $num;$i++) {
-        $fid = $myfile->upload("userfile$i", $upath, $id, $upfolder);
+		$fid = $myfile->upload("userfile$i", $upath, $id, $upfolder);
         $fileprops = $myfile->getFile($fid);
 
         if ($settings["mailnotify"]) {
@@ -115,7 +114,7 @@ if ($action == "upload") {
         }
     }
     $loc = $url .= "managefile.php?action=showproject&id=$id&mode=added";
-    header("Location: $loc");
+  	header("Location: $loc");
 } elseif ($action == "uploadAsync") {
     if (!$userpermissions["files"]["add"]) {
         $errtxt = $langfile["nopermission"];
