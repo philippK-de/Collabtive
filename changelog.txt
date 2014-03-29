@@ -15,6 +15,7 @@
 + Added start date functionality for tasks (TODO: turn into optional parameter by debugging required="0" and presenting field as empty on form open;)
 + Fixed several typos in style_form.css
 + Fixed typo in paginate-first function
++ Fixed cancel button for deleting folders in list view
 
 Collabtive 1.2
 + Added translations: Vietnamese
