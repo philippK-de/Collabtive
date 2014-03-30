@@ -16,6 +16,8 @@
 + Fixed several typos in style_form.css
 + Fixed typo in paginate-first function
 + Fixed cancel button for deleting folders in list view
++ Corrected label for edit button in project members view ("edit file" -> "edit user")
++ Changed permission for adding users to an existing project from "administration" to "project edit"
 
 Collabtive 1.2
 + Added translations: Vietnamese

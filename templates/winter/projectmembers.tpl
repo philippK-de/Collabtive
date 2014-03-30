@@ -1,6 +1,6 @@
-{include file="header.tpl" jsload = "ajax" }
+{include file="header.tpl" jsload="ajax"}
+{include file="tabsmenue-project.tpl" userstab="active"}
 
-{include file="tabsmenue-project.tpl" userstab = "active"}
 <div id="content-left">
 <div id="content-left-in">
 <div class="user">
@@ -32,8 +32,8 @@
 				<a href="javascript:void(0);" id="block_members_toggle" class="win_block" onclick = "toggleBlock('block_members');"></a>
 
 				<div class="wintools">
-					{if $userpermissions.admin.add}
-					<a class="add" href="javascript:blindtoggle('form_member');" id="addmember" onclick="toggleClass(this,'add-active','add');toggleClass('add_butn_member','butn_link_active','butn_link');toggleClass('sm_member','smooth','nosmooth');"><span>{#adduser#}</span></a>
+					{if $userpermissions.projects.edit}
+						<a class="add" href="javascript:blindtoggle('form_member');" id="addmember" onclick="toggleClass(this,'add-active','add');toggleClass('add_butn_member','butn_link_active','butn_link');toggleClass('sm_member','smooth','nosmooth');"><span>{#adduser#}</span></a>
 					{/if}
 				</div>
 
@@ -46,7 +46,7 @@
 
 			<div id="block_members" class="blockwrapper">
 				{*Add User*}
-				{if $userpermissions.admin.add}
+				{if $userpermissions.projects.edit}
 					<div id = "form_member" class="addmenue" style = "display:none;">
 						{include file="adduserproject.tpl" }
 					</div>
@@ -91,9 +91,9 @@
 													</td>
 													<td class="rightmen" valign="top">
 														<div class="inmenue">
-															{if $userpermissions.admin.add}
-															<a class="del" href="manageproject.php?action=deassignform&amp;id={$project.ID}&amp;user={$members[member].ID}" title="{#deassign#}"></a>
-															<a class="edit" href="admin.php?action=editform&id={$members[member].ID}" title="{#editfile#}"></a>
+															{if $userpermissions.projects.edit}
+																<a class="del" href="manageproject.php?action=deassignform&amp;id={$project.ID}&amp;user={$members[member].ID}" title="{#deassign#}"></a>
+																<a class="edit" href="admin.php?action=editform&id={$members[member].ID}" title="{#edituser#}"></a>
 															{/if}
 														</div>
 													</td>
@@ -147,8 +147,8 @@
 			</div> {*nosmooth End*}
 			<div class="tablemenue">
 					<div class="tablemenue-in">
-						{if $userpermissions.admin.add}
-						<a class="butn_link" href="javascript:blindtoggle('form_member');" id="add_butn_member" onclick="toggleClass(this,'butn_link_active','butn_link');toggleClass('addmember','add-active','add');toggleClass('sm_member','smooth','nosmooth');">{#adduser#}</a>
+						{if $userpermissions.projects.edit}
+							<a class="butn_link" href="javascript:blindtoggle('form_member');" id="add_butn_member" onclick="toggleClass(this,'butn_link_active','butn_link');toggleClass('addmember','add-active','add');toggleClass('sm_member','smooth','nosmooth');">{#adduser#}</a>
 						{/if}
 					</div>
 			</div>
