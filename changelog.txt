@@ -17,6 +17,7 @@
 + Fixed typo in paginate-first function
 + Fixed cancel button for deleting folders in list view
 + Implemented HTML Purifier filter for all user input. This will give us STRONG protection against all kinds of XSS attacks, while preserving rich formating options. It will also enhance well formedness.
++ Implemented some Content-Security-Protection header options. No framing,only load css from same origin, only load .js files from same origin, only load images from same origin
 
 Collabtive 1.2
 + Added translations: Vietnamese
