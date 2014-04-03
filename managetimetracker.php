@@ -344,10 +344,13 @@ if ($action == "add") {
     $usr = getArrayVal($_POST, "usr");
     $taski = getArrayVal($_POST, "task");
 
+	//get open project tasks for filtering
     $task = new task();
-    $ptasks = $task->getProjectTasks($id,false);
+    $ptasks = $task->getProjectTasks($id,1);
+
     $tracker = (object) new timetracker();
-    if (!$usr) {
+    //If the user can not read tt entries from other user, set the user filter to the current user id.
+	if (!$usr) {
         if (!$userpermissions["timetracker"]["read"]) {
             $usr = $userid;
         } else {

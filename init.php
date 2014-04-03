@@ -1,7 +1,8 @@
 <?php
 ini_set("arg_separator.output", "&amp;");
 ini_set('default_charset', 'utf-8');
-header("Content-Security-Policy-Report-Only:default-src 'self'; style-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval';frame-src 'self'");
+//header("Content-Security-Policy-Report-Only:default-src 'self'; style-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval';frame-src 'self'");
+header("Content-Security-Policy:default-src 'self'; style-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval';frame-src 'self'");
 // Start output buffering with gzip compression and start the session
 ob_start('ob_gzhandler');
 session_start();
@@ -24,6 +25,9 @@ error_reporting(E_WARNING);
 require(CL_ROOT . "/config/" . CL_CONFIG . "/config.php");
 require(CL_ROOT . "/include/SmartyPaginate.class.php");
 require(CL_ROOT . "/include/initfunctions.php");
+//require html purifier
+require(CL_ROOT . "/include/HTMLPurifier.standalone.php");
+
 
 // Start database connection
 if (!empty($db_name) and !empty($db_user)) {

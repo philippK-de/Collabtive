@@ -34,7 +34,7 @@
 				<td></td>
 				<td class="tools">
 					{if $userpermissions.files.del}
-						<a class="tool_del" href="javascript:confirmfunction('{$langfile.confirmdel}','deleteElement(\'thefold_{$folders[folder].ID}\',\'managefile.php?action=delfolder&amp;id={$project.ID}&amp;folder={$folders[folder].ID}&ajax=1\')');" onclick="fadeToggle('thefold_{$folders[folder].ID}');" title="{#delete#}"></a>
+						<a class="tool_del" href="javascript:confirmfunction('{$langfile.confirmdel}','deleteElement(\'thefold_{$folders[folder].ID}\',\'managefile.php?action=delfolder&amp;id={$project.ID}&amp;folder={$folders[folder].ID}&ajax=1\')');" title="{#delete#}"></a>
 					{/if}
 				</td>
 			</tr>

@@ -132,33 +132,16 @@ function getMyUrl()
     return $url;
 }
 
-function strip_only_tags($str, $tags, $stripContent = false)
-{
-    $content = '';
-    if (is_array($str)) {
-        $stripped = array();
-        foreach ($str as $key => $value) {
-            $stripped[$key] = strip_only_tags($value, $tags, $stripContent);
-        }
-        return $stripped;
-    }
-    if (!is_array($tags)) {
-        $tags = (strpos($str, '>') !== false ? explode('>', str_replace('<', '', $tags)) : array($tags));
-        if (end($tags) == '') array_pop($tags);
-    }
-    foreach($tags as $tag) {
-        if ($stripContent) {
-            $content = '(.+</' . $tag . '(>|\s[^>]*>)|)';
-        }
-        $str = preg_replace('#</?' . $tag . '(>|\s[^>]*>)' . $content . '#is', '', $str);
-    }
-    return $str;
-}
-
 function getArrayVal(array $array, $name)
 {
     if (array_key_exists($name, $array)) {
-        return strip_only_tags($array[$name], "script");
+    	$purifier = new HTMLPurifier($config);
+        if (!is_array($array[$name])) {
+            $clean = $purifier->purify($array[$name]);
+        }else {
+            $clean = $array[$name];
+        }
+        return $clean;
     } else {
         return false;
     }

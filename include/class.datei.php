@@ -275,11 +275,13 @@ class datei {
      */
     function upload($fname, $ziel, $project, $folder = 0)
     {
+    	echo $fname . " " . $ziel . " " . $project;
         // Get data from form
         $name = $_FILES[$fname]['name'];
         $typ = $_FILES[$fname]['type'];
         $size = $_FILES[$fname]['size'];
         $tmp_name = $_FILES[$fname]['tmp_name'];
+    	print_r($_FILES);
         $tstr = $fname . "-title";
         $tastr = $fname . "-tags";
 
@@ -344,13 +346,15 @@ class datei {
         $datei_final2 = $ziel . "/" . $name;
 
         if (!file_exists($datei_final)) {
+
             if (move_uploaded_file($tmp_name, $datei_final)) {
-                if ($project > 0) {
+
+				if ($project > 0) {
                     // File did not already exist, was uploaded, and a project is set
                     // Now add the file to the database, log the upload event and return the file ID
                     chmod($datei_final, 0755);
 
-                    $fid = $this->add_file($name, $desc, $project, 0, "$tags", $datei_final2, "$typ", $title, $folder, $visstr);
+                    $fid = $this->add_file($name, $desc, $project, 0, "$tags", $datei_final2, "$typ", $title, $folder, "");
 
                     if (!empty($title)) {
                         $this->mylog->add($title, 'file', 1, $project);
@@ -765,10 +769,8 @@ class datei {
         $folder = (int) $folder;
         $userid = $_SESSION["userid"];
         $now = time();
-
         $insStmt = $conn->prepare("INSERT INTO files (`name`, `desc`, `project`, `milestone`, `user`, `tags`, `added`, `datei`, `type`, `title`, `folder`, `visible`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $ins = $insStmt->execute(array($name, $desc, $project, $milestone, $userid, $tags, $now, $datei, $type, $title, $folder, $visstr));
-
         if ($ins) {
             $insid = $conn->lastInsertId();
             return $insid;
