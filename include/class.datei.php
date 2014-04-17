@@ -346,9 +346,7 @@ class datei {
         $datei_final2 = $ziel . "/" . $name;
 
         if (!file_exists($datei_final)) {
-
             if (move_uploaded_file($tmp_name, $datei_final)) {
-
 				if ($project > 0) {
                     // File did not already exist, was uploaded, and a project is set
                     // Now add the file to the database, log the upload event and return the file ID
@@ -454,7 +452,7 @@ class datei {
                     } else {
                         $this->mylog->add($name, 'file', 1, $project);
                     }
-
+echo $this->encryptFile($datei_final);
                     return $fid;
                 } else {
                     // No project means the file is not added to the database wilfully. Return file name
@@ -778,6 +776,36 @@ class datei {
             return false;
         }
     }
+
+	private function encryptFile($filename)
+	{
+		include(CL_ROOT . "/include/phpseclib/Crypt/AES.php");
+		$cipher = new Crypt_AES(); // could use CRYPT_AES_MODE_CBC
+		$cipher->setPassword('whatever');
+		// the following does the same thing:
+		//$cipher->setPassword('whatever', 'pbkdf2', 'sha1', 'phpseclib/salt', 1000, 128 / 8);
+		//$cipher->setIV('...'); // defaults to all-NULLs if not explicitely defined
+		$plaintext = file_get_contents($filename);
+
+		//echo $cipher->decrypt($cipher->encrypt($plaintext));
+		return file_put_contents($filename,$cipher->encrypt($plaintext));
+
+	}
+	function decryptFile($filename)
+	{
+		include(CL_ROOT . "/include/phpseclib/Crypt/AES.php");
+		$cipher = new Crypt_AES(); // could use CRYPT_AES_MODE_CBC
+		$cipher->setPassword('whatever');
+		// the following does the same thing:
+		//$cipher->setPassword('whatever', 'pbkdf2', 'sha1', 'phpseclib/salt', 1000, 128 / 8);
+		//$cipher->setIV('...'); // defaults to all-NULLs if not explicitely defined
+		$plaintext = file_get_contents($filename);
+
+
+		//echo $cipher->decrypt($cipher->encrypt($plaintext));
+		return $cipher->decrypt($plaintext);
+
+	}
 }
 
 ?>

@@ -114,7 +114,7 @@ if ($action == "upload") {
         }
     }
     $loc = $url .= "managefile.php?action=showproject&id=$id&mode=added";
-  	header("Location: $loc");
+  	//header("Location: $loc");
 } elseif ($action == "uploadAsync") {
     if (!$userpermissions["files"]["add"]) {
         $errtxt = $langfile["nopermission"];
@@ -349,6 +349,35 @@ if ($action == "upload") {
 
     $target = $_GET["target"];
     $myfile->moveFile($file, $target);
+}
+elseif($action == "downloadfile")
+{
+	if (!$userpermissions["files"]["view"]) {
+		$errtxt = $langfile["nopermission"];
+		$noperm = $langfile["accessdenied"];
+		$template->assign("errortext", "$errtxt<br>$noperm");
+		$template->display("error.tpl");
+		die();
+	}
+
+	$fileId = getArrayVal($_GET,"file");
+	$thefile = $myfile->getFile($fileId);
+
+	$datei = $thefile["datei"];
+	$fsize =  filesize($datei);
+//	$fileContent = file_get_contents($datei);
+
+	header('Content-Description: File Transfer');
+	header('Content-Type: application/octet-stream');
+	header('Content-Disposition: attachment; filename="'.basename($datei).'"'); //<<< Note the " " surrounding the file name
+	header('Content-Transfer-Encoding: binary');
+	header('Connection: Keep-Alive');
+	header('Expires: 0');
+	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+	header('Pragma: public');
+	header("Content-length: $fsize");
+	echo $myfile->decryptFile($datei);
+
 }
 
 ?>
