@@ -360,30 +360,33 @@ elseif($action == "downloadfile")
 		die();
 	}
 
+	//get the file ID.
 	$fileId = getArrayVal($_GET,"file");
 	$thefile = $myfile->getFile($fileId);
 
-	$datei = $thefile["datei"];
-	$fsize =  filesize($datei);
+	//getFile path and filesize
+	$filePath = $thefile["datei"];
+	$fsize =  filesize($filePath);
 
+	//Send HTTP headers for dowonload
 	header('Content-Description: File Transfer');
 	header('Content-Type: application/octet-stream');
-	header('Content-Disposition: attachment; filename="'.basename($datei).'"'); //<<< Note the " " surrounding the file name
+	header('Content-Disposition: attachment; filename="'.basename($filePath).'"'); //<<< Note the " " surrounding the file name
 	header('Content-Transfer-Encoding: binary');
 	header('Connection: Keep-Alive');
 	header('Expires: 0');
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
 	header("Content-length: $fsize");
-
 	//Try to decrypt the file
-	$plaintext = $myfile->decryptFile($datei);
+	$plaintext = $myfile->decryptFile($filePath);
 
 	//no plaintext means file was not encrypted or not decrypted. however deliver to unmodified file
 	if(!$plaintext)
 	{
-		$plaintext = file_get_contents($datei);
+		$plaintext = file_get_contents($filePath);
 	}
+	//Render the content
 	echo $plaintext;
 
 }
