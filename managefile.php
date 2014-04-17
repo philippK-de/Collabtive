@@ -365,7 +365,6 @@ elseif($action == "downloadfile")
 
 	$datei = $thefile["datei"];
 	$fsize =  filesize($datei);
-//	$fileContent = file_get_contents($datei);
 
 	header('Content-Description: File Transfer');
 	header('Content-Type: application/octet-stream');
@@ -376,7 +375,16 @@ elseif($action == "downloadfile")
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
 	header("Content-length: $fsize");
-	echo $myfile->decryptFile($datei);
+
+	//Try to decrypt the file
+	$plaintext = $myfile->decryptFile($datei);
+
+	//no plaintext means file was not encrypted or not decrypted. however deliver to unmodified file
+	if(!$plaintext)
+	{
+		$plaintext = file_get_contents($datei);
+	}
+	echo $plaintext;
 
 }
 
