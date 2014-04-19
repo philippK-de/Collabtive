@@ -117,8 +117,9 @@ if (!file_exists(CL_ROOT . "/language/$locale/lng.conf")) {
 // Set locale directory
 $template->config_dir = CL_ROOT . "/language/$locale/";
 
-//Smarty 3 seems to have a problem with re-compiling the templates if the config changes. this forces a compile of the templates if the user has a different locale than the system locale.
-$template->force_compile = true;
+//Smarty 3 seems to have a problem with re-compiling the config if the user config is different than the system config.
+//this forces a compile of the config.
+$template->compileAllConfig('.config',true);
 
 // read language file into PHP array
 $langfile = readLangfile($locale);
