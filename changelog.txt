@@ -18,6 +18,10 @@
 + Fixed cancel button for deleting folders in list view
 + Corrected label for edit button in project members view ("edit file" -> "edit user")
 + Changed permission for adding users to an existing project from "administration" to "project edit"
++ Implemented HTML Purifier filter for all user input. This will give us STRONG protection against all kinds of XSS attacks, while preserving rich formating options. It will also enhance well formedness.
++ Implemented some Content-Security-Protection header options. No framing,only load css from same origin, only load .js files from same origin, only load images from same origin
++ Remove force-compile option from template engine. This disabled caching and caused performance problems for some users.
++ Add compileAllConfig() to force a recompile of the config files in certain cases.
 
 Collabtive 1.2
 + Added translations: Vietnamese
@@ -222,6 +226,7 @@ Collabtive 0.7
 + New translations: Slovenian, Croatian, Farsi
 + 100% completed translations: Danish, German, Greek, English, Spanish, Finnish, French, Croatian, Italian, Norwegian, Dutch, Polish, Portuguese, Brazilian Portuguese, Romanian, Russian, Serbian
 + Improved security: open .php files as plaintext only
+
 + Improved sorting of projects on desktop, now sorted chronologically by default
 + Improved message display: Avatar now appears next to body of text thus making better use of the given space
 + Fixed bug which prevented choosing existing project files as attachments for a reply
@@ -239,6 +244,7 @@ Collabtive 0.6.5
 + Fixed a bug where a folder wouldnt be visible if visible = all was selected
 + Fixed a bug where every timetracker entry was tracked for "today" regardless of selection
 + Removed some debug output in managefile.php
+
 + Added check for userpermission of file editing, so the edit icon will not show up
 any longer in case of missing permission
 + Added missing truncation to project title on the mymessages view
@@ -501,6 +507,7 @@ Collabtive 0.4.8
 + Fixed: bulleted lists created from the wyswyg editor (they now actually include bullets ;) )
 + Fixed: various UI glitches
 + Moved the short project report to the "description" area of the project details on projectview
+
 + Fixed: Only display tagcloud when there actually are tagged items in the project
 + Changed the task title to mandatory , and the text as optional
 + Added spanish readme
