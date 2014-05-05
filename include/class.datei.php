@@ -191,6 +191,7 @@ class datei {
         global $conn;
 
         $project = (int) $project;
+    	$parent = (int) $parent;
 
         $sel = $conn->query("SELECT * FROM projectfolders WHERE project = $project AND parent = $parent ORDER BY ID ASC");
 
