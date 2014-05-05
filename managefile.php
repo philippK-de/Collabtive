@@ -68,6 +68,7 @@ if ($action == "upload") {
     }
     $chk = 0;
     for($i = 1;$i <= $num;$i++) {
+
 		$fid = $myfile->upload("userfile$i", $upath, $id, $upfolder);
         $fileprops = $myfile->getFile($fid);
 
@@ -138,7 +139,9 @@ if ($action == "upload") {
     }
     $num = count($_FILES);
     $chk = 0;
+	echo "NUMFILES: $num";
     foreach($_FILES as $file) {
+    	$myfile->encryptFile($file["tmp_name"]);
         $fid = $myfile->uploadAsync($file["name"], $file["tmp_name"], $file["type"], $file["size"], $upath, $id, $upfolder);
         $fileprops = $myfile->getFile($fid);
 
