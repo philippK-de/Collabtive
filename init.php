@@ -23,6 +23,9 @@ error_reporting(E_WARNING);
 // include config file , pagination and global functions
 require(CL_ROOT . "/config/" . CL_CONFIG . "/config.php");
 require(CL_ROOT . "/include/SmartyPaginate.class.php");
+//require html purifier
+require(CL_ROOT . "/include/HTMLPurifier.standalone.php");
+//load init functions
 require(CL_ROOT . "/include/initfunctions.php");
 
 // Start database connection
