@@ -22,6 +22,8 @@
 + Implemented some Content-Security-Protection header options. No framing,only load css from same origin, only load .js files from same origin, only load images from same origin
 + Remove force-compile option from template engine. This disabled caching and caused performance problems for some users.
 + Add compileAllConfig() to force a recompile of the config files in certain cases.
++ Fixed possible sql vulnerability in manageajax.php
++ Added AES encryption of uploaded files
 
 Collabtive 1.2
 + Added translations: Vietnamese
