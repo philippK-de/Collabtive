@@ -157,17 +157,17 @@ function strip_only_tags($str, $tags, $stripContent = false)
 
 function getArrayVal(array $array, $name)
 {
-	if (array_key_exists($name, $array)) {
-		$purifier = new HTMLPurifier($config);
-		if (!is_array($array[$name])) {
-			$clean = $purifier->purify($array[$name]);
-		}else {
-			$clean = $array[$name];
-		}
-		return $clean;
-	} else {
-		return false;
-	}
+    if (array_key_exists($name, $array)) {
+        $purifier = new HTMLPurifier($config);
+        if (!is_array($array[$name])) {
+            $clean = $purifier->purify($array[$name]);
+        } else {
+            $clean = $array[$name];
+        }
+        return $clean;
+    } else {
+        return false;
+    }
 }
 
 function delete_directory($dirname)
