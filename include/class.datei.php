@@ -46,8 +46,11 @@ class datei {
     		$thepath = "";
     	}
         // Replace umlauts
+        $folder = str_replace("Ä", "Ae" , $folder);
         $folder = str_replace("ä", "ae" , $folder);
+        $folder = str_replace("Ö", "Oe" , $folder);
         $folder = str_replace("ö", "oe" , $folder);
+        $folder = str_replace("Ü", "Ue" , $folder);
         $folder = str_replace("ü", "ue" , $folder);
         $folder = str_replace("ß", "ss" , $folder);
 
@@ -321,8 +324,11 @@ class datei {
         $randval = mt_rand(1, 99999);
 
         // Only allow a-z, 0-9 in filenames, substitute other chars with _
+        $subname = str_replace("Ä", "Ae" , $subname);
         $subname = str_replace("ä", "ae" , $subname);
+        $subname = str_replace("Ö", "Oe" , $subname);
         $subname = str_replace("ö", "oe" , $subname);
+        $subname = str_replace("Ü", "Ue" , $subname);
         $subname = str_replace("ü", "ue" , $subname);
         $subname = str_replace("ß", "ss" , $subname);
         $subname = preg_replace("/[^-_0-9a-zA-Z]/", "_", $subname);
