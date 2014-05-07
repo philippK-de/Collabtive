@@ -139,7 +139,6 @@ if ($action == "upload") {
     }
     $num = count($_FILES);
     $chk = 0;
-	echo "NUMFILES: $num";
     foreach($_FILES as $file) {
     	$myfile->encryptFile($file["tmp_name"], $settings["filePass"]);
         $fid = $myfile->uploadAsync($file["name"], $file["tmp_name"], $file["type"], $file["size"], $upath, $id, $upfolder);
@@ -313,6 +312,7 @@ if ($action == "upload") {
         $template->display("error.tpl");
         die();
     }
+
     $name = getArrayVal($_POST, "foldertitle");
     $desc = getArrayVal($_POST, "folderdesc");
     $parent = getArrayVal($_POST, "folderparent");
@@ -340,6 +340,7 @@ if ($action == "upload") {
         }
     }
 } elseif ($action == "movefile") {
+
     if (!$userpermissions["files"]["edit"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
