@@ -141,7 +141,7 @@ if ($action == "upload") {
     $chk = 0;
 	echo "NUMFILES: $num";
     foreach($_FILES as $file) {
-    	$myfile->encryptFile($file["tmp_name"]);
+    	$myfile->encryptFile($file["tmp_name"], $settings["filePass"]);
         $fid = $myfile->uploadAsync($file["name"], $file["tmp_name"], $file["type"], $file["size"], $upath, $id, $upfolder);
         $fileprops = $myfile->getFile($fid);
 
@@ -382,7 +382,7 @@ elseif($action == "downloadfile")
 	header('Pragma: public');
 	header("Content-length: $fsize");
 	//Try to decrypt the file
-	$plaintext = $myfile->decryptFile($filePath);
+	$plaintext = $myfile->decryptFile($filePath, $settings["filePass"]);
 
 	//no plaintext means file was not encrypted or not decrypted. however deliver to unmodified file
 	if(!$plaintext)

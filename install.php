@@ -96,7 +96,9 @@ if (!$action) {
 (13, 'mailpass', ''),
 (14, 'rssuser', ''),
 (15, 'rsspass', ''),
-(16, 'theme', 'standard')");
+(16, 'theme', 'standard'),
+(16, 'filePass', 'whatever')
+");
     if (!$ins) {
         $template->assign("errortext", "Error: Failed to create initial settings.");
         $template->display("error.tpl");
