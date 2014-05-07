@@ -46,11 +46,8 @@ class datei {
     		$thepath = "";
     	}
         // Replace umlauts
-        $folder = str_replace("Ä", "Ae" , $folder);
         $folder = str_replace("ä", "ae" , $folder);
-        $folder = str_replace("Ö", "Oe" , $folder);
         $folder = str_replace("ö", "oe" , $folder);
-        $folder = str_replace("Ü", "Ue" , $folder);
         $folder = str_replace("ü", "ue" , $folder);
         $folder = str_replace("ß", "ss" , $folder);
 
@@ -324,11 +321,8 @@ class datei {
         $randval = mt_rand(1, 99999);
 
         // Only allow a-z, 0-9 in filenames, substitute other chars with _
-        $subname = str_replace("Ä", "Ae" , $subname);
         $subname = str_replace("ä", "ae" , $subname);
-        $subname = str_replace("Ö", "Oe" , $subname);
         $subname = str_replace("ö", "oe" , $subname);
-        $subname = str_replace("Ü", "Ue" , $subname);
         $subname = str_replace("ü", "ue" , $subname);
         $subname = str_replace("ß", "ss" , $subname);
         $subname = preg_replace("/[^-_0-9a-zA-Z]/", "_", $subname);
@@ -784,11 +778,11 @@ class datei {
         }
     }
 
-	function encryptFile($filename)
+	function encryptFile($filename, $key)
 	{
 		include_once(CL_ROOT . "/include/phpseclib/Crypt/AES.php");
 		$cipher = new Crypt_AES(); // could use CRYPT_AES_MODE_CBC
-		$cipher->setPassword('whatever');
+		$cipher->setPassword($key);
 
 		$plaintext = file_get_contents($filename);
 
@@ -796,11 +790,11 @@ class datei {
 		return file_put_contents($filename,$cipher->encrypt($plaintext));
 
 	}
-	function decryptFile($filename)
+	function decryptFile($filename, $key)
 	{
 		include_once(CL_ROOT . "/include/phpseclib/Crypt/AES.php");
 		$cipher = new Crypt_AES(); // could use CRYPT_AES_MODE_CBC
-		$cipher->setPassword('whatever');
+		$cipher->setPassword($key);
 
 		$ciphertext = file_get_contents($filename);
 
