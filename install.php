@@ -48,6 +48,17 @@ if (!$action) {
 
     $template->display("install1.tpl");
 } elseif ($action == "step2") {
+	function randomPassword() {
+		$alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
+		$pass = array(); //remember to declare $pass as an array
+		$alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+		for ($i = 0; $i < 8; $i++) {
+			$n = rand(0, $alphaLength);
+			$pass[] = $alphabet[$n];
+		}
+		return implode($pass); //turn the array into a string
+	}
+	$filePass = randomPassword();
     // check if the settings table / object is present. if yes, assume collabtive is already installed and abort
     if (!empty($settings)) {
         die("Collabtive seems to be already installed.<br />If this is an error, please clear your database.");
@@ -97,8 +108,7 @@ if (!$action) {
 (14, 'rssuser', ''),
 (15, 'rsspass', ''),
 (16, 'theme', 'standard'),
-(16, 'filePass', 'whatever')
-");
+(17, 'filePass', '$filePass')");
     if (!$ins) {
         $template->assign("errortext", "Error: Failed to create initial settings.");
         $template->display("error.tpl");
