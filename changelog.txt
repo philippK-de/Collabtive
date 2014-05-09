@@ -4,7 +4,7 @@
 + Merge existing members and new members when adding project
 + Error reporting globally set to E_WARNING
 + Changed redirection after project creation from desktop or project administration to project dashboard
-+ Improved translations: German, Polish, Farsi, Norwegian (Bokmal)
++ Improved translations: German, Polish, Farsi, Norwegian (Bokmal & Nynorsk)
 + Improved project tree's handling for special characters
 + Removed file upload from the add reply form. Now only previously uploaded files can be attached to replies.
 + Lots of code beautification in templates files
@@ -16,10 +16,14 @@
 + Fixed several typos in style_form.css
 + Fixed typo in paginate-first function
 + Fixed cancel button for deleting folders in list view
++ Corrected label for edit button in project members view ("edit file" -> "edit user")
++ Changed permission for adding users to an existing project from "administration" to "project edit"
 + Implemented HTML Purifier filter for all user input. This will give us STRONG protection against all kinds of XSS attacks, while preserving rich formating options. It will also enhance well formedness.
 + Implemented some Content-Security-Protection header options. No framing,only load css from same origin, only load .js files from same origin, only load images from same origin
 + Remove force-compile option from template engine. This disabled caching and caused performance problems for some users.
 + Add compileAllConfig() to force a recompile of the config files in certain cases.
++ Fixed possible sql vulnerability in manageajax.php
++ Added AES encryption of uploaded files
 
 Collabtive 1.2
 + Added translations: Vietnamese

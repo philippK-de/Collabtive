@@ -392,7 +392,6 @@ class datei {
         $visible = "";
         $visstr = "";
         $root = CL_ROOT;
-
         if (empty($name)) {
             return false;
         }
@@ -454,7 +453,7 @@ class datei {
                         $this->mylog->add($name, 'file', 1, $project);
                     }
 					//encrypt the uploaded file
-					$this->encryptFile($datei_final);
+					//$this->encryptFile($datei_final);
                     return $fid;
                 } else {
                     // No project means the file is not added to the database wilfully. Return file name
@@ -779,11 +778,11 @@ class datei {
         }
     }
 
-	private function encryptFile($filename)
+	function encryptFile($filename, $key)
 	{
-		include(CL_ROOT . "/include/phpseclib/Crypt/AES.php");
+		include_once(CL_ROOT . "/include/phpseclib/Crypt/AES.php");
 		$cipher = new Crypt_AES(); // could use CRYPT_AES_MODE_CBC
-		$cipher->setPassword('whatever');
+		$cipher->setPassword($key);
 
 		$plaintext = file_get_contents($filename);
 
@@ -791,11 +790,11 @@ class datei {
 		return file_put_contents($filename,$cipher->encrypt($plaintext));
 
 	}
-	function decryptFile($filename)
+	function decryptFile($filename, $key)
 	{
-		include(CL_ROOT . "/include/phpseclib/Crypt/AES.php");
+		include_once(CL_ROOT . "/include/phpseclib/Crypt/AES.php");
 		$cipher = new Crypt_AES(); // could use CRYPT_AES_MODE_CBC
-		$cipher->setPassword('whatever');
+		$cipher->setPassword($key);
 
 		$ciphertext = file_get_contents($filename);
 
