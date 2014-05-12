@@ -281,12 +281,10 @@ class datei {
         $typ = $_FILES[$fname]['type'];
         $size = $_FILES[$fname]['size'];
         $tmp_name = $_FILES[$fname]['tmp_name'];
-    	print_r($_FILES);
         $tstr = $fname . "-title";
         $tastr = $fname . "-tags";
 
         $title = $_POST[$tstr];
-        $tags = $_POST[$tastr];
         $error = $_FILES[$fname]['error'];
         $root = CL_ROOT;
 
@@ -296,9 +294,6 @@ class datei {
         }
 
         $desc = $_POST['desc'];
-
-        $tagobj = new tags();
-        $tags = $tagobj->formatInputTags($tags);
 
         // Find the extension
         $teilnamen = explode(".", $name);
@@ -352,7 +347,7 @@ class datei {
                     // Now add the file to the database, log the upload event and return the file ID
                     chmod($datei_final, 0755);
 
-                    $fid = $this->add_file($name, $desc, $project, 0, "$tags", $datei_final2, "$typ", $title, $folder, "");
+                    $fid = $this->add_file($name, $desc, $project, 0, $datei_final2, "$typ", $title, $folder, "");
 
                     if (!empty($title)) {
                         $this->mylog->add($title, 'file', 1, $project);
@@ -445,7 +440,7 @@ class datei {
 
                     chmod($datei_final, 0755);
 
-                    $fid = $this->add_file($name, $desc, $project, 0, "$tags", $datei_final2, "$typ", $title, $folder, $visstr);
+                    $fid = $this->add_file($name, $desc, $project, 0,  $datei_final2, "$typ", $title, $folder, $visstr);
 
                     if (!empty($title)) {
                         $this->mylog->add($title, 'file', 1, $project);
@@ -585,12 +580,6 @@ class datei {
             } else {
                 $file['imgfile'] = 0;
             }
-
-            // Split the tags string into an array, and also count how many tags the file has
-            $tagobj = new tags();
-            $thetags = $tagobj->splitTagStr($file["tags"]);;
-            $file["tagsarr"] = $thetags;
-            $file["tagnum"] = count($file["tagsarr"]);
 
             // Strip slashes from title, desc and tags
             $file["title"] = stripslashes($file["title"]);
@@ -755,7 +744,7 @@ class datei {
      * @param int $ folder Optional parameter (holds ID of subfolder the file is uploaded to [0 = root directory])
      * @return bool $insid
      */
-    function add_file($name, $desc, $project, $milestone, $tags, $datei, $type, $title = " ", $folder = 0, $visstr = "")
+    function add_file($name, $desc, $project, $milestone, $datei, $type, $title = " ", $folder = 0, $visstr = "")
     {
         global $conn;
 
@@ -768,8 +757,8 @@ class datei {
         $folder = (int) $folder;
         $userid = $_SESSION["userid"];
         $now = time();
-        $insStmt = $conn->prepare("INSERT INTO files (`name`, `desc`, `project`, `milestone`, `user`, `tags`, `added`, `datei`, `type`, `title`, `folder`, `visible`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $ins = $insStmt->execute(array($name, $desc, $project, $milestone, $userid, $tags, $now, $datei, $type, $title, $folder, $visstr));
+        $insStmt = $conn->prepare("INSERT INTO files (`name`, `desc`, `project`, `milestone`, `user`, `added`, `datei`, `type`, `title`, `folder`, `visible`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $ins = $insStmt->execute(array($name, $desc, $project, $milestone, $userid, $now, $datei, $type, $title, $folder, $visstr));
         if ($ins) {
             $insid = $conn->lastInsertId();
             return $insid;

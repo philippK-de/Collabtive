@@ -20,6 +20,8 @@ $filePass = randomPassword();
 $conn->query("INSERT INTO `settings` (`ID` ,`settingsKey` ,`settingsValue`) VALUES (NULL , 'theme', 'standard')");
 $conn->query("INSERT INTO `settings` (`ID`, `settingsKey`, `settingsValue`) VALUES (NULL, 'filePass', '$filePass')");
 
+//drop tags field from files
+$conn->query("ALTER TABLE `files` DROP `tags`");
 // VERSION-INDEPENDENT
 
 // Clear templates cache
