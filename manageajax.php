@@ -41,7 +41,9 @@ if ($action == "makeinputs") {
         <div class=\"row\"><label for = \"tags$i\">$tags </label><input type = \"text\" name = \"userfile$i-tags\" id=\"tags$i\" /></div>
 			<div class=\"row\"><label for = \"userfile$i\">$file </label><input type=\"file\" id = \"userfile$i\" name=\"userfile$i\" /><div style=\"clear:left\"></div>";
     }
-} elseif ($action == "addfx-all") {
+}
+//This is used to add the search functionality to firefoxs seachbar
+elseif ($action == "addfx-all") {
     $templ = $url . "managesearch.php?action=search&amp;query={searchTerms}";
     $templ2 = $url . "managesearch.php?action=searchjson&amp;query={searchTerms}";
     $fav = $url . "templates/standard/images/favicon.ico";
@@ -60,7 +62,9 @@ if ($action == "makeinputs") {
 
 <AdultContent>false</AdultContent>
 </OpenSearchDescription>";
-} elseif ($action == "addfx-project") {
+}
+//This is used to add the search functionality to firefoxs seachbar
+elseif ($action == "addfx-project") {
     $templ = $url . "managesearch.php?action=projectsearch&amp;project=$project&amp;query={searchTerms}";
     $templ2 = $url . "managesearch.php?action=searchjson-project&amp;project=$project&amp;query={searchTerms}";
     $fav = $url . "templates/standard/images/favicon.ico";
@@ -82,7 +86,9 @@ if ($action == "makeinputs") {
 
 <AdultContent>false</AdultContent>
 </OpenSearchDescription>";
-} elseif ($action == "jsonfiles") {
+}
+//This is used to put file lists into tinymce for selection
+elseif ($action == "jsonfiles") {
     if (!chkproject($userid, $id)) {
         $errtxt = $langfile["notyourproject"];
         $noperm = $langfile["accessdenied"];
@@ -106,7 +112,9 @@ if ($action == "makeinputs") {
         $json = "";
     }
     echo $json;
-} elseif ($action == "fileview") {
+}
+//this is used to display the project files
+elseif ($action == "fileview") {
     if (!chkproject($userid, $id)) {
         $errtxt = $langfile["notyourproject"];
         $noperm = $langfile["accessdenied"];
@@ -158,7 +166,9 @@ if ($action == "makeinputs") {
     $template->assign("files", $finfiles);
     $template->assign("postmax", $POST_MAX_SIZE);
     $template->display("fileview.tpl");
-} elseif ($action == "fileview_list") {
+}
+//this is used to display the project files
+ elseif ($action == "fileview_list") {
     if (!chkproject($userid, $id)) {
         $errtxt = $langfile["notyourproject"];
         $noperm = $langfile["accessdenied"];
@@ -223,7 +233,9 @@ if ($action == "makeinputs") {
     $template->assign("langfile", $langfile);
     $template->assign("ordner", $ordner);
     $template->display("folderview.tpl");
-} elseif ($action == "newcal") {
+}
+//this is used to display the calendar on the desktop
+elseif ($action == "newcal") {
     $thisd = date("j");
     $thism = date("n");
     $thisy = date("Y");
