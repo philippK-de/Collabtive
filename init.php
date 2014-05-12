@@ -12,9 +12,13 @@ define("CL_CONFIG", "standard");
 // collabtive version and release date
 define("CL_VERSION", 1.2);
 define("CL_PUBDATE", "1389567600");
+
 // uncomment next line for debugging
 // error_reporting(E_ALL || E_STRICT);
-error_reporting(E_WARNING);
+
+// Report all errors except E_NOTICE
+error_reporting(E_ALL & ~E_NOTICE);
+
 // include config file , pagination and global functions
 require(CL_ROOT . "/config/" . CL_CONFIG . "/config.php");
 require(CL_ROOT . "/include/SmartyPaginate.class.php");

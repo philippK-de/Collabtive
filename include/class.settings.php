@@ -54,12 +54,12 @@ class settings {
      * @param string $rsspass Password for RSS Feed access
      * @return bool
      */
-    function editSettings($name, $subtitle, $locale, $timezone, $dateformat, $templ, $theme,  $rssuser, $rsspass)
+    function editSettings($name, $subtitle, $locale, $timezone, $dateformat, $templ, $theme, $rssuser, $rsspass)
     {
         global $conn;
         // This is an artifact of refactoring to a key/value table for the settings
         // Create an arrray containing the settings fields as keys and new values from the user as values
-        $theSettings = array("name" => $name, "subtitle" => $subtitle, "locale" => $locale, "timezone" => $timezone, "dateformat" => $dateformat, "template" => $templ,"theme"=>$theme, "rssuser" => $rssuser, "rsspass" => $rsspass);
+        $theSettings = array("name" => $name, "subtitle" => $subtitle, "locale" => $locale, "timezone" => $timezone, "dateformat" => $dateformat, "template" => $templ, "theme" => $theme, "rssuser" => $rssuser, "rsspass" => $rsspass);
         // Now prepare a statement to edit one settings row
         $updStmt = $conn->prepare("UPDATE settings SET `settingsValue` = ? WHERE `settingsKey` = ?");
         // Loop through the array containing the key/value pairs, writing the database field to $setKey and the value to $setVal
@@ -130,6 +130,13 @@ class settings {
         }
     }
 
+    /*
+	   * Returns all available themes for a given template
+	   *
+	   * @param string $template The template whose themes get fetched
+	   *
+	   * @return array $templates
+	*/
     function getThemes($template)
     {
         $handle = opendir(CL_ROOT . "/templates/$template/theme");
