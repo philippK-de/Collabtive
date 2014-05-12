@@ -4,12 +4,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <title>{$title} @ {$settings.name}</title>
-<link rel="shortcut icon" href="templates/standard/images/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="templates/{$settings.template}/theme/{$settings.theme}/images/favicon.ico" type="image/x-icon" />
 {if $stage != "project" and $loggedin|default}
 <link rel="search" type="application/opensearchdescription+xml" title="{$settings.name} {#search#}" href="manageajax.php?action=addfx-all" />
 {elseif $stage == "project" and $loggedin}
 <link rel="search" type="application/opensearchdescription+xml" title="{$project.name} {#search#}" href="manageajax.php?action=addfx-project&amp;project={$project.ID}" />
-<link rel="stylesheet" href="templates/{$settings.template}/css/dtree.css" type="text/css"  />
+<link rel="stylesheet" href="templates/{$settings.template}/theme/{$settings.theme}/css/dtree.css" type="text/css"  />
 <script type="text/javascript" src="include/js/dtree.js"></script>
 {/if}
 {if $loggedin}
@@ -44,7 +44,7 @@ window.onunload = quitchat;
 {/if}
 
 {if $jsload3 == "lightbox"}
-<link rel="stylesheet" href="templates/{$settings.template}/css/lytebox.css" type="text/css"  />
+<link rel="stylesheet" href="templates/{$settings.template}/theme/{$settings.theme}/css/lytebox.css" type="text/css"  />
 <script type="text/javascript" src="include/js/lytebox.php"></script>
 {/if}
 <link rel="stylesheet" type="text/css" href="templates/{$settings.template}/theme/{$settings.theme}/css/style_main.css"/>

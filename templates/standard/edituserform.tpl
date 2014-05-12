@@ -26,11 +26,11 @@
 									{else}
 										{if $user.gender == "f"}
 											<div class="avatar-profile">
-												<img src="thumb.php?pic=templates/standard/images/no-avatar-female.jpg&amp;width=122;" alt="" />
+												<img src="thumb.php?pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-female.jpg&amp;width=122;" alt="" />
 											</div>
 										{else}
 											<div class="avatar-profile">
-												<img src="thumb.php?pic=templates/standard/images/no-avatar-male.jpg&amp;width=122;" alt="" />
+												<img src="thumb.php?pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-male.jpg&amp;width=122;" alt="" />
 											</div>
 										{/if}
 									{/if}

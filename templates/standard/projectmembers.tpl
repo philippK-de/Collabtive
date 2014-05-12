@@ -7,15 +7,15 @@
 
 	<div class="infowin_left" style = "display:none;" id = "systemmsg">
 		{if $mode == "added"}
-		<span class="info_in_green"><img src="templates/standard/images/symbols/user-icon-male.png" alt=""/>{#userwasadded#}</span>
+		<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-male.png" alt=""/>{#userwasadded#}</span>
 		{elseif $mode == "edited"}
-		<span class="info_in_yellow"><img src="templates/standard/images/symbols/user-icon-male.png" alt=""/>{#userwasedited#}</span>
+		<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-male.png" alt=""/>{#userwasedited#}</span>
 		{elseif $mode == "deleted"}
-		<span class="info_in_red"><img src="templates/standard/images/symbols/user-icon-male.png" alt=""/>{#userwasdeleted#}</span>
+		<span class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-male.png" alt=""/>{#userwasdeleted#}</span>
 		{elseif $mode == "assigned"}
-		<span class="info_in_yellow"><img src="templates/standard/images/symbols/user-icon-male.png" alt=""/>{#userwasassigned#}</span>
+		<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-male.png" alt=""/>{#userwasassigned#}</span>
 		{elseif $mode == "deassigned"}
-		<span class="info_in_yellow"><img src="templates/standard/images/symbols/user-icon-male.png" alt=""/>{#userwasdeassigned#}</span>
+		<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-male.png" alt=""/>{#userwasdeassigned#}</span>
 		{/if}
 	</div>
 	{literal}
@@ -38,7 +38,7 @@
 				</div>
 
 				<h2>
-					<img src="./templates/standard/images/symbols/userlist.png" alt="" />{#members#}
+					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/userlist.png" alt="" />{#members#}
 				</h2>
 
 			</div>
@@ -83,9 +83,9 @@
 													<td class="thumb">
 														<a href="manageuser.php?action=profile&amp;id={$members[member].ID}" title="{$members[member].name}">
 															{if $members[member].gender == "f"}
-																<img src = "./templates/standard/images/symbols/user-icon-female.png" alt="" />
+																<img src = "./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-female.png" alt="" />
 															{else}
-																<img src = "./templates/standard/images/symbols/user-icon-male.png" alt="" />
+																<img src = "./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-male.png" alt="" />
 															{/if}
 														</a>
 													</td>

@@ -8,11 +8,11 @@
 		<div class="msgs">
 			
 			<div class="breadcrumb">
-				<a href="managemessage.php?action=showproject&amp;id={$project.ID}" title="{$project.name}"><img src="./templates/standard/images/symbols/projects.png" alt="" />{$message.pname}</a>
-				<a href="managemessage.php?action=showmessage&amp;id={$project.ID}&mid={$message.ID}"><img src="./templates/standard/images/symbols/msgs.png" alt="" />{#message#}</a>
+				<a href="managemessage.php?action=showproject&amp;id={$project.ID}" title="{$project.name}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{$message.pname}</a>
+				<a href="managemessage.php?action=showmessage&amp;id={$project.ID}&mid={$message.ID}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt="" />{#message#}</a>
 			</div>
 			
-			<h1 class="second"><img src="./templates/standard/images/symbols/msgs.png" alt="" />{$message.name}</h1>
+			<h1 class="second"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt="" />{$message.name}</h1>
 
 {/if}
 

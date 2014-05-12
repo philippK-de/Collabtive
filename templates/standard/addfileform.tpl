@@ -1,11 +1,11 @@
 <div class="block_in_wrapper">
-	
+
 	<h2>{#addfile#}</h2>
 	{#maxsize#}: {$postmax}<br /><br />
-	
+
 	<form novalidate class="main" action="managefile.php?action=upload&amp;id={$project.ID}" method="post" enctype="multipart/form-data" {literal}onsubmit="return validateCompleteForm(this,'input_error');"{/literal}>
 		<fieldset>
-		
+
 			<div class="row">
 				<label for="numfiles">{#count#}:</label>
 				<select name="numfiles" id="numfiles" onchange="make_inputs(this.value);">
@@ -21,7 +21,7 @@
 					<option value="10">10</option>
 				</select>
 			</div>
-			
+
 			<div class="row">
 				<label for="upfolder">{#folder#}:</label>
 				<select name="upfolder" id="upfolder">
@@ -31,13 +31,13 @@
 					{/section}
 				</select>
 			</div>
-			
+
 			<div id="inputs">
 				<div class="row">
 					<label for="title">{#title#}:</label>
 					<input type="text" name="userfile1-title" id="title" />
 				</div>
-				
+
 				<div class="row">
 					<label for="file">{#file#}:</label>
 					<div class="fileinput">
@@ -54,18 +54,18 @@
 						</table>
 					</div>
 				</div>
-				
+
 				<div class="row">
 					<label for="tags">{#tags#}:</label>
 					<input type="text" name="userfile1-tags" id="tags" />
 				</div>
 			</div>
-			
+
 			<div class="row">
 				<label for="desc">{#description#}:</label>
 				<textarea name="desc" id="desc" rows="3" cols="1"></textarea>
 			</div>
-			
+
 			<div class="row">
 				<label>{#visibility#}:</label>
 				<select name="visible[]" multiple style="height:80px;">
@@ -75,7 +75,7 @@
 					{/section}
 				</select>
 			</div>
-			
+
 			<div class="row">
 				<label>{#notify#}:</label>
 				<select name="sendto[]" multiple style="height:100px;">
@@ -88,18 +88,18 @@
 					{/section}
 				</select>
 			</div>
-			
+
 			<div class="row-butn-bottom">
 				<label>&nbsp;</label>
-				<img id="fakeprogress" src="templates/standard/images/symbols/ajax-loader.gif" alt="fakeprogress" style="display:none;" />
-				
+				<img id="fakeprogress" src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/ajax-loader.gif" alt="fakeprogress" style="display:none;" />
+
 				<div id="filesubmit">
 					<button type="submit" onclick="$('filesubmit').hide();$('fakeprogress').show();" onfocus="this.blur();">{#addbutton#}</button>
 					<button type="reset" onclick="blindtoggle('form_file');toggleClass('addfile','addfile-active','addfile');toggleClass('add_file_butn','butn_link_active','butn_link');toggleClass('sm_files','smooth','nosmooth');return false;" onfocus="this.blur();">{#cancel#}</button>
 				</div>
 			</div>
-			
+
 		</fieldset>
 	</form>
-	
+
 </div> {*block_in_wrapper end*}

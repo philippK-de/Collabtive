@@ -14,9 +14,9 @@
 				<img src="thumb.php?pic=files/avatar/{$avatar}&amp;width=80" style="float:left;margin-left:10px;" alt="" />
 			{else}
 				{if $user.gender == "f"}
-					<img src="thumb.php?pic=templates/standard/images/no-avatar-female.jpg&amp;width=80;" style="float:left;margin-left:10px;" alt="" />
+					<img src="thumb.php?pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-female.jpg&amp;width=80;" style="float:left;margin-left:10px;" alt="" />
 				{else}
-					<img src="thumb.php?pic=templates/standard/images/no-avatar-male.jpg&amp;width=80;" style="float:left;margin-left:10px;" alt="" />
+					<img src="thumb.php?pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-male.jpg&amp;width=80;" style="float:left;margin-left:10px;" alt="" />
 				{/if}
 			{/if}
 			

@@ -12,7 +12,7 @@
 				<a href="javascript:void(0);" id="block_tags_toggle" class="win_block" onclick = "toggleBlock('block_tags');"></a>
 				
 				<h2>
-					<img src="./templates/standard/images/symbols/tags.png" alt="" />{$thetag}
+					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tags.png" alt="" />{$thetag}
 				</h2>
 			</div>
 
@@ -51,12 +51,12 @@
 														 		{if $result[obj].imgfile == 1}
 														 		<img src = "thumb.php?pic={$result[obj].datei}&amp;width=32" alt="" />
 														 		{else}
-														 		<img src = "templates/standard/images/symbols/{$result[obj].icon}" alt="" />
+														 		<img src = "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/{$result[obj].icon}" alt="" />
 														 		{/if}
 															</a>	
 														{else}
 															<a href = "{$result[obj].url}" title="{$result[obj].name}">
-																<img src = "templates/standard/images/symbols/{$result[obj].icon}" alt="" />
+																<img src = "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/{$result[obj].icon}" alt="" />
 															</a>
 														{/if}											
 													</td>

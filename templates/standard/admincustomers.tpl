@@ -9,17 +9,17 @@
 				
 				{if $mode == "edited"}
 				<span class="info_in_yellow">
-					<img src="templates/standard/images/symbols/customers.png" alt="" />
+					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/customers.png" alt="" />
 					{#customerwasedited#}
 				</span>
 				{elseif $mode == "deassigned"}
 				<span class="info_in_red">
-					<img src="templates/standard/images/symbols/user-icon-male.png" alt="" />
+					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-male.png" alt="" />
 					{#userwasdeassigned#}
 				</span>
 				{elseif $mode == "added"}
 				<span class="info_in_green">
-					<img src="templates/standard/images/symbols/customers.png" alt="" />
+					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/customers.png" alt="" />
 					{#customerwasadded#}
 				</span>
 				{/if}
@@ -46,7 +46,7 @@
 				{/if}
 				
 				<h2>
-					<img src="./templates/standard/images/symbols/customers.png" alt="" />
+					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/customers.png" alt="" />
 					{#customerlist#}
 				</h2>
 			</div>

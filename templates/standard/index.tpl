@@ -8,16 +8,16 @@
 		<div class="infowin_left" style="display:none;" id="systemmsg">
 			{if $mode == "projectadded"}
 				<span class="info_in_green">
-					<img src="templates/standard/images/symbols/projects.png" alt="" />{#projectwasadded#}
+					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{#projectwasadded#}
 				</span>
 			{/if}
 
 			{* For async display *}
 			<span id="closed" style="display:none;" class="info_in_green">
-				<img src="templates/standard/images/symbols/projects.png" alt="" />{#projectwasclosed#}
+				<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{#projectwasclosed#}
 			</span>
 			<span id="deleted" style="display:none;" class="info_in_red">
-				<img src="templates/standard/images/symbols/projects.png" alt="" />{#projectwasdeleted#}
+				<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{#projectwasdeleted#}
 			</span>
 		</div>
 
@@ -285,7 +285,7 @@
 
 					<div class="wintools">
 						<div class="progress" id="progress" style="display:none;">
-							<img src="templates/standard/images/symbols/loader-cal.gif" />
+							<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-cal.gif" />
 						</div>
 					</div>
 
@@ -393,9 +393,9 @@
 													<div class="avatar"><img src="thumb.php?width=80&amp;height=80&amp;pic=files/{$cl_config}/avatar/{$messages[message].avatar}" alt="" /></div>
 												{else}
 													{if $messages[message].gender == "f"}
-														<div class="avatar"><img src="thumb.php?width=80&amp;height=80&amp;pic=templates/standard/images/no-avatar-female.jpg" alt="" /></div>
+														<div class="avatar"><img src="thumb.php?width=80&amp;height=80&amp;pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-female.jpg" alt="" /></div>
 													{else}
-														<div class="avatar"><img src="thumb.php?width=80&amp;height=80&amp;pic=templates/standard/images/no-avatar-male.jpg" alt="" /></div>
+														<div class="avatar"><img src="thumb.php?width=80&amp;height=80&amp;pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-male.jpg" alt="" /></div>
 													{/if}
 												{/if}
 
@@ -450,7 +450,7 @@
 																							{if $messages[message].files[file].imgfile == 1}
 																								<img src="thumb.php?pic={$messages[message].files[file].datei}&amp;width=32" alt="{$ordner[file].name}" />
 																							{else}
-																								<img src="templates/standard/images/files/{$messages[message].files[file].type}.png" alt="{$messages[message].files[file].name}" />
+																								<img src="templates/{$settings.template}/theme/{$settings.theme}/images/files/{$messages[message].files[file].type}.png" alt="{$messages[message].files[file].name}" />
 																							{/if}
 																						</a>
 																					</td>

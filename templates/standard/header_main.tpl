@@ -1,14 +1,14 @@
 <div id="sitebody">
-	
+
 	<div id="header-wrapper">
 		<div id="header">
 			<div class="header-in">
-				
+
 				<div class="left">
 					<div class="logo">
 						<h1>
 							<a href="index.php" title="{#desktop#}">
-								<img src="./templates/standard/images/logo-b.png" alt="" />
+								<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/logo-b.png" alt="" />
 							</a>
 							<span class="title">{$settings.name}
 								<span class="subtitle"> {if $settings.subtitle}/ {$settings.subtitle} {/if} </span>
@@ -16,15 +16,15 @@
 						</h1>
 					</div>
 				</div> {* left END *}
-				
+
 				<div class="right">
-					
+
 					{if $loggedin == 1}
 						<ul id="mainmenue">
 							<li class="desktop">
 								<a class="{$mainclasses.desktop}" href="index.php"><span>{#desktop#}</span></a>
 							</li>
-							
+
 							{if $usergender == "f"}
 								<li class="profil-female">
 									<a class="{$mainclasses.profil}" href="manageuser.php?action=profile&amp;id={$userid}"><span>{#myaccount#}</span></a>
@@ -34,7 +34,7 @@
 									<a class="{$mainclasses.profil}" href="manageuser.php?action=profile&amp;id={$userid}"><span>{#myaccount#}</span></a>
 								</li>
 							{/if}
-							
+
 							{if $userpermissions.admin.add}
 								<li class="admin">
 									<a class="{$mainclasses.admin}" href="admin.php?action=projects"><span>{#administration#}</span><span class="submenarrow"></span></a>
@@ -47,15 +47,15 @@
 									</div>
 								</li>
 							{/if}
-							
+
 							<li class="logout"><a href="manageuser.php?action=logout"><span>{#logout#}</span></a></li>
 						</ul>
 					{/if}
-					
+
 				</div> <!-- right END -->
-				
+
 			</div> <!-- header-in END -->
 		</div> <!-- header END -->
 	</div> <!-- header-wrapper END -->
-	
+
 	<div id="contentwrapper">

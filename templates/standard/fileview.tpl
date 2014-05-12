@@ -13,7 +13,7 @@
 						</td>
 						<td class="thumb">
 							<a href="javascript:change('manageajax.php?action=fileview&id={$project.ID}&folder={$folders[fold].ID}','filescontent');selectFolder({$folders[fold].ID});">
-								<img src="./templates/standard/images/symbols/folder-sub.png" alt="" />
+								<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/folder-sub.png" alt="" />
 							</a>
 						</td>
 						<td class="rightmen" valign="top">
@@ -61,7 +61,7 @@
 									<img src="thumb.php?pic={$files[file].datei}&amp;width=32" alt="{$files[file].name}" />
 
 								{else}
-									<img src="templates/standard/images/files/{$files[file].type}.png" alt="{$files[file].name}" />
+									<img src="templates/{$settings.template}/theme/{$settings.theme}/images/files/{$files[file].type}.png" alt="{$files[file].name}" />
 								{/if}
 							</a>
 						</td>
@@ -70,6 +70,7 @@
 								{if $userpermissions.files.del}
 									<a class="del" href="javascript:confirmfunction('{$langfile.confirmdel}','deleteElement(\'fli_{$files[file].ID}\',\'managefile.php?action=delete&amp;id={$project.ID}&amp;file={$files[file].ID}\')');" title="{#delete#}"></a>
 								{/if}
+
 								{if $userpermissions.files.edit}
 									<a class="edit" href="managefile.php?action=editform&amp;id={$project.ID}&amp;file={$files[file].ID}" title="{#editfile#}"></a>
 								{/if}

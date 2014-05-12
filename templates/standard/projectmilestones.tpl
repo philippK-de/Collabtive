@@ -6,19 +6,19 @@
 		<div class="miles">
 			<div class="infowin_left" style = "display:none;" id = "systemmsg">
 				{if $mode == "added"}
-					<span class="info_in_green"><img src="templates/standard/images/symbols/miles.png" alt=""/>{#milestonewasadded#}</span>
+					<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt=""/>{#milestonewasadded#}</span>
 				{elseif $mode == "edited"}
-					<span class="info_in_yellow"><img src="templates/standard/images/symbols/miles.png" alt=""/>{#milestonewasedited#}</span>
+					<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt=""/>{#milestonewasedited#}</span>
 				{elseif $mode == "deleted"}
-					<span class="info_in_red"><img src="templates/standard/images/symbols/miles.png" alt=""/>{#milestonewasdeleted#}</span>
+					<span class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt=""/>{#milestonewasdeleted#}</span>
 				{elseif $mode == "opened"}
-					<span class="info_in_green"><img src="templates/standard/images/symbols/miles.png" alt=""/>{#milestonewasopened#}</span>
+					<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt=""/>{#milestonewasopened#}</span>
 				{elseif $mode == "closed"}
-					<span class="info_in_red"><img src="templates/standard/images/symbols/miles.png" alt=""/>{#milestonewasclosed#}</span>
+					<span class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt=""/>{#milestonewasclosed#}</span>
 				{/if}
 
-				<span id = "deleted" class="info_in_red" style = "display:none;"><img src="templates/standard/images/symbols/miles.png" alt=""/>{#milestonewasdeleted#}</span>
-				<span class="info_in_green" id = "closed" style = "display:none;"><img src="templates/standard/images/symbols/miles.png" alt=""/>{#milestonewasclosed#}</span>
+				<span id = "deleted" class="info_in_red" style = "display:none;"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt=""/>{#milestonewasdeleted#}</span>
+				<span class="info_in_green" id = "closed" style = "display:none;"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt=""/>{#milestonewasclosed#}</span>
 
 			</div>
 
@@ -40,7 +40,7 @@
 					{/if}
 				</div>
 
-				<h2><img src="./templates/standard/images/symbols/miles.png" alt="" />{#milestones#}</h2>
+				<h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt="" />{#milestones#}</h2>
 			</div>
 
 			<div class="block" id="milehead">
@@ -210,7 +210,7 @@
 																						</td>
 																						<td class="thumb">
 																							<a href="managetasklist.php?action=showtasklist&amp;tlid={$milestones[stone].tasklists[task].ID}&amp;id={$project.ID}" title="{$milestones[stone].tasklists[task].name}">
-																									<img src = "./templates/standard/images/symbols/tasklist.png" style="width: 32px; height: auto;" alt="" />
+																									<img src = "./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" style="width: 32px; height: auto;" alt="" />
 																							</a>
 																						</td>
 																						<td class="rightmen" valign="top">
@@ -328,7 +328,7 @@
 																						</td>
 																						<td class="thumb">
 																							<a href="managetasklist.php?action=showtasklist&amp;tlid={$upcomingStones[ustone].tasklists[task].ID}&amp;id={$project.ID}" title="{$upcomingStones[ustone].tasklists[task].name}">
-																									<img src = "./templates/standard/images/symbols/tasklist.png" style="width: 32px; height: auto;" alt="" />
+																									<img src = "./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" style="width: 32px; height: auto;" alt="" />
 																							</a>
 																						</td>
 																						<td class="rightmen" valign="top">

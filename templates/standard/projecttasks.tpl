@@ -8,41 +8,41 @@
 	{*System Message*}
 	<div class="infowin_left" style="display:none;" id="systemmsg">
 		{if $mode == "added"}
-			<span class="info_in_green"><img src="templates/standard/images/symbols/task.png" alt=""/>{#taskwasadded#}</span>
+			<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasadded#}</span>
 		{elseif $mode == "edited"}
-			<span class="info_in_yellow"><img src="templates/standard/images/symbols/task.png" alt=""/>{#taskwasedited#}</span>
+			<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasedited#}</span>
 		{elseif $mode == "deleted"}
-			<span class="info_in_red"><img src="templates/standard/images/symbols/task.png" alt=""/>{#taskwasdeleted#}</span>
+			<span class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasdeleted#}</span>
 		{elseif $mode == "opened"}
-			<span class="info_in_green"><img src="templates/standard/images/symbols/task.png" alt=""/>{#taskwasopened#}</span>
+			<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasopened#}</span>
 		{elseif $mode == "closed"}
-			<span class="info_in_red"><img src="templates/standard/images/symbols/task.png" alt=""/>{#taskwasclosed#}</span>
+			<span class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasclosed#}</span>
 		{elseif $mode == "assigned"}
-			<span class="info_in_yellow"><img src="templates/standard/images/symbols/task.png" alt=""/>{#taskwasassigned#}</span>
+			<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasassigned#}</span>
 		{elseif $mode == "deassigned"}
-			<span class="info_in_yellow"><img src="templates/standard/images/symbols/task.png" alt=""/>{#taskwasdeassigned#}</span>
+			<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasdeassigned#}</span>
 		{elseif $mode == "listadded"}
-			<span class="info_in_green"><img src="templates/standard/images/symbols/tasklist.png" alt=""/>{#tasklistwasadded#}</span>
+			<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt=""/>{#tasklistwasadded#}</span>
 		{elseif $mode == "listclosed"}
-			<span class="info_in_red"><img src="templates/standard/images/symbols/tasklist-done.png" alt=""/>{#tasklistwasclosed#}</span>
+			<span class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist-done.png" alt=""/>{#tasklistwasclosed#}</span>
 		{elseif $mode == "listdeleted"}
-			<span class="info_in_red"><img src="templates/standard/images/symbols/tasklist.png" alt=""/>{#tasklistwasdeleted#}</span>
+			<span class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt=""/>{#tasklistwasdeleted#}</span>
 		{elseif $mode == "listopened"}
-			<span class="info_in_green"><img src="templates/standard/images/symbols/tasklist.png" alt=""/>{#tasklistwasopened#}</span>
+			<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt=""/>{#tasklistwasopened#}</span>
 		{/if}
 
 		{*for async display*}
-		<span id = "added" style = "display:none;" class="info_in_green"><img src="templates/standard/images/symbols/task.png" alt=""/>{#taskwasadded#}</span>
-		<span id = "edited" style = "display:none;" class="info_in_yellow"><img src="templates/standard/images/symbols/task.png" alt=""/>{#taskwasedited#}</span>
-		<span id = "deleted" style = "display:none;" class="info_in_red"><img src="templates/standard/images/symbols/task.png" alt=""/>{#taskwasdeleted#}</span>
-		<span id = "opened" style = "display:none;" class="info_in_green"><img src="templates/standard/images/symbols/task.png" alt=""/>{#taskwasopened#}</span>
-		<span id = "closed" style = "display:none;" class="info_in_green"><img src="templates/standard/images/symbols/task.png" alt=""/>{#taskwasclosed#}</span>
-		<span id = "assigned" style = "display:none;" class="info_in_yellow"><img src="templates/standard/images/symbols/task.png" alt=""/>{#taskwasassigned#}</span>
-		<span id = "deassigned" style = "display:none;" class="info_in_yellow"><img src="templates/standard/images/symbols/task.png" alt=""/>{#taskwasdeassigned#}</span>
-		<span id = "listadded" style = "display:none;" class="info_in_green"><img src="templates/standard/images/symbols/tasklist.png" alt=""/>{#tasklistwasadded#}</span>
-        <span id = "listclosed" style = "display:none;" class="info_in_red"><img src="templates/standard/images/symbols/tasklist-done.png" alt=""/>{#tasklistwasclosed#}</span>
-		<span id = "listdeleted" style = "display:none;" class="info_in_red"><img src="templates/standard/images/symbols/tasklist.png" alt=""/>{#tasklistwasdeleted#}</span>
-		<span id = "listopened" style = "display:none;" class="info_in_green"><img src="templates/standard/images/symbols/tasklist.png" alt=""/>{#tasklistwasopened#}</span>
+		<span id = "added" style = "display:none;" class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasadded#}</span>
+		<span id = "edited" style = "display:none;" class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasedited#}</span>
+		<span id = "deleted" style = "display:none;" class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasdeleted#}</span>
+		<span id = "opened" style = "display:none;" class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasopened#}</span>
+		<span id = "closed" style = "display:none;" class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasclosed#}</span>
+		<span id = "assigned" style = "display:none;" class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasassigned#}</span>
+		<span id = "deassigned" style = "display:none;" class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasdeassigned#}</span>
+		<span id = "listadded" style = "display:none;" class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt=""/>{#tasklistwasadded#}</span>
+        <span id = "listclosed" style = "display:none;" class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist-done.png" alt=""/>{#tasklistwasclosed#}</span>
+		<span id = "listdeleted" style = "display:none;" class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt=""/>{#tasklistwasdeleted#}</span>
+		<span id = "listopened" style = "display:none;" class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt=""/>{#tasklistwasopened#}</span>
 	</div>
 
 	{literal}
@@ -87,7 +87,7 @@
 				</div>
 
 				<h2>
-					<a href="managetasklist.php?action=showtasklist&amp;id={$project.ID}&amp;tlid={$lists[list].ID}" title="{#tasklist#} {$lists[list].name}"><img src="./templates/standard/images/symbols/tasklist.png" alt="" />{$lists[list].name|truncate:70:"...":true}</a>
+					<a href="managetasklist.php?action=showtasklist&amp;id={$project.ID}&amp;tlid={$lists[list].ID}" title="{#tasklist#} {$lists[list].name}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt="" />{$lists[list].name|truncate:70:"...":true}</a>
 				</h2>
 			</div>
 
@@ -299,7 +299,7 @@
 	<div class="headline">
 		<a href="javascript:void(0);" id="block-donelists_toggle" class="win_block" onclick = "toggleBlock('block-donelists');"></a>
 		<h2>
-			<img src="./templates/standard/images/symbols/tasklist-done.png" alt="" />
+			<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist-done.png" alt="" />
 		</h2>
 	</div>
 

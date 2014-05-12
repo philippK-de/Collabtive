@@ -8,12 +8,12 @@
 		<div class="projects">
 			
 			<div class="breadcrumb">
-				<a href="manageproject.php?action=showproject&amp;id={$project.ID}" title="{$project.name}"><img src="./templates/standard/images/symbols/projects.png" alt="" />{$project.name|truncate:50:"...":true}</a>
+				<a href="manageproject.php?action=showproject&amp;id={$project.ID}" title="{$project.name}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{$project.name|truncate:50:"...":true}</a>
 				<span>&nbsp;/...</span>
 			</div>
 			
 			<h1 class="second">
-				<img src="./templates/standard/images/symbols/projects.png" alt="" />
+				<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />
 				{$project.name}
 			</h1>
 			
