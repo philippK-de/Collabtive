@@ -9,7 +9,7 @@
 <link rel="search" type="application/opensearchdescription+xml" title="{$settings.name} {#search#}" href="manageajax.php?action=addfx-all" />
 {elseif $stage == "project" and $loggedin}
 <link rel="search" type="application/opensearchdescription+xml" title="{$project.name} {#search#}" href="manageajax.php?action=addfx-project&amp;project={$project.ID}" />
-<link rel="stylesheet" href="templates/standard/css/dtree.css" type="text/css"  />
+<link rel="stylesheet" href="templates/{$settings.template}/css/dtree.css" type="text/css"  />
 <script type="text/javascript" src="include/js/dtree.js"></script>
 {/if}
 {if $loggedin}
@@ -44,10 +44,10 @@ window.onunload = quitchat;
 {/if}
 
 {if $jsload3 == "lightbox"}
-<link rel="stylesheet" href="templates/standard/css/lytebox.css" type="text/css"  />
+<link rel="stylesheet" href="templates/{$settings.template}/css/lytebox.css" type="text/css"  />
 <script type="text/javascript" src="include/js/lytebox.php"></script>
 {/if}
-<link rel="stylesheet" type="text/css" href="templates/standard/css/style_main.css"/>
+<link rel="stylesheet" type="text/css" href="templates/{$settings.template}/theme/{$settings.theme}/css/style_main.css"/>
 
 
 {if $jsload1 == "tinymce"}
