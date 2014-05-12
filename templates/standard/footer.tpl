@@ -3,13 +3,7 @@
 
 		<div id="msgchk" style="display:none;"></div>
 
-		<script type="text/javascript">
-		  {literal}
-		  Event.observe(window,'load', function(event) {
-		  	chkChat();
-		});
-		  {/literal}
-		</script>
+
 
 		<div id="footer-wrapper">
 			<div class="footer">

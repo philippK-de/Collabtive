@@ -22,7 +22,6 @@
 <script type = "text/javascript" src = "include/js/prototype.php" ></script>
 <script type = "text/javascript" src = "include/js/ajax.php" ></script>
 <script type = "text/javascript" src="include/js/jsval.js"></script>
-<script type="text/javascript" src="include/js/chat.js"></script>
      <script type = "text/javascript">
         function _jsVal_Language() {
             this.err_enter = "{/literal}{#wrongfield#}{literal}";
