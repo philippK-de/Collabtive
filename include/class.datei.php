@@ -572,7 +572,7 @@ class datei {
             $settings = $set->getSettings();
 
             // Construct the path to the MIME-type icon
-            $myfile = "./templates/" . $settings["template"] . "/images/files/" . $file['type'] . ".png";
+            $myfile = "./templates/" . $settings["template"] . "/theme/" . $settings["theme"] . "/images/files/" . $file['type'] . ".png";
             if (!file_exists($myfile)) {
                 $file['type'] = "none";
             }
