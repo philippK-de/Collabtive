@@ -24,6 +24,7 @@
 + Add compileAllConfig() to force a recompile of the config files in certain cases.
 + Fixed possible sql vulnerability in manageajax.php
 + Added AES encryption of uploaded files
++ Added CSS theme functionality. Now the CSS and image files for each template set reside in a /themes/ subfolder. This way, there can be CSS only variations of templates created more easily.
 
 Collabtive 1.2
 + Added translations: Vietnamese
