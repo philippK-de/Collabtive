@@ -16,7 +16,10 @@ function chkproject($user, $project)
     global $conn;
     $user = (int) $user;
     $project = (int) $project;
-    $chk = @$conn->query("SELECT ID FROM projekte_assigned WHERE projekt = $project AND user = $user")->fetch();
+    $qry = @$conn->query("SELECT ID FROM projekte_assigned WHERE projekt = $project AND user = $user");
+    if ($qry) {
+        $chk = $qry->fetch();
+    }
 
     $chk = $chk[0];
 

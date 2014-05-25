@@ -221,7 +221,10 @@ class task {
         global $conn;
         $id = (int) $id;
 
-        $task = $conn->query("SELECT * FROM tasks WHERE ID = $id")->fetch();
+        $qry = $conn->query("SELECT * FROM tasks WHERE ID = $id");
+	if ($qry) {
+	    $task = $qry->fetch();
+	}
         if (!empty($task)) {
             // format datestring according to dateformat option
             if (is_numeric($task['start'])) {
@@ -244,7 +247,7 @@ class task {
             // Get the user(s) assigned to the task from the db
             $usel = $conn->query("SELECT user FROM tasks_assigned WHERE task = $task[ID]");
             $users = array();
-            while ($usr = $usel->fetch()) {
+            while ($use1 and $usr = $usel->fetch()) {
                 // push the assigned users to an array
                 array_push($users, $usr[0]);
                 $task["user"] = "All";
@@ -303,7 +306,7 @@ class task {
             $sel2 = $conn->query("SELECT ID FROM tasks WHERE project = $project AND status=$status");
         } else {
             $sel2 = $conn->query("SELECT ID FROM tasks WHERE project = $project");
-        } while ($tasks = $sel2->fetch()) {
+        } while ($sel2 and $tasks = $sel2->fetch()) {
             $task = $this->getTask($tasks["ID"]);
             array_push($lists, $task);
         }
@@ -334,9 +337,12 @@ class task {
 
         $sel2 = $conn->query("SELECT ID FROM tasks WHERE project = $project AND status=1 AND end > $now ORDER BY `end` ASC LIMIT $limit");
 
-        while ($tasks = $sel2->fetch()) {
-            $chk = $conn->query("SELECT ID FROM tasks_assigned WHERE user = $user AND task = $tasks[ID]")->fetch();
-            $chk = $chk[0];
+        while ($sel2 and $tasks = $sel2->fetch()) {
+	    $qry = $conn->query("SELECT ID FROM tasks_assigned WHERE user = $user AND task = $tasks[ID]");
+	    if ($qry) {
+	        $chk = $qry->fetch();
+		$chk = $chk[0];
+	    }
             if ($chk) {
                 $task = $this->getTask($tasks["ID"]);
                 array_push($lists, $task);
@@ -373,7 +379,7 @@ class task {
 
         $sel2 = $conn->query("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task HAVING tasks_assigned.user = $user AND tasks.project = $project AND status=1 ORDER BY `end` ASC ");
 
-        while ($tasks = $sel2->fetch()) {
+        while ($sel2 and $tasks = $sel2->fetch()) {
             $task = $this->getTask($tasks["ID"]);
             array_push($lists, $task);
         }
@@ -404,7 +410,7 @@ class task {
         $now = strtotime($tod);
 
         $sel2 = $conn->query("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task HAVING tasks_assigned.user = $user AND tasks.project = $project  AND status=1 AND end < $now ORDER BY `end` ASC LIMIT $limit");
-        while ($tasks = $sel2->fetch()) {
+        while ($sel2 and $tasks = $sel2->fetch()) {
             $task = $this->getTask($tasks["ID"]);
             array_push($lists, $task);
         }
@@ -436,7 +442,7 @@ class task {
 
         $sel2 = $conn->query("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task HAVING tasks_assigned.user = $user AND tasks.project = $project  AND status=1 AND end = '$now' ORDER BY `end` ASC LIMIT $limit");
 
-        while ($tasks = $sel2->fetch()) {
+        while ($sel2 and $tasks = $sel2->fetch()) {
             $task = $this->getTask($tasks["ID"]);
             array_push($lists, $task);
         }
@@ -467,7 +473,7 @@ class task {
 
         $sel2 = $conn->query("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task HAVING tasks_assigned.user = $user AND tasks.project = $project AND status=0 ORDER BY `end` ASC LIMIT $limit");
 
-        while ($tasks = $sel2->fetch()) {
+        while ($sel2 and $tasks = $sel2->fetch()) {
             $task = $this->getTask($tasks["ID"]);
             array_push($lists, $task);
         }
@@ -511,7 +517,7 @@ class task {
         }
         $sel1 = $conn->query($sql);
 
-        while ($stone = $sel1->fetch()) {
+        while ($sel1 and $stone = $sel1->fetch()) {
             $stone["daysleft"] = $this->getDaysLeft($stone["end"]);
             array_push($timeline, $stone);
         }
@@ -534,12 +540,18 @@ class task {
         global $conn;
         $id = (int) $id;
 
-        $user = $conn->query("SELECT user FROM tasks_assigned WHERE task = $id")->fetch();
+        $qry = $conn->query("SELECT user FROM tasks_assigned WHERE task = $id");
+	if ($qry) {
+	    $user = $qry->fetch();
+	}
 
         if (!empty($user)) {
-            $uname = $conn->query("SELECT name FROM user WHERE ID = $user[0]")->fetch();
-            $uname = $uname[0];
-            $user[1] = stripslashes($uname);
+	    $qry = $conn->query("SELECT name FROM user WHERE ID = $user[0]");
+	    if ($qry) {
+	        $uname = $qry->fetch();
+		$uname = $uname[0];
+		$user[1] = stripslashes($uname);
+	    }
 
             return $user;
         } else {
@@ -561,11 +573,13 @@ class task {
         $sql = $conn->query("SELECT user FROM tasks_assigned WHERE task = $id");
 
         $result = array();
-        while ($user = $sql->fetch()) {
+        while ($sql and $user = $sql->fetch()) {
             $sel2 = $conn->query("SELECT name FROM user WHERE ID = $user[0]");
-            $uname = $sel2->fetch();
-            $uname = $uname[0];
-            $user[1] = stripslashes($uname);
+            if ($sel2) {
+	        $uname = $sel2->fetch();
+		$uname = $uname[0];
+		$user[1] = stripslashes($uname);
+	    }
 
             $result[] = $user;
         }
@@ -665,11 +679,16 @@ class task {
     {
         global $conn;
         $psel = $conn->query("SELECT name FROM projekte WHERE ID = $task[project]");
-        $pname = $psel->fetch();
-        $pname = stripslashes($pname[0]);
+        if ($psel) {
+	    $pname = $psel->fetch();
+	    $pname = stripslashes($pname[0]);
+	}
 
-        $list = $conn->query("SELECT name FROM tasklist WHERE ID = $task[liste]")->fetch();
-        $list = stripslashes($list[0]);
+        $qry = $conn->query("SELECT name FROM tasklist WHERE ID = $task[liste]");
+	if ($qry) {
+	    $list = $qry->fetch();
+	    $list = stripslashes($list[0]);
+	}
 
         if (isset($list) or isset($pname)) {
             $details = array("list" => $list, "pname" => $pname);
@@ -708,11 +727,17 @@ class task {
         global $conn;
         $id = (int) $id;
 
-        $nam = $conn->query("SELECT text,liste,title FROM tasks WHERE ID = $id")->fetch();
-        $text = stripslashes($nam[2]);
-        $list = $nam[1];
-        $project = $conn->query("SELECT project FROM tasklist WHERE ID = $list")->fetch();
-        $project = $project[0];
+        $qry = $conn->query("SELECT text,liste,title FROM tasks WHERE ID = $id");
+	if ($qry) {
+	    $nam = $qry->fetch();
+	    $text = stripslashes($nam[2]);
+	    $list = $nam[1];
+	}
+        $qry = $conn->query("SELECT project FROM tasklist WHERE ID = $list");
+	if ($qry) {
+	    $project = $qry->fetch();
+	    $project = $project[0];
+	}
         $nameproject = array($text, $project);
 
         if (!empty($nameproject)) {

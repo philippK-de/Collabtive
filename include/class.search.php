@@ -61,7 +61,7 @@ class search {
         $selStmt->execute(array("%{$query}%", "%{$query}%", $query));
 
         $projects = array();
-        while ($result = $selStmt->fetch()) {
+        while ($selStmt and $result = $selStmt->fetch()) {
             if (!empty($result)) {
                 $result["type"] = "project";
                 $result["icon"] = "projects.png";
@@ -93,12 +93,15 @@ class search {
         }
 
         $milestones = array();
-        while ($result = $sel->fetch()) {
+        while ($sel and $result = $sel->fetch()) {
             if (!empty($result)) {
-                $project = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]")->fetch();
-                $project = $project[0];
+	        $qry = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]");
+		if ($qry) {
+		    $project = $qry->fetch();
+		    $project = $project[0];
+		    $result["pname"] = $project;
+		}
 
-                $result["pname"] = $project;
                 $result["type"] = "milestone";
                 $result["icon"] = "miles.png";
                 $result["name"] = stripslashes($result["name"]);
@@ -129,12 +132,15 @@ class search {
         }
 
         $messages = array();
-        while ($result = $sel->fetch()) {
+        while ($sel and $result = $sel->fetch()) {
             if (!empty($result)) {
-                $project = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]")->fetch();
-                $project = $project[0];
+	        $qry = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]");
+		if ($qry) {
+		    $project = $qry->fetch();
+		    $project = $project[0];
+		    $result["pname"] = $project;
+		}
 
-                $result["pname"] = $project;
                 $result["type"] = "message";
                 $result["icon"] = "msgs.png";
                 $result["title"] = stripslashes($result["title"]);
@@ -168,12 +174,15 @@ class search {
         }
 
         $tasks = array();
-        while ($result = $sel->fetch()) {
+        while ($sel and $result = $sel->fetch()) {
             if (!empty($result)) {
-                $project = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]")->fetch();
-                $project = $project[0];
+	        $qry = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]");
+		if ($qry) {
+		    $project = $qry->fetch();
+		    $project = $project[0];
+		    $result["pname"] = $project;
+		}
 
-                $result["pname"] = $project;
                 $result["type"] = "task";
                 $result["icon"] = "task.png";
                 $result["title"] = stripslashes($result["title"]);
@@ -204,12 +213,15 @@ class search {
         }
 
         $files = array();
-        while ($result = $sel->fetch()) {
+        while ($sel and $result = $sel->fetch()) {
             if (!empty($result)) {
-                $project = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]")->fetch();
-                $project = $project[0];
+	        $qry = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]");
+		if ($qry) {
+		    $project = $qry->fetch();
+		    $project = $project[0];
+		    $result["pname"] = $project;
+		}
 
-                $result["pname"] = $project;
                 $result["ftype"] = str_replace("/", "-", $result["type"]);
                 $set = new settings();
                 $settings = $set->getSettings();
@@ -249,7 +261,7 @@ class search {
         $sel = $conn->query("SELECT `ID`,`email`,`name`,`avatar`,`lastlogin`, `gender` FROM user WHERE name LIKE " . $conn->quote("%{$query}%"));
 
         $user = array();
-        while ($result = $sel->fetch()) {
+        while ($sel and $result = $sel->fetch()) {
             if (!empty($result)) {
                 $result["type"] = "user";
                 $result["name"] = stripslashes($result["name"]);

@@ -72,9 +72,12 @@ class milestone {
         $updStmt = $conn->prepare("UPDATE milestones SET `name`=?, `desc`=?, `start`=?, `end`=? WHERE ID=?");
         $upd = $updStmt->execute(array($name, $desc, $start, $end, $id));
         if ($upd) {
-            $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id")->fetch();
-            $project = $nam[0];
-            $name = $nam[1];
+	    $qry = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
+	    if ($qry) {
+	        $nam = $qry->fetch();
+		$project = $nam[0];
+		$name = $nam[1];
+	    }
 
             $this->mylog->add($name, 'milestone' , 2, $project);
             return true;
@@ -98,9 +101,11 @@ class milestone {
         $del = $conn->query("DELETE FROM milestones WHERE ID = $id");
         $del1 = $conn->query("DELETE FROM milestones_assigned WHERE milestone = $id");
         if ($del) {
-            $nam = $nam->fetch();
-            $project = $nam[0];
-            $name = $nam[1];
+	    if ($nam) {
+	        $nam = $nam->fetch();
+		$project = $nam[0];
+		$name = $nam[1];
+	    }
 
             $this->mylog->add($name, 'milestone', 3, $project);
             return true;
@@ -124,9 +129,11 @@ class milestone {
 
         if ($upd) {
             $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
-            $nam = $nam->fetch();
-            $project = $nam[0];
-            $name = $nam[1];
+	    if ($nam) {
+	        $nam = $nam->fetch();
+		$project = $nam[0];
+		$name = $nam[1];
+	    }
 
             $this->mylog->add($name, 'milestone', 4, $project);
             return true;
@@ -159,11 +166,12 @@ class milestone {
         }
 
         if ($upd) {
-            $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
-            $nam = $nam->fetch();
-            $project = $nam[0];
-            $name = $nam[1];
-
+	    $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
+	    if ($nam) {
+	        $nam = $nam->fetch();
+		$project = $nam[0];
+		$name = $nam[1];
+	    }
             $this->mylog->add($name, 'milestone', 5, $project);
             return true;
         } else {
@@ -186,10 +194,12 @@ class milestone {
 
         $upd = $conn->query("INSERT INTO milestones_assigned (NULL,$user,$milestone)");
         if ($upd) {
-            $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
-            $nam = $nam->fetch();
-            $project = $nam[0];
-            $name = $nam[1];
+	    $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
+	    if ($nam) {
+	        $nam = $nam->fetch();
+		$project = $nam[0];
+		$name = $nam[1];
+	    }
 
             $this->mylog->add($name, 'milestone', 6, $project);
             return true;
@@ -214,9 +224,11 @@ class milestone {
         $upd = $conn->query("DELETE FROM milestones_assigned WHERE user = $user AND milestone = $milestone");
         if ($upd) {
             $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
-            $nam = $nam->fetch();
-            $project = $nam[0];
-            $name = $nam[1];
+            if ($nam) {
+	        $nam = $nam->fetch();
+		$project = $nam[0];
+		$name = $nam[1];
+	    }
 
             $this->mylog->add($name, 'milestone', 7, $project);
             return true;
@@ -237,7 +249,9 @@ class milestone {
         $id = (int) $id;
 
         $sel = $conn->query("SELECT * FROM milestones WHERE ID = $id");
-        $milestone = $sel->fetch();
+	if ($sel) {
+	    $milestone = $sel->fetch();
+	}
 
         if (!empty($milestone)) {
             // Format start and end date for display
@@ -252,10 +266,12 @@ class milestone {
             $milestone["desc"] = stripslashes($milestone["desc"]);
             // Get the name of the project where the message was posted for display
             $psel = $conn->query("SELECT name FROM projekte WHERE ID = $milestone[project]");
-            $pname = $psel->fetch();
-            $pname = $pname[0];
-            $milestone["pname"] = $pname;
-            $milestone["pname"] = stripslashes($milestone["pname"]);
+	    if ($psel) {
+	        $pname = $psel->fetch();
+		$pname = $pname[0];
+		$milestone["pname"] = $pname;
+		$milestone["pname"] = stripslashes($milestone["pname"]);
+	    }
             // Daysleft contains a signed number, dayslate an unsigned one that only applies if the milestone is late
             $dayslate = $this->getDaysLeft($milestone["end"]);
             $milestone["daysleft"] = $dayslate;
@@ -290,7 +306,7 @@ class milestone {
 
         $sel = $conn->query("SELECT ID FROM milestones WHERE `status`=$status  ORDER BY `end` ASC LIMIT $lim");
 
-        while ($milestone = $sel->fetch()) {
+        while ($sel and $milestone = $sel->fetch()) {
             $themilestone = $this->getMilestone($milestone["ID"]);
             array_push($milestones, $themilestone);
         }
@@ -316,7 +332,7 @@ class milestone {
         $sel = $conn->query("SELECT ID FROM milestones WHERE project = $project AND status = 0 ORDER BY `end` ASC");
         $stones = array();
 
-        while ($milestone = $sel->fetch()) {
+        while ($sel and $milestone = $sel->fetch()) {
             $themilestone = $this->getMilestone($milestone["ID"]);
             array_push($stones, $themilestone);
         }
@@ -348,7 +364,7 @@ class milestone {
         $sql = "SELECT ID FROM milestones WHERE project = $project AND end < $now AND status = 1 ORDER BY end ASC LIMIT $lim";
 
         $sel1 = $conn->query($sql);
-        while ($milestone = $sel1->fetch()) {
+        while ($sel1 and $milestone = $sel1->fetch()) {
             if (!empty($milestone)) {
                 $themilestone = $this->getMilestone($milestone["ID"]);
                 array_push($milestones, $themilestone);
@@ -382,7 +398,7 @@ class milestone {
         $sql = "SELECT ID FROM milestones WHERE project = $project  AND start > $now AND status = 1 ORDER BY end ASC LIMIT $lim";
 
         $sel1 = $conn->query($sql);
-        while ($milestone = $sel1->fetch()) {
+        while ($sel1 and $milestone = $sel1->fetch()) {
             if (!empty($milestone)) {
                 $themilestone = $this->getMilestone($milestone["ID"]);
                 array_push($milestones, $themilestone);
@@ -415,7 +431,7 @@ class milestone {
         $sql = "SELECT ID FROM milestones WHERE project = $project AND status = 1 ORDER BY end ASC LIMIT $lim";
 
         $sel1 = $conn->query($sql);
-        while ($milestone = $sel1->fetch()) {
+        while ($sel1 and $milestone = $sel1->fetch()) {
             if (!empty($milestone)) {
                 $themilestone = $this->getMilestone($milestone["ID"]);
                 array_push($milestones, $themilestone);
@@ -451,7 +467,7 @@ class milestone {
         }
 
         $sel1 = $conn->query($sql);
-        while ($milestone = $sel1->fetch()) {
+        while ($sel1 and $milestone = $sel1->fetch()) {
             $themilestone = $this->getMilestone($milestone["ID"]);
             array_push($milestones, $themilestone);
         }
@@ -482,7 +498,7 @@ class milestone {
         $milestones = array();
 
         $sel1 = $conn->query("SELECT * FROM milestones WHERE project = $project AND end = '$now' AND status = 1 ORDER BY end ASC LIMIT $lim");
-        while ($milestone = $sel1->fetch()) {
+        while ($sel1 and $milestone = $sel1->fetch()) {
             $themilestone = $this->getMilestone($milestone["ID"]);
             array_push($milestones, $themilestone);
         }
@@ -524,7 +540,7 @@ class milestone {
             $sel1 = $conn->query("SELECT * FROM milestones WHERE project =  $project AND status=1 AND end = '$starttime' ORDER BY `end` ASC");
         } else {
         	$sel1 = $conn->query("SELECT milestones.*,projekte_assigned.user,projekte.name AS pname,projekte.status AS pstatus FROM milestones,projekte_assigned,projekte WHERE milestones.project = projekte_assigned.projekt AND milestones.project = projekte.ID HAVING projekte_assigned.user = $user AND status=1 AND pstatus != 2 AND end = '$starttime'");
-        } while ($stone = $sel1->fetch()) {
+        } while ($sel1 and $stone = $sel1->fetch()) {
             $stone["daysleft"] = $this->getDaysLeft($stone["end"]);
             array_push($timeline, $stone);
         }
@@ -552,7 +568,7 @@ class milestone {
         $sel = $conn->query("SELECT ID FROM tasklist WHERE milestone = $milestone AND status = 1 ORDER BY ID ASC");
         $lists = array();
         if ($milestone) {
-            while ($listId = $sel->fetch()) {
+            while ($sel and $listId = $sel->fetch()) {
                 array_push($lists, $objtasklist->getTasklist($listId["ID"]));
             }
         }
@@ -571,7 +587,7 @@ class milestone {
 
         $sel = $conn->query("SELECT title,ID,milestone FROM messages WHERE milestone = $milestone");
         $msgs = array();
-        while ($msg = $sel->fetch()) {
+        while ($sel and $msg = $sel->fetch()) {
             array_push($msgs, $msg);
         }
         if (!empty($msgs)) {

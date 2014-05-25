@@ -31,7 +31,7 @@ class settings {
         $sel = $selStmt->execute(array());
 
         $settings = array();
-        while ($selSettings = $selStmt->fetch()) {
+        while ($selStmt and $selSettings = $selStmt->fetch()) {
             // Create a key/value array
             $settings[$selSettings["settingsKey"]] = $selSettings["settingsValue"];
         }

@@ -149,7 +149,9 @@ class timetracker {
 
         $sel = $conn->query("SELECT * FROM timetracker WHERE ID = $id");
         $track = array();
-        $track = $sel->fetch();
+        if ($sel) {
+	    $track = $sel->fetch();
+	}
 
         if (!empty($track)) {
             if (isset($track["started"]) and isset($track["ended"])) {
@@ -209,9 +211,9 @@ class timetracker {
             $num .= " AND ended >=$start AND ended<=$end ";
         }
 
-        if ($num) {
-            $num = $conn->query($num)->fetch();
-            $num = $num[0];
+        if ($num and $qry = $conn->query($num)) {
+	    $num = $qry->fetch();
+	    $num = $num[0];
         } else {
             $num = 0;
         }
@@ -234,7 +236,7 @@ class timetracker {
         $ttask = new task();
 
         if (isset($sel)) {
-            while ($data = @$sel->fetch()) {
+            while ($sel and $data = @$sel->fetch()) {
                 $endstring = date("H:i", $data["ended"]);
                 $startstring = date("H:i", $data["started"]);
                 $daystring = date("d.m.y", $data["ended"]);
@@ -245,11 +247,17 @@ class timetracker {
                     $data["tname"] = $tasks;
                 }
 
-                $pname = $conn->query("SELECT name FROM projekte WHERE ID = $data[project]")->fetch();
-                $pname = stripslashes($pname[0]);
+                $qry = $conn->query("SELECT name FROM projekte WHERE ID = $data[project]");
+		if ($qry) {
+		    $pname = $qry->fetch();
+		    $pname = stripslashes($pname[0]);
+		}
 
-                $uname = $conn->query("SELECT name FROM user WHERE ID = $data[user]")->fetch();
-                $uname = stripslashes($uname[0]);
+                $qry = $conn->query("SELECT name FROM user WHERE ID = $data[user]");
+		if ($qry) {
+		    $uname = $qry->fetch();
+		    $uname = stripslashes($uname[0]);
+		}
 
                 $data["endstring"] = $endstring;
                 $data["startstring"] = $startstring;
@@ -309,8 +317,9 @@ class timetracker {
             $num .= " AND ended >=$start AND ended<=$end ";
         }
 
-        if ($num) {
-            $num = $conn->query($num)->fetch();
+        if ($num and $qry = $conn->query($num)) {
+	      $num = $qry->fetch();
+	  }
             $num = $num[0];
         } else {
             $num = 0;
@@ -335,7 +344,7 @@ class timetracker {
         $ttask = new task();
 
         if (isset($sel)) {
-            while ($data = @$sel->fetch()) {
+	  while ($sel and $data = @$sel->fetch()) {
                 $endstring = date("H:i", $data["ended"]);
                 $startstring = date("H:i", $data["started"]);
                 $daystring = date(CL_DATEFORMAT, $data["ended"]);
@@ -346,11 +355,17 @@ class timetracker {
                     $data["tname"] = $tasks;
                 }
 
-                $pname = $conn->query("SELECT name FROM projekte WHERE ID = $data[project]")->fetch();
-                $pname = stripslashes($pname[0]);
+                $qry = $conn->query("SELECT name FROM projekte WHERE ID = $data[project]");
+		if ($qry) {
+		    $pname = $qry->fetch();
+		    $pname = stripslashes($pname[0]);
+		}
 
-                $uname = $conn->query("SELECT name FROM user WHERE ID = $data[user]")->fetch();
-                $uname = stripslashes($uname[0]);
+                $qry = $conn->query("SELECT name FROM user WHERE ID = $data[user]");
+		if ($qry) {
+		    $uname = $qry->fetch();
+		    $uname = stripslashes($uname[0]);
+		}
 
                 $data["endstring"] = $endstring;
                 $data["startstring"] = $startstring;
