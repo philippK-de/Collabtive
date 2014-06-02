@@ -35,12 +35,12 @@ class message {
      * @param int $replyto ID of the message this message is replying to. Standardmessage: 0
      * @return bool
      */
-    function add($project, $title, $text, $tags, $user, $username, $replyto, $milestone)
+    function add($project, $title, $text, $user, $username, $replyto, $milestone)
     {
         global $conn;
 
-        $insStmt = $conn->prepare("INSERT INTO messages (`project`,`title`,`text`,`tags`,`posted`,`user`,`username`,`replyto`,`milestone`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ? )");
-        $ins = $insStmt->execute(array((int) $project, $title, $text, $tags, time(), (int) $user, $username, (int) $replyto, (int) $milestone));
+        $insStmt = $conn->prepare("INSERT INTO messages (`project`,`title`,`text`,`posted`,`user`,`username`,`replyto`,`milestone`) VALUES (?, ?, ?, ?, ?, ?, ?, ? )");
+        $ins = $insStmt->execute(array((int) $project, $title, $text, time(), (int) $user, $username, (int) $replyto, (int) $milestone));
 
         $insid = $conn->lastInsertId();
         if ($ins) {
@@ -114,7 +114,7 @@ class message {
 
         $message = $conn->query("SELECT * FROM messages WHERE ID = $id LIMIT 1")->fetch();
 
-        $tagobj = new tags();
+
         $milesobj = new milestone();
         if (!empty($message)) {
             $replies = $conn->query("SELECT COUNT(*) FROM messages WHERE replyto = $id")->fetch();
@@ -137,8 +137,6 @@ class message {
             $message["title"] = stripslashes($message["title"]);
             $message["text"] = stripslashes($message["text"]);
             $message["username"] = stripslashes($message["username"]);
-            $message["tagsarr"] = $tagobj->splitTagStr($message["tags"]);
-            $message["tagnum"] = count($message["tagsarr"]);
 
             $attached = $this->getAttachedFiles($message["ID"]);
             $message["files"] = $attached;
@@ -170,7 +168,6 @@ class message {
         $sel = $conn->query("SELECT ID FROM messages WHERE replyto = $id ORDER BY posted DESC");
         $replies = array();
 
-        $tagobj = new tags();
         $milesobj = new milestone();
         $user = new user();
         while ($reply = $sel->fetch()) {
@@ -211,7 +208,6 @@ class message {
             $sel1 = $conn->query("SELECT ID FROM messages WHERE project IN($prstring) ORDER BY posted DESC LIMIT $limit ");
             $messages = array();
 
-            $tagobj = new tags();
             $milesobj = new milestone();
             while ($message = $sel1->fetch()) {
                 $themessage = $this->getMessage($message["ID"]);
@@ -239,7 +235,6 @@ class message {
         $messages = array();
         $sel1 = $conn->query("SELECT ID FROM messages WHERE project = $project AND replyto = 0 ORDER BY posted DESC");
 
-        $tagobj = new tags();
         $milesobj = new milestone();
 
         while ($message = $sel1->fetch()) {
