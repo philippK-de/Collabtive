@@ -60,12 +60,12 @@ class message {
      * @param string $tags Tags for the message
      * @return bool
      */
-    function edit($id, $title, $text, $tags)
+    function edit($id, $title, $text)
     {
         global $conn;
 
-        $updStmt = $conn->prepare("UPDATE `messages` SET `title`=?, `text`=?, `tags`=? WHERE ID = ?");
-        $upd = $updStmt->execute(array($title, $text, $tags, (int) $id));
+        $updStmt = $conn->prepare("UPDATE `messages` SET `title`=?, `text`=? WHERE ID = ?");
+        $upd = $updStmt->execute(array($title, $text, (int) $id));
 
         if ($upd) {
             $proj = $conn->query("SELECT project FROM messages WHERE ID = $id")->fetch();

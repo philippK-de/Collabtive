@@ -133,10 +133,8 @@ if ($action == "addform") {
         die();
     }
 
-    $tagobj = new tags();
-    $tags = $tagobj->formatInputTags($tags);
     // edit the msg
-    if ($msg->edit($mid_post, $title, $text, $tags)) {
+    if ($msg->edit($mid_post, $title, $text)) {
         if ($redir) {
             $redir = $url . $redir;
             header("Location: $redir");
