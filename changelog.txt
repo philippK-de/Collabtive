@@ -25,6 +25,7 @@
 + Fixed possible sql vulnerability in manageajax.php
 + Added AES encryption of uploaded files
 + Added CSS theme functionality. Now the CSS and image files for each template set reside in a /themes/ subfolder. This way, there can be CSS only variations of templates created more easily.
++ Change color of tab info string, making it more readable
 
 Collabtive 1.2
 + Added translations: Vietnamese
