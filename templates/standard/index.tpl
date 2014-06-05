@@ -318,9 +318,7 @@
 					</div>
 
 					<h2>
-						<a href="managemessage.php?action=mymsgs" title="{#mymessages#}">
-							<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt="" />{#mymessages#}
-						</a>
+						<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt="" />{#mymessages#}
 					</h2>
 				</div>
 
