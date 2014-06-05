@@ -286,6 +286,11 @@ td.message ul {
 	background-position: 0 -32px;
 }
 
+
+#mainmenue .submen li.customer-settings a {
+	background: url(../images/main-admin-d.png) no-repeat 0 0;
+}
+
 #mainmenue li a:hover span {
 	display: block;
 	width: 200px;
@@ -1605,6 +1610,10 @@ ul.tabs li.desk a {
 
 ul.tabs li.projects a {
 	background-image: url(../images/symbols/tab-projects.png);
+}
+
+ul.tabs li.customers a {
+	background-image: url(../images/symbols/tab-customers.png);
 }
 
 ul.tabs li.tasks a {
