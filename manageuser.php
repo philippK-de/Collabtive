@@ -67,7 +67,7 @@ if ($action == "loginerror") {
 
         $mailcontent = $langfile["hello"] . ",<br /><br/>" .
                        $langfile["projectpasswordtext"] . "<br /><br />" .
-                       $langfile["newpass"] . ": " . $newpass['newpass'] ."<br />" . 
+                       $langfile["newpass"] . ": " . $newpass['newpass'] ."<br />" .
                        $langfile["login"] . ": <a href = \"$url\">$url</a>";
         // Send e-mail with new password
         $themail = new emailer($settings);
@@ -304,17 +304,11 @@ if ($action == "loginerror") {
             if ($online["avatar"]) {
                 $userpic = "thumb.php?pic=files/" . CL_CONFIG . "/avatar/$online[avatar]&width=90";
             } elseif ($online["gender"] == "f") {
-                $userpic = "thumb.php?pic=templates/standard/images/no-avatar-female.jpg&amp;width=90";
+                $userpic = "thumb.php?pic=templates/$settings[template]/theme/$settings[theme]images/no-avatar-female.jpg&amp;width=90";
             } else {
-                $userpic = "thumb.php?pic=templates/standard/images/no-avatar-male.jpg&amp;width=90";
+                $userpic = "thumb.php?pic=templates/$settings[template]/theme/$settings[theme]/images/no-avatar-male.jpg&amp;width=90";
             }
-            echo "<li>" . "<a class=\"user\" href = \"manageuser.php?action=profile&id=$online[ID]\">$online[name]<div><img src = \"$userpic\" /></div> </a>";
-            if ($online['ID'] != $userid and $userpermissions["chat"]["add"]) {
-                echo " <a class=\"chat\" href = \"javascript:openChatwin('$online[name]',$online[ID]);\" title=\"chat\"></a>";
-            } elseif ($online['ID'] == $userid and $userpermissions["chat"]["add"]) {
-                echo " <a class=\"chat-user\" ></a>";
-            }
-            echo "</li>";
+            echo "<li>" . "<a class=\"user\" href = \"manageuser.php?action=profile&id=$online[ID]\">$online[name]<div><img src = \"$userpic\" /></div> </a></li>";
         }
         echo "</ul>";
     }

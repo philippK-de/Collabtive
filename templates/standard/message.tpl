@@ -7,13 +7,13 @@
 
 			<div class="infowin_left" style="display:none;" id="systemmsg">
 				{if $mode == "added"}
-					<span class="info_in_green"><img src="templates/standard/images/symbols/msg.png" alt="" />{#messagewasadded#}</span>
+					<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msg.png" alt="" />{#messagewasadded#}</span>
 				{elseif $mode == "edited"}
-					<span class="info_in_yellow"><img src="templates/standard/images/symbols/msg.png" alt="" />{#messagewasedited#}</span>
+					<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msg.png" alt="" />{#messagewasedited#}</span>
 				{elseif $mode == "deleted"}
-					<span class="info_in_red"><img src="templates/standard/images/symbols/msg.png" alt="" />{#messagewasdeleted#}</span>
+					<span class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msg.png" alt="" />{#messagewasdeleted#}</span>
 				{elseif $mode == "replied"}
-					<span class="info_in_green"><img src="templates/standard/images/symbols/msgs.png" alt="" />{#replywasadded#}</span>
+					<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt="" />{#replywasadded#}</span>
 				{/if}
 			</div>
 			
@@ -26,17 +26,17 @@
 
 			<div class="breadcrumb">
 				<a href="manageproject.php?action=showproject&amp;id={$project.ID}">
-					<img src="./templates/standard/images/symbols/projects.png" alt="" />
+					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />
 					{$projectname|truncate:40:"...":true}
 				</a>
 				<a href="managemessage.php?action=showproject&amp;id={$project.ID}">
-					<img src="./templates/standard/images/symbols/msgs.png" alt="" />
+					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt="" />
 					{#messages#}
 				</a>
 			</div>
 
 			<h1 class="second">
-				<img src="./templates/standard/images/symbols/msgs.png" alt="" />
+				<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt="" />
 				{$message.title|truncate:40:"...":true}
 			</h1>
 
@@ -81,11 +81,11 @@
 					{else}
 						{if $message.gender == "f"}
 							<div class="avatar">
-								<img src="thumb.php?width=80&amp;height=80&amp;pic=templates/standard/images/no-avatar-female.jpg" alt="" />
+								<img src="thumb.php?width=80&amp;height=80&amp;pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-female.jpg" alt="" />
 							</div>
 						{else}
 							<div class="avatar">
-								<img src="thumb.php?width=80&amp;height=80&amp;pic=templates/standard/images/no-avatar-male.jpg" alt="" />
+								<img src="thumb.php?width=80&amp;height=80&amp;pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-male.jpg" alt="" />
 							</div>
 						{/if}
 					{/if}
@@ -139,7 +139,7 @@
 																{if $message.files[file].imgfile == 1}
 																	<img src = "thumb.php?pic={$message.files[file].datei}&amp;width=32" alt="{$message.files[file].name}" />
 																{else}
-																	<img src = "templates/standard/images/files/{$message.files[file].type}.png" alt="{$message.files[file].name}" />
+																	<img src = "templates/{$settings.template}/theme/{$settings.theme}/images/files/{$message.files[file].type}.png" alt="{$message.files[file].name}" />
 																{/if}
 															</a>
 														</td>
@@ -186,7 +186,7 @@
 							<a class="add" href="javascript:blindtoggle('form_reply_b');" id="add_replies" onclick="toggleClass(this,'add-active','add');toggleClass('add_butn_replies','butn_link_active','butn_link');toggleClass('sm_replies','smooth','nosmooth');"><span>{#answer#}</span></a>
 						{/if}
 					</div>
-					<h2><img src="./templates/standard/images/symbols/msgs.png" alt="" />{#replies#}</a></h2>
+					<h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt="" />{#replies#}</a></h2>
 				</div>
 
 				<div id="block-answers" class="block">
@@ -255,9 +255,9 @@
 														<div class="avatar"><img src = "thumb.php?width=80&amp;height=80&amp;pic=files/{$cl_config}/avatar/{$replies[reply].avatar}" alt="" /></div>
 													{else}
 														{if $replies[reply].gender == "f"}
-															<div class="avatar"><img src = "thumb.php?width=80&amp;height=80&amp;pic=templates/standard/images/no-avatar-female.jpg" alt="" /></div>
+															<div class="avatar"><img src = "thumb.php?width=80&amp;height=80&amp;pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-female.jpg" alt="" /></div>
 														{else}
-															<div class="avatar"><img src = "thumb.php?width=80&amp;height=80&amp;pic=templates/standard/images/no-avatar-male.jpg" alt="" /></div>
+															<div class="avatar"><img src = "thumb.php?width=80&amp;height=80&amp;pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-male.jpg" alt="" /></div>
 														{/if}
 													{/if}
 													
@@ -296,7 +296,7 @@
 																							{if $replies[reply].files[file].imgfile == 1}
 																							<img src = "thumb.php?pic={$replies[reply].files[file].datei}&amp;width=32" alt="" />
 																							{else}
-																							<img src = "templates/standard/images/files/{$replies[reply].files[file].type}.png" alt="" />
+																							<img src = "templates/{$settings.template}/theme/{$settings.theme}/images/files/{$replies[reply].files[file].type}.png" alt="" />
 																							{/if}
 																						</a>
 																					</td>

@@ -6,16 +6,16 @@
 		<div class="msgs">
 
 			<div class = "infowin_left">
-				<span id = "deleted" style = "display:none;" class="info_in_red"><img src="templates/standard/images/symbols/msgs.png" alt=""/>{#messagewasdeleted#}</span>
+				<span id = "deleted" style = "display:none;" class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#messagewasdeleted#}</span>
 			</div>
 
 			<div class="infowin_left" style = "display:none;" id = "systemmsg">
 				{if $mode == "added"}
-					<span class="info_in_green"><img src="templates/standard/images/symbols/msgs.png" alt=""/>{#messagewasadded#}</span>
+					<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#messagewasadded#}</span>
 				{elseif $mode == "edited"}
-					<span class="info_in_yellow"><img src="templates/standard/images/symbols/msgs.png" alt=""/>{#messagewasedited#}</span>
+					<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#messagewasedited#}</span>
 				{elseif $mode == "replied"}
-					<span class="info_in_green"><img src="templates/standard/images/symbols/msgs.png" alt=""/>{#replywasadded#}</span>
+					<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#replywasadded#}</span>
 				{/if}
 			</div>
 			
@@ -46,7 +46,7 @@
 				</div>
 
 				<h2>
-					<img src="./templates/standard/images/symbols/msgs.png" alt="" />{#messages#}
+					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt="" />{#messages#}
 				</h2>
 			</div>
 
@@ -124,9 +124,9 @@
 												<div class="avatar"><img src = "thumb.php?width=80&amp;height=80&amp;pic=files/{$cl_config}/avatar/{$messages[message].avatar}" alt="" /></div>
 											{else}
 												{if $messages[message].gender == "f"}
-													<div class="avatar"><img src = "thumb.php?pic=templates/standard/images/no-avatar-female.jpg&amp;width=80;" alt="" /></div>
+													<div class="avatar"><img src = "thumb.php?pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-female.jpg&amp;width=80;" alt="" /></div>
 												{else}
-													<div class="avatar"><img src = "thumb.php?pic=templates/standard/images/no-avatar-male.jpg&amp;width=80;" alt="" /></div>
+													<div class="avatar"><img src = "thumb.php?pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-male.jpg&amp;width=80;" alt="" /></div>
 												{/if}
 											{/if}
 											<div class="message">
@@ -178,7 +178,7 @@
 																					{if $messages[message].files[file].imgfile == 1}
 																					<img src = "thumb.php?pic={$messages[message].files[file].datei}&amp;width=32" alt="" />
 																					{else}
-																					<img src = "templates/standard/images/files/{$messages[message].files[file].type}.png" alt="" />
+																					<img src = "templates/{$settings.template}/theme/{$settings.theme}/images/files/{$messages[message].files[file].type}.png" alt="" />
 																					{/if}
 																				</a>
 																			</td>

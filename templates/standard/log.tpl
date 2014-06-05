@@ -14,7 +14,7 @@
 	{/if}
 
 	<h2>
-		<img src="./templates/standard/images/symbols/activity.png" alt="" />{#activity#}
+		<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/activity.png" alt="" />{#activity#}
 	</h2>
 </div>
 
@@ -49,23 +49,23 @@
 				<tr>
 					<td style="padding:0" class="symbols">
 						{if $log[logitem].type == "tasklist"}
-							<img style="margin:0 0 0 3px;" src="./templates/standard/images/symbols/tasklist.png" alt="" />
+							<img style="margin:0 0 0 3px;" src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt="" />
 						{elseif $log[logitem].type == "user"}
-							<img style="margin:0 0 0 3px;" src="./templates/standard/images/symbols/userlist.png" alt="" />
+							<img style="margin:0 0 0 3px;" src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/userlist.png" alt="" />
 						{elseif $log[logitem].type == "task"}
-							<img style="margin:0 0 0 3px;" src="./templates/standard/images/symbols/task.png" alt="" />
+							<img style="margin:0 0 0 3px;" src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt="" />
 						{elseif $log[logitem].type == "projekt"}
-							<img style="margin:0 0 0 3px;" src="./templates/standard/images/symbols/projects.png" alt="" />
+							<img style="margin:0 0 0 3px;" src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />
 						{elseif $log[logitem].type == "milestone"}
-							<img style="margin:0 0 0 3px;" src="./templates/standard/images/symbols/miles.png" alt="" />
+							<img style="margin:0 0 0 3px;" src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt="" />
 						{elseif $log[logitem].type == "message"}
-							<img style="margin:0 0 0 3px;" src="./templates/standard/images/symbols/msgs.png" alt="" />
+							<img style="margin:0 0 0 3px;" src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt="" />
 						{elseif $log[logitem].type == "file"}
-							<img style="margin:0 0 0 3px;" src = "./templates/standard/images/symbols/files.png" alt="" />
+							<img style="margin:0 0 0 3px;" src = "./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/files.png" alt="" />
 						{elseif $log[logitem].type == "folder"}
-							<img style="margin:0 0 0 3px;" src = "./templates/standard/images/symbols/folder-root.png" alt="" />
+							<img style="margin:0 0 0 3px;" src = "./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/folder-root.png" alt="" />
 						{elseif $log[logitem].type == "track"}
-							<img style="margin:0 0 0 3px;" src = "./templates/standard/images/symbols/timetracker.png" alt="" />
+							<img style="margin:0 0 0 3px;" src = "./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/timetracker.png" alt="" />
 						{/if}
 					</td>
 					<td>

@@ -7,13 +7,13 @@
 
 
 <div class="breadcrumb">
-<a href="manageproject.php?action=showproject&amp;id={$project.ID}"><img src="./templates/standard/images/symbols/projects.png" alt="" />{$projectname|truncate:40:"...":true}</a>
-<a href="managemilestone.php?action=showproject&amp;id={$project.ID}"><img src="./templates/standard/images/symbols/miles.png" alt="" />{#milestones#}</a>
+<a href="manageproject.php?action=showproject&amp;id={$project.ID}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{$projectname|truncate:40:"...":true}</a>
+<a href="managemilestone.php?action=showproject&amp;id={$project.ID}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt="" />{#milestones#}</a>
 
 </div>
 
 
-<h1 class="second"><img src="./templates/standard/images/symbols/miles.png" alt="" />{$milestone.name}</h1>
+<h1 class="second"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt="" />{$milestone.name}</h1>
 
 
 	<div class="statuswrapper">
@@ -79,7 +79,7 @@
 													</td>
 													<td class="thumb">
 														<a href="managetasklist.php?action=showtasklist&amp;tlid={$milestone.tasklists[task].ID}&amp;id={$project.ID}" title="{$milestone.tasklists[task].name}">
-																<img src = "./templates/standard/images/symbols/tasklist.png" style="width: 32px; height: auto;" alt="" />
+																<img src = "./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" style="width: 32px; height: auto;" alt="" />
 														</a>
 													</td>
 													<td class="rightmen" valign="top">
@@ -136,7 +136,7 @@
 													</td>
 													<td class="thumb">
 														<a href="managemessage.php?action=showmessage&amp;mid={$milestone.messages[msg].ID}&amp;id={$project.ID}" title="{$milestone.messages[msg].title}">
-																<img src = "./templates/standard/images/symbols/msgs.png" style="width: 32px; height: auto;" alt="" />
+																<img src = "./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" style="width: 32px; height: auto;" alt="" />
 														</a>
 													</td>
 													<td class="rightmen" valign="top">

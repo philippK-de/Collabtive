@@ -5,7 +5,7 @@
 				<div class="logo-name">
 					<h1>
 						<a href="http://collabtive.o-dyn.de/" title="{$settings.name} Open Source Project Management">
-							<img src="./templates/standard/images/logo-a.png" alt="{$settings.name}" />
+							<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/logo-a.png" alt="{$settings.name}" />
 						</a>
 					</h1>
 					<h2>{$settings.subtitle}</h2>

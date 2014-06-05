@@ -31,6 +31,9 @@ $template->config_dir = "./language/$locale/";
 $title = $langfile['installcollabtive'];
 $template->assign("title", $title);
 $template->template_dir = "./templates/standard/";
+$installSettings["template"] = "standard";
+$installSettings["theme"] = "standard";
+$template->assign("settings", $installSettings);
 
 if (!$action) {
     // check if required directories are writable

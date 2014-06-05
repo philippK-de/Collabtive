@@ -57,13 +57,8 @@ if ($action == "addform") {
         $template->display("error.tpl");
         die();
     }
-    // format tags properly
-    if ($tags) {
-        $tagobj = new tags();
-        $tags = $tagobj->formatInputTags($tags);
-    }
     // add message
-    $themsg = $msg->add($id, $title, $message, $tags, $userid, $username, 0, $milestone);
+    $themsg = $msg->add($id, $title, $message, $userid, $username, 0, $milestone);
 
     if ($themsg) {
         if ($thefiles > 0) {
@@ -138,10 +133,8 @@ if ($action == "addform") {
         die();
     }
 
-    $tagobj = new tags();
-    $tags = $tagobj->formatInputTags($tags);
     // edit the msg
-    if ($msg->edit($mid_post, $title, $text, $tags)) {
+    if ($msg->edit($mid_post, $title, $text)) {
         if ($redir) {
             $redir = $url . $redir;
             header("Location: $redir");

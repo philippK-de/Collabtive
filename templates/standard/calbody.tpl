@@ -57,13 +57,13 @@
 									{if $weeks[week][day].milesnum > 0}
 										
 										<a href="#miles{$weeks[week][day].val}" id="mileslink{$weeks[week][day].val}">
-											<img src="templates/standard/images/symbols/miles.png" alt="" />
+											<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt="" />
 										</a>
 										
 										<div id="miles{$weeks[week][day].val}" style="display:none;">
 											
 											<div class="modaltitle">
-												<img src="./templates/standard/images/symbols/miles.png" alt="" />
+												<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt="" />
 												{$langfile.milestones}
 												{$weeks[week][day].val}.{$m}.{$y}
 												<a class="winclose" href="javascript:Control.Modal.close();"></a>
@@ -95,7 +95,7 @@
 																
 																	<tr {if $weeks[week][day].milestones[stone].daysleft < 0} class="marker-late" {elseif $weeks[week][day].milestones[stone].daysleft == 0} class="marker-today" {/if} >
 																		<td class="icon">
-																			<img src="./templates/standard/images/symbols/miles.png" alt="" />
+																			<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt="" />
 																		</td>
 																		<td>
 																			<div class="toggle-in">
@@ -158,11 +158,11 @@
 									{if $weeks[week][day].tasksnum > 0}
 										
 										<a href="#tasks{$weeks[week][day].val}" id="tasklink{$weeks[week][day].val}">
-											<img src="templates/standard/images/symbols/task.png" alt="" />
+											<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt="" />
 										</a>
 										<div id="tasks{$weeks[week][day].val}" style="display:none;">
 											<div class="modaltitle">
-												<img src="./templates/standard/images/symbols/tasklist.png" alt="" />
+												<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt="" />
 												{$langfile.tasklist}
 												{$weeks[week][day].val}.{$m}.{$y}
 												<a class="winclose" href="javascript:Control.Modal.close();"></a>
@@ -195,7 +195,7 @@
 																
 																	<tr {if $weeks[week][day].tasks[task].daysleft < 0} class="marker-late" {elseif $weeks[week][day].tasks[task].daysleft == 0} class="marker-today" {/if} >
 																		<td class="icon">
-																			<img src="./templates/standard/images/symbols/task.png" alt="" />
+																			<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt="" />
 																		</td>
 																		<td>
 																			<div class="toggle-in">

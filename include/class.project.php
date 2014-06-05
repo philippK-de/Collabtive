@@ -61,39 +61,6 @@ class project {
     }
 
     /**
-     * Imports a project from Basecamp into Collabtive
-     *
-     * @param string $name Name of the project
-     * @param string $desc Description of the project
-     * @param string $start Date on which the project was started
-     * @param int $status Status of the project
-     * @return int $insid ID des neu angelegten Projekts
-     */
-    function AddFromBasecamp($name, $desc, $start, $status = 1)
-    {
-        global $conn;
-        $id = (int) $id;
-        $status = (int) $status;
-
-        $start = strtotime($start);
-        $tod = date("d.m.Y");
-        $now = strtotime($tod . " +1week");
-
-        $ins1Stmt = $conn->prepare("INSERT INTO projekte (`name`, `desc`,`end`, `start`, `status`) VALUES (?, ?, ?, ?, ?)");
-        $ins1 = $ins1Stmt->execute(array($name, $desc, $now, $start, $status));
-
-        $insid = $conn->lastInsertId();
-
-        if ($ins1) {
-            mkdir(CL_ROOT . "/files/" . CL_CONFIG . "/$insid/", 0777);
-            $this->mylog->add($name, 'projekt', 1, $insid);
-            return $insid;
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * Bearbeitet ein Projekt
      *
      * @param int $id Project ID

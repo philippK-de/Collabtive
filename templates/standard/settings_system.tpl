@@ -59,6 +59,14 @@
 					{/section}
 				</select>
 			</div>
+			<div class="row">
+				<label for = "template">Theme:</label>
+				<select name="theme" id="theme" required = "1" realname = "{#template#}" >
+					{section name=theme loop=$themes}
+						<option value="{$themes[theme]}" {if $settings.theme == $themes[theme]}selected="selected"{/if}>{$themes[theme]}</option>
+					{/section}
+				</select>
+			</div>
 
 
 			<div class="row-butn-bottom">

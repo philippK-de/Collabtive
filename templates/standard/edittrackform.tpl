@@ -7,13 +7,13 @@
 			
 			<div class="breadcrumb">
 				<a href="managetimetracker.php?action=showproject&amp;id={$project.ID}">
-					<img src="./templates/standard/images/symbols/timetracker.png" alt="" />
+					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/timetracker.png" alt="" />
 					{#timetracker#}
 				</a>
 			</div>
 			
 			<h1 class="second">
-				<img src="./templates/standard/images/symbols/timetracker.png" alt="" />
+				<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/timetracker.png" alt="" />
 				{$track.username} ({$track.hours})
 			</h1>
 			
@@ -112,4 +112,3 @@
 
 {include file="sidebar-a.tpl"}
 {include file="footer.tpl"}
-

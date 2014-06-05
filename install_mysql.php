@@ -41,7 +41,6 @@
   `project` int(10) NOT NULL default '0',
   `milestone` int(10) NOT NULL default '0',
   `user` int(10) NOT NULL default '0',
-  `tags` varchar(255) NOT NULL default '',
   `added` varchar(255) NOT NULL default '',
   `datei` varchar(255) NOT NULL default '',
   `type` varchar(255) NOT NULL default '',
@@ -52,8 +51,7 @@
   KEY `name` (`name`),
   KEY `datei` (`datei`),
   KEY `added` (`added`),
-  KEY `project` (`project`),
-  KEY `tags` (`tags`)
+  KEY `project` (`project`)
 ) ENGINE=MyISAM");
 
         $table4 = $conn->query("CREATE TABLE `log` (

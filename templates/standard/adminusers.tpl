@@ -9,32 +9,32 @@
 				
 				{if $mode == "deleted"}
 				<span class="info_in_red">
-					<img src="templates/standard/images/symbols/userlist.png" alt="" />
+					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/userlist.png" alt="" />
 					{#userwasdeleted#}
 				</span>
 				{elseif $mode == "added"}
 				<span class="info_in_green">
-					<img src="templates/standard/images/symbols/userlist.png" alt="" />
+					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/userlist.png" alt="" />
 					{#userwasadded#}
 				</span>
 				{elseif $mode == "roleadded"}
 				<span class="info_in_green">
-					<img src="templates/standard/images/symbols/userlist.png" alt="" />
+					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/userlist.png" alt="" />
 					{#roleadded#}
 				</span>
 				{elseif $mode == "roleedited"}
 				<span class="info_in_yellow">
-					<img src="templates/standard/images/symbols/userlist.png" alt="" />
+					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/userlist.png" alt="" />
 					{#roleedited#}
 				</span>
 				{elseif $mode == "edited"}
 					<span class="info_in_yellow">
-					<img src="templates/standard/images/symbols/userlist.png" alt="" />
+					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/userlist.png" alt="" />
 					{#userwasedited#}
 				</span>
 		        {elseif $mode == "de-assigned"}
 				<span class="info_in_yellow">
-					<img src="templates/standard/images/symbols/userlist.png" alt="" />
+					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/userlist.png" alt="" />
 					{#permissionswereedited#}
 				</span>
 				{/if}
@@ -63,7 +63,7 @@
 				</div>
 				
 				<h2>
-					<img src="./templates/standard/images/symbols/userlist.png" alt="" />
+					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/userlist.png" alt="" />
 					{#useradministration#}
 				</h2>
 			</div>
@@ -111,9 +111,9 @@
 															<a href="manageuser.php?action=profile&amp;id={$users[user].ID}" title="{$users[user].name}">
 																
 																{if $users[user].gender == "f"}
-																<img src="./templates/standard/images/symbols/user-icon-female.png" alt="" />
+																<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-female.png" alt="" />
 																{else}
-																<img src="./templates/standard/images/symbols/user-icon-male.png" alt="" />
+																<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-male.png" alt="" />
 																{/if}
 																
 															</a>

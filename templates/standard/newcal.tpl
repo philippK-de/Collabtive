@@ -28,7 +28,7 @@ makeCal(10,2008,'mycal');
 <br />
 
 {if $weeks[week][day].tasksnum > 0}
-						<a href = "#tasks{$weeks[week][day].val}" id = "tasklink{$weeks[week][day].val}" ><img src = "templates/standard/images/symbols/task.png" alt = ""></a>
+						<a href = "#tasks{$weeks[week][day].val}" id = "tasklink{$weeks[week][day].val}" ><img src = "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt = ""></a>
 						<div id = "tasks{$weeks[week][day].val}">
 						{section name = task loop=$weeks[week][day].tasks}
 						{$weeks[week][day].tasks[task].title}<br/>

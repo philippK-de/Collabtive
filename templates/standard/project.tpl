@@ -8,9 +8,9 @@
 
 	<div class="infowin_left" style = "display:none;" id = "systemmsg">
 		{if $mode == "edited"}
-		<span class="info_in_yellow"><img src="templates/standard/images/symbols/projects.png" alt=""/>{#projectwasedited#}</span>
+		<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt=""/>{#projectwasedited#}</span>
 		{elseif $mode == "timeadded"}
-		<span class="info_in_green"><img src="templates/standard/images/symbols/timetracker.png" alt=""/>{#timetrackeradded#}</span>
+		<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/timetracker.png" alt=""/>{#timetrackeradded#}</span>
 		{/if}
 	</div>
 	{literal}
@@ -77,7 +77,7 @@
 	<div class="headline">
 		<a href="javascript:void(0);" id="treehead_toggle" class="win_block" onclick = "toggleBlock('treehead');"></a>
 		<h2>
-			<img src="./templates/standard/images/symbols/projects.png" alt="" />Project Tree
+			<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />Project Tree
 		</h2>
 	</div>
 
@@ -93,15 +93,15 @@
 		
 		// Milestones
 		{section name=titem loop=$tree}
-			d{$project.ID}.add("m"+{$tree[titem].ID}, 0, "{$tree[titem].name}", "managemilestone.php?action=showmilestone&msid={$tree[titem].ID}&id={$project.ID}", "", "", "templates/standard/images/symbols/miles.png", "templates/standard/images/symbols/miles.png", "", {$tree[titem].daysleft});
+			d{$project.ID}.add("m"+{$tree[titem].ID}, 0, "{$tree[titem].name}", "managemilestone.php?action=showmilestone&msid={$tree[titem].ID}&id={$project.ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png", "", {$tree[titem].daysleft});
 
 			// Task lists
 			{section name=tlist loop=$tree[titem].tasklists}
-				d{$project.ID}.add("tl"+{$tree[titem].tasklists[tlist].ID}, "m"+{$tree[titem].tasklists[tlist].milestone}, "{$tree[titem].tasklists[tlist].name}", "managetasklist.php?action=showtasklist&id={$project.ID}&tlid={$tree[titem].tasklists[tlist].ID}", "", "", "templates/standard/images/symbols/tasklist.png", "templates/standard/images/symbols/tasklist.png");
+				d{$project.ID}.add("tl"+{$tree[titem].tasklists[tlist].ID}, "m"+{$tree[titem].tasklists[tlist].milestone}, "{$tree[titem].tasklists[tlist].name}", "managetasklist.php?action=showtasklist&id={$project.ID}&tlid={$tree[titem].tasklists[tlist].ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png");
 
 				// Tasks from lists
 				{section name=ttask loop=$tree[titem].tasklists[tlist].tasks}
-					d{$project.ID}.add("ta"+{$tree[titem].tasklists[tlist].tasks[ttask].ID}, "tl"+{$tree[titem].tasklists[tlist].tasks[ttask].liste}, "{$tree[titem].tasklists[tlist].tasks[ttask].title}", "managetask.php?action=showtask&tid={$tree[titem].tasklists[tlist].tasks[ttask].ID}&id={$project.ID}", "", "", "templates/standard/images/symbols/task.png", "templates/standard/images/symbols/task.png", "",{$tree[titem].tasklists[tlist].tasks[ttask].daysleft});
+					d{$project.ID}.add("ta"+{$tree[titem].tasklists[tlist].tasks[ttask].ID}, "tl"+{$tree[titem].tasklists[tlist].tasks[ttask].liste}, "{$tree[titem].tasklists[tlist].tasks[ttask].title}", "managetask.php?action=showtask&tid={$tree[titem].tasklists[tlist].tasks[ttask].ID}&id={$project.ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png", "",{$tree[titem].tasklists[tlist].tasks[ttask].daysleft});
 				{/section}
 
 			// End task lists
@@ -110,7 +110,7 @@
 			// Messages
 			{section name=tmsg loop=$tree[titem].messages}
 				{if $tree[titem].messages[tmsg].milestone > 0}
-					d{$project.ID}.add("msg"+{$tree[titem].messages[tmsg].ID}, "m"+{$tree[titem].messages[tmsg].milestone}, "{$tree[titem].messages[tmsg].title}", "managemessage.php?action=showmessage&id={$project.ID}&mid={$tree[titem].messages[tmsg].ID}", "", "", "templates/standard/images/symbols/msgs.png", "templates/standard/images/symbols/msgs.png");
+					d{$project.ID}.add("msg"+{$tree[titem].messages[tmsg].ID}, "m"+{$tree[titem].messages[tmsg].milestone}, "{$tree[titem].messages[tmsg].title}", "managemessage.php?action=showmessage&id={$project.ID}&mid={$tree[titem].messages[tmsg].ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png");
 				{/if}
 
 			{/section}
@@ -151,13 +151,13 @@
 						</div>
 					</div>-->
 					<div class = "progress" id = "progress" style = "display:none;">
-						<img src = "templates/standard/images/symbols/loader-cal.gif" />
+						<img src = "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-cal.gif" />
 					</div>
 				</div>
 
 
 				<h2>
-					<img src="./templates/standard/images/symbols/miles.png" alt="" />{#calendar#}
+					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt="" />{#calendar#}
 				</h2>
 
 			</div>
@@ -191,7 +191,7 @@
 		-->
 
 		<h2>
-			<a href="managetimetracker.php?action=showproject&amp;id={$project.ID}" title="{#timetracker#}"><img src="./templates/standard/images/symbols/timetracker.png" alt="" />{#timetracker#}</a>
+			<a href="managetimetracker.php?action=showproject&amp;id={$project.ID}" title="{#timetracker#}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/timetracker.png" alt="" />{#timetracker#}</a>
 		</h2>
 	</div>
 

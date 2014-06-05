@@ -6,12 +6,12 @@
 	<div id="content-left-in">
 		<div class="msgs">
 			<div class="breadcrumb">
-				<a href="manageproject.php?action=showproject&amp;id={$project.ID}" title="{$project.name}"><img src="./templates/standard/images/symbols/projects.png" alt="" />{$project.name|truncate:25:"...":true}</a>
-				<a href="managetask.php?action=showproject&amp;id={$project.ID}"><img src="./templates/standard/images/symbols/msgs.png" alt="" />{#messages#}</a>
-				<a href="managetasklist.php?action=showtasklist&amp;id={$project.ID}&amp;tlid={$tasklist.ID}"><img src="./templates/standard/images/symbols/msgs.png" alt="" />{$message.name|truncate:50:"...":true}</a><span>&nbsp;/...</span>
+				<a href="manageproject.php?action=showproject&amp;id={$project.ID}" title="{$project.name}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{$project.name|truncate:25:"...":true}</a>
+				<a href="managetask.php?action=showproject&amp;id={$project.ID}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt="" />{#messages#}</a>
+				<a href="managetasklist.php?action=showtasklist&amp;id={$project.ID}&amp;tlid={$tasklist.ID}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt="" />{$message.name|truncate:50:"...":true}</a><span>&nbsp;/...</span>
 			</div>
 
-			<h1 class="second"><img src="./templates/standard/images/symbols/msgs.png" alt="" />{$message.name}</h1>
+			<h1 class="second"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt="" />{$message.name}</h1>
 {/if}
 
 			<div class="block_in_wrapper">

@@ -22,7 +22,7 @@
 		{/if}
 		
 			<tr>
-				<td style="border-right:0px;"><img src="templates/standard/images/symbols/folder-sub.png" /></td>
+				<td style="border-right:0px;"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/folder-sub.png" /></td>
 				<td style="border-left:0px;">
 					<a href="javascript:change('manageajax.php?action=fileview_list&id={$project.ID}&folder={$folders[folder].ID}','filescontent');">
 						{if $folders[folder].name != ""}
@@ -58,7 +58,7 @@
 			 			{if $files[file].imgfile == 1}
 				 			<img src="thumb.php?pic={$files[file].datei}&amp;width=32" alt="{$files[file].name}" />
 				 		{else}
-				 			<img src="templates/standard/images/files/{$files[file].type}.png" alt="{$files[file].name}" />
+				 			<img src="templates/{$settings.template}/theme/{$settings.theme}/images/files/{$files[file].type}.png" alt="{$files[file].name}" />
 				 		{/if}
 					 </a>
 				</td>

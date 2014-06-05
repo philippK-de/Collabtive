@@ -13,7 +13,7 @@
 						</td>
 						<td class="thumb">
 							<a href="javascript:change('manageajax.php?action=fileview&id={$project.ID}&folder={$folders[fold].ID}','filescontent');">
-								<img src="./templates/standard/images/symbols/folder-sub.png" alt="" />
+								<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/folder-sub.png" alt="" />
 							</a>
 						</td>
 						<td class="rightmen" valign="top">
@@ -59,7 +59,7 @@
 								{if $files[file].imgfile == 1}
 									<img src="thumb.php?pic={$files[file].datei}&amp;width=32" alt="{$files[file].name}" />
 								{else}
-									<img src="templates/standard/images/files/{$files[file].type}.png" alt="{$files[file].name}" />
+									<img src="templates/{$settings.template}/theme/{$settings.theme}/images/files/{$files[file].type}.png" alt="{$files[file].name}" />
 								{/if}
 							</a>
 						</td>

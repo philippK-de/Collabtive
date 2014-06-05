@@ -6,10 +6,10 @@
 				<h1>{#installcollabtive#}</h1>
 
 				<div style="border-bottom:1px dashed;padding:16px 0 16px 0;">
-					
+
 					<form class="main" method="get" action="install.php">
 						<fieldset>
-						
+
 							<div class="row">
 								<label for="language" style="width:210px;">{#installerlanguage#}</label>
 								<select name="locale" id="language" onchange="document.forms[0].submit();">
@@ -28,10 +28,10 @@
 									<option value="sr">{#sr#}</option>
 								</select>
 							</div>
-					
+
 						</fieldset>
 					</form>
-					
+
 				</div>
 
 				<div style="border-bottom:1px dashed;padding:16px 0 20px 0;">
@@ -49,41 +49,41 @@
 						<tr valign="top">
 							<td>PHP 5.2</td>
 							{if $phpver >= 5.2}
-								<td><span style="color:green;font-weight:bold;"><img src="./templates/standard/images/butn-ok.png" alt="OK" /></span></td>
+								<td><span style="color:green;font-weight:bold;"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/butn-ok.png" alt="OK" /></span></td>
 							{else}
-								<td><span style="color:red;font-weight:bold;"><img src="./templates/standard/images/butn-notok.png" alt="Not OK" /><br />(PHP {$phpver} - {#phpversion#})</span></td>
+								<td><span style="color:red;font-weight:bold;"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/butn-notok.png" alt="Not OK" /><br />(PHP {$phpver} - {#phpversion#})</span></td>
 							{/if}
 						</tr>
 						<tr valign="top">
 							<td>config.php {#iswritable#}</td>
 							{if $configfile == 1}
-								<td><span style="color:green;font-weight:bold;"><img src="./templates/standard/images/butn-ok.png" alt="OK" /></span></td>
+								<td><span style="color:green;font-weight:bold;"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/butn-ok.png" alt="OK" /></span></td>
 							{else}
-								<td><span style="color:red;font-weight:bold;"><img src="./templates/standard/images/butn-notok.png" alt="Not OK" /><br />{#makefilewritable#}</span></td>
+								<td><span style="color:red;font-weight:bold;"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/butn-notok.png" alt="Not OK" /><br />{#makefilewritable#}</span></td>
 							{/if}
 						</tr>
 						<tr valign="top">
 							<td>files {#iswritable#}</td>
 							{if $filesdir == 1}
-							<td><span style="color:green;font-weight:bold;"><img src="./templates/standard/images/butn-ok.png" alt="OK" /></span></td>
+							<td><span style="color:green;font-weight:bold;"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/butn-ok.png" alt="OK" /></span></td>
 							{else}
-							<td><span style="color:red;font-weight:bold;"><img src="./templates/standard/images/butn-notok.png" alt="Not OK" /><br />{#makedirwritable#}</span></td>
+							<td><span style="color:red;font-weight:bold;"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/butn-notok.png" alt="Not OK" /><br />{#makedirwritable#}</span></td>
 							{/if}
 						</tr>
 						<tr valign="top">
 							<td>templates_c {#iswritable#}</td>
 							{if $templatesdir == 1}
-							<td><span style="color:green;font-weight:bold;"><img src="./templates/standard/images/butn-ok.png" alt="OK" /></span></td>
+							<td><span style="color:green;font-weight:bold;"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/butn-ok.png" alt="OK" /></span></td>
 							{else}
-							<td><span style="color:red;font-weight:bold;"><img src="./templates/standard/images/butn-notok.png" alt="Not OK" /><br />{#makedirwritable#}</span></td>
+							<td><span style="color:red;font-weight:bold;"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/butn-notok.png" alt="Not OK" /><br />{#makedirwritable#}</span></td>
 							{/if}
 						</tr>
 						<tr valign="top">
 							<td>{#mb_string_enabled#}</td>
 							{if $is_mbstring_enabled}
-							<td><span style="color:green;font-weight:bold;"><img src="./templates/standard/images/butn-ok.png" alt="OK" /></span></td>
+							<td><span style="color:green;font-weight:bold;"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/butn-ok.png" alt="OK" /></span></td>
 							{else}
-							<td><span style="color:red;font-weight:bold;"><img src="./templates/standard/images/butn-notok.png" alt="Not OK" /><br />{#enable_mb_string#}</span></td>
+							<td><span style="color:red;font-weight:bold;"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/butn-notok.png" alt="Not OK" /><br />{#enable_mb_string#}</span></td>
 							{/if}
 						</tr>
 					</table>
@@ -97,7 +97,7 @@
 
 						<form class="main" method="post" action="install.php?action=step2&locale={$locale}">
 							<fieldset>
-							
+
 								<div class="row">
 									<label for="db_host" style="width:210px;">{#dbhost#}:</label><input type="text" name="db_host" id="db_host" value="localhost" />
 								</div>
@@ -118,10 +118,10 @@
 									<label style="width:210px;">&nbsp;</label>
 									<button type="submit" onfocus="this.blur();">{#continue#}</button>
 								</div>
-						
+
 							</fieldset>
 						</form>
-						
+
 					</div>
 				{else}
 					<br />
@@ -132,6 +132,6 @@
 
 			</div>
 		</div> {* install END *}
-		
+
 	</body>
 </html>
