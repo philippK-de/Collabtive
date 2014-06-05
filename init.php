@@ -61,6 +61,11 @@ if (isset($_SESSION["userid"])) {
     $gender = $_SESSION["usergender"];
     // what the user may or may not do
     $userpermissions = $_SESSION["userpermissions"];
+
+	//update user lastlogin for the onlinelist
+	$mynow = time();
+	$upd = $conn->exec("UPDATE LOW_PRIORITY user SET lastlogin='$mynow' WHERE ID = $userid");
+
     // assign it all to the templates
     $template->assign("userid", $userid);
     $template->assign("username", $username);
@@ -137,7 +142,5 @@ if (isset($userid)) {
 // clear session data for pagination
 SmartyPaginate::disconnect();
 
-//update user lastlogin for the onlinelist
-$mynow = time();
-$upd = $conn->exec("UPDATE LOW_PRIORITY user SET lastlogin='$mynow' WHERE ID = $userid");
+
 ?>
