@@ -206,7 +206,7 @@ if ($action == "index") {
         $error = $_FILES['userfile']['error'];
         $root = "./";
 
-        $desc = $_POST['desc'];
+        $desc = getArrayVal($_POST,"desc" );
         $teilnamen = explode(".", $fname);
         $teile = count($teilnamen);
         $workteile = $teile - 1;
