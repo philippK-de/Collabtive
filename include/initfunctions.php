@@ -135,6 +135,7 @@ function getMyUrl()
 function getArrayVal(array $array, $name)
 {
     if (array_key_exists($name, $array)) {
+    	$config = HTMLPurifier_Config::createDefault();
     	$purifier = new HTMLPurifier($config);
         if (!is_array($array[$name])) {
             $clean = $purifier->purify($array[$name]);
