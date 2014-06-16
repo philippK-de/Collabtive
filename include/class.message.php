@@ -314,18 +314,20 @@ class message {
             }
             $set = new settings();
             $settings = $set->getSettings();
-            $myfile = "./templates/" . $settings["template"] . "/images/files/" . $thisfile["type"] . ".png";
-            if (stristr($thisfile["type"], "image")) {
-                $thisfile["imgfile"] = 1;
-            } elseif (stristr($thisfile["type"], "text")) {
-                $thisfile["imgfile"] = 2;
-            } else {
-                $thisfile["imgfile"] = 0;
-            }
+        	// Construct the path to the MIME-type icon
+        	$myfile = "./templates/" . $settings["template"] . "/theme/" . $settings["theme"] . "/images/files/" . $file['type'] . ".png";
+        	if (!file_exists($myfile)) {
+        		$file['type'] = "none";
+        	}
 
-            if (!file_exists($myfile)) {
-                $thisfile["type"] = "none";
-            }
+        	// Determine if it is an image or text file or some other kind of file (required for lightbox)
+        	if (stristr($file['type'], "image")) {
+        		$file['imgfile'] = 1;
+        	} elseif (stristr($file['type'], "text")) {
+        		$file['imgfile'] = 2;
+        	} else {
+        		$file['imgfile'] = 0;
+        	}
             array_push($files, $thisfile);
         }
 
