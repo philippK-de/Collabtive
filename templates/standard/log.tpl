@@ -1,6 +1,6 @@
-<div class="headline">
-	<a href="javascript:void(0);" id="loghead_toggle" class="win_block" onclick="toggleBlock('loghead');"></a>
-	
+<div class="headline accordion_toggle">
+	<a href="javascript:void(0);" id="loghead_toggle" class="win_none" onclick="toggleBlock('loghead');"></a>
+
 	{if $userpermissions.admin.add}
 		<div class="wintools">
 			<div class="export-main">
@@ -18,10 +18,10 @@
 	</h2>
 </div>
 
-<div class="block" id="loghead" style="{$logstyle}">
-	
+<div class="block accordion_content" id="loghead" style="overflow:hidden;">
+
 	<table class="log" cellpadding="0" cellspacing="0" border="0">
-		
+
 		<thead>
 			<tr>
 				<th class="a"></th>
@@ -45,7 +45,7 @@
 			{else}
 				<tbody class="color-b" id="log_{$log[logitem].ID}">
 			{/if}
-			
+
 				<tr>
 					<td style="padding:0" class="symbols">
 						{if $log[logitem].type == "tasklist"}
@@ -55,6 +55,7 @@
 						{elseif $log[logitem].type == "task"}
 							<img style="margin:0 0 0 3px;" src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt="" />
 						{elseif $log[logitem].type == "projekt"}
+
 							<img style="margin:0 0 0 3px;" src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />
 						{elseif $log[logitem].type == "milestone"}
 							<img style="margin:0 0 0 3px;" src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt="" />
@@ -71,7 +72,7 @@
 					<td>
 						<div class="toggle-in">
 							<strong>{$log[logitem].name|truncate:55:"...":true}</strong><br />
-							
+
 							<span class="info">{#was#}
 								{if $log[logitem].action == 1}
 									{#added#}
@@ -111,7 +112,7 @@
 				<td class="tools"></td>
 			</tr>
 		</tbody>
-		
+
 	</table>
 
 	<div class="tablemenue"></div>

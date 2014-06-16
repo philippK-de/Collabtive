@@ -71,26 +71,27 @@
 	<div class="content-spacer"></div>
 	<div class="nosmooth" id="sm_project">
 
+<div id="block_dashboard" class="block" >
 {*Miles tree*}
 {if $tree[0][0] > 0}
 <div class="projects dtree">
-	<div class="headline">
-		<a href="javascript:void(0);" id="treehead_toggle" class="win_block" onclick = "toggleBlock('treehead');"></a>
+	<div class="headline accordion_toggle">
+		<a href="javascript:void(0);" id="treehead_toggle" class="win_none" onclick = "toggleBlock('treehead');"></a>
 		<h2>
 			<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />Project Tree
 		</h2>
 	</div>
 
-	<div class="block" id="treehead">
+	<div class="block accordion_content" id="treehead">
 		<div class="block_in_wrapper" style="padding-top:0px;">
 
 	<script type="text/javascript">
-	
+
 		d{$project.ID} = new dTree('d{$project.ID}');
 		d{$project.ID}.config.useCookies = true;
 		d{$project.ID}.config.useSelection = false;
 		d{$project.ID}.add(0,-1,'');
-		
+
 		// Milestones
 		{section name=titem loop=$tree}
 			d{$project.ID}.add("m"+{$tree[titem].ID}, 0, "{$tree[titem].name}", "managemilestone.php?action=showmilestone&msid={$tree[titem].ID}&id={$project.ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png", "", {$tree[titem].daysleft});
@@ -117,11 +118,11 @@
 			// End Messages
 		{/section}
 		// End milestones
-	
+
 		document.write(d{$project.ID});
 
 	</script>
-	
+
 	<br />
 	<form id="treecontrol" action="#">
 		<fieldset>
@@ -134,14 +135,14 @@
 	{*block end*}</div>
 	{*block in wrapper end*}</div>
 </div>
-<div class="content-spacer"></div>
+<!--<div class="content-spacer"></div>-->
 {*Tree end*}
 {/if}
 
 {*Milestones*}
 <div class="miles" >
-			<div class="headline">
-				<a href="javascript:void(0);" id="milehead_toggle" class="win_block" onclick = "toggleBlock('milehead');"></a>
+			<div class="headline accordion_toggle" onclick = "toggleBlock('milehead');">
+				<a href="javascript:void(0);" id="milehead_toggle" class="win_block" ></a>
 
 				<div class="wintools">
 					<!-- <div class="export-main">
@@ -163,21 +164,19 @@
 			</div>
 
 
-			<div class="block" id="milehead" style = "{$tmilestyle}">
+			<div class="block accordion_content" id="milehead" style = "overflow:hidden;">
 				<div id = "thecal" class="bigcal"></div>
 			</div> {*block End*}
 </div>	{*miles End*}
-<div class="content-spacer"></div>
+<!--<div class="content-spacer"></div>-->
 {*Milestons END*}
-
-
 
 
 {*Timetracker*}
 {if $userpermissions.timetracker.add}
 <div class="timetrack">
-	<div class="headline">
-		<a href="javascript:void(0);" id="trackerhead_toggle" class="win_block" onclick = "toggleBlock('trackerhead');"></a>
+	<div class="headline accordion_toggle">
+		<a href="javascript:void(0);" id="trackerhead_toggle" class="win_none" onclick = "toggleBlock('trackerhead');"></a>
 
 		<!-- Export-block
 		<div class="wintools">
@@ -195,7 +194,7 @@
 		</h2>
 	</div>
 
-	<div class="block" id="trackerhead" style = "{$trackerstyle}">
+	<div class="block accordion_content" id="trackerhead" style = "overflow:hidden;">
 		<div id = "trackerform" class="addmenue">
 			{include file="addtimetracker.tpl" }
 		</div>
@@ -203,7 +202,7 @@
 	</div> {*block end*}
 </div> {*timetrack end*}
 
-<div class="content-spacer"></div>
+<!--<div class="content-spacer"></div>-->
 {/if}
 {*Timetracker End*}
 
@@ -217,6 +216,8 @@
 
 </div> {*nosmooth End*}
 
+{*block dashboard end*}
+</div>
 
 {literal}
 	<script type = "text/javascript">
@@ -238,6 +239,8 @@
 				duration: 4.0
 			});
 		});
+		var accord_dashboard = new accordion('block_dashboard');
+		accord_dashboard.activate($$('#block_dashboard .accordion_toggle')[0]);
 	</script>
 {/literal}
 
