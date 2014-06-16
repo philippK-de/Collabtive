@@ -18,7 +18,7 @@
 					<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#replywasadded#}</span>
 				{/if}
 			</div>
-			
+
 			{literal}
 				<script type = "text/javascript">
 					systemMsg('systemmsg');
@@ -87,7 +87,9 @@
 						{/if}
 							<tr>
 								<td>
-									{if $userpermissions.messages.close}<a class="butn_reply" href="managemessage.php?action=replyform&amp;mid={$messages[message].ID}&amp;id={$project.ID}" title="{#answer#}"></a>{/if}
+									{if $userpermissions.messages.close}
+											<a class="butn_reply" href="javascript:void(0);" onclick="change('managemessage.php?action=replyform&amp;mid={$messages[message].ID}&amp;id={$project.ID}','addmsg');toggleClass(this,'butn_reply_active','butn_reply');blindtoggle('addmsg');" title="{#edit#}"></a>
+									{/if}
 								</td>
 								<td>
 									<div class="toggle-in">
@@ -107,7 +109,7 @@
 								<td>{$messages[message].postdate}</td>
 								<td class="tools">
 									{if $userpermissions.messages.edit}
-										<a class="tool_edit" href="managemessage.php?action=editform&amp;mid={$messages[message].ID}&amp;id={$project.ID}" title="{#edit#}"></a>
+										<a class="tool_edit" href="javascript:void(0);" onclick="change('managemessage.php?action=editform&amp;mid={$messages[message].ID}&amp;id={$project.ID}','addmsg');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('addmsg');" title="{#edit#}"></a>
 									{/if}
 									{if $userpermissions.messages.del}
 										<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'msgs_{$messages[message].ID}\',\'managemessage.php?action=del&amp;mid={$messages[message].ID}&amp;id={$project.ID}\')');"  title="{#delete#}"></a>

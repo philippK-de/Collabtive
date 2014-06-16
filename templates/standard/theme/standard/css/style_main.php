@@ -2991,6 +2991,13 @@ a.butn_reply {
 	background-image: url(../images/butn-reply.png);
 }
 
+a.butn_reply_active {
+	display: block;
+	width: 100%;
+	height: 27px;
+	background: url(../images/butn-reply.png) no-repeat 4px -20px;
+}
+
 a.tool_edit, a.tool_del {
 	display: block;
 	width: 14px;

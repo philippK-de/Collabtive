@@ -2731,6 +2731,7 @@ a.butn_check, a.butn_checked, a.butn_reply {
 	background: url(../images/butn-check.png) no-repeat 4px 6px;
 }
 
+
 a.butn_check:hover, a.butn_checked, a.butn_reply:hover {
 	background-position: 4px -20px;
 }
@@ -2741,6 +2742,13 @@ a.butn_checked:hover {
 
 a.butn_reply {
 	background-image: url(../images/butn-reply.png);
+}
+
+a.butn_reply_active {
+	display: block;
+	width: 100%;
+	height: 27px;
+	background: url(../images/butn-reply.png) no-repeat 4px -20px;
 }
 
 a.tool_edit, a.tool_del {
