@@ -71,12 +71,12 @@
 	<div class="content-spacer"></div>
 	<div class="nosmooth" id="sm_project">
 
-<div id="block_dashboard" class="block" >
+<div id="block_dashboard" class="block"  >
 {*Miles tree*}
 {if $tree[0][0] > 0}
-<div class="projects dtree">
+<div class="projects dtree" >
 	<div class="headline accordion_toggle">
-		<a href="javascript:void(0);" id="treehead_toggle" class="win_none" onclick = "toggleBlock('treehead');"></a>
+		<a href="javascript:void(0);" id="treehead_toggle" class="win_block" onclick = "changeElements('a.win_block','win_none');toggleBlock('treehead');"></a>
 		<h2>
 			<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />Project Tree
 		</h2>
@@ -141,8 +141,8 @@
 
 {*Milestones*}
 <div class="miles" >
-			<div class="headline accordion_toggle" onclick = "toggleBlock('milehead');">
-				<a href="javascript:void(0);" id="milehead_toggle" class="win_block" ></a>
+			<div class="headline accordion_toggle" >
+				<a href="javascript:void(0);" id="milehead_toggle" class="win_none" onclick = "changeElements('a.win_block','win_none');toggleBlock('milehead');"></a>
 
 				<div class="wintools">
 					<!-- <div class="export-main">
@@ -176,7 +176,7 @@
 {if $userpermissions.timetracker.add}
 <div class="timetrack">
 	<div class="headline accordion_toggle">
-		<a href="javascript:void(0);" id="trackerhead_toggle" class="win_none" onclick = "toggleBlock('trackerhead');"></a>
+		<a href="javascript:void(0);" id="trackerhead_toggle" class="win_none" onclick = "changeElements('a.win_block','win_none');toggleBlock('trackerhead');"></a>
 
 		<!-- Export-block
 		<div class="wintools">
