@@ -26,7 +26,10 @@
 + Added AES encryption of uploaded files
 + Added CSS theme functionality. Now the CSS and image files for each template set reside in a /themes/ subfolder. This way, there can be CSS only variations of templates created more easily.
 + Change color of tab info string, making it more readable
-+ Implemented a new css themes scheme. Now each set of templates can have several css themes. This makes it unneeded to have a separate set of templates for only cosmetic variation.
++ Set cache directory for HTML purifier definitions to /files/standard/ics/
++ Messages can now be edited asyncronously
++ Messages can now be replied to asyncronously
++ Implemented a new structure for the project dashboard. It is now an accordeon where clicking each section slides it open and closes all others.
 
 Collabtive 1.2
 + Added translations: Vietnamese
