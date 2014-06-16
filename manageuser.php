@@ -15,6 +15,7 @@ if ($action != "login" and $action != "logout" and $action != "resetpassword" an
     }
 }
 
+$tasknotify = getArrayVal($_POST, "tasknotify");
 $name = getArrayVal($_POST, "name");
 $realname = getArrayVal($_POST, "realname");
 $role = getArrayVal($_POST, "role");
@@ -180,7 +181,7 @@ if ($action == "loginerror") {
             $avatar = $fname;
         }
 
-        if ($user->edit($userid, $name, $realname, $email, $tel1, $tel2, "", $zip, $gender, $turl, $address1, $address2, $state, $country, "", $locale, $avatar, 0)) {
+        if ($user->edit($userid, $name, $realname, $email, $tel1, $tel2, "", $zip, $gender, $turl, $address1, $address2, $state, $country, "", $locale, $avatar, 0, $tasknotify)) {
             if (!empty($oldpass) and !empty($newpass) and !empty($repeatpass)) {
                 $user->editpass($userid, $oldpass, $newpass, $repeatpass);
             }
@@ -188,7 +189,7 @@ if ($action == "loginerror") {
             header("Location: $loc");
         }
     } else {
-        if ($user->edit($userid, $name, $realname, $email, $tel1, $tel2, $company, $zip, $gender, $turl, $address1, $address2, $state, $country, "", $locale, "", 0)) {
+        if ($user->edit($userid, $name, $realname, $email, $tel1, $tel2, $company, $zip, $gender, $turl, $address1, $address2, $state, $country, "", $locale, "", 0, $tasknotify)) {
             if (isset($oldpass) and isset($newpass) and isset($repeatpass)) {
                 $user->editpass($userid, $oldpass, $newpass, $repeatpass);
             }

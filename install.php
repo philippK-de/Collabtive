@@ -111,7 +111,9 @@ if (!$action) {
 (14, 'rssuser', ''),
 (15, 'rsspass', ''),
 (16, 'theme', 'standard'),
-(17, 'filePass', '$filePass')");
+(17, 'filePass', '$filePass'),
+(18, 'taskmailnotify', '0'),
+(19, 'lastcheckdate', '".time()."')");
     if (!$ins) {
         $template->assign("errortext", "Error: Failed to create initial settings.");
         $template->display("error.tpl");

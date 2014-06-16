@@ -1,6 +1,7 @@
 <?php
 
 require("./init.php");
+$tasknotify = getArrayVal($_POST, "tasknotify");
 $action = getArrayVal($_GET, "action");
 $mode = getArrayVal($_GET, "mode");
 $id = getArrayVal($_GET, "id");
@@ -242,14 +243,14 @@ if ($action == "index") {
             $avatar = $fname;
         }
 
-        if ($user->edit($id, $name, "" , $email, $tel1, $tel2, $company, $zip, $gender, $turl, $address1, $address2, $state, $country, $tags, $locale, $avatar, $rate)) {
-            if (!empty($newpass) and !empty($repeatpass)) {
+        if ($user->edit($id, $name, "" , $email, $tel1, $tel2, $company, $zip, $gender, $turl, $address1, $address2, $state, $country, $tags, $locale, $avatar, $rate, $tasknotify)) {
+          if (!empty($newpass) and !empty($repeatpass)) {
                 $user->admin_editpass($id, $newpass, $repeatpass);
             }
             header("Location: admin.php?action=users&mode=edited");
         }
     } else {
-        if ($user->edit($id, $name, "", $email, $tel1, $tel2, $company, $zip, $gender, $turl, $address1, $address2, $state, $country, $tags, $locale, "", $rate)) {
+        if ($user->edit($id, $name, "", $email, $tel1, $tel2, $company, $zip, $gender, $turl, $address1, $address2, $state, $country, $tags, $locale, "", $rate, $tasknotify)) {
             if (!empty($newpass) and !empty($repeatpass)) {
                 $user->admin_editpass($id, $newpass, $repeatpass);
             }
@@ -574,8 +575,9 @@ if ($action == "index") {
     $server = getArrayVal($_POST, "server");
     $mailuser = getArrayVal($_POST, "mailuser");
     $mailpass = getArrayVal($_POST, "mailpass");
-
-    if ($theset->editMailsettings($status, $mailfrom, $mailfromname, $method, $server, $mailuser, $mailpass)) {
+    $taskmailnotify = getArrayVal($_POST, "taskmailnotify");
+    
+    if ($theset->editMailsettings($status, $mailfrom, $mailfromname, $method, $server, $mailuser, $mailpass, $taskmailnotify)) {
         header("Location: admin.php?action=system&mode=edited");
     }
 }

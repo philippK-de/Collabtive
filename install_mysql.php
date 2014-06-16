@@ -199,6 +199,7 @@ CREATE TABLE `user` (
   `locale` varchar(6)  default '',
   `avatar` varchar(255)  default '',
   `rate` varchar(10) ,
+  `tasknotify` varchar(6)  default '',
   PRIMARY KEY  (`ID`),
   UNIQUE KEY `name` (`name`),
   KEY `pass` (`pass`),

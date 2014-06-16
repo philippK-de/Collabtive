@@ -84,12 +84,14 @@ class settings {
      * @param string $method Method (e.g. SMTP)
      * @param string $mailhost Host
      * @param string $mailuser User
-	 * @param string $mailpass Password
+  	 * @param string $mailpass Password
+	   * @param int $taskmailnotify 0 = no expires task notification, int = number of days notice
      * @return bool
      */
-    function editMailsettings($onoff, $mailfrom, $mailfromname, $method, $mailhost, $mailuser, $mailpass)
+    function editMailsettings($onoff, $mailfrom, $mailfromname, $method, $mailhost, $mailuser, $mailpass, $taskmailnotify = 0)
     {
         global $conn;
+        $taskmailnotify = abs((int) $taskmailnotify);
         // This is an artifact of refactoring to a key/value table for the settings
         $theSettings = array("mailnotify" => $onoff, "mailfrom" => $mailfrom, "mailfromname" => $mailfromname, "mailmethod" => $method, "mailhost" => $mailhost, "mailuser" => $mailuser, "mailpass" => $mailpass);
         $updStmt = $conn->prepare("UPDATE settings SET `settingsValue` = ? WHERE `settingsKey` = ?");

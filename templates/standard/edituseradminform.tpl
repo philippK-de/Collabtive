@@ -210,38 +210,53 @@
 														</td>
 													</tr>
 												</tbody>
+
+                        <tbody class="color-a">
+                          <tr>
+                            <td><label for="tasknotify">{#tasknotify#}:</label></td>
+                            <td class="right">
+                              <select name = "tasknotify" id = "tasknotify" realname = "{#tasknotify#}" />
+                                {if $user.tasknotify == ""}
+                                <option value = "" selected>{#chooseone#}</option>
+                                {/if}
+                                <option {if $user.tasknotify == "yes"}selected="selected"{/if} value = "yes">{#enabled#}</option>
+                                <option {if $user.tasknotify == "no"}selected="selected"{/if} value = "no">{#disabled#}</option>
+                              </select>
+                            </td>
+                          </tr>
+                        </tbody>
 												
 												<input type="hidden" name="admin" value="{$user.admin}" />
 												
-												<tbody class="color-a">
+												<tbody class="color-b">
 													<tr>
 														<td><label for="newpass">{#newpass#}:</label></td>
 														<td class="right"><input type="password" name="newpass" id="newpass" autocomplete="off" /></td>
 													</tr>
 												</tbody>
 												
-												<tbody class="color-b">
+												<tbody class="color-a">
 													<tr>
 														<td><label for="repeatpass">{#repeatpass#}:</label></td>
 														<td class="right"><input type="password" name="repeatpass" id="repeatpass" autocomplete="off" /></td>
 													</tr>
 												</tbody>
 												
-												<tbody class="color-a">
+												<tbody class="color-b">
 													<tr>
 														<td></td>
 														<td class="right"></td>
 													</tr>
 												</tbody>
 												
-												<tbody class="color-b">
+												<tbody class="color-a">
 													<tr>
 														<td><label for="tags">{#tags#}:</label></td>
 														<td class="right"><input type="text" name="tags" id="tags" realname="{#tags#}" value="{$user.tags}" /></td>
 													</tr>
 												</tbody>
 												
-												<tbody class="color-a">
+												<tbody class="color-b">
 													<tr>
 														<td><label>{#permissions#}:</label></td>
 														<td class="right">
@@ -254,14 +269,14 @@
 													</tr>
 												</tbody>
 												
-												<tbody class="color-b">
+												<tbody class="color-a">
 													<tr>
 														<td></td>
 														<td class="right"></td>
 													</tr>
 												</tbody>
 												
-												<tbody class="color-a">
+												<tbody class="color-b">
 													<tr>
 														<td></td>
 														<td class="right">

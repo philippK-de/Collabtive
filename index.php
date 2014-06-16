@@ -21,6 +21,10 @@ $mainclasses = array("desktop" => "active",
     );
 $template->assign("mainclasses", $mainclasses);
 
+// call autocron script
+if ($settings["mailnotify"] AND ($settings["taskmailnotify"] > 0))
+  include_once("./notify.php");
+
 //create objects
 $project = new project();
 $customer = new company();
