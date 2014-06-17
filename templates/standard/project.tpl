@@ -74,7 +74,7 @@
 <div id="block_dashboard" class="block"  >
 {*Miles tree*}
 {if $tree[0][0] > 0}
-<div class="projects dtree" >
+<div class="projects dtree" style = "padding-bottom:2px;" >
 	<div class="headline accordion_toggle">
 		<a href="javascript:void(0);" id="treehead_toggle" class="win_block" onclick = "changeElements('a.win_block','win_none');toggleBlock('treehead');"></a>
 		<h2>
@@ -140,7 +140,7 @@
 {/if}
 
 {*Milestones*}
-<div class="miles" >
+<div class="miles" style = "padding-bottom:2px;">
 			<div class="headline accordion_toggle" >
 				<a href="javascript:void(0);" id="milehead_toggle" class="win_none" onclick = "changeElements('a.win_block','win_none');toggleBlock('milehead');"></a>
 
@@ -174,7 +174,7 @@
 
 {*Timetracker*}
 {if $userpermissions.timetracker.add}
-<div class="timetrack">
+<div class="timetrack" style = "padding-bottom:2px;">
 	<div class="headline accordion_toggle">
 		<a href="javascript:void(0);" id="trackerhead_toggle" class="win_none" onclick = "changeElements('a.win_block','win_none');toggleBlock('trackerhead');"></a>
 
@@ -208,7 +208,7 @@
 
 
 {*Activity Log*}
-<div class="neutral">
+<div class="neutral" style = "padding-bottom:2px;">
 	{include file="log.tpl" }
 </div>
 {*Activity Log End*}
