@@ -55,7 +55,7 @@ if (time() - $LastCheckDate[0]['settingsValue']  > 86400) { // Last check date >
                   }
               }
           }
-          if ($sender) {  //controllo se inviare la mail
+          if ($sender) {  // Check whether to send email
 //              print("<br/>".$userid[$i]['email']."<br/><br/>".$mailtext);
               $themail = new emailer($settings);    
               $themail->send_mail($userid[$i]['email'],$langfile["notifyduedate"]." ".$myprojects[$j]['name'],$mailtext);   // send mail

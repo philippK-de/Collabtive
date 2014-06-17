@@ -93,7 +93,7 @@ class settings {
         global $conn;
         $taskmailnotify = abs((int) $taskmailnotify);
         // This is an artifact of refactoring to a key/value table for the settings
-        $theSettings = array("mailnotify" => $onoff, "mailfrom" => $mailfrom, "mailfromname" => $mailfromname, "mailmethod" => $method, "mailhost" => $mailhost, "mailuser" => $mailuser, "mailpass" => $mailpass);
+        $theSettings = array("mailnotify" => $onoff, "mailfrom" => $mailfrom, "mailfromname" => $mailfromname, "mailmethod" => $method, "mailhost" => $mailhost, "mailuser" => $mailuser, "mailpass" => $mailpass, "taskmailnotify" => $taskmailnotify);
         $updStmt = $conn->prepare("UPDATE settings SET `settingsValue` = ? WHERE `settingsKey` = ?");
 
         foreach($theSettings as $setKey => $setVal) {
