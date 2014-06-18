@@ -41,14 +41,15 @@ if (time() - $LastCheckDate[0]['settingsValue']  > 86400) { // Last check date >
       for($j=0;$j<count($myprojects);$j++){   // Cycle on projects
           $sender = FALSE;
           $mailtext = $langfile["hello"].",<br/>".$langfile["taskduenotify"]." ".$myprojects[$j]['name'].":<br/><ul>";
-          $mytask = $task->getProjectTasks($myprojects[$j]['ID']);    // return the tasks for every project
-          sort($mytask);
+          $mytask = $task->getAllMyProjectTasks($myprojects[$j]['ID'],10,$userid[$i]['id']);    // return the user's tasks for every project
+          if(is_array($mytask))
+              sort($mytask);
           for($w=0;$w<count($mytask);$w++){   // Cycle on tasks
               $diffdate = $mytask[$w]['end'] - time();    // difference between now and the expiry date of the task
               $difflastdate = $mytask[$w]['end'] - $LastCheckDate[0][0];  // difference between task's expiry date and the date of last check
               if($difflastdate>0){
-                  $remaining_days = round(($diffdate/(86400)),0); // calculating the remaining days
-                  $remaining_days2 = round(($difflastdate/(86400)),0); //calculation of days left from last control
+                  $remaining_days = floor($diffdate/86400); // calculating the remaining days
+                  $remaining_days2 = floor($difflastdate/86400); // calculating the days left from last control
                   if ($remaining_days <= $settings["taskmailnotify"] AND $settings["taskmailnotify"] <= $remaining_days2){
                       $sender = TRUE; // set variable to send mail
                       $mailtext .= "<li>".$mytask[$w]['title']."</li>";  // prepare mail body
