@@ -82,7 +82,7 @@
 		</h2>
 	</div>
 
-	<div class="block accordion_content" id="treehead">
+	<div class="block accordion_content" id="treehead" style = "overflow:hidden;">
 		<div class="block_in_wrapper" style="padding-top:0px;">
 
 	<script type="text/javascript">

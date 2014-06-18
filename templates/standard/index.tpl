@@ -41,14 +41,6 @@
 				<div class="headline">
 					<a href="javascript:void(0);" id="projecthead_toggle" class="win_block" onclick="changeElements('a.win_block','win_none');toggleBlock('projecthead');accordIndex.activate($$('#block_index .acc_toggle')[0]);"></a>
 
-						{if $userpermissions.projects.add}
-							<div class="wintools">
-								<a class="add" href="javascript:blindtoggle('form_addmyproject');" id="add_myprojects" onclick="toggleClass(this,'add-active','add');toggleClass('add_butn_myprojects','butn_link_active','butn_link');">
-									<span>{#addproject#}</span>
-								</a>
-							</div>
-						{/if}
-
 					<h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{#myprojects#}</h2>
 				</div>
 				<div class = "acc_toggle"></div>
