@@ -122,6 +122,7 @@ class project {
         $del_tasklists = $conn->query("DELETE FROM tasklist WHERE project = $id");
         $del_tasks = $conn->query("DELETE FROM tasks WHERE project = $id");
         $del_timetracker = $conn->query("DELETE FROM timetracker WHERE project = $id");
+    	$del_customer = $conn->query("DELETE FROM customers_assigned WHERE project = $id");
 
         $del_logentries = $conn->query("DELETE FROM log WHERE project = $id");
         $del = $conn->query("DELETE FROM projekte WHERE ID = $id");
