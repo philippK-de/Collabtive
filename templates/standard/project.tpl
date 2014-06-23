@@ -188,7 +188,7 @@
 
 
 			<div class="block accordion_content" id="milehead" style = "overflow:hidden;">
-				<div id = "thecal" class="bigcal"></div>
+				<div id = "thecal" class="bigcal" style = "min-height:270px;"><p style="position:relative;left:50%;">Loading ...</div>
 			</div> {*block End*}
 </div>	{*miles End*}
 <!--<div class="content-spacer"></div>-->
@@ -200,17 +200,6 @@
 <div class="timetrack" style = "padding-bottom:2px;">
 	<div class="headline accordion_toggle">
 		<a href="javascript:void(0);" id="trackerhead_toggle" class="win_none" onclick = "changeElements('a.win_block','win_none');toggleBlock('trackerhead');"></a>
-
-		<!-- Export-block
-		<div class="wintools">
-			<div class="export-main">
-				<a class="export"><span>{#export#}</span></a>
-				<div class="export-in"  style="width:23px;left: -23px;"> {*at one item*}
-					<a class="ical" href="managetask.php?action=ical"><span>{#icalexport#}</span></a>
-				</div>
-			</div>
-		</div>
-		-->
 
 		<h2>
 			<a href="managetimetracker.php?action=showproject&amp;id={$project.ID}" title="{#timetracker#}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/timetracker.png" alt="" />{#timetracker#}</a>
