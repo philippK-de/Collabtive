@@ -21,6 +21,7 @@
 
 <h1>{$project.name|truncate:45:"...":true}<span>/ {#overview#}</span></h1>
 
+
 	<div class="statuswrapper">
 			<ul>
 				{if $userpermissions.projects.close}
@@ -41,6 +42,7 @@
 				<li><a>{#budget#}: {$project.budget}</a></li>
 				{/if}{/if}
 
+				{if $project.customer.company != ""}<li class="link" onclick="blindtoggle('customer');toggleClass('custtogle','desc_active','desc');"><a class = "desc" id = "custtogle">Customer: {$project.customer.company} </a></li>{/if}
 				{if $project.daysleft != "" || $project.daysleft == "0"}
 					<li {if $project.daysleft < 0}class="red"{elseif $project.daysleft == "0"}class="green"{/if}><a>{$project.daysleft} {#daysleft#}</a></li>
 				{/if}
@@ -52,6 +54,8 @@
 			</div>
 	</div>
 
+
+
 		{*Edit Task*}
 		{if $userpermissions.projects.edit}
 			<div id = "form_edit" class="addmenue" style = "display:none;clear:both;">
@@ -59,6 +63,25 @@
 				{include file="editform.tpl" showhtml="no" }
 			</div>
 		{/if}
+
+		<div class="nosmooth" id="sm_project_customer">
+			<div id="customer" class="descript" style="display:none;">
+				<div class="content-spacer"></div>
+				<h2>{$project.customer.company}</h2>
+				<b>Contact person:</b> {$project.customer.contact}
+				<br />
+				<b>Email:</b> <a href = "mailto:{$project.customer.email}">{$project.customer.email}</a>
+				<br />
+				<b>Phone:</b> {$project.customer.phone} / {$project.customer.mobile}
+				<br />
+				<b>URL:</b> <a href = "{$project.customer.url}" target="_blank">{$project.customer.url}</a>
+				<br /><br />
+				<b>Address:</b><br />
+				{$project.customer.address}
+				<br />{$project.customer.zip} {$project.customer.city}
+				<br />{$project.customer.country}<br />
+			</div>
+		</div>
 
 		<div class="nosmooth" id="sm_project_desc">
 			<div id="descript" class="descript" style="display:none;">

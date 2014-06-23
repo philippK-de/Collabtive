@@ -299,7 +299,7 @@ class project {
             if ($project["end"]) {
                 $daysleft = $this->getDaysLeft($project["end"]);
                 $project["daysleft"] = $daysleft;
-                $endstring = date("d.m.Y", $project["end"]);
+                $endstring = date(CL_DATEFORMAT, $project["end"]);
                 $project["endstring"] = $endstring;
             } else {
                 $project["daysleft"] = "";
@@ -311,6 +311,9 @@ class project {
             $project["name"] = stripslashes($project["name"]);
             $project["desc"] = stripslashes($project["desc"]);
             $project["done"] = $this->getProgress($project["ID"]);
+
+        	$companyObj = new company();
+        	$project["customer"] = $companyObj->getProjectCompany($id);
 
             return $project;
         } else {
