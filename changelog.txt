@@ -30,6 +30,8 @@
 + Messages can now be edited asyncronously
 + Messages can now be replied to asyncronously
 + Implemented a new structure for the project dashboard. It is now an accordeon where clicking each section slides it open and closes all others.
++ A customer can be assigned to projects
++ Remove user pictures from the onlinelist
 
 Collabtive 1.2
 + Added translations: Vietnamese
@@ -293,6 +295,7 @@ Collabtive 0.6.3
 + Added TinyMCE editor options to message edit form, reply form, milestone add form, and milestone edit form
 + Dropped update support for updating from versions earlier than 0.5
 + Removed calls to deprecated function set_magic_quotes_runtime() in class tcpdf (PDF export)
+
 + Renamed language file folders for Chinese, Greek, Ukranian, Galician, Japanese, and Czech so they
 match those used in TinyMCE
 + Complete translation to English, German, Romanian, and Bulgarian
