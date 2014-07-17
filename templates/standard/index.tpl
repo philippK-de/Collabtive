@@ -517,25 +517,47 @@
 			    }
 			});
 
+				/**
+				 *
+				 * @access public
+				 * @return void
+				 **/
+				function activateAccordeon(theAccord){
+					accordIndex.activate($$('#block_index .acc_toggle')[theAccord]);
+					changeElements("#"+blockIds[theAccord]+" > a.win_block","win_none");
+					setCookie("activeSlideIndex",theAccord);
+				}
 				var theBlocks = $$("#block_index > div .headline > a");
 				console.log(theBlocks);
 
 				//loop through the blocks and add the accordion toggle link
+				openSlide = 0;
+				blockIds = [];
 				for(i=0;i<theBlocks.length;i++)
 				{
 					var theId = theBlocks[i].getAttribute("id");
 
-					theId = theId.split("_");
-					theId = theId[0];
+					//theId = theId.split("_");
+					//theId = theId[0];
+					blockIds.push(theId);
+
+					theCook = readCookie("activeSlideIndex");
+					console.log(theCook);
+					if(theCook > 0)
+					{
+						openSlide = theCook;
+					}
 
 					var theAction = theBlocks[i].getAttribute("onclick");
-					theAction += "accordIndex.activate($$('#block_index .acc_toggle')["+i+"]);";
+					theAction += "activateAccordeon("+i+");";
 					theBlocks[i].setAttribute("onclick",theAction);
 					//console.log(theBlocks[i].getAttribute("onclick"));
 				}
 
 
-				accordIndex.activate($$('#block_index .acc_toggle')[0]);
+				//accordIndex.activate($$('#block_index .acc_toggle')[0]);
+				activateAccordeon(0);
+
 
 
 			</script>
