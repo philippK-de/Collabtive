@@ -36,7 +36,7 @@
 + Fixed white page when editing of task failed.
 + Fixed conversion of umlauts
 + Fixed accordeon in tasklist view
-
++ Fixed a bug where the list view in project->files could not be selected if the user's role had file:add deactivated.
 
 Collabtive 1.2
 + Added translations: Vietnamese
