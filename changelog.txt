@@ -34,6 +34,7 @@
 + A customer can be assigned to projects
 + Remove user pictures from the onlinelist
 + Added translation of install-readme: Simplified Chinese
++ Removed unfunctional links from the day numbers in the desktop calendar
 + Fixed white page when editing of task failed.
 + Fixed conversion of umlauts when uploading files.
 + Fixed accordeon in tasklist view
