@@ -35,7 +35,7 @@
 + Remove user pictures from the onlinelist
 + Added translation of install-readme: Simplified Chinese
 + Fixed white page when editing of task failed.
-+ Fixed conversion of umlauts
++ Fixed conversion of umlauts when uploading files.
 + Fixed accordeon in tasklist view
 + Fixed a bug where the list view in project->files could not be selected if the user's role had file:add deactivated.
 + Files in subfolders can now also be attached to messages
