@@ -37,7 +37,7 @@
 + Fixed conversion of umlauts
 + Fixed accordeon in tasklist view
 + Fixed a bug where the list view in project->files could not be selected if the user's role had file:add deactivated.
-+ Files in subfolders can now also be attached to files
++ Files in subfolders can now also be attached to messages
 + Fixed filetype detection in message::getAttachedFiles - needs more refactoring to use file::getFile
 
 Collabtive 1.2
