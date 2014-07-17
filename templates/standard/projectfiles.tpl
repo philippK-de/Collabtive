@@ -86,7 +86,7 @@
 						</div>
 						<div style = "float:right;margin-right:3px;">
 						<form id = "typechose">
-							<select id = "fileviewtype" onchange = "changeFileview(this.value,$('folderparent').value);">
+							<select id = "fileviewtype" onchange = "changeFileview(this.value);">
 								<option value = "fileview" selected>{#gridview#}</option>
 								<option value = "fileview_list" >{#listview#}</option>
 							</select>
@@ -126,8 +126,17 @@
 </div> {*content-left END*}
 {literal}
 <script type = "text/javascript">
-function changeFileview(viewtype, folder)
+function changeFileview(viewtype)
 {
+	var folder;
+	try{
+		folder = $('folderparent').value;
+	}
+	catch(e)
+	{
+		folder = 0;
+	}
+
 	if(!folder)
 	{
 		folder = 0;
