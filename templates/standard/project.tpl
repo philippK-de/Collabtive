@@ -101,7 +101,7 @@
 	<div class="headline accordion_toggle">
 		<a href="javascript:void(0);" id="treehead_toggle" class="win_block" onclick = "changeElements('a.win_block','win_none');toggleBlock('treehead');"></a>
 		<h2>
-			<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />Project Tree
+			<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{#projecttree#}
 		</h2>
 	</div>
 
@@ -150,8 +150,8 @@
 	<form id="treecontrol" action="#">
 		<fieldset>
 			<div class="row-butn-bottom">
-				<button type = "reset" id = "openall" onclick = "d{$project.ID}.openAll();" >Open all</button>
-				<button type = "reset" id = "closeall" onclick = "d{$project.ID}.closeAll();" >Close all</button>
+				<button type = "reset" id = "openall" onclick = "d{$project.ID}.openAll();" >{#openall#}</button>
+				<button type = "reset" id = "closeall" onclick = "d{$project.ID}.closeAll();" >{#closeall#}</button>
 			</div>
 		</fieldset>
 	</form>
