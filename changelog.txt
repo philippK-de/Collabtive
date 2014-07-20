@@ -42,6 +42,7 @@
 + Fixed a bug where the list view in project->files could not be selected if the user's role had file:add deactivated.
 + Files in subfolders can now also be attached to messages
 + Fixed filetype detection in message::getAttachedFiles - needs more refactoring to use file::getFile
++ Localized project tree labels
 
 Collabtive 1.2
 + Added translations: Vietnamese
