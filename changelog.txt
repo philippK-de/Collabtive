@@ -34,6 +34,8 @@
 + A customer can be assigned to projects
 + Remove user pictures from the onlinelist
 + Added translation of install-readme: Simplified Chinese
++ Removed unfunctional links from the day numbers in the desktop calendar
++ Changed error reporting during installation to display fatal run-time errors
 + Fixed white page when editing of task failed.
 + Fixed conversion of umlauts when uploading files.
 + Fixed accordeon in tasklist view
@@ -42,7 +44,7 @@
 + Fixed filetype detection in message::getAttachedFiles - needs more refactoring to use file::getFile
 + Fixed a problem with file uploads and visibility string
 + Messages can now be replied to asyncronously
-
++ Localized project tree labels
 
 Collabtive 1.2
 + Added translations: Vietnamese
