@@ -57,7 +57,7 @@ if ($action == "search")
                     {
                         $res["name"] = substr($res["name"], 0, $strlim);
                     }
-                    echo "<li><img src = \"templates/$settings[template]/images/files/$res[ftype].png\">$res[name]</li>";
+                    echo "<li><img src = \"templates/$settings[template]/theme/$settings[theme]/images/files/$res[ftype].png\">$res[name]</li>";
                 } elseif ($res["type"] != "task" and $res["type"] != "message")
                 {
                     if (strlen($res["name"]) > $strlim)
@@ -65,7 +65,7 @@ if ($action == "search")
                         $res["name"] = substr($res["name"], 0, $strlim);
                     }
                     // style = \"list-style-image: url(templates/standard/img/symbols/$res[icon]);\"
-                    echo "<li><img src = \"templates/$settings[template]/images/symbols/$res[icon]\">$res[name]</li>";
+                    echo "<li><img src = \"templates/$settings[template]/theme/$settings[theme]/images/symbols/$res[icon]\">$res[name]</li>";
                 }
                 else
                 {
@@ -74,7 +74,7 @@ if ($action == "search")
                         $res["title"] = substr($res["title"], 0, $strlim);
                     }
                     // style = \"list-style-image: url(templates/standard/img/symbols/$res[icon]);\"
-                    echo "<li><img src = \"templates/$settings[template]/images/symbols/$res[icon]\" >$res[title]</li>";
+                    echo "<li><img src = \"templates/$settings[template]/theme/$settings[theme]/images/symbols/$res[icon]\" >$res[title]</li>";
                 }
             }
         }
