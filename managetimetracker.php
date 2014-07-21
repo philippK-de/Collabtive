@@ -359,9 +359,9 @@ if ($action == "add") {
     }
 
     if (!empty($start) and !empty($end)) {
-        $track = $tracker->getProjectTrack($id, $usr, $taski, $start, $end, 25);
+        $track = $tracker->getProjectTrack($id, $usr, $taski, $start, $end, 50);
     } else {
-        $track = $tracker->getProjectTrack($id, $usr, $taski, 0, 0, 25);
+        $track = $tracker->getProjectTrack($id, $usr, $taski, 0, 0, 50);
     }
     if (!empty($track)) {
         $totaltime = $tracker->getTotalTrackTime($track);
