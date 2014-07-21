@@ -446,7 +446,7 @@ class datei {
 
                     chmod($datei_final, 0755);
 
-                    $fid = $this->add_file($name, $desc, $project, 0,  $datei_final2, "$typ", $title, $folder, $visstr);
+                    $fid = $this->add_file($name, $desc, $project, 0,  $datei_final2, "$typ", $title, $folder, "");
 
                     if (!empty($title)) {
                         $this->mylog->add($title, 'file', 1, $project);

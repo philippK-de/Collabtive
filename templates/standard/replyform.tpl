@@ -67,12 +67,8 @@
 
 						<div class="row">
 							<label>{$langfile.files}:</label>
-							<button class="inner" onclick="blindtoggle('files-add');toggleClass(this,'inner-active','inner');return false;" onfocus="this.blur()">{$langfile.addbutton}</button>
-							<button class="inner" onclick="blindtoggle('files-attach');toggleClass(this,'inner-active','inner');return false;" onfocus="this.blur()">{$langfile.attachbutton}</button>
-						</div>
-
 						{*Attach*}
-						<div id="files-attach" class="blinded" style="display:none;clear:both;">
+						<div id="files-attach" class="blinded">
 							<div class="row">
 								<label for="thefiles">{$langfile.attachfile}:</label>
 								<select name="thefiles" id="thefiles">
@@ -86,6 +82,9 @@
 								</select>
 							</div>
 						</div>
+
+						</div>
+
 
 						<div class="row">
 							<label>{$langfile.notify}:</label>

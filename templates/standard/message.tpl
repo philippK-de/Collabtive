@@ -16,7 +16,7 @@
 					<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt="" />{#replywasadded#}</span>
 				{/if}
 			</div>
-			
+
 			{literal}
 				<script type="text/javascript">
 					apperar = new Effect.Appear('systemmsg', { duration: 2.0 })
@@ -98,7 +98,7 @@
 
 						{if $message.tagsarr[0] != "" or $message.milestones[0] != ""}
 							<div class="content-spacer-b"></div>
-						
+
 							{* Milestones *}
 							{if $message.milestones[0] != ""}
 								<p>
@@ -135,7 +135,8 @@
 															<div class="inmenue"></div>
 														</td>
 														<td class="thumb">
-															<a href = "{$message.files[file].datei}"{if $message.files[file].imgfile == 1} rel="lytebox[img{$message.files[file].ID}]" {elseif $message.files[file].imgfile == 2} rel = "lyteframe[text{$message.files[file].ID}]"{/if} title="{$message.files[file].name}">
+	<!--														<a href = "{$message.files[file].datei}"{if $message.files[file].imgfile == 1} rel="lytebox[img{$message.files[file].ID}]" {elseif $message.files[file].imgfile == 2} rel = "lyteframe[text{$message.files[file].ID}]"{/if} title="{$message.files[file].name}">-->
+															<a href = "managefile.php?action=downloadfile&amp;id={$message.files[file].project}&amp;file={$message.files[file].ID}"{if $message.files[file].imgfile == 1} rel="lytebox[img{$message.ID}]"{/if} title="{$message.files[file].name}">
 																{if $message.files[file].imgfile == 1}
 																	<img src = "thumb.php?pic={$message.files[file].datei}&amp;width=32" alt="{$message.files[file].name}" />
 																{else}
@@ -154,7 +155,9 @@
 													<tr>
 														<td colspan="3">
 															<span class="name">
-																<a href = "{$message.files[file].datei}"{if $message.files[file].imgfile == 1} rel="lytebox[img{$message.files[file].ID}]" {elseif $message.files[file].imgfile == 2} rel = "lyteframe[text{$message.files[file].ID}]"{/if} title="{$message.files[file].name}">
+															<!--	<a href = "{$message.files[file].datei}"{if $message.files[file].imgfile == 1} rel="lytebox[img{$message.files[file].ID}]" {elseif $message.files[file].imgfile == 2} rel = "lyteframe[text{$message.files[file].ID}]"{/if} title="{$message.files[file].name}">-->
+														<a href = "managefile.php?action=downloadfile&amp;id={$message.files[file].project}&amp;file={$message.files[file].ID}"{if $message.files[file].imgfile == 1} rel="lytebox[img{$message.ID}]"{/if} title="{$message.files[file].name}">
+
 																	{if $message.files[file].title != ""}
 																	{$message.files[file].title|truncate:13:"...":true}
 																	{else}
@@ -260,7 +263,7 @@
 															<div class="avatar"><img src = "thumb.php?width=80&amp;height=80&amp;pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-male.jpg" alt="" /></div>
 														{/if}
 													{/if}
-													
+
 													<div class="message">
 														<div class="message-in">
 															{$replies[reply].text|nl2br}
@@ -292,25 +295,31 @@
 																						<div class="inmenue"></div>
 																					</td>
 																					<td class="thumb">
-																						<a href = "{$replies[reply].files[file].datei}"{if $replies[reply].files[file].imgfile == 1} rel="lytebox[img{$replies[reply].files[file].ID}]" {elseif $replies[reply].files[file].imgfile == 2} rel = "lyteframe[text{$replies[reply].files[file].ID}]"{/if} title="{$replies[reply].files[file].name}">
-																							{if $replies[reply].files[file].imgfile == 1}
+																					<!--	<a href = "{$replies[reply].files[file].datei}"{if $replies[reply].files[file].imgfile == 1} rel="lytebox[img{$replies[reply].files[file].ID}]" {elseif $replies[reply].files[file].imgfile == 2} rel = "lyteframe[text{$replies[reply].files[file].ID}]"{/if} title="{$replies[reply].files[file].name}">-->
+																						<a href = "managefile.php?action=downloadfile&amp;id={$replies[reply].files[file].project}&amp;file={$replies[reply].files[file].ID}"{if $replies[reply].files[file].imgfile == 1} rel="lytebox[img{$replies[reply].ID}]"{/if} title="{$replies[reply].files[file].name}">
+																							{*if $replies[reply].files[file].imgfile == 1}
 																							<img src = "thumb.php?pic={$replies[reply].files[file].datei}&amp;width=32" alt="" />
 																							{else}
 																							<img src = "templates/{$settings.template}/theme/{$settings.theme}/images/files/{$replies[reply].files[file].type}.png" alt="" />
-																							{/if}
+																							{/if*}
+																							<img src = "templates/{$settings.template}/theme/{$settings.theme}/images/files/{$replies[reply].files[file].type}.png" alt="" />
 																						</a>
 																					</td>
 																					<td class="rightmen" valign="top">
 																						<div class="inmenue">
 																							{if $userpermissions.messages.del}
-																								<a class="del" href="javascript:void(0);" onclick = "javascript:confirmfunction('{$langfile.confirmdel}','deleteElement(\'fli_{$replies[reply].files[file].ID}\',\'managefile.php?action=delete&id={$myprojects[project].ID}&file={$replies[reply].files[file].ID}\')');"></a>
+																								<a class="del" href="javascript:void(0);" onclick = "confirmfunction('{$langfile.confirmdel}','deleteElement(\'fli_{$replies[reply].files[file].ID}\',\'managefile.php?action=delete&id={$replies[reply].files[file].project}&file={$replies[reply].files[file].ID}\')');"></a>
 																							{/if}
 																						</div>
 																					</td>
 																				</tr>
 																				<tr>
 																					<td colspan="3">
-																						<span class="name"><a href = "{$replies[reply].files[file].datei}"{if $replies[reply].files[file].imgfile == 1} rel="lytebox[img{$replies[reply].files[file].ID}]" {elseif $replies[reply].files[file].imgfile == 2} rel = "lyteframe[text{$replies[reply].files[file].ID}]"{/if} title="{$replies[reply].files[file].name}">{$replies[reply].files[file].name|truncate:15:"...":true}</a></span>
+																						<span class="name">
+																						<!--<a href = "{$replies[reply].files[file].datei}"{if $replies[reply].files[file].imgfile == 1} rel="lytebox[img{$replies[reply].files[file].ID}]" {elseif $replies[reply].files[file].imgfile == 2} rel = "lyteframe[text{$replies[reply].files[file].ID}]"{/if} title="{$replies[reply].files[file].name}">{$replies[reply].files[file].name|truncate:15:"...":true}</a></span>-->	<a href = "managefile.php?action=downloadfile&amp;id={$replies[reply].files[file].project}&amp;file={$replies[reply].files[file].ID}"{if $replies[reply].files[file].imgfile == 1} rel="lytebox[img{$replies[reply].ID}]"{/if} title="{$replies[reply].files[file].name}">
+																						{$replies[reply].files[file].name|truncate:15:"...":true}
+																						</a>
+
 																					</td>
 																				<tr/>
 																			</table>
