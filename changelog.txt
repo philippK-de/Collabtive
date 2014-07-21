@@ -30,7 +30,9 @@
 + Set cache directory for HTML purifier definitions to /files/standard/ics/
 + Messages can now be edited asyncronously
 + Messages can now be replied to asyncronously
++ Implemented a new structure for the desktop. It is now an accordeon where clicking each section slides it open and closes all others.
 + Implemented a new structure for the project dashboard. It is now an accordeon where clicking each section slides it open and closes all others.
++ Customer profiles can be added in admin->customer
 + A customer can be assigned to projects
 + Remove user pictures from the onlinelist
 + Added translation of install-readme: Simplified Chinese
@@ -45,7 +47,7 @@
 + Fixed a problem with file uploads and visibility string
 + Messages can now be replied to asyncronously
 + Localized project tree labels
-+ Fixed cancel button submitting the form in project->edit
++ Fixed cancel button submitting the form in task->edit
 
 Collabtive 1.2
 + Added translations: Vietnamese
