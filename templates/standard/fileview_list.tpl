@@ -5,7 +5,7 @@
 	<thead>
 		<tr>
 			<th class="a" style="text-align:center;width:5%;border-right:0px;"></th>
-			<th class="b" style="text-align:left;width:50%;border-left:0px;">Name</th>
+			<th class="b" style="text-align:left;width:50%;border-left:0px;">{#name#}</th>
 			<th class="c" style="text-align:left;width:20%">{#uploaded#}</th>
 			<th class="d" style="text-align:left;width:10%;">{#filesize#}</th>
 			<th class="tools" style="width:3%;"></th>
