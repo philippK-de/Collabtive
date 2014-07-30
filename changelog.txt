@@ -12,7 +12,7 @@
 + Revert to gridview as the default file view (this was changed in 1.2 b/c of issues)
 + Added edge case for SSL detection
 + Removed .htaccess file as it was causing trouble with some servers
-+ Added start date functionality for tasks (TODO: turn into optional parameter by debugging required="0" and presenting field as empty on form open;)
++ Added start date functionality for tasks
 + Fixed several typos in style_form.css
 + Fixed typo in paginate-first function
 + Fixed cancel button for deleting folders in list view
@@ -45,10 +45,9 @@
 + Files in subfolders can now also be attached to messages
 + Fixed filetype detection in message::getAttachedFiles - needs more refactoring to use file::getFile
 + Fixed a problem with file uploads and visibility string
-+ Messages can now be replied to asyncronously
++ Fixed cancel button submitting the form in task->edit
 + Localized project tree labels
 + Localized label for name in list view for files
-+ Fixed cancel button submitting the form in task->edit
 
 Collabtive 1.2
 + Added translations: Vietnamese
