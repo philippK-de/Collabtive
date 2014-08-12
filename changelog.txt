@@ -47,6 +47,8 @@
 + Fixed cancel button submitting the form in task->edit
 + Localized project tree labels
 + Localized label for name in list view for files
++ Added a new CSS theme: spring
++ Fixed various display bugs
 
 Collabtive 1.2
 + Added translations: Vietnamese
