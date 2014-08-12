@@ -556,6 +556,7 @@
 
 
 				//accordIndex.activate($$('#block_index .acc_toggle')[0]);
+				//activateAccordeon(openSlide);
 				activateAccordeon(0);
 
 
