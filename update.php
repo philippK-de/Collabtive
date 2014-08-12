@@ -17,6 +17,14 @@ function randomPassword() {
 }
 $filePass = randomPassword();
 
+$conn->query("CREATE TABLE IF NOT EXISTS `customers_assigned` (
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `customer` int(10) NOT NULL,
+  `project` int(10) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+)");
+
 $conn->query("INSERT INTO `settings` (`ID` ,`settingsKey` ,`settingsValue`) VALUES (NULL , 'theme', '')");
 $conn->query("UPDATE `settings` SET `theme`=settings.template");
 $conn->query("UPDATE `settings` SET `template`=`standard`");
