@@ -6,6 +6,8 @@ if (!isset($_SESSION["userid"])) {
     $template->display("login.tpl");
     die();
 }
+$path = "./include/phpseclib";
+set_include_path(get_include_path() . PATH_SEPARATOR . $path);
 $myfile = new datei();
 
 $POST_MAX_SIZE = ini_get('post_max_size');
@@ -117,6 +119,7 @@ if ($action == "upload") {
     $loc = $url .= "managefile.php?action=showproject&id=$id&mode=added";
   	//header("Location: $loc");
 } elseif ($action == "uploadAsync") {
+
     if (!$userpermissions["files"]["add"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
@@ -141,6 +144,7 @@ if ($action == "upload") {
     $chk = 0;
     foreach($_FILES as $file) {
     	$myfile->encryptFile($file["tmp_name"], $settings["filePass"]);
+    	echo $file["tmp_name"];
         $fid = $myfile->uploadAsync($file["name"], $file["tmp_name"], $file["type"], $file["size"], $upath, $id, $upfolder);
         $fileprops = $myfile->getFile($fid);
 
