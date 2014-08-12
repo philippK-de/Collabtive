@@ -1,8 +1,8 @@
 <?php
-
+error_reporting(0);
 require("./init.php");
 
-error_reporting(0);
+
 // VERSION-DEPENDENT
 //2.0
 function randomPassword() {
@@ -18,6 +18,7 @@ function randomPassword() {
 $filePass = randomPassword();
 $path = "./include/phpseclib";
 set_include_path(get_include_path() . PATH_SEPARATOR . $path);
+
 $conn->query("CREATE TABLE IF NOT EXISTS `customers_assigned` (
   `ID` int(10) NOT NULL AUTO_INCREMENT,
   `customer` int(10) NOT NULL,
@@ -26,7 +27,7 @@ $conn->query("CREATE TABLE IF NOT EXISTS `customers_assigned` (
   UNIQUE KEY `ID` (`ID`)
 )");
 $oldTemplate = $settings["template"];
-
+$template->assign("theme",$oldTemplate);
 $conn->query("INSERT INTO `settings` (`ID` ,`settingsKey` ,`settingsValue`) VALUES (NULL , 'theme', '$oldTemplate')");
 $conn->query("UPDATE `settings` SET `template`='standard'");
 
