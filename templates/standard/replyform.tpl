@@ -66,7 +66,6 @@
 						</div>
 
 						<div class="row">
-							<label>{$langfile.files}:</label>
 						{*Attach*}
 						<div id="files-attach" class="blinded">
 							<div class="row">

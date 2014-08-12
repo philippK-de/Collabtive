@@ -542,7 +542,7 @@
 					blockIds.push(theId);
 
 					theCook = readCookie("activeSlideIndex");
-					console.log(theCook);
+					//console.log(theCook);
 					if(theCook > 0)
 					{
 						openSlide = theCook;
