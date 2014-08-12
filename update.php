@@ -9,14 +9,15 @@ function randomPassword() {
 	$alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
 	$pass = array(); //remember to declare $pass as an array
 	$alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
-	for ($i = 0; $i < 12; $i++) {
+	for ($i = 0; $i < 16; $i++) {
 		$n = rand(0, $alphaLength);
 		$pass[] = $alphabet[$n];
 	}
 	return implode($pass); //turn the array into a string
 }
 $filePass = randomPassword();
-
+$path = "./include/phpseclib";
+set_include_path(get_include_path() . PATH_SEPARATOR . $path);
 $conn->query("CREATE TABLE IF NOT EXISTS `customers_assigned` (
   `ID` int(10) NOT NULL AUTO_INCREMENT,
   `customer` int(10) NOT NULL,
@@ -24,9 +25,9 @@ $conn->query("CREATE TABLE IF NOT EXISTS `customers_assigned` (
   PRIMARY KEY (`ID`),
   UNIQUE KEY `ID` (`ID`)
 )");
+$oldTemplate = $settings["template"];
 
-$conn->query("INSERT INTO `settings` (`ID` ,`settingsKey` ,`settingsValue`) VALUES (NULL , 'theme', '')");
-$conn->query("UPDATE `settings` SET `theme`=settings.template");
+$conn->query("INSERT INTO `settings` (`ID` ,`settingsKey` ,`settingsValue`) VALUES (NULL , 'theme', '$oldTemplate')");
 $conn->query("UPDATE `settings` SET `template`=`standard`");
 
 $conn->query("INSERT INTO `settings` (`ID`, `settingsKey`, `settingsValue`) VALUES (NULL, 'filePass', '$filePass')");
