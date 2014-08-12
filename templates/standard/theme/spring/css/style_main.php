@@ -111,7 +111,7 @@ $filesColorC = "url(../images/tables-projects-bg-c.png)"; // Files in Messages
 
 /*
 ##  Visional Arts CSS Framework 1.1 static
-##  Author & Copyright: Marcus Fröhner
+##  Author & Copyright: Marcus Froehner
 ##  URL: http://www.visional-arts.de
 ##  Color Scheme: Eva Kiszka
 */
@@ -400,6 +400,10 @@ td.message ul {
 
 #mainmenue .submen li.system-settings a {
 	background: url(../images/main-admin-c.png) no-repeat 0 0;
+}
+
+#mainmenue .submen li.customer-settings a {
+	background: url(../images/main-admin-d.png) no-repeat 0 0;
 }
 
 #mainmenue li:hover a, #mainmenue li a.active, #mainmenue .submen li:hover a, #mainmenue .submen li a.active {
@@ -1735,6 +1739,10 @@ ul.tabs li.desk a {
 
 ul.tabs li.projects a {
 	background-image: url(../images/symbols/tab-projects.png);
+}
+
+ul.tabs li.customers a {
+	background-image: url(../images/symbols/tab-customers.png);
 }
 
 ul.tabs li.tasks a {

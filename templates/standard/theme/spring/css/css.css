@@ -105,7 +105,7 @@ td.message ul {
 }
 
 .login-in {
-	background: #598a31;
+	background: #598a31; /*url(../images/color-a.png) repeat 0 0;*/
 }
 
 .login-alert {
@@ -1263,6 +1263,7 @@ td.message ul {
 
 #onlinelist a.user:hover, .chat-user {
 	color: #6daa3b;
+	/*background: url(../images/onlinelist-hover.png) repeat 0 0; */
 }
 
 #onlinelist a.chat, .chat-user {
