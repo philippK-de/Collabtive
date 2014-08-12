@@ -319,7 +319,8 @@
 				</div>
 				<div class = "acc_toggle"></div>
 				<div class="block acc_content" id="activityhead" style = "overflow:hidden;" >
-
+				<div id = "addmsg" class="addmenue" style = "display:none;">
+				</div>
 					<table id="desktopmessages" cellpadding="0" cellspacing="0" border="0">
 
 						<thead>
@@ -369,7 +370,7 @@
 									<td>{$messages[message].postdate}</td>
 									<td class="tools">
 										{if $userpermissions.messages.edit}
-											<a class="tool_edit" href="managemessage.php?action=editform&amp;mid={$messages[message].ID}&amp;id={$messages[message].project}&amp;redir=index.php" title="{#edit#}"></a>
+											<a class="tool_edit" href="javascript:void(0);" onclick="change('managemessage.php?action=editform&amp;mid={$messages[message].ID}&amp;id={$messages[message].project}','addmsg');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('addmsg');" title="{#edit#}"></a>
 										{/if}
 										{if $userpermissions.messages.del}
 											<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'messages_{$messages[message].ID}\',\'managemessage.php?action=del&amp;mid={$messages[message].ID}&amp;id={$messages[message].project}\')');"  title="{#delete#}"></a>
