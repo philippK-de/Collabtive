@@ -28,7 +28,7 @@ $conn->query("CREATE TABLE IF NOT EXISTS `customers_assigned` (
 $oldTemplate = $settings["template"];
 
 $conn->query("INSERT INTO `settings` (`ID` ,`settingsKey` ,`settingsValue`) VALUES (NULL , 'theme', '$oldTemplate')");
-$conn->query("UPDATE `settings` SET `template`=`standard`");
+$conn->query("UPDATE `settings` SET `template`='standard'");
 
 $conn->query("INSERT INTO `settings` (`ID`, `settingsKey`, `settingsValue`) VALUES (NULL, 'filePass', '$filePass')");
 
