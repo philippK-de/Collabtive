@@ -119,7 +119,6 @@ if ($action == "upload") {
     $loc = $url .= "managefile.php?action=showproject&id=$id&mode=added";
   	//header("Location: $loc");
 } elseif ($action == "uploadAsync") {
-
     if (!$userpermissions["files"]["add"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
@@ -142,12 +141,16 @@ if ($action == "upload") {
     }
     $num = count($_FILES);
     $chk = 0;
-    foreach($_FILES as $file) {
+    //Loop through uploaded files
+	foreach($_FILES as $file) {
+		//encrypt files in their tmp location
     	$myfile->encryptFile($file["tmp_name"], $settings["filePass"]);
-    	echo $file["tmp_name"];
+		//upload them to the files folder and add to the database
         $fid = $myfile->uploadAsync($file["name"], $file["tmp_name"], $file["type"], $file["size"], $upath, $id, $upfolder);
-        $fileprops = $myfile->getFile($fid);
+        //get the new file object
+		$fileprops = $myfile->getFile($fid);
 
+		//send mail notifications
         if ($settings["mailnotify"]) {
             $sendto = getArrayVal($_POST, "sendto");
             $usr = (object) new project();
