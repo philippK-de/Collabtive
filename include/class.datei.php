@@ -582,7 +582,7 @@ class datei {
             if (stristr($file['type'], "image")) {
                 $file['imgfile'] = 1;
             } elseif (stristr($file['type'], "text")) {
-                $file['imgfile'] = 2;
+                $file['imgfile'] = 0;
             } else {
                 $file['imgfile'] = 0;
             }

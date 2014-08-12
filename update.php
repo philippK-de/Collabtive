@@ -17,9 +17,20 @@ function randomPassword() {
 }
 $filePass = randomPassword();
 
-$conn->query("INSERT INTO `settings` (`ID` ,`settingsKey` ,`settingsValue`) VALUES (NULL , 'theme', 'standard')");
+$conn->query("INSERT INTO `settings` (`ID` ,`settingsKey` ,`settingsValue`) VALUES (NULL , 'theme', '')");
+$conn->query("UPDATE `settings` SET `theme`=`template`");
+$conn->query("UPDATE `settings` SET `template`=`standard`");
+
 $conn->query("INSERT INTO `settings` (`ID`, `settingsKey`, `settingsValue`) VALUES (NULL, 'filePass', '$filePass')");
 
+$filesList = $conn->query("SELECT * FROM `files`")->fetchAll();
+$fileObj = new datei();
+
+foreach($filesList as $file)
+{
+	$tmpFile = CL_ROOT . "/" . $file["datei"];
+	$fileObj->encryptFile($tmpFile,$filePass);
+}
 //drop tags field from files
 $conn->query("ALTER TABLE `files` DROP `tags`");
 // VERSION-INDEPENDENT
