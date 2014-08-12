@@ -590,7 +590,6 @@ class datei {
             // Strip slashes from title, desc and tags
             $file["title"] = stripslashes($file["title"]);
             $file["desc"] = stripslashes($file["desc"]);
-            $file["tags"] = stripslashes($file["tags"]);
             $file["size"] = filesize(realpath($file["datei"])) / 1024;
             $file["size"] = round($file["size"]);
             $file["addedstr"] = date(CL_DATEFORMAT, $file["added"]);
