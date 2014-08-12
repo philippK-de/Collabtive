@@ -18,7 +18,7 @@ function randomPassword() {
 $filePass = randomPassword();
 
 $conn->query("INSERT INTO `settings` (`ID` ,`settingsKey` ,`settingsValue`) VALUES (NULL , 'theme', '')");
-$conn->query("UPDATE `settings` SET `theme`=`template`");
+$conn->query("UPDATE `settings` SET `theme`=settings.template");
 $conn->query("UPDATE `settings` SET `template`=`standard`");
 
 $conn->query("INSERT INTO `settings` (`ID`, `settingsKey`, `settingsValue`) VALUES (NULL, 'filePass', '$filePass')");
