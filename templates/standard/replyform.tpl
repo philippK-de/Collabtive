@@ -106,11 +106,11 @@
 							<button type="submit" onfocus="this.blur()">{$langfile.send}</button>
 							{if $showhtml == "no"}
 								{if $reply != "a"}
-									<button onclick="blindtoggle('form_reply_b');toggleClass('add_replies','add-active','add');toggleClass('add_butn_replies','butn_link_active','butn_link');toggleClass('sm_replies','smooth','nosmooth');return false;" onfocus="this.blur()">{$langfile.cancel}</button>
+									<button type = "reset" onclick="blindtoggle('addmsg');toggleClass('add_replies','add-active','add');toggleClass('butn_reply','butn_reply_active','butn_reply');toggleClass('sm_replies','smooth','nosmooth');return false;" onfocus="this.blur()">{$langfile.cancel}</button>
 								{/if}
 							{/if}
 							{if $reply == "a"}
-								<button onclick="blindtoggle('form_reply_a');toggleClass('add_reply_a','reply-active','reply');toggleClass('sm_replies_a','smooth','nosmooth');return false;" onfocus="this.blur()">{$langfile.cancel}</button>
+								<button type = "reset" onclick="blindtoggle('form_reply_a');toggleClass('add_reply_a','reply-active','reply');toggleClass('sm_replies_a','smooth','nosmooth');return false;" onfocus="this.blur()">{$langfile.cancel}</button>
 							{/if}
 						</div>
 
