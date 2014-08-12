@@ -1,0 +1,263 @@
+.export-main, .add-main {
+	float: right;
+	width: 30px;
+	height: 26px;
+	position: relative;
+	left: 0;
+	top: -41px;
+	margin: 0 9px -26px 0;
+	background-repeat: no-repeat;
+	background-position: right 0;
+	z-index: 9;
+}
+
+
+
+.add-main {
+	width: 19px;	
+}
+
+.wintools .export-main {
+	position: relative;
+	top: 0;
+	z-index: 1;
+	margin: 0;
+	float: left;
+}
+
+.export-main a span, .wintools a span, .add-main a span {
+	display: none;
+	white-space: nowrap;
+}
+
+.export-main a:hover span, .export-main .export-in a:hover span, .wintools a:hover span, .add-main a:hover span {
+	display: block;
+	height: 21px;
+	line-height: 21px;
+	position: absolute;
+	top: -34px;	
+	right: 0;
+	z-index: 9;
+	color: <? echo $colorMain; ?>;
+	font-size: 12px;
+	background: <? echo $leftBlockBg; ?>;
+	padding: 0 7px 0 7px;
+	-moz-border-radius-topleft: 2px;
+	-moz-border-radius-topright: 2px;	
+	-webkit-border-top-left-radius: 2px;
+	-webkit-border-top-right-radius: 2px;	
+}
+
+.wintools .export-main a:hover span, .wintools .export-main .export-in a:hover span, .wintools a:hover span {
+	top: -28px;
+	color: <? echo $leftBlockBg; ?>;
+	font-weight: bold;
+}
+
+
+.export-main .export-in a:hover span {
+	right: -30px;
+}
+
+.export-main:hover, .add-main:hover {
+	cursor: pointer;
+	background-position: right -31px;
+}
+
+.export-in {
+	display: none;
+	position: absolute;
+	top: 0;
+	z-index: 8;
+	right: 30px;
+	height: 100%;
+	float: left;
+}
+
+.export-main:hover .export-in {
+	display: block;
+}
+
+.export-main a, .wintools a, .add-main a {
+	float: left;
+	display: block;
+	width: 19px;
+	height: 100%;
+	margin-left: 4px;
+	background-repeat: no-repeat;		
+	background-position: 0 0;
+}
+
+.toolwrapper {
+	float: left;
+	height: 100%;
+	margin-left: 5px;	
+}
+
+.projects .export-main, .projects .export-main a {
+	background-image: url(../images/export-tasks.png);
+}
+
+.projects .wintools .export-main, .projects .wintools .export-main a {
+	background-image: url(../images/export-headline.png);
+}
+
+.projects .wintools .export-main a:hover span, .projects .wintools a:hover span {
+	background: <? echo $projectsMain; ?>;
+}
+
+.tasks .export-main, .tasks .export-main a {
+	background-image: url(../images/export-tasks.png);
+}
+
+.tasks .wintools .export-main, .tasks .wintools .export-main a {
+	background-image: url(../images/export-headline.png);
+}
+
+.tasks .wintools .export-main a:hover span, .tasks .wintools a:hover span, .wintools a:hover span {
+	background: <? echo $tasksMain; ?>;
+}
+
+.msgs .export-main, .msgs .export-main a {
+	background-image: url(../images/export-msgs.png);
+}
+
+.msgs .wintools .export-main, .msgs .wintools .export-main a {
+	background-image: url(../images/export-headline.png);
+}
+
+.msgs .wintools .export-main a:hover span, .msgs .wintools a:hover span {
+	background: <? echo $msgsMain; ?>;
+}
+
+.user .export-main, .user .export-main a {
+	background-image: url(../images/export-vcard.png);
+}
+
+.user .wintools .export-main, .user .wintools .export-main a {
+	background-image: url(../images/export-headline.png);
+}
+
+.user .wintools .export-main a:hover span, .user .wintools a:hover span {
+	background: <? echo $userMain; ?>;
+}
+
+.timetrack .wintools .export-main, .timetrack .wintools .export-main a {
+	background-image: url(../images/export-headline.png);
+}
+
+.timetrack .wintools .export-main a:hover span, .timetrack .wintools a:hover span {
+	background: <? echo $timetrackMain; ?>;
+}
+
+.miles .wintools .export-main, .miles .wintools .export-main a {
+	background-image: url(../images/export-headline.png);
+}
+
+.miles .wintools .export-main a:hover span, .miles .wintools a:hover span {
+	background: <? echo $milesMain; ?>;
+}
+
+.neutral .wintools .export-main, .neutral .wintools .export-main a {
+	background-image: url(../images/export-headline.png);
+}
+
+.neutral .wintools .export-main a:hover span, .neutral .wintools a:hover span {
+	background: <? echo $neutralMain; ?>;
+}
+
+.files .wintools .addmen .export-main, .files .wintools .addmen .export-main a {
+	background-image: url(../images/add-files.png);
+}
+
+.files .wintools .export-main, .files .wintools .export-main a {
+	background-image: url(../images/export-headline.png);
+}
+
+.files .wintools .export-main a:hover span, .files .wintools a:hover span {
+	background: <? echo $filesMain; ?>;
+}
+
+.export-main a.export, .wintools .export-main a.export, .files .wintools .addmen .export-main a.export {
+	background: none;
+	width: 30px;
+	margin: 0;
+}
+
+.add-main a.add, .add-main a.add-active {
+	background-image: url(../images/adds.png);
+	margin: 0;
+}
+
+.add-main a.add:hover, .add-main a.add-active {
+	background-position: 0 -31px;
+}
+
+
+.export-main a.ical {
+	background-position: 0 0;
+}
+
+.export-main a.ical:hover {
+	background-position: 0 -31px;	
+}
+
+.export-main a.pdf {
+	background-position: -23px 0;		
+}
+
+.export-main a.pdf:hover {
+	background-position: -23px -31px;	
+}
+
+.export-main a.rss {
+	background-position: -46px 0;	
+}
+
+.export-main a.rss:hover {
+	background-position: -46px -31px;	
+}
+
+.export-main a.excel {
+	background-position: -69px 0;	
+}
+
+.export-main a.excel:hover {
+	background-position: -69px -31px;	
+}
+
+.export-main a.vcardmale {
+	width: 28px;	
+	background-position: -32px 0;	
+}
+
+.export-main a.vcardmale:hover {
+	background-position: -32px -31px;	
+}
+
+.export-main a.vcardfemale {
+	width: 28px;	
+	background-position: 0 0;	
+}
+
+.export-main a.vcardfemale:hover {
+	background-position: 0 -31px;	
+}
+
+.export-main a.addfile {
+	background-position: -31px 0;	
+}
+
+.export-main a.addfile:hover, .export-main a.addfile-active {
+	background-position: -31px -31px;	
+}
+
+.export-main a.addfolder {
+	width: 27px;	
+	background-position: 0 0;	
+}
+
+.export-main a.addfolder:hover, .export-main a.addfolder-active {
+	width: 27px;	
+	background-position: 0 -31px;	
+}
