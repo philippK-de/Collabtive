@@ -528,7 +528,7 @@
 					setCookie("activeSlideIndex",theAccord);
 				}
 				var theBlocks = $$("#block_index > div .headline > a");
-				console.log(theBlocks);
+				//console.log(theBlocks);
 
 				//loop through the blocks and add the accordion toggle link
 				openSlide = 0;
