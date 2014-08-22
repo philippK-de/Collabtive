@@ -17,7 +17,7 @@
 						</select>
 					</div>
 
-          <div class="row"><label for="taskmailnotify">{#taskmailnotify#}:</label><input type="text" class="text" name="taskmailnotify" id="taskmailnotify" value = "{$settings.taskmailnotify}" /></div>
+                    <div class="row"><label for="taskmailnotify">{#taskmailnotify#}:</label><input type="text" class="text" name="taskmailnotify" id="taskmailnotify" value = "{$settings.taskmailnotify}" /></div>
 					<div class="row"><label for="mailfrommail">{#mailfrommail#}:</label><input type="text" class="text" name="mailfrommail" id="mailfrommail" value = "{$settings.mailfrom}" /></div>
 					<div class="row"><label for="mailfromname">{#mailfromname#}:</label><input type="text" class="text" name="mailfromname" id="mailfromname" value = "{$settings.mailfromname}" /></div>
 

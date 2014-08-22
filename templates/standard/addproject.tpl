@@ -57,6 +57,16 @@
 				<input type="text" class="text" name="budget" id="budget" />
 			</div>
 
+			<div class = "row">
+				<label>Customer:</label>
+				<select name="company" id="company" realname="{#assignto#}">
+					<option value="-1">{#chooseone#}</option>
+					{section name=customer loop=$customers}
+						<option value = "{$customers[customer].ID}">{$customers[customer].company}</option>
+					{/section}
+				</select>
+			</div>
+
 			<div class="row">
 				<label>{#members#}:</label>
 				<div style="float:left;">
@@ -68,6 +78,7 @@
 				    {/section}
 			    </div>
 			</div>
+
 
 			<input type="hidden" name="assignme" value="1" />
 

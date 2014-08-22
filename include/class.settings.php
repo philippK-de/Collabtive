@@ -84,8 +84,8 @@ class settings {
      * @param string $method Method (e.g. SMTP)
      * @param string $mailhost Host
      * @param string $mailuser User
-  	 * @param string $mailpass Password
-	   * @param int $taskmailnotify 0 = no expires task notification, int = number of days notice
+	 * @param string $mailpass Password
+	 * @param int $taskmailnotify 0 = no expires task notification, int = number of days notice
      * @return bool
      */
     function editMailsettings($onoff, $mailfrom, $mailfromname, $method, $mailhost, $mailuser, $mailpass, $taskmailnotify = 0)

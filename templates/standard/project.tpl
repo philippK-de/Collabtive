@@ -21,6 +21,7 @@
 
 <h1>{$project.name|truncate:45:"...":true}<span>/ {#overview#}</span></h1>
 
+
 	<div class="statuswrapper">
 			<ul>
 				{if $userpermissions.projects.close}
@@ -41,6 +42,7 @@
 				<li><a>{#budget#}: {$project.budget}</a></li>
 				{/if}{/if}
 
+				{if $project.customer.company != ""}<li class="link" onclick="blindtoggle('customer');toggleClass('custtogle','desc_active','desc');"><a class = "desc" id = "custtogle">Customer: {$project.customer.company} </a></li>{/if}
 				{if $project.daysleft != "" || $project.daysleft == "0"}
 					<li {if $project.daysleft < 0}class="red"{elseif $project.daysleft == "0"}class="green"{/if}><a>{$project.daysleft} {#daysleft#}</a></li>
 				{/if}
@@ -52,6 +54,8 @@
 			</div>
 	</div>
 
+
+
 		{*Edit Task*}
 		{if $userpermissions.projects.edit}
 			<div id = "form_edit" class="addmenue" style = "display:none;clear:both;">
@@ -59,6 +63,25 @@
 				{include file="editform.tpl" showhtml="no" }
 			</div>
 		{/if}
+
+		<div class="nosmooth" id="sm_project_customer">
+			<div id="customer" class="descript" style="display:none;">
+				<div class="content-spacer"></div>
+				<h2>{$project.customer.company}</h2>
+				<b>Contact person:</b> {$project.customer.contact}
+				<br />
+				<b>Email:</b> <a href = "mailto:{$project.customer.email}">{$project.customer.email}</a>
+				<br />
+				<b>Phone:</b> {$project.customer.phone} / {$project.customer.mobile}
+				<br />
+				<b>URL:</b> <a href = "{$project.customer.url}" target="_blank">{$project.customer.url}</a>
+				<br /><br />
+				<b>Address:</b><br />
+				{$project.customer.address}
+				<br />{$project.customer.zip} {$project.customer.city}
+				<br />{$project.customer.country}<br />
+			</div>
+		</div>
 
 		<div class="nosmooth" id="sm_project_desc">
 			<div id="descript" class="descript" style="display:none;">
@@ -71,18 +94,18 @@
 	<div class="content-spacer"></div>
 	<div class="nosmooth" id="sm_project">
 
-<div id="block_dashboard" class="block" >
+<div id="block_dashboard" class="block"  >
 {*Miles tree*}
 {if $tree[0][0] > 0}
-<div class="projects dtree">
+<div class="projects dtree" style = "padding-bottom:2px;" >
 	<div class="headline accordion_toggle">
-		<a href="javascript:void(0);" id="treehead_toggle" class="win_none" onclick = "toggleBlock('treehead');"></a>
+		<a href="javascript:void(0);" id="treehead_toggle" class="win_block" onclick = "changeElements('a.win_block','win_none');toggleBlock('treehead');"></a>
 		<h2>
-			<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />Project Tree
+			<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{#projecttree#}
 		</h2>
 	</div>
 
-	<div class="block accordion_content" id="treehead">
+	<div class="block accordion_content" id="treehead" style = "overflow:hidden;">
 		<div class="block_in_wrapper" style="padding-top:0px;">
 
 	<script type="text/javascript">
@@ -127,8 +150,8 @@
 	<form id="treecontrol" action="#">
 		<fieldset>
 			<div class="row-butn-bottom">
-				<button type = "reset" id = "openall" onclick = "d{$project.ID}.openAll();" >Open all</button>
-				<button type = "reset" id = "closeall" onclick = "d{$project.ID}.closeAll();" >Close all</button>
+				<button type = "reset" id = "openall" onclick = "d{$project.ID}.openAll();" >{#openall#}</button>
+				<button type = "reset" id = "closeall" onclick = "d{$project.ID}.closeAll();" >{#closeall#}</button>
 			</div>
 		</fieldset>
 	</form>
@@ -140,9 +163,9 @@
 {/if}
 
 {*Milestones*}
-<div class="miles" >
-			<div class="headline accordion_toggle" onclick = "toggleBlock('milehead');">
-				<a href="javascript:void(0);" id="milehead_toggle" class="win_block" ></a>
+<div class="miles" style = "padding-bottom:2px;">
+			<div class="headline accordion_toggle" >
+				<a href="javascript:void(0);" id="milehead_toggle" class="win_none" onclick = "changeElements('a.win_block','win_none');toggleBlock('milehead');"></a>
 
 				<div class="wintools">
 					<!-- <div class="export-main">
@@ -165,7 +188,7 @@
 
 
 			<div class="block accordion_content" id="milehead" style = "overflow:hidden;">
-				<div id = "thecal" class="bigcal"></div>
+				<div id = "thecal" class="bigcal" style = "min-height:270px;"><p style="position:relative;left:50%;">Loading ...</div>
 			</div> {*block End*}
 </div>	{*miles End*}
 <!--<div class="content-spacer"></div>-->
@@ -174,20 +197,9 @@
 
 {*Timetracker*}
 {if $userpermissions.timetracker.add}
-<div class="timetrack">
+<div class="timetrack" style = "padding-bottom:2px;">
 	<div class="headline accordion_toggle">
-		<a href="javascript:void(0);" id="trackerhead_toggle" class="win_none" onclick = "toggleBlock('trackerhead');"></a>
-
-		<!-- Export-block
-		<div class="wintools">
-			<div class="export-main">
-				<a class="export"><span>{#export#}</span></a>
-				<div class="export-in"  style="width:23px;left: -23px;"> {*at one item*}
-					<a class="ical" href="managetask.php?action=ical"><span>{#icalexport#}</span></a>
-				</div>
-			</div>
-		</div>
-		-->
+		<a href="javascript:void(0);" id="trackerhead_toggle" class="win_none" onclick = "changeElements('a.win_block','win_none');toggleBlock('trackerhead');"></a>
 
 		<h2>
 			<a href="managetimetracker.php?action=showproject&amp;id={$project.ID}" title="{#timetracker#}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/timetracker.png" alt="" />{#timetracker#}</a>
@@ -208,7 +220,7 @@
 
 
 {*Activity Log*}
-<div class="neutral">
+<div class="neutral" style = "padding-bottom:2px;">
 	{include file="log.tpl" }
 </div>
 {*Activity Log End*}
@@ -240,7 +252,36 @@
 			});
 		});
 		var accord_dashboard = new accordion('block_dashboard');
-		accord_dashboard.activate($$('#block_dashboard .accordion_toggle')[0]);
+
+				function activateAccordeon(theAccord){
+
+					accord_dashboard.activate($$('#block_dashboard .accordion_toggle')[theAccord]);
+					setCookie("activeSlideProject",theAccord);
+				}
+				var theBlocks = $$("#block_dashboard > div .headline > a");
+				console.log(theBlocks);
+
+				//loop through the blocks and add the accordion toggle link
+				openSlide = 0;
+				for(i=0;i<theBlocks.length;i++)
+				{
+					theCook = readCookie("activeSlideProject");
+					console.log(theCook);
+					if(theCook > 0)
+					{
+						openSlide = theCook;
+					}
+
+					var theAction = theBlocks[i].getAttribute("onclick");
+					theAction += "activateAccordeon("+i+");";
+					theBlocks[i].setAttribute("onclick",theAction);
+					//console.log(theBlocks[i].getAttribute("onclick"));
+				}
+
+
+				//accordIndex.activate($$('#block_index .acc_toggle')[0]);
+				activateAccordeon(0);
+
 	</script>
 {/literal}
 

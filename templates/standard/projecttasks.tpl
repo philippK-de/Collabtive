@@ -21,6 +21,8 @@
 			<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasassigned#}</span>
 		{elseif $mode == "deassigned"}
 			<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasdeassigned#}</span>
+		{elseif $mode == "error"}
+			<span class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#error#}</span>
 		{elseif $mode == "listadded"}
 			<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt=""/>{#tasklistwasadded#}</span>
 		{elseif $mode == "listclosed"}

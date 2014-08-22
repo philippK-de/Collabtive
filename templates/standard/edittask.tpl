@@ -156,7 +156,7 @@
 						<div class="row-butn-bottom">
 							<label>&nbsp;</label>
 							<button type="submit" onfocus="this.blur();">{$langfile.send}</button>
-							<button onclick="blindtoggle('form_edit');toggleClass('edit_butn','edit-active','edit');toggleClass('sm_task','smooth','nosmooth');return false;" onfocus="this.blur();" {if $showhtml != "no"}style="display:none;"{/if}>{$langfile.cancel}</button>
+							<button type="reset" onclick="blindtoggle('form_edit');toggleClass('edit_butn','edit-active','edit');toggleClass('sm_task','smooth','nosmooth');return false;" onfocus="this.blur();" {if $showhtml != "no"}style="display:none;"{/if}>{$langfile.cancel}</button>
 						</div>
 
 					</fieldset>

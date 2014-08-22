@@ -66,13 +66,8 @@
 						</div>
 
 						<div class="row">
-							<label>{$langfile.files}:</label>
-							<button class="inner" onclick="blindtoggle('files-add');toggleClass(this,'inner-active','inner');return false;" onfocus="this.blur()">{$langfile.addbutton}</button>
-							<button class="inner" onclick="blindtoggle('files-attach');toggleClass(this,'inner-active','inner');return false;" onfocus="this.blur()">{$langfile.attachbutton}</button>
-						</div>
-
 						{*Attach*}
-						<div id="files-attach" class="blinded" style="display:none;clear:both;">
+						<div id="files-attach" class="blinded">
 							<div class="row">
 								<label for="thefiles">{$langfile.attachfile}:</label>
 								<select name="thefiles" id="thefiles">
@@ -86,6 +81,9 @@
 								</select>
 							</div>
 						</div>
+
+						</div>
+
 
 						<div class="row">
 							<label>{$langfile.notify}:</label>
@@ -108,11 +106,11 @@
 							<button type="submit" onfocus="this.blur()">{$langfile.send}</button>
 							{if $showhtml == "no"}
 								{if $reply != "a"}
-									<button onclick="blindtoggle('form_reply_b');toggleClass('add_replies','add-active','add');toggleClass('add_butn_replies','butn_link_active','butn_link');toggleClass('sm_replies','smooth','nosmooth');return false;" onfocus="this.blur()">{$langfile.cancel}</button>
+									<button type = "reset" onclick="blindtoggle('addmsg');toggleClass('add_replies','add-active','add');toggleClass('butn_reply','butn_reply_active','butn_reply');toggleClass('sm_replies','smooth','nosmooth');return false;" onfocus="this.blur()">{$langfile.cancel}</button>
 								{/if}
 							{/if}
 							{if $reply == "a"}
-								<button onclick="blindtoggle('form_reply_a');toggleClass('add_reply_a','reply-active','reply');toggleClass('sm_replies_a','smooth','nosmooth');return false;" onfocus="this.blur()">{$langfile.cancel}</button>
+								<button type = "reset" onclick="blindtoggle('form_reply_a');toggleClass('add_reply_a','reply-active','reply');toggleClass('sm_replies_a','smooth','nosmooth');return false;" onfocus="this.blur()">{$langfile.cancel}</button>
 							{/if}
 						</div>
 

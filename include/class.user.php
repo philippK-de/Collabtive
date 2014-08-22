@@ -67,7 +67,7 @@ class user {
      * @param string $country Country
      * @param string $locale Localisation
      * @param string $avatar Avatar
-     * @param string $tasknotify warning expires task
+     * @param string $tasknotify Notices of tasks close to the deadline
      * @return bool
      */
     function edit($id, $name, $realname, $email, $tel1, $tel2, $company, $zip, $gender, $url, $address1, $address2, $state, $country, $tags, $locale, $avatar = "", $rate = 0.0, $tasknotify)

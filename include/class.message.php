@@ -303,31 +303,24 @@ class message {
             $sel2 = $conn->query("SELECT * FROM files WHERE ID = $file[0]");
             $thisfile = $sel2->fetch();
             $thisfile["type"] = str_replace("/", "-", $thisfile["type"]);
-            if (isset($thisfile["desc"])) {
-                $thisfile["desc"] = stripslashes($thisfile["desc"]);
-            }
-            if (isset($thisfile["tags"])) {
-                $thisfile["tags"] = stripslashes($thisfile["tags"]);
-            }
-            if (isset($thisfile["title"])) {
-                $thisfile["title"] = stripslashes($thisfile["title"]);
-            }
+
             $set = new settings();
             $settings = $set->getSettings();
         	// Construct the path to the MIME-type icon
-        	$myfile = "./templates/" . $settings["template"] . "/theme/" . $settings["theme"] . "/images/files/" . $file['type'] . ".png";
+        	$myfile = "./templates/" . $settings["template"] . "/theme/" . $settings["theme"] . "/images/files/" . $thisfile['type'] . ".png";
         	if (!file_exists($myfile)) {
-        		$file['type'] = "none";
+        		$thisfile['type'] = "none";
         	}
 
         	// Determine if it is an image or text file or some other kind of file (required for lightbox)
-        	if (stristr($file['type'], "image")) {
-        		$file['imgfile'] = 1;
-        	} elseif (stristr($file['type'], "text")) {
-        		$file['imgfile'] = 2;
+        	if (stristr($thisfile['type'], "image")) {
+        		$thisfile['imgfile'] = 1;
+        	} elseif (stristr($thisfile['type'], "text")) {
+        		$thisfile['imgfile'] = 2;
         	} else {
-        		$file['imgfile'] = 0;
+        		$thisfile['imgfile'] = 0;
         	}
+
             array_push($files, $thisfile);
         }
 

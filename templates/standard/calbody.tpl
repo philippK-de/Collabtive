@@ -25,54 +25,54 @@
 			<th>{$langfile.sunday}</th>
 		</tr>
 	</thead>
-	
+
 	<tbody class="content">
-	
+
 		{section name=week loop=$weeks}
-			
+
 			<tr valign="top">
-			
+
 				{* Iterate days of current week *}
 				{section name=day loop=$weeks[week]}
-					
+
 					{if $weeks[week][day].currmonth == 1}
-						{* Hightlight today *}			
+						{* Hightlight today *}
 						{if $thism == $m and $thisy == $y and $thisd == $weeks[week][day].val}
 							<td class="today" id="{$weeks[week][day].val}">
-								<a href="javascript:void(0)" onclick="fadeToggle('t{$weeks[week][day].val}');">{$weeks[week][day].val}</a>
+							{$weeks[week][day].val}
 						{else}
 							<td class="second" id="{$weeks[week][day].val}">
-								<a href="javascript:void(0)" onclick="fadeToggle('t{$weeks[week][day].val}');">{$weeks[week][day].val}</a>
+								{$weeks[week][day].val}
 						{/if}
 					{else}
 							<td class="othermonth" id="{$weeks[week][day].val}">{$weeks[week][day].val}
 					{/if}
-					
+
 								{* Only output tasks/milestones if the day belongs to the current month *}
 								{if $weeks[week][day].currmonth == 1}
-					
+
 								<div class="calcontent">
-									
+
 									{* Milestones *}
 									{if $weeks[week][day].milesnum > 0}
-										
+
 										<a href="#miles{$weeks[week][day].val}" id="mileslink{$weeks[week][day].val}">
 											<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt="" />
 										</a>
-										
+
 										<div id="miles{$weeks[week][day].val}" style="display:none;">
-											
+
 											<div class="modaltitle">
 												<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt="" />
 												{$langfile.milestones}
 												{$weeks[week][day].val}.{$m}.{$y}
 												<a class="winclose" href="javascript:Control.Modal.close();"></a>
 											</div>
-											
+
 											<div class="inmodal">
 												<div class="miles">
 													<div class="block">
-														
+
 														<table class="acc_modal" id="acc_m" cellpadding="0" cellspacing="0" border="0">
 															<colgroup>
 																<col class="m_a" />
@@ -84,15 +84,15 @@
 																<th>{$langfile.project}: {$langfile.milestone}</th>
 																<th class="tools">{$langfile.daysleft}</th>
 															</thead>
-															
+
 															{section name=stone loop=$weeks[week][day].milestones}
-																
+
 																{if $smarty.section.stone.index % 2 == 0}
 																<tbody class="color-a" id="mile_m_{$weeks[week][day].milestones[stone].ID}">
 																{else}
 																<tbody class="color-b" id="mile_m_{$weeks[week][day].milestones[stone].ID}">
 																{/if}
-																
+
 																	<tr {if $weeks[week][day].milestones[stone].daysleft < 0} class="marker-late" {elseif $weeks[week][day].milestones[stone].daysleft == 0} class="marker-today" {/if} >
 																		<td class="icon">
 																			<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt="" />
@@ -110,11 +110,11 @@
 																			{$weeks[week][day].milestones[stone].daysleft}
 																		</td>
 																	</tr>
-																	
-																	<tr class="acc">					
+
+																	<tr class="acc">
 																		<td colspan="3">
 																			<div class="accordion_toggle"></div>
-																			<div class="accordion_content">						
+																			<div class="accordion_content">
 																				<div class="content_in">
 																					{$weeks[week][day].milestones[stone].desc}
 																				</div>
@@ -122,22 +122,22 @@
 																		</td>
 																	</tr>
 																</tbody>
-																
+
 															{/section}
-															
+
 														</table>
-														
+
 													</div>
-												</div>										
+												</div>
 											</div>
 										</div>
-										
+
 										{literal}
 											<script type="text/javascript">
-												accord_m = new accordion('acc_m');							
+												accord_m = new accordion('acc_m');
 											</script>
-										{/literal}							
-										
+										{/literal}
+
 										{literal}
 											<script type="text/javascript">
 												new Control.Modal('mileslink{/literal}{$weeks[week][day].val}{literal}',{
@@ -150,13 +150,13 @@
 												});
 											</script>
 										{/literal}
-										
+
 									{/if} {* Milestones End *}
-									
-									
+
+
 									{* Tasks *}
 									{if $weeks[week][day].tasksnum > 0}
-										
+
 										<a href="#tasks{$weeks[week][day].val}" id="tasklink{$weeks[week][day].val}">
 											<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt="" />
 										</a>
@@ -167,13 +167,13 @@
 												{$weeks[week][day].val}.{$m}.{$y}
 												<a class="winclose" href="javascript:Control.Modal.close();"></a>
 											</div>
-											
+
 											<div class="inmodal">
 												<div class="tasks">
 													<div class="block">
-														
+
 														<table class="acc_modal" id="acc_mb_{$weeks[week][day].val}" cellpadding="0" cellspacing="0" border="0">
-															
+
 															<colgroup>
 																<col class="m_a" />
 																<col class="m_b" />
@@ -184,15 +184,15 @@
 																<th>{$langfile.project}: {$langfile.task}</th>
 																<th class="tools">{$langfile.daysleft}</th>
 															</thead>
-															
+
 															{section name = task loop=$weeks[week][day].tasks}
-															
+
 																{if $smarty.section.task.index % 2 == 0}
 																<tbody class="color-a" id="task_m_{$weeks[week][day].tasks[task].ID}">
 																{else}
 																<tbody class="color-b" id="task_m_{$weeks[week][day].tasks[task].ID}">
 																{/if}
-																
+
 																	<tr {if $weeks[week][day].tasks[task].daysleft < 0} class="marker-late" {elseif $weeks[week][day].tasks[task].daysleft == 0} class="marker-today" {/if} >
 																		<td class="icon">
 																			<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt="" />
@@ -201,43 +201,43 @@
 																			<div class="toggle-in">
 																				<span class="acc-toggle" onclick="javascript:accord_mb_{$weeks[week][day].val}.activate($$('#acc_mb_{$weeks[week][day].val} .accordion_toggle')[{$smarty.section.task.index}]);toggleAccordeon('acc_mb_{$weeks[week][day].val}',this);"></span>
 																				<a href="managetask.php?action=showtask&amp;tid={$weeks[week][day].tasks[task].ID}&amp;id={$weeks[week][day].tasks[task].project}" title="{$weeks[week][day].tasks[task].title}">
-																					{$weeks[week][day].tasks[task].pname}: 
+																					{$weeks[week][day].tasks[task].pname}:
 																					{$weeks[week][day].tasks[task].title|truncate:30:"...":true}
 																				</a>
 																			</div>
 																		</td>
 																		<td class="tools">{$weeks[week][day].tasks[task].daysleft}</td>
 																	</tr>
-																	
-																	<tr class="acc">					
+
+																	<tr class="acc">
 																		<td colspan="3">
 																			<div class="accordion_toggle"></div>
 																			<div class="accordion_content">
 																				<div class="content_in">
 																					{$weeks[week][day].tasks[task].text}
-																				</div>											
+																				</div>
 																			</div>
-																		</td>													
+																		</td>
 																	</tr>
-																	
+
 																</tbody>
-																							
+
 															{/section}
-																
+
 														</table>
-													
+
 													</div>
 												</div>
 											</div>
 										</div>
-										
+
 										{literal}
 											<script type="text/javascript">
 												accord_mb_{/literal}{$weeks[week][day].val}{literal} = new accordion('acc_mb_{/literal}{$weeks[week][day].val}{literal}');
-												//accord_mb = new accordion('acc_mb');							
+												//accord_mb = new accordion('acc_mb');
 											</script>
 										{/literal}
-										
+
 										{literal}
 											<script type="text/javascript">
 												new Control.Modal('tasklink{/literal}{$weeks[week][day].val}{literal}',{
@@ -250,19 +250,19 @@
 												});
 											</script>
 										{/literal}
-										
+
 									{/if} {* Tasks End *}
-									
+
 								</div> {* Calcontent End *}
-								
+
 								{/if}
-							
+
 							</td>
-			
+
 				{/section} {* Day End *}
-				
+
 			</tr>
-			
+
 		{/section} {* Week End *}
 
 	</tbody>

@@ -244,7 +244,7 @@ if ($action == "index") {
         }
 
         if ($user->edit($id, $name, "" , $email, $tel1, $tel2, $company, $zip, $gender, $turl, $address1, $address2, $state, $country, $tags, $locale, $avatar, $rate, $tasknotify)) {
-          if (!empty($newpass) and !empty($repeatpass)) {
+            if (!empty($newpass) and !empty($repeatpass)) {
                 $user->admin_editpass($id, $newpass, $repeatpass);
             }
             header("Location: admin.php?action=users&mode=edited");
@@ -439,7 +439,12 @@ if ($action == "index") {
                 }
             }
         }
-        header("Location: manageproject.php?action=showproject&id=$add");
+    	if($company > 0)
+    	{
+    		echo $company . " " . $add;
+    		$companyObj->assign($company,$add);
+    	}
+    	header("Location: manageproject.php?action=showproject&id=$add");
     }
 } elseif ($action == "closepro") {
     if ($project->close($id)) {
@@ -480,7 +485,7 @@ if ($action == "index") {
     $template->assign("allcust", $allcust);
     $template->display("admincustomers.tpl");
 } elseif ($action == "addcust") {
-    if (!$userpermissions["customers"]["add"]) {
+    if (!$userpermissions["admin"]["add"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
         $template->assign("errortext", "$errtxt<br>$noperm");
@@ -507,7 +512,12 @@ if ($action == "index") {
     $add = $companyObj->add($data);
     if ($add)
         header("Location: admin.php?action=customers&mode=added");
-} elseif ($action == "system") {
+}
+elseif($action == "assigncustomer")
+{
+
+}
+elseif ($action == "system") {
     $classes = array("overview" => "overview",
         "system" => "active",
         "users" => "users"

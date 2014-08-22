@@ -211,21 +211,21 @@
 													</tr>
 												</tbody>
 
-                        <tbody class="color-a">
-                          <tr>
-                            <td><label for="tasknotify">{#tasknotify#}:</label></td>
-                            <td class="right">
-                              <select name = "tasknotify" id = "tasknotify" realname = "{#tasknotify#}" />
-                                {if $user.tasknotify == ""}
-                                <option value = "" selected>{#chooseone#}</option>
-                                {/if}
-                                <option {if $user.tasknotify == "yes"}selected="selected"{/if} value = "yes">{#enabled#}</option>
-                                <option {if $user.tasknotify == "no"}selected="selected"{/if} value = "no">{#disabled#}</option>
-                              </select>
-                            </td>
-                          </tr>
-                        </tbody>
-												
+                                                <tbody class="color-a">
+                                                  <tr>
+                                                    <td><label for="tasknotify">{#tasknotify#}:</label></td>
+                                                    <td class="right">
+                                                      <select name = "tasknotify" id = "tasknotify" realname = "{#tasknotify#}" />
+                                                        {if $user.tasknotify != "yes" OR $user.tasknotify != "no"}
+                                                        <option value = "" selected>{#chooseone#}</option>
+                                                        {/if}
+                                                        <option {if $user.tasknotify == "yes"}selected="selected"{/if} value = "yes">{#enabled#}</option>
+                                                        <option {if $user.tasknotify == "no"}selected="selected"{/if} value = "no">{#disabled#}</option>
+                                                      </select>
+                                                    </td>
+                                                  </tr>
+                                                </tbody>
+                                                												
 												<input type="hidden" name="admin" value="{$user.admin}" />
 												
 												<tbody class="color-b">
