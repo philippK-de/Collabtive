@@ -207,7 +207,7 @@
                                                     <td><label for="tasknotify">{#tasknotify#}:</label></td>
                                                     <td class="right">
                                                     <select name = "tasknotify" id = "tasknotify" realname = "{#tasknotify#}" />
-                                                      {if !($user.tasknotify = "yes" OR $user.tasknotify = "no")}
+                                                      {if !(($user.tasknotify == "yes") OR ($user.tasknotify == "no"))}
                                                       <option value = "" selected>{#chooseone#}</option>
                                                       {/if}
                                                       <option {if $user.tasknotify == "yes"}selected="selected"{/if} value = "yes">{#enabled#}</option>
