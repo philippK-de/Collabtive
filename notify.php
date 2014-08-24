@@ -1,6 +1,6 @@
 <?php
 /*
- * Manages notification of the deadline tasks to users
+ * Manages notification of the deadline of tasks to users
  * This script act also as autocron but can be called from a server cron-job too
  * 
  * @authors Daniel Farinati and Marco Tomazzoni
