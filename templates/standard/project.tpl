@@ -21,7 +21,6 @@
 
 <h1>{$project.name|truncate:45:"...":true}<span>/ {#overview#}</span></h1>
 
-
 	<div class="statuswrapper">
 			<ul>
 				{if $userpermissions.projects.close}
@@ -53,8 +52,6 @@
 				<div class="statusbar"><div class="complete" id = "completed" style="width:0%;"></div></div>
 			</div>
 	</div>
-
-
 
 		{*Edit Task*}
 		{if $userpermissions.projects.edit}
@@ -94,78 +91,79 @@
 	<div class="content-spacer"></div>
 	<div class="nosmooth" id="sm_project">
 
-<div id="block_dashboard" class="block"  >
+<div id="block_dashboard" class="block">
+
 {*Miles tree*}
 {if $tree[0][0] > 0}
-<div class="projects dtree" style = "padding-bottom:2px;" >
+<div class="projects dtree" style="padding-bottom:2px;" >
 	<div class="headline accordion_toggle">
-		<a href="javascript:void(0);" id="treehead_toggle" class="win_block" onclick = "changeElements('a.win_block','win_none');toggleBlock('treehead');"></a>
+		<a href="javascript:void(0);" id="treehead_toggle" class="win_block" onclick="changeElements('a.win_block','win_none');toggleBlock('treehead');"></a>
 		<h2>
 			<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{#projecttree#}
 		</h2>
 	</div>
 
-	<div class="block accordion_content" id="treehead" style = "overflow:hidden;">
+	<div class="block accordion_content" id="treehead" style="overflow:hidden;">
 		<div class="block_in_wrapper" style="padding-top:0px;">
-
-	<script type="text/javascript">
-
-		d{$project.ID} = new dTree('d{$project.ID}');
-		d{$project.ID}.config.useCookies = true;
-		d{$project.ID}.config.useSelection = false;
-		d{$project.ID}.add(0,-1,'');
-
-		// Milestones
-		{section name=titem loop=$tree}
-			d{$project.ID}.add("m"+{$tree[titem].ID}, 0, "{$tree[titem].name}", "managemilestone.php?action=showmilestone&msid={$tree[titem].ID}&id={$project.ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png", "", {$tree[titem].daysleft});
-
-			// Task lists
-			{section name=tlist loop=$tree[titem].tasklists}
-				d{$project.ID}.add("tl"+{$tree[titem].tasklists[tlist].ID}, "m"+{$tree[titem].tasklists[tlist].milestone}, "{$tree[titem].tasklists[tlist].name}", "managetasklist.php?action=showtasklist&id={$project.ID}&tlid={$tree[titem].tasklists[tlist].ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png");
-
-				// Tasks from lists
-				{section name=ttask loop=$tree[titem].tasklists[tlist].tasks}
-					d{$project.ID}.add("ta"+{$tree[titem].tasklists[tlist].tasks[ttask].ID}, "tl"+{$tree[titem].tasklists[tlist].tasks[ttask].liste}, "{$tree[titem].tasklists[tlist].tasks[ttask].title}", "managetask.php?action=showtask&tid={$tree[titem].tasklists[tlist].tasks[ttask].ID}&id={$project.ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png", "",{$tree[titem].tasklists[tlist].tasks[ttask].daysleft});
+	
+			<script type="text/javascript">
+		
+				d{$project.ID} = new dTree('d{$project.ID}');
+				d{$project.ID}.config.useCookies = true;
+				d{$project.ID}.config.useSelection = false;
+				d{$project.ID}.add(0,-1,'');
+		
+				// Milestones
+				{section name=titem loop=$tree}
+					d{$project.ID}.add("m"+{$tree[titem].ID}, 0, "{$tree[titem].name}", "managemilestone.php?action=showmilestone&msid={$tree[titem].ID}&id={$project.ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png", "", {$tree[titem].daysleft});
+		
+					// Task lists
+					{section name=tlist loop=$tree[titem].tasklists}
+						d{$project.ID}.add("tl"+{$tree[titem].tasklists[tlist].ID}, "m"+{$tree[titem].tasklists[tlist].milestone}, "{$tree[titem].tasklists[tlist].name}", "managetasklist.php?action=showtasklist&id={$project.ID}&tlid={$tree[titem].tasklists[tlist].ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png");
+		
+						// Tasks from lists
+						{section name=ttask loop=$tree[titem].tasklists[tlist].tasks}
+							d{$project.ID}.add("ta"+{$tree[titem].tasklists[tlist].tasks[ttask].ID}, "tl"+{$tree[titem].tasklists[tlist].tasks[ttask].liste}, "{$tree[titem].tasklists[tlist].tasks[ttask].title}", "managetask.php?action=showtask&tid={$tree[titem].tasklists[tlist].tasks[ttask].ID}&id={$project.ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png", "",{$tree[titem].tasklists[tlist].tasks[ttask].daysleft});
+						{/section}
+		
+					// End task lists
+					{/section}
+		
+					// Messages
+					{section name=tmsg loop=$tree[titem].messages}
+						{if $tree[titem].messages[tmsg].milestone > 0}
+							d{$project.ID}.add("msg"+{$tree[titem].messages[tmsg].ID}, "m"+{$tree[titem].messages[tmsg].milestone}, "{$tree[titem].messages[tmsg].title}", "managemessage.php?action=showmessage&id={$project.ID}&mid={$tree[titem].messages[tmsg].ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png");
+						{/if}
+		
+					{/section}
+					// End Messages
 				{/section}
-
-			// End task lists
-			{/section}
-
-			// Messages
-			{section name=tmsg loop=$tree[titem].messages}
-				{if $tree[titem].messages[tmsg].milestone > 0}
-					d{$project.ID}.add("msg"+{$tree[titem].messages[tmsg].ID}, "m"+{$tree[titem].messages[tmsg].milestone}, "{$tree[titem].messages[tmsg].title}", "managemessage.php?action=showmessage&id={$project.ID}&mid={$tree[titem].messages[tmsg].ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png");
-				{/if}
-
-			{/section}
-			// End Messages
-		{/section}
-		// End milestones
-
-		document.write(d{$project.ID});
-
-	</script>
-
-	<br />
-	<form id="treecontrol" action="#">
-		<fieldset>
-			<div class="row-butn-bottom">
-				<button type = "reset" id = "openall" onclick = "d{$project.ID}.openAll();" >{#openall#}</button>
-				<button type = "reset" id = "closeall" onclick = "d{$project.ID}.closeAll();" >{#closeall#}</button>
-			</div>
-		</fieldset>
-	</form>
-	{*block end*}</div>
-	{*block in wrapper end*}</div>
+				// End milestones
+		
+				document.write(d{$project.ID});
+		
+			</script>
+		
+			<br />
+			<form id="treecontrol" action="#">
+				<fieldset>
+					<div class="row-butn-bottom">
+						<button type="reset" id="openall" onclick="d{$project.ID}.openAll();">{#openall#}</button>
+						<button type="reset" id="closeall" onclick="d{$project.ID}.closeAll();">{#closeall#}</button>
+					</div>
+				</fieldset>
+			</form>
+			
+		</div> {*block end*}
+	</div> {*block in wrapper end*}
 </div>
-<!--<div class="content-spacer"></div>-->
-{*Tree end*}
 {/if}
+{*Tree end*}
 
 {*Milestones*}
-<div class="miles" style = "padding-bottom:2px;">
+<div class="miles" style="padding-bottom:2px;">
 			<div class="headline accordion_toggle" >
-				<a href="javascript:void(0);" id="milehead_toggle" class="win_none" onclick = "changeElements('a.win_block','win_none');toggleBlock('milehead');"></a>
+				<a href="javascript:void(0);" id="milehead_toggle" class="win_none" onclick="changeElements('a.win_block','win_none');toggleBlock('milehead');"></a>
 
 				<div class="wintools">
 					<!-- <div class="export-main">
@@ -174,8 +172,8 @@
 							<a class="ical" href="managetask.php?action=ical"><span>{#icalexport#}</span></a>
 						</div>
 					</div>-->
-					<div class = "progress" id = "progress" style = "display:none;">
-						<img src = "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-cal.gif" />
+					<div class="progress" id="progress" style="display:none;">
+						<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-cal.gif" />
 					</div>
 				</div>
 
