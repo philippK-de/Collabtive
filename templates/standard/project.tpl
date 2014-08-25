@@ -40,7 +40,7 @@
 					<li><a>{#budget#}: {$project.budget}</a></li>
 				{/if}{/if}
 				{if $project.customer.company != ""}
-					<li class="link" onclick="blindtoggle('customer');toggleClass('custtogle','desc_active','desc');"><a class="desc" id="custtogle">Customer: {$project.customer.company}</a></li>
+					<li class="link" onclick="blindtoggle('customer');toggleClass('custtogle','desc_active','desc');"><a class="desc" id="custtogle">{#customer#}: {$project.customer.company}</a></li>
 				{/if}
 				{if $project.daysleft != "" || $project.daysleft == "0"}
 					<li {if $project.daysleft < 0}class="red"{elseif $project.daysleft == "0"}class="green"{/if}><a>{$project.daysleft} {#daysleft#}</a></li>
@@ -64,16 +64,18 @@
 		<div class="nosmooth" id="sm_project_customer">
 			<div id="customer" class="descript" style="display:none;">
 				<div class="content-spacer"></div>
+				
 				<h2>{$project.customer.company}</h2>
-				<b>Contact person:</b> {$project.customer.contact}
+				
+				<b>{#contactperson#}:</b> {$project.customer.contact}
 				<br />
-				<b>Email:</b> <a href = "mailto:{$project.customer.email}">{$project.customer.email}</a>
+				<b>{#email#}:</b> <a href = "mailto:{$project.customer.email}">{$project.customer.email}</a>
 				<br />
-				<b>Phone:</b> {$project.customer.phone} / {$project.customer.mobile}
+				<b>{#phone#} / {#cellphone#}:</b> {$project.customer.phone} / {$project.customer.mobile}
 				<br />
-				<b>URL:</b> <a href = "{$project.customer.url}" target="_blank">{$project.customer.url}</a>
+				<b>{#url#}:</b> <a href = "{$project.customer.url}" target="_blank">{$project.customer.url}</a>
 				<br /><br />
-				<b>Address:</b><br />
+				<b>{#address#}:</b><br />
 				{$project.customer.address}
 				<br />{$project.customer.zip} {$project.customer.city}
 				<br />{$project.customer.country}<br />
