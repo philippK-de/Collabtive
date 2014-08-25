@@ -440,8 +440,7 @@ if ($action == "index") {
         }
     	if($company > 0)
     	{
-    		echo $company . " " . $add;
-    		$companyObj->assign($company,$add);
+    		$companyObj->assign($company, $add);
     	}
     	header("Location: manageproject.php?action=showproject&id=$add");
     }
