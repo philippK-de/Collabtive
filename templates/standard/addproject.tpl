@@ -58,7 +58,7 @@
 			</div>
 
 			<div class = "row">
-				<label>Customer:</label>
+				<label>{#customer#}:</label>
 				<select name="company" id="company" realname="{#assignto#}">
 					<option value="-1">{#chooseone#}</option>
 					{section name=customer loop=$customers}
