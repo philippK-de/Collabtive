@@ -24,24 +24,24 @@
 	<div class="statuswrapper">
 			<ul>
 				{if $userpermissions.projects.close}
-			        {if $project.status == 1}
-					    <li class="link" id = "closetoggle"><a class="close" href="javascript:closeElement('closetoggle','manageproject.php?action=close&amp;id={$project.ID}');" title="{#close#}"></a></li>
-					{else}
+		        {if $project.status == 1}
+				    <li class="link" id = "closetoggle"><a class="close" href="javascript:closeElement('closetoggle','manageproject.php?action=close&amp;id={$project.ID}');" title="{#close#}"></a></li>
+				{else}
 					<li class="link" id = "closetoggle"><a class="closed" href="manageproject.php?action=open&amp;id={$project.ID}" title="{#open#}"></a></li>
-				    {/if}
+			    {/if}
 				{/if}
 				{if $userpermissions.projects.edit}
-				<li class="link"><a class="edit" href="javascript:void(0);"  id="edit_butn" onclick="blindtoggle('form_edit');toggleClass(this,'edit-active','edit');toggleClass('sm_project','smooth','nosmooth');toggleClass('sm_project_desc','smooth','nosmooth');" title="{#edit#}"></a></li>
+					<li class="link"><a class="edit" href="javascript:void(0);"  id="edit_butn" onclick="blindtoggle('form_edit');toggleClass(this,'edit-active','edit');toggleClass('sm_project','smooth','nosmooth');toggleClass('sm_project_desc','smooth','nosmooth');" title="{#edit#}"></a></li>
 				{/if}
 				{if $project.desc}
-				<li class="link" onclick="blindtoggle('descript');toggleClass('desctoggle','desc_active','desc');"><a class="desc" id="desctoggle" href="#" title="{#open#}">{#description#}</a></li>
+					<li class="link" onclick="blindtoggle('descript');toggleClass('desctoggle','desc_active','desc');"><a class="desc" id="desctoggle" href="#" title="{#open#}">{#description#}</a></li>
 				{/if}
-				{if $userpermissions.projects.del}
-				{if $project.budget}
-				<li><a>{#budget#}: {$project.budget}</a></li>
+				{if $userpermissions.projects.del}{if $project.budget}
+					<li><a>{#budget#}: {$project.budget}</a></li>
 				{/if}{/if}
-
-				{if $project.customer.company != ""}<li class="link" onclick="blindtoggle('customer');toggleClass('custtogle','desc_active','desc');"><a class = "desc" id = "custtogle">Customer: {$project.customer.company} </a></li>{/if}
+				{if $project.customer.company != ""}
+					<li class="link" onclick="blindtoggle('customer');toggleClass('custtogle','desc_active','desc');"><a class="desc" id="custtogle">Customer: {$project.customer.company}</a></li>
+				{/if}
 				{if $project.daysleft != "" || $project.daysleft == "0"}
 					<li {if $project.daysleft < 0}class="red"{elseif $project.daysleft == "0"}class="green"{/if}><a>{$project.daysleft} {#daysleft#}</a></li>
 				{/if}
@@ -49,7 +49,7 @@
 
 			<div class="status">
 				{$done}%
-				<div class="statusbar"><div class="complete" id = "completed" style="width:0%;"></div></div>
+				<div class="statusbar"><div class="complete" id="completed" style="width:0%;"></div></div>
 			</div>
 	</div>
 
