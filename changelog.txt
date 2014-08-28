@@ -1,4 +1,5 @@
 Collabtive 2.1
++ Fixed bug to return correct customer for a project
 + Made customer selection available in admin area
 + Localized customer-related labels
 
