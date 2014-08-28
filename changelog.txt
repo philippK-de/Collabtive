@@ -1,4 +1,8 @@
-﻿Collabtive 2.0
+Collabtive 2.1
++ Made customer selection available in admin area
++ Localized customer-related labels
+
+Collabtive 2.0
 + Fixed notice on desktop that resulted from missing network connection during update check
 + Fixed deactivation of error reporting during update
 + Merge existing members and new members when adding project
