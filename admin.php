@@ -399,7 +399,10 @@ if ($action == "index") {
         }
         $template->assign("opros", $opros);
     }
-
+    
+    $customers = $companyObj->getAllCompanies();
+    
+    $template->assign("customers", $customers);
     $template->assign("users", $users);
     $template->assign("clopros", $clopros);
     $template->display("adminprojects.tpl");
