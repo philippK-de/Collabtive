@@ -162,14 +162,15 @@ class company {
     	global $conn;
 
         $project = (int) $project;
-        $sel = $conn->prepare("SELECT customer FROM customers_assigned WHERE project = ?");
-        $selStmt = $sel->execute(array($project));
+        
+        $sel = $conn->prepare("SELECT customer FROM customers_assigned WHERE project = :project");
+        $selStmt = $sel->execute(array(':project' => $project));
 
         $companyId = $sel->fetch();
 
-		$company = $this->getCompany($companyId);
+	$company = $this->getCompany($companyId[0]);
 
-		if (!empty($company)) {
+	if (!empty($company)) {
             return $company;
         } else {
             return false;
