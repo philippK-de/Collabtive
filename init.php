@@ -12,7 +12,7 @@ define("CL_ROOT", realpath(dirname(__FILE__)));
 define("CL_CONFIG", "standard");
 // collabtive version and release date
 define("CL_VERSION", 2.0);
-define("CL_PUBDATE", "1389567600");
+define("CL_PUBDATE", "1407880800");
 
 
 // uncomment next line for debugging
