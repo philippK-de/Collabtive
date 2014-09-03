@@ -1,7 +1,7 @@
 Collabtive 2.1
 + Fixed bug to return correct customer for a project
 + Made customer selection available in admin area
-+ Localized customer-related labels
++ Localized customer-related labels and labels for the installation procedure
 
 Collabtive 2.0
 + Fixed notice on desktop that resulted from missing network connection during update check
