@@ -25,7 +25,8 @@ $conn->query("CREATE TABLE IF NOT EXISTS `customers_assigned` (
   `project` int(10) NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `ID` (`ID`)
-)");
+) ENGINE=MyISAM DEFAULT CHARSET=utf8");
+
 $oldTemplate = $settings["template"];
 $template->assign("theme",$oldTemplate);
 $conn->query("INSERT INTO `settings` (`ID` ,`settingsKey` ,`settingsValue`) VALUES (NULL , 'theme', '$oldTemplate')");
