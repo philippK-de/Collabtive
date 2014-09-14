@@ -18,7 +18,7 @@ Peramban:
 		- /templates_c
 		- /files
 		- /config/standard/config.php
-	4. Buat database MySQL baru untuk digunakan dalam Collabtive.
+	4. Buat database MySQL baru untuk digunakan dalam Collabtive  (collation: utf8_general_ci).
 	5. Arahkan peramban browser anda ke install.php dan ikuti petunjuk instalasinya.
 	6. Bila instalasi berhasil dilakukan, silahkan hapus file install.php dan update.php
 
