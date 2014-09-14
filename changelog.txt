@@ -1,4 +1,6 @@
 Collabtive 2.1
++ Added default charset to all create table statements
++ Removed creation of unnecessary table
 + Added collation info to install-readme files
 + Fixed bug in start date vs. end date comparison when adding or editing a task
 + Fixed bug to return correct customer for a project
