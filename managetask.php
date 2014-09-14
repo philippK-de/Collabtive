@@ -202,7 +202,7 @@ if ($action == "addform") {
     }
 
     // check dates' consistency
-    if ($end < $start) {
+    if (strtotime($end) < strtotime($start)) {
 		$goback = $langfile["goback"];
 		$endafterstart = $langfile["endafterstart"];
 		$template->assign("mode", "error");
