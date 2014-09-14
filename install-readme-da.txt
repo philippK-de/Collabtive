@@ -16,7 +16,7 @@ Klient:
 		- /templates_c
 		- /files
 		- /config/standard/config.php
-	4. Opret en ny MySQL database til Collabtive.
+	4. Opret en ny MySQL database til Collabtive  (collation: utf8_general_ci).
 	5. Naviger din browser til install.php og følg de instrukser der bliver givet.
 	6. Hvis installationen bliver gennemført, slet da install.php og update.php.
 
