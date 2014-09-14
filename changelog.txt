@@ -1,5 +1,5 @@
 Collabtive 2.1
-+ Fixed bug in task start and end date comparison
++ Fixed bug in start date vs. end date comparison when adding or editing a task
 + Fixed bug to return correct customer for a project
 + Made customer selection available in admin area
 + Localized customer-related labels and labels for the installation procedure
