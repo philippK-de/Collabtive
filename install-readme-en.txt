@@ -22,7 +22,7 @@
 	   - ./config/standard/config.php
 	   - ./files
 	   - ./templates_c
-	4. Create a new MySQL database.
+	4. Create a new MySQL database (collation: utf8_general_ci).
 	5. Point your browser to install.php and follow the instructions given.
 	6. If the installation was successful, delete install.php and update.php.
 	7. Disable the writing permissions for ./config/standard/config.php (chmod 755).
