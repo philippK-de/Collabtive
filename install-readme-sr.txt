@@ -17,7 +17,7 @@ Klijent:
 - /templates_c
 - /files
 - config.php
-4. Kreirajte novu MySQL bazu podataka za Collabtive
+4. Kreirajte novu MySQL bazu podataka za Collabtive  (collation: utf8_general_ci)
 5. Otvorite install.php stranicu kroz vaš internet pretraživač (primer http://localhost/collabtive/install.php) i pratite date instrukcije
 
 
