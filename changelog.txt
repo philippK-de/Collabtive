@@ -1,4 +1,5 @@
 Collabtive 2.1
++ Removed accordion-related JS legacy code from desktop
 + Added default charset to all create table statements
 + Removed creation of unnecessary table
 + Added collation info to install-readme files
