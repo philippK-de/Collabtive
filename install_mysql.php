@@ -45,7 +45,7 @@
   KEY `datei` (`datei`),
   KEY `added` (`added`),
   KEY `project` (`project`)
-) ENGINE=MyISAM");
+) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
         $table4 = $conn->query("CREATE TABLE `log` (
   `ID` int(10) NOT NULL auto_increment,
@@ -62,7 +62,7 @@
   KEY `action` (`action`),
   FULLTEXT KEY `username` (`username`),
   FULLTEXT KEY `name` (`name`)
-) ENGINE=MyISAM");
+) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
         $table5 = $conn->query("CREATE TABLE `messages` (
   `ID` int(10) NOT NULL auto_increment,
@@ -80,7 +80,7 @@
   KEY `user` (`user`),
   KEY `replyto` (`replyto`),
   KEY `tags` (`tags`)
-) ENGINE=MyISAM");
+) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
         $table6 = $conn->query("CREATE TABLE `milestones` (
   `ID` int(10) NOT NULL auto_increment,
@@ -94,7 +94,7 @@
   KEY `name` (`name`),
   KEY `end` (`end`),
   KEY `project` (`project`)
-) ENGINE=MyISAM");
+) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
         $table7 = $conn->query("CREATE TABLE `milestones_assigned` (
   `ID` int(10) NOT NULL auto_increment,
@@ -103,7 +103,7 @@
   PRIMARY KEY  (`ID`),
   KEY `user` (`user`),
   KEY `milestone` (`milestone`)
-) ENGINE=MyISAM");
+) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
         $table8 = $conn->query("CREATE TABLE `projekte` (
   `ID` int(10) NOT NULL auto_increment,
@@ -115,7 +115,7 @@
   `budget` float NOT NULL default '0',
   PRIMARY KEY  (`ID`),
   KEY `status` (`status`)
-) ENGINE=MyISAM");
+) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
         $table9 = $conn->query("CREATE TABLE `projekte_assigned` (
   `ID` int(10) NOT NULL auto_increment,
@@ -124,14 +124,14 @@
   PRIMARY KEY  (`ID`),
   KEY `user` (`user`),
   KEY `projekt` (`projekt`)
-) ENGINE=MyISAM");
+) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
         $table10 = $conn->query("CREATE TABLE `settings` (
   `ID` int(10) NOT NULL auto_increment,
   `settingsKey` varchar(50) NOT NULL,
   `settingsValue` varchar(50) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM");
+) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
         $table11 = $conn->query("CREATE TABLE `tasklist` (
   `ID` int(10) NOT NULL auto_increment,
@@ -145,7 +145,7 @@
   PRIMARY KEY  (`ID`),
   KEY `status` (`status`),
   KEY `milestone` (`milestone`)
-) ENGINE=MyISAM");
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 DEFAULT CHARSET=utf8");
 
         $table12 = $conn->query("CREATE TABLE `tasks` (
   `ID` int(10) NOT NULL auto_increment,
@@ -160,7 +160,7 @@
   KEY `liste` (`liste`),
   KEY `status` (`status`),
   KEY `end` (`end`)
-) ENGINE=MyISAM");
+) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
         $table13 = $conn->query("CREATE TABLE `tasks_assigned` (
   `ID` int(10) NOT NULL auto_increment,
@@ -169,7 +169,7 @@
   PRIMARY KEY  (`ID`),
   KEY `user` (`user`),
   KEY `task` (`task`)
-) ENGINE=MyISAM");
+) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
         $table14 = $conn->query("
 CREATE TABLE `user` (
@@ -196,7 +196,7 @@ CREATE TABLE `user` (
   UNIQUE KEY `name` (`name`),
   KEY `pass` (`pass`),
   KEY `locale` (`locale`)
-) ENGINE=MyISAM");
+) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
         $table15 = $conn->query("CREATE TABLE `chat` (
   `ID` int(10) NOT NULL auto_increment,
@@ -207,7 +207,7 @@ CREATE TABLE `user` (
   `userto_id` int(10) NOT NULL default '0',
   `text` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`ID`)
-) ENGINE=MyISAM");
+) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
         $table16 = $conn->query("CREATE TABLE `files_attached` (
   `ID` int(10) unsigned NOT NULL auto_increment,
@@ -215,7 +215,7 @@ CREATE TABLE `user` (
   `message` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`ID`),
   KEY `file` (`file`,`message`)
-) ENGINE=MyISAM");
+) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
         $table17 = $conn->query("CREATE TABLE `timetracker` (
   `ID` int(10) NOT NULL auto_increment,
@@ -231,7 +231,7 @@ CREATE TABLE `user` (
   KEY `user` (`user`,`project`,`task`),
   KEY `started` (`started`),
   KEY `ended` (`ended`)
-) ENGINE=MyISAM");
+) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
         $table18 = $conn->query("CREATE TABLE `projectfolders` (
   `ID` int(10) unsigned NOT NULL auto_increment,
@@ -242,7 +242,7 @@ CREATE TABLE `user` (
   `visible` text NOT NULL,
   PRIMARY KEY  (`ID`),
   KEY `project` (`project`)
-) ENGINE=MyISAM");
+) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
         $table19 = $conn->query("
 CREATE TABLE `roles` (
@@ -257,7 +257,7 @@ CREATE TABLE `roles` (
   `timetracker` text NOT NULL,
   `admin` text NOT NULL,
   PRIMARY KEY  (`ID`)
-) ENGINE=MyISAM");
+) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
         $table20 = $conn->query("
 CREATE TABLE `roles_assigned` (
@@ -265,7 +265,7 @@ CREATE TABLE `roles_assigned` (
   `user` int(10) NOT NULL,
   `role` int(10) NOT NULL,
   PRIMARY KEY  (`ID`)
-) ENGINE=MyISAM");
+) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
 	$table21 = $conn->query("CREATE TABLE IF NOT EXISTS `customers_assigned` (
   `ID` int(10) NOT NULL AUTO_INCREMENT,
