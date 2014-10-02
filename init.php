@@ -1,7 +1,8 @@
 <?php
 ini_set("arg_separator.output", "&amp;");
 ini_set('default_charset', 'utf-8');
-header("Content-Security-Policy-Report-Only:default-src 'self'; style-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval';frame-src 'self'");
+//Set content security policy header. This instructs the browser to block various unsafe behaviours.
+header("Content-Security-Policy:default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval';frame-src 'self'");
 // Start output buffering with gzip compression and start the session
 ob_start('ob_gzhandler');
 session_start();
@@ -11,13 +12,11 @@ define("CL_ROOT", realpath(dirname(__FILE__)));
 define("CL_CONFIG", "standard");
 // collabtive version and release date
 define("CL_VERSION", 2.0);
-define("CL_PUBDATE", "1389567600");
+define("CL_PUBDATE", "1407880800");
+
 
 // uncomment next line for debugging
 // error_reporting(E_ALL || E_STRICT);
-
-// Report all errors except E_NOTICE
-error_reporting(E_ALL & ~E_NOTICE);
 
 // include config file , pagination and global functions
 require(CL_ROOT . "/config/" . CL_CONFIG . "/config.php");
@@ -60,6 +59,11 @@ if (isset($_SESSION["userid"])) {
     $gender = $_SESSION["usergender"];
     // what the user may or may not do
     $userpermissions = $_SESSION["userpermissions"];
+
+	//update user lastlogin for the onlinelist
+	$mynow = time();
+	$upd = $conn->exec("UPDATE LOW_PRIORITY user SET lastlogin='$mynow' WHERE ID = $userid");
+
     // assign it all to the templates
     $template->assign("userid", $userid);
     $template->assign("username", $username);
@@ -135,5 +139,6 @@ if (isset($userid)) {
 }
 // clear session data for pagination
 SmartyPaginate::disconnect();
+
 
 ?>

@@ -16,7 +16,7 @@
 		- /templates_c
 		- /files
 		- /config/standard/config.php
-	4. قم بإنشاء قاعدة ييانات MySQL جديدة لـ Collabtive.
+	4. قم بإنشاء قاعدة ييانات MySQL جديدة لـ Collabtive.  (collation: utf8_general_ci)
 	5. وجه المتصفح إلى العنوان yourdomain.com/path/to/Collabtive/install.php واتبع التعليمات في معالج التنصيب.
 	6. بعد انتهاء التنصيب، قم بحذف install.php و update.php
 

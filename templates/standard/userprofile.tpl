@@ -191,8 +191,7 @@
 									<td></td>
 									<td style="text-align:right">{$opros[opro].daysleft}&nbsp;&nbsp;</td>
 									<td class="tools">
-										<a class="tool_edit" href="manageproject.php?action=editform&amp;id={$opros[opro].ID}" title="{#edit#}" {if !$userpermissions.projects.edit}style="visibility:hidden;" {/if}></a>
-										<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'proj_{$opros[opro].ID}\',\'manageproject.php?action=del&amp;id={$opros[opro].ID}\')');"  title="{#delete#}" {if !$userpermissions.projects.del}style="visibility:hidden;" {/if}></a>
+
 									</td>
 								</tr>
 

@@ -17,7 +17,7 @@ Client:
 - /templates_c
 - /files
 - /config/standard/config.php
-4. Créez une nouvelle base de données MySQL pour Collabtive
+4. Créez une nouvelle base de données MySQL pour Collabtive  (collation: utf8_general_ci)
 5. Faites pointer votre navigateur sur install.php et suivez les instructions à l'écran
 
 

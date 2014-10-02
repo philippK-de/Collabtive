@@ -1,22 +1,22 @@
 <div class="block_in_wrapper">
-	
+
 	<h2>{#addmessage#}</h2>
-	
+
 	<form novalidate name="addmessageform" id="addmessageform" class="main" method="post" enctype="multipart/form-data" action="managemessage.php?action=add&amp;id={$project.ID}" {literal} onsubmit="return validateCompleteForm(this,'input_error');"{/literal}>
 		<fieldset>
-			
+
 			<div class="row">
 				<label for="title">{#title#}:</label>
 				<input type="text" class="text" name="title" id="title" required="1" realname="{#title#}" />
 			</div>
-			
+
 			<div class="row">
 				<label for="text">{#text#}:</label>
 				<div class="editor">
 					<textarea name="text" id="text" realname="{#text#}" rows="3" cols="1"></textarea>
 				</div>
 			</div>
-			
+
 			{*Attach*}
 			<div class="row">
 				<label for="thefiles">{#attachfile#}:</label>
@@ -30,9 +30,7 @@
 					{/section}
 				</select>
 			</div>
-			
-			<input type="hidden" name="tags" id="tags" realname="{#tags#}" />
-			
+
 			<div class="row">
 				<label for="milestone">{#milestone#}:</label>
 				<select name="milestone" id="milestone" realname="{#milestone#}">
@@ -42,7 +40,7 @@
 					{/section}
 				</select>
 			</div>
-			
+
 			<div class="row">
 				<label>{#notify#}:</label>
 				<select name="sendto[]" multiple style="height:100px;">
@@ -55,14 +53,14 @@
 					{/section}
 				</select>
 			</div>
-			
+
 			<div class="row-butn-bottom">
 				<label>&nbsp;</label>
 				<button type="submit" onfocus="this.blur()">{#send#}</button>
 				<button onclick="blindtoggle('addmsg');toggleClass('add','add-active','add');toggleClass('add_butn','butn_link_active','butn_link');toggleClass('sm_msgs','smooth','nosmooth');return false;" onfocus="this.blur()">{#cancel#}</button>
 			</div>
-			
+
 		</fieldset>
 	</form>
-	
+
 </div> {*block_in_wrapper end*}

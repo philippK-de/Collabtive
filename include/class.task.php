@@ -6,7 +6,7 @@
  * @author Eva Kiszka <eva@o-dyn.de>
  * @name task
  * @package Collabtive
- * @version 1.2
+ * @version 2.0
  * @link http://www.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
@@ -42,7 +42,7 @@ class task {
         $liste = (int) $liste;
         $project = (int) $project;
 
-		$start_fin = strtotime($start);
+	$start_fin = strtotime($start);
         $end_fin = strtotime($end);
 
         if (empty($start_fin)) {
@@ -85,16 +85,16 @@ class task {
         $liste = (int) $liste;
         $title = htmlspecialchars($title);
 
+    	//convert time string to timestamp
         $start = strtotime($start);
         $end = strtotime($end);
 
         $updStmt = $conn->prepare("UPDATE tasks SET `start`=?, `end`=?, `title`=?, `text`=?, `liste`=? WHERE ID = ?");
-        // Remove all the users from the task. Done to ensure no double assigns occur since the handler scripts call this::assign() on their own.
-        $conn->query("DELETE FROM tasks_assigned WHERE `task` = $id");
-
         $upd = $updStmt->execute(array($start, $end, $title, $text, $liste, $id));
 
         if ($upd) {
+        	// Remove all the users from the task. Done to ensure no double assigns occur since the handler scripts call this::assign() on their own.
+			$conn->query("DELETE FROM tasks_assigned WHERE `task` = $id");
             $nameproject = $this->getNameProject($id);
             $this->mylog->add($nameproject[0], 'task', 2, $nameproject[1]);
             return true;
@@ -147,7 +147,7 @@ class task {
     }
 
     /**
-     * Close a task. If it's the last task of its tasklist, the list gets closed, too.
+     * Close a task
      *
      * @param int $id Task ID
      * @return bool
@@ -242,7 +242,7 @@ class task {
             $details = $this->getTaskDetails($task);
             $list = $details["list"];
             $pname = $details["pname"];
-            // get remainig days until due date
+            // get remaining days until due date
             $tage = $this->getDaysLeft($task['end']);
             // Get the user(s) assigned to the task from the db
             $usel = $conn->query("SELECT user FROM tasks_assigned WHERE task = $task[ID]");
@@ -253,7 +253,7 @@ class task {
                 $task["user"] = "All";
                 $task["user_id"] = $users;
             }
-            // If only one user is assigned , get his profile and add him to users, user_id fields
+            // If only one user is assigned, get his profile and add him to users, user_id fields
             if (count($users) == 1) {
                 $usrobj = new user();
                 $usr = $users[0];
@@ -596,7 +596,7 @@ class task {
     function getIcal($user,$show_long = true)
     {
         $user = (int) $user;
-	$show_long = (bool) $show_long;
+		$show_long = (bool) $show_long;
 
         $username = $_SESSION["username"];
         $project = new project();
@@ -670,7 +670,7 @@ class task {
     }
 
     /**
-     * Return a tasks project name and tasklist name
+     * Return a task's project name and tasklist name
      *
      * @param array $task Task ID
      * @return array $details Name of associated project and tasklist
@@ -702,7 +702,7 @@ class task {
     }
 
     /**
-     * Return the number of left days until a task is due
+     * Return the number of days left until a task is due
      *
      * @param string $end Timestamp of the date the task is due
      * @return int $days Days left

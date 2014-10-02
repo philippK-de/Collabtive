@@ -206,7 +206,7 @@ if ($action == "index") {
         $error = $_FILES['userfile']['error'];
         $root = "./";
 
-        $desc = $_POST['desc'];
+        $desc = getArrayVal($_POST,"desc" );
         $teilnamen = explode(".", $fname);
         $teile = count($teilnamen);
         $workteile = $teile - 1;
@@ -399,7 +399,10 @@ if ($action == "index") {
         }
         $template->assign("opros", $opros);
     }
-
+    
+    $customers = $companyObj->getAllCompanies();
+    
+    $template->assign("customers", $customers);
     $template->assign("users", $users);
     $template->assign("clopros", $clopros);
     $template->display("adminprojects.tpl");
@@ -438,7 +441,11 @@ if ($action == "index") {
                 }
             }
         }
-        header("Location: manageproject.php?action=showproject&id=$add");
+    	if($company > 0)
+    	{
+    		$companyObj->assign($company, $add);
+    	}
+    	header("Location: manageproject.php?action=showproject&id=$add");
     }
 } elseif ($action == "closepro") {
     if ($project->close($id)) {
@@ -479,7 +486,7 @@ if ($action == "index") {
     $template->assign("allcust", $allcust);
     $template->display("admincustomers.tpl");
 } elseif ($action == "addcust") {
-    if (!$userpermissions["customers"]["add"]) {
+    if (!$userpermissions["admin"]["add"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
         $template->assign("errortext", "$errtxt<br>$noperm");
@@ -506,7 +513,12 @@ if ($action == "index") {
     $add = $companyObj->add($data);
     if ($add)
         header("Location: admin.php?action=customers&mode=added");
-} elseif ($action == "system") {
+}
+elseif($action == "assigncustomer")
+{
+
+}
+elseif ($action == "system") {
     $classes = array("overview" => "overview",
         "system" => "active",
         "users" => "users"

@@ -22,7 +22,7 @@
     	- ./config/standard/config.php
 		- ./files
 		- ./templates_c
-	4. Erzeuge eine neue MySQL-Datenbank.
+	4. Erzeuge eine neue MySQL-Datenbank  (Kollation: utf8_general_ci).
 	5. Öffne install.php im Browser und folge den Anweisungen.
 	6. Wenn die Installation erfolgreich war, lösche install.php und update.php.
 	7. Setze die Schreibrechte für ./config/standard/config.php zurück (chmod 755).

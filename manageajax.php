@@ -286,4 +286,13 @@ elseif ($action == "newcal") {
     $template->assign("weeks", $weeks);
     $template->display("calbody.tpl");
 }
+elseif($action == "chkconn")
+{
+	$dbHost = getArrayVal($_GET,"dbhost");
+	$dbUser = getArrayVal($_GET,"dbuser");
+	$dbName = getArrayVal($_GET,"dbname");
+	$dbPass = getArrayVal($_GET,"dbpass");
+	$chk = new PDO("mysql:host=$dbHost;dbname=$dbName;charset=utf8", $dbUser, $dbPass);
+	 echo $chk;
+}
 

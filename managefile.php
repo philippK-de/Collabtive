@@ -6,6 +6,8 @@ if (!isset($_SESSION["userid"])) {
     $template->display("login.tpl");
     die();
 }
+$path = "./include/phpseclib";
+set_include_path(get_include_path() . PATH_SEPARATOR . $path);
 $myfile = new datei();
 
 $POST_MAX_SIZE = ini_get('post_max_size');
@@ -139,11 +141,16 @@ if ($action == "upload") {
     }
     $num = count($_FILES);
     $chk = 0;
-    foreach($_FILES as $file) {
+    //Loop through uploaded files
+	foreach($_FILES as $file) {
+		//encrypt files in their tmp location
     	$myfile->encryptFile($file["tmp_name"], $settings["filePass"]);
+		//upload them to the files folder and add to the database
         $fid = $myfile->uploadAsync($file["name"], $file["tmp_name"], $file["type"], $file["size"], $upath, $id, $upfolder);
-        $fileprops = $myfile->getFile($fid);
+        //get the new file object
+		$fileprops = $myfile->getFile($fid);
 
+		//send mail notifications
         if ($settings["mailnotify"]) {
             $sendto = getArrayVal($_POST, "sendto");
             $usr = (object) new project();

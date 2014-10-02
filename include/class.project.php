@@ -122,6 +122,7 @@ class project {
         $del_tasklists = $conn->query("DELETE FROM tasklist WHERE project = $id");
         $del_tasks = $conn->query("DELETE FROM tasks WHERE project = $id");
         $del_timetracker = $conn->query("DELETE FROM timetracker WHERE project = $id");
+    	$del_customer = $conn->query("DELETE FROM customers_assigned WHERE project = $id");
 
         $del_logentries = $conn->query("DELETE FROM log WHERE project = $id");
         $del = $conn->query("DELETE FROM projekte WHERE ID = $id");
@@ -305,7 +306,7 @@ class project {
             if ($project["end"]) {
                 $daysleft = $this->getDaysLeft($project["end"]);
                 $project["daysleft"] = $daysleft;
-                $endstring = date("d.m.Y", $project["end"]);
+                $endstring = date(CL_DATEFORMAT, $project["end"]);
                 $project["endstring"] = $endstring;
             } else {
                 $project["daysleft"] = "";
@@ -317,6 +318,9 @@ class project {
             $project["name"] = stripslashes($project["name"]);
             $project["desc"] = stripslashes($project["desc"]);
             $project["done"] = $this->getProgress($project["ID"]);
+
+        	$companyObj = new company();
+        	$project["customer"] = $companyObj->getProjectCompany($id);
 
             return $project;
         } else {

@@ -17,8 +17,8 @@ $logoSubname = "#6ab0c5";
 $leftBlockBg = "#fff";
 
 //$tabsInfo = "#6d7f93";
-$tabsInfo = "#839BB5";
-$mainMenueInfo = "#6d7f93"; // Info-Span in Mainmenue
+$tabsInfo = "#c5d2e1";
+$mainMenueInfo = "#c5d2e1"; // Info-Span in Mainmenue
 
 $bigCalToday = "#eaf6e3"; //day in the Big Calendar
 
@@ -112,7 +112,7 @@ $filesColorC = "url(../images/tables-files-bg-c.png)"; // Files in Messages
 
 /*
 ##  Visional Arts CSS Framework 1.1 static
-##  Author & Copyright: Marcus Fröhner
+##  Author & Copyright: Marcus Froehner
 ##  URL: http://www.visional-arts.de
 */
 
@@ -397,6 +397,10 @@ td.message ul {
 
 #mainmenue .submen li.system-settings a {
 	background: url(../images/main-admin-c.png) no-repeat 0 0;
+}
+
+#mainmenue .submen li.customer-settings a {
+	background: url(../images/main-admin-d.png) no-repeat 0 0;
 }
 
 #mainmenue li:hover a, #mainmenue li a.active, #mainmenue .submen li:hover a, #mainmenue .submen li a.active {
@@ -1738,6 +1742,10 @@ ul.tabs li.projects a {
 	background-image: url(../images/symbols/tab-projects.png);
 }
 
+ul.tabs li.customers a {
+	background-image: url(../images/symbols/tab-customers.png);
+}
+
 ul.tabs li.tasks a {
 	background-image: url(../images/symbols/tab-tasklist.png);
 }
@@ -2989,6 +2997,13 @@ a.butn_checked:hover {
 
 a.butn_reply {
 	background-image: url(../images/butn-reply.png);
+}
+
+a.butn_reply_active {
+	display: block;
+	width: 100%;
+	height: 27px;
+	background: url(../images/butn-reply.png) no-repeat 4px -20px;
 }
 
 a.tool_edit, a.tool_del {

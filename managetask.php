@@ -98,7 +98,7 @@ if ($action == "addform") {
     }
 
     // check dates' consistency
-    if ($end < $start) {
+    if (strtotime($end) < strtotime($start)) {
 		$goback = $langfile["goback"];
 		$endafterstart = $langfile["endafterstart"];
 		$template->assign("mode", "error");
@@ -168,6 +168,7 @@ if ($action == "addform") {
     $thistask['listname'] = $tl['name'];
 
     $user = $task->getUser($thistask['ID']);
+
     $thistask['username'] = $user[1];
     $thistask['userid'] = $user[0];
 
@@ -201,7 +202,7 @@ if ($action == "addform") {
     }
 
     // check dates' consistency
-    if ($end < $start) {
+    if (strtotime($end) < strtotime($start)) {
 		$goback = $langfile["goback"];
 		$endafterstart = $langfile["endafterstart"];
 		$template->assign("mode", "error");
@@ -245,7 +246,8 @@ if ($action == "addform") {
 				header("Location: $loc");
 			}
 		} else {
-			$template->assign("edittask", 0);
+			$loc = $url . "managetask.php?action=showproject&id=$id&mode=error";
+			header("Location: $loc");
 		}
 	}
 } elseif ($action == "del") {

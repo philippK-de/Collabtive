@@ -323,8 +323,11 @@ class datei {
 
         // Only allow a-z, 0-9 in filenames, substitute other chars with _
         $subname = str_replace("ä", "ae" , $subname);
+        $subname = str_replace("Ä", "Ae" , $subname);
         $subname = str_replace("ö", "oe" , $subname);
+        $subname = str_replace("Ö", "Oe" , $subname);
         $subname = str_replace("ü", "ue" , $subname);
+        $subname = str_replace("Ü", "Ue" , $subname);
         $subname = str_replace("ß", "ss" , $subname);
         $subname = preg_replace("/[^-_0-9a-zA-Z]/", "_", $subname);
 
@@ -417,10 +420,13 @@ class datei {
         $randval = mt_rand(1, 99999);
 
         // Only allow a-z, 0-9 in filenames, substitute other chars with _
-        $subname = str_replace("ä", "ae" , $subname);
-        $subname = str_replace("ö", "oe" , $subname);
-        $subname = str_replace("ü", "ue" , $subname);
-        $subname = str_replace("ß", "ss" , $subname);
+    	$subname = str_replace("ä", "ae" , $subname);
+    	$subname = str_replace("Ä", "Ae" , $subname);
+    	$subname = str_replace("ö", "oe" , $subname);
+    	$subname = str_replace("Ö", "Oe" , $subname);
+    	$subname = str_replace("ü", "ue" , $subname);
+    	$subname = str_replace("Ü", "Ue" , $subname);
+    	$subname = str_replace("ß", "ss" , $subname);
         $subname = preg_replace("/[^-_0-9a-zA-Z]/", "_", $subname);
 
         // Remove whitespace
@@ -446,7 +452,7 @@ class datei {
 
                     chmod($datei_final, 0755);
 
-                    $fid = $this->add_file($name, $desc, $project, 0,  $datei_final2, "$typ", $title, $folder, $visstr);
+                    $fid = $this->add_file($name, $desc, $project, 0,  $datei_final2, "$typ", $title, $folder, "");
 
                     if (!empty($title)) {
                         $this->mylog->add($title, 'file', 1, $project);
@@ -589,7 +595,7 @@ class datei {
             if (stristr($file['type'], "image")) {
                 $file['imgfile'] = 1;
             } elseif (stristr($file['type'], "text")) {
-                $file['imgfile'] = 2;
+                $file['imgfile'] = 0;
             } else {
                 $file['imgfile'] = 0;
             }
@@ -597,7 +603,6 @@ class datei {
             // Strip slashes from title, desc and tags
             $file["title"] = stripslashes($file["title"]);
             $file["desc"] = stripslashes($file["desc"]);
-            $file["tags"] = stripslashes($file["tags"]);
             $file["size"] = filesize(realpath($file["datei"])) / 1024;
             $file["size"] = round($file["size"]);
             $file["addedstr"] = date(CL_DATEFORMAT, $file["added"]);
