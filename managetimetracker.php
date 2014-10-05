@@ -234,7 +234,9 @@ if ($action == "add") {
 
 	$id = (int) $id;
     $pname = $conn->query("SELECT name FROM projekte WHERE ID = $id");
-    $pname = $pname->fetchColumn();
+    if ($pname) {
+      $pname = $pname->fetchColumn();
+    }
 
     $pdf = new MYPDF("P", PDF_UNIT, "A4", true);
     $headstr = $langfile["timetable"] . " " . $pname;
@@ -297,8 +299,11 @@ if ($action == "add") {
 
     $totaltime = $tracker->getTotalTrackTime($track);
     $totaltime = str_replace(".", ",", $totaltime);
-    $uname = $conn->query("SELECT name FROM user WHERE ID = {$conn->quote($id)}")->fetch();
-    $uname = $uname[0];
+    $res = $conn->query("SELECT name FROM user WHERE ID = {$conn->quote($id)}");
+    if ($res) {
+        $uname = $res->fetch();
+	$uname = $uname[0];
+    }
 
     $pdf = new MYPDF("P", PDF_UNIT, "A4", true);
     $pdf->setup($langfile["timetable"] . " " . $uname, array(239, 232, 229));

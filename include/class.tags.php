@@ -118,13 +118,13 @@ class tags {
         $tags1 = array();
         $worktags = "";
 
-        while ($dat = $sel1->fetch()) {
+        while ($sel1 and $dat = $sel1->fetch()) {
             $tag = $dat[0];
             $tag = ucfirst($tag);
             if ($tag != "" and $tag != ",") {
                 $worktags .= $tag . ",";
             }
-        } while ($dat = $sel2->fetch()) {
+        } while ($sel2 and $dat = $sel2->fetch()) {
             $tag = $dat[0];
             $tag = ucfirst($tag);
             if ($tag != "" and $tag != ",") {
@@ -170,10 +170,13 @@ class tags {
         }
 
         $files = array();
-        while ($result = $sel->fetch()) {
+        while ($sel and $result = $sel->fetch()) {
             if (!empty($result)) {
-                $project = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]")->fetch();
-                $project = $project[0];
+  	        $qry = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]");
+		if ($qry) {
+		    $project = $qry->fetch();
+		    $project = $project[0];
+		}
 
                 $result["pname"] = $project;
                 $result["ftype"] = str_replace("/", "-", $result["type"]);
@@ -223,10 +226,13 @@ class tags {
         }
 
         $messages = array();
-        while ($result = $sel->fetch()) {
+        while ($sel and $result = $sel->fetch()) {
             if (!empty($result)) {
-                $project = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]")->fetch();
-                $project = $project[0];
+	        $qry = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]");
+		if ($qry) {
+		    $project = $qry->fetch();
+		    $project = $project[0];
+		}
 
                 $result["pname"] = $project;
                 $result["type"] = "message";
@@ -259,7 +265,7 @@ class tags {
         $sel = $conn->query("SELECT `ID`,`email`,`name`,`avatar`,`lastlogin`,`tags`, `gender` FROM user WHERE tags LIKE " . $conn->quote("%{$query}%"));
 
         $user = array();
-        while ($result = $sel->fetch()) {
+        while ($sel and $result = $sel->fetch()) {
             if (!empty($result)) {
                 $result["type"] = "user";
                 $result["name"] = stripslashes($result["name"]);

@@ -130,8 +130,11 @@ class roles {
         $role = (int) $role;
         $user = (int) $user;
         // get the number of roles already assigned to $user
-        $chk = $conn->query("SELECT COUNT(*) FROM roles_assigned WHERE user = $user")->fetch();
-        $chk = $chk[0];
+        $qry = $conn->query("SELECT COUNT(*) FROM roles_assigned WHERE user = $user");
+	if ($qry) {
+	    $chk = $qry->fetch();
+	    $chk = $chk[0];
+	}
         // If there already is a role assigned to the user, just update this entry
         // Otherwise create a new entry
         if ($chk > 0) {
@@ -185,7 +188,7 @@ class roles {
             $sel = $conn->query("SELECT ID FROM roles ORDER BY ID DESC");
         } else {
             $sel = $conn->query("SELECT ID FROM roles ORDER BY ID DESC LIMIT $limit");
-        } while ($role = $sel->fetch()) {
+        } while ($sel and $role = $sel->fetch()) {
             /**
              * $role["projects"] = unserialize($role["projects"]);
              * $role["tasks"] = unserialize($role["tasks"]);
@@ -232,8 +235,11 @@ class roles {
         global $conn;
         $user = (int) $user;
 
-        $usr = $conn->query("SELECT role FROM roles_assigned WHERE user = $user")->fetch();
-        $usr = $usr[0];
+        $qry = $conn->query("SELECT role FROM roles_assigned WHERE user = $user");
+	if ($qry) {
+	    $usr = $qry->fetch();
+	    $usr = $usr[0];
+	}
         if ($usr) {
             $role = $this->getRole($usr);
         } else {
@@ -293,7 +299,9 @@ class roles {
         $role = (int) $role;
         // Get the serialized strings from the db
         $sel2 = $conn->query("SELECT * FROM roles WHERE ID = $role");
-        $therole = $sel2->fetch();
+	if ($sel2) {
+	    $therole = $sel2->fetch();
+	}
         // Unserialize to an array
         $therole["projects"] = unserialize($therole["projects"]);
         $therole["tasks"] = unserialize($therole["tasks"]);

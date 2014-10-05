@@ -138,11 +138,15 @@ class datei {
 
         $id = (int) $id;
 
-        $folder = $conn->query("SELECT * FROM projectfolders WHERE ID = $id LIMIT 1")->fetch();
-		if(!$folder)
-		{
-			return false;
-		}
+        $qry = $conn->query("SELECT * FROM projectfolders WHERE ID = $id LIMIT 1");
+	if ($qry) {
+	    $folder = $qry->fetch();
+	}
+
+	if(!$folder) {
+	    return false;
+	}
+
         $folder["subfolders"] = $this->getSubFolders($folder["ID"]);
         $folder["abspath"] = $this->getAbsolutePathName($folder);
 
@@ -165,7 +169,7 @@ class datei {
 
         $folders = array();
 
-        while ($folder = $sel->fetch()) {
+        while ($sel and $folder = $sel->fetch()) {
             $folder["subfolders"] = $this->getSubFolders($folder["ID"]);
             $folder["abspath"] = $this->getAbsolutePathName($folder);
 
@@ -191,12 +195,13 @@ class datei {
         global $conn;
 
         $project = (int) $project;
+	$parent = (int) $parent;
 
         $sel = $conn->query("SELECT * FROM projectfolders WHERE project = $project AND parent = $parent ORDER BY ID ASC");
 
         $folders = array();
 
-        while ($folder = $sel->fetch()) {
+        while ($sel and $folder = $sel->fetch()) {
             $folder["subfolders"] = $this->getSubFolders($folder["ID"]);
             $folder["abspath"] = $this->getAbsolutePathName($folder);
 
@@ -226,7 +231,7 @@ class datei {
 
         $folders = array();
 
-        while ($folder = $sel->fetch()) {
+        while ($sel and $folder = $sel->fetch()) {
             $folder["subfolders"] = $this->getSubFolders($folder["ID"]);
             $folder["abspath"] = $this->getAbsolutePathName($folder);
 
@@ -254,8 +259,9 @@ class datei {
             return "/" . $folder['name'];
         } else {
             $sel = $conn->query("SELECT * FROM projectfolders WHERE ID = " . $folder['parent']);
-            $parent = $sel->fetch();
-
+	    if ($sel) {
+  	        $parent = $sel->fetch();
+	    }
             return $this->getAbsolutePathName($parent) . "/" . $folder['name'];
         }
     }
@@ -486,9 +492,11 @@ class datei {
         $id = (int) $id;
 
         // Get project for logging
-        $proj = $conn->query("SELECT project FROM files WHERE ID = $id")->fetch();
-
-        $project = $proj[0];
+        $qry = $conn->query("SELECT project FROM files WHERE ID = $id");
+	if ($qry) {
+	    $proj = $qry->fetch();
+	    $project = $proj[0];
+	}
 
         $sql = $conn->prepare("UPDATE files SET `title` = ?, `desc` = ?, `tags` = ? WHERE id = ?");
         $upd = $sql->execute(array($title, $desc, $tags, $id));
@@ -512,8 +520,10 @@ class datei {
         global $conn;
         $datei = (int) $datei;
 
-        $thisfile = $conn->query("SELECT datei, name, project, title FROM files WHERE ID = $datei")->fetch();
-
+	$qry = $conn->query("SELECT datei, name, project, title FROM files WHERE ID = $datei");
+	if ($qry) {
+	    $thisfile = $qry->fetch();
+	}
         if (!empty($thisfile)) {
             $fname = $thisfile[1];
             $project = $thisfile[2];
@@ -562,7 +572,10 @@ class datei {
         $id = (int) $id;
 
         // Get the file from the database
-        $file = $conn->query("SELECT * FROM files WHERE ID=$id")->fetch();
+        $qry = $conn->query("SELECT * FROM files WHERE ID=$id");
+	if ($qry) {
+	    $file->fetch();
+	}
 
         if (!empty($file)) {
             // Determine if there is a MIME-type icon corresponding to the file's MIME-type. If not, set 'none'
@@ -664,8 +677,10 @@ class datei {
         } else {
             $sel = $conn->query("SELECT COUNT(*) FROM files WHERE project = $id AND folder = 0 ORDER BY ID DESC");
         }
-        $num = $sel->fetch();
-        $num = $num[0];
+	if ($sel) {
+	    $num = $sel->fetch();
+	    $num = $num[0];
+	}
 
         // Set items per page
         SmartyPaginate::connect();
@@ -681,7 +696,7 @@ class datei {
             $sel2 = $conn->query($sql);
         } else {
             $sel2 = $conn->query("SELECT ID FROM files WHERE project = $id AND folder = 0 ORDER BY  ID DESC LIMIT $start,$lim");
-        } while ($file = $sel2->fetch()) {
+        } while ($sel2 and $file = $sel2->fetch()) {
             if (!empty($file)) {
                 array_push($files, $this->getFile($file["ID"]));
             }
@@ -710,7 +725,7 @@ class datei {
 
         $sel2 = $conn->query("SELECT ID FROM files WHERE project = $id  ORDER BY  ID DESC");
 
-        while ($file = $sel2->fetch()) {
+        while ($sel2 and $file = $sel2->fetch()) {
             if (!empty($file)) {
                 array_push($files, $this->getFile($file["ID"]));
             }

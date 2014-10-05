@@ -149,8 +149,11 @@ class project {
 
         $upd = $conn->query("UPDATE projekte SET status=1 WHERE ID = $id");
         if ($upd) {
-            $nam = $conn->query("SELECT name FROM projekte WHERE ID = $id")->fetch();
-            $nam = $nam[0];
+	    $qry = $conn->query("SELECT name FROM projekte WHERE ID = $id");
+	    if ($qry) {
+	        $nam = $qry->fetch();
+		$nam = $nam[0];
+	    }
             $this->mylog->add($nam, 'projekt', 4, $id);
             return true;
         } else {
@@ -195,8 +198,11 @@ class project {
 
         $upd = $conn->query("UPDATE projekte SET status=0 WHERE ID = $id");
         if ($upd) {
-            $nam = $conn->query("SELECT name FROM projekte WHERE ID = $id")->fetch();
-            $nam = $nam[0];
+	    $qry = $conn->query("SELECT name FROM projekte WHERE ID = $id");
+	    if ($qry) {
+	        $nam = $qry->fetch();
+		$nam = $nam[0];
+	    }
             $this->mylog->add($nam, 'projekt', 5, $id);
             return true;
         } else {
@@ -292,10 +298,10 @@ class project {
         $id = (int) $id;
 
         $sel = $conn->prepare("SELECT * FROM projekte WHERE ID = ?");
-        $selStmt = $sel->execute(array($id));
-
-        $project = $sel->fetch();
-
+	if ($sel) {
+	    $selStmt = $sel->execute(array($id));
+	    $project = $sel->fetch();
+	}
         if (!empty($project)) {
             if ($project["end"]) {
                 $daysleft = $this->getDaysLeft($project["end"]);
@@ -341,7 +347,7 @@ class project {
         $sel = $conn->prepare("SELECT `ID` FROM projekte WHERE `status`= ? ORDER BY `end` ASC LIMIT $lim");
         $selStmt = $sel->execute(array($status));
 
-        while ($projekt = $sel->fetch()) {
+        while ($sel and $projekt = $sel->fetch()) {
             $project = $this->getProject($projekt["ID"]);
             array_push($projekte, $project);
         }
@@ -370,8 +376,11 @@ class project {
         $sel = $conn->prepare("SELECT projekt FROM projekte_assigned WHERE user = ? ORDER BY ID ASC");
         $selStmt = $sel->execute(array($user));
 
-        while ($projs = $sel->fetch()) {
-            $projekt = $conn->query("SELECT ID FROM projekte WHERE ID = " . $projs[0] . " AND status={$conn->quote((int) $status)}")->fetch();
+        while ($sel and $projs = $sel->fetch()) {
+	    $qry = $conn->query("SELECT ID FROM projekte WHERE ID = " . $projs[0] . " AND status={$conn->quote((int) $status)}");
+	    if ($qry) {
+	        $projekt = $qry->fetch();
+	    }
             if ($projekt) {
                 $project = $this->getProject($projekt["ID"]);
                 array_push($myprojekte, $project);
@@ -407,9 +416,11 @@ class project {
         $selStmt = $sel->execute(array($user));
 
         if ($sel) {
-            while ($projs = $sel->fetch()) {
+            while ($sel and $projs = $sel->fetch()) {
                 $sel2 = $conn->query("SELECT ID FROM projekte WHERE ID = " . $projs[0]);
-                $projekt = $sel2->fetch();
+                if ($sel2) {
+		    $projekt = $sel2->fetch();
+		}
                 if ($projekt) {
                     array_push($myprojekte, $projekt);
                 }
@@ -440,8 +451,11 @@ class project {
         $members = array();
 
         if ($paginate) {
-            $num = $conn->query("SELECT COUNT(*) FROM projekte_assigned WHERE projekt = $project")->fetch();
-            $num = $num[0];
+	    $qry = $conn->query("SELECT COUNT(*) FROM projekte_assigned WHERE projekt = $project");
+	    if ($qry) {
+	        $num = $qry->fetch();
+		$num = $num[0];
+	    }
             $lim = (int)$lim;
             SmartyPaginate::connect();
             // set items per page
@@ -456,7 +470,7 @@ class project {
         $sel1 = $conn->query("SELECT user FROM projekte_assigned WHERE projekt = $project LIMIT $start,$lim");
 
         $usr = new user();
-        while ($user = $sel1->fetch()) {
+        while ($sel1 and $user = $sel1->fetch()) {
             $theuser = $usr->getProfile($user[0]);
             array_push($members, $theuser);
         }
@@ -478,7 +492,10 @@ class project {
     {
         global $conn;
         $project = (int) $project;
-        $num = $conn->query("SELECT COUNT(*) FROM projekte_assigned WHERE projekt = $project")->fetch();
+        $qry = $conn->query("SELECT COUNT(*) FROM projekte_assigned WHERE projekt = $project");
+	if ($qry) {
+	    $num = $qry->fetch();
+	}
         return $num[0];
     }
 
@@ -493,11 +510,17 @@ class project {
         global $conn;
         $project = (int) $project;
 
-        $otasks = $conn->query("SELECT COUNT(*) FROM tasks WHERE project = $project AND status = 1")->fetch();
-        $otasks = $otasks[0];
+        $qry = $conn->query("SELECT COUNT(*) FROM tasks WHERE project = $project AND status = 1");
+	if ($qry) {
+	    $otasks = $qry->fetch();
+	    $otasks = $otasks[0];
+	}
 
-        $clotasks = $conn->query("SELECT COUNT(*) FROM tasks WHERE project = $project AND status = 0")->fetch();
-        $clotasks = $clotasks[0];
+        $qry = $conn->query("SELECT COUNT(*) FROM tasks WHERE project = $project AND status = 0");
+	if ($qry) {
+	    $clotasks = $qry->fetch();
+	    $clotasks = $clotasks[0];
+	}
 
         $totaltasks = $otasks + $clotasks;
         if ($totaltasks > 0 and $clotasks > 0) {
@@ -524,7 +547,7 @@ class project {
         $selStmt = $sel->execute(array($project));
 
         $folders = array();
-        while ($folder = $sel->fetch()) {
+        while ($sel and $folder = $sel->fetch()) {
             array_push($folders, $folder);
         }
 

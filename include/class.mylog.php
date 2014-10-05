@@ -82,7 +82,9 @@ class mylog {
         $lim = (int) $lim;
 
         $sel = $conn->query("SELECT COUNT(*) FROM log WHERE project = $project ");
-        $num = $sel->fetch();
+        if ($sel) {
+	    $num = $sel->fetch();
+	}
         $num = $num[0];
         if ($num > 200) {
             $num = 200;
@@ -98,13 +100,15 @@ class mylog {
         $sel2 = $conn->query($sql);
 
         $mylog = array();
-        while ($log = $sel2->fetch()) {
+        while ($sel2 and $log = $sel2->fetch()) {
             if (!empty($log)) {
                 $sel3 = $conn->query("SELECT name FROM projekte WHERE ID = $log[project]");
-                $proname = $sel3->fetch();
-                $proname = $proname[0];
-                $log["proname"] = $proname;
-                $log["proname"] = stripslashes($log["proname"]);
+		if ($sel3) {
+		    $proname = $sel3->fetch();
+		    $proname = $proname[0];
+		    $log["proname"] = $proname;
+		    $log["proname"] = stripslashes($log["proname"]);
+		}
                 $log["username"] = stripslashes($log["username"]);
                 $log["name"] = stripslashes($log["name"]);
                 array_push($mylog, $log);
@@ -134,7 +138,7 @@ class mylog {
         $sel = $conn->query("SELECT * FROM log WHERE user = $user ORDER BY ID DESC LIMIT $limit");
 
         $mylog = array();
-        while ($log = $sel->fetch()) {
+        while ($sel and $log = $sel->fetch()) {
             $log["username"] = stripslashes($log["username"]);
             $log["name"] = stripslashes($log["name"]);
             array_push($mylog, $log);
@@ -162,7 +166,7 @@ class mylog {
         $mylog = array();
         $sel3 = $conn->query("SELECT projekt FROM projekte_assigned WHERE user = $userid");
         $prstring = "";
-        while ($upro = $sel3->fetch()) {
+        while ($sel3 and $upro = $sel3->fetch()) {
             $projekt = $upro[0];
             $prstring .= $projekt . ",";
         }
@@ -172,12 +176,14 @@ class mylog {
         if ($prstring) {
             $sel = $conn->query("SELECT * FROM log  WHERE project IN($prstring) OR project = 0 ORDER BY ID DESC LIMIT $limit");
 
-            while ($log = $sel->fetch()) {
+            while ($sel and $log = $sel->fetch()) {
                 $sel2 = $conn->query("SELECT name FROM projekte WHERE ID = $log[project]");
-                $proname = $sel2->fetch();
-                $proname = $proname[0];
-                $log["proname"] = $proname;
-                $log["proname"] = stripslashes($log["proname"]);
+                if ($sel2) {
+		    $proname = $sel2->fetch();
+		    $proname = $proname[0];
+		    $log["proname"] = $proname;
+		    $log["proname"] = stripslashes($log["proname"]);
+		}
                 $log["username"] = stripslashes($log["username"]);
                 $log["name"] = stripslashes($log["name"]);
                 array_push($mylog, $log);

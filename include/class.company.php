@@ -146,9 +146,11 @@ class company {
         $id = (int) $id;
 
         $sel = $conn->prepare("SELECT * FROM company WHERE ID = ?");
-        $selStmt = $sel->execute(array($id));
+        if ($sel) {
+	    $selStmt = $sel->execute(array($id));
 
-        $company = $sel->fetch();
+	    $company = $sel->fetch();
+	}
 
         if (!empty($company)) {
             return $company;
@@ -189,9 +191,10 @@ class company {
         $lim = (int) $lim;
 
         $sel = $conn->prepare("SELECT * FROM company ORDER BY `company` ASC LIMIT $lim");
-        $selStmt = $sel->execute();
-
-        $companies = $sel->fetchAll();
+        if ($sel) {
+	    $selStmt = $sel->execute();
+	    $companies = $sel->fetchAll();
+	}
 
         if (!empty($companies)) {
             return $companies;
@@ -212,8 +215,9 @@ class company {
         $sel = $conn->query("SELECT * FROM company");
         $companies = array();
 
-        while ($company = $sel->fetch()) {
-            array_push($companies, $company);
+        while($sel and $company = $sel->fetch())
+        {
+            array_push($companies,$company);
         }
 
         if (!empty($companies)) {
@@ -241,7 +245,8 @@ class company {
         $userobj = (object) new user();
         $company = $this->getProfile($member[1]);
 
-        while ($member = $sel->fetch()) {
+        while($sel and $member = $sel->fetch())
+        {
             $user = $userobj->getProfile($member[0]);
             array_push($staff, $user);
         }

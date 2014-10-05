@@ -102,7 +102,10 @@ class user {
     {
         global $conn;
 
-        $user = $conn->query("SELECT ID, email, locale FROM user WHERE email={$conn->quote($email)} LIMIT 1")->fetch();
+        $qry = $conn->query("SELECT ID, email, locale FROM user WHERE email={$conn->quote($email)} LIMIT 1");
+	if ($qry) {
+	    $user = $qry->fetch();
+	}
 
         if ($user["email"] == $email) {
             $id = $user["ID"];
@@ -153,9 +156,12 @@ class user {
         $newpass = sha1($newpass);
 
         $oldpass = sha1($oldpass);
-        $chk = $conn->query("SELECT ID, name FROM user WHERE ID = $id AND pass = {$conn->quote($oldpass)}")->fetch();
-        $chk = $chk[0];
-        $name = $chk[1];
+        $qry = $conn->query("SELECT ID, name FROM user WHERE ID = $id AND pass = {$conn->quote($oldpass)}");
+	if ($qry) {
+	    $chk = $qry->fetch();
+	    $chk = $chk[0];
+	    $name = $chk[1];
+	}
         if (!$chk) {
             return false;
         }
@@ -205,8 +211,11 @@ class user {
         global $conn;
         $id = (int) $id;
 
-        $chk = $conn->query("SELECT name FROM user WHERE ID = $id")->fetch();
-        $name = $chk[0];
+        $qry = $conn->query("SELECT name FROM user WHERE ID = $id");
+	if ($qry) {
+	    $chk = $qry->fetch();
+	    $name = $chk[0];
+	}
 
         $del = $conn->query("DELETE FROM user WHERE ID = $id");
         $del2 = $conn->query("DELETE FROM projekte_assigned WHERE user = $id");
@@ -235,7 +244,9 @@ class user {
         $id = (int) $id;
 
         $sel = $conn->query("SELECT * FROM user WHERE ID = $id");
-        $profile = $sel->fetch();
+        if ($sel) {
+	    $profile = $sel->fetch();
+	}
         if (!empty($profile)) {
             $profile["name"] = stripslashes($profile["name"]);
             if (isset($profile["company"])) {
@@ -276,8 +287,10 @@ class user {
         $id = (int) $id;
         global $conn;
         $sel = $conn->query("SELECT avatar FROM user WHERE ID = $id");
-        $profile = $sel->fetch();
-        $profile = $profile[0];
+	if ($sel) {
+	    $profile = $sel->fetch();
+	    $profile = $profile[0];
+	}
 
         if (!empty($profile)) {
             return $profile;
@@ -304,7 +317,9 @@ class user {
         $pass = sha1($pass);
 
         $sel1 = $conn->query("SELECT ID,name,locale,lastlogin,gender FROM user WHERE (name = $user OR email = $user) AND pass = '$pass'");
-        $chk = $sel1->fetch();
+	if ($sel1) {
+  	    $chk = $sel1->fetch();
+	}
         if ($chk["ID"] != "") {
             $rolesobj = new roles();
             $now = time();
@@ -351,12 +366,14 @@ class user {
                 $identity = $openid->data['openid_identity'];
 
                 $sel1 = $conn->query("SELECT ID from openids WHERE identity='$identity'");
-                if ($row = $sel1->fetch()) {
+                if ($sel1 and $row = $sel1->fetch()) {
                     $id = $row['ID'];
                 } else return false;
                 // die("SELECT ID,name,locale,lastlogin,gender FROM user WHERE ID=$id");
                 $sel1 = $conn->query("SELECT ID,name,locale,lastlogin,gender FROM user WHERE ID=$id");
-                $chk = $sel1->fetch();
+		if ($sel1) {
+		    $chk = $sel1->fetch();
+		}
                 if ($chk["ID"] != "") {
                     $rolesobj = new roles();
                     $now = time();
@@ -412,8 +429,11 @@ class user {
 
         $lim = (int) $lim;
 
-        $num = $conn->query("SELECT COUNT(*) FROM `user`")->fetch();
-        $num = $num[0];
+        $qry = $conn->query("SELECT COUNT(*) FROM `user`");
+	if ($qry) {
+	    $num = $qry->fetch();
+	    $num = $num[0];
+	}
         SmartyPaginate::connect();
         // set items per page
         SmartyPaginate::setLimit($lim);
@@ -425,7 +445,7 @@ class user {
         $sel2 = $conn->query("SELECT ID FROM `user` ORDER BY ID DESC LIMIT $start,$lim");
 
         $users = array();
-        while ($user = $sel2->fetch()) {
+        while ($sel2 and $user = $sel2->fetch()) {
             array_push($users, $this->getProfile($user["ID"]));
         }
 
@@ -454,7 +474,7 @@ class user {
 
         $users = array();
 
-        while ($user = $sel->fetch()) {
+        while ($sel and $user = $sel->fetch()) {
             $user["name"] = stripslashes($user["name"]);
             $user["company"] = stripslashes($user["company"]);
             $user["adress"] = stripslashes($user["adress"]);
@@ -489,7 +509,9 @@ class user {
         $now = $time - $offset;
 
         $sel = $conn->query("SELECT ID FROM user WHERE lastlogin >= $now AND ID = $user");
-        $user = $sel->fetch();
+        if ($sel) {
+	    $user = $sel->fetch();
+	}
 
         if (!empty($user)) {
             return true;
@@ -509,8 +531,10 @@ class user {
         global $conn;
 
         $sel = $conn->query("SELECT ID FROM user WHERE name = {$conn->quote($user)}");
-        $id = $sel->fetch();
-        $id = $id[0];
+	if ($sel) {
+  	    $id = $sel->fetch();
+	    $id = $id[0];
+	}
 
         $theid = array();
 

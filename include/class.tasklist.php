@@ -64,8 +64,11 @@ class tasklist {
         $updStmt = $conn->prepare("UPDATE tasklist SET `name` = ?, `desc` = ?, `milestone` = ? WHERE ID = ?");
         $upd = $updStmt->execute(array($name, $desc, $milestone, $id));
         if ($upd) {
-            $proj = $conn->query("SELECT project FROM tasklist WHERE ID = $id")->fetch();
-            $proj = $proj[0];
+  	    $qry = $conn->query("SELECT project FROM tasklist WHERE ID = $id");
+	    if ($qry) {
+	        $proj = $qry->fetch();
+		$proj = $proj[0];
+	    }
 
             $this->mylog->add($name, 'tasklist', 2, $proj);
             return true;
@@ -101,9 +104,11 @@ class tasklist {
                     $taskobj->del($task["ID"]);
                 }
             }
-            $sel1 = $sel->fetch();
-            $proj = $sel1[0];
-            $name = $sel1[1];
+            if ($sel) {
+	        $sel1 = $sel->fetch();
+		$proj = $sel1[0];
+		$name = $sel1[1];
+	    }
             $this->mylog->add($name, 'tasklist', 3, $proj);
             return true;
         } else {
@@ -125,9 +130,12 @@ class tasklist {
         $upd = $conn->query("UPDATE tasklist SET status = 1 WHERE ID = $id");
 
         if ($upd) {
-            $nam = $conn->query("SELECT project, name FROM tasklist WHERE ID = $id")->fetch();
-            $project = $nam[0];
-            $name = $nam[1];
+	    $qry = $conn->query("SELECT project, name FROM tasklist WHERE ID = $id");
+	    if ($qry) {
+	        $nam = $qry->fetch();
+		$project = $nam[0];
+		$name = $nam[1];
+	    }
 
             $this->mylog->add($name, 'tasklist', 4, $project);
             return true;
@@ -153,9 +161,15 @@ class tasklist {
 
         if ($closeMilestones) {
             // Close assigned milestone too, if no other open tasklists are assigned to it
-            $milestone = $conn->query("SELECT milestone FROM tasklist WHERE ID = $id")->fetch();
+	    $qry = $conn->query("SELECT milestone FROM tasklist WHERE ID = $id");
+	    if ($qry) {
+	        $milestone = $qry->fetch();
+	    }
             if ($milestone[0] > 0) {
-                $cou = $conn->query("SELECT count(*) FROM tasklist WHERE milestone = $milestone[0] AND status = 1")->fetch();
+	        $qry = $conn->query("SELECT count(*) FROM tasklist WHERE milestone = $milestone[0] AND status = 1");
+		if ($qry) {
+		    $cou = $qry->fetch();
+		}
 
                 if ($cou[0] == 0) {
                     $miles = new milestone();
@@ -173,9 +187,12 @@ class tasklist {
         }
         // Log entry
         if ($upd) {
-            $nam = $conn->query("SELECT project, name FROM tasklist WHERE ID = $id")->fetch();
-            $project = $nam[0];
-            $name = $nam[1];
+	    $qry = $conn->query("SELECT project, name FROM tasklist WHERE ID = $id");
+	    if ($qry) {
+	        $nam = $qry->fetch();
+		$project = $nam[0];
+		$name = $nam[1];
+	    }
 
             $this->mylog->add($name, 'tasklist', 5, $project);
             return true;
@@ -202,16 +219,16 @@ class tasklist {
         $tasklists = array();
 
         $taskobj = new task();
-        while ($list = $sel->fetch()) {
+        while ($sel and $list = $sel->fetch()) {
             $sel2 = $conn->query("SELECT ID FROM tasks WHERE liste = $list[ID] AND status=1 ORDER BY `end`,`title` ASC");
             $list['tasks'] = array();
-            while ($tasks = $sel2->fetch()) {
+            while ($sel2 and $tasks = $sel2->fetch()) {
                 array_push($list['tasks'], $taskobj->getTask($tasks["ID"]));
             }
 
             $sel3 = $conn->query("SELECT ID FROM tasks WHERE liste = $list[ID] AND status=0 ORDER BY `end` ASC");
             $list['oldtasks'] = array();
-            while ($oldtasks = $sel3->fetch()) {
+            while ($sel3 and $oldtasks = $sel3->fetch()) {
                 array_push($list['oldtasks'], $taskobj->getTask($oldtasks["ID"]));
             }
 
@@ -236,9 +253,11 @@ class tasklist {
         global $conn;
 
         $selStmt = $conn->prepare("SELECT * FROM `tasklist` WHERE ID = ?");
-        $sel = $selStmt->execute(array($id));
-        // $sel = $conn->query("SELECT * FROM tasklist WHERE ID = $id");
-        $tasklist = $selStmt->fetch();
+        if ($selStmt) {
+	    $sel = $selStmt->execute(array($id));
+	    // $sel = $conn->query("SELECT * FROM tasklist WHERE ID = $id");
+	    $tasklist = $selStmt->fetch();
+	}
 
         if (!empty($tasklist)) {
             $startstring = date(CL_DATEFORMAT, $tasklist["start"]);
@@ -270,7 +289,7 @@ class tasklist {
 
         $sel = $conn->query("SELECT ID FROM tasks WHERE `liste` = $id AND `status` = $status ORDER BY `end`,`title` ASC");
         $tasks = array();
-        while ($task = $sel->fetch()) {
+        while ($sel and $task = $sel->fetch()) {
             array_push($tasks, $taskobj->getTask($task["ID"]));
         }
 

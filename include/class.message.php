@@ -68,8 +68,11 @@ class message {
         $upd = $updStmt->execute(array($title, $text, (int) $id));
 
         if ($upd) {
-            $proj = $conn->query("SELECT project FROM messages WHERE ID = $id")->fetch();
-            $proj = $proj[0];
+	    $qry = $conn->query("SELECT project FROM messages WHERE ID = $id");
+	    if ($qry) {
+	        $proj = $qry->fetch();
+		$proj = $proj[0];
+	    }
             $this->mylog->add($title, 'message', 2, $proj);
             return true;
         } else {
@@ -88,7 +91,10 @@ class message {
         global $conn;
         $id = (int) $id;
 
-        $msg = $conn->query("SELECT title,project FROM messages WHERE ID = $id")->fetch();
+        $qry = $conn->query("SELECT title,project FROM messages WHERE ID = $id");
+	if ($qry) {
+	    $msg = $qry->fetch();
+	}
 
         $del = $conn->query("DELETE FROM messages WHERE ID = $id LIMIT 1");
         $del2 = $conn->query("DELETE FROM messages WHERE replyto = $id");
@@ -112,23 +118,35 @@ class message {
         global $conn;
         $id = (int) $id;
 
-        $message = $conn->query("SELECT * FROM messages WHERE ID = $id LIMIT 1")->fetch();
+        $qry = $conn->query("SELECT * FROM messages WHERE ID = $id LIMIT 1");
+	if ($qry) {
+	    $message = $qry->fetch();
+	}
 
 
         $milesobj = new milestone();
         if (!empty($message)) {
-            $replies = $conn->query("SELECT COUNT(*) FROM messages WHERE replyto = $id")->fetch();
-            $replies = $replies[0];
+	    $qry = $conn->query("SELECT COUNT(*) FROM messages WHERE replyto = $id");
+	    if ($qry) {
+	        $replies = $qry->fetch();
+		$replies = $replies[0];
+	    }
 
             $user = new user();
             $avatar = $user->getAvatar($message["user"]);
 
-            $ds = $conn->query("SELECT gender FROM user WHERE ID = $message[user]")->fetch();
-            $gender = $ds[0];
-            $message["gender"] = $gender;
+            $qry = $conn->query("SELECT gender FROM user WHERE ID = $message[user]");
+	    if ($qry) {
+	        $ds = $qry->fetch();
+		$gender = $ds[0];
+		$message["gender"] = $gender;
+	    }
 
-            $project = $conn->query("SELECT name FROM projekte WHERE ID = $message[project]")->fetch();
-            $message["pname"] = $project[0];
+            $qry = $conn->query("SELECT name FROM projekte WHERE ID = $message[project]");
+	    if ($qry) {
+	        $project = $qry->fetch();
+		$message["pname"] = $project[0];
+	    }
             $posted = date(CL_DATEFORMAT . " - H:i", $message["posted"]);
             $message["postdate"] = $posted;
             $message["endstring"] = $posted;
@@ -170,7 +188,7 @@ class message {
 
         $milesobj = new milestone();
         $user = new user();
-        while ($reply = $sel->fetch()) {
+        while ($sel and $reply = $sel->fetch()) {
             if (!empty($reply)) {
                 $thereply = $this->getMessage($reply["ID"]);
                 array_push($replies, $thereply);
@@ -198,7 +216,7 @@ class message {
         $sel3 = $conn->query("SELECT projekt FROM projekte_assigned WHERE user = $userid");
         // Assemble a string of project IDs the user belongs to for IN() query.
         $prstring = "";
-        while ($upro = $sel3->fetch()) {
+        while ($sel3 and $upro = $sel3->fetch()) {
             $projekt = $upro[0];
             $prstring .= $projekt . ",";
         }
@@ -209,7 +227,7 @@ class message {
             $messages = array();
 
             $milesobj = new milestone();
-            while ($message = $sel1->fetch()) {
+            while ($sel1 and $message = $sel1->fetch()) {
                 $themessage = $this->getMessage($message["ID"]);
                 array_push($messages, $themessage);
             }
@@ -237,7 +255,7 @@ class message {
 
         $milesobj = new milestone();
 
-        while ($message = $sel1->fetch()) {
+        while ($sel1 and $message = $sel1->fetch()) {
             $themessage = $this->getMessage($message["ID"]);
             array_push($messages, $themessage);
         }
@@ -299,8 +317,11 @@ class message {
 
         $files = array();
         $sel = $conn->query("SELECT file FROM files_attached WHERE message = $msg");
-        while ($file = $sel->fetch()) {
+        while ($sel and $file = $sel->fetch()) {
             $sel2 = $conn->query("SELECT * FROM files WHERE ID = $file[0]");
+	    if (! $sel2) {
+	      return false;
+	    }
             $thisfile = $sel2->fetch();
             $thisfile["type"] = str_replace("/", "-", $thisfile["type"]);
 
