@@ -233,7 +233,7 @@ if ($action == "add") {
 	global $conn;
 
 	$id = (int) $id;
-    $pname = $conn->query("SELECT name FROM projekte WHERE ID = $id");
+    $pname = queryWithParameters('SELECT name FROM projekte WHERE ID = ?;', array($id));
     $pname = $pname->fetchColumn();
 
     $pdf = new MYPDF("P", PDF_UNIT, "A4", true);
@@ -297,7 +297,7 @@ if ($action == "add") {
 
     $totaltime = $tracker->getTotalTrackTime($track);
     $totaltime = str_replace(".", ",", $totaltime);
-    $uname = $conn->query("SELECT name FROM user WHERE ID = {$conn->quote($id)}")->fetch();
+    $uname = queryWithParameters('SELECT name FROM user WHERE ID = ?;', array($id))->fetch();
     $uname = $uname[0];
 
     $pdf = new MYPDF("P", PDF_UNIT, "A4", true);

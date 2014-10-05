@@ -30,6 +30,9 @@ if (!empty($db_name) and !empty($db_user)) {
     // $tdb = new datenbank();
     $conn = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8", $db_user, $db_pass);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+    // Need to set PDO::ATTR_EMULATE_PREPARES to FALSE because otherwise parameters can't be used with LIMIT-clauses.
+    // See https://bugs.php.net/bug.php?id=44639
+    $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, FALSE);
 }
 // Start template engine
 $template = new Smarty();
@@ -62,7 +65,7 @@ if (isset($_SESSION["userid"])) {
 
 	//update user lastlogin for the onlinelist
 	$mynow = time();
-	$upd = $conn->exec("UPDATE LOW_PRIORITY user SET lastlogin='$mynow' WHERE ID = $userid");
+	queryWithParameters('UPDATE LOW_PRIORITY user SET lastlogin=? WHERE ID = ?', array($mynow, $userid));
 
     // assign it all to the templates
     $template->assign("userid", $userid);

@@ -95,7 +95,7 @@ class search {
         $milestones = array();
         while ($result = $sel->fetch()) {
             if (!empty($result)) {
-                $project = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]")->fetch();
+                $project = queryWithParameters('SELECT name FROM projekte WHERE ID = ?;', array($result['project']))->fetch();
                 $project = $project[0];
 
                 $result["pname"] = $project;
@@ -131,7 +131,7 @@ class search {
         $messages = array();
         while ($result = $sel->fetch()) {
             if (!empty($result)) {
-                $project = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]")->fetch();
+                $project = queryWithParameters('SELECT name FROM projekte WHERE ID = ?;', array($result['project']))->fetch();
                 $project = $project[0];
 
                 $result["pname"] = $project;
@@ -170,7 +170,7 @@ class search {
         $tasks = array();
         while ($result = $sel->fetch()) {
             if (!empty($result)) {
-                $project = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]")->fetch();
+                $project = queryWithParameters('SELECT name FROM projekte WHERE ID = ?;', array($result['project']))->fetch();
                 $project = $project[0];
 
                 $result["pname"] = $project;
@@ -206,7 +206,7 @@ class search {
         $files = array();
         while ($result = $sel->fetch()) {
             if (!empty($result)) {
-                $project = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]")->fetch();
+                $project = queryWithParameters('SELECT name FROM projekte WHERE ID = ?;', array($result['project']))->fetch();
                 $project = $project[0];
 
                 $result["pname"] = $project;
@@ -246,7 +246,7 @@ class search {
     {
         global $conn;
 
-        $sel = $conn->query("SELECT `ID`,`email`,`name`,`avatar`,`lastlogin`, `gender` FROM user WHERE name LIKE " . $conn->quote("%{$query}%"));
+        $sel = queryWithParameters('SELECT `ID`,`email`,`name`,`avatar`,`lastlogin`, `gender` FROM user WHERE name LIKE ?;', array("%{$query}%"));
 
         $user = array();
         while ($result = $sel->fetch()) {

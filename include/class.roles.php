@@ -106,8 +106,8 @@ class roles {
     {
         global $conn;
         $id = (int) $id;
-        $del = $conn->query("DELETE FROM roles WHERE ID = $id");
-        $del2 = $conn->query("DELETE FROM roles_assigned WHERE role = $id");
+        $del = queryWithParameters('DELETE FROM roles WHERE ID = ?;', array($id));
+        $del2 = queryWithParameters('DELETE FROM roles_assigned WHERE role = ?;', array($id));
 
         if ($del) {
             return true;
@@ -130,14 +130,14 @@ class roles {
         $role = (int) $role;
         $user = (int) $user;
         // get the number of roles already assigned to $user
-        $chk = $conn->query("SELECT COUNT(*) FROM roles_assigned WHERE user = $user")->fetch();
+        $chk = queryWithParameters('SELECT COUNT(*) FROM roles_assigned WHERE user = ?;', array($user))->fetch();
         $chk = $chk[0];
         // If there already is a role assigned to the user, just update this entry
         // Otherwise create a new entry
         if ($chk > 0) {
-            $ins = $conn->query("UPDATE roles_assigned SET role = $role WHERE user = $user");
+            $ins = queryWithParameters('UPDATE roles_assigned SET role = $role WHERE user = ?;', array($user));
         } else {
-            $ins = $conn->query("INSERT INTO roles_assigned (user,role) VALUES ($user,$role)");
+            $ins = queryWithParameters('INSERT INTO roles_assigned (user,role) VALUES (?, ?);', array($user,$role));
         }
 
         if ($ins) {
@@ -161,7 +161,7 @@ class roles {
         $role = (int) $role;
         $user = (int) $user;
 
-        $del = $conn->query("DELETE FROM roles_assigned WHERE user = $user AND role = $role LIMIT 1");
+        $del = queryWithParameters('DELETE FROM roles_assigned WHERE user = ? AND role = ? LIMIT 1;', array($user, $role));
 
         if ($del) {
             return true;
@@ -184,7 +184,7 @@ class roles {
         if (!$limit) {
             $sel = $conn->query("SELECT ID FROM roles ORDER BY ID DESC");
         } else {
-            $sel = $conn->query("SELECT ID FROM roles ORDER BY ID DESC LIMIT $limit");
+            $sel = queryWithParameters('SELECT ID FROM roles ORDER BY ID DESC LIMIT ?;', array($limit));
         } while ($role = $sel->fetch()) {
             /**
              * $role["projects"] = unserialize($role["projects"]);
@@ -232,7 +232,7 @@ class roles {
         global $conn;
         $user = (int) $user;
 
-        $usr = $conn->query("SELECT role FROM roles_assigned WHERE user = $user")->fetch();
+        $usr = queryWithParameters('SELECT role FROM roles_assigned WHERE user = ?;', array($user))->fetch();
         $usr = $usr[0];
         if ($usr) {
             $role = $this->getRole($usr);
@@ -292,7 +292,7 @@ class roles {
         global $conn;
         $role = (int) $role;
         // Get the serialized strings from the db
-        $sel2 = $conn->query("SELECT * FROM roles WHERE ID = $role");
+        $sel2 = queryWithParameters('SELECT * FROM roles WHERE ID = ?;', array($role));
         $therole = $sel2->fetch();
         // Unserialize to an array
         $therole["projects"] = unserialize($therole["projects"]);

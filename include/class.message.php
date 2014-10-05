@@ -68,7 +68,7 @@ class message {
         $upd = $updStmt->execute(array($title, $text, (int) $id));
 
         if ($upd) {
-            $proj = $conn->query("SELECT project FROM messages WHERE ID = $id")->fetch();
+            $proj = queryWithParameters('SELECT project FROM messages WHERE ID = ?;', array($id))->fetch();
             $proj = $proj[0];
             $this->mylog->add($title, 'message', 2, $proj);
             return true;
@@ -88,11 +88,11 @@ class message {
         global $conn;
         $id = (int) $id;
 
-        $msg = $conn->query("SELECT title,project FROM messages WHERE ID = $id")->fetch();
+        $msg = queryWithParameters('SELECT title,project FROM messages WHERE ID = ?;', array($id))->fetch();
 
-        $del = $conn->query("DELETE FROM messages WHERE ID = $id LIMIT 1");
-        $del2 = $conn->query("DELETE FROM messages WHERE replyto = $id");
-        $del3 = $conn->query("DELETE FROM files_attached WHERE message = $id");
+        $del = queryWithParameters('DELETE FROM messages WHERE ID = ? LIMIT 1;', array($id));
+        $del2 = queryWithParameters('DELETE FROM messages WHERE replyto = ?;', array($id));
+        $del3 = queryWithParameters('DELETE FROM files_attached WHERE message = ?;', array($id));
         if ($del) {
             $this->mylog->add($msg[0], 'message', 3, $msg[1]);
             return true;
@@ -112,22 +112,22 @@ class message {
         global $conn;
         $id = (int) $id;
 
-        $message = $conn->query("SELECT * FROM messages WHERE ID = $id LIMIT 1")->fetch();
+        $message = queryWithParameters('SELECT * FROM messages WHERE ID = ? LIMIT 1;', array($id))->fetch();
 
 
         $milesobj = new milestone();
         if (!empty($message)) {
-            $replies = $conn->query("SELECT COUNT(*) FROM messages WHERE replyto = $id")->fetch();
+            $replies = queryWithParameters('SELECT COUNT(*) FROM messages WHERE replyto = ?;', array($id))->fetch();
             $replies = $replies[0];
 
             $user = new user();
             $avatar = $user->getAvatar($message["user"]);
 
-            $ds = $conn->query("SELECT gender FROM user WHERE ID = $message[user]")->fetch();
+            $ds = queryWithParameters('SELECT gender FROM user WHERE ID = ?;', array($message['user']))->fetch();
             $gender = $ds[0];
             $message["gender"] = $gender;
 
-            $project = $conn->query("SELECT name FROM projekte WHERE ID = $message[project]")->fetch();
+            $project = queryWithParameters('SELECT name FROM projekte WHERE ID = ?;', array($message['project']))->fetch();
             $message["pname"] = $project[0];
             $posted = date(CL_DATEFORMAT . " - H:i", $message["posted"]);
             $message["postdate"] = $posted;
@@ -165,7 +165,7 @@ class message {
         global $conn;
         $id = (int) $id;
 
-        $sel = $conn->query("SELECT ID FROM messages WHERE replyto = $id ORDER BY posted DESC");
+        $sel = queryWithParameters('SELECT ID FROM messages WHERE replyto = ? ORDER BY posted DESC;', array($id));
         $replies = array();
 
         $milesobj = new milestone();
@@ -195,17 +195,7 @@ class message {
         $limit = (int) $limit;
         // Get the id of the logged in user and get his projects
         $userid = $_SESSION["userid"];
-        $sel3 = $conn->query("SELECT projekt FROM projekte_assigned WHERE user = $userid");
-        // Assemble a string of project IDs the user belongs to for IN() query.
-        $prstring = "";
-        while ($upro = $sel3->fetch()) {
-            $projekt = $upro[0];
-            $prstring .= $projekt . ",";
-        }
-
-        $prstring = substr($prstring, 0, strlen($prstring)-1);
-        if ($prstring) {
-            $sel1 = $conn->query("SELECT ID FROM messages WHERE project IN($prstring) ORDER BY posted DESC LIMIT $limit ");
+            $sel1 = queryWithParameters('SELECT ID FROM messages WHERE project IN(SELECT projekt FROM projekte_assigned WHERE user = ?) ORDER BY posted DESC LIMIT ?;', array($userid, $limit));
             $messages = array();
 
             $milesobj = new milestone();
@@ -213,7 +203,6 @@ class message {
                 $themessage = $this->getMessage($message["ID"]);
                 array_push($messages, $themessage);
             }
-        }
         if (!empty($messages)) {
             return $messages;
         } else {
@@ -233,7 +222,7 @@ class message {
         $project = (int) $project;
 
         $messages = array();
-        $sel1 = $conn->query("SELECT ID FROM messages WHERE project = $project AND replyto = 0 ORDER BY posted DESC");
+        $sel1 = queryWithParameters('SELECT ID FROM messages WHERE project = ? AND replyto = 0 ORDER BY posted DESC;', array($project));
 
         $milesobj = new milestone();
 
@@ -268,12 +257,12 @@ class message {
         // If a file ID is given, the given file will be attached
         // If no file ID is given, the file will be uploaded to the project defined by $id and then attached
         if ($fid > 0) {
-            $ins = $conn->query("INSERT INTO files_attached (ID,file,message) VALUES ('',$fid,$mid)");
+            $ins = queryWithParameters('INSERT INTO files_attached (file,message) VALUES (?,?)', array($fid, $mid));
         } else {
             $num = $_POST["numfiles"];
 
             $chk = 0;
-            $insStmt = $conn->prepare("INSERT INTO files_attached (ID,file,message) VALUES ('',?,?)");
+            $insStmt = $conn->prepare('INSERT INTO files_attached (file,message) VALUES (?,?)');
             for($i = 1;$i <= $num;$i++) {
                 $fid = $myfile->upload("userfile$i", "files/" . CL_CONFIG . "/$id", $id);
                 $ins = $insStmt->execute(array($fid, $mid));
@@ -298,9 +287,9 @@ class message {
         $msg = (int) $msg;
 
         $files = array();
-        $sel = $conn->query("SELECT file FROM files_attached WHERE message = $msg");
+        $sel = queryWithParameters('SELECT file FROM files_attached WHERE message = ?;', array($msg));
         while ($file = $sel->fetch()) {
-            $sel2 = $conn->query("SELECT * FROM files WHERE ID = $file[0]");
+            $sel2 = queryWithParameters('SELECT * FROM files WHERE ID = ?;', array($file[0]));
             $thisfile = $sel2->fetch();
             $thisfile["type"] = str_replace("/", "-", $thisfile["type"]);
 

@@ -60,7 +60,7 @@ class mylog {
         global $conn;
         $id = (int) $id;
 
-        $del = $conn->query("DELETE FROM log WHERE ID = $id LIMIT 1");
+        $del = queryWithParameters('DELETE FROM log WHERE ID = ? LIMIT 1;', array($id));
         if ($del) {
             return true;
         } else {
@@ -81,7 +81,7 @@ class mylog {
         $project = (int) $project;
         $lim = (int) $lim;
 
-        $sel = $conn->query("SELECT COUNT(*) FROM log WHERE project = $project ");
+        $sel = queryWithParameters('SELECT COUNT(*) FROM log WHERE project = ?;', array($project));
         $num = $sel->fetch();
         $num = $num[0];
         if ($num > 200) {
@@ -94,13 +94,13 @@ class mylog {
 
         $start = SmartyPaginate::getCurrentIndex();
         $lim = SmartyPaginate::getLimit();
-        $sql = "SELECT * FROM log WHERE project = $project ORDER BY ID DESC LIMIT $start,$lim";
-        $sel2 = $conn->query($sql);
+        $sql = 'SELECT * FROM log WHERE project = ? ORDER BY ID DESC LIMIT ?, ?;';
+        $sel2 = queryWithParameters($sql, array($project, $start, $lim));
 
         $mylog = array();
         while ($log = $sel2->fetch()) {
             if (!empty($log)) {
-                $sel3 = $conn->query("SELECT name FROM projekte WHERE ID = $log[project]");
+                $sel3 = queryWithParameters('SELECT name FROM projekte WHERE ID = ?;', array($log['project']));
                 $proname = $sel3->fetch();
                 $proname = $proname[0];
                 $log["proname"] = $proname;
@@ -131,7 +131,7 @@ class mylog {
         $user = (int) $user;
         $limit = (int) $limit;
 
-        $sel = $conn->query("SELECT * FROM log WHERE user = $user ORDER BY ID DESC LIMIT $limit");
+        $sel = queryWithParameters('SELECT * FROM log WHERE user = ? ORDER BY ID DESC LIMIT ?;', array($user, $limit));
 
         $mylog = array();
         while ($log = $sel->fetch()) {
@@ -160,28 +160,17 @@ class mylog {
         $limit = (int) $limit;
 
         $mylog = array();
-        $sel3 = $conn->query("SELECT projekt FROM projekte_assigned WHERE user = $userid");
-        $prstring = "";
-        while ($upro = $sel3->fetch()) {
-            $projekt = $upro[0];
-            $prstring .= $projekt . ",";
-        }
+        $sel = queryWithParameters('SELECT * FROM log WHERE project IN(SELECT projekt FROM projekte_assigned WHERE user = ?) OR project = 0 ORDER BY ID DESC LIMIT ?;', array($userid, $limit));
 
-        $prstring = substr($prstring, 0, strlen($prstring)-1);
-
-        if ($prstring) {
-            $sel = $conn->query("SELECT * FROM log  WHERE project IN($prstring) OR project = 0 ORDER BY ID DESC LIMIT $limit");
-
-            while ($log = $sel->fetch()) {
-                $sel2 = $conn->query("SELECT name FROM projekte WHERE ID = $log[project]");
-                $proname = $sel2->fetch();
-                $proname = $proname[0];
-                $log["proname"] = $proname;
-                $log["proname"] = stripslashes($log["proname"]);
-                $log["username"] = stripslashes($log["username"]);
-                $log["name"] = stripslashes($log["name"]);
-                array_push($mylog, $log);
-            }
+        while ($log = $sel->fetch()) {
+            $sel2 = queryWithParameters('SELECT name FROM projekte WHERE ID = ?;', array($log['project']));
+            $proname = $sel2->fetch();
+            $proname = $proname[0];
+            $log["proname"] = $proname;
+            $log["proname"] = stripslashes($log["proname"]);
+            $log["username"] = stripslashes($log["username"]);
+            $log["name"] = stripslashes($log["name"]);
+            array_push($mylog, $log);
         }
 
         if (!empty($mylog)) {

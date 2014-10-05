@@ -11,12 +11,28 @@ function cl_autoload($class_name)
 }
 spl_autoload_register('cl_autoload');
 
+function queryWithParameters($statement, $parameters)
+{
+    global $conn;
+    $query = $conn->prepare($statement);// || die('Could not prepare SQL statement.');
+    if ($query === FALSE) {
+        die('Could not prepare SQL statement.');
+    }
+    
+    if (!$query->execute($parameters))
+    {
+        die('Could not execute SQL statement.');
+    }
+    
+    return $query;
+}
+
 function chkproject($user, $project)
 {
     global $conn;
     $user = (int) $user;
     $project = (int) $project;
-    $chk = @$conn->query("SELECT ID FROM projekte_assigned WHERE projekt = $project AND user = $user")->fetch();
+    $chk = queryWithParameters('SELECT ID FROM projekte_assigned WHERE projekt = ? AND user = ?;', array($project, $user))->fetch();
 
     $chk = $chk[0];
 

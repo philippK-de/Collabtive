@@ -102,7 +102,7 @@ class user {
     {
         global $conn;
 
-        $user = $conn->query("SELECT ID, email, locale FROM user WHERE email={$conn->quote($email)} LIMIT 1")->fetch();
+        $user = queryWithParameters("SELECT ID, email, locale FROM user WHERE email=? LIMIT 1", array($email))->fetch();
 
         if ($user["email"] == $email) {
             $id = $user["ID"];
@@ -122,7 +122,7 @@ class user {
 
             $sha1pass = sha1($newpass);
 
-            $upd = $conn->query("UPDATE user SET `pass` = '$sha1pass' WHERE ID = $id");
+            $upd = queryWithParameters('UPDATE user SET `pass` = ? WHERE ID = ?;', array($sha1pass, $id));
             if ($upd) {
                 return array('newpass'=>$newpass, 'locale'=>$locale);
             } else {
@@ -153,14 +153,14 @@ class user {
         $newpass = sha1($newpass);
 
         $oldpass = sha1($oldpass);
-        $chk = $conn->query("SELECT ID, name FROM user WHERE ID = $id AND pass = {$conn->quote($oldpass)}")->fetch();
+        $chk = queryWithParameters('SELECT ID, name FROM user WHERE ID = ? AND pass = ?;', array($id, $oldpass))->fetch();
         $chk = $chk[0];
         $name = $chk[1];
         if (!$chk) {
             return false;
         }
 
-        $upd = $conn->query("UPDATE user SET pass={$conn->quote($newpass)} WHERE ID = $id");
+        $upd = queryWithParameters('UPDATE user SET pass=? WHERE ID = ?;', array($newpass, $id));
         if ($upd) {
             return true;
         } else {
@@ -186,7 +186,7 @@ class user {
         }
         $newpass = sha1($newpass);
 
-        $upd = $conn->query("UPDATE user SET pass={$conn->quote($newpass)} WHERE ID = $id");
+        $upd = queryWithParameters('UPDATE user SET pass=? WHERE ID = ?;', array($newpass, $id));
         if ($upd) {
             return true;
         } else {
@@ -205,16 +205,16 @@ class user {
         global $conn;
         $id = (int) $id;
 
-        $chk = $conn->query("SELECT name FROM user WHERE ID = $id")->fetch();
+        $chk = queryWithParameters('SELECT name FROM user WHERE ID = ?;', array($id))->fetch();
         $name = $chk[0];
 
-        $del = $conn->query("DELETE FROM user WHERE ID = $id");
-        $del2 = $conn->query("DELETE FROM projekte_assigned WHERE user = $id");
-        $del3 = $conn->query("DELETE FROM milestones_assigned WHERE user = $id");
-        $del4 = $conn->query("DELETE FROM tasks_assigned WHERE user = $id");
-        $del5 = $conn->query("DELETE FROM log WHERE user = $id");
-        $del6 = $conn->query("DELETE FROM timetracker WHERE user = $id");
-        $del7 = $conn->query("DELETE FROM roles_assigned WHERE user = $id");
+        $del = queryWithParameters('DELETE FROM user WHERE ID = ?;', array($id));
+        $del2 = queryWithParameters('DELETE FROM projekte_assigned WHERE user = ?;', array($id));
+        $del3 = queryWithParameters('DELETE FROM milestones_assigned WHERE user = ?;', array($id));
+        $del4 = queryWithParameters('DELETE FROM tasks_assigned WHERE user = ?;', array($id));
+        $del5 = queryWithParameters('DELETE FROM log WHERE user = ?;', array($id));
+        $del6 = queryWithParameters('DELETE FROM timetracker WHERE user = ?;', array($id));
+        $del7 = queryWithParameters('DELETE FROM roles_assigned WHERE user = ?;', array($id));
         if ($del) {
             $this->mylog->add($name, 'user', 3, 0);
             return true;
@@ -234,7 +234,7 @@ class user {
         global $conn;
         $id = (int) $id;
 
-        $sel = $conn->query("SELECT * FROM user WHERE ID = $id");
+        $sel = queryWithParameters('SELECT * FROM user WHERE ID = ?;', array($id));
         $profile = $sel->fetch();
         if (!empty($profile)) {
             $profile["name"] = stripslashes($profile["name"]);
@@ -275,7 +275,7 @@ class user {
     {
         $id = (int) $id;
         global $conn;
-        $sel = $conn->query("SELECT avatar FROM user WHERE ID = $id");
+        $sel = queryWithParameters('SELECT avatar FROM user WHERE ID = ?;', array($id));
         $profile = $sel->fetch();
         $profile = $profile[0];
 
@@ -300,10 +300,9 @@ class user {
         if (!$user) {
             return false;
         }
-        $user = $conn->quote($user);
         $pass = sha1($pass);
 
-        $sel1 = $conn->query("SELECT ID,name,locale,lastlogin,gender FROM user WHERE (name = $user OR email = $user) AND pass = '$pass'");
+        $sel1 = queryWithParameters('SELECT ID,name,locale,lastlogin,gender FROM user WHERE (name = ? OR email = ?) AND pass = ?;', array($user, $user, $pass));
         $chk = $sel1->fetch();
         if ($chk["ID"] != "") {
             $rolesobj = new roles();
@@ -322,7 +321,7 @@ class user {
             if ($staylogged == 1) {
                 setcookie("PHPSESSID", "$seid", time() + 14 * 24 * 3600);
             }
-            $upd1 = $conn->query("UPDATE user SET lastlogin = '$now' WHERE ID = $userid");
+            $upd1 = queryWithParameters('UPDATE user SET lastlogin = ? WHERE ID = ?;', array($now, $userid));
             return true;
         } else {
             return false;
@@ -422,7 +421,7 @@ class user {
         $start = SmartyPaginate::getCurrentIndex();
         $lim = SmartyPaginate::getLimit();
 
-        $sel2 = $conn->query("SELECT ID FROM `user` ORDER BY ID DESC LIMIT $start,$lim");
+        $sel2 = queryWithParameters("SELECT ID FROM `user` ORDER BY ID DESC LIMIT ?,?;", array($start,$lim));
 
         $users = array();
         while ($user = $sel2->fetch()) {
@@ -450,7 +449,7 @@ class user {
         $time = time();
         $now = $time - $offset;
 
-        $sel = $conn->query("SELECT * FROM user WHERE lastlogin >= $now");
+        $sel = queryWithParameters('SELECT * FROM user WHERE lastlogin >= ?;', array($now));
 
         $users = array();
 
@@ -488,7 +487,7 @@ class user {
         $time = time();
         $now = $time - $offset;
 
-        $sel = $conn->query("SELECT ID FROM user WHERE lastlogin >= $now AND ID = $user");
+        $sel = queryWithParameters('SELECT ID FROM user WHERE lastlogin >= ? AND ID = ?;', array($now, $user));
         $user = $sel->fetch();
 
         if (!empty($user)) {
@@ -508,7 +507,7 @@ class user {
     {
         global $conn;
 
-        $sel = $conn->query("SELECT ID FROM user WHERE name = {$conn->quote($user)}");
+        $sel = queryWithParameters('SELECT ID FROM user WHERE name = ?;', array($user));
         $id = $sel->fetch();
         $id = $id[0];
 

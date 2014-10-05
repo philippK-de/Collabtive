@@ -95,11 +95,11 @@ if (!$action) {
         $ins = $conn->query("INSERT INTO settings (`settingsKey`,`settingsValue`) VALUES ('$setKey','$setVal')");
     }
 */
-    $ins = $conn->query("INSERT INTO `settings` (`ID`, `settingsKey`, `settingsValue`) VALUES
+    $ins = queryWithParameters("INSERT INTO `settings` (`ID`, `settingsKey`, `settingsValue`) VALUES
 (1, 'name', 'Collabtive'),
 (2, 'subtitle', 'Collabtive'),
 (3, 'locale', 'en'),
-(4, 'timezone', '$timezone'),
+(4, 'timezone', ?),
 (5, 'dateformat', 'd.m.Y'),
 (6, 'template', 'standard'),
 (7, 'mailnotify', '1'),
@@ -112,7 +112,7 @@ if (!$action) {
 (14, 'rssuser', ''),
 (15, 'rsspass', ''),
 (16, 'theme', 'standard'),
-(17, 'filePass', '$filePass')");
+(17, 'filePass', ?)", array($timezone, $filePass));
     if (!$ins) {
         $template->assign("errortext", "Error: Failed to create initial settings.");
         $template->display("error.tpl");
