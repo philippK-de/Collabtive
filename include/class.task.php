@@ -42,9 +42,11 @@ class task {
         $liste = (int) $liste;
         $project = (int) $project;
 
-	$start_fin = strtotime($start);
+		//convert strings to timestamps
+		$start_fin = strtotime($start);
         $end_fin = strtotime($end);
 
+    	//if strtotime doesnt return something, set the final value to the value given in the function call
         if (empty($start_fin)) {
             $start_fin = $start;
         }
@@ -249,6 +251,7 @@ class task {
             // Get the user(s) assigned to the task from the db
             $usel = $conn->query("SELECT user FROM tasks_assigned WHERE task = $task[ID]");
             $users = array();
+        	//fetch the assigned user(s)
             while ($usr = $usel->fetch()) {
                 // push the assigned users to an array
                 array_push($users, $usr[0]);
@@ -304,6 +307,7 @@ class task {
         $status = (int) $status;
 
         $lists = array();
+    	//if a status is given, query with status - else get all the tasks in the project
         if ($status !== false) {
             $sel2 = $conn->prepare("SELECT ID FROM tasks WHERE project = ? AND status=?");
         	$sel2->execute(array($project,$status));
