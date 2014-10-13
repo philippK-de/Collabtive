@@ -225,7 +225,8 @@ class task {
         $id = (int) $id;
 
         $taskStmt = $conn->query("SELECT * FROM tasks WHERE ID = $id");
-    	$task = $taskStmt->execute(array($id))->fetch();
+    	$taskStmt->execute(array($id));
+    	$task = $taskStmt->fetch();
         if (!empty($task)) {
             // format datestring according to dateformat option
             if (is_numeric($task['start'])) {
@@ -304,9 +305,11 @@ class task {
 
         $lists = array();
         if ($status !== false) {
-            $sel2 = $conn->query("SELECT ID FROM tasks WHERE project = $project AND status=$status");
+            $sel2 = $conn->prepare("SELECT ID FROM tasks WHERE project = ? AND status=?");
+        	$sel2->execute(array($project,$status));
         } else {
-            $sel2 = $conn->query("SELECT ID FROM tasks WHERE project = $project");
+            $sel2 = $conn->prepare("SELECT ID FROM tasks WHERE project = ?");
+        	$sel2->execute(array($project));
         } while ($tasks = $sel2->fetch()) {
             $task = $this->getTask($tasks["ID"]);
             array_push($lists, $task);
@@ -333,11 +336,13 @@ class task {
         $limit = (int) $limit;
         // Get the id of the currently logged in user.
         $user = $_SESSION['userid'];
+    	$userid = (int)$userid;
 
         $lists = array();
         $now = time();
 
-        $sel2 = $conn->query("SELECT ID FROM tasks WHERE project = $project AND status=1 AND end > $now ORDER BY `end` ASC LIMIT $limit");
+        $sel2 = $conn->prepare("SELECT ID FROM tasks WHERE project = ? AND status=1 AND end > ? ORDER BY `end` ASC LIMIT $limit");
+		$sel2->execute(array($id,$now));
 
         while ($tasks = $sel2->fetch()) {
             $chk = $conn->query("SELECT ID FROM tasks_assigned WHERE user = $user AND task = $tasks[ID]")->fetch();
@@ -368,11 +373,12 @@ class task {
         global $conn;
         $project = (int) $project;
         $limit = (int) $limit;
-        $user = (int) $user;
+
         // If no user is given, use the currently logged in one.
         if ($user < 1) {
             $user = $_SESSION['userid'];
         }
+		$user = (int) $user;
         $lists = array();
         $now = time();
 
@@ -563,7 +569,8 @@ class task {
         global $conn;
         $id = (int) $id;
 
-        $sql = $conn->query("SELECT user FROM tasks_assigned WHERE task = $id");
+        $sql = $conn->prepare("SELECT user FROM tasks_assigned WHERE task = ?");
+		$sql->execute(array($id));
 
         $result = array();
         while ($user = $sql->fetch()) {
