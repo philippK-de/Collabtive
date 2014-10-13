@@ -136,7 +136,8 @@ class task {
         global $conn;
         $id = (int) $id;
 
-        $upd = $conn->query("UPDATE tasks SET status = 1 WHERE ID = $id");
+        $updStmt = $conn->prepare("UPDATE tasks SET status = 1 WHERE ID = ?");
+    	$upd = $updStmt->execute(array($id));
         if ($upd) {
             $nameproject = $this->getNameProject($id);
             $this->mylog->add($nameproject[0], 'task', 4, $nameproject[1]);
@@ -157,8 +158,8 @@ class task {
         global $conn;
         $id = (int) $id;
 
-        $upd = $conn->query("UPDATE tasks SET status = 0 WHERE ID = $id");
-
+        $updStmt = $conn->prepare("UPDATE tasks SET status = 0 WHERE ID = ?");
+		$upd = $updStmt->execute(array($id));
         if ($upd) {
             $nameproject = $this->getNameProject($id);
             $this->mylog->add($nameproject[0], 'task', 5, $nameproject[1]);
@@ -181,7 +182,8 @@ class task {
         $task = (int) $task;
         $id = (int) $id;
 
-        $upd = $conn->query("INSERT INTO tasks_assigned (user,task) VALUES ($id,$task)");
+        $updStmt = $conn->prepare("INSERT INTO tasks_assigned (user,task) VALUES (?,?)");
+    	$upd = $updStmt->execute(array($id,$task));
         if ($upd) {
             return true;
         } else {
@@ -202,7 +204,8 @@ class task {
         $task = (int) $task;
         $id = (int) $id;
 
-        $upd = $conn->query("DELETE FROM tasks_assigned WHERE user = $id AND task = $task");
+        $updStmt = $conn->prepare("DELETE FROM tasks_assigned WHERE user = ? AND task = ?");
+    	$upd = $updStmt->execute(array($id,$task));
         if ($upd) {
             return true;
         } else {
@@ -221,7 +224,8 @@ class task {
         global $conn;
         $id = (int) $id;
 
-        $task = $conn->query("SELECT * FROM tasks WHERE ID = $id")->fetch();
+        $taskStmt = $conn->query("SELECT * FROM tasks WHERE ID = $id");
+    	$task = $taskStmt->execute(array($id))->fetch();
         if (!empty($task)) {
             // format datestring according to dateformat option
             if (is_numeric($task['start'])) {
@@ -329,6 +333,7 @@ class task {
         $limit = (int) $limit;
         // Get the id of the currently logged in user.
         $user = $_SESSION['userid'];
+
         $lists = array();
         $now = time();
 
