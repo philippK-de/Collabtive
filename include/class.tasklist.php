@@ -31,15 +31,13 @@ class tasklist {
      * @param int $milestone ID of the associated milestone (0 = no association)
      * @return bool
      */
-    function add_liste($project, $name, $desc, $priority, $access = 0, $milestone = 0) // PLUGIN: PRIORITIZATION
+    function add_liste($project, $name, $desc, $access = 0, $milestone = 0)
     {
         global $conn;
         $name = htmlspecialchars($name);
 
-        // START PLUGIN: PRIORITIZATION
-        $insStmt = $conn->prepare("INSERT INTO tasklist (`project`, `name`, `desc`, `start`, `status`, `access`, `milestone`, `priority`) VALUES (?, ?, ?, ?, 1, ?, ?, ?)");
-        $ins = $insStmt->execute(array((int) $project, $name, $desc, time(), (int) $access, (int) $milestone, (int) $priority));
-        // END PLUGIN: PRIORITIZATION
+        $insStmt = $conn->prepare("INSERT INTO tasklist (`project`, `name`, `desc`, `start`, `status`, `access`, `milestone`) VALUES (?, ?, ?, ?, 1, ?, ?)");
+        $ins = $insStmt->execute(array((int) $project, $name, $desc, time(), (int) $access, (int) $milestone));
 
         if ($ins) {
             $insid = $conn->lastInsertId();
@@ -59,14 +57,12 @@ class tasklist {
      * @param int $milestone ID of the associated milestone
      * @return bool
      */
-    function edit_liste($id, $name, $desc, $milestone, $priority) // PLUGIN: PRIORITIZATION
+    function edit_liste($id, $name, $desc, $milestone)
     {
         global $conn;
         $name = htmlspecialchars($name);
-        // START PLUGIN: PRIORITIZATION
-        $updStmt = $conn->prepare("UPDATE tasklist SET `name` = ?, `desc` = ?, `milestone` = ?, `priority` = ? WHERE ID = ?");
-        $upd = $updStmt->execute(array($name, $desc, $milestone, (int) $priority, $id));
-        // END PLUGIN: PRIORITIZATION
+        $updStmt = $conn->prepare("UPDATE tasklist SET `name` = ?, `desc` = ?, `milestone` = ? WHERE ID = ?");
+        $upd = $updStmt->execute(array($name, $desc, $milestone, $id));
         if ($upd) {
             $proj = $conn->query("SELECT project FROM tasklist WHERE ID = $id")->fetch();
             $proj = $proj[0];
@@ -89,13 +85,8 @@ class tasklist {
         global $conn;
         $id = (int) $id;
 
-        $selStmt = $conn->prepare("SELECT project, name FROM tasklist WHERE ID = ?");
-    	$selStmt->execute(array($id));
-    	$sel1 = $selStmt->fetch();
-
-        $del = $conn->prepare("DELETE FROM tasklist WHERE ID = ? LIMIT 1");
-    	$del->execute(array($id));
-
+        $sel = $conn->query("SELECT project, name FROM tasklist WHERE ID = $id");
+        $del = $conn->query("DELETE FROM tasklist WHERE ID = $id LIMIT 1");
         if ($del) {
             $tasks1 = $this->getTasksFromList($id);
             $taskobj = new task();
@@ -110,6 +101,7 @@ class tasklist {
                     $taskobj->del($task["ID"]);
                 }
             }
+            $sel1 = $sel->fetch();
             $proj = $sel1[0];
             $name = $sel1[1];
             $this->mylog->add($name, 'tasklist', 3, $proj);
@@ -130,8 +122,7 @@ class tasklist {
         global $conn;
         $id = (int) $id;
 
-        $upd = $conn->prepare("UPDATE tasklist SET status = 1 WHERE ID = ?");
-		$upd->execute(array($id));
+        $upd = $conn->query("UPDATE tasklist SET status = 1 WHERE ID = $id");
 
         if ($upd) {
             $nam = $conn->query("SELECT project, name FROM tasklist WHERE ID = $id")->fetch();
@@ -158,8 +149,7 @@ class tasklist {
         global $conn;
         $id = (int) $id;
 
-        $upd = $conn->prepare("UPDATE tasklist SET status = 0 WHERE ID = ?");
-		$upd->execute(array($id));
+        $upd = $conn->query("UPDATE tasklist SET status = 0 WHERE ID = $id");
 
         if ($closeMilestones) {
             // Close assigned milestone too, if no other open tasklists are assigned to it
@@ -207,8 +197,7 @@ class tasklist {
         $project = (int) $project;
         $status = (int) $status;
 
-        $sel = $conn->prepare("SELECT * FROM tasklist WHERE project = ? AND status=?");
-		$sel->execute(array($project,$status));
+        $sel = $conn->query("SELECT * FROM tasklist WHERE project = $project AND status=$status");
 
         $tasklists = array();
 
