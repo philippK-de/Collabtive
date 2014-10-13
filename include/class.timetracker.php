@@ -114,7 +114,8 @@ class timetracker {
         global $conn;
         $id = (int) $id;
 
-        $del = $conn->query("DELETE FROM timetracker WHERE ID = $id");
+        $del = $conn->prepare("DELETE FROM timetracker WHERE ID = ?");
+		$del->execute(array($id));
 
         if ($del) {
             return true;
@@ -147,8 +148,10 @@ class timetracker {
         global $conn;
         $id = (int) $id;
 
-        $sel = $conn->query("SELECT * FROM timetracker WHERE ID = $id");
-        $track = array();
+        $sel = $conn->prepare("SELECT * FROM timetracker WHERE ID = ?");
+        $sel->execute(array($id));
+
+		$track = array();
         $track = $sel->fetch();
 
         if (!empty($track)) {
@@ -189,11 +192,11 @@ class timetracker {
         if ($project > 0) {
             $sql = "SELECT * FROM timetracker WHERE user = $user AND project = $project";
             $num = "SELECT COUNT(*) FROM timetracker WHERE user = $user AND project = $project";
-            $order = " ORDER BY ended ASC";
+            $order = " ORDER BY ID DESC";
         } else {
             $sql = "SELECT * FROM timetracker WHERE user = $user";
             $num = "SELECT COUNT(*) FROM timetracker WHERE user = $user";
-            $order = " ORDER BY ended ASC";
+            $order = " ORDER BY ID DESC";
         }
 
         if ($task > 0) {
@@ -289,11 +292,11 @@ class timetracker {
         if ($user > 0) {
             $sql = "SELECT * FROM timetracker WHERE project = $project AND user = $user";
             $num = "SELECT COUNT(*) FROM timetracker WHERE project = $project AND user = $user";
-            $order = " ORDER BY ended ASC";
+            $order = " ORDER BY ID DESC";
         } else {
             $sql = "SELECT * FROM timetracker WHERE project = $project";
             $num = "SELECT COUNT(*) FROM timetracker WHERE project = $project";
-            $order = " ORDER BY ended ASC";
+            $order = " ORDER BY ID DESC";
         }
 
         if ($task > 0) {
