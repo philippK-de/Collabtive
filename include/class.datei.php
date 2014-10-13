@@ -772,6 +772,13 @@ class datei {
         }
     }
 
+	/**
+	 * Encrypts a file with AES
+	 *
+	 * @param string $filename Filename
+	 * @param string $key Encryption key
+	 * @return bool file was written
+	 */
 	function encryptFile($filename, $key)
 	{
 		include_once(CL_ROOT . "/include/phpseclib/Crypt/AES.php");
@@ -784,6 +791,14 @@ class datei {
 		return file_put_contents($filename,$cipher->encrypt($plaintext));
 
 	}
+
+	/**
+	 * Decrypts a file with AES
+	 *
+	 * @param string $filename Filename
+	 * @param string $key Encryption key
+	 * @return string cleartext
+	 */
 	function decryptFile($filename, $key)
 	{
 		include_once(CL_ROOT . "/include/phpseclib/Crypt/AES.php");
