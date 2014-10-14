@@ -114,7 +114,8 @@ class timetracker {
         global $conn;
         $id = (int) $id;
 
-        $del = queryWithParameters('DELETE FROM timetracker WHERE ID = ?;', array($id));
+        $del = $conn->prepare("DELETE FROM timetracker WHERE ID = ?");
+		$del->execute(array($id));
 
         if ($del) {
             return true;
@@ -147,8 +148,10 @@ class timetracker {
         global $conn;
         $id = (int) $id;
 
-        $sel = queryWithParameters('SELECT * FROM timetracker WHERE ID = ?;', array($id));
-        $track = array();
+        $sel = $conn->prepare("SELECT * FROM timetracker WHERE ID = ?");
+        $sel->execute(array($id));
+
+		$track = array();
         $track = $sel->fetch();
 
         if (!empty($track)) {
@@ -191,14 +194,14 @@ class timetracker {
         if ($project > 0) {
             $sql = 'SELECT * FROM timetracker WHERE user = ? AND project = ?';
             $num = 'SELECT COUNT(*) FROM timetracker WHERE user = ? AND project = ?';
-            $order = ' ORDER BY ended ASC';
+            $order = ' ORDER BY ID DESC';
             
             array_push($sqlParameters, $user);
             array_push($sqlParameters, $project);
         } else {
             $sql = 'SELECT * FROM timetracker WHERE user = ?';
             $num = 'SELECT COUNT(*) FROM timetracker WHERE user = ?';
-            $order = ' ORDER BY ended ASC';
+            $order = ' ORDER BY ID DESC';
             
             array_push($sqlParameters, $user);
         }
@@ -309,14 +312,14 @@ class timetracker {
             array_push($sqlParameters, $project);
             array_push($sqlParameters, $user);
             
-            $order = " ORDER BY ended ASC";
+            $order = " ORDER BY ID DESC";
         } else {
             $sql = 'SELECT * FROM timetracker WHERE project = ?';
             $num = 'SELECT COUNT(*) FROM timetracker WHERE project = ?';
             
             array_push($sqlParameters, $project);
             
-            $order = " ORDER BY ended ASC";
+            $order = " ORDER BY ID DESC";
         }
 
         if ($task > 0) {
