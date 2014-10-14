@@ -377,6 +377,7 @@ class task {
         global $conn;
         $project = (int) $project;
         $limit = (int) $limit;
+        $user = (int) $user;
 
         // If no user is given, use the currently logged in one.
         if ($user < 1) {
