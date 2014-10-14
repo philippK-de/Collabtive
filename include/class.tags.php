@@ -112,8 +112,8 @@ class tags {
         global $conn;
         $project = (int) $project;
 
-        $sel1 = $conn->query("SELECT tags FROM files WHERE tags != '' AND project = $project");
-        $sel2 = $conn->query("SELECT tags FROM messages WHERE tags != '' AND project = $project");
+        $sel1 = queryWithParameters('SELECT tags FROM files WHERE tags != \'\' AND project = ?;', array($project));
+        $sel2 = queryWithParameters('SELECT tags FROM messages WHERE tags != \'\' AND project = ?;', array($project));
 
         $tags1 = array();
         $worktags = "";
@@ -164,15 +164,15 @@ class tags {
         $project = (int) $project;
 
         if ($project > 0) {
-            $sel = $conn->query("SELECT `ID`,`name`,`desc`,`type`,`datei`,`title`,`project`,`tags` FROM `files` WHERE `tags` LIKE " . $conn->quote("%{$query}%") . " HAVING project = $project");
+            $sel = queryWithParameters('SELECT `ID`,`name`,`desc`,`type`,`datei`,`title`,`project`,`tags` FROM `files` WHERE `tags` LIKE ? HAVING project = ?;', array("%{$query}%", $project));
         } else {
-            $sel = $conn->query("SELECT `ID`,`name`,`desc`,`type`,`datei`,`title`,`project`,`tags` FROM `files` WHERE `tags` LIKE " . $conn->quote("%{$query}%"));
+            $sel = queryWithParameters('SELECT `ID`,`name`,`desc`,`type`,`datei`,`title`,`project`,`tags` FROM `files` WHERE `tags` LIKE ?;', array("%{$query}%"));
         }
 
         $files = array();
         while ($result = $sel->fetch()) {
             if (!empty($result)) {
-                $project = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]")->fetch();
+                $project = queryWithParameters('SELECT name FROM projekte WHERE ID = ?;', array($result['project']))->fetch();
                 $project = $project[0];
 
                 $result["pname"] = $project;
@@ -217,15 +217,15 @@ class tags {
         $project = (int) $project;
 
         if ($project > 0) {
-            $sel = $conn->query("SELECT `ID`,`title`,`text`,`posted`,`user`,`username`,`project`,`tags` FROM messages WHERE `tags` LIKE " . $conn->quote("%{$query}%") . " HAVING project = $project ");
+            $sel = queryWithParameters('SELECT `ID`,`title`,`text`,`posted`,`user`,`username`,`project`,`tags` FROM messages WHERE `tags` LIKE ? HAVING project = ?;', array("%{$query}%", $project));
         } else {
-            $sel = $conn->query("SELECT `ID`,`title`,`text`,`posted`,`user`,`username`,`project`,`tags` FROM messages WHERE `tags` LIKE " . $conn->quote("%{$query}%"));
+            $sel = queryWithParameters('SELECT `ID`,`title`,`text`,`posted`,`user`,`username`,`project`,`tags` FROM messages WHERE `tags` LIKE ?;', array("%{$query}%"));
         }
 
         $messages = array();
         while ($result = $sel->fetch()) {
             if (!empty($result)) {
-                $project = $conn->query("SELECT name FROM projekte WHERE ID = $result[project]")->fetch();
+                $project = queryWithParameters('SELECT name FROM projekte WHERE ID = ?;', array($result['project']))->fetch();
                 $project = $project[0];
 
                 $result["pname"] = $project;
@@ -256,7 +256,7 @@ class tags {
     {
         global $conn;
 
-        $sel = $conn->query("SELECT `ID`,`email`,`name`,`avatar`,`lastlogin`,`tags`, `gender` FROM user WHERE tags LIKE " . $conn->quote("%{$query}%"));
+        $sel = queryWithParameters('SELECT `ID`,`email`,`name`,`avatar`,`lastlogin`,`tags`, `gender` FROM user WHERE tags LIKE ?;', array("%{$query}%"));
 
         $user = array();
         while ($result = $sel->fetch()) {

@@ -29,10 +29,10 @@ $conn->query("CREATE TABLE IF NOT EXISTS `customers_assigned` (
 
 $oldTemplate = $settings["template"];
 $template->assign("theme",$oldTemplate);
-$conn->query("INSERT INTO `settings` (`ID` ,`settingsKey` ,`settingsValue`) VALUES (NULL , 'theme', '$oldTemplate')");
+queryWithParameters('INSERT INTO `settings` (`ID` ,`settingsKey` ,`settingsValue`) VALUES (NULL , \'theme\', ?);', array($oldTemplate));
 $conn->query("UPDATE `settings` SET `template`='standard'");
 
-$conn->query("INSERT INTO `settings` (`ID`, `settingsKey`, `settingsValue`) VALUES (NULL, 'filePass', '$filePass')");
+queryWithParameters('INSERT INTO `settings` (`ID`, `settingsKey`, `settingsValue`) VALUES (NULL, \'filePass\', ?);', array($filePass));
 
 $filesList = $conn->query("SELECT * FROM `files`")->fetchAll();
 $fileObj = new datei();

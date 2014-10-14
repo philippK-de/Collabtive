@@ -114,7 +114,7 @@ class datei {
             }
         }
 
-        $del = $conn->query("DELETE FROM projectfolders WHERE ID = $id");
+        $del = queryWithParameters('DELETE FROM projectfolders WHERE ID = ?;', array($id));
 
         if ($del) {
             // Remove directory
@@ -138,7 +138,7 @@ class datei {
 
         $id = (int) $id;
 
-        $folder = $conn->query("SELECT * FROM projectfolders WHERE ID = $id LIMIT 1")->fetch();
+        $folder = queryWithParameters('SELECT * FROM projectfolders WHERE ID = ? LIMIT 1', array($id))->fetch();
 		if(!$folder)
 		{
 			return false;
@@ -161,7 +161,7 @@ class datei {
 
         $parent = (int) $parent;
 
-        $sel = $conn->query("SELECT * FROM projectfolders WHERE parent = $parent ORDER BY ID ASC");
+        $sel = queryWithParameters('SELECT * FROM projectfolders WHERE parent = ? ORDER BY ID ASC;', array($parent));
 
         $folders = array();
 
@@ -192,7 +192,7 @@ class datei {
 
         $project = (int) $project;
 
-        $sel = $conn->query("SELECT * FROM projectfolders WHERE project = $project AND parent = $parent ORDER BY ID ASC");
+        $sel = queryWithParameters('SELECT * FROM projectfolders WHERE project = ? AND parent = ? ORDER BY ID ASC;', array($project, $parent));
 
         $folders = array();
 
@@ -222,7 +222,7 @@ class datei {
 
         $project = (int) $project;
 
-        $sel = $conn->query("SELECT * FROM projectfolders WHERE project = $project ORDER BY ID ASC");
+        $sel = queryWithParameters('SELECT * FROM projectfolders WHERE project = ? ORDER BY ID ASC', array($project));
 
         $folders = array();
 
@@ -253,7 +253,7 @@ class datei {
         if ($folder['parent'] == 0) {
             return "/" . $folder['name'];
         } else {
-            $sel = $conn->query("SELECT * FROM projectfolders WHERE ID = " . $folder['parent']);
+            $sel = queryWithParameters('SELECT * FROM projectfolders WHERE ID = ?;', array($folder['parent']));
             $parent = $sel->fetch();
 
             return $this->getAbsolutePathName($parent) . "/" . $folder['name'];
@@ -486,7 +486,7 @@ class datei {
         $id = (int) $id;
 
         // Get project for logging
-        $proj = $conn->query("SELECT project FROM files WHERE ID = $id")->fetch();
+        $proj = queryWithParameters('SELECT project FROM files WHERE ID = ?;', array($id))->fetch();
 
         $project = $proj[0];
 
@@ -512,7 +512,7 @@ class datei {
         global $conn;
         $datei = (int) $datei;
 
-        $thisfile = $conn->query("SELECT datei, name, project, title FROM files WHERE ID = $datei")->fetch();
+        $thisfile = queryWithParameters('SELECT datei, name, project, title FROM files WHERE ID = ?;', array($datei))->fetch();
 
         if (!empty($thisfile)) {
             $fname = $thisfile[1];
@@ -526,10 +526,10 @@ class datei {
                 return false;
             }
 
-            $del = $conn->query("DELETE FROM files WHERE ID = $datei");
+            $del = queryWithParameters('DELETE FROM files WHERE ID = ?;', array($datei));
 
             // Delete attachments of the file (prevents abandoned objects in messages)
-            $del2 = $conn->query("DELETE FROM files_attached WHERE file = $datei");
+            $del2 = queryWithParameters('DELETE FROM files_attached WHERE file = ?;', array($datei));
 
             if ($del) {
                 // Only remove the file from file system if deletion from database was successful
@@ -562,7 +562,7 @@ class datei {
         $id = (int) $id;
 
         // Get the file from the database
-        $file = $conn->query("SELECT * FROM files WHERE ID=$id")->fetch();
+        $file = queryWithParameters('SELECT * FROM files WHERE ID=?;', array($id))->fetch();
 
         if (!empty($file)) {
             // Determine if there is a MIME-type icon corresponding to the file's MIME-type. If not, set 'none'
@@ -635,7 +635,7 @@ class datei {
         $rootstr = CL_ROOT . "/" . $thefile["datei"];
 
         // Update database
-        $upd = $conn->query("UPDATE files SET datei = '$targetstr', folder = '$thefolder[ID]' WHERE ID = $thefile[ID]");
+        $upd = queryWithParameters('UPDATE files SET datei = ?, folder = ? WHERE ID = ?;', array($targetstr, $thefolder['ID'], $thefile['ID']));
 
         // Move the file physically
         return rename($rootstr, $targetstr);
@@ -660,9 +660,9 @@ class datei {
         // If folder is given, return files from this folder, otherwise return files from root folder
         if ($folder > 0) {
             $fold = "files/" . CL_CONFIG . "/$id/$folder/";
-            $sel = $conn->query("SELECT COUNT(*) FROM files WHERE project = $id AND folder = $folder ORDER BY ID DESC");
+            $sel = queryWithParameters('SELECT COUNT(*) FROM files WHERE project = ? AND folder = ? ORDER BY ID DESC;', array($id, $folder));
         } else {
-            $sel = $conn->query("SELECT COUNT(*) FROM files WHERE project = $id AND folder = 0 ORDER BY ID DESC");
+            $sel = queryWithParameters('SELECT COUNT(*) FROM files WHERE project = ? AND folder = 0 ORDER BY ID DESC', array($id));
         }
         $num = $sel->fetch();
         $num = $num[0];
@@ -677,10 +677,10 @@ class datei {
         $files = array();
 
         if ($folder > 0) {
-            $sql = "SELECT ID FROM files WHERE project = $id AND folder = $folder ORDER BY  ID DESC LIMIT $start,$lim";
-            $sel2 = $conn->query($sql);
+            $sql = 'SELECT ID FROM files WHERE project = ? AND folder = ? ORDER BY ID DESC LIMIT ?,?;';
+            $sel2 = queryWithParameters($sql, array($id, $folder, $start, $lim));
         } else {
-            $sel2 = $conn->query("SELECT ID FROM files WHERE project = $id AND folder = 0 ORDER BY  ID DESC LIMIT $start,$lim");
+            $sel2 = queryWithParameters('SELECT ID FROM files WHERE project = ? AND folder = 0 ORDER BY  ID DESC LIMIT ?,?;', array($id, $start, $lim));
         } while ($file = $sel2->fetch()) {
             if (!empty($file)) {
                 array_push($files, $this->getFile($file["ID"]));
@@ -708,7 +708,7 @@ class datei {
 
         $files = array();
 
-        $sel2 = $conn->query("SELECT ID FROM files WHERE project = $id  ORDER BY  ID DESC");
+        $sel2 = queryWithParameters('SELECT ID FROM files WHERE project = ? ORDER BY ID DESC;', array($id));
 
         while ($file = $sel2->fetch()) {
             if (!empty($file)) {

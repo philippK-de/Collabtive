@@ -77,8 +77,8 @@ class company {
 
         $id = (int) $id;
 
-        $del_assigns = $conn->query("DELETE FROM company_assigned WHERE customer = $id");
-        $del = $conn->query("DELETE FROM customer WHERE ID = $id");
+        $del_assigns = queryWithParameters('DELETE FROM company_assigned WHERE customer = ?;', array($id));
+        $del = queryWithParameters('DELETE FROM customer WHERE ID = ?;', array($id));
 
         if ($del) {
             return true;
@@ -101,7 +101,7 @@ class company {
         $company = (int) $company;
         $id = (int) $id;
 
-        $upd = $conn->query("INSERT INTO customers_assigned (customer, project) VALUES ($company, $id)");
+        $upd = queryWithParameters('INSERT INTO customers_assigned (customer, project) VALUES (?,?);', array($company, $id));
 
         if ($upd) {
             return true;
@@ -124,7 +124,7 @@ class company {
         $company = (int) $company;
         $id = (int) $id;
 
-        $upd = $conn->query("DELETE FROM company_assigned WHERE user = $id AND company = $company");
+        $upd = queryWithParameters('DELETE FROM company_assigned WHERE user = ? AND company =`?;', array($id, $company));
 
         if ($upd) {
             return true;
@@ -188,8 +188,8 @@ class company {
 
         $lim = (int) $lim;
 
-        $sel = $conn->prepare("SELECT * FROM company ORDER BY `company` ASC LIMIT $lim");
-        $selStmt = $sel->execute();
+        $sel = $conn->prepare("SELECT * FROM company ORDER BY `company` ASC LIMIT ?;");
+        $selStmt = $sel->execute(array($lim));
 
         $companies = $sel->fetchAll();
 
@@ -235,7 +235,7 @@ class company {
 
         $id = (int) $id;
 
-        $sel = $conn->query("SELECT user, company FROM company_assigned WHERE company = $id");
+        $sel = queryWithParameters('SELECT user, company FROM company_assigned WHERE company = ?;', array($id));
 
         $staff = array();
         $userobj = (object) new user();

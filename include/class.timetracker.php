@@ -129,7 +129,7 @@ class timetracker {
         global $conn;
         $pstatus = (int) $pstatus;
         $id = (int) $id;
-        $upd = $conn->query("UPDATE timetracker SET pstatus = $pstatus WHERE ID = $id");
+        $upd = queryWithParameters('UPDATE timetracker SET pstatus = ? WHERE ID = ?;', array($pstatus, $id));
 
         if ($upd) {
             return true;
@@ -187,33 +187,45 @@ class timetracker {
         $project = (int) $project;
         $lim = (int) $lim;
         $task = (int) $task;
+        
+        $sqlParameters = array();
         // $start = (int) $start; // those are strings, not numbers
         // $end = (int) $end;
         if ($project > 0) {
-            $sql = "SELECT * FROM timetracker WHERE user = $user AND project = $project";
-            $num = "SELECT COUNT(*) FROM timetracker WHERE user = $user AND project = $project";
-            $order = " ORDER BY ID DESC";
+            $sql = 'SELECT * FROM timetracker WHERE user = ? AND project = ?';
+            $num = 'SELECT COUNT(*) FROM timetracker WHERE user = ? AND project = ?';
+            $order = ' ORDER BY ID DESC';
+            
+            array_push($sqlParameters, $user);
+            array_push($sqlParameters, $project);
         } else {
-            $sql = "SELECT * FROM timetracker WHERE user = $user";
-            $num = "SELECT COUNT(*) FROM timetracker WHERE user = $user";
-            $order = " ORDER BY ID DESC";
+            $sql = 'SELECT * FROM timetracker WHERE user = ?';
+            $num = 'SELECT COUNT(*) FROM timetracker WHERE user = ?';
+            $order = ' ORDER BY ID DESC';
+            
+            array_push($sqlParameters, $user);
         }
 
         if ($task > 0) {
-            $sql .= " AND task = $task";
-            $num .= " AND task = $task";
+            $sql .= ' AND task = ?';
+            $num .= ' AND task = ?';
+            
+            array_push($sqlParameters, $task);
         }
 
         if ($start > 0 and $end > 0) {
             $start = strtotime($start);
             $end = strtotime($end . " +1 day");
             $end = $end - 1;
-            $sql .= " AND ended >=$start AND ended<=$end ";
-            $num .= " AND ended >=$start AND ended<=$end ";
+            $sql .= ' AND ended >=? AND ended<=? ';
+            $num .= ' AND ended >=? AND ended<=? ';
+            
+            array_push($sqlParameters, $start);
+            array_push($sqlParameters, $end);
         }
 
         if ($num) {
-            $num = $conn->query($num)->fetch();
+            $num = queryWithParameters($num, $sqlParameters)->fetch();
             $num = $num[0];
         } else {
             $num = 0;
@@ -228,11 +240,14 @@ class timetracker {
             $start = SmartyPaginate::getCurrentIndex();
             $lim = SmartyPaginate::getLimit();
 
-            $limi = " LIMIT $start,$lim";
+            $limi = ' LIMIT ?,?';
             $sql = $sql . $limi;
+            
+            array_push($sqlParameters, $start);
+            array_push($sqlParameters, $lim);
         }
 
-        $sel = $conn->query($sql);
+        $sel = queryWithParameters($sql, $sqlParameters);
         $track = array();
         $ttask = new task();
 
@@ -248,10 +263,10 @@ class timetracker {
                     $data["tname"] = $tasks;
                 }
 
-                $pname = $conn->query("SELECT name FROM projekte WHERE ID = $data[project]")->fetch();
+                $pname = queryWithParameters('SELECT name FROM projekte WHERE ID = ?;', array($data['project']))->fetch();
                 $pname = stripslashes($pname[0]);
 
-                $uname = $conn->query("SELECT name FROM user WHERE ID = $data[user]")->fetch();
+                $uname = queryWithParameters('SELECT name FROM user WHERE ID = ?;', array($data['user']))->fetch();
                 $uname = stripslashes($uname[0]);
 
                 $data["endstring"] = $endstring;
@@ -286,34 +301,49 @@ class timetracker {
         for ($index = 0; $index < count($task);$index++) {
             $task[$index] = (int) $task[$index];
         }
-        $task = join(',', $task);
+        
+        $sqlParameters = array();
         // $start = (int) $start; // those are strings, not numbers
         // $end = (int) $end; // those are strings, not numbers
         if ($user > 0) {
-            $sql = "SELECT * FROM timetracker WHERE project = $project AND user = $user";
-            $num = "SELECT COUNT(*) FROM timetracker WHERE project = $project AND user = $user";
+            $sql = 'SELECT * FROM timetracker WHERE project = ? AND user = ?';
+            $num = 'SELECT COUNT(*) FROM timetracker WHERE project = ? AND user = ?';
+            
+            array_push($sqlParameters, $project);
+            array_push($sqlParameters, $user);
+            
             $order = " ORDER BY ID DESC";
         } else {
-            $sql = "SELECT * FROM timetracker WHERE project = $project";
-            $num = "SELECT COUNT(*) FROM timetracker WHERE project = $project";
+            $sql = 'SELECT * FROM timetracker WHERE project = ?';
+            $num = 'SELECT COUNT(*) FROM timetracker WHERE project = ?';
+            
+            array_push($sqlParameters, $project);
+            
             $order = " ORDER BY ID DESC";
         }
 
         if ($task > 0) {
-            $sql .= " AND task in ($task)";
-            $num .= " AND task in ($task)";
+            $questionMarkArray = array_pad(array(), count($task), '?');
+            $taskString = join(',', $questionMarkArray);
+            $sql .= " AND task in ($taskString)";
+            $num .= " AND task in ($taskString)";
+            
+            $sqlParameters = array_merge($sqlParameters, $task);
         }
 
         if ($start > 0 and $end > 0) {
             $start = strtotime($start);
             $end = strtotime($end . " +1 day");
             $end = $end - 1;
-            $sql .= " AND ended >=$start AND ended<=$end ";
-            $num .= " AND ended >=$start AND ended<=$end ";
+            $sql .= ' AND ended >=? AND ended<=? ';
+            $num .= ' AND ended >=? AND ended<=? ';
+            
+            array_push($sqlParameters, $start);
+            array_push($sqlParameters, $end);
         }
 
         if ($num) {
-            $num = $conn->query($num)->fetch();
+            $num = queryWithParameters($num, $sqlParameters)->fetch();
             $num = $num[0];
         } else {
             $num = 0;
@@ -329,10 +359,13 @@ class timetracker {
             $start = SmartyPaginate::getCurrentIndex();
             $lim = SmartyPaginate::getLimit();
 
-            $limi = " LIMIT $start,$lim ";
+            $limi = ' LIMIT ?,? ';
             $sql = $sql . $limi;
+            
+            array_push($sqlParameters, $start);
+            array_push($sqlParameters, $lim);
         }
-        $sel = $conn->query($sql);
+        $sel = queryWithParameters($sql, $sqlParameters);
 
         $track = array();
         $ttask = new task();
@@ -349,10 +382,10 @@ class timetracker {
                     $data["tname"] = $tasks;
                 }
 
-                $pname = $conn->query("SELECT name FROM projekte WHERE ID = $data[project]")->fetch();
+                $pname = queryWithParameters('SELECT name FROM projekte WHERE ID = ?;', array($data['project']))->fetch();
                 $pname = stripslashes($pname[0]);
 
-                $uname = $conn->query("SELECT name FROM user WHERE ID = $data[user]")->fetch();
+                $uname = queryWithParameters('SELECT name FROM user WHERE ID = ?;', array($data['user']))->fetch();
                 $uname = stripslashes($uname[0]);
 
                 $data["endstring"] = $endstring;

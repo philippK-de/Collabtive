@@ -104,7 +104,7 @@ class project {
         $tasks = $task->getProjectTasks($id);
         if (!empty($tasks)) {
             foreach ($tasks as $tas) {
-                $del_taskassign = $conn->query("DELETE FROM tasks_assigned WHERE task = $tas[ID]");
+                queryWithParameters('DELETE FROM tasks_assigned WHERE task = ?;', array($tas['ID']));
             }
         }
         // Delete files and the assignments of these files to the messages they were attached to
@@ -116,16 +116,16 @@ class project {
             }
         }
 
-        $del_messages = $conn->query("DELETE FROM messages WHERE project = $id");
-        $del_milestones = $conn->query("DELETE FROM milestones WHERE project = $id");
-        $del_projectassignments = $conn->query("DELETE FROM projekte_assigned WHERE projekt = $id");
-        $del_tasklists = $conn->query("DELETE FROM tasklist WHERE project = $id");
-        $del_tasks = $conn->query("DELETE FROM tasks WHERE project = $id");
-        $del_timetracker = $conn->query("DELETE FROM timetracker WHERE project = $id");
-    	$del_customer = $conn->query("DELETE FROM customers_assigned WHERE project = $id");
+        $del_messages = queryWithParameters('DELETE FROM messages WHERE project = ?;', array($id));
+        $del_milestones = queryWithParameters('DELETE FROM milestones WHERE project = ?;', array($id));
+        $del_projectassignments = queryWithParameters('DELETE FROM projekte_assigned WHERE projekt = ?;', array($id));
+        $del_tasklists = queryWithParameters('DELETE FROM tasklist WHERE project = ?;', array($id));
+        $del_tasks = queryWithParameters('DELETE FROM tasks WHERE project = ?;', array($id));
+        $del_timetracker = queryWithParameters('DELETE FROM timetracker WHERE project = ?;', array($id));
+    	$del_customer = queryWithParameters('DELETE FROM customers_assigned WHERE project = ?;', array($id));
 
-        $del_logentries = $conn->query("DELETE FROM log WHERE project = $id");
-        $del = $conn->query("DELETE FROM projekte WHERE ID = $id");
+        $del_logentries = queryWithParameters('DELETE FROM log WHERE project = ?;', array($id));
+        $del = queryWithParameters('DELETE FROM projekte WHERE ID = ?;', array($id));
 
         delete_directory(CL_ROOT . "/files/" . CL_CONFIG . "/$id");
         if ($del) {
@@ -147,9 +147,9 @@ class project {
         global $conn;
         $id = (int) $id;
 
-        $upd = $conn->query("UPDATE projekte SET status=1 WHERE ID = $id");
+        $upd = queryWithParameters('UPDATE projekte SET status=1 WHERE ID = ?;', array($id));
         if ($upd) {
-            $nam = $conn->query("SELECT name FROM projekte WHERE ID = $id")->fetch();
+            $nam = queryWithParameters('SELECT name FROM projekte WHERE ID = ?;', array($id))->fetch();
             $nam = $nam[0];
             $this->mylog->add($nam, 'projekt', 4, $id);
             return true;
@@ -173,7 +173,7 @@ class project {
         $milestones = $mile->getAllProjectMilestones($id, 100000);
         if (!empty($milestones)) {
             foreach ($milestones as $miles) {
-                $close_milestones = $conn->query("UPDATE milestones SET status = 0 WHERE ID = $miles[ID]");
+                $close_milestones = queryWithParameters('UPDATE milestones SET status = 0 WHERE ID = ?;', array($miles['ID']));
             }
         }
 
@@ -181,7 +181,7 @@ class project {
         $tasks = $task->getProjectTasks($id);
         if (!empty($tasks)) {
             foreach ($tasks as $tas) {
-                $close_tasks = $conn->query("UPDATE tasks SET status = 0 WHERE ID = $tas[ID]");
+                $close_tasks = queryWithParameters('UPDATE tasks SET status = 0 WHERE ID = ?;', array($tas['ID']));
             }
         }
 
@@ -189,13 +189,13 @@ class project {
         $tasklists = $tasklist->getProjectTasklists($id);
         if (!empty($tasklists)) {
             foreach ($tasklists as $tl) {
-                $close_tasklists = $conn->query("UPDATE tasklist SET status = 0 WHERE ID = $tl[ID]");
+                $close_tasklists = queryWithParameters('UPDATE tasklist SET status = 0 WHERE ID = ?;', array($tl['ID']));
             }
         }
 
-        $upd = $conn->query("UPDATE projekte SET status=0 WHERE ID = $id");
+        $upd = queryWithParameters('UPDATE projekte SET status=0 WHERE ID = ?;', array($id));
         if ($upd) {
-            $nam = $conn->query("SELECT name FROM projekte WHERE ID = $id")->fetch();
+            $nam = queryWithParameters('SELECT name FROM projekte WHERE ID = ?;', array($id))->fetch();
             $nam = $nam[0];
             $this->mylog->add($nam, 'projekt', 5, $id);
             return true;
@@ -338,8 +338,8 @@ class project {
 
         $projekte = array();
 
-        $sel = $conn->prepare("SELECT `ID` FROM projekte WHERE `status`= ? ORDER BY `end` ASC LIMIT $lim");
-        $selStmt = $sel->execute(array($status));
+        $sel = $conn->prepare("SELECT `ID` FROM projekte WHERE `status`= ? ORDER BY `end` ASC LIMIT ?");
+        $selStmt = $sel->execute(array($status, $lim));
 
         while ($projekt = $sel->fetch()) {
             $project = $this->getProject($projekt["ID"]);
@@ -371,7 +371,7 @@ class project {
         $selStmt = $sel->execute(array($user));
 
         while ($projs = $sel->fetch()) {
-            $projekt = $conn->query("SELECT ID FROM projekte WHERE ID = " . $projs[0] . " AND status={$conn->quote((int) $status)}")->fetch();
+            $projekt = queryWithParameters('SELECT ID FROM projekte WHERE ID = ? AND status=?;', array($projs[0], (int)$status))->fetch();
             if ($projekt) {
                 $project = $this->getProject($projekt["ID"]);
                 array_push($myprojekte, $project);
@@ -408,7 +408,7 @@ class project {
 
         if ($sel) {
             while ($projs = $sel->fetch()) {
-                $sel2 = $conn->query("SELECT ID FROM projekte WHERE ID = " . $projs[0]);
+                $sel2 = queryWithParameters('SELECT ID FROM projekte WHERE ID = ?;', array($projs[0]));
                 $projekt = $sel2->fetch();
                 if ($projekt) {
                     array_push($myprojekte, $projekt);
@@ -440,7 +440,7 @@ class project {
         $members = array();
 
         if ($paginate) {
-            $num = $conn->query("SELECT COUNT(*) FROM projekte_assigned WHERE projekt = $project")->fetch();
+            $num = queryWithParameters('SELECT COUNT(*) FROM projekte_assigned WHERE projekt = ?;', array($project))->fetch();
             $num = $num[0];
             $lim = (int)$lim;
             SmartyPaginate::connect();
@@ -453,7 +453,7 @@ class project {
         } else {
             $start = 0;
         }
-        $sel1 = $conn->query("SELECT user FROM projekte_assigned WHERE projekt = $project LIMIT $start,$lim");
+        $sel1 = queryWithParameters('SELECT user FROM projekte_assigned WHERE projekt = ? LIMIT ?, ?;', array($project, $start, $lim));
 
         $usr = new user();
         while ($user = $sel1->fetch()) {
@@ -478,7 +478,7 @@ class project {
     {
         global $conn;
         $project = (int) $project;
-        $num = $conn->query("SELECT COUNT(*) FROM projekte_assigned WHERE projekt = $project")->fetch();
+        $num = queryWithParameters('SELECT COUNT(*) FROM projekte_assigned WHERE projekt = ?;', array($project))->fetch();
         return $num[0];
     }
 
@@ -493,10 +493,10 @@ class project {
         global $conn;
         $project = (int) $project;
 
-        $otasks = $conn->query("SELECT COUNT(*) FROM tasks WHERE project = $project AND status = 1")->fetch();
+        $otasks = queryWithParameters('SELECT COUNT(*) FROM tasks WHERE project = ? AND status = 1;', array($project))->fetch();
         $otasks = $otasks[0];
 
-        $clotasks = $conn->query("SELECT COUNT(*) FROM tasks WHERE project = $project AND status = 0")->fetch();
+        $clotasks = queryWithParameters('SELECT COUNT(*) FROM tasks WHERE project = ? AND status = 0;', array($project))->fetch();
         $clotasks = $clotasks[0];
 
         $totaltasks = $otasks + $clotasks;
