@@ -38,7 +38,6 @@ class task {
     function add($start, $end, $title, $text, $liste, $project)
     {
         global $conn;
-        $title = htmlspecialchars($title);
         $liste = (int) $liste;
         $project = (int) $project;
 

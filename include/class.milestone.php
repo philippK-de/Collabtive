@@ -38,7 +38,6 @@ class milestone {
         // Convert end date to timestamp
         $end = strtotime($end);
         $start = strtotime($start);
-        $name = htmlspecialchars($name);
 
         $insStmt = $conn->prepare("INSERT INTO milestones (`project`,`name`,`desc`,`start`,`end`,`status`) VALUES (?, ?, ?, ?, ?, ?)");
         $ins = $insStmt->execute(array((int) $project, $name, $desc, $start, $end, (int) $status));

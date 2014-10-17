@@ -34,7 +34,6 @@ class tasklist {
     function add_liste($project, $name, $desc, $access = 0, $milestone = 0)
     {
         global $conn;
-        $name = htmlspecialchars($name);
 
         $insStmt = $conn->prepare("INSERT INTO tasklist (`project`, `name`, `desc`, `start`, `status`, `access`, `milestone`) VALUES (?, ?, ?, ?, 1, ?, ?)");
         $ins = $insStmt->execute(array((int) $project, $name, $desc, time(), (int) $access, (int) $milestone));
