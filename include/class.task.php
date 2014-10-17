@@ -84,7 +84,6 @@ class task {
         global $conn;
         $id = (int) $id;
         $liste = (int) $liste;
-        $title = htmlspecialchars($title);
 
     	//convert time string to timestamp
         $start = strtotime($start);

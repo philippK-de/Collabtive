@@ -66,7 +66,6 @@ class milestone {
         $id = (int) $id;
         $start = strtotime($start);
         $end = strtotime($end);
-        $name = htmlspecialchars($name);
 
         $updStmt = $conn->prepare("UPDATE milestones SET `name`=?, `desc`=?, `start`=?, `end`=? WHERE ID=?");
         $upd = $updStmt->execute(array($name, $desc, $start, $end, $id));
