@@ -77,8 +77,11 @@ class company {
 
         $id = (int) $id;
 
-        $del_assigns = $conn->query("DELETE FROM company_assigned WHERE customer = $id");
-        $del = $conn->query("DELETE FROM customer WHERE ID = $id");
+        $del_assigns = $conn->prepare("DELETE FROM company_assigned WHERE customer = ?");
+    	$del_assigns->execute(array($id));
+
+        $del = $conn->query("DELETE FROM customer WHERE ID = ?");
+		$del->execute(array($id));
 
         if ($del) {
             return true;
@@ -101,7 +104,8 @@ class company {
         $company = (int) $company;
         $id = (int) $id;
 
-        $upd = $conn->query("INSERT INTO customers_assigned (customer, project) VALUES ($company, $id)");
+        $updStmt = $conn->query("INSERT INTO customers_assigned (customer, project) VALUES (?, ?)");
+    	$upd = $updStmt->execute(array($company,$id));
 
         if ($upd) {
             return true;
@@ -162,7 +166,7 @@ class company {
     	global $conn;
 
         $project = (int) $project;
-        
+
         $sel = $conn->prepare("SELECT customer FROM customers_assigned WHERE project = :project");
         $selStmt = $sel->execute(array(':project' => $project));
 
