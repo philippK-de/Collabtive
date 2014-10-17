@@ -280,9 +280,9 @@ class task {
             $task["startstring"] = $startstring;
             $task["endstring"] = $endstring;
 
-            $task["title"] = stripslashes($task["title"]);
-            $task["text"] = stripslashes($task["text"]);
-            $task["pname"] = stripslashes($pname);
+            $task["title"] = $task["title"];
+            $task["text"] = $task["text"];
+            $task["pname"] = $pname;
             $task["list"] = $list;
             $task["daysleft"] = $tage;
 
