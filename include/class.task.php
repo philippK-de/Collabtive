@@ -224,7 +224,7 @@ class task {
         global $conn;
         $id = (int) $id;
 
-        $taskStmt = $conn->query("SELECT * FROM tasks WHERE ID = $id");
+        $taskStmt = $conn->query("SELECT * FROM tasks WHERE ID = ?");
     	$taskStmt->execute(array($id));
     	$task = $taskStmt->fetch();
         if (!empty($task)) {
