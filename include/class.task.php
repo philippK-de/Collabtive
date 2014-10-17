@@ -261,7 +261,7 @@ class task {
                 $usrobj = new user();
                 $usr = $users[0];
                 $user = $usrobj->getProfile($usr);
-                $task["user"] = stripslashes($user["name"]);
+                $task["user"] = $user["name"];
                 $task["users"] = array($user);
                 $task["user_id"] = $user["ID"];
             } elseif (count($users) > 1) {

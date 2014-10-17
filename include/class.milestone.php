@@ -5,7 +5,7 @@
  * @author Philipp Kiszka <info@o-dyn.de>
  * @name milestone
  * @package Collabtive
- * @version 1.0
+ * @version 2.0
  * @link http://www.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  * @global $mylog
@@ -246,14 +246,11 @@ class milestone {
             $startstring = date(CL_DATEFORMAT, $milestone["start"]);
             $milestone["startstring"] = $startstring;
 
-            $milestone["name"] = stripslashes($milestone["name"]);
-            $milestone["desc"] = stripslashes($milestone["desc"]);
             // Get the name of the project where the message was posted for display
             $psel = $conn->query("SELECT name FROM projekte WHERE ID = $milestone[project]");
             $pname = $psel->fetch();
             $pname = $pname[0];
             $milestone["pname"] = $pname;
-            $milestone["pname"] = stripslashes($milestone["pname"]);
             // Daysleft contains a signed number, dayslate an unsigned one that only applies if the milestone is late
             $dayslate = $this->getDaysLeft($milestone["end"]);
             $milestone["daysleft"] = $dayslate;

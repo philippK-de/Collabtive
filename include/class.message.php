@@ -5,7 +5,7 @@
  *
  * @author Philipp Kiszka <info@o-dyn.de>
  * @name message
- * @version 1.0
+ * @version 2.0
  * @package Collabtive
  * @link http://www.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
@@ -135,9 +135,9 @@ class message {
             $message["endstring"] = $posted;
             $message["replies"] = $replies;
             $message["avatar"] = $avatar;
-            $message["title"] = stripslashes($message["title"]);
-            $message["text"] = stripslashes($message["text"]);
-            $message["username"] = stripslashes($message["username"]);
+            $message["title"] = $message["title"];
+            $message["text"] = $message["text"];
+            $message["username"] = $message["username"];
 
             $attached = $this->getAttachedFiles($message["ID"]);
             $message["files"] = $attached;
