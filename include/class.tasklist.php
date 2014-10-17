@@ -244,8 +244,6 @@ class tasklist {
         if (!empty($tasklist)) {
             $startstring = date(CL_DATEFORMAT, $tasklist["start"]);
             $tasklist["startstring"] = $startstring;
-            $tasklist["name"] = stripslashes($tasklist["name"]);
-            $tasklist["desc"] = stripslashes($tasklist["desc"]);
             $tasklist["tasks"] = $this->getTasksFromList($tasklist["ID"]);
 
             return $tasklist;

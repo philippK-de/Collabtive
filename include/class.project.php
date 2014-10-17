@@ -307,8 +307,6 @@ class project {
             $startstring = date(CL_DATEFORMAT, $project["start"]);
             $project["startstring"] = $startstring;
 
-            $project["name"] = stripslashes($project["name"]);
-            $project["desc"] = stripslashes($project["desc"]);
             $project["done"] = $this->getProgress($project["ID"]);
 
         	$companyObj = new company();
