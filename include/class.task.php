@@ -450,7 +450,7 @@ class task {
         $lists = array();
         $now = strtotime($tod);
 
-        $sel2 = $conn->query("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task HAVING tasks_assigned.user = ? AND tasks.project = ?  AND status=1 AND end = '$now' ORDER BY `end` ASC LIMIT $limit");
+        $sel2 = $conn->prepare("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task HAVING tasks_assigned.user = ? AND tasks.project = ?  AND status=1 AND end = '$now' ORDER BY `end` ASC LIMIT $limit");
  		$sel2->execute(array($user,$project));
 
 		while ($tasks = $sel2->fetch()) {
@@ -482,7 +482,7 @@ class task {
         $lists = array();
         $now = time();
 
-        $sel2 = $conn->query("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task HAVING tasks_assigned.user = ? AND tasks.project = ? AND status=0 ORDER BY `end` ASC LIMIT $limit");
+        $sel2 = $conn->prepare("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task HAVING tasks_assigned.user = ? AND tasks.project = ? AND status=0 ORDER BY `end` ASC LIMIT $limit");
  		$sel2->execute(array($user,$project));
 
         while ($tasks = $sel2->fetch()) {
