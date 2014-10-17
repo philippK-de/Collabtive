@@ -277,7 +277,7 @@ class user {
     {
         $id = (int) $id;
         global $conn;
-        $sel = $conn->query("SELECT avatar FROM user WHERE ID = ?");
+        $sel = $conn->prepare("SELECT avatar FROM user WHERE ID = ?");
     	$sel->execute(array($id));
 
         $profile = $sel->fetch();
