@@ -104,7 +104,7 @@ class company {
         $company = (int) $company;
         $id = (int) $id;
 
-        $updStmt = $conn->query("INSERT INTO customers_assigned (customer, project) VALUES (?, ?)");
+        $updStmt = $conn->prepare("INSERT INTO customers_assigned (customer, project) VALUES (?, ?)");
     	$upd = $updStmt->execute(array($company,$id));
 
         if ($upd) {
