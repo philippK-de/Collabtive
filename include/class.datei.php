@@ -357,8 +357,6 @@ class datei {
                     } else {
                         $this->mylog->add($name, 'file', 1, $project);
                     }
-					//encrypt the uploaded file
-					$this->encryptFile($datei_final);
                     return $fid;
 
                 } else {
