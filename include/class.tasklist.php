@@ -121,7 +121,8 @@ class tasklist {
         global $conn;
         $id = (int) $id;
 
-        $upd = $conn->query("UPDATE tasklist SET status = 1 WHERE ID = $id");
+        $updStmt = $conn->prepare("UPDATE tasklist SET status = 1 WHERE ID = ?");
+		$upd = $updStmt->execute(array($id));
 
         if ($upd) {
             $nam = $conn->query("SELECT project, name FROM tasklist WHERE ID = $id")->fetch();
@@ -148,7 +149,8 @@ class tasklist {
         global $conn;
         $id = (int) $id;
 
-        $upd = $conn->query("UPDATE tasklist SET status = 0 WHERE ID = $id");
+        $updStmt = $conn->prepare("UPDATE tasklist SET status = 0 WHERE ID = ?");
+    	$upd = $updStmt->execute(array($id));
 
         if ($closeMilestones) {
             // Close assigned milestone too, if no other open tasklists are assigned to it
@@ -196,7 +198,8 @@ class tasklist {
         $project = (int) $project;
         $status = (int) $status;
 
-        $sel = $conn->query("SELECT * FROM tasklist WHERE project = $project AND status=$status");
+        $sel = $conn->prepare("SELECT * FROM tasklist WHERE project = ? AND status=?");
+    	$sel->execute(array($project,$status));
 
         $tasklists = array();
 
@@ -236,7 +239,6 @@ class tasklist {
 
         $selStmt = $conn->prepare("SELECT * FROM `tasklist` WHERE ID = ?");
         $sel = $selStmt->execute(array($id));
-        // $sel = $conn->query("SELECT * FROM tasklist WHERE ID = $id");
         $tasklist = $selStmt->fetch();
 
         if (!empty($tasklist)) {
@@ -267,7 +269,9 @@ class tasklist {
 
         $taskobj = new task();
 
-        $sel = $conn->query("SELECT ID FROM tasks WHERE `liste` = $id AND `status` = $status ORDER BY `end`,`title` ASC");
+        $sel = $conn->prepare("SELECT ID FROM tasks WHERE `liste` = ? AND `status` = ? ORDER BY `end`,`title` ASC");
+    	$sel->execute(array($id,$status));
+
         $tasks = array();
         while ($task = $sel->fetch()) {
             array_push($tasks, $taskobj->getTask($task["ID"]));
