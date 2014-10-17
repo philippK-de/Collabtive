@@ -113,7 +113,8 @@ $template->config_dir = CL_ROOT . "/language/$locale/";
 
 //Smarty 3 seems to have a problem with re-compiling the config if the user config is different than the system config.
 //this forces a compile of the config.
-$template->compileAllConfig('.config',true);
+//uncomment this if you have issues with language switching
+//$template->compileAllConfig('.config',true);
 
 
 // read language file into PHP array
