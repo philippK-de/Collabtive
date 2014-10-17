@@ -112,8 +112,9 @@ class message {
         global $conn;
         $id = (int) $id;
 
-        $message = $conn->query("SELECT * FROM messages WHERE ID = $id LIMIT 1")->fetch();
-
+        $messageStmt = $conn->prepare("SELECT * FROM messages WHERE ID = ? LIMIT 1");
+		$messageStmt->execute(array($id));
+    	$message = $messageStmt->fetch();
 
         $milesobj = new milestone();
         if (!empty($message)) {
@@ -165,7 +166,9 @@ class message {
         global $conn;
         $id = (int) $id;
 
-        $sel = $conn->query("SELECT ID FROM messages WHERE replyto = $id ORDER BY posted DESC");
+        $sel = $conn->prepare("SELECT ID FROM messages WHERE replyto = ? ORDER BY posted DESC");
+    	$sel->execute(array($id));
+
         $replies = array();
 
         $milesobj = new milestone();
@@ -195,6 +198,8 @@ class message {
         $limit = (int) $limit;
         // Get the id of the logged in user and get his projects
         $userid = $_SESSION["userid"];
+    	$userid = (int)$userid;
+
         $sel3 = $conn->query("SELECT projekt FROM projekte_assigned WHERE user = $userid");
         // Assemble a string of project IDs the user belongs to for IN() query.
         $prstring = "";
@@ -233,7 +238,8 @@ class message {
         $project = (int) $project;
 
         $messages = array();
-        $sel1 = $conn->query("SELECT ID FROM messages WHERE project = $project AND replyto = 0 ORDER BY posted DESC");
+        $sel1 = $conn->prepare("SELECT ID FROM messages WHERE project = ? AND replyto = 0 ORDER BY posted DESC");
+		$sel1->execute(array($project));
 
         $milesobj = new milestone();
 

@@ -40,6 +40,7 @@ class project {
         }
 
         $now = time();
+
         $ins1Stmt = $conn->prepare("INSERT INTO projekte (`name`, `desc`, `end`, `start`, `status`, `budget`) VALUES (?,?,?,?,1,?)");
         $ins1 = $ins1Stmt->execute(array($name, $desc, $end, $now, (float) $budget));
 
