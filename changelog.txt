@@ -7,6 +7,9 @@ Collabtive 2.1
 + Fixed bug to return correct customer for a project
 + Made customer selection available in admin area
 + Localized customer-related labels and labels for the installation procedure
++ More SQL queries use prepared statements now
++ Remove file upload for IE versions 9 and older
++ Removed several calls to htmlspecialchars(). they are obsoleted by the html purifier lib and caused issues
 
 Collabtive 2.0
 + Fixed notice on desktop that resulted from missing network connection during update check
@@ -84,6 +87,7 @@ Collabtive 1.2
 + Start date for a timetracker entry can now be set manually
 + Fixed a mssing (int) typecast in managetimetracker.php.
 + Timetracker start date can now be manually set
+
 
 Collabtive 1.1
 + Fixed bug in tasklist editing, which would automatically remove the tasklist's assignment to a given milestone
