@@ -57,7 +57,7 @@ class search {
     {
         global $conn;
 
-        $selStmt = $conn->prepare("SELECT `ID`,`name`,`desc`,`status` FROM projekte WHERE `name` LIKE ? OR `desc` LIKE ? OR ID = ? HAVING status=1");
+        $selStmt = $conn->prepare("SELECT `ID`,`name`,`desc`,`status` FROM projekte WHERE `name` LIKE ? OR `desc` LIKE ? OR ID = ? AND status=1");
         $selStmt->execute(array("%{$query}%", "%{$query}%", $query));
 
         $projects = array();
@@ -85,10 +85,10 @@ class search {
         $project = (int) $project;
 
         if ($project > 0) {
-            $sel = $conn->prepare("SELECT `ID`,`name`,`desc`,`status`,`project` FROM milestones WHERE `name` LIKE ? OR `desc` LIKE ? HAVING project = ? AND status=1");
+            $sel = $conn->prepare("SELECT `ID`,`name`,`desc`,`status`,`project` FROM milestones WHERE `name` LIKE ? OR `desc` LIKE ? AND project = ? AND status=1");
             $sel->execute(array("%{$query}%", "%{$query}%", $project));
         } else {
-            $sel = $conn->prepare("SELECT `ID`,`name`,`desc`,`status`,`project` FROM milestones WHERE `name` LIKE ? OR `desc` LIKE ? HAVING status=1");
+            $sel = $conn->prepare("SELECT `ID`,`name`,`desc`,`status`,`project` FROM milestones WHERE `name` LIKE ? OR `desc` LIKE ? AND status=1");
             $sel->execute(array("%{$query}%", "%{$query}%"));
         }
 
@@ -121,7 +121,7 @@ class search {
         $project = (int) $project;
 
         if ($project > 0) {
-            $sel = $conn->prepare("SELECT `ID`,`title`,`text`,`posted`,`user`,`username`,`project` FROM messages WHERE `title` LIKE ? OR `text` LIKE ? HAVING project = ? ");
+            $sel = $conn->prepare("SELECT `ID`,`title`,`text`,`posted`,`user`,`username`,`project` FROM messages WHERE `title` LIKE ? OR `text` LIKE ? AND project = ? ");
             $sel->execute(array("%{$query}%", "%{$query}%", $project));
         } else {
             $sel = $conn->prepare("SELECT `ID`,`title`,`text`,`posted`,`user`,`username`,`project` FROM messages WHERE `title` LIKE ? OR `text` LIKE ?");
@@ -160,10 +160,10 @@ class search {
         $project = (int) $project;
 
         if ($project > 0) {
-            $sel = $conn->prepare("SELECT `ID`,`title`,`text`,`status`,`project` FROM tasks WHERE `title` LIKE ? OR `text` LIKE ? HAVING project = ? AND status=1");
+            $sel = $conn->prepare("SELECT `ID`,`title`,`text`,`status`,`project` FROM tasks WHERE `title` LIKE ? OR `text` LIKE ? AND project = ? AND status=1");
             $sel->execute(array("%{$query}%", "%{$query}%", $project));
         } else {
-            $sel = $conn->prepare("SELECT `ID`,`title`,`text`,`status`,`project` FROM tasks WHERE `title` LIKE ? OR `text` LIKE ? HAVING status=1");
+            $sel = $conn->prepare("SELECT `ID`,`title`,`text`,`status`,`project` FROM tasks WHERE `title` LIKE ? OR `text` LIKE ? AND status=1");
             $sel->execute(array("%{$query}%", "%{$query}%"));
         }
 
@@ -196,7 +196,7 @@ class search {
         $project = (int) $project;
 
         if ($project > 0) {
-            $sel = $conn->prepare("SELECT `ID`,`name`,`desc`,`type`,`datei`,`title`,`project` FROM `files` WHERE `name` LIKE ? OR `desc` LIKE ? OR `title` LIKE ? HAVING project = ?");
+            $sel = $conn->prepare("SELECT `ID`,`name`,`desc`,`type`,`datei`,`title`,`project` FROM `files` WHERE `name` LIKE ? OR `desc` LIKE ? OR `title` LIKE ? AND project = ?");
             $sel->execute(array("%{$query}%", "%{$query}%", "%{$query}%", $project));
         } else {
             $sel = $conn->prepare("SELECT `ID`,`name`,`desc`,`type`,`datei`,`title`,`project` FROM `files` WHERE `name` LIKE ? OR `desc` LIKE ? OR `title` LIKE ?");

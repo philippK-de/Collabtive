@@ -384,7 +384,7 @@ class task {
         $lists = array();
         $now = time();
 
-        $sel2 = $conn->prepare("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task HAVING tasks_assigned.user = ? AND tasks.project = ? AND status=1 ORDER BY `end` ASC ");
+        $sel2 = $conn->prepare("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task AND tasks_assigned.user = ? AND tasks.project = ? AND status=1 ORDER BY `end` ASC ");
 		$sel2->execute(array($user,$project));
 
         while ($tasks = $sel2->fetch()) {
@@ -417,7 +417,7 @@ class task {
         $tod = date("d.m.Y");
         $now = strtotime($tod);
 
-        $sel2 = $conn->prepare("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task HAVING tasks_assigned.user = ? AND tasks.project = ?  AND status=1 AND end < $now ORDER BY `end` ASC LIMIT $limit");
+        $sel2 = $conn->prepare("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task AND tasks_assigned.user = ? AND tasks.project = ?  AND status=1 AND end < $now ORDER BY `end` ASC LIMIT $limit");
         $sel2->execute(array($user,$project));
 
 		while ($tasks = $sel2->fetch()) {
@@ -450,7 +450,7 @@ class task {
         $lists = array();
         $now = strtotime($tod);
 
-        $sel2 = $conn->prepare("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task HAVING tasks_assigned.user = ? AND tasks.project = ?  AND status=1 AND end = '$now' ORDER BY `end` ASC LIMIT $limit");
+        $sel2 = $conn->prepare("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task AND tasks_assigned.user = ? AND tasks.project = ?  AND status=1 AND end = '$now' ORDER BY `end` ASC LIMIT $limit");
  		$sel2->execute(array($user,$project));
 
 		while ($tasks = $sel2->fetch()) {
@@ -482,7 +482,7 @@ class task {
         $lists = array();
         $now = time();
 
-        $sel2 = $conn->prepare("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task HAVING tasks_assigned.user = ? AND tasks.project = ? AND status=0 ORDER BY `end` ASC LIMIT $limit");
+        $sel2 = $conn->prepare("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task AND tasks_assigned.user = ? AND tasks.project = ? AND status=0 ORDER BY `end` ASC LIMIT $limit");
  		$sel2->execute(array($user,$project));
 
         while ($tasks = $sel2->fetch()) {
@@ -525,7 +525,7 @@ class task {
         if ($project > 0) {
             $sql = "SELECT * FROM tasks  WHERE status=1 AND project = $project AND end = '$starttime'";
         } else {
-            $sql = "SELECT tasks.*,tasks_assigned.user,projekte.name AS pname FROM tasks,tasks_assigned,projekte WHERE tasks.ID = tasks_assigned.task AND tasks.project = projekte.ID HAVING tasks_assigned.user = $user AND status=1 AND end = '$starttime'";
+            $sql = "SELECT tasks.*,tasks_assigned.user,projekte.name AS pname FROM tasks,tasks_assigned,projekte WHERE tasks.ID = tasks_assigned.task AND tasks.project = projekte.ID AND tasks_assigned.user = $user AND status=1 AND end = '$starttime'";
         }
         $sel1 = $conn->query($sql);
 

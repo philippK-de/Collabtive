@@ -164,7 +164,7 @@ class tags {
         $project = (int) $project;
 
         if ($project > 0) {
-            $sel = $conn->query("SELECT `ID`,`name`,`desc`,`type`,`datei`,`title`,`project`,`tags` FROM `files` WHERE `tags` LIKE " . $conn->quote("%{$query}%") . " HAVING project = $project");
+            $sel = $conn->query("SELECT `ID`,`name`,`desc`,`type`,`datei`,`title`,`project`,`tags` FROM `files` WHERE `tags` LIKE " . $conn->quote("%{$query}%") . " AND project = $project");
         } else {
             $sel = $conn->query("SELECT `ID`,`name`,`desc`,`type`,`datei`,`title`,`project`,`tags` FROM `files` WHERE `tags` LIKE " . $conn->quote("%{$query}%"));
         }
@@ -217,7 +217,7 @@ class tags {
         $project = (int) $project;
 
         if ($project > 0) {
-            $sel = $conn->query("SELECT `ID`,`title`,`text`,`posted`,`user`,`username`,`project`,`tags` FROM messages WHERE `tags` LIKE " . $conn->quote("%{$query}%") . " HAVING project = $project ");
+            $sel = $conn->query("SELECT `ID`,`title`,`text`,`posted`,`user`,`username`,`project`,`tags` FROM messages WHERE `tags` LIKE " . $conn->quote("%{$query}%") . " AND project = $project ");
         } else {
             $sel = $conn->query("SELECT `ID`,`title`,`text`,`posted`,`user`,`username`,`project`,`tags` FROM messages WHERE `tags` LIKE " . $conn->quote("%{$query}%"));
         }
