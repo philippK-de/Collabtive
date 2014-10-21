@@ -525,7 +525,7 @@ class task {
         if ($project > 0) {
             $sql = "SELECT * FROM tasks  WHERE status=1 AND project = $project AND end = '$starttime'";
         } else {
-            $sql = "SELECT tasks.*,tasks_assigned.user,projekte.name AS pname FROM tasks,tasks_assigned,projekte WHERE tasks.ID = tasks_assigned.task AND tasks.project = projekte.ID AND tasks_assigned.user = $user AND status=1 AND end = '$starttime'";
+            $sql = "SELECT tasks.*,tasks_assigned.user,projekte.name AS pname FROM tasks,tasks_assigned,projekte WHERE tasks.ID = tasks_assigned.task AND tasks.project = projekte.ID AND tasks_assigned.user = $user AND tasks.status=1 AND tasks.end = '$starttime'";
         }
         $sel1 = $conn->query($sql);
 
