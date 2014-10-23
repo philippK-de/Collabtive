@@ -80,7 +80,7 @@ class company {
         $del_assigns = $conn->prepare("DELETE FROM company_assigned WHERE customer = ?");
     	$del_assigns->execute(array($id));
 
-        $del = $conn->query("DELETE FROM customer WHERE ID = ?");
+        $del = $conn->prepare("DELETE FROM customer WHERE ID = ?");
 		$del->execute(array($id));
 
         if ($del) {
@@ -128,7 +128,8 @@ class company {
         $company = (int) $company;
         $id = (int) $id;
 
-        $upd = $conn->query("DELETE FROM company_assigned WHERE user = $id AND company = $company");
+        $updStmt = $conn->prepare("DELETE FROM company_assigned WHERE user = ? AND company = ?");
+    	$upd = $updStmt->execute(array($id,$company));
 
         if ($upd) {
             return true;
@@ -239,7 +240,8 @@ class company {
 
         $id = (int) $id;
 
-        $sel = $conn->query("SELECT user, company FROM company_assigned WHERE company = $id");
+        $sel = $conn->prepare("SELECT user, company FROM company_assigned WHERE company = ?");
+		$sel->execute(array($id));
 
         $staff = array();
         $userobj = (object) new user();

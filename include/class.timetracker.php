@@ -249,10 +249,7 @@ class timetracker {
                 }
 
                 $pname = $conn->query("SELECT name FROM projekte WHERE ID = $data[project]")->fetch();
-                $pname = stripslashes($pname[0]);
-
                 $uname = $conn->query("SELECT name FROM user WHERE ID = $data[user]")->fetch();
-                $uname = stripslashes($uname[0]);
 
                 $data["endstring"] = $endstring;
                 $data["startstring"] = $startstring;
@@ -350,10 +347,7 @@ class timetracker {
                 }
 
                 $pname = $conn->query("SELECT name FROM projekte WHERE ID = $data[project]")->fetch();
-                $pname = stripslashes($pname[0]);
-
                 $uname = $conn->query("SELECT name FROM user WHERE ID = $data[user]")->fetch();
-                $uname = stripslashes($uname[0]);
 
                 $data["endstring"] = $endstring;
                 $data["startstring"] = $startstring;
