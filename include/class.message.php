@@ -305,7 +305,7 @@ class message {
 
         $files = array();
         $sel = $conn->prepare("SELECT file FROM files_attached WHERE message = ?");
-    	$sel->execute(array($id));
+    	$sel->execute(array($msg));
 
         while ($file = $sel->fetch()) {
             $sel2 = $conn->query("SELECT * FROM files WHERE ID = $file[0]");
