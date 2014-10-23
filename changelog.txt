@@ -10,6 +10,10 @@ Collabtive 2.1
 + More SQL queries use prepared statements now
 + Remove file upload for IE versions 9 and older
 + Removed several calls to htmlspecialchars(). they are obsoleted by the html purifier lib and caused issues
++ Removed several calls to stripslashes(). they are obsoleted by html purifier
++ Fixed a problem with ambiguous field names
++ Fixed a missing GROUP BY clause
+
 
 Collabtive 2.0
 + Fixed notice on desktop that resulted from missing network connection during update check
