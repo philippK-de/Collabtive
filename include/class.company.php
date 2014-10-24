@@ -214,7 +214,8 @@ class company {
     {
         global $conn;
 
-        $sel = $conn->query("SELECT * FROM company");
+        $sel = $conn->prepare("SELECT * FROM company");
+    	$sel->execute();
         $companies = array();
 
         while ($company = $sel->fetch()) {
