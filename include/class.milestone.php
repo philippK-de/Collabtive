@@ -477,7 +477,6 @@ class milestone {
     * @param int $lim Number of milestones to return
     * @return array $milestones Details of the milestones
     */
-
     function getTodayProjectMilestones($project, $lim = 100)
     {
         global $conn;

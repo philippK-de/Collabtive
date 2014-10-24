@@ -53,6 +53,7 @@ class task {
         // write to db
         $insStmt = $conn->prepare("INSERT INTO tasks (start, end, title, text, liste, status, project) VALUES (?, ?, ?, ?, ?, 1, ?)");
         $ins = $insStmt->execute(array($start_fin, $end_fin, $title, $text, $liste, $project));
+
         if ($ins) {
             $insid = $conn->lastInsertId();
             // logentry
@@ -112,6 +113,7 @@ class task {
 
         $nameproject = $this->getNameProject($id);
         $del = $conn->query("DELETE FROM tasks WHERE ID = $id LIMIT 1");
+
         if ($del) {
             $del2 = $conn->query("DELETE FROM tasks_assigned WHERE task=$id");
             $this->mylog->add($nameproject[0], 'task', 3, $nameproject[1]);
@@ -134,6 +136,7 @@ class task {
 
         $updStmt = $conn->prepare("UPDATE tasks SET status = 1 WHERE ID = ?");
         $upd = $updStmt->execute(array($id));
+
         if ($upd) {
             $nameproject = $this->getNameProject($id);
             $this->mylog->add($nameproject[0], 'task', 4, $nameproject[1]);
@@ -156,6 +159,7 @@ class task {
 
         $updStmt = $conn->prepare("UPDATE tasks SET status = 0 WHERE ID = ?");
         $upd = $updStmt->execute(array($id));
+
         if ($upd) {
             $nameproject = $this->getNameProject($id);
             $this->mylog->add($nameproject[0], 'task', 5, $nameproject[1]);
@@ -202,6 +206,7 @@ class task {
 
         $updStmt = $conn->prepare("DELETE FROM tasks_assigned WHERE user = ? AND task = ?");
         $upd = $updStmt->execute(array($id, $task));
+
         if ($upd) {
             return true;
         } else {
@@ -517,11 +522,15 @@ class task {
         $timeline = array();
 
         if ($project > 0) {
-            $sql = "SELECT * FROM tasks  WHERE status=1 AND project = $project AND end = '$starttime'";
+            $sql = "SELECT * FROM tasks  WHERE status=1 AND project = ? AND end = '$starttime'";
+        	$sel1 = $conn->prepare($sql);
+        	$sel1->execute(array($project));
         } else {
-            $sql = "SELECT tasks.*,tasks_assigned.user,projekte.name AS pname FROM tasks,tasks_assigned,projekte WHERE tasks.ID = tasks_assigned.task AND tasks.project = projekte.ID AND tasks_assigned.user = $user AND tasks.status=1 AND tasks.end = '$starttime'";
+            $sql = "SELECT tasks.*,tasks_assigned.user,projekte.name AS pname FROM tasks,tasks_assigned,projekte WHERE tasks.ID = tasks_assigned.task AND tasks.project = projekte.ID AND tasks_assigned.user = ? AND tasks.status=1 AND tasks.end = '$starttime'";
+        	$sel1 = $conn->prepare($sql);
+        	$sel1->execute(array($user));
         }
-        $sel1 = $conn->query($sql);
+
 
         while ($stone = $sel1->fetch()) {
             $stone["daysleft"] = $this->getDaysLeft($stone["end"]);
