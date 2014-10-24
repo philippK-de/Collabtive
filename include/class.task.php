@@ -184,6 +184,7 @@ class task {
 
         $updStmt = $conn->prepare("INSERT INTO tasks_assigned (user,task) VALUES (?,?)");
         $upd = $updStmt->execute(array($id, $task));
+
         if ($upd) {
             return true;
         } else {
@@ -228,6 +229,7 @@ class task {
         $taskStmt = $conn->prepare("SELECT * FROM tasks WHERE ID = ?");
         $taskStmt->execute(array($id));
         $task = $taskStmt->fetch();
+
         if (!empty($task)) {
             // format datestring according to dateformat option
             if (is_numeric($task['start'])) {
@@ -338,6 +340,7 @@ class task {
         $limit = (int) $limit;
         // Get the id of the currently logged in user.
         $user = $_SESSION['userid'];
+    	$user = (int) $user;
         $userid = (int)$userid;
 
         $lists = array();
@@ -531,7 +534,6 @@ class task {
         	$sel1->execute(array($user));
         }
 
-
         while ($stone = $sel1->fetch()) {
             $stone["daysleft"] = $this->getDaysLeft($stone["end"]);
             array_push($timeline, $stone);
@@ -555,7 +557,9 @@ class task {
         global $conn;
         $id = (int) $id;
 
-        $user = $conn->query("SELECT user FROM tasks_assigned WHERE task = $id")->fetch();
+        $userStmt = $conn->prepare("SELECT user FROM tasks_assigned WHERE task = ?");
+		$userStmt->execute(array($id));
+    	$user = $userStmt->fetch();
 
         if (!empty($user)) {
             $uname = $conn->query("SELECT name FROM user WHERE ID = $user[0]")->fetch();
