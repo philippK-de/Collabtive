@@ -118,9 +118,10 @@ class milestone {
         global $conn;
         $id = (int) $id;
 
-        $upd = $conn->query("UPDATE milestones SET status = 1 WHERE ID = $id");
+        $updStmt = $conn->query("UPDATE milestones SET status = 1 WHERE ID = ?");
+		$upd = $updStmt->execute(array($id));
 
-        if ($upd) {
+		if ($upd) {
             $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
             $nam = $nam->fetch();
             $project = $nam[0];
@@ -145,8 +146,9 @@ class milestone {
         global $conn;
         $id = (int) $id;
 
-        $upd = $conn->query("UPDATE milestones SET status = 0 WHERE ID = $id");
-        // Get attached tasklists
+        $updStmt = $conn->prepare("UPDATE milestones SET status = 0 WHERE ID = ?");
+        $upd = $updStmt->execute(array($id));
+		// Get attached tasklists
         $tasklists = $this->getMilestoneTasklists($id);
         // Loop through tasklists , close all tasks in them, then close tasklist itself
         if (!empty($tasklists)) {
@@ -182,7 +184,10 @@ class milestone {
         $milestone = (int) $milestone;
         $user = (int) $user;
 
-        $upd = $conn->query("INSERT INTO milestones_assigned (NULL,$user,$milestone)");
+
+    	$updStmt = $conn->prepare("INSERT INTO milestones_assigned (NULL,?,?)");
+    	$upd = $updStmt->execute(array($user,$milestone));
+
         if ($upd) {
             $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
             $nam = $nam->fetch();
