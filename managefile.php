@@ -53,6 +53,8 @@ if ($action == "uploadAsync") {
         $template->display("error.tpl");
         die();
     }
+	//if a folder for upload is set
+	//otherwhise use the root folder
     if ($upfolder) {
         $thefolder = $myfile->getFolder($upfolder);
     	$absfolder = $myfile->getAbsolutePathName($thefolder);
@@ -66,6 +68,7 @@ if ($action == "uploadAsync") {
         $upath = "files/" . CL_CONFIG . "/$id";
         $upfolder = 0;
     }
+	//how many files to upload
     $num = count($_FILES);
     $chk = 0;
     //Loop through uploaded files
@@ -89,6 +92,7 @@ if ($action == "uploadAsync") {
             } elseif ($sendto[0] == "none") {
                 $sendto = array();
             }
+        	//loop through the users in the project
             foreach($users as $user) {
                 if (!empty($user["email"])) {
                     $userlang=readLangfile($user['locale']);
@@ -104,8 +108,9 @@ if ($action == "uploadAsync") {
                                    $userlang["file"] . ":  <a href = \"" . $url . $fileprops["datei"] . "\">" . $url . $fileprops["datei"] . "</a>";
 
                     $subject = $userlang["filecreatedsubject"] . " (". $userlang['by'] . ' '. $username . ")";
-
+					//if sendto is an array multiple users need to be notified
                     if (is_array($sendto)) {
+                    	//check if the current user is in the notifications array
                         if (in_array($user["ID"], $sendto)) {
                             // send email
                             $themail = new emailer($settings);
@@ -151,9 +156,7 @@ if ($action == "uploadAsync") {
         $template->display("error.tpl");
         die();
     }
-    $tagobj = new tags();
-    $tags = $tagobj->formatInputTags($tags);
-    if ($myfile->edit($thisfile, $title, $desc, $tags)) {
+    if ($myfile->edit($thisfile, $title, $desc, "")) {
         $loc = $url .= "managefile.php?action=showproject&id=$id&mode=edited";
         header("Location: $loc");
     }
@@ -214,13 +217,19 @@ if ($action == "uploadAsync") {
     if (empty($finfiles)) {
         $filenum = 0;
     }
-    $folders = $myfile->getProjectFolders($id);
+	$myproject = new project();
+	$rolesobj = new roles();
 
+	//get folders
+    $folders = $myfile->getProjectFolders($id);
+	//get all folders
     $allfolders = $myfile->getAllProjectFolders($id);
-    $myproject = new project();
+
+	//get the project
     $pro = $myproject->getProject($id);
+	//get the project members
     $members = $myproject->getProjectMembers($id, 10000);
-    $rolesobj = new roles();
+   	//get all roles
     $allroles = $rolesobj->getAllRoles();
 
     $projectname = $pro["name"];
