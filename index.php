@@ -27,7 +27,7 @@ $mtask = new task();
 $msg = new message();
 
 $myprojects = $project->getMyProjects($userid);
-$myoldprojects = $project->getMyProjects($userid, 0, 10);
+$myoldprojects = $project->getMyProjects($userid, 0, 10, 'DESC');
 $messages = array();
 $milestones = array();
 $tasks = array();

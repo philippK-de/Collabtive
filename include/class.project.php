@@ -361,9 +361,11 @@ class project {
      *
      * @param int $user Eindeutige Mitgliedsnummer
      * @param int $status Bearbeitungsstatus von Projekten (1 = offenes Projekt)
+     * @param int $limit Die Anzahl der zurückgegebenen Projekte. 0 = unbegrenzt
+     * @param string $sort Die Sortierreihenfolge. ASC = aufsteigend, DESC = absteigend
      * @return array $myprojekte Projekte des Mitglieds
      */
-    function getMyProjects($user, $status = 1, $limit = 0)
+    function getMyProjects($user, $status = 1, $limit = 0, $sort = 'ASC')
     {
         global $conn;
 
@@ -371,6 +373,9 @@ class project {
         $user = (int) $user;
     	$status = (int) $status;
         $limit = (int) $limit;
+        if ($sort !== 'ASC' && $sort !== 'DESC') {
+            $sort = 'ASC';
+        }
         
         $parameters = array($user, $status);
         $sql = "SELECT projekte_assigned.projekt FROM projekte_assigned INNER JOIN projekte ON projekte_assigned.projekt = projekte.ID WHERE projekte_assigned.user = ? AND projekte.status = ? ORDER BY projekte_assigned.ID ASC";
