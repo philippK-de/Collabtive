@@ -378,7 +378,7 @@ class project {
         }
         
         $parameters = array($user, $status);
-        $sql = "SELECT projekte_assigned.projekt FROM projekte_assigned INNER JOIN projekte ON projekte_assigned.projekt = projekte.ID WHERE projekte_assigned.user = ? AND projekte.status = ? ORDER BY projekte_assigned.ID ASC";
+        $sql = "SELECT projekte_assigned.projekt FROM projekte_assigned INNER JOIN projekte ON projekte_assigned.projekt = projekte.ID WHERE projekte_assigned.user = ? AND projekte.status = ? ORDER BY projekte_assigned.ID " . $sort;
         if ($limit > 0)
         {
             $sql .= " LIMIT ?";
