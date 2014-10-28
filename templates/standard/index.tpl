@@ -223,7 +223,7 @@
 								{if $userpermissions.projects.add}
 									<a class="butn_link" href="javascript:blindtoggle('form_addmyproject');" id="add_butn_myprojects" onclick="toggleClass('add_myprojects','add-active','add');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_deskprojects','smooth','nosmooth');">{#addproject#}</a>
 								{/if}
-                                                                <a class="butn_link" href="javascript:blindtoggle('doneblock');" id="donebutn_25" onclick="toggleClass(this,'butn_link_active','butn_link');toggleClass('toggle-done','acc-toggle','acc-toggle-active');">Erledigte Projekte</a>
+                                                                <a class="butn_link" href="javascript:blindtoggle('doneblock');" id="donebutn_25" onclick="toggleClass(this,'butn_link_active','butn_link');toggleClass('toggle-done','acc-toggle','acc-toggle-active');">{#closedprojects#}</a>
 							</div>
 						</div>
 					<div class="content-spacer"></div>
