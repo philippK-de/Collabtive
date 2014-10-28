@@ -13,7 +13,7 @@ Collabtive 2.1
 + Removed several calls to stripslashes(). they are obsoleted by html purifier
 + Fixed a problem with ambiguous field names
 + Fixed a missing GROUP BY clause
-
++ Ensured consistency by disabling the checkbox representing the current user in the form for adding a project
 
 Collabtive 2.0
 + Fixed notice on desktop that resulted from missing network connection during update check
