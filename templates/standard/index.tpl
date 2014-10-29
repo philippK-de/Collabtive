@@ -127,103 +127,14 @@
 									</tr>
 								</tbody>
 							{/section}
-                                                        </table>
-                                                        
-                                                        <div id="doneblock" class="doneblock" style="display: none;">
-                                                        <table class="second-thead" cellpadding="0" cellspacing="0" border="0" onclick="blindtoggle('doneblock');toggleClass('donebutn','butn_link_active','butn_link');toggleClass('toggle-done','acc-toggle','acc-toggle-active');">
-                                                            <tr>
-                                                                <td class="a"></td>
-                                                                <td class="b"><span id="toggle-done" class="acc-done">{#closedprojects#}</span></td>
-                                                                <td class="c"></td>
-                                                                <td class="d"></td>
-                                                                <td class="tools"></td>
-                                                            </tr>
-                                                        </table>
-                                                        
-                                                            <div class="toggleblock">
-                                                        <table cellpadding="0" cellspacing="0" border="0" id = "done">
-                                                        {section name=doneproject loop=$myoldprojects}
-                                                                {*Color-Mix*}
-								{if $smarty.section.doneproject.index % 2 == 0}
-									<tbody class="color-a" id="proj_{$myoldprojects[doneproject].ID}" rel="{$myoldprojects[doneproject].ID},{$myoldprojects[doneproject].name},{$myoldprojects[doneproject].daysleft},0,0,{$myoldprojects[project].done}">
-								{else}
-									<tbody class="color-b" id="proj_{$myoldprojects[doneproject].ID}" rel="{$myoldprojects[doneproject].ID},{$myoldprojects[doneproject].name},{$myoldprojects[doneproject].daysleft},0,0,{$myoldprojects[project].done}">
-								{/if}
 
-									<tr>
-										<td class="a">
-
-											{if $userpermissions.projects.add}
-												<a class="butn_checked" href="manageproject.php?action=open&amp;id={$myoldprojects[doneproject].ID}" title="{#open#}"></a>
-											{/if}
-
-										</td>
-										<td class="b">
-											<div class="toggle-in">
-												<span id="desktopprojectstoggle{$myoldprojects[doneproject].ID}" class="acc-toggle" onclick="javascript:accord_projects.activate($$('#projecthead .accordion_toggle')[{($smarty.section.project.total + $smarty.section.doneproject.index)}]);toggleAccordeon('projecthead',this);"></span>
-												<a href="manageproject.php?action=showproject&amp;id={$myoldprojects[doneproject].ID}" title="{$myoldprojects[doneproject].name}">
-													{$myoldprojects[doneproject].name|truncate:33:"...":true}
-												</a>
-											</div>
-										</td>
-										<td class="c">
-											<div class="statusbar_b">
-												<div class="complete" id="completed" style="width:{$myoldprojects[doneproject].done}%;"></div>
-											</div>
-											<span>{$myoldprojects[doneproject].done}%</span>
-										</td>
-										<td class="d" style="text-align:right">{$myoldprojects[doneproject].daysleft}&nbsp;&nbsp;</td>
-										<td class="tools">
-
-											{if $userpermissions.projects.edit}
-												<a class="tool_edit" href="javascript:void(0);" onclick="change('manageproject.php?action=editform&amp;id={$myoldprojects[doneproject].ID}','form_addmyproject');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_addmyproject');" title="{#edit#}"></a>
-											{/if}
-
-											{if $userpermissions.projects.del}
-												<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'proj_{$myoldprojects[doneproject].ID}\',\'manageproject.php?action=del&amp;id={$myoldprojects[doneproject].ID}\')');"  title="{#delete#}"></a>
-											{/if}
-
-										</td>
-									</tr>
-
-									<tr class="acc">
-										<td colspan="5">
-											<div class="accordion_toggle"></div>
-											<div class="accordion_content">
-												<div class="acc-in">
-													<div class="message-in">
-														{$myoldprojects[doneproject].desc}
-													</div>
-												</div>
-											</div>
-										</td>
-									</tr>
-								</tbody>
-                                                        {/section}
-                                                        </table>
-                                                        
-                                                        <table class="second-thead" cellpadding="0" cellspacing="0" border="0">
-                                                            <tr>
-                                                                <td class="a"></td>
-                                                                <td class="b" style="text-decoration:none;"><a href="manageclosedprojects.php">{#allclosedprojects#}</a></td>
-                                                                <td class="c"></td>
-                                                                <td class="d"></td>
-                                                                <td class="tools"></td>
-                                                            </tr>
-                                                        </table>
-                                                        
-                                                        </div>
-                                                        </div>
-
-
-						
+						</table>
 
 						<div class="tablemenue">
 							<div class="tablemenue-in">
 								{if $userpermissions.projects.add}
 									<a class="butn_link" href="javascript:blindtoggle('form_addmyproject');" id="add_butn_myprojects" onclick="toggleClass('add_myprojects','add-active','add');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_deskprojects','smooth','nosmooth');">{#addproject#}</a>
 								{/if}
-                                                                <a class="butn_link" href="javascript:blindtoggle('doneblock');" id="donebutn_25" onclick="toggleClass(this,'butn_link_active','butn_link');toggleClass('toggle-done','acc-toggle','acc-toggle-active');">{#closedprojects#}</a>
 							</div>
 						</div>
 					<div class="content-spacer"></div>

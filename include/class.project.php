@@ -361,36 +361,27 @@ class project {
      *
      * @param int $user Eindeutige Mitgliedsnummer
      * @param int $status Bearbeitungsstatus von Projekten (1 = offenes Projekt)
-     * @param int $limit Die Anzahl der zurückgegebenen Projekte. 0 = unbegrenzt
-     * @param string $sort Die Sortierreihenfolge. ASC = aufsteigend, DESC = absteigend
      * @return array $myprojekte Projekte des Mitglieds
      */
-    function getMyProjects($user, $status = 1, $limit = 0, $sort = 'ASC')
+    function getMyProjects($user, $status = 1)
     {
         global $conn;
 
         $myprojekte = array();
         $user = (int) $user;
     	$status = (int) $status;
-        $limit = (int) $limit;
-        if ($sort !== 'ASC' && $sort !== 'DESC') {
-            $sort = 'ASC';
-        }
-        
-        $parameters = array($user, $status);
-        $sql = "SELECT projekte_assigned.projekt FROM projekte_assigned INNER JOIN projekte ON projekte_assigned.projekt = projekte.ID WHERE projekte_assigned.user = ? AND projekte.status = ? ORDER BY projekte_assigned.ID " . $sort;
-        if ($limit > 0)
-        {
-            $sql .= " LIMIT ?";
-            array_push($parameters, $limit);
-        }
 
-        $sel = $conn->prepare($sql);
-        $selStmt = $sel->execute($parameters);
-        
-        while ($projekt = $sel->fetch()) {
-            $project = $this->getProject($projekt[0]);
-            array_push($myprojekte, $project);
+        $sel = $conn->prepare("SELECT projekt FROM projekte_assigned WHERE user = ? ORDER BY ID ASC");
+        $selStmt = $sel->execute(array($user));
+
+    	$projektStmt = $conn->prepare("SELECT ID FROM projekte WHERE ID = ? AND status=?");
+        while ($projs = $sel->fetch()) {
+        	$projektStmt->execute(array($projs[0],$status));
+        	$projekt = $projektStmt->fetch();
+            if ($projekt) {
+                $project = $this->getProject($projekt["ID"]);
+                array_push($myprojekte, $project);
+            }
         }
 
         if (!empty($myprojekte)) {
