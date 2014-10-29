@@ -34,8 +34,11 @@ switch ($db_driver) {
         $conn = new PDO("sqlite:" . CL_ROOT . "/files/collabtive.sdb");
         break;
 }
-$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-$conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+if($conn)
+{
+	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+	$conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+}
 // Start template engine
 $template = new Smarty();
 // STOP smarty from spewing notices all over the html code
