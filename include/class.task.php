@@ -736,7 +736,7 @@ class task {
         $list = $nam[1];
         $project = $conn->query("SELECT project FROM tasklist WHERE ID = $list")->fetch();
         $project = $project[0];
-        $nameproject = array($text, $project);
+        $nameproject = array($nam[0], $project);
 
         if (!empty($nameproject)) {
             return $nameproject;
