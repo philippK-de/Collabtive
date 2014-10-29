@@ -27,7 +27,6 @@ $mtask = new task();
 $msg = new message();
 
 $myprojects = $project->getMyProjects($userid);
-$myoldprojects = $project->getMyProjects($userid, 0, 10, 'DESC');
 $messages = array();
 $milestones = array();
 $tasks = array();
@@ -98,7 +97,7 @@ if ($mode == "login") {
 // Get todays date and count tasks, projects and messages for display
 $today = date("d");
 $tasknum = count($etasks);
-$projectnum = count($myprojects) + count($myoldprojects);
+$projectnum = count($myprojects);
 $msgnum = count($messages);
 
 $title = $langfile["desktop"];
@@ -112,7 +111,6 @@ $template->assign("actbar", $activitybar);
 $template->assign("today", $today);
 
 $template->assign("myprojects", $myprojects);
-$template->assign("myoldprojects", $myoldprojects);
 $template->assign("projectnum", $projectnum);
 $template->assign("projectov", "yes");
 
