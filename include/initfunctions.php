@@ -136,14 +136,16 @@ function getArrayVal(array $array, $name)
 {
     if (array_key_exists($name, $array)) {
     	$config = HTMLPurifier_Config::createDefault();
-    	if(file_exists(CL_ROOT . "/files/standard/ics"))
+    /*	if(file_exists(CL_ROOT . "/files/standard/ics"))
     	{
     		$config->set('Cache.SerializerPath', CL_ROOT . "/files/standard/ics");
     	}
     	else
     	{
     		$config->set('Cache.SerializerPath', NULL);
-    	}
+    	}*/
+
+		$config->set('Cache.SerializerPath', CL_ROOT . "/files/standard/ics");
 		$purifier = new HTMLPurifier($config);
         if (!is_array($array[$name])) {
             $clean = $purifier->purify($array[$name]);
