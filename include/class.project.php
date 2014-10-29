@@ -101,8 +101,9 @@ class project {
         $task = new task();
         $tasks = $task->getProjectTasks($id);
         if (!empty($tasks)) {
+        	$del_taskassign = $conn->prepare("DELETE FROM tasks_assigned WHERE task = ?");
             foreach ($tasks as $tas) {
-                $del_taskassign = $conn->query("DELETE FROM tasks_assigned WHERE task = $tas[ID]");
+                $del_taskassign->execute(array($tas["ID"]));
             }
         }
         // Delete files and the assignments of these files to the messages they were attached to
@@ -110,7 +111,7 @@ class project {
         $files = $fil->getProjectFiles($id, 1000000);
         if (!empty($files)) {
             foreach ($files as $file) {
-                $del_files = $fil->loeschen($file[ID]);
+                $del_files = $fil->loeschen($file["ID"]);
             }
         }
 
