@@ -18,6 +18,7 @@ Collabtive 2.1
 + Add folder /files/standard/ics/ to the installation package
 + Removed call to file_exists in getArrayVal() - it worked around an edge case in the installer. This safes a lot of calls to file_exists()
 + Fixed a bug that prevented files from being attached to messages
++ Fix the link in the file-uploaded email notification
 
 Collabtive 2.0
 + Fixed notice on desktop that resulted from missing network connection during update check
