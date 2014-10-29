@@ -185,8 +185,6 @@ if ($action == "index") {
     $template->assign("roles", $roles);
     $template->display("edituseradminform.tpl");
 } elseif ($action == "edituser") {
-    $thetag = new tags();
-    $tags = $thetag->formatInputTags($tags);
 
     $roleobj = new roles();
     $roleobj->assign($role, $id);
@@ -399,9 +397,9 @@ if ($action == "index") {
         }
         $template->assign("opros", $opros);
     }
-    
+
     $customers = $companyObj->getAllCompanies();
-    
+
     $template->assign("customers", $customers);
     $template->assign("users", $users);
     $template->assign("clopros", $clopros);
