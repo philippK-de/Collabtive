@@ -92,13 +92,13 @@ class message {
 		$msgStmt->execute(array($id));
     	$msg = $msgStmt->fetch();
 
-        $delStmt = $conn->prepare("DELETE FROM messages WHERE ID = ? LIMIT 1");
+        $delStmt = $conn->prepare("DELETE FROM messages WHERE ID = ?");
     	$del = $delStmt->execute(array($id));
 
-        $del2 = $conn->prepare("DELETE FROM messages WHERE replyto = ? LIMIT 1");
+        $del2 = $conn->prepare("DELETE FROM messages WHERE replyto = ?");
         $del2->execute(array($id));
 
-		$del3 = $conn->prepare("DELETE FROM files_attached WHERE message = ? LIMIT 1");
+		$del3 = $conn->prepare("DELETE FROM files_attached WHERE message = ?");
         $del3->execute(array($id));
 
 		if ($del) {
