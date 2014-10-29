@@ -1,4 +1,4 @@
-{include file="header.tpl" title="$title" showheader="no"}
+{include file="header.tpl" title="$title" showheader="no" jsload="ajax"}
 
 			<div class="install" style="text-align:center;padding:5% 0;">
 				<div style="text-align:left;width:500px;margin:0 auto;padding:25px 25px 15px 25px;background:white;border:1px solid;">
@@ -97,15 +97,15 @@
 						<h2>2. {#db#}</h2>
 						<form class="main" method="post" action="install.php?action=step2&locale={$locale}">
 							<fieldset>
-								<div class="row" style="padding-bottom:12px;"><i>DB Driver</i></div>
+								<div class="row" style="padding-bottom:12px;"><i>Select your DB driver</i></div>
 								<label for="db_driver" style="width:210px;">Db Driver:</label>
 								<select name="db_driver" id="db_driver">
-								<option value="-1">{#chooseone#}</option>
-								<option value="mysql">MySQL</option>
-								<option value="sqlite" onfocus="blindtoggle('dbdata');">SQLite</option>
+								<option value="mysql" onclick="$('dbdata').blindDown();">MySQL</option>
+								<option value="sqlite" onclick="$('dbdata').blindUp();">SQLite</option>
 								</select>
 							</fieldset>
 						<fieldset id = "dbdata">
+						<div style="border-bottom:1px dashed;height:16px;display:block;clear:both;margin-bottom:16px;"></div>
 						<div class="row" style="padding-bottom:12px;"><i>{#insertdbaccessdata#}</i></div>
 								<div class="row">
 									<label for="db_host" style="width:210px;">{#dbhost#}:</label><input type="text" name="db_host" id="db_host" value="localhost" />
@@ -119,6 +119,8 @@
 								<div class="row">
 									<label for="db_pass" style="width:210px;">{#dbpass#}:</label><input type="password" name="db_pass" id="db_pass" />
 								</div>
+								</fieldset>
+								<fieldset>
 								<div style="border-bottom:1px dashed;height:16px;display:block;clear:both;margin-bottom:16px;"></div>
 								<div class="row" style="padding-bottom:12px;">
 									<i>{#clickcontinue#}</i>
