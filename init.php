@@ -15,6 +15,7 @@ define("CL_VERSION", 2.0);
 define("CL_PUBDATE", "1407880800");
 // uncomment next line for debugging
 // error_reporting(E_ALL || E_STRICT);
+
 // include config file , pagination and global functions
 require(CL_ROOT . "/config/" . CL_CONFIG . "/config.php");
 require(CL_ROOT . "/include/SmartyPaginate.class.php");
@@ -22,6 +23,7 @@ require(CL_ROOT . "/include/SmartyPaginate.class.php");
 require(CL_ROOT . "/include/HTMLPurifier.standalone.php");
 // load init functions
 require(CL_ROOT . "/include/initfunctions.php");
+
 // Start database connection
 // $tdb = new datenbank();
 switch ($db_driver) {
@@ -33,11 +35,6 @@ switch ($db_driver) {
     case "sqlite":
         $conn = new PDO("sqlite:" . CL_ROOT . "/files/collabtive.sdb");
         break;
-}
-if($conn)
-{
-	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-	$conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 }
 // Start template engine
 $template = new Smarty();
@@ -82,6 +79,10 @@ if (isset($_SESSION["userid"])) {
 }
 // get system settings
 if (isset($conn)) {
+	//Set PDO options
+	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+	$conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+
     $set = (object) new settings();
     $settings = $set->getSettings();
 
