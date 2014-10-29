@@ -282,12 +282,12 @@ class message {
         // If a file ID is given, the given file will be attached
         // If no file ID is given, the file will be uploaded to the project defined by $id and then attached
         if ($fid > 0) {
-            $ins = $conn->query("INSERT INTO files_attached (ID,file,message) VALUES ('',$fid,$mid)");
+            $ins = $conn->query("INSERT INTO files_attached (file,message) VALUES ($fid,$mid)");
         } else {
             $num = $_POST["numfiles"];
 
             $chk = 0;
-            $insStmt = $conn->prepare("INSERT INTO files_attached (ID,file,message) VALUES ('',?,?)");
+            $insStmt = $conn->prepare("INSERT INTO files_attached (file,message) VALUES (?,?)");
             for($i = 1;$i <= $num;$i++) {
                 $fid = $myfile->upload("userfile$i", "files/" . CL_CONFIG . "/$id", $id);
                 $ins = $insStmt->execute(array($fid, $mid));

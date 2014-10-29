@@ -442,12 +442,9 @@
 																						<div class="inmenue"></div>
 																					</td>
 																					<td class="thumb">
-																						<a href="{$messages[message].files[file].datei}" {if $messages[message].files[file].imgfile == 1} rel="lytebox[]" {elseif $messages[message].files[file].imgfile == 2} rel = "lyteframe[text]" {/if} title="{$messages[message].files[file].name}">
-																							{if $messages[message].files[file].imgfile == 1}
-																								<img src="thumb.php?pic={$messages[message].files[file].datei}&amp;width=32" alt="{$ordner[file].name}" />
-																							{else}
-																								<img src="templates/{$settings.template}/theme/{$settings.theme}/images/files/{$messages[message].files[file].type}.png" alt="{$messages[message].files[file].name}" />
-																							{/if}
+
+																								<a href = "managefile.php?action=downloadfile&amp;id={$messages[message].files[file].project}&amp;file={$messages[message].files[file].ID}"{if $messages[message].files[file].imgfile == 1} rel="lytebox[img{$messages[message].ID}]"{/if} title="{$messages[message].files[file].name}">	<img src="templates/{$settings.template}/theme/{$settings.theme}/images/files/{$messages[message].files[file].type}.png" alt="{$messages[message].files[file].name}" />
+																		<
 																						</a>
 																					</td>
 																					<td class="rightmen" valign="top">
@@ -458,7 +455,7 @@
 																				</tr>
 																				<tr>
 																					<td colspan="3"><span class="name">
-																						<a href="{$messages[message].files[file].datei}" {if $messages[message].files[file].imgfile == 1} rel="lytebox[]" {elseif $messages[message].files[file].imgfile == 2} rel = "lyteframe[text]" {/if} title="{$messages[message].files[file].name}">{$messages[message].files[file].name|truncate:15:"...":true}</a></span>
+																							<a href = "managefile.php?action=downloadfile&amp;id={$messages[message].files[file].project}&amp;file={$messages[message].files[file].ID}"{if $messages[message].files[file].imgfile == 1} rel="lytebox[img{$messages[message].ID}]"{/if} title="{$messages[message].files[file].name}">{$messages[message].files[file].name|truncate:15:"...":true}</a></span>
 																					</td>
 																				<tr/>
 																			</table>
