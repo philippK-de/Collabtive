@@ -10,8 +10,11 @@ if (!isset($_SESSION["userid"])) {
 }
 // collabtive doesn't seem to be installed properly , redirect to installer
 if (empty($db_name) or empty($db_user)) {
-    $loc = $url . "install.php";
-    header("Location: " . $loc);
+	if($db_driver == "mysql")
+	{
+		$loc = $url . "install.php";
+		header("Location: " . $loc);
+	}
 }
 // Set the desktop icon in the top icon menue
 $mainclasses = array("desktop" => "active",

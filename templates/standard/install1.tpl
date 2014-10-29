@@ -95,11 +95,18 @@
 					<div style="padding:16px 0 12px 0;">
 
 						<h2>2. {#db#}</h2>
-						<div class="row" style="padding-bottom:12px;"><i>{#insertdbaccessdata#}</i></div>
-
 						<form class="main" method="post" action="install.php?action=step2&locale={$locale}">
 							<fieldset>
-
+								<div class="row" style="padding-bottom:12px;"><i>DB Driver</i></div>
+								<label for="db_driver" style="width:210px;">Db Driver:</label>
+								<select name="db_driver" id="db_driver">
+								<option value="-1">{#chooseone#}</option>
+								<option value="mysql">MySQL</option>
+								<option value="sqlite" onfocus="blindtoggle('dbdata');">SQLite</option>
+								</select>
+							</fieldset>
+						<fieldset id = "dbdata">
+						<div class="row" style="padding-bottom:12px;"><i>{#insertdbaccessdata#}</i></div>
 								<div class="row">
 									<label for="db_host" style="width:210px;">{#dbhost#}:</label><input type="text" name="db_host" id="db_host" value="localhost" />
 								</div>
