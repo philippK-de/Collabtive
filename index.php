@@ -70,11 +70,7 @@ foreach($etasks as $etask) {
 }
 // Sort using array_multisort
 array_multisort($sort, SORT_NUMERIC, SORT_ASC, $etasks);
-// Initial toggle state
-$taskbar = "win_block";
-$milebar = "win_block";
-$projectbar = "win_block";
-$activitybar = "win_block";
+
 // On Admin Login check for updates
 $mode = getArrayVal($_GET, "mode");
 if ($mode == "login") {
@@ -103,11 +99,6 @@ $msgnum = count($messages);
 $title = $langfile["desktop"];
 // Assign everything to the template engine
 $template->assign("title", $title);
-$template->assign("taskbar", $taskbar);
-$template->assign("milebar", $milebar);
-$template->assign("projectbar", $projectbar);
-$template->assign("actbar", $activitybar);
-
 $template->assign("today", $today);
 
 $template->assign("myprojects", $myprojects);
