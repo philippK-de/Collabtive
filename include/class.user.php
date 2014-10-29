@@ -239,24 +239,6 @@ class user {
 
 		$profile = $sel->fetch();
         if (!empty($profile)) {
-            $profile["name"] = stripslashes($profile["name"]);
-            if (isset($profile["company"])) {
-                $profile["company"] = stripslashes($profile["company"]);
-            }
-            if (isset($profile["adress"])) {
-                $profile["adress"] = stripslashes($profile["adress"]);
-            }
-            if (isset($profile["adress2"])) {
-                $profile["adress2"] = stripslashes($profile["adress2"]);
-            }
-            if (isset($profile["state"])) {
-                $profile["state"] = stripslashes($profile["state"]);
-            }
-            if (isset($profile["country"])) {
-                $profile["country"] = stripslashes($profile["country"]);
-            }
-            $tagsobj = new tags();
-            $profile["tagsarr"] = $tagsobj->splitTagStr($profile["tags"]);
 
             $rolesobj = (object) new roles();
             $profile["role"] = $rolesobj->getUserRole($profile["ID"]);
