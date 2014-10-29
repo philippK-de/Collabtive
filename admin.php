@@ -14,7 +14,7 @@ $pass = getArrayVal($_POST, "pass");
 $company = getArrayVal($_POST, "company");
 $address1 = getArrayVal($_POST, "address1");
 $address2 = getArrayVal($_POST, "address2");
-$tags = getArrayVal($_POST, "tags");
+$tags = "";
 $state = getArrayVal($_POST, "state");
 $country = getArrayVal($_POST, "country");
 $locale = getArrayVal($_POST, "locale");
@@ -117,8 +117,6 @@ if ($action == "index") {
     $template->assign("roles", $roles);
     $template->display("adminusers.tpl");
 } elseif ($action == "adduser") {
-    $thetag = new tags();
-    $tags = $thetag->formatInputTags($tags);
     // Get the system locale and set it as the default locale for the new user
     $sysloc = $settings["locale"];
     // Add the user
