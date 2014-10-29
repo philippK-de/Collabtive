@@ -116,17 +116,6 @@
 												{/if}
 											</tr>
 										</tbody>
-
-										<tbody class="color-b">
-											<tr>
-												<td><strong>{#tags#}:</strong></td>
-												<td class="right">
-													{section name = tag loop=$user.tagsarr}
-														<a href = "managetags.php?action=gettag&tag={$user.tagsarr[tag]}&amp;id=0">{$user.tagsarr[tag]}</a>
-													{/section}
-												</td>
-											</tr>
-										</tbody>
 									</table>
 
 								</div> {*Block End*}
