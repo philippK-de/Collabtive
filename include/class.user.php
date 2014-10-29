@@ -384,12 +384,6 @@ class user {
         $users = array();
 
         while ($user = $sel->fetch()) {
-            $user["name"] = stripslashes($user["name"]);
-            $user["company"] = stripslashes($user["company"]);
-            $user["adress"] = stripslashes($user["adress"]);
-            $user["adress2"] = stripslashes($user["adress2"]);
-            $user["state"] = stripslashes($user["state"]);
-            $user["country"] = stripslashes($user["country"]);
             array_push($users, $user);
         }
 

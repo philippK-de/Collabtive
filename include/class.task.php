@@ -565,7 +565,7 @@ class task {
         if (!empty($user)) {
             $uname = $conn->query("SELECT name FROM user WHERE ID = $user[0]")->fetch();
             $uname = $uname[0];
-            $user[1] = stripslashes($uname);
+            //$user[1] = stripslashes($uname);
 
             return $user;
         } else {
@@ -592,7 +592,7 @@ class task {
             $sel2 = $conn->query("SELECT name FROM user WHERE ID = $user[0]");
             $uname = $sel2->fetch();
             $uname = $uname[0];
-            $user[1] = stripslashes($uname);
+            //$user[1] = stripslashes($uname);
 
             $result[] = $user;
         }
@@ -733,7 +733,6 @@ class task {
         $id = (int) $id;
 
         $nam = $conn->query("SELECT text,liste,title FROM tasks WHERE ID = $id")->fetch();
-        $text = stripslashes($nam[2]);
         $list = $nam[1];
         $project = $conn->query("SELECT project FROM tasklist WHERE ID = $list")->fetch();
         $project = $project[0];

@@ -504,6 +504,7 @@ class datei {
             // Delete attachments of the file (prevents abandoned objects in messages)
             $del2 = $conn->query("DELETE FROM files_attached WHERE file = $datei");
 
+
             if ($del) {
                 // Only remove the file from file system if deletion from database was successful
                 if (unlink($delfile)) {
@@ -559,8 +560,8 @@ class datei {
                 $file['imgfile'] = 0;
             }
             // Strip slashes from title, desc and tags
-            $file["title"] = stripslashes($file["title"]);
-            $file["desc"] = stripslashes($file["desc"]);
+            //$file["title"] = stripslashes($file["title"]);
+            //$file["desc"] = stripslashes($file["desc"]);
             $file["size"] = filesize(realpath($file["datei"])) / 1024;
             $file["size"] = round($file["size"]);
             $file["addedstr"] = date(CL_DATEFORMAT, $file["added"]);

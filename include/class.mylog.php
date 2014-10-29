@@ -108,8 +108,8 @@ class mylog {
                 $proname = $sel3->fetch();
                 $proname = $proname[0];
                 $log["proname"] = $proname;
-                $log["proname"] = stripslashes($log["proname"]);
-                $log["username"] = stripslashes($log["username"]);
+                //$log["proname"] = stripslashes($log["proname"]);
+                //$log["username"] = stripslashes($log["username"]);
                 $log["name"] = stripslashes($log["name"]);
                 array_push($mylog, $log);
             }
@@ -140,8 +140,8 @@ class mylog {
 
         $mylog = array();
         while ($log = $sel->fetch()) {
-            $log["username"] = stripslashes($log["username"]);
-            $log["name"] = stripslashes($log["name"]);
+            //$log["username"] = stripslashes($log["username"]);
+            //$log["name"] = stripslashes($log["name"]);
             array_push($mylog, $log);
         }
 
@@ -184,9 +184,9 @@ class mylog {
                 $proname = $sel2->fetch();
                 $proname = $proname[0];
                 $log["proname"] = $proname;
-                $log["proname"] = stripslashes($log["proname"]);
-                $log["username"] = stripslashes($log["username"]);
-                $log["name"] = stripslashes($log["name"]);
+                //$log["proname"] = stripslashes($log["proname"]);
+                //$log["username"] = stripslashes($log["username"]);
+                //$log["name"] = stripslashes($log["name"]);
                 array_push($mylog, $log);
             }
         }
