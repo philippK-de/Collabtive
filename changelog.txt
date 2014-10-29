@@ -15,6 +15,8 @@ Collabtive 2.1
 + Fixed a missing GROUP BY clause
 + Implemented SQLite support. It can be chosen in the installer.
 + Removed the tags class for good
++ Add folder /files/standard/ics/ to the installation package
++ Removed call to file_exists in getArrayVal() - it worked around an edge case in the installer. This safes a lot of calls to file_exists()
 
 Collabtive 2.0
 + Fixed notice on desktop that resulted from missing network connection during update check
