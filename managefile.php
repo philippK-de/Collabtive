@@ -105,7 +105,8 @@ if ($action == "uploadAsync") {
                                    $userlang["filecreatedtext"] . "<br /><br />" .
                                    $userlang["project"] . ": " . $pname["name"] . "<br />" .
                                    $userlang["folder"] . ": " . $whichfolder . "<br />" .
-                                   $userlang["file"] . ":  <a href = \"" . $url . $fileprops["datei"] . "\">" . $url . $fileprops["datei"] . "</a>";
+                                   $userlang["file"] . ":  <a href = \"" . $url . "managefile.php?action=downloadfile&file=" .  $fileprops["ID"] . "\">" . $url . "managefile.php?action=downloadfile&file=" . $fileprops["ID"] . "</a>";
+                	//$userlang["file"] . ":  <a href = \"" . $url . $fileprops["datei"] . "\">" . $url . $fileprops["datei"] . "</a>";
 
                     $subject = $userlang["filecreatedsubject"] . " (". $userlang['by'] . ' '. $username . ")";
 					//if sendto is an array multiple users need to be notified
