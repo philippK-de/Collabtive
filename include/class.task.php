@@ -112,7 +112,8 @@ class task {
         $id = (int) $id;
 
         $nameproject = $this->getNameProject($id);
-        $del = $conn->query("DELETE FROM tasks WHERE ID = $id LIMIT 1");
+        $delStmt = $conn->prepare("DELETE FROM tasks WHERE ID = ?");
+		$del = $delStmt->execute(array($id));
 
         if ($del) {
             $del2 = $conn->query("DELETE FROM tasks_assigned WHERE task=$id");
