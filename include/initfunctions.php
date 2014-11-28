@@ -11,6 +11,14 @@ function cl_autoload($class_name)
 }
 spl_autoload_register('cl_autoload');
 
+/**
+* Check if a user is assigned to a project
+*
+* @param int $user ID of the user
+* @param int $project ID of the project
+*
+* return bool
+*/
 function chkproject($user, $project)
 {
     global $conn;
@@ -27,6 +35,13 @@ function chkproject($user, $project)
     }
 }
 
+/**
+* Read all available languages into an array
+*
+* @param string $locale the name of the locale (en, de, etc)
+*
+* return array $languages List of available languages
+*/
 function getAvailableLanguages()
 {
     $dir = scandir(CL_ROOT . "/language/");
@@ -45,6 +60,13 @@ function getAvailableLanguages()
     }
 }
 
+/**
+* Count how complete a specified locale is , compared to the english one
+*
+* @param string $locale the name of the locale (en, de, etc)
+*
+* return int $proz Percentage of completeness
+*/
 function countLanguageStrings($locale)
 {
     if (file_exists(CL_ROOT . "/language/$locale/lng.conf")) {
@@ -73,18 +95,31 @@ function countLanguageStrings($locale)
     }
 }
 
+/**
+* Read the language file for a specified locale to an associative array
+*
+* @param string $locale the name of the locale (en, de, etc)
+*
+* return array $langfile An associative array with the language file strings
+*/
 function readLangfile($locale)
 {
-    $langfile = file("./language/$locale/lng.conf");
+    // open the file
+    $langfile = file(CL_ROOT . "/language/$locale/lng.conf");
     $langkeys = array();
     $langvalues = array();
+    // loop through the lines
     foreach($langfile as $lang) {
+        // if a line contains = it is not a comment
         if (strstr($lang, "=")) {
+            // make an array of the string
             $slang = explode("=", $lang);
+            // write both the key and the value of the string to an array
             array_push($langkeys, trim($slang[0]));
             array_push($langvalues, trim($slang[1]));
         }
     }
+    // combine the two arrays, where the string key act as the array keys
     $langfile = array_combine($langkeys, $langvalues);
     if (!empty($langfile)) {
         return $langfile;
@@ -93,6 +128,9 @@ function readLangfile($locale)
     }
 }
 
+/**
+* Detect if Collabtive runs on HTTP or HTTPS
+*/
 function detectSSL()
 {
     if (getArrayVal($_SERVER, "https") == "on") {
@@ -108,6 +146,9 @@ function detectSSL()
     }
 }
 
+/**
+* Get the URL Collabtive is running on
+*/
 function getMyUrl()
 {
     if (isset($_SERVER['REQUEST_URI']) && !empty($_SERVER['REQUEST_URI'])) {
@@ -132,15 +173,25 @@ function getMyUrl()
     return $url;
 }
 
+/**
+* Get a specific value from an array.
+* Used to fetch user input from POST and GET
+* This sanitizes user input with HTMLPurifier
+*
+* @param array $array The array
+* @param string $name The key we want
+*
+* return string a sanitized version of the array key
+*/
 function getArrayVal(array $array, $name)
 {
     if (array_key_exists($name, $array)) {
-    	$config = HTMLPurifier_Config::createDefault();
-		$config->set('Cache.SerializerPath', CL_ROOT . "/files/standard/ics");
-		$purifier = new HTMLPurifier($config);
+        $config = HTMLPurifier_Config::createDefault();
+        $config->set('Cache.SerializerPath', CL_ROOT . "/files/standard/ics");
+        $purifier = new HTMLPurifier($config);
         if (!is_array($array[$name])) {
             $clean = $purifier->purify($array[$name]);
-        }else {
+        } else {
             $clean = $array[$name];
         }
         return $clean;
@@ -170,6 +221,12 @@ function delete_directory($dirname)
     return true;
 }
 
+/**
+ * Reduce an array by one dimension
+ * @param array $arr array to be flattened
+ *
+ * return array $earr Flat array
+ */
 function reduceArray(array $arr)
 {
     $num = count($arr);
@@ -182,6 +239,10 @@ function reduceArray(array $arr)
     return $earr;
 }
 
+/**
+ * Check if an update is available
+ * return string JSON document describing update info
+ */
 function getUpdateNotify()
 {
     return json_decode(@file_get_contents("http://collabtive.o-dyn.de/update/chk.php"));
