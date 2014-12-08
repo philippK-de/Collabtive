@@ -8,7 +8,7 @@ if (!isset($_SESSION["userid"])) {
     if ($action == "ical" || $action == "icalshort"){
       // spawn basic auth request here
       // most probably this is not the best location for this basic auth code. feel free to move it to whereever it should be.
-      // in the ideal case, this kind of basic auth should also be available for the rss feed!
+      // in the ideal case, this kind of basic auth should also be available for the RSS feed!
       if (!isset($_SERVER['PHP_AUTH_USER'])) {
 	$msg="Collabtive";
 	if ($action == "ical") {
@@ -41,6 +41,7 @@ $task = (object) new task();
 $tasklist = getArrayVal($_GET, "tasklist");
 $mode = getArrayVal($_GET, "mode");
 $tid = getArrayVal($_GET, "tid");
+$start = getArrayVal($_POST, "start");
 $end = getArrayVal($_POST, "end");
 $project = getArrayVal($_POST, "project");
 $assigned = getArrayVal($_POST, "assigned");
@@ -95,44 +96,56 @@ if ($action == "addform") {
         $template->display("error.tpl");
         die();
     }
-    // add the task
-    $tid = $task->add($end, $title, $text, $tasklist, $id);
-    if ($tid) {
-        // Loop through the selected users from the form and assign them to the task
-        foreach($assigned as $member) {
-            $task->assign($tid, $member);
-        }
-        // if tasks was added and mailnotify is activated, send an email
-        if ($settings["mailnotify"]) {
-			$projobj = new project();
-			$theproject = $projobj->getProject($project["ID"]);
-			// Check project status
-			if ($theproject["status"] != 2)
-			{
-				foreach($assigned as $member) {
-					$usr = (object) new user();
-					$user = $usr->getProfile($member);
-					if (!empty($user["email"]) && $userid != $user["ID"]) {
-						// send email
-						$userlang = readLangfile($user['locale']);
 
-						$subject = $userlang["taskassignedsubject"] . ' (' . $userlang['by'] . ' ' . $username . ')';
+    // check dates' consistency
+    if ($end < $start) {
+		$goback = $langfile["goback"];
+		$endafterstart = $langfile["endafterstart"];
+		$template->assign("mode", "error");
+		$template->assign("errortext", "$endafterstart<br>$goback");
+		$template->display("error.tpl");
+	} else {
+		// add the task
+		$tid = $task->add($start, $end, $title, $text, $tasklist, $id);
+		if ($tid) {
+			// Loop through the selected users from the form and assign them to the task
+			foreach($assigned as $member) {
+				$task->assign($tid, $member);
+			}
+			// if tasks was added and mailnotify is activated, send an email
+			if ($settings["mailnotify"]) {
+				$projobj = new project();
+				$theproject = $projobj->getProject($project["ID"]);
+				// Check project status
+				if ($theproject["status"] != 2)
+				{
+					foreach($assigned as $member) {
+						$usr = (object) new user();
+						$user = $usr->getProfile($member);
+						if (!empty($user["email"]) && $userid != $user["ID"]) {
+							// send email
+							$userlang = readLangfile($user['locale']);
 
-						$mailcontent = $userlang["hello"] . ",<br /><br/>" .
-									$userlang["taskassignedtext"] .
-									"<h3><a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a></h3>".
-									$text;
+							$subject = $userlang["taskassignedsubject"] . ' (' . $userlang['by'] . ' ' . $username . ')';
 
-						$themail = new emailer($settings);
+							$mailcontent = $userlang["hello"] . ",<br /><br/>" .
+										$userlang["taskassignedtext"] .
+										"<h3><a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a></h3>".
+										$text;
 
-						$themail->send_mail($user["email"], $subject , $mailcontent);
+							$themail = new emailer($settings);
+
+							$themail->send_mail($user["email"], $subject , $mailcontent);
+						}
 					}
 				}
 			}
-        }
-        $loc = $url . "managetask.php?action=showproject&id=$id&mode=added";
-        header("Location: $loc");
-    }
+			$loc = $url . "managetask.php?action=showproject&id=$id&mode=added";
+			header("Location: $loc");
+		} else {
+			$template->assign("addtask", 0);
+		}
+	}
 } elseif ($action == "editform") {
     // check if user has appropriate permissions
     if (!$userpermissions["tasks"]["edit"]) {
@@ -155,6 +168,7 @@ if ($action == "addform") {
     $thistask['listname'] = $tl['name'];
 
     $user = $task->getUser($thistask['ID']);
+
     $thistask['username'] = $user[1];
     $thistask['userid'] = $user[0];
 
@@ -186,45 +200,56 @@ if ($action == "addform") {
         $template->display("error.tpl");
         die();
     }
-    // edit the task
-    if ($task->edit($tid, $end, $title, $text, $tasklist)) {
-        $redir = urldecode($redir);
-        if (!empty($assigned)) {
-            foreach($assigned as $assignee) {
-                $assignChk = $task->assign($tid, $assignee);
-                if ($assignChk) {
-                    if ($settings["mailnotify"]) {
-                        $usr = (object) new user();
-                        $user = $usr->getProfile($assignee);
 
-                        if (!empty($user["email"]) && $userid != $user["ID"]) {
-                            $userlang = readLangfile($user['locale']);
+    // check dates' consistency
+    if ($end < $start) {
+		$goback = $langfile["goback"];
+		$endafterstart = $langfile["endafterstart"];
+		$template->assign("mode", "error");
+		$template->assign("errortext", "$endafterstart<br>$goback");
+		$template->display("error.tpl");
+	} else {
+		// edit the task
+		if ($task->edit($tid, $start, $end, $title, $text, $tasklist)) {
+			$redir = urldecode($redir);
+			if (!empty($assigned)) {
+				foreach($assigned as $assignee) {
+					$assignChk = $task->assign($tid, $assignee);
+					if ($assignChk) {
+						if ($settings["mailnotify"]) {
+							$usr = (object) new user();
+							$user = $usr->getProfile($assignee);
 
-                            $subject = $userlang["taskassignedsubject"] . ' (' . $userlang['by'] . ' ' . $username . ')';
+							if (!empty($user["email"]) && $userid != $user["ID"]) {
+								$userlang = readLangfile($user['locale']);
 
-                            $mailcontent = $userlang["hello"] . ",<br /><br/>" .
-                                           $userlang["taskassignedtext"] .
-                                           "<h3><a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a></h3>".
-                                           $text;
+								$subject = $userlang["taskassignedsubject"] . ' (' . $userlang['by'] . ' ' . $username . ')';
 
-                            // send email
-                            $themail = new emailer($settings);
-                            $themail->send_mail($user["email"], $subject , $mailcontent);
-                        }
-                    }
-                }
-            }
-        }
-        if ($redir) {
-            $redir = $url . $redir;
-            header("Location: $redir");
-        } else {
-            $loc = $url . "managetask.php?action=showproject&id=$id&mode=edited";
-            header("Location: $loc");
-        }
-    } else {
-        $template->assign("edittask", 0);
-    }
+								$mailcontent = $userlang["hello"] . ",<br /><br/>" .
+											$userlang["taskassignedtext"] .
+											"<h3><a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a></h3>".
+											$text;
+
+								// send email
+								$themail = new emailer($settings);
+								$themail->send_mail($user["email"], $subject, $mailcontent);
+							}
+						}
+					}
+				}
+			}
+			if ($redir) {
+				$redir = $url . $redir;
+				header("Location: $redir");
+			} else {
+				$loc = $url . "managetask.php?action=showproject&id=$id&mode=edited";
+				header("Location: $loc");
+			}
+		} else {
+			$loc = $url . "managetask.php?action=showproject&id=$id&mode=error";
+			header("Location: $loc");
+		}
+	}
 } elseif ($action == "del") {
     // check if user has appropriate permissions
     if (!$userpermissions["tasks"]["del"]) {

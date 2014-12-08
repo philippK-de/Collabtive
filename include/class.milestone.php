@@ -409,7 +409,7 @@ class milestone {
         $project = (int) $project;
         $lim = (int) $lim;
 
-        $tod = date("d.m.Y");
+        $tod = date(CL_DATEFORMAT);
         $now = strtotime($tod);
         $milestones = array();
         $sql = "SELECT ID FROM milestones WHERE project = $project AND status = 1 ORDER BY end ASC LIMIT $lim";

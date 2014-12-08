@@ -1,35 +1,44 @@
-{include file="header.tpl"  jsload = "ajax" jsload1 = "tinymce" jsload3 = "lightbox"}
-{include file="tabsmenue-project.tpl" msgstab = "active"}
+{include file="header.tpl" jsload="ajax" jsload1="tinymce" jsload3="lightbox"}
+{include file="tabsmenue-project.tpl" msgstab="active"}
 
 <div id="content-left">
 	<div id="content-left-in">
 		<div class="msgs">
 
-			<div class="infowin_left" style = "display:none;" id = "systemmsg">
+			<div class="infowin_left" style="display:none;" id="systemmsg">
 				{if $mode == "added"}
-					<span class="info_in_green"><img src="templates/standard/images/symbols/msg.png" alt=""/>{#messagewasadded#}</span>
+					<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msg.png" alt="" />{#messagewasadded#}</span>
 				{elseif $mode == "edited"}
-					<span class="info_in_yellow"><img src="templates/standard/images/symbols/msg.png" alt=""/>{#messagewasedited#}</span>
+					<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msg.png" alt="" />{#messagewasedited#}</span>
 				{elseif $mode == "deleted"}
-					<span class="info_in_red"><img src="templates/standard/images/symbols/msg.png" alt=""/>{#messagewasdeleted#}</span>
+					<span class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msg.png" alt="" />{#messagewasdeleted#}</span>
 				{elseif $mode == "replied"}
-					<span class="info_in_green"><img src="templates/standard/images/symbols/msgs.png" alt=""/>{#replywasadded#}</span>
+					<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt="" />{#replywasadded#}</span>
 				{/if}
 			</div>
-			
+
 			{literal}
-				<script type = "text/javascript">
+				<script type="text/javascript">
 					apperar = new Effect.Appear('systemmsg', { duration: 2.0 })
 					makeTimer("new Effect.Fade('systemmsg', { duration: 2.0 })",7000);
 				</script>
 			{/literal}
 
 			<div class="breadcrumb">
-				<a href="manageproject.php?action=showproject&amp;id={$project.ID}"><img src="./templates/standard/images/symbols/projects.png" alt="" />{$projectname|truncate:40:"...":true}</a>
-				<a href="managemessage.php?action=showproject&amp;id={$project.ID}"><img src="./templates/standard/images/symbols/msgs.png" alt="" />{#messages#}</a>
+				<a href="manageproject.php?action=showproject&amp;id={$project.ID}">
+					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />
+					{$projectname|truncate:40:"...":true}
+				</a>
+				<a href="managemessage.php?action=showproject&amp;id={$project.ID}">
+					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt="" />
+					{#messages#}
+				</a>
 			</div>
 
-			<h1 class="second"><img src="./templates/standard/images/symbols/msgs.png" alt="" />{$message.title|truncate:40:"...":true}</h1>
+			<h1 class="second">
+				<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt="" />
+				{$message.title|truncate:40:"...":true}
+			</h1>
 
 			<div class="statuswrapper">
 				<ul>
@@ -37,7 +46,7 @@
 						<li class="link"><a class="reply" id="add_reply_a" href="javascript:void(0);" onclick="blindtoggle('form_reply_a');toggleClass(this,'reply-active','reply');toggleClass('sm_replies_a','smooth','nosmooth');" title="{#reply#}"></a></li>
 					{/if}
 					{if $userpermissions.messages.edit}
-						<li class="link"><a class="edit" href="javascript:void(0);"  id="edit_butn" onclick="blindtoggle('form_edit');toggleClass(this,'edit-active','edit');toggleClass('sm_replies_a','smooth','nosmooth');" title="{#edit#}"></a></li>
+						<li class="link"><a class="edit" href="javascript:void(0);" id="edit_butn" onclick="blindtoggle('form_edit');toggleClass(this,'edit-active','edit');toggleClass('sm_replies_a','smooth','nosmooth');" title="{#edit#}"></a></li>
 					{/if}
 					{if $message.replies}
 						<li><a>{#replies#}: {$message.replies}</a></li>
@@ -45,19 +54,19 @@
 				</ul>
 			</div>
 
-			{*Add Reply*}
+			{* Add Reply *}
 			{if $userpermissions.messages.close}
-				<div id = "form_reply_a" class="addmenue" style = "display:none;">
+				<div id="form_reply_a" class="addmenue" style="display:none;">
 					<div class="content-spacer"></div>
 					{include file="replyform.tpl" showhtml="no" reply="a"}
 				</div>
 			{/if}
 
-			{*Edit Message*}
+			{* Edit Message *}
 			{if $userpermissions.messages.edit}
-				<div id = "form_edit" class="addmenue" style = "display:none;">
+				<div id="form_edit" class="addmenue" style="display:none;">
 					<div class="content-spacer"></div>
-					{include file="editmessageform.tpl" showhtml="no" }
+					{include file="editmessageform.tpl" showhtml="no"}
 				</div>
 			{/if}
 
@@ -66,12 +75,18 @@
 			<div id="sm_replies_a" class="nosmooth">
 				<div id="message" class="descript">
 					{if $message.avatar != ""}
-						<div class="avatar"><img src = "thumb.php?width=80&amp;height=80&amp;pic=files/{$cl_config}/avatar/{$message.avatar}" alt="" /></div>
+						<div class="avatar">
+							<img src="thumb.php?width=80&amp;height=80&amp;pic=files/{$cl_config}/avatar/{$message.avatar}" alt="" />
+						</div>
 					{else}
 						{if $message.gender == "f"}
-							<div class="avatar"><img src = "thumb.php?width=80&amp;height=80&amp;pic=templates/standard/images/no-avatar-female.jpg" alt="" /></div>
+							<div class="avatar">
+								<img src="thumb.php?width=80&amp;height=80&amp;pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-female.jpg" alt="" />
+							</div>
 						{else}
-							<div class="avatar"><img src = "thumb.php?width=80&amp;height=80&amp;pic=templates/standard/images/no-avatar-male.jpg" alt="" /></div>
+							<div class="avatar">
+								<img src="thumb.php?width=80&amp;height=80&amp;pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-male.jpg" alt="" />
+							</div>
 						{/if}
 					{/if}
 
@@ -83,12 +98,12 @@
 
 						{if $message.tagsarr[0] != "" or $message.milestones[0] != ""}
 							<div class="content-spacer-b"></div>
-						
-							{*Milestones*}
+
+							{* Milestones *}
 							{if $message.milestones[0] != ""}
 								<p>
 									<strong>{#milestone#}: </strong>
-									<a href = "managemilestone.php?action=showmilestone&amp;msid={$message.milestones.ID}&amp;id={$project.ID}">{$message.milestones.name}</a>
+									<a href="managemilestone.php?action=showmilestone&amp;msid={$message.milestones.ID}&amp;id={$project.ID}">{$message.milestones.name}</a>
 								</p>
 							{/if}
 
@@ -120,11 +135,12 @@
 															<div class="inmenue"></div>
 														</td>
 														<td class="thumb">
-															<a href = "{$message.files[file].datei}"{if $message.files[file].imgfile == 1} rel="lytebox[img{$message.files[file].ID}]" {elseif $message.files[file].imgfile == 2} rel = "lyteframe[text{$message.files[file].ID}]"{/if} title="{$message.files[file].name}">
+	<!--														<a href = "{$message.files[file].datei}"{if $message.files[file].imgfile == 1} rel="lytebox[img{$message.files[file].ID}]" {elseif $message.files[file].imgfile == 2} rel = "lyteframe[text{$message.files[file].ID}]"{/if} title="{$message.files[file].name}">-->
+															<a href = "managefile.php?action=downloadfile&amp;id={$message.files[file].project}&amp;file={$message.files[file].ID}"{if $message.files[file].imgfile == 1} rel="lytebox[img{$message.ID}]"{/if} title="{$message.files[file].name}">
 																{if $message.files[file].imgfile == 1}
 																	<img src = "thumb.php?pic={$message.files[file].datei}&amp;width=32" alt="{$message.files[file].name}" />
 																{else}
-																	<img src = "templates/standard/images/files/{$message.files[file].type}.png" alt="{$message.files[file].name}" />
+																	<img src = "templates/{$settings.template}/theme/{$settings.theme}/images/files/{$message.files[file].type}.png" alt="{$message.files[file].name}" />
 																{/if}
 															</a>
 														</td>
@@ -139,7 +155,9 @@
 													<tr>
 														<td colspan="3">
 															<span class="name">
-																<a href = "{$message.files[file].datei}"{if $message.files[file].imgfile == 1} rel="lytebox[img{$message.files[file].ID}]" {elseif $message.files[file].imgfile == 2} rel = "lyteframe[text{$message.files[file].ID}]"{/if} title="{$message.files[file].name}">
+															<!--	<a href = "{$message.files[file].datei}"{if $message.files[file].imgfile == 1} rel="lytebox[img{$message.files[file].ID}]" {elseif $message.files[file].imgfile == 2} rel = "lyteframe[text{$message.files[file].ID}]"{/if} title="{$message.files[file].name}">-->
+														<a href = "managefile.php?action=downloadfile&amp;id={$message.files[file].project}&amp;file={$message.files[file].ID}"{if $message.files[file].imgfile == 1} rel="lytebox[img{$message.ID}]"{/if} title="{$message.files[file].name}">
+
 																	{if $message.files[file].title != ""}
 																	{$message.files[file].title|truncate:13:"...":true}
 																	{else}
@@ -171,7 +189,7 @@
 							<a class="add" href="javascript:blindtoggle('form_reply_b');" id="add_replies" onclick="toggleClass(this,'add-active','add');toggleClass('add_butn_replies','butn_link_active','butn_link');toggleClass('sm_replies','smooth','nosmooth');"><span>{#answer#}</span></a>
 						{/if}
 					</div>
-					<h2><img src="./templates/standard/images/symbols/msgs.png" alt="" />{#replies#}</a></h2>
+					<h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt="" />{#replies#}</a></h2>
 				</div>
 
 				<div id="block-answers" class="block">
@@ -240,12 +258,12 @@
 														<div class="avatar"><img src = "thumb.php?width=80&amp;height=80&amp;pic=files/{$cl_config}/avatar/{$replies[reply].avatar}" alt="" /></div>
 													{else}
 														{if $replies[reply].gender == "f"}
-															<div class="avatar"><img src = "thumb.php?width=80&amp;height=80&amp;pic=templates/standard/images/no-avatar-female.jpg" alt="" /></div>
+															<div class="avatar"><img src = "thumb.php?width=80&amp;height=80&amp;pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-female.jpg" alt="" /></div>
 														{else}
-															<div class="avatar"><img src = "thumb.php?width=80&amp;height=80&amp;pic=templates/standard/images/no-avatar-male.jpg" alt="" /></div>
+															<div class="avatar"><img src = "thumb.php?width=80&amp;height=80&amp;pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-male.jpg" alt="" /></div>
 														{/if}
 													{/if}
-													
+
 													<div class="message">
 														<div class="message-in">
 															{$replies[reply].text|nl2br}
@@ -277,25 +295,31 @@
 																						<div class="inmenue"></div>
 																					</td>
 																					<td class="thumb">
-																						<a href = "{$replies[reply].files[file].datei}"{if $replies[reply].files[file].imgfile == 1} rel="lytebox[img{$replies[reply].files[file].ID}]" {elseif $replies[reply].files[file].imgfile == 2} rel = "lyteframe[text{$replies[reply].files[file].ID}]"{/if} title="{$replies[reply].files[file].name}">
-																							{if $replies[reply].files[file].imgfile == 1}
+																					<!--	<a href = "{$replies[reply].files[file].datei}"{if $replies[reply].files[file].imgfile == 1} rel="lytebox[img{$replies[reply].files[file].ID}]" {elseif $replies[reply].files[file].imgfile == 2} rel = "lyteframe[text{$replies[reply].files[file].ID}]"{/if} title="{$replies[reply].files[file].name}">-->
+																						<a href = "managefile.php?action=downloadfile&amp;id={$replies[reply].files[file].project}&amp;file={$replies[reply].files[file].ID}"{if $replies[reply].files[file].imgfile == 1} rel="lytebox[img{$replies[reply].ID}]"{/if} title="{$replies[reply].files[file].name}">
+																							{*if $replies[reply].files[file].imgfile == 1}
 																							<img src = "thumb.php?pic={$replies[reply].files[file].datei}&amp;width=32" alt="" />
 																							{else}
-																							<img src = "templates/standard/images/files/{$replies[reply].files[file].type}.png" alt="" />
-																							{/if}
+																							<img src = "templates/{$settings.template}/theme/{$settings.theme}/images/files/{$replies[reply].files[file].type}.png" alt="" />
+																							{/if*}
+																							<img src = "templates/{$settings.template}/theme/{$settings.theme}/images/files/{$replies[reply].files[file].type}.png" alt="" />
 																						</a>
 																					</td>
 																					<td class="rightmen" valign="top">
 																						<div class="inmenue">
 																							{if $userpermissions.messages.del}
-																								<a class="del" href="javascript:void(0);" onclick = "javascript:confirmfunction('{$langfile.confirmdel}','deleteElement(\'fli_{$replies[reply].files[file].ID}\',\'managefile.php?action=delete&id={$myprojects[project].ID}&file={$replies[reply].files[file].ID}\')');"></a>
+																								<a class="del" href="javascript:void(0);" onclick = "confirmfunction('{$langfile.confirmdel}','deleteElement(\'fli_{$replies[reply].files[file].ID}\',\'managefile.php?action=delete&id={$replies[reply].files[file].project}&file={$replies[reply].files[file].ID}\')');"></a>
 																							{/if}
 																						</div>
 																					</td>
 																				</tr>
 																				<tr>
 																					<td colspan="3">
-																						<span class="name"><a href = "{$replies[reply].files[file].datei}"{if $replies[reply].files[file].imgfile == 1} rel="lytebox[img{$replies[reply].files[file].ID}]" {elseif $replies[reply].files[file].imgfile == 2} rel = "lyteframe[text{$replies[reply].files[file].ID}]"{/if} title="{$replies[reply].files[file].name}">{$replies[reply].files[file].name|truncate:15:"...":true}</a></span>
+																						<span class="name">
+																						<!--<a href = "{$replies[reply].files[file].datei}"{if $replies[reply].files[file].imgfile == 1} rel="lytebox[img{$replies[reply].files[file].ID}]" {elseif $replies[reply].files[file].imgfile == 2} rel = "lyteframe[text{$replies[reply].files[file].ID}]"{/if} title="{$replies[reply].files[file].name}">{$replies[reply].files[file].name|truncate:15:"...":true}</a></span>-->	<a href = "managefile.php?action=downloadfile&amp;id={$replies[reply].files[file].project}&amp;file={$replies[reply].files[file].ID}"{if $replies[reply].files[file].imgfile == 1} rel="lytebox[img{$replies[reply].ID}]"{/if} title="{$replies[reply].files[file].name}">
+																						{$replies[reply].files[file].name|truncate:15:"...":true}
+																						</a>
+
 																					</td>
 																				<tr/>
 																			</table>

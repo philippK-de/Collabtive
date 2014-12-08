@@ -6,13 +6,13 @@
 		<div class="files">
 
 			<div class="breadcrumb">
-				<a href="managefile.php?action=showproject&amp;id={$project.ID}" ><img src="./templates/standard/images/symbols/projects.png" alt="" />
+				<a href="managefile.php?action=showproject&amp;id={$project.ID}" ><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />
 					{$projectname|truncate:25:"...":true}
 				</a>
 			</div>
 			
 			<h1 class="second">
-				<img src="./templates/standard/images/symbols/files.png" alt="" />
+				<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/files.png" alt="" />
 				{$file.title|truncate:30:"...":true}
 			</h1>
 			

@@ -1,6 +1,7 @@
 <?php
 // Autoload requires classes on new class()
-function cl_autoload($class_name) {
+function cl_autoload($class_name)
+{
     $pfad = CL_ROOT . "/include/class." . $class_name . ".php";
     if (file_exists($pfad)) {
         require_once($pfad);
@@ -10,8 +11,9 @@ function cl_autoload($class_name) {
 }
 spl_autoload_register('cl_autoload');
 
-function chkproject($user, $project) {
-	global $conn;
+function chkproject($user, $project)
+{
+    global $conn;
     $user = (int) $user;
     $project = (int) $project;
     $chk = @$conn->query("SELECT ID FROM projekte_assigned WHERE projekt = $project AND user = $user")->fetch();
@@ -25,7 +27,8 @@ function chkproject($user, $project) {
     }
 }
 
-function getAvailableLanguages() {
+function getAvailableLanguages()
+{
     $dir = scandir(CL_ROOT . "/language/");
     $languages = array();
     if (!empty($dir)) {
@@ -42,7 +45,8 @@ function getAvailableLanguages() {
     }
 }
 
-function countLanguageStrings($locale) {
+function countLanguageStrings($locale)
+{
     if (file_exists(CL_ROOT . "/language/$locale/lng.conf")) {
         $langfile = file("./language/$locale/lng.conf");
         $cou1 = (int) 0;
@@ -69,7 +73,8 @@ function countLanguageStrings($locale) {
     }
 }
 
-function readLangfile($locale) {
+function readLangfile($locale)
+{
     $langfile = file("./language/$locale/lng.conf");
     $langkeys = array();
     $langvalues = array();
@@ -88,10 +93,13 @@ function readLangfile($locale) {
     }
 }
 
-function detectSSL() {
+function detectSSL()
+{
     if (getArrayVal($_SERVER, "https") == "on") {
         return true;
     } elseif (getArrayVal($_SERVER, "https") == 1) {
+        return true;
+    } elseif (getArrayVal($_SERVER, "HTTPS") == 1) {
         return true;
     } elseif (getArrayVal($_SERVER, "SERVER_PORT") == 443) {
         return true;
@@ -100,7 +108,8 @@ function detectSSL() {
     }
 }
 
-function getMyUrl() {
+function getMyUrl()
+{
     if (isset($_SERVER['REQUEST_URI']) && !empty($_SERVER['REQUEST_URI'])) {
         $requri = $_SERVER['REQUEST_URI'];
     } else {
@@ -123,37 +132,32 @@ function getMyUrl() {
     return $url;
 }
 
-function strip_only_tags($str, $tags, $stripContent = false) {
-    $content = '';
-    if (is_array($str)){
-      $stripped=array();
-      foreach ($str as $key => $value){
-        $stripped[$key]=strip_only_tags($value, $tags, $stripContent);
-      }
-      return $stripped;
-    }
-    if (!is_array($tags)) {
-      $tags = (strpos($str, '>') !== false ? explode('>', str_replace('<', '', $tags)) : array($tags));
-      if (end($tags) == '') array_pop($tags);
-    }
-    foreach($tags as $tag) {
-      if ($stripContent){
-        $content = '(.+</' . $tag . '(>|\s[^>]*>)|)';
-      }
-      $str = preg_replace('#</?' . $tag . '(>|\s[^>]*>)' . $content . '#is', '', $str);
-    }    
-    return $str;
-}
-
-function getArrayVal(array $array, $name) {
+function getArrayVal(array $array, $name)
+{
     if (array_key_exists($name, $array)) {
-        return strip_only_tags($array[$name], "script");
+    	$config = HTMLPurifier_Config::createDefault();
+    	if(file_exists(CL_ROOT . "/files/standard/ics"))
+    	{
+    		$config->set('Cache.SerializerPath', CL_ROOT . "/files/standard/ics");
+    	}
+    	else
+    	{
+    		$config->set('Cache.SerializerPath', NULL);
+    	}
+		$purifier = new HTMLPurifier($config);
+        if (!is_array($array[$name])) {
+            $clean = $purifier->purify($array[$name]);
+        }else {
+            $clean = $array[$name];
+        }
+        return $clean;
     } else {
         return false;
     }
 }
 
-function delete_directory($dirname) {
+function delete_directory($dirname)
+{
     if (is_dir($dirname)) {
         $dir_handle = opendir($dirname);
     }
@@ -173,7 +177,8 @@ function delete_directory($dirname) {
     return true;
 }
 
-function reduceArray(array $arr) {
+function reduceArray(array $arr)
+{
     $num = count($arr);
     $earr = array();
     for($i = 0;$i < $num;$i++) {
@@ -184,15 +189,18 @@ function reduceArray(array $arr) {
     return $earr;
 }
 
-function getUpdateNotify() {
-	return json_decode(@file_get_contents("http://collabtive.o-dyn.de/update/chk.php"));
+function getUpdateNotify()
+{
+    return json_decode(@file_get_contents("http://collabtive.o-dyn.de/update/chk.php"));
 }
 
-function full_url() {
+function full_url()
+{
     $s = empty($_SERVER["HTTPS"]) ? '' : ($_SERVER["HTTPS"] == "on") ? "s" : "";
     $sp = strtolower($_SERVER["SERVER_PROTOCOL"]);
     $protocol = substr($sp, 0, strpos($sp, "/")) . $s;
-    $port = ($_SERVER["SERVER_PORT"] == "80") ? "" : (":".$_SERVER["SERVER_PORT"]);
+    $port = ($_SERVER["SERVER_PORT"] == "80") ? "" : (":" . $_SERVER["SERVER_PORT"]);
     return $_SERVER['REQUEST_URI'];
 }
+
 ?>

@@ -14,7 +14,7 @@
 				<div id="choices"></div>
 				<input type = "hidden" name = "action" value = "search" />
 
-				<div id="indicator1" style="display:none;"><img src="templates/standard/images/symbols/indicator_arrows.gif" alt="{#searching#}" /></div>
+				<div id="indicator1" style="display:none;"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/indicator_arrows.gif" alt="{#searching#}" /></div>
 
 				<button type="submit" title="{#gosearch#}"></button>
 			</fieldset>
@@ -74,7 +74,7 @@
 			<h2><a id="onlinelisttoggle" class="win-up" href="javascript:blindtoggle('onlinelist');toggleClass('onlinelisttoggle','win-up','win-down');">{#usersonline#}</a></h2>
 
 			<div id="onlinelist">
-				{$cloud|default}
+
 			</div>
 	</div>
 

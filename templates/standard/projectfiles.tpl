@@ -6,21 +6,21 @@
 		<div class="files">
 
 			<div class="infowin_left">
-				<span id = "deleted" style = "display:none;" class="info_in_red"><img src="templates/standard/images/symbols/files.png" alt=""/>{#filewasdeleted#}</span>
-					<span id = "fileadded" style = "display:none;" class="info_in_green"><img src="templates/standard/images/symbols/files.png" alt=""/>{#filewasadded#}</span>
+				<span id = "deleted" style = "display:none;" class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/files.png" alt=""/>{#filewasdeleted#}</span>
+					<span id = "fileadded" style = "display:none;" class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/files.png" alt=""/>{#filewasadded#}</span>
 			</div>
 
 			<div class="infowin_left" style = "display:none;" id = "systemmsg">
 				{if $mode == "added"}
-				<span class="info_in_green"><img src="templates/standard/images/symbols/files.png" alt=""/>{#filewasadded#}</span>
+				<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/files.png" alt=""/>{#filewasadded#}</span>
 				{elseif $mode == "edited"}
-				<span class="info_in_yellow"><img src="templates/standard/images/symbols/files.png" alt=""/>{#filewasedited#}</span>
+				<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/files.png" alt=""/>{#filewasedited#}</span>
 				{elseif $mode == "folderadded"}
-				<span class="info_in_green"><img src="templates/standard/images/symbols/folder-root.png" alt=""/>{#folderwasadded#}</span>
+				<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/folder-root.png" alt=""/>{#folderwasadded#}</span>
 				{elseif $mode == "folderedited"}
-				<span class="info_in_yellow"><img src="templates/standard/images/symbols/folder-root.png" alt=""/>{#folderwasedited#}</span>
+				<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/folder-root.png" alt=""/>{#folderwasedited#}</span>
 				{elseif $mode == "folderdel"}
-				<span class="info_in_red"><img src="templates/standard/images/symbols/folder-root.png" alt=""/>{#folderwasdeleted#}</span>
+				<span class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/folder-root.png" alt=""/>{#folderwasdeleted#}</span>
 				{/if}
 			</div>
 
@@ -49,7 +49,7 @@
 				</div>
 
 				<h2>
-					<img src="./templates/standard/images/symbols/folder-root.png" alt="" /><span id = "dirname">{#rootdir#}</span>
+					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/folder-root.png" alt="" /><span id = "dirname">{#rootdir#}</span>
 				</h2>
 			</div>
 
@@ -86,9 +86,9 @@
 						</div>
 						<div style = "float:right;margin-right:3px;">
 						<form id = "typechose">
-							<select id = "fileviewtype" onchange = "changeFileview(this.value,$('folderparent').value);">
-								<option value = "fileview">{#gridview#}</option>
-								<option value = "fileview_list" selected>{#listview#}</option>
+							<select id = "fileviewtype" onchange = "changeFileview(this.value);">
+								<option value = "fileview" selected>{#gridview#}</option>
+								<option value = "fileview_list" >{#listview#}</option>
 							</select>
 						</form>
 						</div>
@@ -107,7 +107,6 @@
 						<div class="staterowin">
 							<span id = "filenum">{$filenum}</span> {#files#}
 						</div>
-
 					</div>
 				</div> {*nosmooth End*}
 
@@ -127,8 +126,17 @@
 </div> {*content-left END*}
 {literal}
 <script type = "text/javascript">
-function changeFileview(viewtype, folder)
+function changeFileview(viewtype)
 {
+	var folder;
+	try{
+		folder = $('folderparent').value;
+	}
+	catch(e)
+	{
+		folder = 0;
+	}
+
 	if(!folder)
 	{
 		folder = 0;

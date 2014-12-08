@@ -6,6 +6,8 @@ if (!isset($_SESSION["userid"])) {
     $template->display("login.tpl");
     die();
 }
+$path = "./include/phpseclib";
+set_include_path(get_include_path() . PATH_SEPARATOR . $path);
 $myfile = new datei();
 
 $POST_MAX_SIZE = ini_get('post_max_size');
@@ -54,17 +56,22 @@ if ($action == "upload") {
     $num = $_POST['numfiles'];
 
     if ($upfolder) {
-        $thefolder = $myfile->getFolder($upfolder);
-        $thefolder = $thefolder["name"];
-        $upath = "files/" . CL_CONFIG . "/$id/" . $thefolder;
+    	$thefolder = $myfile->getFolder($upfolder);
+    	$absfolder = $myfile->getAbsolutePathName($thefolder);
+    	if($absfolder == "/")
+    	{
+    		$absfolder = "";
+    	}
+    	$thefolder = $thefolder["name"];
+    	$upath = "files/" . CL_CONFIG . "/$id" . $absfolder;
     } else {
         $upath = "files/" . CL_CONFIG . "/$id";
         $upfolder = 0;
     }
-
     $chk = 0;
     for($i = 1;$i <= $num;$i++) {
-        $fid = $myfile->upload("userfile$i", $upath, $id, $upfolder);
+
+		$fid = $myfile->upload("userfile$i", $upath, $id, $upfolder);
         $fileprops = $myfile->getFile($fid);
 
         if ($settings["mailnotify"]) {
@@ -110,7 +117,7 @@ if ($action == "upload") {
         }
     }
     $loc = $url .= "managefile.php?action=showproject&id=$id&mode=added";
-    header("Location: $loc");
+  	//header("Location: $loc");
 } elseif ($action == "uploadAsync") {
     if (!$userpermissions["files"]["add"]) {
         $errtxt = $langfile["nopermission"];
@@ -121,18 +128,29 @@ if ($action == "upload") {
     }
     if ($upfolder) {
         $thefolder = $myfile->getFolder($upfolder);
+    	$absfolder = $myfile->getAbsolutePathName($thefolder);
+    	if($absfolder == "/")
+    	{
+    		$absfolder = "";
+    	}
         $thefolder = $thefolder["name"];
-        $upath = "files/" . CL_CONFIG . "/$id/" . $thefolder;
+        $upath = "files/" . CL_CONFIG . "/$id" . $absfolder;
     } else {
         $upath = "files/" . CL_CONFIG . "/$id";
         $upfolder = 0;
     }
     $num = count($_FILES);
     $chk = 0;
-    foreach($_FILES as $file) {
+    //Loop through uploaded files
+	foreach($_FILES as $file) {
+		//encrypt files in their tmp location
+    	$myfile->encryptFile($file["tmp_name"], $settings["filePass"]);
+		//upload them to the files folder and add to the database
         $fid = $myfile->uploadAsync($file["name"], $file["tmp_name"], $file["type"], $file["size"], $upath, $id, $upfolder);
-        $fileprops = $myfile->getFile($fid);
+        //get the new file object
+		$fileprops = $myfile->getFile($fid);
 
+		//send mail notifications
         if ($settings["mailnotify"]) {
             $sendto = getArrayVal($_POST, "sendto");
             $usr = (object) new project();
@@ -150,17 +168,17 @@ if ($action == "upload") {
 
                     // check if subfolder exists, else root folder
                     $whichfolder = (!empty($thefolder)) ? $thefolder : $userlang["rootdir"];
-                    
+
                     // assemble content only once. no need to do this repeatedly
                     $mailcontent = $userlang["hello"] . ",<br /><br/>" .
                                    $userlang["filecreatedtext"] . "<br /><br />" .
                                    $userlang["project"] . ": " . $pname["name"] . "<br />" .
                                    $userlang["folder"] . ": " . $whichfolder . "<br />" .
                                    $userlang["file"] . ":  <a href = \"" . $url . $fileprops["datei"] . "\">" . $url . $fileprops["datei"] . "</a>";
-                    
+
                     $subject = $userlang["filecreatedsubject"] . " (". $userlang['by'] . ' '. $username . ")";
 
-                    if (is_array($sendto)) {                                                                                                                                        
+                    if (is_array($sendto)) {
                         if (in_array($user["ID"], $sendto)) {
                             // send email
                             $themail = new emailer($settings);
@@ -301,14 +319,12 @@ if ($action == "upload") {
         $template->display("error.tpl");
         die();
     }
+
     $name = getArrayVal($_POST, "foldertitle");
     $desc = getArrayVal($_POST, "folderdesc");
     $parent = getArrayVal($_POST, "folderparent");
-    $visible = getArrayVal($_POST, "visible");
-    if (empty($visible[0])) {
-        $visible = "";
-    }
-    if ($myfile->addFolder($parent, $id, $name, $desc, $visible)) {
+
+    if ($myfile->addFolder($parent, $id, $name, $desc)) {
         $loc = $url .= "managefile.php?action=showproject&id=$id&mode=folderadded";
         header("Location: $loc");
     }
@@ -331,6 +347,7 @@ if ($action == "upload") {
         }
     }
 } elseif ($action == "movefile") {
+
     if (!$userpermissions["files"]["edit"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
@@ -343,6 +360,46 @@ if ($action == "upload") {
 
     $target = $_GET["target"];
     $myfile->moveFile($file, $target);
+}
+elseif($action == "downloadfile")
+{
+	if (!$userpermissions["files"]["view"]) {
+		$errtxt = $langfile["nopermission"];
+		$noperm = $langfile["accessdenied"];
+		$template->assign("errortext", "$errtxt<br>$noperm");
+		$template->display("error.tpl");
+		die();
+	}
+
+	//get the file ID.
+	$fileId = getArrayVal($_GET,"file");
+	$thefile = $myfile->getFile($fileId);
+
+	//getFile path and filesize
+	$filePath = $thefile["datei"];
+	$fsize =  filesize($filePath);
+
+	//Send HTTP headers for dowonload
+	header('Content-Description: File Transfer');
+	header('Content-Type: application/octet-stream');
+	header('Content-Disposition: attachment; filename="'.basename($filePath).'"');
+	header('Content-Transfer-Encoding: binary');
+	header('Connection: Keep-Alive');
+	header('Expires: 0');
+	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+	header('Pragma: public');
+	header("Content-length: $fsize");
+	//Try to decrypt the file
+	$plaintext = $myfile->decryptFile($filePath, $settings["filePass"]);
+
+	//no plaintext means file was not encrypted or not decrypted. however deliver to unmodified file
+	if(!$plaintext)
+	{
+		$plaintext = file_get_contents($filePath);
+	}
+	//Render the content
+	echo $plaintext;
+
 }
 
 ?>

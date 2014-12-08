@@ -30,107 +30,7 @@ if (!$id) {
     $id = 0;
 }
 $template->assign("id", $id);
-if ($action == "timeline1next") {
-    $start = $start + 7;
-    $end = $end + 7;
-    $today = date("d");
-
-    $timestr = $pro->getTimestr();
-    $timeline1 = $pro->getTimeline($id, $start, $end);
-
-    $timestring = array();
-    foreach($timestr as $times) {
-        $times = $langfile[$times];
-        array_push($timestring, $times);
-    }
-
-    $template->assign("timeline1", $timeline1);
-
-    $template->assign("start", $start);
-    $template->assign("end", $end);
-    $template->assign("timestr", $timestring);
-    $template->assign("today", $today);
-
-    $template->display("mileview1.tpl");
-} elseif ($action == "timeline1prev") {
-    $start = $start - 7;
-    $end = $end - 7;
-
-    $today = date("d");
-
-    $timestr = $pro->getTimestr();
-    $timeline1 = $pro->getTimeline($id, $start, $end);
-
-    $timestring = array();
-    foreach($timestr as $times) {
-        $times = $langfile[$times];
-        array_push($timestring, $times);
-    }
-
-    $template->assign("timeline1", $timeline1);
-
-    $template->assign("start", $start);
-    $template->assign("end", $end);
-    $template->assign("timestr", $timestring);
-    $template->assign("today", $today);
-
-    $template->display("mileview1.tpl");
-} elseif ($action == "timeline2next") {
-    $start = $start + 7;
-    $end = $end + 7;
-    $today = date("d");
-
-    $timestr = $pro->getTimestr();
-
-    $timeline1 = $pro->getTimeline($id, $start, $end);
-
-    $start = $start + 7;
-    $end = $end + 7;
-    $timeline2 = $pro->getTimeline($id, $start, $end);
-    $timestring = array();
-    foreach($timestr as $times) {
-        $times = $langfile[$times];
-        array_push($timestring, $times);
-    }
-
-    $template->assign("timeline1", $timeline1);
-    $template->assign("timeline2", $timeline2);
-
-    $template->assign("start", $start);
-    $template->assign("end", $end);
-    $template->assign("timestr", $timestring);
-    $template->assign("today", $today);
-
-    $template->display("mileview2.tpl");
-} elseif ($action == "timeline2prev") {
-    $start = $start - 7;
-    $end = $end - 7;
-    $today = date("d");
-
-    $timestr = $pro->getTimestr();
-    $timeline2 = $pro->getTimeline($id, $start, $end);
-
-    $start = $start - 7;
-    $end = $end - 7;
-
-    $timeline1 = $pro->getTimeline($id, $start, $end);
-
-    $timestring = array();
-    foreach($timestr as $times) {
-        $times = $langfile[$times];
-        array_push($timestring, $times);
-    }
-
-    $template->assign("timeline1", $timeline1);
-    $template->assign("timeline2", $timeline2);
-
-    $template->assign("start", $start);
-    $template->assign("end", $end);
-    $template->assign("timestr", $timestring);
-    $template->assign("today", $today);
-
-    $template->display("mileview2.tpl");
-} elseif ($action == "makeinputs") {
+if ($action == "makeinputs") {
     $num = getArrayVal($_GET, "num");
     $file = $langfile["file"] . ":";
     $title = $langfile["title"] . ":";
@@ -141,7 +41,9 @@ if ($action == "timeline1next") {
         <div class=\"row\"><label for = \"tags$i\">$tags </label><input type = \"text\" name = \"userfile$i-tags\" id=\"tags$i\" /></div>
 			<div class=\"row\"><label for = \"userfile$i\">$file </label><input type=\"file\" id = \"userfile$i\" name=\"userfile$i\" /><div style=\"clear:left\"></div>";
     }
-} elseif ($action == "addfx-all") {
+}
+//This is used to add the search functionality to firefoxs seachbar
+elseif ($action == "addfx-all") {
     $templ = $url . "managesearch.php?action=search&amp;query={searchTerms}";
     $templ2 = $url . "managesearch.php?action=searchjson&amp;query={searchTerms}";
     $fav = $url . "templates/standard/images/favicon.ico";
@@ -160,7 +62,9 @@ if ($action == "timeline1next") {
 
 <AdultContent>false</AdultContent>
 </OpenSearchDescription>";
-} elseif ($action == "addfx-project") {
+}
+//This is used to add the search functionality to firefoxs seachbar
+elseif ($action == "addfx-project") {
     $templ = $url . "managesearch.php?action=projectsearch&amp;project=$project&amp;query={searchTerms}";
     $templ2 = $url . "managesearch.php?action=searchjson-project&amp;project=$project&amp;query={searchTerms}";
     $fav = $url . "templates/standard/images/favicon.ico";
@@ -182,7 +86,9 @@ if ($action == "timeline1next") {
 
 <AdultContent>false</AdultContent>
 </OpenSearchDescription>";
-} elseif ($action == "jsonfiles") {
+}
+//This is used to put file lists into tinymce for selection
+elseif ($action == "jsonfiles") {
     if (!chkproject($userid, $id)) {
         $errtxt = $langfile["notyourproject"];
         $noperm = $langfile["accessdenied"];
@@ -206,7 +112,9 @@ if ($action == "timeline1next") {
         $json = "";
     }
     echo $json;
-} elseif ($action == "fileview") {
+}
+//this is used to display the project files
+elseif ($action == "fileview") {
     if (!chkproject($userid, $id)) {
         $errtxt = $langfile["notyourproject"];
         $noperm = $langfile["accessdenied"];
@@ -258,7 +166,9 @@ if ($action == "timeline1next") {
     $template->assign("files", $finfiles);
     $template->assign("postmax", $POST_MAX_SIZE);
     $template->display("fileview.tpl");
-} elseif ($action == "fileview_list") {
+}
+//this is used to display the project files
+ elseif ($action == "fileview_list") {
     if (!chkproject($userid, $id)) {
         $errtxt = $langfile["notyourproject"];
         $noperm = $langfile["accessdenied"];
@@ -323,7 +233,9 @@ if ($action == "timeline1next") {
     $template->assign("langfile", $langfile);
     $template->assign("ordner", $ordner);
     $template->display("folderview.tpl");
-} elseif ($action == "newcal") {
+}
+//this is used to display the calendar on the desktop
+elseif ($action == "newcal") {
     $thisd = date("j");
     $thism = date("n");
     $thisy = date("Y");
@@ -373,5 +285,14 @@ if ($action == "timeline1next") {
     $template->assign("py", $py);
     $template->assign("weeks", $weeks);
     $template->display("calbody.tpl");
+}
+elseif($action == "chkconn")
+{
+	$dbHost = getArrayVal($_GET,"dbhost");
+	$dbUser = getArrayVal($_GET,"dbuser");
+	$dbName = getArrayVal($_GET,"dbname");
+	$dbPass = getArrayVal($_GET,"dbpass");
+	$chk = new PDO("mysql:host=$dbHost;dbname=$dbName;charset=utf8", $dbUser, $dbPass);
+	 echo $chk;
 }
 

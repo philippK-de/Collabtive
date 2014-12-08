@@ -57,13 +57,8 @@ if ($action == "addform") {
         $template->display("error.tpl");
         die();
     }
-    // format tags properly
-    if ($tags) {
-        $tagobj = new tags();
-        $tags = $tagobj->formatInputTags($tags);
-    }
     // add message
-    $themsg = $msg->add($id, $title, $message, $tags, $userid, $username, 0, $milestone);
+    $themsg = $msg->add($id, $title, $message, $userid, $username, 0, $milestone);
 
     if ($themsg) {
         if ($thefiles > 0) {
@@ -124,6 +119,10 @@ if ($action == "addform") {
     // get page title from language file
     $title = $langfile["editmessage"];
     $template->assign("title", $title);
+
+	//disable full html, for async display
+	$template->assign("showhtml","no");
+	$template->assign("async","yes");
     // get the message to edit
     $message = $msg->getMessage($mid);
     $template->assign("message", $message);
@@ -138,10 +137,8 @@ if ($action == "addform") {
         die();
     }
 
-    $tagobj = new tags();
-    $tags = $tagobj->formatInputTags($tags);
     // edit the msg
-    if ($msg->edit($mid_post, $title, $text, $tags)) {
+    if ($msg->edit($mid_post, $title, $text)) {
         if ($redir) {
             $redir = $url . $redir;
             header("Location: $redir");
@@ -190,6 +187,9 @@ if ($action == "addform") {
     $myfile = new datei();
     $ordner = $myfile->getProjectFiles($id, 1000);
     $message = $msg->getMessage($mid);
+
+	$template->assign("showhtml","no");
+	$template->assign("async","yes");
     $template->assign("message", $message);
     $template->assign("members", $members);
     $template->assign("files", $ordner);
@@ -204,9 +204,8 @@ if ($action == "addform") {
         die();
     }
 
-    $tagobj = new tags();
-    $tags = $tagobj->formatInputTags($tags);
-    $themsg = $msg->add($id, $title, $message, $tags, $userid, $username, $mid_post, $milestone);
+
+    $themsg = $msg->add($id, $title, $message, $userid, $username, $mid_post, $milestone);
     if ($themsg) {
         if ($thefiles > 0) {
             // attach existing file
@@ -289,7 +288,7 @@ if ($action == "addform") {
     }
     // get files of the project
     $datei = new datei();
-    $thefiles = $datei->getProjectFiles($id);
+    $thefiles = $datei->getAllProjectFiles($id);
 
     $milestones = $objmilestone->getAllProjectMilestones($id, 10000);
 
@@ -437,45 +436,6 @@ if ($action == "addform") {
     <tr><td >$message[text]</td></tr></table>";
     $pdf->writeHTML($htmltable, true, 0, true, 0);
     $pdf->Output("message$mid.pdf", "D");
-}
-elseif ($action == "mymsgs")
-{
-	// create new project and file objects
-	$project = new project();
-	$myfile = new datei();
-	// get all uof the users projects
-	$myprojects = $project->getMyProjects($userid);
-	$cou = 0;
-	$messages = array();
-	// loop through the projects and get messages and files for each project
-	if (!empty($myprojects))
-	{
-		foreach($myprojects as $proj)
-		{
-			$message = $msg->getProjectMessages($proj["ID"]);
-			$ordner = $myfile->getProjectFiles($proj["ID"], 1000);
-			$milestones = $objmilestone->getProjectMilestones($proj["ID"], 10000);
-			if(!empty($message))
-			{
-				array_push($messages,$message);
-			}
-			$myprojects[$cou]["milestones"] = $milestones;
-			$myprojects[$cou]["messages"] = $message;
-			$myprojects[$cou]["files"] = $ordner;
-			$cou = $cou + 1;
-		}
-	}
-	$emessages = reduceArray($messages);
-
-	// print_r($myprojects);
-	$title = $langfile['mymessages'];
-	$template->assign("title", $title);
-	$members = $project->getProjectMembers($id, 10000);
-	$template->assign("members", $members);
-	$template->assign("messages", $emessages);
-	$template->assign("msgnum", count($emessages));
-	$template->assign("myprojects", $myprojects);
-	$template->display("mymessages.tpl");
 }
 elseif ($action == "mymsgs-pdf") {
     $l = Array();

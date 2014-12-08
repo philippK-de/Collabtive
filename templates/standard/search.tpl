@@ -1,6 +1,6 @@
-{include file="header.tpl" jsload = "ajax" jsload3 = "lightbox" }
+{include file="header.tpl" jsload="ajax" jsload3="lightbox"}
+{include file="tabsmenue-desk.tpl"}
 
-{include file="tabsmenue-desk.tpl" }
 <div id="content-left">
 <div id="content-left-in">
 <div class="neutral">
@@ -10,14 +10,14 @@
 
 			<div class="headline">
 				<a href="javascript:void(0);" id="block_tags_toggle" class="win_block" onclick = "toggleBlock('block_tags');"></a>
-				
+
 				<h2>
-					<img src="./templates/standard/images/symbols/search.png" alt="" />{#results#} ({$num})
+					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/search.png" alt="" />{#results#} ({$num})
 				</h2>
 			</div>
 
 			<div id="block_tags" class="blockwrapper">
-			
+
 				<div class="contenttitle">
 					<div class="contenttitle_menue">
 						{*place for tool under ne title-icon*}
@@ -28,7 +28,7 @@
 				</div>
 				<div class="content_in_wrapper">
 					<div class="content_in_wrapper_in">
-						<div class="inwrapper">		
+						<div class="inwrapper">
 							<ul>
 							{section name=obj loop=$result}
 								<li>
@@ -40,48 +40,44 @@
 												<div class="inmenue">
 													{if $members[member].avatar != ""}
 														<a class="more" href="javascript:fadeToggle('info_{$members[member].ID}');"></a>
-													{/if}															
-												</div>																				
+													{/if}
+												</div>
 											</td>
 											<td class="thumb">
-												{if $result[obj].type == "file"}
-													<a style="top:-33px;" href = "files/{$cl_config}/{$result[obj].project}/{$result[obj].name}" {if $result[obj].imgfile == 1} rel="lytebox[]" {elseif $result[obj].imgfile == 2} rel = "lyteframe[text]" rev="width: 650px; height: 500px;" {/if}>
+												{*if $result[obj].type == "file"}
+													<a style="top:-33px;" href = "{$result[obj].datei}" {if $result[obj].imgfile == 1} rel="lytebox[]" {elseif $result[obj].imgfile == 2} rel = "lyteframe[text]" rev="width: 650px; height: 500px;" {/if}>
 														{if $result[obj].imgfile == 1}
 														<img src = "thumb.php?pic={$result[obj].datei}&amp;width=32" alt="" />
 														{else}
-														<img src = "templates/standard/images/symbols/{$result[obj].icon}" alt="" />
+														<img src = "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/{$result[obj].icon}" alt="" />
 														{/if}
-													</a>	
+													</a>
 												{else}
 													<a href = "{$result[obj].url}" title="{$result[obj].name}">
-														<img src = "templates/standard/images/symbols/{$result[obj].icon}" alt="" />
+														<img src = "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/{$result[obj].icon}" alt="" />
 													</a>
-												{/if}											
+												{/if*}
+													<a style="top:-33px;" href = "managefile.php?action=downloadfile&amp;id={$result[obj].project}&amp;file={$result[obj].ID}" {if $result[obj].imgfile == 1} rel="lytebox[]" {elseif $result[obj].imgfile == 2} rel = "lyteframe[text]" rev="width: 650px; height: 500px;" {/if}>
+													<img src = "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/{$result[obj].icon}" alt="" />
 											</td>
-											<td class="rightmen" valign="top">
-												<!--
-												<div class="inmenue">
-													<a class="del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'files_focus{$ordner[file].ID}\',\'managefile.php?action=delete&amp;id={$project.ID}&amp;file={$folders[fold].ID}\')');" title="{#delete#}" onclick="fadeToggle('iw_{$folders[fold].ID}');"></a>
-													<a class="edit" href="#" title="{#editfile#}"></a>
-												</div>
-												-->
-											</td>
+											<td class="rightmen" valign="top"></td>
 										</tr>
 										<tr>
 											<td colspan="3">
 												<span class="name">
-														{if $result[obj].type == "file"}
-															<a href = "files/{$cl_config}/{$result[obj].project}/{$result[obj].name}" {if $result[obj].imgfile == 1} rel="lytebox[]" {elseif $result[obj].imgfile == 2} rel = "lyteframe[text]" rev="width: 650px; height: 500px;" {/if} title="{$result[obj].name}">{$result[obj].name|truncate:13:"...":true}</a>
+														{*if $result[obj].type == "file"}
+															<a href = "{$result[obj].datei}" {if $result[obj].imgfile == 1} rel="lytebox[]" {elseif $result[obj].imgfile == 2} rel = "lyteframe[text]" rev="width: 650px; height: 500px;" {/if} title="{$result[obj].name}">{$result[obj].name|truncate:13:"...":true}</a>
 														{elseif $result[obj].name != ""}
 															<a href = "{$result[obj].url}" title="{$result[obj].name}">{$result[obj].name|truncate:13:"...":true}</a>
 														{else}
 															<a href = "{$result[obj].url}" title="{$result[obj].title}">{$result[obj].title|truncate:13:"...":true}</a>
-														{/if}
+														{/if*}
+															<a href = "managefile.php?action=downloadfile&amp;id={$result[obj].project}&amp;file={$result[obj].ID}" {if $result[obj].imgfile == 1} rel="lytebox[]" {elseif $result[obj].imgfile == 2} rel = "lyteframe[text]" rev="width: 650px; height: 500px;" {/if}>{$result[obj].name|truncate:13:"...":true}
 													</a>
 												</span>
 											</td>
 										<tr/>
-									</table>						
+									</table>
 
 											{if $members[member].avatar != ""}
 												<div class="moreinfo" id="info_{$members[member].ID}" style="display:none">
@@ -89,30 +85,30 @@
 													<span class="name"><a href="manageuser.php?action=profile&amp;id={$members[member].ID}">{$members[member].name|truncate:15:"...":true}</a></span>
 												</div>
 											{/if}
-															
+
 									</div> {*itemwrapper End*}
 								</li>
 							{/section} {*lop folder End*}
 
 							</ul>
-						</div> {*inwrapper End*}			
+						</div> {*inwrapper End*}
 
 
-										
+
 			</div> {*content_in_wrapper_in End*}
 
 			</div> {*content_in_wrapper End*}
-			
+
 			<div class="staterow">
 				<div class="staterowin">
 					{*place for whatever*}
 				</div>
 			</div>
-				
-					
+
+
 			<div class="tablemenue"></div>
-			</div> {*block_tags End*}			
-			
+			</div> {*block_tags End*}
+
 
 <div class="content-spacer"></div>
 

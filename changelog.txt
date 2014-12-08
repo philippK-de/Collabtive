@@ -4,10 +4,51 @@
 + Merge existing members and new members when adding project
 + Error reporting globally set to E_WARNING
 + Changed redirection after project creation from desktop or project administration to project dashboard
-+ Removed English strings from Farsi translation file
-+ Improved translations: German
++ Improved translations: German, Polish, Farsi, Norwegian (Bokmal & Nynorsk), Simplified Chinese
 + Improved project tree's handling for special characters
 + Removed file upload from the add reply form. Now only previously uploaded files can be attached to replies.
++ Lots of code beautification in templates files
++ Make filemanager behave more like explorer (i.e. no pagination - show all files in each folder at once)
++ Revert to gridview as the default file view (this was changed in 1.2 b/c of issues)
++ Added edge case for SSL detection
++ Removed .htaccess file as it was causing trouble with some servers
++ Added start date functionality for tasks
++ Fixed several typos in style_form.css
++ Fixed typo in paginate-first function
++ Fixed cancel button for deleting folders in list view
++ Corrected label for edit button in project members view ("edit file" -> "edit user")
++ Changed permission for adding users to an existing project from "administration" to "project edit"
++ Implemented HTML Purifier filter for all user input. This will give us STRONG protection against all kinds of XSS attacks, while preserving rich formating options. It will also enhance well formedness.
++ Implemented some Content-Security-Protection header options. No framing,only load css from same origin, only load .js files from same origin, only load images from same origin
++ Remove force-compile option from template engine. This disabled caching and caused performance problems for some users.
++ Add compileAllConfig() to force a recompile of the config files in certain cases.
++ Fixed possible sql vulnerability in manageajax.php
++ Dont expose plain filesystem links to uploaded files. Downloads are routed through download.php
++ Added AES encryption of uploaded files
++ Added CSS theme functionality. Now the CSS and image files for each template set reside in a /themes/ subfolder. This way, there can be CSS only variations of templates created more easily.
++ Change color of tab info string, making it more readable
++ Set cache directory for HTML purifier definitions to /files/standard/ics/
++ Messages can now be edited asyncronously
++ Messages can now be replied to asyncronously
++ Implemented a new structure for the desktop. It is now an accordeon where clicking each section slides it open and closes all others.
++ Implemented a new structure for the project dashboard. It is now an accordeon where clicking each section slides it open and closes all others.
++ Customer profiles can be added in admin->customer
++ A customer can be assigned to projects
++ Remove user pictures from the onlinelist
++ Added translation of install-readme: Simplified Chinese
++ Removed unfunctional links from the day numbers in the desktop calendar
++ Fixed white page when editing of task failed.
++ Fixed conversion of umlauts when uploading files.
++ Fixed accordeon in tasklist view
++ Fixed a bug where the list view in project->files could not be selected if the user's role had file:add deactivated.
++ Files in subfolders can now also be attached to messages
++ Fixed filetype detection in message::getAttachedFiles - needs more refactoring to use file::getFile
++ Fixed a problem with file uploads and visibility string
++ Fixed cancel button submitting the form in task->edit
++ Localized project tree labels
++ Localized label for name in list view for files
++ Added a new CSS theme: spring
++ Fixed various display bugs
 
 Collabtive 1.2
 + Added translations: Vietnamese
@@ -212,6 +253,7 @@ Collabtive 0.7
 + New translations: Slovenian, Croatian, Farsi
 + 100% completed translations: Danish, German, Greek, English, Spanish, Finnish, French, Croatian, Italian, Norwegian, Dutch, Polish, Portuguese, Brazilian Portuguese, Romanian, Russian, Serbian
 + Improved security: open .php files as plaintext only
+
 + Improved sorting of projects on desktop, now sorted chronologically by default
 + Improved message display: Avatar now appears next to body of text thus making better use of the given space
 + Fixed bug which prevented choosing existing project files as attachments for a reply
@@ -229,6 +271,7 @@ Collabtive 0.6.5
 + Fixed a bug where a folder wouldnt be visible if visible = all was selected
 + Fixed a bug where every timetracker entry was tracked for "today" regardless of selection
 + Removed some debug output in managefile.php
+
 + Added check for userpermission of file editing, so the edit icon will not show up
 any longer in case of missing permission
 + Added missing truncation to project title on the mymessages view
@@ -267,8 +310,10 @@ Collabtive 0.6.3
 + Fixed a bug in tasklist editing where not all active milestones were available to assign the list to.
 + Added Favicon to standard theme
 + Added TinyMCE editor options to message edit form, reply form, milestone add form, and milestone edit form
+
 + Dropped update support for updating from versions earlier than 0.5
 + Removed calls to deprecated function set_magic_quotes_runtime() in class tcpdf (PDF export)
+
 + Renamed language file folders for Chinese, Greek, Ukranian, Galician, Japanese, and Czech so they
 match those used in TinyMCE
 + Complete translation to English, German, Romanian, and Bulgarian
@@ -491,6 +536,7 @@ Collabtive 0.4.8
 + Fixed: bulleted lists created from the wyswyg editor (they now actually include bullets ;) )
 + Fixed: various UI glitches
 + Moved the short project report to the "description" area of the project details on projectview
+
 + Fixed: Only display tagcloud when there actually are tagged items in the project
 + Changed the task title to mandatory , and the text as optional
 + Added spanish readme
