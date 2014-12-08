@@ -399,7 +399,10 @@ if ($action == "index") {
         }
         $template->assign("opros", $opros);
     }
-
+    
+    $customers = $companyObj->getAllCompanies();
+    
+    $template->assign("customers", $customers);
     $template->assign("users", $users);
     $template->assign("clopros", $clopros);
     $template->display("adminprojects.tpl");
@@ -440,8 +443,7 @@ if ($action == "index") {
         }
     	if($company > 0)
     	{
-    		echo $company . " " . $add;
-    		$companyObj->assign($company,$add);
+    		$companyObj->assign($company, $add);
     	}
     	header("Location: manageproject.php?action=showproject&id=$add");
     }

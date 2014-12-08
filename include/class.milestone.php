@@ -5,7 +5,7 @@
  * @author Philipp Kiszka <info@o-dyn.de>
  * @name milestone
  * @package Collabtive
- * @version 1.0
+ * @version 2.0
  * @link http://www.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  * @global $mylog
@@ -38,7 +38,6 @@ class milestone {
         // Convert end date to timestamp
         $end = strtotime($end);
         $start = strtotime($start);
-        $name = htmlspecialchars($name);
 
         $insStmt = $conn->prepare("INSERT INTO milestones (`project`,`name`,`desc`,`start`,`end`,`status`) VALUES (?, ?, ?, ?, ?, ?)");
         $ins = $insStmt->execute(array((int) $project, $name, $desc, $start, $end, (int) $status));
@@ -67,7 +66,6 @@ class milestone {
         $id = (int) $id;
         $start = strtotime($start);
         $end = strtotime($end);
-        $name = htmlspecialchars($name);
 
         $updStmt = $conn->prepare("UPDATE milestones SET `name`=?, `desc`=?, `start`=?, `end`=? WHERE ID=?");
         $upd = $updStmt->execute(array($name, $desc, $start, $end, $id));
@@ -248,14 +246,11 @@ class milestone {
             $startstring = date(CL_DATEFORMAT, $milestone["start"]);
             $milestone["startstring"] = $startstring;
 
-            $milestone["name"] = stripslashes($milestone["name"]);
-            $milestone["desc"] = stripslashes($milestone["desc"]);
             // Get the name of the project where the message was posted for display
             $psel = $conn->query("SELECT name FROM projekte WHERE ID = $milestone[project]");
             $pname = $psel->fetch();
             $pname = $pname[0];
             $milestone["pname"] = $pname;
-            $milestone["pname"] = stripslashes($milestone["pname"]);
             // Daysleft contains a signed number, dayslate an unsigned one that only applies if the milestone is late
             $dayslate = $this->getDaysLeft($milestone["end"]);
             $milestone["daysleft"] = $dayslate;
@@ -521,9 +516,12 @@ class milestone {
         $timeline = array();
 
         if ($project > 0) {
-            $sel1 = $conn->query("SELECT * FROM milestones WHERE project =  $project AND status=1 AND end = '$starttime' ORDER BY `end` ASC");
+            $sel1 = $conn->prepare("SELECT * FROM milestones WHERE project =  ? AND status=1 AND end = '$starttime' ORDER BY `end` ASC");
+        	$sel1->execute(array($project));
         } else {
-        	$sel1 = $conn->query("SELECT milestones.*,projekte_assigned.user,projekte.name AS pname,projekte.status AS pstatus FROM milestones,projekte_assigned,projekte WHERE milestones.project = projekte_assigned.projekt AND milestones.project = projekte.ID HAVING projekte_assigned.user = $user AND status=1 AND pstatus != 2 AND end = '$starttime'");
+        //	$sel1 = $conn->prepare("SELECT milestones.*,projekte_assigned.user,projekte.name AS pname,projekte.status AS pstatus FROM milestones,projekte_assigned,projekte WHERE milestones.project = projekte_assigned.projekt AND milestones.project = projekte.ID HAVING projekte_assigned.user = ? AND status=1 AND pstatus != 2 AND end = '$starttime'");
+        	$sel1 = $conn->prepare("SELECT milestones.*,projekte_assigned.user,projekte.name AS pname,projekte.status AS pstatus FROM milestones,projekte_assigned,projekte WHERE milestones.project = projekte_assigned.projekt AND milestones.project = projekte.ID GROUP BY projekte.ID HAVING projekte_assigned.user = ? AND milestones.status=1 AND pstatus != 2 AND milestones.end = '$starttime'");
+        	$sel1->execute(array($user));
         } while ($stone = $sel1->fetch()) {
             $stone["daysleft"] = $this->getDaysLeft($stone["end"]);
             array_push($timeline, $stone);

@@ -22,7 +22,7 @@
 	   - ./config/standard/config.php
 	   - ./files
 	   - ./templates_c
-	4. 新建一个新的MySQL数据库。
+	4. 新建一个新的MySQL数据库a。 (collation: utf8_general_ci)
 	5. 在你的浏览器中打开install.php，然后根据提示安装。
 	6. 安装成功后，请删除install.php和update.php。
 	7. 剥夺./config/standard/config.php写的权限(chmod 755)。

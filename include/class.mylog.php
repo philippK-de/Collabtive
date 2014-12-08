@@ -60,8 +60,10 @@ class mylog {
         global $conn;
         $id = (int) $id;
 
-        $del = $conn->query("DELETE FROM log WHERE ID = $id LIMIT 1");
-        if ($del) {
+        $delStmt = $conn->prepare("DELETE FROM log WHERE ID = ? LIMIT 1");
+        $del = $delStmt->execute($id);
+
+		if ($del) {
             return true;
         } else {
             return false;
@@ -81,7 +83,8 @@ class mylog {
         $project = (int) $project;
         $lim = (int) $lim;
 
-        $sel = $conn->query("SELECT COUNT(*) FROM log WHERE project = $project ");
+        $sel = $conn->prepare("SELECT COUNT(*) FROM log WHERE project = ? ");
+    	$sel->execute(array($project));
         $num = $sel->fetch();
         $num = $num[0];
         if ($num > 200) {
@@ -94,8 +97,9 @@ class mylog {
 
         $start = SmartyPaginate::getCurrentIndex();
         $lim = SmartyPaginate::getLimit();
-        $sql = "SELECT * FROM log WHERE project = $project ORDER BY ID DESC LIMIT $start,$lim";
-        $sel2 = $conn->query($sql);
+        $sql = "SELECT * FROM log WHERE project = ? ORDER BY ID DESC LIMIT $start,$lim";
+        $sel2 = $conn->prepare($sql);
+    	$sel2->execute(array($project));
 
         $mylog = array();
         while ($log = $sel2->fetch()) {
@@ -131,7 +135,8 @@ class mylog {
         $user = (int) $user;
         $limit = (int) $limit;
 
-        $sel = $conn->query("SELECT * FROM log WHERE user = $user ORDER BY ID DESC LIMIT $limit");
+        $sel = $conn->prepare("SELECT * FROM log WHERE user = ? ORDER BY ID DESC LIMIT ?");
+		$sel->execute(array($user,$limit));
 
         $mylog = array();
         while ($log = $sel->fetch()) {
@@ -160,7 +165,9 @@ class mylog {
         $limit = (int) $limit;
 
         $mylog = array();
-        $sel3 = $conn->query("SELECT projekt FROM projekte_assigned WHERE user = $userid");
+        $sel3 = $conn->prepare("SELECT projekt FROM projekte_assigned WHERE user = ?");
+    	$sel3->execute(array($userid));
+
         $prstring = "";
         while ($upro = $sel3->fetch()) {
             $projekt = $upro[0];

@@ -19,7 +19,7 @@ Kliens:
 		- /templates_c
 		- /files
 		- /config/standard/config.php
-	4. Hozzon létre egy új MySQL adatbázist a Collabtive-nek.
+	4. Hozzon létre egy új MySQL adatbázist a Collabtive-nek  (collation: utf8_general_ci).
 	5. Hívja be a böngészőjébe az install.php-t és kövesse a megjelenő utasításokat.
 	6. A telepítést követően törölje az install.php és az update.php fájlokat.
 

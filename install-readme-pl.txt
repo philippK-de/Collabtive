@@ -16,7 +16,7 @@ Przegladarka:
 - /templates_c
 - /files
 - /config/standard/config.php
-4. Stworz nowa baze danych MySQL dla oprogramowania.
+4. Stworz nowa baze danych MySQL dla oprogramowania  (collation: utf8_general_ci).
 5. Uruchom plik install.php i postepuj zgodnie z podanymi tam instrukcjami (np. www.TwojAdres.pl/collabtive/install.php)
 
 

@@ -41,8 +41,6 @@ class project {
 
         $now = time();
 
-        $name = htmlspecialchars($name);
-
         $ins1Stmt = $conn->prepare("INSERT INTO projekte (`name`, `desc`, `end`, `start`, `status`, `budget`) VALUES (?,?,?,?,1,?)");
         $ins1 = $ins1Stmt->execute(array($name, $desc, $end, $now, (float) $budget));
 
@@ -309,8 +307,6 @@ class project {
             $startstring = date(CL_DATEFORMAT, $project["start"]);
             $project["startstring"] = $startstring;
 
-            $project["name"] = stripslashes($project["name"]);
-            $project["desc"] = stripslashes($project["desc"]);
             $project["done"] = $this->getProgress($project["ID"]);
 
         	$companyObj = new company();

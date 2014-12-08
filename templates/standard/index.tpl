@@ -301,7 +301,7 @@
 		{if $msgnum > 0}
 			<div class="msgs" style = "padding-bottom:2px;">
 				<div class="headline">
-					<a href="javascript:void(0);" id="activityhead_toggle" class="win_none" onclick="changeElements('a.win_block','win_none');toggleBlock('activityhead');accordIndex.activate($$('#block_index .acc_toggle')[3]);"></a>
+					<a href="javascript:void(0);" id="activityhead_toggle" class="win_none" onclick="changeElements('a.win_block','win_none');toggleBlock('activityhead');"></a>
 
 					<div class="wintools">
 						<div class="export-main">

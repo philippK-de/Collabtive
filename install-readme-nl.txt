@@ -16,7 +16,7 @@ Client:
 		- /templates_c
 		- /files
 		- /config/standard/config.php
-	4. Maak een nieuwe Mysql database (type MyISAM) voor Collabtive.
+	4. Maak een nieuwe Mysql database (type MyISAM,  collation utf8_general_ci) voor Collabtive.
 	5. Voer http://www.mijndomein.xx/install.php uit en volg de instructies.
 	6. Indien de installatie succesvol is, verwijder dan install.php en update.php.
 

@@ -77,8 +77,11 @@ class company {
 
         $id = (int) $id;
 
-        $del_assigns = $conn->query("DELETE FROM company_assigned WHERE customer = $id");
-        $del = $conn->query("DELETE FROM customer WHERE ID = $id");
+        $del_assigns = $conn->prepare("DELETE FROM company_assigned WHERE customer = ?");
+    	$del_assigns->execute(array($id));
+
+        $del = $conn->prepare("DELETE FROM customer WHERE ID = ?");
+		$del->execute(array($id));
 
         if ($del) {
             return true;
@@ -101,7 +104,8 @@ class company {
         $company = (int) $company;
         $id = (int) $id;
 
-        $upd = $conn->query("INSERT INTO customers_assigned (customer, project) VALUES ($company, $id)");
+        $updStmt = $conn->prepare("INSERT INTO customers_assigned (customer, project) VALUES (?, ?)");
+    	$upd = $updStmt->execute(array($company,$id));
 
         if ($upd) {
             return true;
@@ -124,7 +128,8 @@ class company {
         $company = (int) $company;
         $id = (int) $id;
 
-        $upd = $conn->query("DELETE FROM company_assigned WHERE user = $id AND company = $company");
+        $updStmt = $conn->prepare("DELETE FROM company_assigned WHERE user = ? AND company = ?");
+    	$upd = $updStmt->execute(array($id,$company));
 
         if ($upd) {
             return true;
@@ -162,14 +167,15 @@ class company {
     	global $conn;
 
         $project = (int) $project;
-        $sel = $conn->prepare("SELECT customer FROM customers_assigned WHERE project = ?");
-        $selStmt = $sel->execute(array($project));
+
+        $sel = $conn->prepare("SELECT customer FROM customers_assigned WHERE project = :project");
+        $selStmt = $sel->execute(array(':project' => $project));
 
         $companyId = $sel->fetch();
 
-		$company = $this->getCompany($companyId);
+	$company = $this->getCompany($companyId[0]);
 
-		if (!empty($company)) {
+	if (!empty($company)) {
             return $company;
         } else {
             return false;
@@ -234,7 +240,8 @@ class company {
 
         $id = (int) $id;
 
-        $sel = $conn->query("SELECT user, company FROM company_assigned WHERE company = $id");
+        $sel = $conn->prepare("SELECT user, company FROM company_assigned WHERE company = ?");
+		$sel->execute(array($id));
 
         $staff = array();
         $userobj = (object) new user();
