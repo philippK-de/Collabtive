@@ -1,55 +1,59 @@
 <?php
 /**
- * This class provides methods to realize tasks
- *
- * @author Philipp Kiszka <info@o-dyn.de>
- * @name task
- * @package Collabtive
- * @version 0.5.5
- * @link http://www.o-dyn.de
- * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
- */
+* This class provides methods to realize tasks
+*
+* @author Philipp Kiszka <info@o-dyn.de>
+* @author Eva Kiszka <eva@o-dyn.de>
+* @name task
+* @package Collabtive
+* @version 2.0
+* @link http://www.o-dyn.de
+* @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
+*/
 
 class task {
     private $mylog;
 
     /**
-     * Constructor
-     * Initializes the event log
-     */
+    * Constructor
+    * Initializes the event log
+    */
     function __construct()
     {
         $this->mylog = new mylog;
     }
 
     /**
-     * Add a task
-     *
-     * @param string $end Date the task is due
-     * @param string $title Title of the task (optional)
-     * @param string $text Description of the task
-     * @param int $liste Tasklist the task is associated with
-     * @param int $assigned ID of the user who has to complete the task
-     * @param int $project ID of the project the task is associated with
-     * @return int $insid New task's ID
-     */
-    function add($end, $title, $text, $liste, $project)
+    * Add a task
+    *
+    * @param string $start Start date of the task
+    * @param string $end Date the task is due
+    * @param string $title Title of the task (optional)
+    * @param string $text Description of the task
+    * @param int $liste Tasklist the task is associated with
+    * @param int $assigned ID of the user who has to complete the task
+    * @param int $project ID of the project the task is associated with
+    * @return int $insid New task's ID
+    */
+    function add($start, $end, $title, $text, $liste, $project)
     {
         global $conn;
-        $title = htmlspecialchars($title);
         $liste = (int) $liste;
         $project = (int) $project;
-
+        // convert strings to timestamps
+        $start_fin = strtotime($start);
         $end_fin = strtotime($end);
-
+        // if strtotime doesnt return something, set the final value to the value given in the function call
+        if (empty($start_fin)) {
+            $start_fin = $start;
+        }
         if (empty($end_fin)) {
             $end_fin = $end;
         }
-
-        $start = time();
         // write to db
-        $insStmt = $conn->prepare("INSERT INTO tasks (start,end,title,text,liste,status,project) VALUES (?, ?, ?, ?, ?, 1, ?)");
-        $ins = $insStmt->execute(array($start, $end_fin, $title, $text, $liste, $project));
+        $insStmt = $conn->prepare("INSERT INTO tasks (start, end, title, text, liste, status, project) VALUES (?, ?, ?, ?, ?, 1, ?)");
+        $ins = $insStmt->execute(array($start_fin, $end_fin, $title, $text, $liste, $project));
+
         if ($ins) {
             $insid = $conn->lastInsertId();
             // logentry
@@ -62,32 +66,32 @@ class task {
     }
 
     /**
-     * Edit a task
-     *
-     * @param int $id Task ID
-     * @param string $end Due date
-     * @param string $title Title of the task
-     * @param string $text Task description
-     * @param int $liste Tasklist
-     * @param int $assigned ID of the user who has to complete the task
-     * @return bool
-     */
-    function edit($id, $end, $title, $text, $liste)
+    * Edit a task
+    *
+    * @param int $id Task ID
+    * @param string $start Start date
+    * @param string $end Due date
+    * @param string $title Title of the task
+    * @param string $text Task description
+    * @param int $liste Tasklist
+    * @param int $assigned ID of the user who has to complete the task
+    * @return bool
+    */
+    function edit($id, $start, $end, $title, $text, $liste)
     {
         global $conn;
         $id = (int) $id;
         $liste = (int) $liste;
-        $title = htmlspecialchars($title);
-        
+        // convert time string to timestamp
+        $start = strtotime($start);
         $end = strtotime($end);
 
-        $updStmt = $conn->prepare("UPDATE tasks SET `end`=?,`title`=?, `text`=?, `liste`=? WHERE ID = ?");
-        // Remove all the users from the task. Done to ensure no double assigns occur since the handler scripts call this::assign() on their own.
-        $conn->query("DELETE FROM tasks_assigned WHERE `task` = $id");
-
-        $upd = $updStmt->execute(array($end, $title, $text, $liste, $id));
+        $updStmt = $conn->prepare("UPDATE tasks SET `start`=?, `end`=?, `title`=?, `text`=?, `liste`=? WHERE ID = ?");
+        $upd = $updStmt->execute(array($start, $end, $title, $text, $liste, $id));
 
         if ($upd) {
+            // Remove all the users from the task. Done to ensure no double assigns occur since the handler scripts call this::assign() on their own.
+            $conn->query("DELETE FROM tasks_assigned WHERE `task` = $id");
             $nameproject = $this->getNameProject($id);
             $this->mylog->add($nameproject[0], 'task', 2, $nameproject[1]);
             return true;
@@ -97,18 +101,20 @@ class task {
     }
 
     /**
-     * Delete a task
-     *
-     * @param int $id Task ID
-     * @return bool
-     */
+    * Delete a task
+    *
+    * @param int $id Task ID
+    * @return bool
+    */
     function del($id)
     {
         global $conn;
         $id = (int) $id;
 
         $nameproject = $this->getNameProject($id);
-        $del = $conn->query("DELETE FROM tasks WHERE ID = $id LIMIT 1");
+        $delStmt = $conn->prepare("DELETE FROM tasks WHERE ID = ?");
+		$del = $delStmt->execute(array($id));
+
         if ($del) {
             $del2 = $conn->query("DELETE FROM tasks_assigned WHERE task=$id");
             $this->mylog->add($nameproject[0], 'task', 3, $nameproject[1]);
@@ -119,17 +125,19 @@ class task {
     }
 
     /**
-     * Reactivate / open a task
-     *
-     * @param int $id Task ID
-     * @return bool
-     */
+    * Reactivate / open a task
+    *
+    * @param int $id Task ID
+    * @return bool
+    */
     function open($id)
     {
         global $conn;
         $id = (int) $id;
 
-        $upd = $conn->query("UPDATE tasks SET status = 1 WHERE ID = $id");
+        $updStmt = $conn->prepare("UPDATE tasks SET status = 1 WHERE ID = ?");
+        $upd = $updStmt->execute(array($id));
+
         if ($upd) {
             $nameproject = $this->getNameProject($id);
             $this->mylog->add($nameproject[0], 'task', 4, $nameproject[1]);
@@ -140,30 +148,18 @@ class task {
     }
 
     /**
-     * Close a task. If it's the last task of its tasklist, the list gets closed, too.
-     *
-     * @param int $id Task ID
-     * @return bool
-     */
+    * Close a task
+    *
+    * @param int $id Task ID
+    * @return bool
+    */
     function close($id)
     {
         global $conn;
         $id = (int) $id;
 
-        $upd = $conn->query("UPDATE tasks SET status = 0 WHERE ID = $id");
-
-        /*
-        $sql = $conn->query("SELECT liste FROM tasks WHERE ID = $id");
-        $liste = $sql->fetch();
-        $sql2 = $conn->query("SELECT count(*) FROM tasks WHERE liste = $liste[0] AND status = 1");
-        $cou = $sql2->fetch();
-        // if this is the last task in its list, close the list too.
-        if ($cou[0] == 0)
-        {
-            $tasklist = new tasklist();
-            $tasklist->close_liste($liste[0]);
-        }
-                */
+        $updStmt = $conn->prepare("UPDATE tasks SET status = 0 WHERE ID = ?");
+        $upd = $updStmt->execute(array($id));
 
         if ($upd) {
             $nameproject = $this->getNameProject($id);
@@ -175,19 +171,21 @@ class task {
     }
 
     /**
-     * Assign a task to a user
-     *
-     * @param int $task Task ID
-     * @param int $id User ID
-     * @return bool
-     */
+    * Assign a task to a user
+    *
+    * @param int $task Task ID
+    * @param int $id User ID
+    * @return bool
+    */
     function assign($task, $id)
     {
         global $conn;
         $task = (int) $task;
         $id = (int) $id;
 
-        $upd = $conn->query("INSERT INTO tasks_assigned (user,task) VALUES ($id,$task)");
+        $updStmt = $conn->prepare("INSERT INTO tasks_assigned (user,task) VALUES (?,?)");
+        $upd = $updStmt->execute(array($id, $task));
+
         if ($upd) {
             return true;
         } else {
@@ -196,19 +194,21 @@ class task {
     }
 
     /**
-     * Delete the assignment of a task to a user
-     *
-     * @param int $task Task ID
-     * @param int $id User ID
-     * @return bool
-     */
+    * Delete the assignment of a task to a user
+    *
+    * @param int $task Task ID
+    * @param int $id User ID
+    * @return bool
+    */
     function deassign($task, $id)
     {
         global $conn;
         $task = (int) $task;
         $id = (int) $id;
 
-        $upd = $conn->query("DELETE FROM tasks_assigned WHERE user = $id AND task = $task");
+        $updStmt = $conn->prepare("DELETE FROM tasks_assigned WHERE user = ? AND task = ?");
+        $upd = $updStmt->execute(array($id, $task));
+
         if ($upd) {
             return true;
         } else {
@@ -217,19 +217,27 @@ class task {
     }
 
     /**
-     * Return a task
-     *
-     * @param int $id Task ID
-     * @return array $task Task details
-     */
+    * Return a task
+    *
+    * @param int $id Task ID
+    * @return array $task Task details
+    */
     function getTask($id)
     {
         global $conn;
         $id = (int) $id;
 
-        $task = $conn->query("SELECT * FROM tasks WHERE ID = $id")->fetch();
+        $taskStmt = $conn->prepare("SELECT * FROM tasks WHERE ID = ?");
+        $taskStmt->execute(array($id));
+        $task = $taskStmt->fetch();
+
         if (!empty($task)) {
             // format datestring according to dateformat option
+            if (is_numeric($task['start'])) {
+                $startstring = date(CL_DATEFORMAT, $task["start"]);
+            } else {
+                $startstring = date(CL_DATEFORMAT, strtotime($task["start"]));
+            }
             if (is_numeric($task['end'])) {
                 $endstring = date(CL_DATEFORMAT, $task["end"]);
             } else {
@@ -239,23 +247,24 @@ class task {
             $details = $this->getTaskDetails($task);
             $list = $details["list"];
             $pname = $details["pname"];
-            // get remainig days until due date
+            // get remaining days until due date
             $tage = $this->getDaysLeft($task['end']);
             // Get the user(s) assigned to the task from the db
             $usel = $conn->query("SELECT user FROM tasks_assigned WHERE task = $task[ID]");
             $users = array();
+            // fetch the assigned user(s)
             while ($usr = $usel->fetch()) {
                 // push the assigned users to an array
                 array_push($users, $usr[0]);
                 $task["user"] = "All";
                 $task["user_id"] = $users;
             }
-            // If only one user is assigned , get his profile and add him to users, user_id fields
+            // If only one user is assigned, get his profile and add him to users, user_id fields
             if (count($users) == 1) {
                 $usrobj = new user();
                 $usr = $users[0];
                 $user = $usrobj->getProfile($usr);
-                $task["user"] = stripslashes($user["name"]);
+                $task["user"] = $user["name"];
                 $task["users"] = array($user);
                 $task["user_id"] = $user["ID"];
             } elseif (count($users) > 1) {
@@ -271,11 +280,12 @@ class task {
                 }
             }
 
+            $task["startstring"] = $startstring;
             $task["endstring"] = $endstring;
 
-            $task["title"] = stripslashes($task["title"]);
-            $task["text"] = stripslashes($task["text"]);
-            $task["pname"] = stripslashes($pname);
+            $task["title"] = $task["title"];
+            $task["text"] = $task["text"];
+            $task["pname"] = $pname;
             $task["list"] = $list;
             $task["daysleft"] = $tage;
 
@@ -286,11 +296,11 @@ class task {
     }
 
     /**
-     * Return all open tasks of a project
-     *
-     * @param int $project Project ID
-     * @return array $lists Tasks
-     */
+    * Return all open tasks of a project
+    *
+    * @param int $project Project ID
+    * @return array $lists Tasks
+    */
     function getProjectTasks($project, $status = 1)
     {
         global $conn;
@@ -298,10 +308,13 @@ class task {
         $status = (int) $status;
 
         $lists = array();
+        // if a status is given, query with status - else get all the tasks in the project
         if ($status !== false) {
-            $sel2 = $conn->query("SELECT ID FROM tasks WHERE project = $project AND status=$status");
+            $sel2 = $conn->prepare("SELECT ID FROM tasks WHERE project = ? AND status=?");
+            $sel2->execute(array($project, $status));
         } else {
-            $sel2 = $conn->query("SELECT ID FROM tasks WHERE project = $project");
+            $sel2 = $conn->prepare("SELECT ID FROM tasks WHERE project = ?");
+            $sel2->execute(array($project));
         } while ($tasks = $sel2->fetch()) {
             $task = $this->getTask($tasks["ID"]);
             array_push($lists, $task);
@@ -315,12 +328,12 @@ class task {
     }
 
     /**
-     * Return all active / open tasks of a given project and user
-     *
-     * @param int $project Project ID
-     * @param int $limit Number of tasks to return
-     * @return array $lists Tasks
-     */
+    * Return all active / open tasks of a given project and user
+    *
+    * @param int $project Project ID
+    * @param int $limit Number of tasks to return
+    * @return array $lists Tasks
+    */
     function getMyProjectTasks($project, $limit = 10)
     {
         global $conn;
@@ -328,10 +341,14 @@ class task {
         $limit = (int) $limit;
         // Get the id of the currently logged in user.
         $user = $_SESSION['userid'];
+    	$user = (int) $user;
+        $userid = (int)$userid;
+
         $lists = array();
         $now = time();
 
-        $sel2 = $conn->query("SELECT ID FROM tasks WHERE project = $project AND status=1 AND end > $now ORDER BY `end` ASC LIMIT $limit");
+        $sel2 = $conn->prepare("SELECT ID FROM tasks WHERE project = ? AND status=1 AND end > ? ORDER BY `end` ASC LIMIT $limit");
+        $sel2->execute(array($id, $now));
 
         while ($tasks = $sel2->fetch()) {
             $chk = $conn->query("SELECT ID FROM tasks_assigned WHERE user = $user AND task = $tasks[ID]")->fetch();
@@ -350,27 +367,28 @@ class task {
     }
 
     /**
-     * Return open tasks from a given project a user
-     *
-     * @param int $project Project ID
-     * @param int $limit Number of tasks to return
-     * @param int $user User ID (0 means the user, to whom the session belongs)
-     * @return array $lists Tasks
-     */
+    * Return open tasks from a given project a user
+    *
+    * @param int $project Project ID
+    * @param int $limit Number of tasks to return
+    * @param int $user User ID (0 means the user, to whom the session belongs)
+    * @return array $lists Tasks
+    */
     function getAllMyProjectTasks($project, $limit = 10, $user = 0)
     {
         global $conn;
         $project = (int) $project;
         $limit = (int) $limit;
-        $user = (int) $user;
         // If no user is given, use the currently logged in one.
         if ($user < 1) {
             $user = $_SESSION['userid'];
         }
+        $user = (int) $user;
         $lists = array();
         $now = time();
 
-        $sel2 = $conn->query("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task HAVING tasks_assigned.user = $user AND tasks.project = $project AND status=1 ORDER BY `end` ASC ");
+        $sel2 = $conn->prepare("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task AND tasks_assigned.user = ? AND tasks.project = ? AND status=1 ORDER BY `end` ASC ");
+        $sel2->execute(array($user, $project));
 
         while ($tasks = $sel2->fetch()) {
             $task = $this->getTask($tasks["ID"]);
@@ -385,12 +403,12 @@ class task {
     }
 
     /**
-     * Returns all late tasks of a user from a given project
-     *
-     * @param int $project Project ID
-     * @param int $limit Number of tasks to return
-     * @return array $lists Tasks
-     */
+    * Returns all late tasks of a user from a given project
+    *
+    * @param int $project Project ID
+    * @param int $limit Number of tasks to return
+    * @return array $lists Tasks
+    */
     function getMyLateProjectTasks($project, $limit = 10)
     {
         global $conn;
@@ -402,7 +420,9 @@ class task {
         $tod = date("d.m.Y");
         $now = strtotime($tod);
 
-        $sel2 = $conn->query("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task HAVING tasks_assigned.user = $user AND tasks.project = $project  AND status=1 AND end < $now ORDER BY `end` ASC LIMIT $limit");
+        $sel2 = $conn->prepare("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task AND tasks_assigned.user = ? AND tasks.project = ?  AND status=1 AND end < $now ORDER BY `end` ASC LIMIT $limit");
+        $sel2->execute(array($user, $project));
+
         while ($tasks = $sel2->fetch()) {
             $task = $this->getTask($tasks["ID"]);
             array_push($lists, $task);
@@ -416,12 +436,12 @@ class task {
     }
 
     /**
-     * Returns all tasks of today of a user from a given project
-     *
-     * @param int $project Project ID
-     * @param int $limit Number of tasks to return
-     * @return array $lists Tasks
-     */
+    * Returns all tasks of today of a user from a given project
+    *
+    * @param int $project Project ID
+    * @param int $limit Number of tasks to return
+    * @return array $lists Tasks
+    */
     function getMyTodayProjectTasks($project, $limit = 10)
     {
         global $conn;
@@ -433,7 +453,8 @@ class task {
         $lists = array();
         $now = strtotime($tod);
 
-        $sel2 = $conn->query("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task HAVING tasks_assigned.user = $user AND tasks.project = $project  AND status=1 AND end = '$now' ORDER BY `end` ASC LIMIT $limit");
+        $sel2 = $conn->prepare("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task AND tasks_assigned.user = ? AND tasks.project = ?  AND status=1 AND end = '$now' ORDER BY `end` ASC LIMIT $limit");
+        $sel2->execute(array($user, $project));
 
         while ($tasks = $sel2->fetch()) {
             $task = $this->getTask($tasks["ID"]);
@@ -448,12 +469,12 @@ class task {
     }
 
     /**
-     * Return all done tasks of a user from a given project
-     *
-     * @param int $project Project ID
-     * @param int $limit Number of tasks to return
-     * @return array $lists Tasks
-     */
+    * Return all done tasks of a user from a given project
+    *
+    * @param int $project Project ID
+    * @param int $limit Number of tasks to return
+    * @return array $lists Tasks
+    */
     function getMyDoneProjectTasks($project, $limit = 5)
     {
         global $conn;
@@ -464,7 +485,8 @@ class task {
         $lists = array();
         $now = time();
 
-        $sel2 = $conn->query("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task HAVING tasks_assigned.user = $user AND tasks.project = $project AND status=0 ORDER BY `end` ASC LIMIT $limit");
+        $sel2 = $conn->prepare("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task AND tasks_assigned.user = ? AND tasks.project = ? AND status=0 ORDER BY `end` ASC LIMIT $limit");
+        $sel2->execute(array($user, $project));
 
         while ($tasks = $sel2->fetch()) {
             $task = $this->getTask($tasks["ID"]);
@@ -479,14 +501,14 @@ class task {
     }
 
     /**
-     * Return all tasks (from a project) due on the specified date
-     *
-     * @param int $m Month
-     * @param int $y Year
-     * @param int $d Day
-     * @param int $project Project ID (Default: 0 = all projects)
-     * @return array $timeline Tasks
-     */
+    * Return all tasks (from a project) due on the specified date
+    *
+    * @param int $m Month
+    * @param int $y Year
+    * @param int $d Day
+    * @param int $project Project ID (Default: 0 = all projects)
+    * @return array $timeline Tasks
+    */
     function getTodayTasks($m, $y, $d, $project = 0)
     {
         global $conn;
@@ -504,11 +526,14 @@ class task {
         $timeline = array();
 
         if ($project > 0) {
-            $sql = "SELECT * FROM tasks  WHERE status=1 AND project = $project AND end = '$starttime'";
+            $sql = "SELECT * FROM tasks  WHERE status=1 AND project = ? AND end = '$starttime'";
+        	$sel1 = $conn->prepare($sql);
+        	$sel1->execute(array($project));
         } else {
-            $sql = "SELECT tasks.*,tasks_assigned.user,projekte.name AS pname FROM tasks,tasks_assigned,projekte WHERE tasks.ID = tasks_assigned.task AND tasks.project = projekte.ID HAVING tasks_assigned.user = $user AND status=1 AND end = '$starttime'";
+            $sql = "SELECT tasks.*,tasks_assigned.user,projekte.name AS pname FROM tasks,tasks_assigned,projekte WHERE tasks.ID = tasks_assigned.task AND tasks.project = projekte.ID AND tasks_assigned.user = ? AND tasks.status=1 AND tasks.end = '$starttime'";
+        	$sel1 = $conn->prepare($sql);
+        	$sel1->execute(array($user));
         }
-        $sel1 = $conn->query($sql);
 
         while ($stone = $sel1->fetch()) {
             $stone["daysleft"] = $this->getDaysLeft($stone["end"]);
@@ -523,17 +548,19 @@ class task {
     }
 
     /**
-     * Return the owner of a given task
-     *
-     * @param int $id Task ID
-     * @return array $user ID of the user who has to complete the task
-     */
+    * Return the owner of a given task
+    *
+    * @param int $id Task ID
+    * @return array $user ID of the user who has to complete the task
+    */
     function getUser($id)
     {
         global $conn;
         $id = (int) $id;
 
-        $user = $conn->query("SELECT user FROM tasks_assigned WHERE task = $id")->fetch();
+        $userStmt = $conn->prepare("SELECT user FROM tasks_assigned WHERE task = ?");
+		$userStmt->execute(array($id));
+    	$user = $userStmt->fetch();
 
         if (!empty($user)) {
             $uname = $conn->query("SELECT name FROM user WHERE ID = $user[0]")->fetch();
@@ -547,17 +574,18 @@ class task {
     }
 
     /**
-     * Return the owner of a given task
-     *
-     * @param int $id Task ID
-     * @return array $user ID of the users who has to complete the task
-     */
+    * Return the owner of a given task
+    *
+    * @param int $id Task ID
+    * @return array $user ID of the users who has to complete the task
+    */
     function getUsers($id)
     {
         global $conn;
         $id = (int) $id;
 
-        $sql = $conn->query("SELECT user FROM tasks_assigned WHERE task = $id");
+        $sql = $conn->prepare("SELECT user FROM tasks_assigned WHERE task = ?");
+        $sql->execute(array($id));
 
         $result = array();
         while ($user = $sql->fetch()) {
@@ -572,16 +600,16 @@ class task {
     }
 
     /**
-     * Export all tasks of a user via iCal
-     *
-     * @param int $user User ID
-     * @param bool $show_long
-     * @return bool
-     */
-    function getIcal($user,$show_long = true)
+    * Export all tasks of a user via iCal
+    *
+    * @param int $user User ID
+    * @param bool $show_long
+    * @return bool
+    */
+    function getIcal($user, $show_long = true)
     {
         $user = (int) $user;
-	$show_long = (bool) $show_long;
+        $show_long = (bool) $show_long;
 
         $username = $_SESSION["username"];
         $project = new project();
@@ -628,16 +656,13 @@ class task {
 
             $e = new vevent();
             $e->setProperty('categories' , $etask['list']);
-            if ($show_long){
-
-              // if we have a task lasting 10 month, normally it will be displayed every day within this time span.
-              $e->setProperty('dtstart' , $jahr, $monat, $tag, $std, $min); // 24 dec 2007 19.30
+            if ($show_long) {
+                // if we have a task lasting 10 month, normally it will be displayed every day within this time span.
+                $e->setProperty('dtstart' , $jahr, $monat, $tag, $std, $min); // 24 dec 2007 19.30
 
             } else {
-
-              // if the show_long flag is set, it will only be shown at the due date
-              $e->setProperty('dtstart' , $ejahr, $emonat, $etag, $estd, $emin);
-
+                // if the show_long flag is set, it will only be shown at the due date
+                $e->setProperty('dtstart' , $ejahr, $emonat, $etag, $estd, $emin);
             }
             $e->setProperty('due' , $ejahr, $emonat, $etag, $estd, $emin); // 24 dec 2007 19.30
             $e->setProperty('dtend' , $ejahr, $emonat, $etag, $estd, $emin);
@@ -655,19 +680,22 @@ class task {
     }
 
     /**
-     * Return a tasks project name and tasklist name
-     *
-     * @param array $task Task ID
-     * @return array $details Name of associated project and tasklist
-     */
+    * Return a task's project name and tasklist name
+    *
+    * @param array $task Task ID
+    * @return array $details Name of associated project and tasklist
+    */
     private function getTaskDetails(array $task)
     {
         global $conn;
-        $psel = $conn->query("SELECT name FROM projekte WHERE ID = $task[project]");
+        $psel = $conn->prepare("SELECT name FROM projekte WHERE ID = ?");
+    	$psel->execute(array($task["project"]));
         $pname = $psel->fetch();
         $pname = stripslashes($pname[0]);
 
-        $list = $conn->query("SELECT name FROM tasklist WHERE ID = $task[liste]")->fetch();
+        $listStmt = $conn->prepare("SELECT name FROM tasklist WHERE ID = ?");
+    	$listStmt->execute(array($task["liste"]));
+    	$list = $listStmt->fetch();
         $list = stripslashes($list[0]);
 
         if (isset($list) or isset($pname)) {
@@ -682,11 +710,11 @@ class task {
     }
 
     /**
-     * Return the number of left days until a task is due
-     *
-     * @param string $end Timestamp of the date the task is due
-     * @return int $days Days left
-     */
+    * Return the number of days left until a task is due
+    *
+    * @param string $end Timestamp of the date the task is due
+    * @return int $days Days left
+    */
     private function getDaysLeft($end)
     {
         $tod = date("d.m.Y");
@@ -697,22 +725,21 @@ class task {
     }
 
     /**
-     * Return the name of the associated project and text of a given task
-     *
-     * @param int $id Task ID
-     * @return array $nameproject Name and project
-     */
+    * Return the name of the associated project and text of a given task
+    *
+    * @param int $id Task ID
+    * @return array $nameproject Name and project
+    */
     private function getNameProject($id)
     {
         global $conn;
         $id = (int) $id;
 
         $nam = $conn->query("SELECT text,liste,title FROM tasks WHERE ID = $id")->fetch();
-        $text = stripslashes($nam[2]);
         $list = $nam[1];
         $project = $conn->query("SELECT project FROM tasklist WHERE ID = $list")->fetch();
         $project = $project[0];
-        $nameproject = array($text, $project);
+        $nameproject = array($nam[0], $project);
 
         if (!empty($nameproject)) {
             return $nameproject;

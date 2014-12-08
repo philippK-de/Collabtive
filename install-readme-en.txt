@@ -2,13 +2,13 @@
 
     Server:
     - PHP 5.2 or higher (recent stable build recommended)
-    - MySQL 4 or higher
+    - MySQL 4 or higher, SQLite 3
     
     It is recommended to run Collabtive on LAMP (Linux, Apache, MySQL, PHP) servers.
     Windows Servers may work, but are not supported as well.
     
     Client:
-    - Firefox 3.6, Internet Explorer 7/8/9, Opera 9/10, Safari, Chrome
+    - Firefox, Internet Explorer 9/10/11, Opera 9/10, Safari, Chrome
     - JavaScript enabled
     - Cookies enabled
 
@@ -22,7 +22,7 @@
 	   - ./config/standard/config.php
 	   - ./files
 	   - ./templates_c
-	4. Create a new MySQL database.
+	4. Create a new MySQL database (collation: utf8_general_ci).
 	5. Point your browser to install.php and follow the instructions given.
 	6. If the installation was successful, delete install.php and update.php.
 	7. Disable the writing permissions for ./config/standard/config.php (chmod 755).

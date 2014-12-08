@@ -167,10 +167,6 @@ class timetracker {
                 $track["endday"] = $endday;
             }
 
-            if (isset($track["comment"])) {
-                $track["comment"] = stripslashes($track["comment"]);
-            }
-
             return $track;
         } else {
             return false;

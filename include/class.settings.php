@@ -54,12 +54,12 @@ class settings {
      * @param string $rsspass Password for RSS Feed access
      * @return bool
      */
-    function editSettings($name, $subtitle, $locale, $timezone, $dateformat, $templ, $rssuser, $rsspass)
+    function editSettings($name, $subtitle, $locale, $timezone, $dateformat, $templ, $theme, $rssuser, $rsspass)
     {
         global $conn;
         // This is an artifact of refactoring to a key/value table for the settings
         // Create an arrray containing the settings fields as keys and new values from the user as values
-        $theSettings = array("name" => $name, "subtitle" => $subtitle, "locale" => $locale, "timezone" => $timezone, "dateformat" => $dateformat, "template" => $templ, "rssuser" => $rssuser, "rsspass" => $rsspass);
+        $theSettings = array("name" => $name, "subtitle" => $subtitle, "locale" => $locale, "timezone" => $timezone, "dateformat" => $dateformat, "template" => $templ, "theme" => $theme, "rssuser" => $rssuser, "rsspass" => $rsspass);
         // Now prepare a statement to edit one settings row
         $updStmt = $conn->prepare("UPDATE settings SET `settingsValue` = ? WHERE `settingsKey` = ?");
         // Loop through the array containing the key/value pairs, writing the database field to $setKey and the value to $setVal
@@ -125,6 +125,34 @@ class settings {
 
         if (!empty($templates)) {
             return $templates;
+        } else {
+            return false;
+        }
+    }
+
+    /*
+	   * Returns all available themes for a given template
+	   *
+	   * @param string $template The template whose themes get fetched
+	   *
+	   * @return array $templates
+	*/
+    function getThemes($template)
+    {
+        $handle = opendir(CL_ROOT . "/templates/$template/theme");
+        $themes = array();
+        // Iterate through the templates directory and count each subdirectory within it as a template
+        while (false !== ($file = readdir($handle))) {
+            $type = filetype(CL_ROOT . "/templates/$template/theme/" . $file);
+
+            if ($type == "dir" and $file != "." and $file != "..") {
+                $theme = $file;
+                array_push($themes, $theme);
+            }
+        }
+
+        if (!empty($themes)) {
+            return $themes;
         } else {
             return false;
         }

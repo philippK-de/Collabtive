@@ -106,8 +106,11 @@ class roles {
     {
         global $conn;
         $id = (int) $id;
-        $del = $conn->query("DELETE FROM roles WHERE ID = $id");
-        $del2 = $conn->query("DELETE FROM roles_assigned WHERE role = $id");
+        $del = $conn->prepare("DELETE FROM roles WHERE ID = ?");
+    	$del->execute(arrqay($id));
+
+        $del2 = $conn->prepare("DELETE FROM roles_assigned WHERE role = ?");
+    	$del2->execute(array($id));
 
         if ($del) {
             return true;
@@ -161,7 +164,8 @@ class roles {
         $role = (int) $role;
         $user = (int) $user;
 
-        $del = $conn->query("DELETE FROM roles_assigned WHERE user = $user AND role = $role LIMIT 1");
+        $del = $conn->prepare("DELETE FROM roles_assigned WHERE user = ? AND role = ? LIMIT 1");
+		$del->execute(array($user,$role));
 
         if ($del) {
             return true;
@@ -292,7 +296,9 @@ class roles {
         global $conn;
         $role = (int) $role;
         // Get the serialized strings from the db
-        $sel2 = $conn->query("SELECT * FROM roles WHERE ID = $role");
+        $sel2 = $conn->prepare("SELECT * FROM roles WHERE ID = ?");
+    	$sel2->execute(array($role));
+
         $therole = $sel2->fetch();
         // Unserialize to an array
         $therole["projects"] = unserialize($therole["projects"]);

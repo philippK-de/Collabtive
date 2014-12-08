@@ -8,12 +8,12 @@
 			<div class="infowin_left" style="display:none;" id="systemmsg">
 				{if $mode == "edited"}
 					<span class="info_in_yellow">
-						<img src="templates/standard/images/symbols/system-settings.png" alt="" />
+						<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/system-settings.png" alt="" />
 						{#settingsedited#}
 					</span>
 		        {elseif $mode == "imported"}
 					<span class="info_in_green">
-						<img src="templates/standard/images/symbols/basecamp.png" alt="" />
+						<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/basecamp.png" alt="" />
 						{#importsuccess#}
 					</span>
 				{/if}
@@ -31,7 +31,7 @@
 			<div class="headline">
 				<a href="javascript:void(0);" id="block_system_toggle" class="win_block" onclick="toggleBlock('block_system');"></a>
 				<h2>
-					<img src="./templates/standard/images/symbols/system-settings.png" alt="" />{#systemadministration#}</a>
+					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/system-settings.png" alt="" />{#systemadministration#}</a>
 				</h2>
 			</div>
 			
@@ -45,7 +45,7 @@
 			<div class="headline">
 				<a href="javascript:void(0);" id="block_email_toggle" class="win_block" onclick="toggleBlock('block_email');"></a>
 				<h2>
-					<img src="./templates/standard/images/symbols/msgs.png" alt="" />{#email#}</a>
+					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt="" />{#email#}</a>
 				</h2>
 			</div>
 			

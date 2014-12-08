@@ -7,11 +7,11 @@
 
 	<div class="infowin_left" style = "display:none;" id = "systemmsg">
 		{if $mode == "added"}
-			<span class="info_in_green"><img src="templates/standard/images/symbols/timetracker.png" alt=""/>{#timetracker#} {#was#} {#added#}</span>
+			<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/timetracker.png" alt=""/>{#timetracker#} {#was#} {#added#}</span>
 		{elseif $mode == "edited"}
-			<span class="info_in_yellow"><img src="templates/standard/images/symbols/timetracker.png" alt=""/>{#timetracker#} {#was#} {#edited#}</span>
+			<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/timetracker.png" alt=""/>{#timetracker#} {#was#} {#edited#}</span>
 		{elseif $mode == "deleted"}
-			<span class="info_in_red"><img src="templates/standard/images/symbols/timetracker.png" alt=""/>{#timetracker#} {#was#} {#deleted#}</span>
+			<span class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/timetracker.png" alt=""/>{#timetracker#} {#was#} {#deleted#}</span>
 		{/if}
 	</div>
 
@@ -43,7 +43,7 @@
 			</div>
 
 			<h2>
-				<img src="./templates/standard/images/symbols/timetracker.png" alt="" />{#report#}
+				<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/timetracker.png" alt="" />{#report#}
 			</h2>
 		</div>
 

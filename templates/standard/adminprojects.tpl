@@ -9,17 +9,17 @@
 				
 				{if $mode == "assigned"}
 				<span class="info_in_yellow">
-					<img src="templates/standard/images/symbols/system-settings.png" alt="" />
+					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/system-settings.png" alt="" />
 					{#settingsedited#}
 				</span>
 				{elseif $mode == "deassigned"}
 				<span class="info_in_red">
-					<img src="templates/standard/images/symbols/user-icon-male.png" alt="" />
+					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-male.png" alt="" />
 					{#userwasdeassigned#}
 				</span>
 				{elseif $mode == "added"}
 				<span class="info_in_green">
-					<img src="templates/standard/images/symbols/projects.png" alt="" />
+					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />
 					{#projectwasadded#}
 				</span>
 				{/if}
@@ -46,7 +46,7 @@
 				{/if}
 
 				<h2>
-					<img src="./templates/standard/images/symbols/projects.png" alt="" />
+					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />
 					{#openprojects#}
 				</h2>
 				
@@ -150,9 +150,9 @@
 																				<a href="manageuser.php?action=profile&amp;id={$opros[opro].members[member].ID}" title="{$opros[opro].members[member].name}">
 																					
 																					{if $opros[opro].members[member].gender == "f"}
-																					<img src="./templates/standard/images/symbols/user-icon-female.png" alt="" />
+																					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-female.png" alt="" />
 																					{else}
-																					<img src="./templates/standard/images/symbols/user-icon-male.png" alt="" />
+																					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-male.png" alt="" />
 																					{/if}
 																					
 																				</a>

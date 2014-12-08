@@ -16,7 +16,7 @@ Asiakas:
 		- /templates_c
 		- /files
 		- /config/standard/config.php
-	4. Luo uusi MySQL tietokanta Collabtivea varten.
+	4. Luo uusi MySQL tietokanta Collabtivea varten  (collation: utf8_general_ci).
 	5. Siirry selaimella osoitteeseen: install.php ja seuraa annettuja ohjeita.
 	6. Kun asennus on valmis, poista install.php ja update.php tiedostot palvelimelta.
 

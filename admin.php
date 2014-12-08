@@ -14,7 +14,7 @@ $pass = getArrayVal($_POST, "pass");
 $company = getArrayVal($_POST, "company");
 $address1 = getArrayVal($_POST, "address1");
 $address2 = getArrayVal($_POST, "address2");
-$tags = getArrayVal($_POST, "tags");
+$tags = "";
 $state = getArrayVal($_POST, "state");
 $country = getArrayVal($_POST, "country");
 $locale = getArrayVal($_POST, "locale");
@@ -117,8 +117,6 @@ if ($action == "index") {
     $template->assign("roles", $roles);
     $template->display("adminusers.tpl");
 } elseif ($action == "adduser") {
-    $thetag = new tags();
-    $tags = $thetag->formatInputTags($tags);
     // Get the system locale and set it as the default locale for the new user
     $sysloc = $settings["locale"];
     // Add the user
@@ -135,13 +133,12 @@ if ($action == "index") {
 
         if ($settings["mailnotify"]) {
             if (!empty($email)) {
-                $subject = $langfile["profileaddedsubject"] . ' (' . $langfile['by'] . ' ' .$username.')';
-                $mailcontent = $langfile["hello"] . ",<br /><br/>" . 
-                               $langfile["profileaddedtext"] . "<br /><br />" . 
-                               $langfile["profileusername"] . ":&nbsp;" . "$name<br />" . 
-                               $langfile["profilepass"] . ":&nbsp;" . "$pass<br /><br />" .
-                               "<a href = \"$url\">$url</a>";
-
+                $subject = $langfile["profileaddedsubject"] . ' (' . $langfile['by'] . ' ' . $username . ')';
+                $mailcontent = $langfile["hello"] . ",<br /><br/>" .
+                $langfile["profileaddedtext"] . "<br /><br />" .
+                $langfile["profileusername"] . ":&nbsp;" . "$name<br />" .
+                $langfile["profilepass"] . ":&nbsp;" . "$pass<br /><br />" .
+                "<a href = \"$url\">$url</a>";
                 // send email
                 $themail = new emailer($settings);
                 $themail->send_mail($email, $subject, $mailcontent);
@@ -156,8 +153,7 @@ if ($action == "index") {
         $template->display("error.tpl");
     }
 } elseif ($action == "editform") {
-	//This is for editing any user as an admin. This provides more options than the normal user edit
-
+    // This is for editing any user as an admin. This provides more options than the normal user edit
     $roleobj = (object) new roles();
     $roles = $roleobj->getAllRoles();
 
@@ -187,8 +183,6 @@ if ($action == "index") {
     $template->assign("roles", $roles);
     $template->display("edituseradminform.tpl");
 } elseif ($action == "edituser") {
-    $thetag = new tags();
-    $tags = $thetag->formatInputTags($tags);
 
     $roleobj = new roles();
     $roleobj->assign($role, $id);
@@ -199,7 +193,7 @@ if ($action == "index") {
     if (!isset($isadmin)) {
         $isadmin = 1;
     }
-    //Upload of avatar
+    // Upload of avatar
     if (!empty($_FILES['userfile']['name'])) {
         $fname = $_FILES['userfile']['name'];
         $typ = $_FILES['userfile']['type'];
@@ -208,7 +202,7 @@ if ($action == "index") {
         $error = $_FILES['userfile']['error'];
         $root = "./";
 
-        $desc = $_POST['desc'];
+        $desc = getArrayVal($_POST,"desc" );
         $teilnamen = explode(".", $fname);
         $teile = count($teilnamen);
         $workteile = $teile - 1;
@@ -336,6 +330,7 @@ if ($action == "index") {
     $template->display("assignform.tpl");
 } elseif ($action == "massassign") {
     $projects = $_POST['projects'];
+
     $user = $_POST['id'];
     $allprojects = $project->getProjects(1, 10000);
     $allpro = array();
@@ -359,11 +354,11 @@ if ($action == "index") {
                     if (!empty($tuser["email"])) {
                         $userlang = readLangfile($tuser['locale']);
 
-                        $subject = $userlang["projectassignedsubject"] . ' (' . $userlang['by'] . ' ' . $username .')';
-                        $mailcontent = $userlang["hello"] . ",<br /><br/>" . 
-                                       $userlang["projectassignedtext"] .
-                                       " <a href = \"" . $url . "manageproject.php?action=showproject&id=$pro\">" . $url . "manageproject.php?action=showproject&id=$pro</a>";
+                        $subject = $userlang["projectassignedsubject"] . ' (' . $userlang['by'] . ' ' . $username . ')';
+                        $mailcontent = $userlang["hello"] . ",<br /><br/>" .
+                        $userlang["projectassignedtext"] .
 
+                        " <a href = \"" . $url . "manageproject.php?action=showproject&id=$pro\">" . $url . "manageproject.php?action=showproject&id=$pro</a>";
                         // send email
                         $themail = new emailer($settings);
                         $themail->send_mail($tuser["email"], $subject , $mailcontent);
@@ -401,6 +396,9 @@ if ($action == "index") {
         $template->assign("opros", $opros);
     }
 
+    $customers = $companyObj->getAllCompanies();
+
+    $template->assign("customers", $customers);
     $template->assign("users", $users);
     $template->assign("clopros", $clopros);
     $template->display("adminprojects.tpl");
@@ -429,22 +427,21 @@ if ($action == "index") {
                 if (!empty($user["email"])) {
                     $userlang = readLangfile($user['locale']);
 
-                    $subject = $userlang["projectassignedsubject"] . ' (' . $userlang['by'] . ' ' .$username.')';
-                    $mailcontent = $userlang["hello"] . ",<br /><br/>" . 
-                                   $userlang["projectassignedtext"] .
-                                   " <a href = \"" . $url . "manageproject.php?action=showproject&id=$add\">" . $url . "manageproject.php?action=showproject&id=$add</a>";
-
+                    $subject = $userlang["projectassignedsubject"] . ' (' . $userlang['by'] . ' ' . $username . ')';
+                    $mailcontent = $userlang["hello"] . ",<br /><br/>" .
+                    $userlang["projectassignedtext"] .
+                    " <a href = \"" . $url . "manageproject.php?action=showproject&id=$add\">" . $url . "manageproject.php?action=showproject&id=$add</a>";
                     // send email
                     $themail = new emailer($settings);
                     $themail->send_mail($user["email"], $subject , $mailcontent);
                 }
             }
         }
-        if ($userpermissions["admin"]["add"]) {
-            header("Location: admin.php?action=projects&mode=added");
-        } else {
-            header("Location: index.php?mode=projectadded");
-        }
+    	if($company > 0)
+    	{
+    		$companyObj->assign($company, $add);
+    	}
+    	header("Location: manageproject.php?action=showproject&id=$add");
     }
 } elseif ($action == "closepro") {
     if ($project->close($id)) {
@@ -485,7 +482,7 @@ if ($action == "index") {
     $template->assign("allcust", $allcust);
     $template->display("admincustomers.tpl");
 } elseif ($action == "addcust") {
-    if (!$userpermissions["customers"]["add"]) {
+    if (!$userpermissions["admin"]["add"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
         $template->assign("errortext", "$errtxt<br>$noperm");
@@ -512,7 +509,12 @@ if ($action == "index") {
     $add = $companyObj->add($data);
     if ($add)
         header("Location: admin.php?action=customers&mode=added");
-} elseif ($action == "system") {
+}
+elseif($action == "assigncustomer")
+{
+
+}
+elseif ($action == "system") {
     $classes = array("overview" => "overview",
         "system" => "active",
         "users" => "users"
@@ -548,13 +550,16 @@ if ($action == "index") {
     $template->assign("classes", $classes);
     $sets = $theset->getSettings();
     $templates = $theset->getTemplates();
+    $themes = $theset->getThemes($settings["template"]);
+    $template->assign("themes", $themes);
     $template->assign("settings", $sets);
     $timezones = DateTimeZone::listIdentifiers();
     $template->assign("timezones", $timezones);
     $template->assign("templates", $templates);
     $template->display("editsettings.tpl");
 } elseif ($action == "editsets") {
-    if ($theset->editSettings($name, $subtitle, $locale, $timezone, $dateformat, $templ, $rssuser, $rsspass)) {
+    $theme = getArrayVal($_POST, "theme");
+    if ($theset->editSettings($name, $subtitle, $locale, $timezone, $dateformat, $templ, $theme, $rssuser, $rsspass)) {
         $handle = opendir($template->compile_dir);
         while (false !== ($file = readdir($handle))) {
             if ($file != "." and $file != "..") {

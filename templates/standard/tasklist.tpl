@@ -18,11 +18,11 @@
 	{/literal}
 
 	<div class="breadcrumb">
-		<a href="manageproject.php?action=showproject&amp;id={$project.ID}"><img src="./templates/standard/images/symbols/projects.png" alt="" />{$projectname|truncate:40:"...":true}</a>
-		<a href="managetask.php?action=showproject&amp;id={$project.ID}"><img src="./templates/standard/images/symbols/tasklist.png" alt="" />{#tasklists#}</a>
+		<a href="manageproject.php?action=showproject&amp;id={$project.ID}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{$projectname|truncate:40:"...":true}</a>
+		<a href="managetask.php?action=showproject&amp;id={$project.ID}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt="" />{#tasklists#}</a>
 	</div>
 
-	<h1 class="second"><img src="./templates/standard/images/symbols/tasklist.png" alt="" />{$tasklist.name|truncate:40:"...":true}</h1>
+	<h1 class="second"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt="" />{$tasklist.name|truncate:40:"...":true}</h1>
 
 	<div class="statuswrapper">
 		<ul>
@@ -73,7 +73,7 @@
 			</div>
 
 			<h2>
-				<img src="./templates/standard/images/symbols/tasklist.png" alt="" />{#newtasks#}</a>
+				<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt="" />{#newtasks#}</a>
 			</h2>
 		</div>
 
@@ -168,7 +168,7 @@
 
 			{*Tasks donetasks*}
 			{if $tasklist.donetasknum > 0}
-				<div id="done_2" class="doneblock">
+				<div id="doneblock_{$project.ID}" class="doneblock">
 
 					<table class="second-thead" cellpadding="0" cellspacing="0" border="0" onclick="blindtoggle('doneblock_{$project.ID}');toggleClass('donebutn_{$project.ID}','butn_link_active','butn_link');toggleClass('toggle-done-{$project.ID}','acc-toggle','acc-toggle-active');">
 						<tr>
@@ -257,7 +257,7 @@
 {literal}
 	<script type = "text/javascript">
 		var accord_1 = new accordion('acc_1');
-		var done_2 = new accordion('done_2');
+		var done_2 = new accordion('doneblock_{$project.ID}');
 	</script>
 {/literal}
 

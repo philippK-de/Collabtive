@@ -86,7 +86,7 @@ if ($action == "add") {
         $comment = "";
     }
 
-    if ($tracker->add($userid, $tproject, $task, $comment , $started, $ended, $startdate, $enddate)) {
+    if ($tracker->add($userid, $tproject, $task, $comment, $started, $ended, $startdate, $enddate)) {
         $redir = urldecode($redir);
         if ($redir) {
             $redir = $url . $redir;
@@ -381,10 +381,13 @@ if ($action == "add") {
     $usr = getArrayVal($_POST, "usr");
     $taski = getArrayVal($_POST, "task");
 
+	//get open project tasks for filtering
     $task = new task();
-    $ptasks = $task->getProjectTasks($id,false);
+    $ptasks = $task->getProjectTasks($id,1);
+
     $tracker = (object) new timetracker();
-    if (!$usr) {
+    //If the user can not read tt entries from other user, set the user filter to the current user id.
+	if (!$usr) {
         if (!$userpermissions["timetracker"]["read"]) {
             $usr = $userid;
         } else {
@@ -393,9 +396,9 @@ if ($action == "add") {
     }
 
     if (!empty($start) and !empty($end)) {
-        $track = $tracker->getProjectTrack($id, $usr, $taski, $start, $end, 25);
+        $track = $tracker->getProjectTrack($id, $usr, $taski, $start, $end, 50);
     } else {
-        $track = $tracker->getProjectTrack($id, $usr, $taski, 0, 0, 25);
+        $track = $tracker->getProjectTrack($id, $usr, $taski, 0, 0, 50);
     }
     if (!empty($track)) {
         $totaltime = $tracker->getTotalTrackTime($track);

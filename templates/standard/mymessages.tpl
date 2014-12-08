@@ -7,13 +7,13 @@
 
 			<div class="infowin_left" style = "display:none;" id = "systemmsg">
 				{if $mode == "added"}
-				<span class="info_in_green"><img src="templates/standard/images/symbols/msgs.png" alt=""/>{#messagewasadded#}</span>
+				<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#messagewasadded#}</span>
 				{elseif $mode == "edited"}
-				<span class="info_in_yellow"><img src="templates/standard/images/symbols/msgs.png" alt=""/>{#messagewasedited#}</span>
+				<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#messagewasedited#}</span>
 				{elseif $mode == "deleted"}
-				<span class="info_in_red"><img src="templates/standard/images/symbols/msgs.png" alt=""/>{#messagewasdeleted#}</span>
+				<span class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#messagewasdeleted#}</span>
 				{elseif $mode == "replied"}
-				<span class="info_in_green"><img src="templates/standard/images/symbols/msgs.png" alt=""/>{#replywasadded#}</span>
+				<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#replywasadded#}</span>
 				{/if}
 			</div>
 			{literal}
@@ -23,7 +23,7 @@
 			{/literal}
 
 			<div class = "infowin_left">
-				<span id = "deleted" style = "display:none;" class="info_in_red"><img src="templates/standard/images/symbols/msgs.png" alt=""/>{#messagewasdeleted#}</span>
+				<span id = "deleted" style = "display:none;" class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#messagewasdeleted#}</span>
 			</div>
 
 			<h1>{#mymessages#}</h1>
@@ -46,7 +46,7 @@
 				</div>
 
 				<h2>
-					<a href="managemessage.php?action=showproject&amp;id={$myprojects[project].ID}" title="{$myprojects[project].name} / {#mymessages#}"><img src="./templates/standard/images/symbols/projects.png" alt="" />{$myprojects[project].name|truncate:80:"...":true}</a>
+					<a href="managemessage.php?action=showproject&amp;id={$myprojects[project].ID}" title="{$myprojects[project].name} / {#mymessages#}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{$myprojects[project].name|truncate:80:"...":true}</a>
 				</h2>
 			</div>
 
@@ -128,9 +128,9 @@
 											<div class="avatar"><img src = "thumb.php?width=80&amp;height=80&amp;pic=files/{$cl_config}/avatar/{$myprojects[project].messages[message].avatar}" alt="" /></div>
 											{else}
 											{if $myprojects[project].messages[message].gender == "f"}
-											<div class="avatar"><img src = "thumb.php?width=80&amp;height=80&amp;pic=templates/standard/images/no-avatar-female.jpg" alt="" /></div>
+											<div class="avatar"><img src = "thumb.php?width=80&amp;height=80&amp;pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-female.jpg" alt="" /></div>
 											{else}
-											<div class="avatar"><img src = "thumb.php?width=80&amp;height=80&amp;pic=templates/standard/images/no-avatar-male.jpg" alt="" /></div>
+											<div class="avatar"><img src = "thumb.php?width=80&amp;height=80&amp;pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-male.jpg" alt="" /></div>
 											{/if}
 											{/if}
 
@@ -185,7 +185,7 @@
 																			{if $myprojects[project].messages[message].files[file].imgfile == 1}
 																			<img src = "thumb.php?pic={$myprojects[project].messages[message].files[file].datei}&amp;width=32" alt="" />
 																			{else}
-																			<img src = "templates/standard/images/files/{$myprojects[project].messages[message].files[file].type}.png" alt="" />
+																			<img src = "templates/{$settings.template}/theme/{$settings.theme}/images/files/{$myprojects[project].messages[message].files[file].type}.png" alt="" />
 																			{/if}</a>
 																		</td>
 																		<td class="rightmen" valign="top">

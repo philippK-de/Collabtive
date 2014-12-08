@@ -1,0 +1,187 @@
+/* CALENDAR */
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++                        Calendar JS/DOM  v3.0                         +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Copyright (C) 2005-07 by Michael Loesler, http://derletztekick.de    +
++                                                                      +
++                                                                      +
++ This program is free software; you can redistribute it and/or modify +
++ it under the terms of the GNU General Public License as published by +
++ the Free Software Foundation; either version 2 of the License, or    +
++ (at your option) any later version.                                  +
++                                                                      +
+*/
+
+	html, body {
+		font-family:Arial, helvetica, sans-serif;
+	}
+
+	/* Fuer IE in IE-FIX */
+
+	div#calendar {
+
+	}
+
+	div#calendar table thead th{
+		font-weight: bold;
+		font-size: 12px;
+		text-align: center;
+		background-color: #cedbec;
+		padding: 2px;
+		border-bottom: 1px #8b9dba solid;
+
+	}
+
+	div#calendar table thead th.weekday{
+		font-weight: normal;
+		font-size: 11px;
+		text-align: center;
+		background-color: #e7edf4;
+		border: solid #e7edf4 1px;
+		border:none;
+	}
+
+	div#calendar table tbody td{
+		font-weight: normal;
+		font-size: 11px;
+		padding: 2px 5px 2px 5px;
+		color: #0E224B;
+		text-align: right;
+		border: solid #e7edf4 1px;
+		border-width: 0 0 1px 1px;
+		background: white;
+	}
+
+	div#calendar table tbody td.weekend{
+		color: rgb(198,36,36);
+	}
+
+	div#calendar table tbody td.today{
+		background: #c4d5e3;
+	}
+
+	div#calendar table{
+		/*border-collapse: collapse;*/
+		padding:0;
+		border-spacing: 0;
+		border-width: 0 0 1px 1px;
+	}
+	
+	div.calendar table th{
+		font-weight: bold;
+		font-size: 12px;
+		text-align: center;
+		background-color: .cedbec;
+		padding: 2px;
+		border-bottom: 1px .8b9dba solid;
+
+	}
+
+	div.calendar table th.weekday{
+		font-weight: normal;
+		font-size: 11px;
+		text-align: center;
+		background-color: .e7edf4;
+		border: solid .e7edf4 1px;
+		border:none;
+	}
+
+	div.calendar table td{
+		font-weight: normal;
+		font-size: 11px;
+		padding: 2px 5px 2px 5px;
+		color: .0E224B;
+		text-align: right;
+		border: solid .e7edf4 1px;
+		border-width: 0 0 1px 1px;
+		background: white;
+	}
+
+	div.calendar table td.weekend{
+		color: rgb(198,36,36);
+	}
+
+	div.calendar table td.today{
+		background: .c4d5e3;
+	}
+
+	div.calendar table{
+		/*border-collapse: collapse;*/
+		padding:0;
+		border-spacing: 0;
+		border-width: 0 0 1px 1px;
+	}
+	
+
+/* DATEPICKER */
+div.datepicker {
+ position: absolute;
+ text-align: center;
+ border: 1px #8b9dba solid;
+ font-family: arial;
+}
+div.datepicker-header {
+ font-size: 11px;
+ font-weight: bold;
+ background: #cedbec;
+ border-bottom:1px solid #8b9dba;
+ padding: 2px;
+}
+div.datepicker-footer {
+ font-size: 10px;
+ background: #cedbec;
+ border-top:1px solid #8b9dba;
+ cursor: pointer;
+ text-align: center;
+ padding: 2px;
+}
+div.datepicker-calendar {
+ font-size: 10px;
+ background:#e7edf4;
+ padding: 2px;
+ text-align: center;
+}
+div.datepicker-calendar table {
+ font-size: 10px;
+ border: 0px;
+ margin: 0px;
+ padding: 0px;
+ text-align: center;
+ background:#e7edf4;
+
+}
+div.datepicker-calendar table tr {
+ border: 1px white solid;
+ margin: 0px;
+ padding: 0px;
+}
+div.datepicker-calendar table td {
+ font-size: 11px;
+ border: solid #e7edf4 1px;
+ border-width: 0 0 1px 1px;
+ padding: 2px 4px 2px 4px;
+ margin: 0px;
+ text-align: center;
+ background:white;
+}
+div.datepicker-calendar table td:hover,
+div.datepicker-calendar table td.outbound:hover,
+div.datepicker-calendar table td.today:hover {
+ background: #e9eff4;
+ cursor: pointer;
+}
+div.datepicker-calendar table td.wday {
+ border: solid #e7edf4 1px;
+ border-width: 0 0 1px 1px;
+ background: #e7edf4;
+ cursor: text;
+}
+div.datepicker-calendar table td.outbound {
+	opacity:.4;
+	filter:alpha(opacity=40);
+	-moz-opacity:.4;
+}
+div.datepicker-calendar table td.today {
+ background: #c4d5e3;
+}
+
