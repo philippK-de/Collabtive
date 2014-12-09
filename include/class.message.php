@@ -88,12 +88,20 @@ class message {
         global $conn;
         $id = (int) $id;
 
-        $msg = $conn->query("SELECT title,project FROM messages WHERE ID = $id")->fetch();
+        $msgStmt = $conn->prepare("SELECT title,project FROM messages WHERE ID = ?");
+		$msgStmt->execute(array($id));
+    	$msg = $msgStmt->fetch();
 
-        $del = $conn->query("DELETE FROM messages WHERE ID = $id LIMIT 1");
-        $del2 = $conn->query("DELETE FROM messages WHERE replyto = $id");
-        $del3 = $conn->query("DELETE FROM files_attached WHERE message = $id");
-        if ($del) {
+        $delStmt = $conn->prepare("DELETE FROM messages WHERE ID = ? LIMIT 1");
+    	$del = $delStmt->execute(array($id));
+
+        $del2 = $conn->prepare("DELETE FROM messages WHERE replyto = ? LIMIT 1");
+        $del2->execute(array($id));
+
+		$del3 = $conn->prepare("DELETE FROM files_attached WHERE message = ? LIMIT 1");
+        $del3->execute(array($id));
+
+		if ($del) {
             $this->mylog->add($msg[0], 'message', 3, $msg[1]);
             return true;
         } else {
