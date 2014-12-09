@@ -209,7 +209,9 @@ class milestone {
         $milestone = (int) $milestone;
         $user = (int) $user;
 
-        $upd = $conn->query("DELETE FROM milestones_assigned WHERE user = $user AND milestone = $milestone");
+        $updStmt = $conn->prepare("DELETE FROM milestones_assigned WHERE user = ? AND milestone = ?");
+    	$upd = $updStmt->execute(array($user,$milestone));
+
         if ($upd) {
             $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
             $nam = $nam->fetch();
@@ -234,7 +236,9 @@ class milestone {
         global $conn;
         $id = (int) $id;
 
-        $sel = $conn->query("SELECT * FROM milestones WHERE ID = $id");
+        $sel = $conn->prepare("SELECT * FROM milestones WHERE ID = ?");
+    	$sel->execute(array($id));
+
         $milestone = $sel->fetch();
         if (!empty($milestone)) {
             // Format start and end date for display
@@ -282,7 +286,8 @@ class milestone {
 
         $milestones = array();
 
-        $sel = $conn->query("SELECT ID FROM milestones WHERE `status`=$status  ORDER BY `end` ASC LIMIT $lim");
+        $sel = $conn->query("SELECT ID FROM milestones WHERE `status`=?  ORDER BY `end` ASC LIMIT ?");
+		$sel->execute(array($status,$lim));
 
         while ($milestone = $sel->fetch()) {
             $themilestone = $this->getMilestone($milestone["ID"]);
@@ -307,7 +312,9 @@ class milestone {
         global $conn;
         $project = (int) $project;
 
-        $sel = $conn->query("SELECT ID FROM milestones WHERE project = $project AND status = 0 ORDER BY `end` ASC");
+        $sel = $conn->prepare("SELECT ID FROM milestones WHERE project = ? AND status = 0 ORDER BY `end` ASC");
+    	$sel->execute(array($project));
+
         $stones = array();
 
         while ($milestone = $sel->fetch()) {
@@ -335,13 +342,15 @@ class milestone {
         $project = (int) $project;
         $lim = (int) $lim;
 
-        $tod = date("d.m.Y");
+        $tod = date(CL_DATEFORMAT);
         $now = strtotime($tod);
         $milestones = array();
 
-        $sql = "SELECT ID FROM milestones WHERE project = $project AND end < $now AND status = 1 ORDER BY end ASC LIMIT $lim";
+        $sql = "SELECT ID FROM milestones WHERE project = ? AND end < ? AND status = 1 ORDER BY end ASC LIMIT ?";
 
-        $sel1 = $conn->query($sql);
+        $sel1 = $conn->prepare($sql);
+    	$sel1->execute(array($project,$now,$lim));
+
         while ($milestone = $sel1->fetch()) {
             if (!empty($milestone)) {
                 $themilestone = $this->getMilestone($milestone["ID"]);
@@ -369,13 +378,15 @@ class milestone {
         $project = (int) $project;
         $lim = (int) $lim;
 
-        $tod = date("d.m.Y");
+        $tod = date(CL_DATEFORMAT);
         $now = strtotime($tod);
         $milestones = array();
 
-        $sql = "SELECT ID FROM milestones WHERE project = $project  AND start > $now AND status = 1 ORDER BY end ASC LIMIT $lim";
+        $sql = "SELECT ID FROM milestones WHERE project = ?  AND start > ? AND status = 1 ORDER BY end ASC LIMIT ?";
 
-        $sel1 = $conn->query($sql);
+        $sel1 = $conn->prepare($sql);
+    	$sel1->execute(array($id));
+
         while ($milestone = $sel1->fetch()) {
             if (!empty($milestone)) {
                 $themilestone = $this->getMilestone($milestone["ID"]);
@@ -451,9 +462,11 @@ class milestone {
         $tod = date(CL_DATEFORMAT);
         $now = strtotime($tod);
         $milestones = array();
-        $sql = "SELECT ID FROM milestones WHERE project = $project AND status = 1 ORDER BY end ASC LIMIT $lim";
+        $sql = "SELECT ID FROM milestones WHERE project = ? AND status = 1 ORDER BY end ASC LIMIT ?";
 
-        $sel1 = $conn->query($sql);
+        $sel1 = $conn->prepare($sql);
+    	$sel1->execute(array($project,$lim));
+
         while ($milestone = $sel1->fetch()) {
             if (!empty($milestone)) {
                 $themilestone = $this->getMilestone($milestone["ID"]);
