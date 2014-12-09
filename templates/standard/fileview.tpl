@@ -57,12 +57,13 @@
 						<td class="thumb">
 						{*href="{$files[file].datei}"*}
 							<a href="managefile.php?action=downloadfile&amp;id={$project.ID}&amp;file={$files[file].ID}" {if $files[file].imgfile == 1}  rel="lytebox[]" {elseif $files[file].imgfile == 2} rel = "lyteframe[text]" rev="width: 650px; height: 500px;" {/if} >
-								{if $files[file].imgfile == 1}
+								{*if $files[file].imgfile == 1}
 									<img src="thumb.php?pic={$files[file].datei}&amp;width=32" alt="{$files[file].name}" />
 
 								{else}
 									<img src="templates/{$settings.template}/theme/{$settings.theme}/images/files/{$files[file].type}.png" alt="{$files[file].name}" />
-								{/if}
+								{/if*}
+								<img src="templates/{$settings.template}/theme/{$settings.theme}/images/files/{$files[file].type}.png" alt="{$files[file].name}" />
 							</a>
 						</td>
 						<td class="rightmen" valign="top">
@@ -80,7 +81,8 @@
 					<tr>
 						<td colspan="3">
 							<span class="name">
-								<a href="{$files[file].datei}" {if $files[file].imgfile == 1} rel="lytebox[img{$files[file].ID}]" {elseif $files[file].imgfile == 2} rel="lyteframe[text{$files[file].ID}]" {/if} title="{$files[file].name}" onmousedown="change('managefile.php?action=makeseen&file={$files[file].ID}&id={$project.ID}','jslog');">
+							{*	<a href="{$files[file].datei}" {if $files[file].imgfile == 1} rel="lytebox[img{$files[file].ID}]" {elseif $files[file].imgfile == 2} rel="lyteframe[text{$files[file].ID}]" {/if} title="{$files[file].name}" onmousedown="change('managefile.php?action=makeseen&file={$files[file].ID}&id={$project.ID}','jslog');">*}
+								<a href="managefile.php?action=downloadfile&amp;id={$project.ID}&amp;file={$files[file].ID}" {if $files[file].imgfile == 1}  rel="lytebox[]" {elseif $files[file].imgfile == 2} rel = "lyteframe[text]" rev="width: 650px; height: 500px;" {/if} >
 									{if $files[file].title != ""}
 										{$files[file].title|truncate:14:"...":true}
 									{else}

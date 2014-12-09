@@ -272,7 +272,7 @@
 		{/if} {* Tasks END *}
 
 		{* Milestones *}
-		{if $myprojects}
+		{if $tasknum}
 			<div class="miles" style = "padding-bottom:2px;">
 				<div class="headline">
 					<a href="javascript:void(0);" id="mileshead_toggle" class="win_none" onclick="changeElements('a.win_block','win_none');toggleBlock('mileshead');accordIndex.activate($$('#block_index .acc_toggle')[2]);"></a>
@@ -290,7 +290,7 @@
 
 				<div class = "acc_toggle"></div>
 				<div class="block acc_content" id="mileshead" style = "overflow:hidden;" >
-					<div id="thecal" class="bigcal"></div>
+					<div id="thecal" class="bigcal" style = "height:270px;"></div>
 				<div class="content-spacer"></div>
 				</div> {* block END *}
 			</div> {* miles END *}
@@ -514,6 +514,9 @@
 			    }
 			});
 				accordIndex.activate($$('#block_index .acc_toggle')[0]);
+				var theBlocks = $$("#block_index > div");
+
+
 			</script>
 		{/literal}
 </div> {* block index end*}

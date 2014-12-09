@@ -59,7 +59,7 @@
 
 			<div class = "row">
 				<label>Customer:</label>
-				<select name="company" id="company" required="0" exclude="-1" realname="{#assignto#}">
+				<select name="company" id="company" realname="{#assignto#}">
 					<option value="-1">{#chooseone#}</option>
 					{section name=customer loop=$customers}
 						<option value = "{$customers[customer].ID}">{$customers[customer].company}</option>
