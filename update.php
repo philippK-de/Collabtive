@@ -1,23 +1,23 @@
 <?php
 error_reporting(0);
-require("./init.php");
-
-
-// VERSION-DEPENDENT
-//2.0
-function randomPassword() {
-	$alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
-	$pass = array(); //remember to declare $pass as an array
-	$alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
-	for ($i = 0; $i < 16; $i++) {
-		$n = rand(0, $alphaLength);
-		$pass[] = $alphabet[$n];
-	}
-	return implode($pass); //turn the array into a string
+// Check if directory templates_c exists and is writable
+if (!file_exists("./templates_c") or !is_writable("./templates_c")) {
+    die("Required folder templates_c does not exist or is not writable. <br>Please create the folder or make it writable in order to proceed.");
 }
-$filePass = randomPassword();
-$path = "./include/phpseclib";
-set_include_path(get_include_path() . PATH_SEPARATOR . $path);
+require("./init.php");
+// VERSION-DEPENDENT
+// 2.0
+function randomPassword()
+{
+    $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
+    $pass = array(); //remember to declare $pass as an array
+    $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+    for ($i = 0; $i < 16; $i++) {
+        $n = rand(0, $alphaLength);
+        $pass[] = $alphabet[$n];
+    }
+    return implode($pass); //turn the array into a string
+}
 
 $conn->query("CREATE TABLE IF NOT EXISTS `customers_assigned` (
   `ID` int(10) NOT NULL AUTO_INCREMENT,
@@ -28,24 +28,26 @@ $conn->query("CREATE TABLE IF NOT EXISTS `customers_assigned` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
 $oldTemplate = $settings["template"];
-$template->assign("theme",$oldTemplate);
+$template->assign("theme", $oldTemplate);
 $conn->query("INSERT INTO `settings` (`ID` ,`settingsKey` ,`settingsValue`) VALUES (NULL , 'theme', '$oldTemplate')");
 $conn->query("UPDATE `settings` SET `template`='standard'");
 
-$conn->query("INSERT INTO `settings` (`ID`, `settingsKey`, `settingsValue`) VALUES (NULL, 'filePass', '$filePass')");
+if (!$settings["filePass"]) {
+    $filePass = randomPassword();
+    $path = "./include/phpseclib";
+    set_include_path(get_include_path() . PATH_SEPARATOR . $path);
+    $conn->query("INSERT INTO `settings` (`ID`, `settingsKey`, `settingsValue`) VALUES (NULL, 'filePass', '$filePass')");
+    $filesList = $conn->query("SELECT * FROM `files`")->fetchAll();
+    $fileObj = new datei();
 
-$filesList = $conn->query("SELECT * FROM `files`")->fetchAll();
-$fileObj = new datei();
-
-foreach($filesList as $file)
-{
-	$tmpFile = CL_ROOT . "/" . $file["datei"];
-	$fileObj->encryptFile($tmpFile,$filePass);
+    foreach($filesList as $file) {
+        $tmpFile = CL_ROOT . "/" . $file["datei"];
+        $fileObj->encryptFile($tmpFile, $filePass);
+    }
 }
-//drop tags field from files
+// drop tags field from files
 $conn->query("ALTER TABLE `files` DROP `tags`");
 // VERSION-INDEPENDENT
-
 // Clear templates cache
 $handle = opendir($template->compile_dir);
 while (false !== ($file = readdir($handle))) {
@@ -53,7 +55,6 @@ while (false !== ($file = readdir($handle))) {
         unlink(CL_ROOT . "/" . $template->compile_dir . "/" . $file);
     }
 }
-
 // Optimize tables
 $opt1 = $conn->query("OPTIMIZE TABLE `files`");
 $opt2 = $conn->query("OPTIMIZE TABLE `files_attached`");

@@ -85,7 +85,7 @@ class tasklist {
         $id = (int) $id;
 
         $sel = $conn->query("SELECT project, name FROM tasklist WHERE ID = $id");
-        $del = $conn->query("DELETE FROM tasklist WHERE ID = $id LIMIT 1");
+        $del = $conn->query("DELETE FROM tasklist WHERE ID = $id");
         if ($del) {
             $tasks1 = $this->getTasksFromList($id);
             $taskobj = new task();
@@ -134,6 +134,7 @@ class tasklist {
         } else {
             return false;
         }
+
     }
 
     /**

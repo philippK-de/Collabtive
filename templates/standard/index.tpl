@@ -259,6 +259,7 @@
 						<div class="tablemenue">
 							<div class="tablemenue-in">
 								{if $userpermissions.tasks.add}
+
 									<a class="butn_link" href="javascript:void(0);" id="add_butn_mytasks" onclick="blindtoggle('form_addmytask');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_desktoptasks','smooth','nosmooth');">{#addtask#}</a>
 								{/if}
 							</div>
@@ -441,12 +442,9 @@
 																						<div class="inmenue"></div>
 																					</td>
 																					<td class="thumb">
-																						<a href="{$messages[message].files[file].datei}" {if $messages[message].files[file].imgfile == 1} rel="lytebox[]" {elseif $messages[message].files[file].imgfile == 2} rel = "lyteframe[text]" {/if} title="{$messages[message].files[file].name}">
-																							{if $messages[message].files[file].imgfile == 1}
-																								<img src="thumb.php?pic={$messages[message].files[file].datei}&amp;width=32" alt="{$ordner[file].name}" />
-																							{else}
-																								<img src="templates/{$settings.template}/theme/{$settings.theme}/images/files/{$messages[message].files[file].type}.png" alt="{$messages[message].files[file].name}" />
-																							{/if}
+
+																								<a href = "managefile.php?action=downloadfile&amp;id={$messages[message].files[file].project}&amp;file={$messages[message].files[file].ID}"{if $messages[message].files[file].imgfile == 1} rel="lytebox[img{$messages[message].ID}]"{/if} title="{$messages[message].files[file].name}">	<img src="templates/{$settings.template}/theme/{$settings.theme}/images/files/{$messages[message].files[file].type}.png" alt="{$messages[message].files[file].name}" />
+																		<
 																						</a>
 																					</td>
 																					<td class="rightmen" valign="top">
@@ -457,7 +455,7 @@
 																				</tr>
 																				<tr>
 																					<td colspan="3"><span class="name">
-																						<a href="{$messages[message].files[file].datei}" {if $messages[message].files[file].imgfile == 1} rel="lytebox[]" {elseif $messages[message].files[file].imgfile == 2} rel = "lyteframe[text]" {/if} title="{$messages[message].files[file].name}">{$messages[message].files[file].name|truncate:15:"...":true}</a></span>
+																							<a href = "managefile.php?action=downloadfile&amp;id={$messages[message].files[file].project}&amp;file={$messages[message].files[file].ID}"{if $messages[message].files[file].imgfile == 1} rel="lytebox[img{$messages[message].ID}]"{/if} title="{$messages[message].files[file].name}">{$messages[message].files[file].name|truncate:15:"...":true}</a></span>
 																					</td>
 																				<tr/>
 																			</table>
@@ -520,14 +518,18 @@
 
 				/**
 				 *
-				 * @access public
-				 * @return void
+				 * This will activate the accordion with the supplied index
+				 *
 				 **/
 				function activateAccordeon(theAccord){
+					//activate the block in the block accordion
 					accordIndex.activate($$('#block_index .acc_toggle')[theAccord]);
+					//change the state of the arrow in the titlebar
 					changeElements("#"+blockIds[theAccord]+" > a.win_block","win_none");
+					//set a cookie to save the accordeon last clicked
 					setCookie("activeSlideIndex",theAccord);
 				}
+				//get the blocks
 				var theBlocks = $$("#block_index > div .headline > a");
 				//console.log(theBlocks);
 
@@ -536,12 +538,11 @@
 				blockIds = [];
 				for(i=0;i<theBlocks.length;i++)
 				{
+					//get the id of the current html element
 					var theId = theBlocks[i].getAttribute("id");
 
-					//theId = theId.split("_");
-					//theId = theId[0];
 					blockIds.push(theId);
-
+					//get the index of the last opened block
 					theCook = readCookie("activeSlideIndex");
 					//console.log(theCook);
 					if(theCook > 0)
@@ -549,7 +550,9 @@
 						openSlide = theCook;
 					}
 
+					//get the onclick action of the current block
 					var theAction = theBlocks[i].getAttribute("onclick");
+					//add a call to activate accordeon
 					theAction += "activateAccordeon("+i+");";
 					theBlocks[i].setAttribute("onclick",theAction);
 					//console.log(theBlocks[i].getAttribute("onclick"));

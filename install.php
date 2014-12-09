@@ -123,7 +123,7 @@ if (!$action) {
 (15, 'rsspass', ''),
 (16, 'theme', 'standard'),
 (17, 'filePass', '$filePass')");*/
-		print_r($conn->errorInfo());
+	//	print_r($conn->errorInfo());
 
     if (!$ins) {
         $template->assign("errortext", "Error: Failed to create initial settings.");

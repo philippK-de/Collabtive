@@ -65,8 +65,8 @@ class search {
 			if (!empty($result)) {
 				$result["type"] = "project";
 				$result["icon"] = "projects.png";
-				$result["name"] = stripslashes($result["name"]);
-				$result["desc"] = stripslashes($result["desc"]);
+				//$result["name"] = stripslashes($result["name"]);
+				//$result["desc"] = stripslashes($result["desc"]);
 				$result["url"] = "manageproject.php?action=showproject&amp;id=$result[ID]";
 				array_push($projects, $result);
 			}

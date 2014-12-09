@@ -112,7 +112,8 @@ class task {
         $id = (int) $id;
 
         $nameproject = $this->getNameProject($id);
-        $del = $conn->query("DELETE FROM tasks WHERE ID = $id LIMIT 1");
+        $delStmt = $conn->prepare("DELETE FROM tasks WHERE ID = ?");
+		$del = $delStmt->execute(array($id));
 
         if ($del) {
             $del2 = $conn->query("DELETE FROM tasks_assigned WHERE task=$id");
@@ -687,11 +688,14 @@ class task {
     private function getTaskDetails(array $task)
     {
         global $conn;
-        $psel = $conn->query("SELECT name FROM projekte WHERE ID = $task[project]");
+        $psel = $conn->prepare("SELECT name FROM projekte WHERE ID = ?");
+    	$psel->execute(array($task["project"]));
         $pname = $psel->fetch();
         $pname = stripslashes($pname[0]);
 
-        $list = $conn->query("SELECT name FROM tasklist WHERE ID = $task[liste]")->fetch();
+        $listStmt = $conn->prepare("SELECT name FROM tasklist WHERE ID = ?");
+    	$listStmt->execute(array($task["liste"]));
+    	$list = $listStmt->fetch();
         $list = stripslashes($list[0]);
 
         if (isset($list) or isset($pname)) {
@@ -732,11 +736,10 @@ class task {
         $id = (int) $id;
 
         $nam = $conn->query("SELECT text,liste,title FROM tasks WHERE ID = $id")->fetch();
-        $text = stripslashes($nam[2]);
         $list = $nam[1];
         $project = $conn->query("SELECT project FROM tasklist WHERE ID = $list")->fetch();
         $project = $project[0];
-        $nameproject = array($text, $project);
+        $nameproject = array($nam[0], $project);
 
         if (!empty($nameproject)) {
             return $nameproject;

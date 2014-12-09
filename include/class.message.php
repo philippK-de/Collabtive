@@ -39,8 +39,8 @@ class message {
     {
         global $conn;
 
-        $insStmt = $conn->prepare("INSERT INTO messages (`project`,`title`,`text`,`posted`,`user`,`username`,`replyto`,`milestone`) VALUES (?, ?, ?, ?, ?, ?, ?, ? )");
-        $ins = $insStmt->execute(array((int) $project, $title, $text, time(), (int) $user, $username, (int) $replyto, (int) $milestone));
+        $insStmt = $conn->prepare("INSERT INTO messages (`project`,`title`,`text`,`tags`,`posted`,`user`,`username`,`replyto`,`milestone`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ? )");
+        $ins = $insStmt->execute(array((int) $project, $title, $text,"", time(), (int) $user, $username, (int) $replyto, (int) $milestone));
 
         $insid = $conn->lastInsertId();
         if ($ins) {
@@ -92,13 +92,13 @@ class message {
 		$msgStmt->execute(array($id));
     	$msg = $msgStmt->fetch();
 
-        $delStmt = $conn->prepare("DELETE FROM messages WHERE ID = ? LIMIT 1");
+        $delStmt = $conn->prepare("DELETE FROM messages WHERE ID = ?");
     	$del = $delStmt->execute(array($id));
 
-        $del2 = $conn->prepare("DELETE FROM messages WHERE replyto = ? LIMIT 1");
+        $del2 = $conn->prepare("DELETE FROM messages WHERE replyto = ?");
         $del2->execute(array($id));
 
-		$del3 = $conn->prepare("DELETE FROM files_attached WHERE message = ? LIMIT 1");
+		$del3 = $conn->prepare("DELETE FROM files_attached WHERE message = ?");
         $del3->execute(array($id));
 
 		if ($del) {
@@ -282,12 +282,12 @@ class message {
         // If a file ID is given, the given file will be attached
         // If no file ID is given, the file will be uploaded to the project defined by $id and then attached
         if ($fid > 0) {
-            $ins = $conn->query("INSERT INTO files_attached (ID,file,message) VALUES ('',$fid,$mid)");
+            $ins = $conn->query("INSERT INTO files_attached (file,message) VALUES ($fid,$mid)");
         } else {
             $num = $_POST["numfiles"];
 
             $chk = 0;
-            $insStmt = $conn->prepare("INSERT INTO files_attached (ID,file,message) VALUES ('',?,?)");
+            $insStmt = $conn->prepare("INSERT INTO files_attached (file,message) VALUES (?,?)");
             for($i = 1;$i <= $num;$i++) {
                 $fid = $myfile->upload("userfile$i", "files/" . CL_CONFIG . "/$id", $id);
                 $ins = $insStmt->execute(array($fid, $mid));
