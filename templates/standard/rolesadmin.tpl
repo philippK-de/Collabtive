@@ -8,7 +8,7 @@
 					</div>
 
 				<h2>
-					<img src="./templates/standard/images/symbols/userlist.png" alt="" />{#roles#}
+					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/userlist.png" alt="" />{#roles#}
 				</h2>
 			</div>
 

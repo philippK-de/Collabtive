@@ -1,18 +1,19 @@
 {if $showhtml|default != "no"}
 
 {include file="header.tpl" jsload="ajax" jsload1="tinymce"}
-{include file="tabsmenue-project.tpl" milestab = "active"}
+{include file="tabsmenue-project.tpl" milestab="active"}
 
 <div id="content-left">
 	<div id="content-left-in">
 		<div class="miles">
 
 			<div class="breadcrumb">
-				<a href="manageproject.php?action=showproject&amp;id={$project.ID}"><img src="./templates/standard/images/symbols/projects.png" alt="" />{$projectname|truncate:40:"...":true}</a>
-				<a href="managemilestone.php?action=showproject&amp;id={$project.ID}"><img src="./templates/standard/images/symbols/miles.png" alt="" />{#milestones#}</a>
+				<a href="manageproject.php?action=showproject&amp;id={$project.ID}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{$projectname|truncate:40:"...":true}</a>
+				<a href="managemilestone.php?action=showproject&amp;id={$project.ID}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt="" />{#milestones#}</a>
 			</div>
 
 			<h1>{#editmilestone#}</h1>
+			
 {/if}
 
 			<div class="block_in_wrapper">
@@ -39,17 +40,16 @@
 						</div>
 
 						<div class="clear_both_b"></div>
-
-
+						
 						<div class="row">
-							<label for="end">Starts on:</label>
+							<label for="end">{#start#}:</label>
 							<input type="text" value="{$milestone.startstring}" name="start" id="start" required="1" realname="{#end#}" />
 						</div>
-
+						
 						<div class="datepick">
-							<div id = "datepicker_mile_start" class="picker" style = "display:none;"></div>
+							<div id="datepicker_mile_start" class="picker" style="display:none;"></div>
 						</div>
-
+						
 						<script type="text/javascript">
 							theCal{$lists[list].ID} = new calendar({$theM},{$theY});
 							theCal{$lists[list].ID}.dayNames = ["{#monday#}","{#tuesday#}","{#wednesday#}","{#thursday#}","{#friday#}","{#saturday#}","{#sunday#}"];
@@ -58,16 +58,16 @@
 							theCal{$lists[list].ID}.dateFormat = "{$settings.dateformat}";
 							theCal{$lists[list].ID}.getDatepicker("datepicker_mile_start");
 						</script>
-
+						
 						<div class="row">
 							<label for="end">{#end#}:</label>
 							<input type="text" value="{$milestone.endstring}" name="end" id="end" required="1" realname="{#end#}" />
 						</div>
-
+						
 						<div class="datepick">
-							<div id = "datepicker_mile" class="picker" style = "display:none;"></div>
+							<div id="datepicker_mile" class="picker" style="display:none;"></div>
 						</div>
-
+						
 						<script type="text/javascript">
 							theCal{$lists[list].ID} = new calendar({$theM},{$theY});
 							theCal{$lists[list].ID}.dayNames = ["{#monday#}","{#tuesday#}","{#wednesday#}","{#thursday#}","{#friday#}","{#saturday#}","{#sunday#}"];
@@ -76,9 +76,9 @@
 							theCal{$lists[list].ID}.dateFormat = "{$settings.dateformat}";
 							theCal{$lists[list].ID}.getDatepicker("datepicker_mile");
 						</script>
-
+						
 						<input type="hidden" name="mid" value="{$milestone.ID}" />
-
+						
 						<div class="row-butn-bottom">
 							<label>&nbsp;</label>
 							<button type="submit" onfocus="this.blur();">{#send#}</button>
@@ -86,17 +86,19 @@
 								<button onclick="blindtoggle('form_edit');toggleClass('edit_butn','edit-active','edit');toggleClass('sm_mile','smooth','nosmooth');return false;" onfocus="this.blur();" {if $showhead|default == "1"} style="display:none;"{/if}>{#cancel#}</button>
 							{/if}
 						</div>
-
+						
 					</fieldset>
 				</form>
+				
 			</div> {*block_in_wrapper end*}
 
 {if $showhtml|default != "no"}
-		<div class="content-spacer"></div>
 
-		</div> {*Miles END*}
-	</div> {*content-left-in END*}
-</div> {*content-left END*}
+			<div class="content-spacer"></div>
+
+		</div> {* Miles END *}
+	</div> {* content-left-in END *}
+</div> {* content-left END *}
 
 {include file="sidebar-a.tpl"}
 {include file="footer.tpl"}

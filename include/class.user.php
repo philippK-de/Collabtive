@@ -102,10 +102,11 @@ class user {
     {
         global $conn;
 
-        $user = $conn->query("SELECT ID, email FROM user WHERE email={$conn->quote($email)} LIMIT 1")->fetch();
+        $user = $conn->query("SELECT ID, email, locale FROM user WHERE email={$conn->quote($email)} LIMIT 1")->fetch();
 
         if ($user["email"] == $email) {
             $id = $user["ID"];
+            $locale = $user['locale'];
         }
 
         if (isset($id)) {
@@ -123,7 +124,7 @@ class user {
 
             $upd = $conn->query("UPDATE user SET `pass` = '$sha1pass' WHERE ID = $id");
             if ($upd) {
-                return $newpass;
+                return array('newpass'=>$newpass, 'locale'=>$locale);
             } else {
                 return false;
             }
@@ -233,27 +234,11 @@ class user {
         global $conn;
         $id = (int) $id;
 
-        $sel = $conn->query("SELECT * FROM user WHERE ID = $id");
-        $profile = $sel->fetch();
+        $sel = $conn->prepare("SELECT * FROM user WHERE ID = ?");
+        $sel->execute(array($id));
+
+		$profile = $sel->fetch();
         if (!empty($profile)) {
-            $profile["name"] = stripslashes($profile["name"]);
-            if (isset($profile["company"])) {
-                $profile["company"] = stripslashes($profile["company"]);
-            }
-            if (isset($profile["adress"])) {
-                $profile["adress"] = stripslashes($profile["adress"]);
-            }
-            if (isset($profile["adress2"])) {
-                $profile["adress2"] = stripslashes($profile["adress2"]);
-            }
-            if (isset($profile["state"])) {
-                $profile["state"] = stripslashes($profile["state"]);
-            }
-            if (isset($profile["country"])) {
-                $profile["country"] = stripslashes($profile["country"]);
-            }
-            $tagsobj = new tags();
-            $profile["tagsarr"] = $tagsobj->splitTagStr($profile["tags"]);
 
             $rolesobj = (object) new roles();
             $profile["role"] = $rolesobj->getUserRole($profile["ID"]);
@@ -274,7 +259,9 @@ class user {
     {
         $id = (int) $id;
         global $conn;
-        $sel = $conn->query("SELECT avatar FROM user WHERE ID = $id");
+        $sel = $conn->prepare("SELECT avatar FROM user WHERE ID = ?");
+    	$sel->execute(array($id));
+
         $profile = $sel->fetch();
         $profile = $profile[0];
 
@@ -328,63 +315,6 @@ class user {
         }
     }
 
-    /**
-     * Log a user in
-     *
-     * @param string $user User name
-     * @param string $pass Password
-     * @return bool
-     */
-    function openIdLogin($url)
-    {
-        /* here the openid auth should take place */
-
-        try {
-            $openid = new LightOpenID($_SERVER['HTTP_HOST']);
-            if (!$openid->mode) {
-                $openid->identity = $url;
-                header('Location: ' . $openid->authUrl());
-            } elseif ($openid->mode == 'cancel') {
-                return false;
-            } else {
-                $identity = $openid->data['openid_identity'];
-
-                $sel1 = $conn->query("SELECT ID from openids WHERE identity='$identity'");
-                if ($row = $sel1->fetch()) {
-                    $id = $row['ID'];
-                } else return false;
-                // die("SELECT ID,name,locale,lastlogin,gender FROM user WHERE ID=$id");
-                $sel1 = $conn->query("SELECT ID,name,locale,lastlogin,gender FROM user WHERE ID=$id");
-                $chk = $sel1->fetch();
-                if ($chk["ID"] != "") {
-                    $rolesobj = new roles();
-                    $now = time();
-                    $_SESSION['userid'] = $chk['ID'];
-                    $_SESSION['username'] = stripslashes($chk['name']);
-                    $_SESSION['lastlogin'] = $now;
-                    $_SESSION['userlocale'] = $chk['locale'];
-                    $_SESSION['usergender'] = $chk['gender'];
-                    $_SESSION["userpermissions"] = $rolesobj->getUserRole($chk["ID"]);
-
-                    $userid = $_SESSION['userid'];
-                    $seid = session_id();
-                    $staylogged = getArrayVal($_POST, 'staylogged');
-
-                    if ($staylogged == 1) {
-                        setcookie("PHPSESSID", "$seid", time() + 14 * 24 * 3600);
-                    }
-                    $upd1 = $conn->prepare("UPDATE user SET lastlogin = ? WHERE ID = ?");
-                    $upd1Stmt = $upd1->execute(array($now,$userid));
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        }
-        catch(ErrorException $e) {
-            return false;
-        }
-    }
     /**
      * Logout
      *
@@ -454,12 +384,6 @@ class user {
         $users = array();
 
         while ($user = $sel->fetch()) {
-            $user["name"] = stripslashes($user["name"]);
-            $user["company"] = stripslashes($user["company"]);
-            $user["adress"] = stripslashes($user["adress"]);
-            $user["adress2"] = stripslashes($user["adress2"]);
-            $user["state"] = stripslashes($user["state"]);
-            $user["country"] = stripslashes($user["country"]);
             array_push($users, $user);
         }
 

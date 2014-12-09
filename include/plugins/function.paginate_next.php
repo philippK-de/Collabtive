@@ -67,8 +67,9 @@ function smarty_function_paginate_next($params, &$smarty) {
 
     if(($_item = SmartyPaginate::_getNextPageItem($_id)) !== false) {
         $_show = true;
-        $_text = isset($params['text']) ? $params['text'] : SmartyPaginate::getNextText($_id);
-        $_url .= (strpos($_url, '?') === false) ? '?' : '&';
+        //$_text = isset($params['text']) ? $params['text'] : SmartyPaginate::getNextText($_id);
+        $_text = ">>";
+		$_url .= (strpos($_url, '?') === false) ? '?' : '&';
         $_url .= SmartyPaginate::getUrlVar($_id) . '=' . $_item;
     } else {
         $_show = false;

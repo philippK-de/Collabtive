@@ -1,6 +1,8 @@
 <?php
 ini_set("arg_separator.output", "&amp;");
 ini_set('default_charset', 'utf-8');
+// Set content security policy header. This instructs the browser to block various unsafe behaviours.
+header("Content-Security-Policy:default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval';frame-src 'self'");
 // Start output buffering with gzip compression and start the session
 ob_start('ob_gzhandler');
 session_start();
@@ -9,19 +11,30 @@ define("CL_ROOT", realpath(dirname(__FILE__)));
 // configuration to load
 define("CL_CONFIG", "standard");
 // collabtive version and release date
-define("CL_VERSION", 1.0);
-define("CL_PUBDATE", "1377122400");
-// uncomment for debugging
-error_reporting(E_ALL | E_STRICT);
+define("CL_VERSION", 2.0);
+define("CL_PUBDATE", "1407880800");
+// uncomment next line for debugging
+// error_reporting(E_ALL || E_STRICT);
+
 // include config file , pagination and global functions
 require(CL_ROOT . "/config/" . CL_CONFIG . "/config.php");
 require(CL_ROOT . "/include/SmartyPaginate.class.php");
+// require html purifier
+require(CL_ROOT . "/include/HTMLPurifier.standalone.php");
+// load init functions
 require(CL_ROOT . "/include/initfunctions.php");
+
 // Start database connection
-if (!empty($db_name) and !empty($db_user)) {
-    // $tdb = new datenbank();
-    $conn = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8", $db_user, $db_pass);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+// $tdb = new datenbank();
+switch ($db_driver) {
+    case "mysql":
+        if (!empty($db_name) and !empty($db_user)) {
+            $conn = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8", $db_user, $db_pass);
+            break;
+        }
+    case "sqlite":
+        $conn = new PDO("sqlite:" . CL_ROOT . "/files/collabtive.sdb");
+        break;
 }
 // Start template engine
 $template = new Smarty();
@@ -31,9 +44,11 @@ $template->error_reporting = E_ALL &~E_NOTICE;
 $languages = getAvailableLanguages();
 // get URL to collabtive
 $url = getMyUrl();
+
 $template->assign("url", $url);
 $template->assign("languages", $languages);
-$template->assign("myversion", "1.1");
+// set the version number for display
+$template->assign("myversion", "2.1");
 $template->assign("cl_config", CL_CONFIG);
 // Assign globals to all templates
 if (isset($_SESSION["userid"])) {
@@ -49,6 +64,9 @@ if (isset($_SESSION["userid"])) {
     $gender = $_SESSION["usergender"];
     // what the user may or may not do
     $userpermissions = $_SESSION["userpermissions"];
+    // update user lastlogin for the onlinelist
+    $mynow = time();
+    $upd = $conn->exec("UPDATE user SET lastlogin='$mynow' WHERE ID = $userid");
     // assign it all to the templates
     $template->assign("userid", $userid);
     $template->assign("username", $username);
@@ -61,6 +79,10 @@ if (isset($_SESSION["userid"])) {
 }
 // get system settings
 if (isset($conn)) {
+	//Set PDO options
+	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+	$conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+
     $set = (object) new settings();
     $settings = $set->getSettings();
 
@@ -69,7 +91,7 @@ if (isset($conn)) {
     date_default_timezone_set($settings["timezone"]);
     $template->assign("settings", $settings);
 }
-// Set Template directory
+// Set template directory
 // If no directory is set in the system settings, default to the standard theme
 if (isset($settings['template'])) {
     $template->template_dir = CL_ROOT . "/templates/$settings[template]/";
@@ -95,11 +117,10 @@ if (!file_exists(CL_ROOT . "/language/$locale/lng.conf")) {
 }
 // Set locale directory
 $template->config_dir = CL_ROOT . "/language/$locale/";
-//Smarty 3 seems to have a problem with re-compiling the templates if the config changes. this forces a compile of the templates if the user has a different locale than the system locale.
-if ($locale != $settings["locale"]) {
-
-}
- $template->force_compile = true;
+// Smarty 3 seems to have a problem with re-compiling the config if the user config is different than the system config.
+// this forces a compile of the config.
+// uncomment this if you have issues with language switching
+// $template->compileAllConfig('.config',true);
 // read language file into PHP array
 $langfile = readLangfile($locale);
 $template->assign("langfile", $langfile);
@@ -123,4 +144,5 @@ if (isset($userid)) {
 }
 // clear session data for pagination
 SmartyPaginate::disconnect();
+
 ?>

@@ -154,9 +154,16 @@ if ($action == "editform") {
             $user = $usr->getProfile($user);
 
             if (!empty($user["email"])) {
+                $userlang = readLangfile($user['locale']);
+
+                $subject = $userlang["projectassignedsubject"] . ' (' .$userlang['by'].' '.$username.')';
+
+                $mailcontent = $userlang["hello"] . ",<br /><br/>" .
+                               $userlang["projectassignedtext"] .
+                               " <a href = \"" . $url . "manageproject.php?action=showproject&id=$id\">" . $url . "manageproject.php?action=showproject&id=$id</a>";
                 // send email
                 $themail = new emailer($settings);
-                $themail->send_mail($user["email"], $langfile["projectassignedsubject"] , $langfile["hello"] . ",<br /><br/>" . $langfile["projectassignedtext"] . " <a href = \"" . $url . "manageproject.php?action=showproject&id=$id\">" . $url . "manageproject.php?action=showproject&id=$id</a>");
+                $themail->send_mail($user["email"], $subject , $mailcontent);
             }
         }
         if ($redir) {
@@ -381,17 +388,10 @@ if ($action == "editform") {
     $tproject = $project->getProject($id);
     $done = $project->getProgress($id);
 
-    $cloud = new tags();
-    $cloud->cloudlimit = 1;
-    $thecloud = $cloud->getTagcloud($id);
-    if (strlen($thecloud) > 0) {
-        $template->assign("cloud", $thecloud);
-    }
-
     $title = $langfile['project'];
     $title = $title . " " . $tproject["name"];
     $template->assign("title", $title);
-	$template->assign("tree",$milestone->getAllProjectMilestones($id));
+	$template->assign("tree",$milestone->getAllProjectMilestones($id,1000));
 
     $template->assign("project", $tproject);
     $template->assign("done", $done);

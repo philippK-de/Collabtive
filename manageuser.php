@@ -60,10 +60,18 @@ if ($action == "loginerror") {
     $template->display("resetpassword.tpl");
 } elseif ($action == "resetpassword") {
     $newpass = $user->resetPassword($email);
-    if ($newpass != "") {
+    if ($newpass !== false) {
+        $langFile=readLangfile($newpass['locale']);
+
+        $subject = $langfile["projectpasswordsubject"];
+
+        $mailcontent = $langfile["hello"] . ",<br /><br/>" .
+                       $langfile["projectpasswordtext"] . "<br /><br />" .
+                       $langfile["newpass"] . ": " . $newpass['newpass'] ."<br />" .
+                       $langfile["login"] . ": <a href = \"$url\">$url</a>";
         // Send e-mail with new password
         $themail = new emailer($settings);
-        $themail->send_mail($email, $langfile["projectpasswordsubject"], $langfile["hello"] . ",<br /><br/>" . $langfile["projectpasswordtext"] . "<br /><br />" . $langfile["newpass"] . ": " . "$newpass<br />" . $langfile["login"] . ": <a href = \"$url\">$url</a>");
+        $themail->send_mail($email, $subject, $mailcontent);
 
         $template->assign("success", 1);
         $template->display("resetpassword.tpl");
@@ -202,7 +210,6 @@ if ($action == "loginerror") {
         header("Location: $loc");
     }
 } elseif ($action == "profile") {
-    $thetag = new tags();
     $start = getArrayVal($_GET, "start");
     $end = getArrayVal($_GET, "end");
     $proj = (object) new project();
@@ -293,20 +300,8 @@ if ($action == "loginerror") {
     if (!empty($onlinelist)) {
         echo "<ul>";
         foreach($onlinelist as $online) {
-            if ($online["avatar"]) {
-                $userpic = "thumb.php?pic=files/" . CL_CONFIG . "/avatar/$online[avatar]&width=90";
-            } elseif ($online["gender"] == "f") {
-                $userpic = "thumb.php?pic=templates/standard/images/no-avatar-female.jpg&amp;width=90";
-            } else {
-                $userpic = "thumb.php?pic=templates/standard/images/no-avatar-male.jpg&amp;width=90";
-            }
-            echo "<li>" . "<a class=\"user\" href = \"manageuser.php?action=profile&id=$online[ID]\">$online[name]<div><img src = \"$userpic\" /></div> </a>";
-            if ($online['ID'] != $userid and $userpermissions["chat"]["add"]) {
-                echo " <a class=\"chat\" href = \"javascript:openChatwin('$online[name]',$online[ID]);\" title=\"chat\"></a>";
-            } elseif ($online['ID'] == $userid and $userpermissions["chat"]["add"]) {
-                echo " <a class=\"chat-user\" ></a>";
-            }
-            echo "</li>";
+
+            echo "<li>" . "<a class=\"user\" href = \"manageuser.php?action=profile&id=$online[ID]\">$online[name]</a></li>";
         }
         echo "</ul>";
     }

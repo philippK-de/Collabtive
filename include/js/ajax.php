@@ -7,6 +7,10 @@ gmdate("D, d M Y H:i:s",time() + $offset) . "GMT";
 header($ExpStr);
 
 ?>
+//endcolor for close element flashing
+closeEndcolor = '#377814';
+//endcolor for delete element flashing
+deleteEndcolor = '#c62424';
 //various ajax functions
 function change(script,element) {
    var ajax = new Ajax.Updater({success: element},script,{method: 'get',evalScripts:true});
@@ -128,13 +132,13 @@ function toggleBlock(id){
 	var state = $(id).style.display;
 	if(state == "none")
 	{
-	setCookie(id,'block','30','/','','');
+	setCookie(id,'1','30','/','','');
 	$(id).style.display = "block";
 	$(id + '_toggle').className = 'win_block';
 	}
 	else if(state == "block" || state == "")
 	{
-	setCookie(id,'none','30','/','','');
+	setCookie(id,'0','30','/','','');
 	$(id).style.display = "none";
 	$(id + '_toggle').className = 'win_none';
 	}
@@ -186,7 +190,6 @@ function toggleAccordeon(accord,theLink)
 
 function changeElements(element,classname){
 	var loop = $$(element);
-
 	for(var i=0; i<loop.length; i++){
 	  loop[i].className = classname;
 	}
@@ -253,6 +256,16 @@ function setCookie( name, value, expires, path, domain, secure )
 	( ( path ) ? ";path=" + path : "" ) +
 	( ( domain ) ? ";domain=" + domain : "" ) +
 	( ( secure ) ? ";secure" : "" );
+}
+function readCookie(name) {
+	var nameEQ = name + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0;i < ca.length;i++) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	}
+	return null;
 }
 
 function getnow(field)
@@ -338,6 +351,7 @@ function sortBlock(theblock,sortmode)
         {
             tbodies[i].setAttribute("sortorder","asc");
         }
+
 
         $(theblock).removeChild(tbodies[i]);
         //$('jslog').innerHTML += tbodies[i].id + "<br />";
@@ -476,24 +490,6 @@ function sortByDays(a, b) {
         return ((x > y) ? -1 : ((x < y) ? 1 : 0));
     }
 }
-
-
-
-
-// accordion.js v2.0
-//
-// Copyright (c) 2007 stickmanlabs
-// Author: Kevin P Miller | http://www.stickmanlabs.com
-//
-// Accordion is freely distributable under the terms of an MIT-style license.
-//
-// I don't care what you think about the file size...
-//   Be a pro:
-//	    http://www.thinkvitamin.com/features/webapps/serving-javascript-fast
-//      http://rakaz.nl/item/make_your_pages_load_faster_by_combining_and_compressing_javascript_and_css_files
-//
-
-/*-----------------------------------------------------------------------------------------------*/
 
 if (typeof Effect == 'undefined')
 	throw("accordion.js requires including script.aculo.us' effects.js library!");

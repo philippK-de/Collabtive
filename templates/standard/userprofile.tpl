@@ -29,10 +29,10 @@
 								</a>
 							{else}
 								{if $user.gender == "f"}
-									<div class="avatar-profile"><img src = "thumb.php?pic=templates/standard/images/no-avatar-female.jpg&amp;width=122;" alt="" /></div>
+									<div class="avatar-profile"><img src = "thumb.php?pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-female.jpg&amp;width=122;" alt="" /></div>
 								{else}
 									<div class="avatar-profile">
-										<img src = "thumb.php?pic=templates/standard/images/no-avatar-male.jpg&amp;width=122;" alt="" />
+										<img src = "thumb.php?pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-male.jpg&amp;width=122;" alt="" />
 									</div>
 								{/if}
 							{/if}
@@ -116,17 +116,6 @@
 												{/if}
 											</tr>
 										</tbody>
-
-										<tbody class="color-b">
-											<tr>
-												<td><strong>{#tags#}:</strong></td>
-												<td class="right">
-													{section name = tag loop=$user.tagsarr}
-														<a href = "managetags.php?action=gettag&tag={$user.tagsarr[tag]}&amp;id=0">{$user.tagsarr[tag]}</a>
-													{/section}
-												</td>
-											</tr>
-										</tbody>
 									</table>
 
 								</div> {*Block End*}
@@ -144,7 +133,7 @@
 					<a href="javascript:void(0);" id="projecthead_toggle" class="win_block" onclick = "toggleBlock('projecthead');"></a>
 
 					<h2>
-						<a href="myprojects.php" title="{#myprojects#}"><img src="./templates/standard/images/symbols/projects.png" alt="" />{#projects#}</a>
+						<a href="myprojects.php" title="{#myprojects#}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{#projects#}</a>
 					</h2>
 				</div>
 
@@ -191,8 +180,7 @@
 									<td></td>
 									<td style="text-align:right">{$opros[opro].daysleft}&nbsp;&nbsp;</td>
 									<td class="tools">
-										<a class="tool_edit" href="manageproject.php?action=editform&amp;id={$opros[opro].ID}" title="{#edit#}" {if !$userpermissions.projects.edit}style="visibility:hidden;" {/if}></a>
-										<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'proj_{$opros[opro].ID}\',\'manageproject.php?action=del&amp;id={$opros[opro].ID}\')');"  title="{#delete#}" {if !$userpermissions.projects.del}style="visibility:hidden;" {/if}></a>
+
 									</td>
 								</tr>
 
@@ -224,9 +212,9 @@
 																			<td class="thumb">
 																				<a href="manageuser.php?action=profile&amp;id={$opros[opro].members[member].ID}" title="{$opros[opro].members[member].name}">
 																					{if $opros[opro].members[member].gender == "f"}
-																						<img src = "./templates/standard/images/symbols/user-icon-female.png" alt="" />
+																						<img src = "./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-female.png" alt="" />
 																					{else}
-																						<img src = "./templates/standard/images/symbols/user-icon-male.png" alt="" />
+																						<img src = "./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-male.png" alt="" />
 																					{/if}
 																				</a>
 																			</td>
@@ -308,7 +296,7 @@
 					</div>
 
 					<h2>
-						<img src="./templates/standard/images/symbols/timetracker.png" alt="" />{#report#}
+						<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/timetracker.png" alt="" />{#report#}
 					</h2>
 				</div>
 

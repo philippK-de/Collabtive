@@ -45,7 +45,7 @@
 					{/if}
 
 				<h2>
-					<img src="./templates/standard/images/symbols/projects.png" alt="" />{#openprojects#}
+					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{#openprojects#}
 				</h2>
 			</div>
 
