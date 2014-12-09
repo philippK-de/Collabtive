@@ -584,11 +584,11 @@ class milestone {
         $timeline = array();
 
         if ($project > 0) {
-            $sel1 = $conn->prepare("SELECT * FROM milestones WHERE project =  ? AND status=1 AND end = '$starttime' ORDER BY `end` ASC");
-            $sel1->execute(array($project));
+            $sel1 = $conn->prepare("SELECT * FROM milestones WHERE project =  ? AND status=1 AND end = ? ORDER BY `end` ASC");
+            $sel1->execute(array($project,$starttime));
         } else {
-            $sel1 = $conn->prepare("SELECT milestones.*,projekte_assigned.user,projekte.name AS pname,projekte.status AS pstatus FROM milestones,projekte_assigned,projekte WHERE milestones.project = projekte_assigned.projekt AND milestones.project = projekte.ID AND projekte_assigned.user = ? AND milestones.status=1 AND projekte.status != 2 AND milestones.end = '$starttime'");
-            $sel1->execute(array($user));
+            $sel1 = $conn->prepare("SELECT milestones.*,projekte_assigned.user,projekte.name AS pname,projekte.status AS pstatus FROM milestones,projekte_assigned,projekte WHERE milestones.project = projekte_assigned.projekt AND milestones.project = projekte.ID AND projekte_assigned.user = ? AND milestones.status=1 AND projekte.status != 2 AND milestones.end = ?");
+            $sel1->execute(array($user,$starttime));
         } while ($stone = $sel1->fetch()) {
             $stone["daysleft"] = $this->getDaysLeft($stone["end"]);
             array_push($timeline, $stone);
