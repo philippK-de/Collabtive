@@ -145,8 +145,10 @@ class project {
         global $conn;
         $id = (int) $id;
 
-        $upd = $conn->query("UPDATE projekte SET status=1 WHERE ID = $id");
-        if ($upd) {
+        $updStmt = $conn->prepare("UPDATE projekte SET status=1 WHERE ID = ?");
+        $upd = $updStmt->execute(array($id));
+
+		if ($upd) {
             $nam = $conn->query("SELECT name FROM projekte WHERE ID = $id")->fetch();
             $nam = $nam[0];
             $this->mylog->add($nam, 'projekt', 4, $id);
@@ -170,29 +172,34 @@ class project {
         $mile = new milestone();
         $milestones = $mile->getAllProjectMilestones($id, 100000);
         if (!empty($milestones)) {
-            foreach ($milestones as $miles) {
-                $close_milestones = $conn->query("UPDATE milestones SET status = 0 WHERE ID = $miles[ID]");
+        		$close_milestones = $conn->prepare("UPDATE milestones SET status = 0 WHERE ID = ?");
+	        foreach ($milestones as $miles) {
+            	$close_milestones->execute(array($miles["ID"]));
             }
         }
 
         $task = new task();
         $tasks = $task->getProjectTasks($id);
         if (!empty($tasks)) {
+        	$close_tasks = $conn->prepare("UPDATE tasks SET status = 0 WHERE ID = ?");
             foreach ($tasks as $tas) {
-                $close_tasks = $conn->query("UPDATE tasks SET status = 0 WHERE ID = $tas[ID]");
+                $close_tasks->execute(array($tas["ID"]));
             }
         }
 
         $tasklist = new tasklist();
         $tasklists = $tasklist->getProjectTasklists($id);
         if (!empty($tasklists)) {
-            foreach ($tasklists as $tl) {
-                $close_tasklists = $conn->query("UPDATE tasklist SET status = 0 WHERE ID = $tl[ID]");
+        	$close_tasklists = $conn->prepare("UPDATE tasklist SET status = 0 WHERE ID = ?");
+	        foreach ($tasklists as $tl) {
+	        	$close_tasklists->execute(array($tl["ID"]));
             }
         }
 
-        $upd = $conn->query("UPDATE projekte SET status=0 WHERE ID = $id");
-        if ($upd) {
+        $updStmt = $conn->prepare("UPDATE projekte SET status=0 WHERE ID = ?");
+        $upd = $updStmt->execute(array($id));
+
+		if ($upd) {
             $nam = $conn->query("SELECT name FROM projekte WHERE ID = $id")->fetch();
             $nam = $nam[0];
             $this->mylog->add($nam, 'projekt', 5, $id);
@@ -334,8 +341,8 @@ class project {
 
         $projekte = array();
 
-        $sel = $conn->prepare("SELECT `ID` FROM projekte WHERE `status`= ? ORDER BY `end` ASC LIMIT $lim");
-        $selStmt = $sel->execute(array($status));
+        $sel = $conn->prepare("SELECT `ID` FROM projekte WHERE `status`= ? ORDER BY `end` ASC LIMIT ?");
+        $selStmt = $sel->execute(array($status,$lim));
 
         while ($projekt = $sel->fetch()) {
             $projekte[]=$this->getProject($projekt["ID"]); // unneeded array_push would create overhead
@@ -361,24 +368,61 @@ class project {
 
         $myprojekte = array();
         $user = (int) $user;
-        $status = (int) $status;
+    	$status = (int) $status;
 
         //$sel = $conn->prepare("SELECT projekt FROM projekte_assigned WHERE user = ? ORDER BY ID ASC");
         $sel = $conn->prepare("SELECT projekte.ID
                                FROM projekte LEFT join projekte_assigned
                                ON projekte.ID=projekte_assigned.projekt
-        		                   WHERE user=? AND status=$status
+        		                   WHERE user=? AND status=?
         		                   ORDER BY name"); // you may apply id here, but i prefere sorting by name
-        $selStmt = $sel->execute(array($user));
+        $selStmt = $sel->execute(array($user,$status));
 
         while ($proj = $sel->fetch()) {
         	$myprojekte[] = $this->getProject($proj["ID"]); // useless array_push would create overhead
         }
 
         if (!empty($myprojekte)) {
+            // Sort projects by due date ascending
+            $date = array();
+            foreach ($myprojekte as $key => $row) {
+                $date[$key] = $row['end'];
+            }
+            array_multisort($date, SORT_ASC, $myprojekte);
+
             return $myprojekte;
         }
         return false;
+    }
+
+    /**
+     * Lists all project IDs assigned to a user
+     *
+     * @param int $user ID of the user
+     * @return array $myprojekte Project IDs for user
+     */
+    function getMyProjectIds($user)
+    {
+        global $conn;
+
+        $myprojekte = array();
+        $sel = $conn->prepare("SELECT projekt FROM projekte_assigned WHERE user = ? ORDER BY end ASC");
+        $selStmt = $sel->execute(array($user));
+
+        if ($sel) {
+            while ($projs = $sel->fetch()) {
+                $sel2 = $conn->query("SELECT ID FROM projekte WHERE ID = " . $projs[0]);
+                $projekt = $sel2->fetch();
+                if ($projekt) {
+                    array_push($myprojekte, $projekt);
+                }
+            }
+        }
+        if (!empty($myprojekte)) {
+            return $myprojekte;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -437,7 +481,12 @@ class project {
     {
         global $conn;
         $project = (int) $project;
-        $num = $conn->query("SELECT COUNT(*) FROM projekte_assigned WHERE projekt = $project")->fetch();
+
+		$numStmt = $conn->prepare("SELECT COUNT(*) FROM projekte_assigned WHERE projekt = ?");
+    	$numStmt->execute(array($project));
+
+		$num = $numStmt->fetch();
+
         return $num[0];
     }
 
@@ -452,11 +501,17 @@ class project {
         global $conn;
         $project = (int) $project;
 
-        $otasks = $conn->query("SELECT COUNT(*) FROM tasks WHERE project = $project AND status = 1")->fetch();
+        $otasksStmt = $conn->prepare("SELECT COUNT(*) FROM tasks WHERE project = ? AND status = 1");
+    	$otasksStmt->execute(array($project));
+
+    	$otasks = $otasksStmt->fetch();
         $otasks = $otasks[0];
 
-        $clotasks = $conn->query("SELECT COUNT(*) FROM tasks WHERE project = $project AND status = 0")->fetch();
-        $clotasks = $clotasks[0];
+        $clotasksStmt = $conn->prepare("SELECT COUNT(*) FROM tasks WHERE project = ? AND status = 0");
+        $clotasksStmt->execute(array($project));
+
+    	$clotasks = $clotasksStmt->fetch();
+		$clotasks = $clotasks[0];
 
         $totaltasks = $otasks + $clotasks;
         if ($totaltasks > 0 and $clotasks > 0) {
