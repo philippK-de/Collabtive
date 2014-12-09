@@ -10,8 +10,11 @@ if (!isset($_SESSION["userid"])) {
 }
 // collabtive doesn't seem to be installed properly , redirect to installer
 if (empty($db_name) or empty($db_user)) {
-    $loc = $url . "install.php";
-    header("Location: " . $loc);
+	if($db_driver == "mysql")
+	{
+		$loc = $url . "install.php";
+		header("Location: " . $loc);
+	}
 }
 // Set the desktop icon in the top icon menue
 $mainclasses = array("desktop" => "active",
@@ -70,11 +73,7 @@ foreach($etasks as $etask) {
 }
 // Sort using array_multisort
 array_multisort($sort, SORT_NUMERIC, SORT_ASC, $etasks);
-// Initial toggle state
-$taskbar = "win_block";
-$milebar = "win_block";
-$projectbar = "win_block";
-$activitybar = "win_block";
+
 // On Admin Login check for updates
 $mode = getArrayVal($_GET, "mode");
 if ($mode == "login") {
@@ -103,11 +102,6 @@ $msgnum = count($messages);
 $title = $langfile["desktop"];
 // Assign everything to the template engine
 $template->assign("title", $title);
-$template->assign("taskbar", $taskbar);
-$template->assign("milebar", $milebar);
-$template->assign("projectbar", $projectbar);
-$template->assign("actbar", $activitybar);
-
 $template->assign("today", $today);
 
 $template->assign("myprojects", $myprojects);

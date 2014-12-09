@@ -1,37 +1,37 @@
 <?php
 /**
- * This class provides methods to realize milestones
- *
- * @author Philipp Kiszka <info@o-dyn.de>
- * @name milestone
- * @package Collabtive
- * @version 2.0
- * @link http://www.o-dyn.de
- * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
- * @global $mylog
- */
+* This class provides methods to realize milestones
+*
+* @author Philipp Kiszka <info@o-dyn.de>
+* @name milestone
+* @package Collabtive
+* @version 2.0
+* @link http://www.o-dyn.de
+* @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
+* @global $mylog
+*/
 class milestone {
     private $mylog;
 
     /**
-     * Constructor
-     * Initialize the event log
-     */
+    * Constructor
+    * Initialize the event log
+    */
     function __construct()
     {
         $this->mylog = new mylog;
     }
 
     /**
-     * Add a milestone
-     *
-     * @param int $project ID of the associated project
-     * @param string $name Name of the milestone
-     * @param string $desc Description
-     * @param string $end Day the milestone is due
-     * @param int $status Status (0 = finished, 1 = open)
-     * @return bool
-     */
+    * Add a milestone
+    *
+    * @param int $project ID of the associated project
+    * @param string $name Name of the milestone
+    * @param string $desc Description
+    * @param string $end Day the milestone is due
+    * @param int $status Status (0 = finished, 1 = open)
+    * @return bool
+    */
     function add($project, $name, $desc, $start, $end, $status = 1)
     {
         global $conn;
@@ -52,14 +52,14 @@ class milestone {
     }
 
     /**
-     * Edit a milestone
-     *
-     * @param int $id Milestone ID
-     * @param string $name Name
-     * @param string $desc Description
-     * @param string $end Day it is due
-     * @return bool
-     */
+    * Edit a milestone
+    *
+    * @param int $id Milestone ID
+    * @param string $name Name
+    * @param string $desc Description
+    * @param string $end Day it is due
+    * @return bool
+    */
     function edit($id, $name, $desc, $start, $end)
     {
         global $conn;
@@ -82,11 +82,11 @@ class milestone {
     }
 
     /**
-     * Delete a milestone
-     *
-     * @param int $id Milestone ID
-     * @return bool
-     */
+    * Delete a milestone
+    *
+    * @param int $id Milestone ID
+    * @return bool
+    */
     function del($id)
     {
         global $conn;
@@ -108,19 +108,20 @@ class milestone {
     }
 
     /**
-     * Mark a milestone as open / active
-     *
-     * @param int $id Milestone ID
-     * @return bool
-     */
+    * Mark a milestone as open / active
+    *
+    * @param int $id Milestone ID
+    * @return bool
+    */
     function open($id)
     {
         global $conn;
         $id = (int) $id;
 
-        $upd = $conn->query("UPDATE milestones SET status = 1 WHERE ID = $id");
+        $updStmt = $conn->query("UPDATE milestones SET status = 1 WHERE ID = ?");
+		$upd = $updStmt->execute(array($id));
 
-        if ($upd) {
+		if ($upd) {
             $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
             $nam = $nam->fetch();
             $project = $nam[0];
@@ -134,26 +135,27 @@ class milestone {
     }
 
     /**
-     * Marka milestone as finished
-     * Also closes all tasklist assigned to this milestone
-     *
-     * @param int $id Milestone ID
-     * @return bool
-     */
+    * Marka milestone as finished
+    * Also closes all tasklist assigned to this milestone
+    *
+    * @param int $id Milestone ID
+    * @return bool
+    */
     function close($id)
     {
         global $conn;
         $id = (int) $id;
 
-        $upd = $conn->query("UPDATE milestones SET status = 0 WHERE ID = $id");
-        // Get attached tasklists
+        $updStmt = $conn->prepare("UPDATE milestones SET status = 0 WHERE ID = ?");
+        $upd = $updStmt->execute(array($id));
+		// Get attached tasklists
         $tasklists = $this->getMilestoneTasklists($id);
         // Loop through tasklists , close all tasks in them, then close tasklist itself
         if (!empty($tasklists)) {
-		$tl = new tasklist();
+            $tl = new tasklist();
             foreach ($tasklists as $tasklist) {
-            	$tl->close_liste($tasklist["ID"],false);
-			}
+                $tl->close_liste($tasklist["ID"], false);
+            }
         }
 
         if ($upd) {
@@ -170,19 +172,22 @@ class milestone {
     }
 
     /**
-     * Assign a milestone to a user
-     *
-     * @param int $milestone Milestone ID
-     * @param int $user User ID
-     * @return bool
-     */
+    * Assign a milestone to a user
+    *
+    * @param int $milestone Milestone ID
+    * @param int $user User ID
+    * @return bool
+    */
     function assign($milestone, $user)
     {
         global $conn;
         $milestone = (int) $milestone;
         $user = (int) $user;
 
-        $upd = $conn->query("INSERT INTO milestones_assigned (NULL,$user,$milestone)");
+
+    	$updStmt = $conn->prepare("INSERT INTO milestones_assigned (NULL,?,?)");
+    	$upd = $updStmt->execute(array($user,$milestone));
+
         if ($upd) {
             $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
             $nam = $nam->fetch();
@@ -197,19 +202,21 @@ class milestone {
     }
 
     /**
-     * Delete the assignment of a milestone to a given user
-     *
-     * @param int $milestone Milestone ID
-     * @param int $user User ID
-     * @return bool
-     */
+    * Delete the assignment of a milestone to a given user
+    *
+    * @param int $milestone Milestone ID
+    * @param int $user User ID
+    * @return bool
+    */
     function deassign($milestone, $user)
     {
         global $conn;
         $milestone = (int) $milestone;
         $user = (int) $user;
 
-        $upd = $conn->query("DELETE FROM milestones_assigned WHERE user = $user AND milestone = $milestone");
+        $updStmt = $conn->prepare("DELETE FROM milestones_assigned WHERE user = ? AND milestone = ?");
+        $upd = $updStmt->execute(array($user, $milestone));
+
         if ($upd) {
             $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
             $nam = $nam->fetch();
@@ -224,17 +231,19 @@ class milestone {
     }
 
     /**
-     * Return a milestone with its tasklists
-     *
-     * @param int $id Milestone ID
-     * @return array $milestone Milestone details
-     */
+    * Return a milestone with its tasklists
+    *
+    * @param int $id Milestone ID
+    * @return array $milestone Milestone details
+    */
     function getMilestone($id)
     {
         global $conn;
         $id = (int) $id;
 
-        $sel = $conn->query("SELECT * FROM milestones WHERE ID = $id");
+        $sel = $conn->prepare("SELECT * FROM milestones WHERE ID = ?");
+        $sel->execute(array($id));
+
         $milestone = $sel->fetch();
 
         if (!empty($milestone)) {
@@ -245,7 +254,6 @@ class milestone {
 
             $startstring = date(CL_DATEFORMAT, $milestone["start"]);
             $milestone["startstring"] = $startstring;
-
             // Get the name of the project where the message was posted for display
             $psel = $conn->query("SELECT name FROM projekte WHERE ID = $milestone[project]");
             $pname = $psel->fetch();
@@ -269,12 +277,12 @@ class milestone {
     }
 
     /**
-     * Return the latest milestones
-     *
-     * @param int $status Status (0 = finished, 1 = open)
-     * @param int $lim Number of milestones to return
-     * @return array $milestones Details of the milestones
-     */
+    * Return the latest milestones
+    *
+    * @param int $status Status (0 = finished, 1 = open)
+    * @param int $lim Number of milestones to return
+    * @return array $milestones Details of the milestones
+    */
     function getMilestones($status = 1, $lim = 100)
     {
         global $conn;
@@ -283,7 +291,8 @@ class milestone {
 
         $milestones = array();
 
-        $sel = $conn->query("SELECT ID FROM milestones WHERE `status`=$status  ORDER BY `end` ASC LIMIT $lim");
+        $sel = $conn->prepare("SELECT ID FROM milestones WHERE `status`=?  ORDER BY `end` ASC LIMIT ?");
+        $sel->execute(array($status, $lim));
 
         while ($milestone = $sel->fetch()) {
             $themilestone = $this->getMilestone($milestone["ID"]);
@@ -292,23 +301,26 @@ class milestone {
 
         if (!empty($milestones)) {
             return $milestones;
+
         } else {
             return false;
         }
     }
 
     /**
-     * Return all finished milestones of a given project
-     *
-     * @param int $project Project ID
-     * @return array $stones Details of the milestones
-     */
+    * Return all finished milestones of a given project
+    *
+    * @param int $project Project ID
+    * @return array $stones Details of the milestones
+    */
     function getDoneProjectMilestones($project)
     {
         global $conn;
         $project = (int) $project;
 
-        $sel = $conn->query("SELECT ID FROM milestones WHERE project = $project AND status = 0 ORDER BY `end` ASC");
+        $sel = $conn->prepare("SELECT ID FROM milestones WHERE project = ? AND status = 0 ORDER BY `end` ASC");
+        $sel->execute(array($project));
+
         $stones = array();
 
         while ($milestone = $sel->fetch()) {
@@ -324,12 +336,12 @@ class milestone {
     }
 
     /**
-     * Return all late milestones of a given project
-     *
-     * @param int $project Project ID
-     * @param int $lim Number of milestones to return
-     * @return array $milestones Dateils of the late milestones
-     */
+    * Return all late milestones of a given project
+    *
+    * @param int $project Project ID
+    * @param int $lim Number of milestones to return
+    * @return array $milestones Dateils of the late milestones
+    */
     function getLateProjectMilestones($project, $lim = 100)
     {
         global $conn;
@@ -340,9 +352,11 @@ class milestone {
         $now = strtotime($tod);
         $milestones = array();
 
-        $sql = "SELECT ID FROM milestones WHERE project = $project AND end < $now AND status = 1 ORDER BY end ASC LIMIT $lim";
+        $sql = "SELECT ID FROM milestones WHERE project = ? AND end < ? AND status = 1 ORDER BY end ASC LIMIT ?";
 
-        $sel1 = $conn->query($sql);
+        $sel1 = $conn->prepare($sql);
+        $sel1->execute(array($project, $now, $lim));
+
         while ($milestone = $sel1->fetch()) {
             if (!empty($milestone)) {
                 $themilestone = $this->getMilestone($milestone["ID"]);
@@ -357,13 +371,13 @@ class milestone {
         }
     }
     /**
-     * Return all upcoming milestones of a given project
-     * Upcoming milestones are milestones where the start date is in the future
-     *
-     * @param int $project Project ID
-     * @param int $lim Number of milestones to return
-     * @return array $milestones Dateils of the late milestones
-     */
+    * Return all upcoming milestones of a given project
+    * Upcoming milestones are milestones where the start date is in the future
+    *
+    * @param int $project Project ID
+    * @param int $lim Number of milestones to return
+    * @return array $milestones Dateils of the late milestones
+    */
     function getUpcomingProjectMilestones($project, $lim = 100)
     {
         global $conn;
@@ -374,9 +388,11 @@ class milestone {
         $now = strtotime($tod);
         $milestones = array();
 
-        $sql = "SELECT ID FROM milestones WHERE project = $project  AND start > $now AND status = 1 ORDER BY end ASC LIMIT $lim";
+        $sql = "SELECT ID FROM milestones WHERE project = ?  AND start > ? AND status = 1 ORDER BY end ASC LIMIT ?";
 
-        $sel1 = $conn->query($sql);
+        $sel1 = $conn->prepare($sql);
+        $sel1->execute(array($project,$now,$lim));
+
         while ($milestone = $sel1->fetch()) {
             if (!empty($milestone)) {
                 $themilestone = $this->getMilestone($milestone["ID"]);
@@ -392,12 +408,12 @@ class milestone {
     }
 
     /**
-     * Return all open milestones of a given project
-     *
-     * @param int $project Project ID
-     * @param int $lim Number of milestones to return
-     * @return array $milestones Details of the open milestones
-     */
+    * Return all open milestones of a given project
+    *
+    * @param int $project Project ID
+    * @param int $lim Number of milestones to return
+    * @return array $milestones Details of the open milestones
+    */
     function getAllProjectMilestones($project, $lim = 100)
     {
         global $conn;
@@ -407,9 +423,11 @@ class milestone {
         $tod = date(CL_DATEFORMAT);
         $now = strtotime($tod);
         $milestones = array();
-        $sql = "SELECT ID FROM milestones WHERE project = $project AND status = 1 ORDER BY end ASC LIMIT $lim";
+        $sql = "SELECT ID FROM milestones WHERE project = ? AND status = 1 ORDER BY end ASC LIMIT ?";
 
-        $sel1 = $conn->query($sql);
+        $sel1 = $conn->prepare($sql);
+        $sel1->execute(array($project, $lim));
+
         while ($milestone = $sel1->fetch()) {
             if (!empty($milestone)) {
                 $themilestone = $this->getMilestone($milestone["ID"]);
@@ -425,12 +443,12 @@ class milestone {
     }
 
     /**
-     * Return all milestone of a given project, that are not late
-     *
-     * @param int $project Project ID
-     * @param int $lim Number of milestones to return
-     * @return array $milestones Details of the milestones
-     */
+    * Return all milestone of a given project, that are not late
+    *
+    * @param int $project Project ID
+    * @param int $lim Number of milestones to return
+    * @return array $milestones Details of the milestones
+    */
     function getProjectMilestones($project, $lim = 100)
     {
         global $conn;
@@ -459,13 +477,12 @@ class milestone {
     }
 
     /**
-     * Return all milestones of a projects, that are due today
-     *
-     * @param int $project Project ID
-     * @param int $lim Number of milestones to return
-     * @return array $milestones Details of the milestones
-     */
-
+    * Return all milestones of a projects, that are due today
+    *
+    * @param int $project Project ID
+    * @param int $lim Number of milestones to return
+    * @return array $milestones Details of the milestones
+    */
     function getTodayProjectMilestones($project, $lim = 100)
     {
         global $conn;
@@ -490,15 +507,15 @@ class milestone {
     }
 
     /**
-     * Return all milestones of that belong to the loggedin user, due on a given day.
-
-     * This method is needed for populating the calendar widget with data.
-     *
-     * @param int $m Month Month, without leading zero (e.g. 5 for march)
-     * @param int $y Year Year in format yyyy
-     * @param int $d Day Without leading zero (e.g. 1 for the 1st of the month $m in year $y)
-     * @return array $milestones Details of the milestones
-     */
+    * Return all milestones of that belong to the loggedin user, due on a given day.
+    *
+    * This method is needed for populating the calendar widget with data.
+    *
+    * @param int $m Month Month, without leading zero (e.g. 5 for march)
+    * @param int $y Year Year in format yyyy
+    * @param int $d Day Without leading zero (e.g. 1 for the 1st of the month $m in year $y)
+    * @return array $milestones Details of the milestones
+    */
     function getTodayMilestones($m, $y, $d, $project = 0)
     {
         global $conn;
@@ -517,11 +534,10 @@ class milestone {
 
         if ($project > 0) {
             $sel1 = $conn->prepare("SELECT * FROM milestones WHERE project =  ? AND status=1 AND end = '$starttime' ORDER BY `end` ASC");
-        	$sel1->execute(array($project));
+            $sel1->execute(array($project));
         } else {
-        //	$sel1 = $conn->prepare("SELECT milestones.*,projekte_assigned.user,projekte.name AS pname,projekte.status AS pstatus FROM milestones,projekte_assigned,projekte WHERE milestones.project = projekte_assigned.projekt AND milestones.project = projekte.ID HAVING projekte_assigned.user = ? AND status=1 AND pstatus != 2 AND end = '$starttime'");
-        	$sel1 = $conn->prepare("SELECT milestones.*,projekte_assigned.user,projekte.name AS pname,projekte.status AS pstatus FROM milestones,projekte_assigned,projekte WHERE milestones.project = projekte_assigned.projekt AND milestones.project = projekte.ID GROUP BY projekte.ID HAVING projekte_assigned.user = ? AND milestones.status=1 AND pstatus != 2 AND milestones.end = '$starttime'");
-        	$sel1->execute(array($user));
+            $sel1 = $conn->prepare("SELECT milestones.*,projekte_assigned.user,projekte.name AS pname,projekte.status AS pstatus FROM milestones,projekte_assigned,projekte WHERE milestones.project = projekte_assigned.projekt AND milestones.project = projekte.ID AND projekte_assigned.user = ? AND milestones.status=1 AND projekte.status != 2 AND milestones.end = '$starttime'");
+            $sel1->execute(array($user));
         } while ($stone = $sel1->fetch()) {
             $stone["daysleft"] = $this->getDaysLeft($stone["end"]);
             array_push($timeline, $stone);
@@ -535,12 +551,13 @@ class milestone {
     }
 
     /**
-     * Return all open tasklists associated to a given milestones
-     *
-     * @param int $milestone Milestone ID
-     * @return array $lists Details of the tasklists
-     */
+    * Return all open tasklists associated to a given milestones
+    *
+    * @param int $milestone Milestone ID
+    * @return array $lists Details of the tasklists
+    */
     private function getMilestoneTasklists($milestone)
+
     {
         global $conn;
         $milestone = (int) $milestone;
@@ -578,11 +595,11 @@ class milestone {
     }
 
     /**
-     * Return the days left from today until a given point in time
-     *
-     * @param int $end Point in time
-     * @return int $days Days left
-     */
+    * Return the days left from today until a given point in time
+    *
+    * @param int $end Point in time
+    * @return int $days Days left
+    */
     private function getDaysLeft($end)
     {
         $tod = date("d.m.Y");
@@ -593,12 +610,12 @@ class milestone {
     }
 
     /**
-     * Format a milestone's timestamp
-     *
-     * @param int $milestones Milestone ID
-     * @param int $format Wanted time format
-     * @return array $milestones Milestone with the formatted timestamp
-     */
+    * Format a milestone's timestamp
+    *
+    * @param int $milestones Milestone ID
+    * @param int $format Wanted time format
+    * @return array $milestones Milestone with the formatted timestamp
+    */
     function formatdate(array $milestones)
     {
         $cou = 0;

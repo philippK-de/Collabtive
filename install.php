@@ -72,6 +72,9 @@ if (!$action) {
     $db_name = $_POST['db_name'];
     $db_user = $_POST['db_user'];
     $db_pass = $_POST['db_pass'];
+	$db_driver = $_POST['db_driver'];
+
+
     // write db login data to config file
     $file = fopen(CL_ROOT . "/config/" . CL_CONFIG . "/config.php", "w+");
     $str = "<?php
@@ -79,6 +82,7 @@ if (!$action) {
 \$db_name = '$db_name';\n
 \$db_user = '$db_user';\n
 \$db_pass = '$db_pass';\n
+\$db_driver = '$db_driver';\n
 ?>";
     $put = fwrite($file, "$str");
     if ($put) {
@@ -86,16 +90,22 @@ if (!$action) {
     }
     $installer_include = "yes";
     // connect database.
-    require_once("install_mysql.php");
+	switch ($db_driver) {
+		case "mysql":
+			require_once("install_mysql.php");
+			break;
+		case "sqlite":
+			$conn = new PDO("sqlite:" . CL_ROOT . "/files/collabtive.sdb");
+			break;
+	}
     // Get the servers default timezone
     $timezone = date_default_timezone_get();
     // insert default settings
-    /*$defSets = array("name" => "Collabtive", "subtitle" => "Projectmanagement", "locale" => $locale, "timezone" => $timezone, "dateformat" => "d.m.Y", "template" => "standard", "mailnotify" => 1, "mailfrom" => "collabtive@localhost", "mailfromname" => "", "mailmethod" => "mail", "mailhost" => "", "mailuser" => "", "mailpass" => "", "rssuser" => "", "rsspass" => "");
-    foreach($defSets as $setKey => $setVal) {
-        $ins = $conn->query("INSERT INTO settings (`settingsKey`,`settingsValue`) VALUES ('$setKey','$setVal')");
-    }
-*/
-    $ins = $conn->query("INSERT INTO `settings` (`ID`, `settingsKey`, `settingsValue`) VALUES
+	$defSets = array("name" => "Collabtive", "subtitle" => "Projectmanagement", "locale" => $locale, "timezone" => $timezone, "dateformat" => "d.m.Y", "template" => "standard", "mailnotify" => 1, "mailfrom" => "collabtive@localhost", "mailfromname" => "", "mailmethod" => "mail", "mailhost" => "", "mailuser" => "", "mailpass" => "", "rssuser" => "", "rsspass" => "", "theme"=>"standard","filePass"=>$filePass);
+	foreach($defSets as $setKey => $setVal) {
+		$ins = $conn->query("INSERT INTO settings (`settingsKey`,`settingsValue`) VALUES ('$setKey','$setVal')");
+	}
+   /* $ins = $conn->query("INSERT INTO `settings` (`ID`, `settingsKey`, `settingsValue`) VALUES
 (1, 'name', 'Collabtive'),
 (2, 'subtitle', 'Collabtive'),
 (3, 'locale', 'en'),
@@ -112,7 +122,9 @@ if (!$action) {
 (14, 'rssuser', ''),
 (15, 'rsspass', ''),
 (16, 'theme', 'standard'),
-(17, 'filePass', '$filePass')");
+(17, 'filePass', '$filePass')");*/
+	//	print_r($conn->errorInfo());
+
     if (!$ins) {
         $template->assign("errortext", "Error: Failed to create initial settings.");
         $template->display("error.tpl");
@@ -126,7 +138,14 @@ if (!$action) {
 
     require(CL_ROOT . "/config/" . CL_CONFIG . "/config.php");
     // Start database connection
-    $conn = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
+	switch ($db_driver) {
+		case "mysql":
+			$conn = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8", $db_user, $db_pass);
+			break;
+		case "sqlite":
+			$conn = new PDO("sqlite:" . CL_ROOT . "/files/collabtive.sdb");
+			break;
+	}
     $user = $_POST['name'];
     $pass = $_POST['pass'];
     // create the first user

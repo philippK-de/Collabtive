@@ -239,24 +239,6 @@ class user {
 
 		$profile = $sel->fetch();
         if (!empty($profile)) {
-            $profile["name"] = stripslashes($profile["name"]);
-            if (isset($profile["company"])) {
-                $profile["company"] = stripslashes($profile["company"]);
-            }
-            if (isset($profile["adress"])) {
-                $profile["adress"] = stripslashes($profile["adress"]);
-            }
-            if (isset($profile["adress2"])) {
-                $profile["adress2"] = stripslashes($profile["adress2"]);
-            }
-            if (isset($profile["state"])) {
-                $profile["state"] = stripslashes($profile["state"]);
-            }
-            if (isset($profile["country"])) {
-                $profile["country"] = stripslashes($profile["country"]);
-            }
-            $tagsobj = new tags();
-            $profile["tagsarr"] = $tagsobj->splitTagStr($profile["tags"]);
 
             $rolesobj = (object) new roles();
             $profile["role"] = $rolesobj->getUserRole($profile["ID"]);
@@ -402,12 +384,6 @@ class user {
         $users = array();
 
         while ($user = $sel->fetch()) {
-            $user["name"] = stripslashes($user["name"]);
-            $user["company"] = stripslashes($user["company"]);
-            $user["adress"] = stripslashes($user["adress"]);
-            $user["adress2"] = stripslashes($user["adress2"]);
-            $user["state"] = stripslashes($user["state"]);
-            $user["country"] = stripslashes($user["country"]);
             array_push($users, $user);
         }
 
