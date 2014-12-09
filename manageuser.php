@@ -210,7 +210,6 @@ if ($action == "loginerror") {
         header("Location: $loc");
     }
 } elseif ($action == "profile") {
-    $thetag = new tags();
     $start = getArrayVal($_GET, "start");
     $end = getArrayVal($_GET, "end");
     $proj = (object) new project();

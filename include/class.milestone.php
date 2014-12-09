@@ -300,6 +300,7 @@ class milestone {
 
         if (!empty($milestones)) {
             return $milestones;
+
         } else {
             return false;
         }
@@ -389,7 +390,7 @@ class milestone {
         $sql = "SELECT ID FROM milestones WHERE project = ?  AND start > ? AND status = 1 ORDER BY end ASC LIMIT ?";
 
         $sel1 = $conn->prepare($sql);
-        $sel1->execute(array($id));
+        $sel1->execute(array($project,$now));
 
         while ($milestone = $sel1->fetch()) {
             if (!empty($milestone)) {
