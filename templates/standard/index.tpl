@@ -39,7 +39,7 @@
 
 			<div class="projects"  style = "padding-bottom:2px;">
 				<div class="headline">
-					<a href="javascript:void(0);" id="projecthead_toggle" class="win_block" onclick="changeElements('a.win_block','win_none');toggleBlock('projecthead');accordIndex.activate($$('#block_index .acc_toggle')[0]);"></a>
+					<a href="javascript:void(0);" id="projecthead_toggle" class="win_block" onclick="changeElements('a.win_block','win_none');toggleBlock('projecthead');"></a>
 
 					<h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{#myprojects#}</h2>
 				</div>
@@ -151,7 +151,7 @@
 
 			<div class="tasks" style = "padding-bottom:2px;">
 				<div class="headline">
-				<a href="javascript:void(0);" id="taskhead_toggle" class="win_none" onclick="changeElements('a.win_block','win_none');toggleBlock('taskhead');accordIndex.activate($$('#block_index .acc_toggle')[1]);"></a>
+				<a href="javascript:void(0);" id="taskhead_toggle" class="win_none" onclick="changeElements('a.win_block','win_none');toggleBlock('taskhead');"></a>
 
 					<div class="wintools">
 						<div class="export-main">
@@ -275,7 +275,7 @@
 		{if $tasknum}
 			<div class="miles" style = "padding-bottom:2px;">
 				<div class="headline">
-					<a href="javascript:void(0);" id="mileshead_toggle" class="win_none" onclick="changeElements('a.win_block','win_none');toggleBlock('mileshead');accordIndex.activate($$('#block_index .acc_toggle')[2]);"></a>
+					<a href="javascript:void(0);" id="mileshead_toggle" class="win_none" onclick="changeElements('a.win_block','win_none');toggleBlock('mileshead');"></a>
 
 					<div class="wintools">
 						<div class="progress" id="progress" style="display:none;">
@@ -319,7 +319,8 @@
 				</div>
 				<div class = "acc_toggle"></div>
 				<div class="block acc_content" id="activityhead" style = "overflow:hidden;" >
-
+				<div id = "addmsg" class="addmenue" style = "display:none;">
+				</div>
 					<table id="desktopmessages" cellpadding="0" cellspacing="0" border="0">
 
 						<thead>
@@ -369,7 +370,7 @@
 									<td>{$messages[message].postdate}</td>
 									<td class="tools">
 										{if $userpermissions.messages.edit}
-											<a class="tool_edit" href="managemessage.php?action=editform&amp;mid={$messages[message].ID}&amp;id={$messages[message].project}&amp;redir=index.php" title="{#edit#}"></a>
+											<a class="tool_edit" href="javascript:void(0);" onclick="change('managemessage.php?action=editform&amp;mid={$messages[message].ID}&amp;id={$messages[message].project}','addmsg');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('addmsg');" title="{#edit#}"></a>
 										{/if}
 										{if $userpermissions.messages.del}
 											<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'messages_{$messages[message].ID}\',\'managemessage.php?action=del&amp;mid={$messages[message].ID}&amp;id={$messages[message].project}\')');"  title="{#delete#}"></a>
@@ -484,12 +485,12 @@
 
 				</div> {* block END *}
 			</div> {* messages END *}
-					<div class="content-spacer"></div>
+
 		{/if}
 
 		{literal}
 			<script type="text/javascript">
-
+				//initialize accordeons
 				try{
 					var accord_projects = new accordion('projecthead');
 				}
@@ -505,21 +506,66 @@
 				}
 				catch(e)
 				{}
+				//load calendar
 				changeshow('manageajax.php?action=newcal','thecal','progress');
-			var accordIndex = new accordion('block_index', {
+
+				//create blocks accordeon
+				var accordIndex = new accordion('block_index', {
 			    classNames : {
 			        toggle : 'acc_toggle',
 			        toggleActive : 'acctoggle_active',
 			        content : 'acc_content'
 			    }
 			});
-				accordIndex.activate($$('#block_index .acc_toggle')[0]);
-				var theBlocks = $$("#block_index > div");
+
+				/**
+				 *
+				 * @access public
+				 * @return void
+				 **/
+				function activateAccordeon(theAccord){
+					accordIndex.activate($$('#block_index .acc_toggle')[theAccord]);
+					changeElements("#"+blockIds[theAccord]+" > a.win_block","win_none");
+					setCookie("activeSlideIndex",theAccord);
+				}
+				var theBlocks = $$("#block_index > div .headline > a");
+				//console.log(theBlocks);
+
+				//loop through the blocks and add the accordion toggle link
+				openSlide = 0;
+				blockIds = [];
+				for(i=0;i<theBlocks.length;i++)
+				{
+					var theId = theBlocks[i].getAttribute("id");
+
+					//theId = theId.split("_");
+					//theId = theId[0];
+					blockIds.push(theId);
+
+					theCook = readCookie("activeSlideIndex");
+					//console.log(theCook);
+					if(theCook > 0)
+					{
+						openSlide = theCook;
+					}
+
+					var theAction = theBlocks[i].getAttribute("onclick");
+					theAction += "activateAccordeon("+i+");";
+					theBlocks[i].setAttribute("onclick",theAction);
+					//console.log(theBlocks[i].getAttribute("onclick"));
+				}
+
+
+				//accordIndex.activate($$('#block_index .acc_toggle')[0]);
+				//activateAccordeon(openSlide);
+				activateAccordeon(0);
+
 
 
 			</script>
 		{/literal}
 </div> {* block index end*}
+<div class="content-spacer"></div>
 	</div> {* content-left-in END *}
 </div> {* content-left END *}
 

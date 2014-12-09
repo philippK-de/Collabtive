@@ -12,7 +12,7 @@
 + Revert to gridview as the default file view (this was changed in 1.2 b/c of issues)
 + Added edge case for SSL detection
 + Removed .htaccess file as it was causing trouble with some servers
-+ Added start date functionality for tasks (TODO: turn into optional parameter by debugging required="0" and presenting field as empty on form open;)
++ Added start date functionality for tasks
 + Fixed several typos in style_form.css
 + Fixed typo in paginate-first function
 + Fixed cancel button for deleting folders in list view
@@ -23,17 +23,32 @@
 + Remove force-compile option from template engine. This disabled caching and caused performance problems for some users.
 + Add compileAllConfig() to force a recompile of the config files in certain cases.
 + Fixed possible sql vulnerability in manageajax.php
++ Dont expose plain filesystem links to uploaded files. Downloads are routed through download.php
 + Added AES encryption of uploaded files
 + Added CSS theme functionality. Now the CSS and image files for each template set reside in a /themes/ subfolder. This way, there can be CSS only variations of templates created more easily.
 + Change color of tab info string, making it more readable
 + Set cache directory for HTML purifier definitions to /files/standard/ics/
 + Messages can now be edited asyncronously
 + Messages can now be replied to asyncronously
++ Implemented a new structure for the desktop. It is now an accordeon where clicking each section slides it open and closes all others.
 + Implemented a new structure for the project dashboard. It is now an accordeon where clicking each section slides it open and closes all others.
++ Customer profiles can be added in admin->customer
 + A customer can be assigned to projects
 + Remove user pictures from the onlinelist
 + Added translation of install-readme: Simplified Chinese
++ Removed unfunctional links from the day numbers in the desktop calendar
 + Fixed white page when editing of task failed.
++ Fixed conversion of umlauts when uploading files.
++ Fixed accordeon in tasklist view
++ Fixed a bug where the list view in project->files could not be selected if the user's role had file:add deactivated.
++ Files in subfolders can now also be attached to messages
++ Fixed filetype detection in message::getAttachedFiles - needs more refactoring to use file::getFile
++ Fixed a problem with file uploads and visibility string
++ Fixed cancel button submitting the form in task->edit
++ Localized project tree labels
++ Localized label for name in list view for files
++ Added a new CSS theme: spring
++ Fixed various display bugs
 
 Collabtive 1.2
 + Added translations: Vietnamese

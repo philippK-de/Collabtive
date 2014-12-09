@@ -404,6 +404,10 @@ td.message ul {
 	background: url(../images/main-admin-c.png) no-repeat 0 0;
 }
 
+#mainmenue .submen li.customer-settings a {
+	background: url(../images/main-admin-d.png) no-repeat 0 0;
+}
+
 #mainmenue li:hover a, #mainmenue li a.active, #mainmenue .submen li:hover a, #mainmenue .submen li a.active {
 	background-position: 0 -32px;
 }
@@ -1478,6 +1482,10 @@ ul.tabs li.desk a {
 
 ul.tabs li.projects a {
 	background-image: url(../images/symbols/tab-projects.png);
+}
+
+ul.tabs li.customers a {
+	background-image: url(../images/symbols/tab-customers.png);
 }
 
 ul.tabs li.tasks a {

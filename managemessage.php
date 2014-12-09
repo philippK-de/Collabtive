@@ -288,7 +288,7 @@ if ($action == "addform") {
     }
     // get files of the project
     $datei = new datei();
-    $thefiles = $datei->getProjectFiles($id);
+    $thefiles = $datei->getAllProjectFiles($id);
 
     $milestones = $objmilestone->getAllProjectMilestones($id, 10000);
 

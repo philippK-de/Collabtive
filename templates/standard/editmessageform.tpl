@@ -75,7 +75,7 @@
 							<label>&nbsp;</label>
 							<button type="submit" onfocus="this.blur();">{$langfile.send}</button>
 							{if $showhtml == "no"}
-								<button onclick="blindtoggle('form_edit');toggleClass('edit_butn','edit-active','edit');toggleClass('sm_replies_a','smooth','nosmooth');return false;" onfocus="this.blur();">{$langfile.cancel}</button>
+								<button type = "reset" onclick="blindtoggle('form_edit');toggleClass('edit_butn','edit-active','edit');toggleClass('sm_replies_a','smooth','nosmooth');return false;" onfocus="this.blur();">{$langfile.cancel}</button>
 							{/if}
 						</div>
 

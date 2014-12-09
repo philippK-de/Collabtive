@@ -168,7 +168,7 @@
 
 			{*Tasks donetasks*}
 			{if $tasklist.donetasknum > 0}
-				<div id="done_2" class="doneblock">
+				<div id="doneblock_{$project.ID}" class="doneblock">
 
 					<table class="second-thead" cellpadding="0" cellspacing="0" border="0" onclick="blindtoggle('doneblock_{$project.ID}');toggleClass('donebutn_{$project.ID}','butn_link_active','butn_link');toggleClass('toggle-done-{$project.ID}','acc-toggle','acc-toggle-active');">
 						<tr>
@@ -257,7 +257,7 @@
 {literal}
 	<script type = "text/javascript">
 		var accord_1 = new accordion('acc_1');
-		var done_2 = new accordion('done_2');
+		var done_2 = new accordion('doneblock_{$project.ID}');
 	</script>
 {/literal}
 

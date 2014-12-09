@@ -1,25 +1,46 @@
 <?php
-
+error_reporting(0);
 require("./init.php");
 
-error_reporting(0);
+
 // VERSION-DEPENDENT
 //2.0
 function randomPassword() {
 	$alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
 	$pass = array(); //remember to declare $pass as an array
 	$alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
-	for ($i = 0; $i < 12; $i++) {
+	for ($i = 0; $i < 16; $i++) {
 		$n = rand(0, $alphaLength);
 		$pass[] = $alphabet[$n];
 	}
 	return implode($pass); //turn the array into a string
 }
 $filePass = randomPassword();
+$path = "./include/phpseclib";
+set_include_path(get_include_path() . PATH_SEPARATOR . $path);
 
-$conn->query("INSERT INTO `settings` (`ID` ,`settingsKey` ,`settingsValue`) VALUES (NULL , 'theme', 'standard')");
+$conn->query("CREATE TABLE IF NOT EXISTS `customers_assigned` (
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `customer` int(10) NOT NULL,
+  `project` int(10) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+)");
+$oldTemplate = $settings["template"];
+$template->assign("theme",$oldTemplate);
+$conn->query("INSERT INTO `settings` (`ID` ,`settingsKey` ,`settingsValue`) VALUES (NULL , 'theme', '$oldTemplate')");
+$conn->query("UPDATE `settings` SET `template`='standard'");
+
 $conn->query("INSERT INTO `settings` (`ID`, `settingsKey`, `settingsValue`) VALUES (NULL, 'filePass', '$filePass')");
 
+$filesList = $conn->query("SELECT * FROM `files`")->fetchAll();
+$fileObj = new datei();
+
+foreach($filesList as $file)
+{
+	$tmpFile = CL_ROOT . "/" . $file["datei"];
+	$fileObj->encryptFile($tmpFile,$filePass);
+}
 //drop tags field from files
 $conn->query("ALTER TABLE `files` DROP `tags`");
 // VERSION-INDEPENDENT

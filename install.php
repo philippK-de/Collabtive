@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ERROR);
+error_reporting(0);
 // Check if directory templates_c exists and is writable
 if (!file_exists("./templates_c") or !is_writable("./templates_c")) {
     die("Required folder templates_c does not exist or is not writable. <br>Please create the folder or make it writable in order to proceed.");
@@ -15,6 +15,7 @@ session_unset();
 setcookie("PHPSESSID", "");
 date_default_timezone_set("Europe/Berlin");
 require("./init.php");
+error_reporting(0);
 $action = getArrayVal($_GET, "action");
 $locale = getArrayVal($_GET, "locale");
 
@@ -55,7 +56,7 @@ if (!$action) {
 		$alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
 		$pass = array(); //remember to declare $pass as an array
 		$alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
-		for ($i = 0; $i < 12; $i++) {
+		for ($i = 0; $i < 16; $i++) {
 			$n = rand(0, $alphaLength);
 			$pass[] = $alphabet[$n];
 		}
