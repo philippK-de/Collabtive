@@ -33,6 +33,7 @@
 + A customer can be assigned to projects
 + Remove user pictures from the onlinelist
 + Added translation of install-readme: Simplified Chinese
++ Fixed white page when editing of task failed.
 
 Collabtive 1.2
 + Added translations: Vietnamese
@@ -294,6 +295,7 @@ Collabtive 0.6.3
 + Fixed a bug in tasklist editing where not all active milestones were available to assign the list to.
 + Added Favicon to standard theme
 + Added TinyMCE editor options to message edit form, reply form, milestone add form, and milestone edit form
+
 + Dropped update support for updating from versions earlier than 0.5
 + Removed calls to deprecated function set_magic_quotes_runtime() in class tcpdf (PDF export)
 

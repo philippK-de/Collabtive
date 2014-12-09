@@ -85,16 +85,16 @@ class task {
         $liste = (int) $liste;
         $title = htmlspecialchars($title);
 
+    	//convert time string to timestamp
         $start = strtotime($start);
         $end = strtotime($end);
 
         $updStmt = $conn->prepare("UPDATE tasks SET `start`=?, `end`=?, `title`=?, `text`=?, `liste`=? WHERE ID = ?");
-        // Remove all the users from the task. Done to ensure no double assigns occur since the handler scripts call this::assign() on their own.
-        $conn->query("DELETE FROM tasks_assigned WHERE `task` = $id");
-
         $upd = $updStmt->execute(array($start, $end, $title, $text, $liste, $id));
 
         if ($upd) {
+        	// Remove all the users from the task. Done to ensure no double assigns occur since the handler scripts call this::assign() on their own.
+			$conn->query("DELETE FROM tasks_assigned WHERE `task` = $id");
             $nameproject = $this->getNameProject($id);
             $this->mylog->add($nameproject[0], 'task', 2, $nameproject[1]);
             return true;
