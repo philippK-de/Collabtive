@@ -370,17 +370,14 @@ class project {
 
         $myprojekte = array();
         $user = (int) $user;
-    	$status = (int) $status;
+      	$status = (int) $status;
 
-        $sel = $conn->prepare("SELECT projekt FROM projekte_assigned WHERE user = ? ORDER BY ID ASC");
-        $selStmt = $sel->execute(array($user));
+        $sel = $conn->prepare('SELECT projekte.ID as ID FROM projekte RIGHT JOIN projekte_assigned on (projekte.ID = projekte_assigned.projekt) WHERE user = ? AND status = ? ORDER BY ID ASC');
+        $selStmt = $sel->execute(array($user,$status));
 
-    	$projektStmt = $conn->prepare("SELECT ID FROM projekte WHERE ID = ? AND status=?");
-        while ($projs = $sel->fetch()) {
-        	$projektStmt->execute(array($projs[0],$status));
-        	$projekt = $projektStmt->fetch();
-            if ($projekt) {
-                $project = $this->getProject($projekt["ID"]);
+        while ($db_projekt = $sel->fetch()) {
+            if ($db_projekt) {
+                $project = $this->getProject($db_projekt["ID"]);
                 array_push($myprojekte, $project);
             }
         }
