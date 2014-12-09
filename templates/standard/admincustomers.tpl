@@ -12,10 +12,10 @@
 					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/customers.png" alt="" />
 					{#customerwasedited#}
 				</span>
-				{elseif $mode == "deassigned"}
+				{elseif $mode == "deleted"}
 				<span class="info_in_red">
-					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-male.png" alt="" />
-					{#userwasdeassigned#}
+					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/customers.png" alt="" />
+					{#customerwasdeleted#}
 				</span>
 				{elseif $mode == "added"}
 				<span class="info_in_green">

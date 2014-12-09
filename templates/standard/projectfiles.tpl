@@ -65,17 +65,8 @@
 				{if $userpermissions.files.add}
 					<div id = "form_file" class="addmenue" style = "display:none;">
 						<div id = "newupload" style = "display:block">{include file="addfileform_new.tpl"}</div>
-						<!--[If IE]><div id = "newuploadIE" style = "display:block">{include file="addfileform.tpl"}</div><![endif]-->
-					</div>
+						</div>
 				{/if}
-				<!--[If IE]>
-				{literal}
-				<script type = "text/javascript">
-			$('newupload').innerHTML = "";
-				</script>
-				{/literal}
-				<![endif]-->
-
 				<div class="nosmooth" id="sm_files">
 					<div class="contenttitle" id = "dropDirUp" >
 						<div class="contenttitle_menue" >
