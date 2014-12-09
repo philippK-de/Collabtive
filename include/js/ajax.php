@@ -7,6 +7,10 @@ gmdate("D, d M Y H:i:s",time() + $offset) . "GMT";
 header($ExpStr);
 
 ?>
+//endcolor for close element flashing
+closeEndcolor = '#377814';
+//endcolor for delete element flashing
+deleteEndcolor = '#c62424';
 //various ajax functions
 function change(script,element) {
    var ajax = new Ajax.Updater({success: element},script,{method: 'get',evalScripts:true});
@@ -338,6 +342,7 @@ function sortBlock(theblock,sortmode)
         {
             tbodies[i].setAttribute("sortorder","asc");
         }
+
 
         $(theblock).removeChild(tbodies[i]);
         //$('jslog').innerHTML += tbodies[i].id + "<br />";

@@ -1,6 +1,6 @@
-{include file="header.tpl" jsload = "ajax" jsload3 = "lightbox" }
+{include file="header.tpl" jsload="ajax" jsload3="lightbox"}
+{include file="tabsmenue-desk.tpl"}
 
-{include file="tabsmenue-desk.tpl" }
 <div id="content-left">
 <div id="content-left-in">
 <div class="neutral">
@@ -12,7 +12,7 @@
 				<a href="javascript:void(0);" id="block_tags_toggle" class="win_block" onclick = "toggleBlock('block_tags');"></a>
 				
 				<h2>
-					<img src="./templates/standard/images/symbols/search.png" alt="" />{#results#} ({$num})
+					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/search.png" alt="" />{#results#} ({$num})
 				</h2>
 			</div>
 
@@ -45,33 +45,26 @@
 											</td>
 											<td class="thumb">
 												{if $result[obj].type == "file"}
-													<a style="top:-33px;" href = "files/{$cl_config}/{$result[obj].project}/{$result[obj].name}" {if $result[obj].imgfile == 1} rel="lytebox[]" {elseif $result[obj].imgfile == 2} rel = "lyteframe[text]" rev="width: 650px; height: 500px;" {/if}>
+													<a style="top:-33px;" href = "{$result[obj].datei}" {if $result[obj].imgfile == 1} rel="lytebox[]" {elseif $result[obj].imgfile == 2} rel = "lyteframe[text]" rev="width: 650px; height: 500px;" {/if}>
 														{if $result[obj].imgfile == 1}
 														<img src = "thumb.php?pic={$result[obj].datei}&amp;width=32" alt="" />
 														{else}
-														<img src = "templates/standard/images/symbols/{$result[obj].icon}" alt="" />
+														<img src = "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/{$result[obj].icon}" alt="" />
 														{/if}
 													</a>	
 												{else}
 													<a href = "{$result[obj].url}" title="{$result[obj].name}">
-														<img src = "templates/standard/images/symbols/{$result[obj].icon}" alt="" />
+														<img src = "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/{$result[obj].icon}" alt="" />
 													</a>
 												{/if}											
 											</td>
-											<td class="rightmen" valign="top">
-												<!--
-												<div class="inmenue">
-													<a class="del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'files_focus{$ordner[file].ID}\',\'managefile.php?action=delete&amp;id={$project.ID}&amp;file={$folders[fold].ID}\')');" title="{#delete#}" onclick="fadeToggle('iw_{$folders[fold].ID}');"></a>
-													<a class="edit" href="#" title="{#editfile#}"></a>
-												</div>
-												-->
-											</td>
+											<td class="rightmen" valign="top"></td>
 										</tr>
 										<tr>
 											<td colspan="3">
 												<span class="name">
 														{if $result[obj].type == "file"}
-															<a href = "files/{$cl_config}/{$result[obj].project}/{$result[obj].name}" {if $result[obj].imgfile == 1} rel="lytebox[]" {elseif $result[obj].imgfile == 2} rel = "lyteframe[text]" rev="width: 650px; height: 500px;" {/if} title="{$result[obj].name}">{$result[obj].name|truncate:13:"...":true}</a>
+															<a href = "{$result[obj].datei}" {if $result[obj].imgfile == 1} rel="lytebox[]" {elseif $result[obj].imgfile == 2} rel = "lyteframe[text]" rev="width: 650px; height: 500px;" {/if} title="{$result[obj].name}">{$result[obj].name|truncate:13:"...":true}</a>
 														{elseif $result[obj].name != ""}
 															<a href = "{$result[obj].url}" title="{$result[obj].name}">{$result[obj].name|truncate:13:"...":true}</a>
 														{else}

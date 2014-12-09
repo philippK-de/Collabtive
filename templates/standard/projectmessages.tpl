@@ -6,19 +6,19 @@
 		<div class="msgs">
 
 			<div class = "infowin_left">
-				<span id = "deleted" style = "display:none;" class="info_in_red"><img src="templates/standard/images/symbols/msgs.png" alt=""/>{#messagewasdeleted#}</span>
+				<span id = "deleted" style = "display:none;" class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#messagewasdeleted#}</span>
 			</div>
 
 			<div class="infowin_left" style = "display:none;" id = "systemmsg">
 				{if $mode == "added"}
-					<span class="info_in_green"><img src="templates/standard/images/symbols/msgs.png" alt=""/>{#messagewasadded#}</span>
+					<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#messagewasadded#}</span>
 				{elseif $mode == "edited"}
-					<span class="info_in_yellow"><img src="templates/standard/images/symbols/msgs.png" alt=""/>{#messagewasedited#}</span>
+					<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#messagewasedited#}</span>
 				{elseif $mode == "replied"}
-					<span class="info_in_green"><img src="templates/standard/images/symbols/msgs.png" alt=""/>{#replywasadded#}</span>
+					<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#replywasadded#}</span>
 				{/if}
 			</div>
-			
+
 			{literal}
 				<script type = "text/javascript">
 					systemMsg('systemmsg');
@@ -46,7 +46,7 @@
 				</div>
 
 				<h2>
-					<img src="./templates/standard/images/symbols/msgs.png" alt="" />{#messages#}
+					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt="" />{#messages#}
 				</h2>
 			</div>
 
@@ -87,7 +87,9 @@
 						{/if}
 							<tr>
 								<td>
-									{if $userpermissions.messages.close}<a class="butn_reply" href="managemessage.php?action=replyform&amp;mid={$messages[message].ID}&amp;id={$project.ID}" title="{#answer#}"></a>{/if}
+									{if $userpermissions.messages.close}
+											<a class="butn_reply" href="javascript:void(0);" onclick="change('managemessage.php?action=replyform&amp;mid={$messages[message].ID}&amp;id={$project.ID}','addmsg');toggleClass(this,'butn_reply_active','butn_reply');blindtoggle('addmsg');" title="{#edit#}"></a>
+									{/if}
 								</td>
 								<td>
 									<div class="toggle-in">
@@ -107,7 +109,7 @@
 								<td>{$messages[message].postdate}</td>
 								<td class="tools">
 									{if $userpermissions.messages.edit}
-										<a class="tool_edit" href="managemessage.php?action=editform&amp;mid={$messages[message].ID}&amp;id={$project.ID}" title="{#edit#}"></a>
+										<a class="tool_edit" href="javascript:void(0);" onclick="change('managemessage.php?action=editform&amp;mid={$messages[message].ID}&amp;id={$project.ID}','addmsg');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('addmsg');" title="{#edit#}"></a>
 									{/if}
 									{if $userpermissions.messages.del}
 										<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'msgs_{$messages[message].ID}\',\'managemessage.php?action=del&amp;mid={$messages[message].ID}&amp;id={$project.ID}\')');"  title="{#delete#}"></a>
@@ -124,9 +126,9 @@
 												<div class="avatar"><img src = "thumb.php?width=80&amp;height=80&amp;pic=files/{$cl_config}/avatar/{$messages[message].avatar}" alt="" /></div>
 											{else}
 												{if $messages[message].gender == "f"}
-													<div class="avatar"><img src = "thumb.php?pic=templates/standard/images/no-avatar-female.jpg&amp;width=80;" alt="" /></div>
+													<div class="avatar"><img src = "thumb.php?pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-female.jpg&amp;width=80;" alt="" /></div>
 												{else}
-													<div class="avatar"><img src = "thumb.php?pic=templates/standard/images/no-avatar-male.jpg&amp;width=80;" alt="" /></div>
+													<div class="avatar"><img src = "thumb.php?pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-male.jpg&amp;width=80;" alt="" /></div>
 												{/if}
 											{/if}
 											<div class="message">
@@ -178,7 +180,7 @@
 																					{if $messages[message].files[file].imgfile == 1}
 																					<img src = "thumb.php?pic={$messages[message].files[file].datei}&amp;width=32" alt="" />
 																					{else}
-																					<img src = "templates/standard/images/files/{$messages[message].files[file].type}.png" alt="" />
+																					<img src = "templates/{$settings.template}/theme/{$settings.theme}/images/files/{$messages[message].files[file].type}.png" alt="" />
 																					{/if}
 																				</a>
 																			</td>

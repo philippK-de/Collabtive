@@ -34,20 +34,20 @@ function dTree(objName) {
 		inOrder					: false
 	}
 	this.icon = {
-		root				: 'templates/standard/images/symbols/empty.gif',
-		folder			: 'templates/standard/images/symbols/folder.gif',
-		folderOpen	: 'templates/standard/images/symbols/folderopen.gif',
-		node				: 'templates/standard/images/symbols/page.gif',
-		empty				: 'templates/standard/images/symbols/empty.gif',
-		line				: 'templates/standard/images/symbols/line.gif',
-		join				: 'templates/standard/images/symbols/join.gif',
-		joinBottom	: 'templates/standard/images/symbols/joinbottom.gif',
-		plus				: 'templates/standard/images/symbols/plus.gif',
-		plusBottom	: 'templates/standard/images/symbols/plusbottom.gif',
-		minus				: 'templates/standard/images/symbols/minus.gif',
-		minusBottom	: 'templates/standard/images/symbols/minusbottom.gif',
-		nlPlus			: 'templates/standard/images/symbols/nolines_plus.gif',
-		nlMinus			: 'templates/standard/images/symbols/nolines_minus.gif'
+		root				: 'templates/standard/theme/standard/images/symbols/empty.gif',
+		folder			: 'templates/standard/theme/standard/images/symbols/folder.gif',
+		folderOpen	: 'templates/standard/theme/standard/images/symbols/folderopen.gif',
+		node				: 'templates/standard/theme/standard/images/symbols/page.gif',
+		empty				: 'templates/standard/theme/standard/images/symbols/empty.gif',
+		line				: 'templates/standard/theme/standard/images/symbols/line.gif',
+		join				: 'templates/standard/theme/standard/images/symbols/join.gif',
+		joinBottom	: 'templates/standard/theme/standard/images/symbols/joinbottom.gif',
+		plus				: 'templates/standard/theme/standard/images/symbols/plus.gif',
+		plusBottom	: 'templates/standard/theme/standard/images/symbols/plusbottom.gif',
+		minus				: 'templates/standard/theme/standard/images/symbols/minus.gif',
+		minusBottom	: 'templates/standard/theme/standard/images/symbols/minusbottom.gif',
+		nlPlus			: 'templates/standard/theme/standard/images/symbols/nolines_plus.gif',
+		nlMinus			: 'templates/standard/theme/standard/images/symbols/nolines_minus.gif'
 	};
 	this.obj = objName;
 	this.aNodes = [];

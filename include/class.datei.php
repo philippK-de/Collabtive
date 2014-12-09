@@ -20,9 +20,9 @@ class datei {
         // Initialize event log
         $this->mylog = new mylog;
     }
-    
+
     // FOLDER METHODS
-    
+
     /**
      * Create a new folder
      *
@@ -33,30 +33,39 @@ class datei {
      * @param strin $visible Visibility of the new folder
      * @return bool
      */
-    function addFolder($parent, $project, $folder, $desc, $visible = "")
+    function addFolder($parent, $project, $folder, $desc)
     {
         global $conn;
-        
+
         $project = (int) $project;
         $folderOrig = $folder;
-        
+		$thepath = $this->getAbsolutePathName($this->getFolder($parent));
+    	//if its the root path, don't append any slashes
+		if($thepath == "/")
+    	{
+    		$thepath = "";
+    	}
         // Replace umlauts
         $folder = str_replace("ä", "ae" , $folder);
         $folder = str_replace("ö", "oe" , $folder);
         $folder = str_replace("ü", "ue" , $folder);
         $folder = str_replace("ß", "ss" , $folder);
-        
+
         // Remove whitespace
         $folder = preg_replace("/\W/", "", $folder);
         $folder = preg_replace("/[^-_0-9a-zA-Z]/", "_", $folder);
-        
+
         // Insert folder into database
-        $insStmt = $conn->prepare("INSERT INTO projectfolders (parent, project, name, description, visible) VALUES (?, ?, ?, ?, ?)");
-        $ins = $insStmt->execute(array($parent, $project, $folder, $desc, $visible));
-        
+        $insStmt = $conn->prepare("INSERT INTO projectfolders (parent, project, name, description) VALUES (?, ?, ?, ?)");
+        $ins = $insStmt->execute(array($parent, $project, $folder, $desc));
+
         if ($ins) {
-            // Create the folder
-            $makefolder = CL_ROOT . "/files/" . CL_CONFIG . "/$project/$folder/";
+           // Create the folder
+            //$makefolder = CL_ROOT . "/files/" . CL_CONFIG . "/$project/$folder/";
+
+            $makefolder = CL_ROOT . "/files/" . CL_CONFIG . "/$project" . $thepath . "/" . $folder . "/";
+
+			//echo "<br><br>" .  $makefolder . "<br>" . $makefolder2;
             if (!file_exists($makefolder)) {
                 if (mkdir($makefolder, 0777, true)) {
                     // Folder created
@@ -84,35 +93,35 @@ class datei {
     function deleteFolder($id, $project)
     {
         global $conn;
-        
+
         $id = (int) $id;
         $project = (int) $project;
-        
+
         $folder = $this->getFolder($id);
         $files = $this->getProjectFiles($project, 10000, $id);
-        
+
         // Delete all files in the folder from database and filesystem
         if (!empty($files)) {
             foreach($files as $file) {
                 $this->loeschen($file["ID"]);
             }
         }
-        
+
         // Recursively delete any nested subfolders
         if (!empty($folder["subfolders"])) {
             foreach($folder["subfolders"] as $sub) {
                 $this->deleteFolder($sub["ID"], $sub["project"]);
             }
         }
-        
+
         $del = $conn->query("DELETE FROM projectfolders WHERE ID = $id");
-        
+
         if ($del) {
             // Remove directory
             $foldstr = CL_ROOT . "/files/" . CL_CONFIG . "/$project/" . $folder["name"] . "/";
             delete_directory($foldstr);
             $this->mylog->add($folder["name"], 'folder', 3, $project);
-            
+
             return true;
         }
     }
@@ -126,11 +135,14 @@ class datei {
     function getFolder($id)
     {
         global $conn;
-        
+
         $id = (int) $id;
-        
+
         $folder = $conn->query("SELECT * FROM projectfolders WHERE ID = $id LIMIT 1")->fetch();
-        
+		if(!$folder)
+		{
+			return false;
+		}
         $folder["subfolders"] = $this->getSubFolders($folder["ID"]);
         $folder["abspath"] = $this->getAbsolutePathName($folder);
 
@@ -146,9 +158,9 @@ class datei {
     function getSubFolders($parent)
     {
         global $conn;
-        
+
         $parent = (int) $parent;
-        
+
         $sel = $conn->query("SELECT * FROM projectfolders WHERE parent = $parent ORDER BY ID ASC");
 
         $folders = array();
@@ -156,7 +168,7 @@ class datei {
         while ($folder = $sel->fetch()) {
             $folder["subfolders"] = $this->getSubFolders($folder["ID"]);
             $folder["abspath"] = $this->getAbsolutePathName($folder);
-            
+
             array_push($folders, $folder);
         }
 
@@ -177,17 +189,17 @@ class datei {
     function getProjectFolders($project, $parent = 0)
     {
         global $conn;
-        
+
         $project = (int) $project;
 
         $sel = $conn->query("SELECT * FROM projectfolders WHERE project = $project AND parent = $parent ORDER BY ID ASC");
-        
+
         $folders = array();
 
         while ($folder = $sel->fetch()) {
             $folder["subfolders"] = $this->getSubFolders($folder["ID"]);
             $folder["abspath"] = $this->getAbsolutePathName($folder);
-            
+
             array_push($folders, $folder);
         }
 
@@ -207,17 +219,17 @@ class datei {
     function getAllProjectFolders($project)
     {
         global $conn;
-        
+
         $project = (int) $project;
 
         $sel = $conn->query("SELECT * FROM projectfolders WHERE project = $project ORDER BY ID ASC");
-        
+
         $folders = array();
 
         while ($folder = $sel->fetch()) {
             $folder["subfolders"] = $this->getSubFolders($folder["ID"]);
             $folder["abspath"] = $this->getAbsolutePathName($folder);
-            
+
             array_push($folders, $folder);
         }
 
@@ -247,9 +259,9 @@ class datei {
             return $this->getAbsolutePathName($parent) . "/" . $folder['name'];
         }
     }
-    
+
     // FILE METHODS
-    
+
     /**
      * Upload a file
      * Does filename sanitizing as well as MIME-type determination
@@ -263,6 +275,7 @@ class datei {
      */
     function upload($fname, $ziel, $project, $folder = 0)
     {
+    	echo $fname . " " . $ziel . " " . $project;
         // Get data from form
         $name = $_FILES[$fname]['name'];
         $typ = $_FILES[$fname]['type'];
@@ -272,10 +285,9 @@ class datei {
         $tastr = $fname . "-tags";
 
         $title = $_POST[$tstr];
-        $tags = $_POST[$tastr];
         $error = $_FILES[$fname]['error'];
         $root = CL_ROOT;
-        
+
         // If no filename is given, abort
         if (empty($name)) {
             return false;
@@ -283,16 +295,13 @@ class datei {
 
         $desc = $_POST['desc'];
 
-        $tagobj = new tags();
-        $tags = $tagobj->formatInputTags($tags);
-        
         // Find the extension
         $teilnamen = explode(".", $name);
         $teile = count($teilnamen);
         $workteile = $teile - 1;
         $erweiterung = $teilnamen[$workteile];
         $subname = "";
-        
+
         // If it is a PHP file, treat it as plain text so it is not executed when opened in the browser
         if (stristr($erweiterung, "php")) {
             $erweiterung = "txt";
@@ -302,50 +311,51 @@ class datei {
         for ($i = 0; $i < $workteile; $i++) {
             $subname .= $teilnamen[$i];
         }
-        
+
         // Create a random number
         $randval = mt_rand(1, 99999);
-        
+
         // Only allow a-z, 0-9 in filenames, substitute other chars with _
         $subname = str_replace("ä", "ae" , $subname);
         $subname = str_replace("ö", "oe" , $subname);
         $subname = str_replace("ü", "ue" , $subname);
         $subname = str_replace("ß", "ss" , $subname);
         $subname = preg_replace("/[^-_0-9a-zA-Z]/", "_", $subname);
-        
+
         // Remove whitespace
         $subname = preg_replace("/\W/", "", $subname);
-        
+
         // If filename is longer than 200 chars, cut it
         if (strlen($subname) > 200) {
             $subname = substr($subname, 0, 200);
         }
-        
+
         // Assemble the final filename from the original name plus the random value.
         // This is to ensure that files with the same name do not overwrite each other.
         $name = $subname . "_" . $randval . "." . $erweiterung;
-        
+
         // Absolute file system path used to move the file to its final location
         $datei_final = $root . "/" . $ziel . "/" . $name;
-        
+
         // Relative path used for display / URL construction in the file manager
         $datei_final2 = $ziel . "/" . $name;
 
         if (!file_exists($datei_final)) {
             if (move_uploaded_file($tmp_name, $datei_final)) {
-                if ($project > 0) {
+				if ($project > 0) {
                     // File did not already exist, was uploaded, and a project is set
                     // Now add the file to the database, log the upload event and return the file ID
                     chmod($datei_final, 0755);
-                    
-                    $fid = $this->add_file($name, $desc, $project, 0, "$tags", $datei_final2, "$typ", $title, $folder, $visstr);
-                    
+
+                    $fid = $this->add_file($name, $desc, $project, 0, $datei_final2, "$typ", $title, $folder, "");
+
                     if (!empty($title)) {
                         $this->mylog->add($title, 'file', 1, $project);
                     } else {
                         $this->mylog->add($name, 'file', 1, $project);
                     }
-                    
+					//encrypt the uploaded file
+					$this->encryptFile($datei_final);
                     return $fid;
 
                 } else {
@@ -377,18 +387,17 @@ class datei {
         $visible = "";
         $visstr = "";
         $root = CL_ROOT;
-
         if (empty($name)) {
             return false;
         }
-        
+
         // Find the extension
         $teilnamen = explode(".", $name);
         $teile = count($teilnamen);
         $workteile = $teile - 1;
         $erweiterung = $teilnamen[$workteile];
         $subname = "";
-        
+
         // If it is a PHP file, treat as plain text so it is not executed when opened in the browser
         if (stristr($erweiterung, "php")) {
             $erweiterung = "txt";
@@ -400,14 +409,14 @@ class datei {
         }
 
         $randval = mt_rand(1, 99999);
-        
+
         // Only allow a-z, 0-9 in filenames, substitute other chars with _
         $subname = str_replace("ä", "ae" , $subname);
         $subname = str_replace("ö", "oe" , $subname);
         $subname = str_replace("ü", "ue" , $subname);
         $subname = str_replace("ß", "ss" , $subname);
         $subname = preg_replace("/[^-_0-9a-zA-Z]/", "_", $subname);
-        
+
         // Remove whitespace
         $subname = preg_replace("/\W/", "", $subname);
         // If filename is longer than 200 chars, cut it
@@ -425,19 +434,21 @@ class datei {
                      // File did not already exist, was uploaded, and a project is set
                      // Now add the file to the database, log the upload event and return the file ID.
                     if (!$title) {
+
                         $title = $name;
                     }
-                    
+
                     chmod($datei_final, 0755);
-                    
-                    $fid = $this->add_file($name, $desc, $project, 0, "$tags", $datei_final2, "$typ", $title, $folder, $visstr);
-                    
+
+                    $fid = $this->add_file($name, $desc, $project, 0,  $datei_final2, "$typ", $title, $folder, $visstr);
+
                     if (!empty($title)) {
                         $this->mylog->add($title, 'file', 1, $project);
                     } else {
                         $this->mylog->add($name, 'file', 1, $project);
                     }
-                    
+					//encrypt the uploaded file
+					//$this->encryptFile($datei_final);
                     return $fid;
                 } else {
                     // No project means the file is not added to the database wilfully. Return file name
@@ -465,12 +476,12 @@ class datei {
     function edit($id, $title, $desc, $tags)
     {
         global $conn;
-        
+
         $id = (int) $id;
-        
+
         // Get project for logging
         $proj = $conn->query("SELECT project FROM files WHERE ID = $id")->fetch();
-        
+
         $project = $proj[0];
 
         $sql = $conn->prepare("UPDATE files SET `title` = ?, `desc` = ?, `tags` = ? WHERE id = ?");
@@ -496,7 +507,7 @@ class datei {
         $datei = (int) $datei;
 
         $thisfile = $conn->query("SELECT datei, name, project, title FROM files WHERE ID = $datei")->fetch();
-        
+
         if (!empty($thisfile)) {
             $fname = $thisfile[1];
             $project = $thisfile[2];
@@ -508,9 +519,9 @@ class datei {
             if (!file_exists($delfile)) {
                 return false;
             }
-            
+
             $del = $conn->query("DELETE FROM files WHERE ID = $datei");
-            
+
             // Delete attachments of the file (prevents abandoned objects in messages)
             $del2 = $conn->query("DELETE FROM files_attached WHERE file = $datei");
 
@@ -541,9 +552,9 @@ class datei {
     function getFile($id)
     {
         global $conn;
-        
+
         $id = (int) $id;
-        
+
         // Get the file from the database
         $file = $conn->query("SELECT * FROM files WHERE ID=$id")->fetch();
 
@@ -556,11 +567,11 @@ class datei {
             $settings = $set->getSettings();
 
             // Construct the path to the MIME-type icon
-            $myfile = "./templates/" . $settings["template"] . "/images/files/" . $file['type'] . ".png";
+            $myfile = "./templates/" . $settings["template"] . "/theme/" . $settings["theme"] . "/images/files/" . $file['type'] . ".png";
             if (!file_exists($myfile)) {
                 $file['type'] = "none";
             }
-            
+
             // Determine if it is an image or text file or some other kind of file (required for lightbox)
             if (stristr($file['type'], "image")) {
                 $file['imgfile'] = 1;
@@ -569,13 +580,7 @@ class datei {
             } else {
                 $file['imgfile'] = 0;
             }
-            
-            // Split the tags string into an array, and also count how many tags the file has
-            $tagobj = new tags();
-            $thetags = $tagobj->splitTagStr($file["tags"]);;
-            $file["tagsarr"] = $thetags;
-            $file["tagnum"] = count($file["tagsarr"]);
-            
+
             // Strip slashes from title, desc and tags
             $file["title"] = stripslashes($file["title"]);
             $file["desc"] = stripslashes($file["desc"]);
@@ -583,7 +588,7 @@ class datei {
             $file["size"] = filesize(realpath($file["datei"])) / 1024;
             $file["size"] = round($file["size"]);
             $file["addedstr"] = date(CL_DATEFORMAT, $file["added"]);
-            
+
             // Attach data about the user who uploaded the file
             $userobj = new user();
             $file["userdata"] = $userobj->getProfile($file["user"]);
@@ -604,23 +609,29 @@ class datei {
     function moveFile($file, $target)
     {
         global $conn;
-        
+
         $file = (int) $file;
         $target = (int)$target;
-        
+
         // Get the file
         $thefile = $this->getFile($file);
-        
+
         // Get the target folder
         $thefolder = $this->getFolder($target);
-        
+    	$abspath = $this->getAbsolutePathName($thefolder);
+    	if($abspath == "/")
+    	{
+    		$abspath = "";
+    	}
+
         // Build file system paths
-        $targetstr = "files/" . CL_CONFIG . "/" . $thefile["project"] . "/" . $thefolder["name"] . "/" . $thefile["name"];
+        //$targetstr = "files/" . CL_CONFIG . "/" . $thefile["project"] . "/" . $thefolder["name"] . "/" . $thefile["name"];
+        $targetstr = "files/" . CL_CONFIG . "/" . $thefile["project"] . $abspath . "/" . $thefile["name"];
         $rootstr = CL_ROOT . "/" . $thefile["datei"];
-        
+
         // Update database
         $upd = $conn->query("UPDATE files SET datei = '$targetstr', folder = '$thefolder[ID]' WHERE ID = $thefile[ID]");
-        
+
         // Move the file physically
         return rename($rootstr, $targetstr);
     }
@@ -633,14 +644,14 @@ class datei {
      * @param int $folder Folder
      * @return array $files Found files
      */
-    function getProjectFiles($id, $lim = 25, $folder = "")
+    function getProjectFiles($id, $lim = 5000, $folder = "")
     {
         global $conn;
-        
+
         $id = (int) $id;
         $lim = (int) $lim;
         $folder = (int) $folder;
-        
+
         // If folder is given, return files from this folder, otherwise return files from root folder
         if ($folder > 0) {
             $fold = "files/" . CL_CONFIG . "/$id/$folder/";
@@ -650,7 +661,7 @@ class datei {
         }
         $num = $sel->fetch();
         $num = $num[0];
-        
+
         // Set items per page
         SmartyPaginate::connect();
         SmartyPaginate::setLimit($lim);
@@ -658,7 +669,6 @@ class datei {
 
         $start = SmartyPaginate::getCurrentIndex();
         $lim = SmartyPaginate::getLimit();
-
         $files = array();
 
         if ($folder > 0) {
@@ -688,7 +698,7 @@ class datei {
     function getAllProjectFiles($id)
     {
         global $conn;
-        
+
         $id = (int) $id;
 
         $files = array();
@@ -734,23 +744,21 @@ class datei {
      * @param int $ folder Optional parameter (holds ID of subfolder the file is uploaded to [0 = root directory])
      * @return bool $insid
      */
-    function add_file($name, $desc, $project, $milestone, $tags, $datei, $type, $title = " ", $folder = 0, $visstr = "")
+    function add_file($name, $desc, $project, $milestone, $datei, $type, $title = " ", $folder = 0, $visstr = "")
     {
         global $conn;
-        
+
         if (!$desc) {
             $desc = " ";
         }
-        
+
         $project = (int) $project;
         $milestone = (int) $milestone;
         $folder = (int) $folder;
         $userid = $_SESSION["userid"];
         $now = time();
-
-        $insStmt = $conn->prepare("INSERT INTO files (`name`, `desc`, `project`, `milestone`, `user`, `tags`, `added`, `datei`, `type`, `title`, `folder`, `visible`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $ins = $insStmt->execute(array($name, $desc, $project, $milestone, $userid, $tags, $now, $datei, $type, $title, $folder, $visstr));
-        
+        $insStmt = $conn->prepare("INSERT INTO files (`name`, `desc`, `project`, `milestone`, `user`, `added`, `datei`, `type`, `title`, `folder`, `visible`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $ins = $insStmt->execute(array($name, $desc, $project, $milestone, $userid, $now, $datei, $type, $title, $folder, $visstr));
         if ($ins) {
             $insid = $conn->lastInsertId();
             return $insid;
@@ -758,6 +766,32 @@ class datei {
             return false;
         }
     }
+
+	function encryptFile($filename, $key)
+	{
+		include_once(CL_ROOT . "/include/phpseclib/Crypt/AES.php");
+		$cipher = new Crypt_AES(); // could use CRYPT_AES_MODE_CBC
+		$cipher->setPassword($key);
+
+		$plaintext = file_get_contents($filename);
+
+		//echo $cipher->decrypt($cipher->encrypt($plaintext));
+		return file_put_contents($filename,$cipher->encrypt($plaintext));
+
+	}
+	function decryptFile($filename, $key)
+	{
+		include_once(CL_ROOT . "/include/phpseclib/Crypt/AES.php");
+		$cipher = new Crypt_AES(); // could use CRYPT_AES_MODE_CBC
+		$cipher->setPassword($key);
+
+		$ciphertext = file_get_contents($filename);
+
+
+		//echo $cipher->decrypt($cipher->encrypt($plaintext));
+		return $cipher->decrypt($ciphertext);
+
+	}
 }
 
 ?>

@@ -58,6 +58,9 @@ if ($userpermissions["projects"]["add"]) {
     $users = $user->getAllUsers(1000000);
     $template->assign("users", $users);
 
+	$company = new company();
+	$companies = $company->getAllCompanies();
+	$template->assign("customers",$companies);
 }
 
 //by default the arrays have a level for each project, whcih contains arrays for each message/task . reduce array flattens this to have all messages/tasks of all projects in one structure

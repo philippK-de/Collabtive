@@ -3,10 +3,25 @@
 require("./init.php");
 
 error_reporting(0);
-
 // VERSION-DEPENDENT
+//2.0
+function randomPassword() {
+	$alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
+	$pass = array(); //remember to declare $pass as an array
+	$alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+	for ($i = 0; $i < 12; $i++) {
+		$n = rand(0, $alphaLength);
+		$pass[] = $alphabet[$n];
+	}
+	return implode($pass); //turn the array into a string
+}
+$filePass = randomPassword();
 
+$conn->query("INSERT INTO `settings` (`ID` ,`settingsKey` ,`settingsValue`) VALUES (NULL , 'theme', 'standard')");
+$conn->query("INSERT INTO `settings` (`ID`, `settingsKey`, `settingsValue`) VALUES (NULL, 'filePass', '$filePass')");
 
+//drop tags field from files
+$conn->query("ALTER TABLE `files` DROP `tags`");
 // VERSION-INDEPENDENT
 
 // Clear templates cache

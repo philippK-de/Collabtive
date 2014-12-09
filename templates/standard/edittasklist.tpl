@@ -9,21 +9,21 @@
 			
 			<div class="breadcrumb">
 				<a href="manageproject.php?action=showproject&amp;id={$project.ID}" title="{$projectname}">
-					<img src="./templates/standard/images/symbols/projects.png" alt="" />
+					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />
 					{$projectname|truncate:25:"...":true}
 				</a>
 				<a href="managetask.php?action=showproject&amp;id={$project.ID}">
-					<img src="./templates/standard/images/symbols/tasklist.png" alt="" />
+					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt="" />
 					{#tasklists#}
 				</a>
 				<a href="managetasklist.php?action=showtasklist&amp;id={$project.ID}&amp;tlid={$tasklist.ID}">
-					<img src="./templates/standard/images/symbols/tasklist.png" alt="" />
+					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt="" />
 					{$tasklist.name|truncate:55:"...":true}
 				</a>
 			</div>
 			
 			<h1 class="second">
-				<img src="./templates/standard/images/symbols/tasklist.png" alt="" />
+				<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt="" />
 				{$tasklist.name|truncate:30:"...":true}
 			</h1>
 			
