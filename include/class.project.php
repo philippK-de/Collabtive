@@ -384,13 +384,6 @@ class project {
         }
 
         if (!empty($myprojekte)) {
-            // Sort projects by due date ascending
-            $date = array();
-            foreach ($myprojekte as $key => $row) {
-                $date[$key] = $row['end'];
-            }
-            array_multisort($date, SORT_ASC, $myprojekte);
-
             return $myprojekte;
         }
         return false;
