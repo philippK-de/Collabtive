@@ -10,16 +10,7 @@
 * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
 */
 class datei {
-    /**
-    * Constructor
-    *
-    * @access protected
-    */
-    function __construct()
-    {
-        // Initialize event log
-        $this->mylog = new mylog;
-    }
+
     // FOLDER METHODS
     /**
     * Create a new folder
@@ -62,7 +53,7 @@ class datei {
             if (!file_exists($makefolder)) {
                 if (mkdir($makefolder, 0777, true)) {
                     // Folder created
-                    $this->mylog->add($folderOrig, 'folder', 1, $project);
+                    $mylog->add($folderOrig, 'folder', 1, $project);
                     return true;
                 }
             } else {
@@ -111,7 +102,7 @@ class datei {
             // Remove directory
             $foldstr = CL_ROOT . "/files/" . CL_CONFIG . "/$project/" . $folder["name"] . "/";
             delete_directory($foldstr);
-            $this->mylog->add($folder["name"], 'folder', 3, $project);
+            $mylog->add($folder["name"], 'folder', 3, $project);
 
             return true;
         }
@@ -336,9 +327,9 @@ class datei {
                     $fid = $this->add_file($name, $desc, $project, 0, $datei_final2, "$typ", $title, $folder, "");
 
                     if (!empty($title)) {
-                        $this->mylog->add($title, 'file', 1, $project);
+                        $mylog->add($title, 'file', 1, $project);
                     } else {
-                        $this->mylog->add($name, 'file', 1, $project);
+                        $mylog->add($name, 'file', 1, $project);
                     }
                     return $fid;
                 } else {
@@ -424,9 +415,9 @@ class datei {
                     $fid = $this->add_file($name, $desc, $project, 0, $datei_final2, "$typ", $title, $folder, "");
 
                     if (!empty($title)) {
-                        $this->mylog->add($title, 'file', 1, $project);
+                        $mylog->add($title, 'file', 1, $project);
                     } else {
-                        $this->mylog->add($name, 'file', 1, $project);
+                        $mylog->add($name, 'file', 1, $project);
                     }
                     // encrypt the uploaded file
                     // $this->encryptFile($datei_final);
@@ -468,7 +459,7 @@ class datei {
         $upd = $sql->execute(array($title, $desc, $tags, $id));
 
         if ($sql) {
-            $this->mylog->add($title, 'file' , 2, $project);
+            $mylog->add($title, 'file' , 2, $project);
             return true;
         } else {
             return false;
@@ -509,9 +500,9 @@ class datei {
                 // Only remove the file from file system if deletion from database was successful
                 if (unlink($delfile)) {
                     if ($ftitle != "") {
-                        $this->mylog->add($ftitle, 'file', 3, $project);
+                        $mylog->add($ftitle, 'file', 3, $project);
                     } else {
-                        $this->mylog->add($fname, 'file', 3, $project);
+                        $mylog->add($fname, 'file', 3, $project);
                     }
                     return true;
                 } else {

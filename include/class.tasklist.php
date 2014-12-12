@@ -10,16 +10,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
 class tasklist {
-    public $mylog;
 
-    /**
-     * Constructor
-     * Initialize the event log
-     */
-    function __construct()
-    {
-        $this->mylog = new mylog;
-    }
 
     /**
      * Add a tasklist
@@ -40,7 +31,7 @@ class tasklist {
 
         if ($ins) {
             $insid = $conn->lastInsertId();
-            $this->mylog->add($name, 'tasklist', 1, $project);
+            $mylog->add($name, 'tasklist', 1, $project);
             return $insid;
         } else {
             return false;
@@ -66,7 +57,7 @@ class tasklist {
             $proj = $conn->query("SELECT project FROM tasklist WHERE ID = $id")->fetch();
             $proj = $proj[0];
 
-            $this->mylog->add($name, 'tasklist', 2, $proj);
+            $mylog->add($name, 'tasklist', 2, $proj);
             return true;
         } else {
             return false;
@@ -103,7 +94,7 @@ class tasklist {
             $sel1 = $sel->fetch();
             $proj = $sel1[0];
             $name = $sel1[1];
-            $this->mylog->add($name, 'tasklist', 3, $proj);
+            $mylog->add($name, 'tasklist', 3, $proj);
             return true;
         } else {
             return false;
@@ -129,7 +120,7 @@ class tasklist {
             $project = $nam[0];
             $name = $nam[1];
 
-            $this->mylog->add($name, 'tasklist', 4, $project);
+            $mylog->add($name, 'tasklist', 4, $project);
             return true;
         } else {
             return false;
@@ -179,7 +170,7 @@ class tasklist {
             $project = $nam[0];
             $name = $nam[1];
 
-            $this->mylog->add($name, 'tasklist', 5, $project);
+            $mylog->add($name, 'tasklist', 5, $project);
             return true;
         } else {
             return false;

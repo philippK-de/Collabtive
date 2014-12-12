@@ -74,6 +74,7 @@ if (isset($_SESSION["userid"])) {
     $template->assign("usergender", $gender);
     $template->assign("userpermissions", $userpermissions);
     $template->assign("loggedin", 1);
+    $mylog = new mylog();
 } else {
     $template->assign("loggedin", 0);
 }

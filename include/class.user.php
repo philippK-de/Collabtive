@@ -10,16 +10,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or laterg
  */
 class user {
-    public $mylog;
 
-    /**
-     * Constructor
-     * Initializes event log
-     */
-    function __construct()
-    {
-        $this->mylog = new mylog;
-    }
 
     /**
      * Creates a user
@@ -42,7 +33,7 @@ class user {
 
         if ($ins1) {
             $insid = $conn->lastInsertId();
-            $this->mylog->add($name, 'user', 1, 0);
+            $mylog->add($name, 'user', 1, 0);
             return $insid;
         } else {
             return false;
@@ -85,7 +76,7 @@ class user {
         }
 
         if ($upd) {
-            $this->mylog->add($name, 'user', 2, 0);
+            $mylog->add($name, 'user', 2, 0);
             return true;
         } else {
             return false;
@@ -216,7 +207,7 @@ class user {
         $del6 = $conn->query("DELETE FROM timetracker WHERE user = $id");
         $del7 = $conn->query("DELETE FROM roles_assigned WHERE user = $id");
         if ($del) {
-            $this->mylog->add($name, 'user', 3, 0);
+            $mylog->add($name, 'user', 3, 0);
             return true;
         } else {
             return false;

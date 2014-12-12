@@ -10,16 +10,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
 class project {
-    private $mylog;
-
-    /**
-     * Konstruktor
-     * Initialisiert den Eventlog
-     */
-    function __construct()
-    {
-        $this->mylog = new mylog;
-    }
 
     /**
      * Add a project
@@ -51,7 +41,7 @@ class project {
         }
         if ($ins1) {
             mkdir(CL_ROOT . "/files/" . CL_CONFIG . "/$insid/", 0777);
-            $this->mylog->add($name, 'projekt', 1, $insid);
+            $mylog->add($name, 'projekt', 1, $insid);
             return $insid;
         } else {
             return false;
@@ -80,7 +70,7 @@ class project {
         $upd = $updStmt->execute(array($name, $desc, $end, $budget, $id));
 
         if ($upd) {
-            $this->mylog->add($name, 'projekt' , 2, $id);
+            $mylog->add($name, 'projekt' , 2, $id);
             return true;
         } else
             return false;
@@ -128,7 +118,7 @@ class project {
 
         delete_directory(CL_ROOT . "/files/" . CL_CONFIG . "/$id");
         if ($del) {
-            $this->mylog->add($userid, 'projekt', 3, $id);
+            $mylog->add($userid, 'projekt', 3, $id);
             return true;
         } else {
             return false;
@@ -152,7 +142,7 @@ class project {
 		if ($upd) {
             $nam = $conn->query("SELECT name FROM projekte WHERE ID = $id")->fetch();
             $nam = $nam[0];
-            $this->mylog->add($nam, 'projekt', 4, $id);
+            $mylog->add($nam, 'projekt', 4, $id);
             return true;
         } else {
             return false;
@@ -203,7 +193,7 @@ class project {
 		if ($upd) {
             $nam = $conn->query("SELECT name FROM projekte WHERE ID = $id")->fetch();
             $nam = $nam[0];
-            $this->mylog->add($nam, 'projekt', 5, $id);
+            $mylog->add($nam, 'projekt', 5, $id);
             return true;
         } else {
             return false;
@@ -226,7 +216,7 @@ class project {
         if ($ins) {
             $userObj = new user();
             $user = $userObj->getProfile($user);
-            $this->mylog->add($user["name"], 'user', 6, $id);
+            $mylog->add($user["name"], 'user', 6, $id);
             return true;
         } else {
             return false;
@@ -278,7 +268,7 @@ class project {
         if ($del) {
             $userObj = new user();
             $user = $userObj->getProfile($user);
-            $this->mylog->add($user["name"], 'user', 7, $id);
+            $mylog->add($user["name"], 'user', 7, $id);
             return true;
         } else {
             return false;
