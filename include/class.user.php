@@ -25,7 +25,7 @@ class user {
      */
     function add($name, $email, $company, $pass, $locale = "", $tags = "", $rate = 0.0)
     {
-        global $conn;
+        global $conn,$mylog;
         $pass = sha1($pass);
 
         $ins1Stmt = $conn->prepare("INSERT INTO user (name,email,company,pass,locale,tags,rate) VALUES (?, ?, ?, ?, ?, ?, ?)");
@@ -62,7 +62,7 @@ class user {
      */
     function edit($id, $name, $realname, $email, $tel1, $tel2, $company, $zip, $gender, $url, $address1, $address2, $state, $country, $tags, $locale, $avatar = "", $rate = 0.0)
     {
-        global $conn;
+        global $conn,$mylog;
 
         $rate = (float) $rate;
         $id = (int) $id;
@@ -193,7 +193,7 @@ class user {
      */
     function del($id)
     {
-        global $conn;
+        global $conn,$mylog;
         $id = (int) $id;
 
         $chk = $conn->query("SELECT name FROM user WHERE ID = $id")->fetch();

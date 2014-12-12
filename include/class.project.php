@@ -23,7 +23,7 @@ class project {
      */
     function add($name, $desc, $end, $budget, $assignme = 0)
     {
-        global $conn;
+        global $conn,$mylog;
 
         if ($end > 0) {
             $end = strtotime($end);
@@ -60,7 +60,7 @@ class project {
      */
     function edit($id, $name, $desc, $end, $budget)
     {
-        global $conn;
+        global $conn,$mylog;
         $end = strtotime($end);
         $id = (int) $id;
         $budget = (float) $budget;
@@ -84,7 +84,7 @@ class project {
      */
     function del($id)
     {
-        global $conn;
+        global $conn,$mylog;
         $userid = $_SESSION["userid"];
         $id = (int) $id;
         // Delete assignments of tasks of this project to users
@@ -133,7 +133,7 @@ class project {
      */
     function open($id)
     {
-        global $conn;
+        global $conn,$mylog;
         $id = (int) $id;
 
         $updStmt = $conn->prepare("UPDATE projekte SET status=1 WHERE ID = ?");
@@ -157,7 +157,7 @@ class project {
      */
     function close($id)
     {
-        global $conn;
+        global $conn,$mylog;
         $id = (int) $id;
 
         $mile = new milestone();
@@ -209,7 +209,7 @@ class project {
      */
     function assign($user, $id)
     {
-        global $conn;
+        global $conn,$mylog;
 
         $insStmt = $conn->prepare("INSERT INTO projekte_assigned (user,projekt) VALUES (?,?)");
         $ins = $insStmt->execute(array((int) $user, (int) $id));
@@ -232,7 +232,7 @@ class project {
      */
     function deassign($user, $id)
     {
-        global $conn;
+        global $conn,$mylog;
 
         $sqlStmt = $conn->prepare("DELETE FROM projekte_assigned WHERE user = ? AND projekt = ?");
 

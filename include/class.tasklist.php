@@ -24,7 +24,7 @@ class tasklist {
      */
     function add_liste($project, $name, $desc, $access = 0, $milestone = 0)
     {
-        global $conn;
+        global $conn,$mylog;
 
         $insStmt = $conn->prepare("INSERT INTO tasklist (`project`, `name`, `desc`, `start`, `status`, `access`, `milestone`) VALUES (?, ?, ?, ?, 1, ?, ?)");
         $ins = $insStmt->execute(array((int) $project, $name, $desc, time(), (int) $access, (int) $milestone));
@@ -49,7 +49,7 @@ class tasklist {
      */
     function edit_liste($id, $name, $desc, $milestone)
     {
-        global $conn;
+        global $conn,$mylog;
         $name = htmlspecialchars($name);
         $updStmt = $conn->prepare("UPDATE tasklist SET `name` = ?, `desc` = ?, `milestone` = ? WHERE ID = ?");
         $upd = $updStmt->execute(array($name, $desc, $milestone, $id));
@@ -72,7 +72,7 @@ class tasklist {
      */
     function del_liste($id)
     {
-        global $conn;
+        global $conn,$mylog;
         $id = (int) $id;
 
         $sel = $conn->query("SELECT project, name FROM tasklist WHERE ID = $id");
@@ -109,7 +109,7 @@ class tasklist {
      */
     function open_liste($id)
     {
-        global $conn;
+        global $conn,$mylog;
         $id = (int) $id;
 
         $updStmt = $conn->prepare("UPDATE tasklist SET status = 1 WHERE ID = ?");
@@ -138,7 +138,7 @@ class tasklist {
      */
     function close_liste($id, $closeMilestones = true)
     {
-        global $conn;
+        global $conn,$mylog;
         $id = (int) $id;
 
         $updStmt = $conn->prepare("UPDATE tasklist SET status = 0 WHERE ID = ?");
