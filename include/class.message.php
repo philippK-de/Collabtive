@@ -12,16 +12,7 @@
  */
 
 class message {
-    public $mylog;
 
-    /**
-     * Konstruktor
-     * Initialisiert den Eventlog
-     */
-    function __construct()
-    {
-        $this->mylog = new mylog;
-    }
 
     /**
      * Creates a new message or a reply to a message
@@ -44,7 +35,7 @@ class message {
 
         $insid = $conn->lastInsertId();
         if ($ins) {
-            $this->mylog->add($title, 'message', 1, $project);
+            $mylog->add($title, 'message', 1, $project);
             return $insid;
         } else {
             return false;
@@ -70,7 +61,7 @@ class message {
         if ($upd) {
             $proj = $conn->query("SELECT project FROM messages WHERE ID = $id")->fetch();
             $proj = $proj[0];
-            $this->mylog->add($title, 'message', 2, $proj);
+            $mylog->add($title, 'message', 2, $proj);
             return true;
         } else {
             return false;
@@ -102,7 +93,7 @@ class message {
         $del3->execute(array($id));
 
 		if ($del) {
-            $this->mylog->add($msg[0], 'message', 3, $msg[1]);
+            $mylog->add($msg[0], 'message', 3, $msg[1]);
             return true;
         } else {
             return false;

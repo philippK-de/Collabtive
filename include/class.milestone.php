@@ -11,16 +11,6 @@
 * @global $mylog
 */
 class milestone {
-    private $mylog;
-
-    /**
-    * Constructor
-    * Initialize the event log
-    */
-    function __construct()
-    {
-        $this->mylog = new mylog;
-    }
 
     /**
     * Add a milestone
@@ -44,7 +34,7 @@ class milestone {
 
         if ($ins) {
             $insid = $conn->lastInsertId();
-            $this->mylog->add($name, 'milestone' , 1, $project);
+            $mylog->add($name, 'milestone' , 1, $project);
             return $insid;
         } else {
             return false;
@@ -74,7 +64,7 @@ class milestone {
             $project = $nam[0];
             $name = $nam[1];
 
-            $this->mylog->add($name, 'milestone' , 2, $project);
+            $mylog->add($name, 'milestone' , 2, $project);
             return true;
         } else {
             return false;
@@ -100,7 +90,7 @@ class milestone {
             $project = $nam[0];
             $name = $nam[1];
 
-            $this->mylog->add($name, 'milestone', 3, $project);
+            $mylog->add($name, 'milestone', 3, $project);
             return true;
         } else {
             return false;
@@ -127,7 +117,7 @@ class milestone {
             $project = $nam[0];
             $name = $nam[1];
 
-            $this->mylog->add($name, 'milestone', 4, $project);
+            $mylog->add($name, 'milestone', 4, $project);
             return true;
         } else {
             return false;
@@ -164,7 +154,7 @@ class milestone {
             $project = $nam[0];
             $name = $nam[1];
 
-            $this->mylog->add($name, 'milestone', 5, $project);
+            $mylog->add($name, 'milestone', 5, $project);
             return true;
         } else {
             return false;
@@ -194,7 +184,7 @@ class milestone {
             $project = $nam[0];
             $name = $nam[1];
 
-            $this->mylog->add($name, 'milestone', 6, $project);
+            $mylog->add($name, 'milestone', 6, $project);
             return true;
         } else {
             return false;
@@ -223,7 +213,7 @@ class milestone {
             $project = $nam[0];
             $name = $nam[1];
 
-            $this->mylog->add($name, 'milestone', 7, $project);
+            $mylog->add($name, 'milestone', 7, $project);
             return true;
         } else {
             return false;
