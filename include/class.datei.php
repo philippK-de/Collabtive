@@ -24,7 +24,7 @@ class datei {
     */
     function addFolder($parent, $project, $folder, $desc)
     {
-        global $conn;
+        global $conn,$mylog;
 
         $project = (int) $project;
         $folderOrig = $folder;
@@ -76,7 +76,7 @@ class datei {
     */
     function deleteFolder($id, $project)
     {
-        global $conn;
+        global $conn,$mylog;
 
         $id = (int) $id;
         $project = (int) $project;
@@ -259,6 +259,7 @@ class datei {
     */
     function upload($fname, $ziel, $project, $folder = 0)
     {
+    	  global $mylog;
         echo $fname . " " . $ziel . " " . $project;
         // Get data from form
         $name = $_FILES[$fname]['name'];
@@ -358,6 +359,7 @@ class datei {
     */
     function uploadAsync($name, $tmp_name, $typ, $size, $ziel, $project, $folder = 0)
     {
+    	  global $mylog;
         $visible = "";
         $visstr = "";
         $root = CL_ROOT;
@@ -447,7 +449,7 @@ class datei {
     */
     function edit($id, $title, $desc, $tags)
     {
-        global $conn;
+        global $conn,$mylog;
 
         $id = (int) $id;
         // Get project for logging
@@ -474,7 +476,7 @@ class datei {
     */
     function loeschen($datei)
     {
-        global $conn;
+        global $conn,$mylog;
         $datei = (int) $datei;
 
         $thisfile = $conn->query("SELECT datei, name, project, title FROM files WHERE ID = $datei")->fetch();

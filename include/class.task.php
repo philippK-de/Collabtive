@@ -28,7 +28,7 @@ class task {
     */
     function add($start, $end, $title, $text, $liste, $project)
     {
-        global $conn;
+        global $conn,$mylog;
         $liste = (int) $liste;
         $project = (int) $project;
         // convert strings to timestamps
@@ -70,7 +70,7 @@ class task {
     */
     function edit($id, $start, $end, $title, $text, $liste)
     {
-        global $conn;
+        global $conn,$mylog;
         $id = (int) $id;
         $liste = (int) $liste;
         // convert time string to timestamp
@@ -99,7 +99,7 @@ class task {
     */
     function del($id)
     {
-        global $conn;
+        global $conn,$mylog;
         $id = (int) $id;
 
         $nameproject = $this->getNameProject($id);
@@ -123,7 +123,7 @@ class task {
     */
     function open($id)
     {
-        global $conn;
+        global $conn,$mylog;
         $id = (int) $id;
 
         $updStmt = $conn->prepare("UPDATE tasks SET status = 1 WHERE ID = ?");
@@ -146,7 +146,7 @@ class task {
     */
     function close($id)
     {
-        global $conn;
+        global $conn,$mylog;
         $id = (int) $id;
 
         $updStmt = $conn->prepare("UPDATE tasks SET status = 0 WHERE ID = ?");

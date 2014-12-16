@@ -28,7 +28,7 @@ class message {
      */
     function add($project, $title, $text, $user, $username, $replyto, $milestone)
     {
-        global $conn;
+        global $conn,$mylog;
 
         $insStmt = $conn->prepare("INSERT INTO messages (`project`,`title`,`text`,`tags`,`posted`,`user`,`username`,`replyto`,`milestone`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ? )");
         $ins = $insStmt->execute(array((int) $project, $title, $text,"", time(), (int) $user, $username, (int) $replyto, (int) $milestone));
@@ -53,7 +53,7 @@ class message {
      */
     function edit($id, $title, $text)
     {
-        global $conn;
+        global $conn,$mylog;
 
         $updStmt = $conn->prepare("UPDATE `messages` SET `title`=?, `text`=? WHERE ID = ?");
         $upd = $updStmt->execute(array($title, $text, (int) $id));
@@ -76,7 +76,7 @@ class message {
      */
     function del($id)
     {
-        global $conn;
+        global $conn,$mylog;
         $id = (int) $id;
 
         $msgStmt = $conn->prepare("SELECT title,project FROM messages WHERE ID = ?");
