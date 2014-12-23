@@ -94,10 +94,6 @@ if ($action == "editform") {
             if (!empty($user["email"])) {
                 $userlang=readLangfile($user['locale']);
 
-                // check if subfolder exists, else root folder
-                $whichfolder = (!empty($thefolder)) ? $thefolder : $userlang["rootdir"];
-
-                // assemble content only once. no need to do this repeatedly
                 $mailcontent = $userlang["hello"] . ",<br /><br/>" . $userlang["projectwasedited"] . ": " .
                                " <a href = \"" . $url . "manageproject.php?action=showproject&id=$id\">" . $url . "manageproject.php?action=showproject&id=$id</a>";
 
