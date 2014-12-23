@@ -97,7 +97,7 @@ if ($action == "editform") {
                 $mailcontent = $userlang["hello"] . ",<br /><br/>" . $userlang["projectwasedited"] . ": " .
                                " <a href = \"" . $url . "manageproject.php?action=showproject&id=$id\">" . $url . "manageproject.php?action=showproject&id=$id</a>";
 
-                $subject = $userlang["projectwasedited"] . " (". $userlang['by'] . ' '. $username . ")";
+                $subject = $userlang["projecdeschanged"] . " (". $userlang['by'] . ' '. $username . ")";
 
                 // send email
                 $themail = new emailer($settings);
