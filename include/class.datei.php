@@ -24,7 +24,7 @@ class datei {
     */
     function addFolder($parent, $project, $folder, $desc)
     {
-        global $conn;
+        global $conn,$mylog;
 
         $project = (int) $project;
         $folderOrig = $folder;
@@ -76,7 +76,7 @@ class datei {
     */
     function deleteFolder($id, $project)
     {
-        global $conn;
+        global $conn,$mylog;
 
         $id = (int) $id;
         $project = (int) $project;
@@ -259,6 +259,7 @@ class datei {
     */
     function upload($fname, $ziel, $project, $folder = 0)
     {
+    	  global $mylog;
         echo $fname . " " . $ziel . " " . $project;
         // Get data from form
         $name = $_FILES[$fname]['name'];
@@ -292,7 +293,8 @@ class datei {
         for ($i = 0; $i < $workteile; $i++) {
             $subname .= $teilnamen[$i];
         }
-        
+        // Create a random number
+        $randval = mt_rand(1, 99999);
         // Only allow a-z, 0-9 in filenames, substitute other chars with _
         $subname = str_replace("ä", "ae" , $subname);
         $subname = str_replace("Ä", "Ae" , $subname);
@@ -308,20 +310,9 @@ class datei {
         if (strlen($subname) > 200) {
             $subname = substr($subname, 0, 200);
         }
-        
-        global $conn;
-        $sel = $conn->query("SELECT COUNT(name) FROM files WHERE name LIKE '$subname%.$erweiterung' AND project = '$project'");
-        $count = $sel->fetch();
-        $count = $count[0];
-                                
         // Assemble the final filename from the original name plus the random value.
         // This is to ensure that files with the same name do not overwrite each other.
-        if($count == 0) {
-            $name = $subname . "." . $erweiterung;
-        }
-        else {
-            $name = $subname . "_" . $count . "." . $erweiterung;
-        }
+        $name = $subname . "_" . $randval . "." . $erweiterung;
         // Absolute file system path used to move the file to its final location
         $datei_final = $root . "/" . $ziel . "/" . $name;
         // Relative path used for display / URL construction in the file manager
@@ -368,6 +359,7 @@ class datei {
     */
     function uploadAsync($name, $tmp_name, $typ, $size, $ziel, $project, $folder = 0)
     {
+    	  global $mylog;
         $visible = "";
         $visstr = "";
         $root = CL_ROOT;
@@ -390,6 +382,7 @@ class datei {
             $subname .= $teilnamen[$i];
         }
 
+        $randval = mt_rand(1, 99999);
         // Only allow a-z, 0-9 in filenames, substitute other chars with _
         $subname = str_replace("ä", "ae" , $subname);
         $subname = str_replace("Ä", "Ae" , $subname);
@@ -406,18 +399,7 @@ class datei {
             $subname = substr($subname, 0, 200);
         }
 
-        global $conn;
-        $sel = $conn->query("SELECT COUNT(name) FROM files WHERE name LIKE '$subname%.$erweiterung' AND project = '$project'");
-        $count = $sel->fetch();
-        $count = $count[0];
-        
-        if($count == 0) {
-            $name = $subname . "." . $erweiterung;
-        }
-        else {
-            $name = $subname . "_" . $count . "." . $erweiterung;
-        }
-
+        $name = $subname . "_" . $randval . "." . $erweiterung;
         $datei_final = $root . "/" . $ziel . "/" . $name;
         $datei_final2 = $ziel . "/" . $name;
 
@@ -467,7 +449,7 @@ class datei {
     */
     function edit($id, $title, $desc, $tags)
     {
-        global $conn;
+        global $conn,$mylog;
 
         $id = (int) $id;
         // Get project for logging
@@ -494,7 +476,7 @@ class datei {
     */
     function loeschen($datei)
     {
-        global $conn;
+        global $conn,$mylog;
         $datei = (int) $datei;
 
         $thisfile = $conn->query("SELECT datei, name, project, title FROM files WHERE ID = $datei")->fetch();
