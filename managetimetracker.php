@@ -77,6 +77,8 @@ if ($action == "add") {
 
     $worked = $_POST["worked"];
     $ajaxreq = $_GET["ajaxreq"];
+	$repeat = getArrayVal($_POST,"repeatTT");
+
     if ($ajaxreq == 1) {
         $lodate = date("d.m.Y");
         $started = date("H:i:s", $started);
@@ -84,25 +86,45 @@ if ($action == "add") {
 
         $comment = "";
     }
+	$trackerstate = false;
+	for($i=0;$i<=$repeat;$i++)
+	{
+		if($i==0)
+		{
+			$tempend = strtotime($startdate);
+		}
+		elseif($i > 0)
+		{
+			$tempend = strtotime($startdate);
+			//magic number - 1 day
+			$tempend += 86400;
+		}
 
-    if ($tracker->add($userid, $tproject, $task, $comment, $started, $ended, $startdate, $enddate)) {
-        $redir = urldecode($redir);
-        if ($redir) {
-            $redir = $url . $redir;
-            header("Location: $redir");
-        } elseif ($ajaxreq == 1) {
-            echo "ok";
-        } else {
-            $loc = $url . "manageproject.php?action=showproject&id=$tproject&mode=timeadded";
-            header("Location: $loc");
-        }
-    } else {
-        $goback = $langfile["goback"];
-        $endafterstart = $langfile["endafterstart"];
-        $template->assign("mode", "error");
-        $template->assign("errortext", "$endafterstart<br>$goback");
-        $template->display("error.tpl");
-    }
+		echo $tempend;
+		$startdate = date("d.m.Y",$tempend);
+		$enddate = $startdate;
+
+	    $trackerstate = $tracker->add($userid, $tproject, $task, $comment, $started, $ended, $startdate, $enddate);
+	}
+		if($trackerstate)
+		{
+			$redir = urldecode($redir);
+			if ($redir) {
+				$redir = $url . $redir;
+				header("Location: $redir");
+			} elseif ($ajaxreq == 1) {
+				echo "ok";
+			} else {
+				$loc = $url . "manageproject.php?action=showproject&id=$tproject&mode=timeadded";
+				header("Location: $loc");
+			}
+		} else {
+			$goback = $langfile["goback"];
+			$endafterstart = $langfile["endafterstart"];
+			$template->assign("mode", "error");
+			$template->assign("errortext", "$endafterstart<br>$goback");
+			$template->display("error.tpl");
+		}
 } elseif ($action == "editform") {
     if (!$userpermissions["timetracker"]["edit"]) {
         $template->assign("errortext", "Permission denied.");
