@@ -74,7 +74,6 @@ if (isset($_SESSION["userid"])) {
     $template->assign("usergender", $gender);
     $template->assign("userpermissions", $userpermissions);
     $template->assign("loggedin", 1);
-    $mylog = new mylog();
 } else {
     $template->assign("loggedin", 0);
 }
@@ -84,7 +83,9 @@ if (isset($conn)) {
 	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 	$conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
-    $set = (object) new settings();
+ 	$mylog = new mylog();
+
+	$set = (object) new settings();
     $settings = $set->getSettings();
 
     define("CL_DATEFORMAT", $settings["dateformat"]);
