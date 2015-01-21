@@ -79,29 +79,30 @@ if ($action == "add") {
     $ajaxreq = $_GET["ajaxreq"];
 	$repeat = getArrayVal($_POST,"repeatTT");
 
+	//auto timetracker - construct input
     if ($ajaxreq == 1) {
         $lodate = date("d.m.Y");
         $started = date("H:i:s", $started);
         $ended = date("H:i:s", $ended);
+    	$repeat = 0;
 
         $comment = "";
     }
+
+	//has the adding of the entry been successful ? assume no
 	$trackerstate = false;
+	//add as many entries as repeat says. a
 	for($i=0;$i<=$repeat;$i++)
 	{
-		if($i==0)
+		//more than one day will be tracked.
+		if($i > 0)
 		{
 			$tempend = strtotime($startdate);
-		}
-		elseif($i > 0)
-		{
-			$tempend = strtotime($startdate);
-			//magic number - 1 day
+			//magic number - add 1 day to the startdate
 			$tempend += 86400;
+			$startdate = date("d.m.Y",$tempend);
 		}
-
-		echo $tempend;
-		$startdate = date("d.m.Y",$tempend);
+		//all in a days work !
 		$enddate = $startdate;
 
 	    $trackerstate = $tracker->add($userid, $tproject, $task, $comment, $started, $ended, $startdate, $enddate);
@@ -152,8 +153,10 @@ if ($action == "add") {
     }
     $template->assign("track", $track);
 
+	//get current and closed tasks
     $newtasks = $task->getProjectTasks($id);
     $oldtasks = $task->getProjectTasks($id, false);
+	//if the project has both - merge them into one array
     if ($newtasks and $oldtasks) {
         $tasks = array_merge($newtasks, $oldtasks);
     } else {
@@ -181,6 +184,7 @@ if ($action == "add") {
         die();
     }
 
+	//construct timestamps
     $started = $day . " " . $started;
     $started = strtotime($started);
     $ended = $endday . " " . $ended;
@@ -255,20 +259,26 @@ if ($action == "add") {
 	global $conn;
 
 	$id = (int) $id;
+	//get the project name
     $pname = $conn->query("SELECT name FROM projekte WHERE ID = $id");
     $pname = $pname->fetchColumn();
 
+	//create a new PDF in portrait orientation, A4 format
     $pdf = new MYPDF("P", PDF_UNIT, "A4", true);
+	//Set the header
     $headstr = $langfile["timetable"] . " " . $pname;
     $pdf->setup($headstr, array(239, 232, 229));
 
+	//headers for table columns
     $headers = array($langfile["user"], $langfile["task"], $langfile["comment"], $langfile["started"] . " - " . $langfile["ended"], $langfile["hours"]);
 
+	//if a filter has been applied, get only those timetracks
     if (!empty($start) and !empty($end)) {
         $track = $tracker->getProjectTrack($id, $usr, $taski, $start, $end, false);
     } else {
         $track = $tracker->getProjectTrack($id, $usr , $taski, 0, 0, false);
     }
+	//array representing the content of the table. each field is a column
     $thetrack = array();
     if (!empty($track)) {
         $i = 0;
@@ -282,10 +292,12 @@ if ($action == "add") {
             $tra["comment"] = strip_tags($tra["comment"]);
 
             $i = $i + 1;
+        	//write the table line
             array_push($thetrack, array($tra["uname"], $tra["tname"], $tra["comment"], $tra["daystring"] . "/" . $tra["startstring"] . "-" . $tra["endstring"], $hrs));
         }
 	}
 
+	//put it all to the PDF and output the file
     $pdf->table($headers, $thetrack);
     $pdf->Output("project-$id-timetable.pdf", "D");
 } elseif ($action == "userxls") {
@@ -354,6 +366,7 @@ if ($action == "add") {
         $template->display("error.tpl");
         die();
     }
+	//Check if the user belongs to this project
     if (!chkproject($userid, $id)) {
         $errtxt = $langfile["notyourproject"];
         $noperm = $langfile["accessdenied"];
