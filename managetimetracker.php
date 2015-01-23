@@ -77,55 +77,52 @@ if ($action == "add") {
 
     $worked = $_POST["worked"];
     $ajaxreq = $_GET["ajaxreq"];
-	$repeat = getArrayVal($_POST,"repeatTT");
-
-	//auto timetracker - construct input
+	$repeat = getArrayVal($_POST, "repeatTT");
+	
+	// auto timetracker - construct input
     if ($ajaxreq == 1) {
         $lodate = date("d.m.Y");
         $started = date("H:i:s", $started);
         $ended = date("H:i:s", $ended);
     	$repeat = 0;
-
         $comment = "";
     }
 
-	//has the adding of the entry been successful ? assume no
+	// has the adding of the entry been successful? assume no
 	$trackerstate = false;
-	//add as many entries as repeat says. a
-	for($i=0;$i<=$repeat;$i++)
-	{
-		//more than one day will be tracked.
-		if($i > 0)
-		{
+	
+	// add as many entries as repeat says
+	for ($i = 0; $i <= $repeat; $i++) {
+		// more than one day will be tracked
+		if ($i > 0) {
 			$tempend = strtotime($startdate);
-			//magic number - add 1 day to the startdate
-			$tempend += 86400;
-			$startdate = date("d.m.Y",$tempend);
+			$tempend += 86400; // magic number: add 1 day to start date
+			$startdate = date("d.m.Y", $tempend);
 		}
-		//all in a days work !
 		$enddate = $startdate;
-
-	    $trackerstate = $tracker->add($userid, $tproject, $task, $comment, $started, $ended, $startdate, $enddate);
+		
+		$trackerstate = $tracker->add($userid, $tproject, $task, $comment, $started, $ended, $startdate, $enddate);
 	}
-		if($trackerstate)
-		{
-			$redir = urldecode($redir);
-			if ($redir) {
-				$redir = $url . $redir;
-				header("Location: $redir");
-			} elseif ($ajaxreq == 1) {
-				echo "ok";
-			} else {
-				$loc = $url . "manageproject.php?action=showproject&id=$tproject&mode=timeadded";
-				header("Location: $loc");
-			}
+	
+	if ($trackerstate) {
+		$redir = urldecode($redir);
+		
+		if ($redir) {
+			$redir = $url . $redir;
+			header("Location: $redir");
+		} elseif ($ajaxreq == 1) {
+			echo "ok";
 		} else {
-			$goback = $langfile["goback"];
-			$endafterstart = $langfile["endafterstart"];
-			$template->assign("mode", "error");
-			$template->assign("errortext", "$endafterstart<br>$goback");
-			$template->display("error.tpl");
+			$loc = $url . "manageproject.php?action=showproject&id=$tproject&mode=timeadded";
+			header("Location: $loc");
 		}
+	} else {
+		$goback = $langfile["goback"];
+		$endafterstart = $langfile["endafterstart"];
+		$template->assign("mode", "error");
+		$template->assign("errortext", "$endafterstart<br>$goback");
+		$template->display("error.tpl");
+	}
 } elseif ($action == "editform") {
     if (!$userpermissions["timetracker"]["edit"]) {
         $template->assign("errortext", "Permission denied.");
