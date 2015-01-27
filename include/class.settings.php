@@ -10,14 +10,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
 class settings {
-    public $mylog;
-
-    /*
-     * Constructor
-     */
-    function __construct()
-    {
-    }
 
     /*
      * Returns all global settings

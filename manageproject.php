@@ -251,10 +251,9 @@ if ($action == "editform") {
 
     $headers = array($langfile["action"], $langfile["day"], $langfile["user"]);
 
-    $thelog = new mylog();
     $datlog = array();
-    $tlog = $thelog->getProjectLog($id, 100000);
-    $tlog = $thelog->formatdate($tlog, CL_DATEFORMAT . " / H:i:s");
+    $tlog = $mylog->getProjectLog($id, 100000);
+    $tlog = $mylog->formatdate($tlog, CL_DATEFORMAT . " / H:i:s");
     if (!empty($tlog)) {
         $i = 0;
         foreach($tlog as $logged) {
@@ -291,10 +290,9 @@ if ($action == "editform") {
 
     $headline = array(" ", $strtext, $straction, $strdate, $struser);
 	fputcsv($excelFile,$headline);
-    $thelog = new mylog();
     $datlog = array();
-    $tlog = $thelog->getProjectLog($id, 100000);
-    $tlog = $thelog->formatdate($tlog, CL_DATEFORMAT);
+    $tlog = $mylog->getProjectLog($id, 100000);
+    $tlog = $mylog->formatdate($tlog, CL_DATEFORMAT);
     if (!empty($tlog)) {
         foreach($tlog as $logged) {
             if ($logged["type"] == "datei") {
