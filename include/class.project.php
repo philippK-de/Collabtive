@@ -10,16 +10,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
 class project {
-    private $mylog;
-
-    /**
-     * Konstruktor
-     * Initialisiert den Eventlog
-     */
-    function __construct()
-    {
-        $this->mylog = new mylog;
-    }
 
     /**
      * Add a project
@@ -33,7 +23,7 @@ class project {
      */
     function add($name, $desc, $end, $budget, $assignme = 0)
     {
-        global $conn;
+        global $conn,$mylog;
 
         if ($end > 0) {
             $end = strtotime($end);
@@ -51,7 +41,7 @@ class project {
         }
         if ($ins1) {
             mkdir(CL_ROOT . "/files/" . CL_CONFIG . "/$insid/", 0777);
-            $this->mylog->add($name, 'projekt', 1, $insid);
+            $mylog->add($name, 'projekt', 1, $insid);
             return $insid;
         } else {
             return false;
@@ -70,7 +60,7 @@ class project {
      */
     function edit($id, $name, $desc, $end, $budget)
     {
-        global $conn;
+        global $conn,$mylog;
         $end = strtotime($end);
         $id = (int) $id;
         $budget = (float) $budget;
@@ -80,7 +70,7 @@ class project {
         $upd = $updStmt->execute(array($name, $desc, $end, $budget, $id));
 
         if ($upd) {
-            $this->mylog->add($name, 'projekt' , 2, $id);
+            $mylog->add($name, 'projekt' , 2, $id);
             return true;
         } else
             return false;
@@ -94,7 +84,7 @@ class project {
      */
     function del($id)
     {
-        global $conn;
+        global $conn,$mylog;
         $userid = $_SESSION["userid"];
         $id = (int) $id;
         // Delete assignments of tasks of this project to users
@@ -128,7 +118,7 @@ class project {
 
         delete_directory(CL_ROOT . "/files/" . CL_CONFIG . "/$id");
         if ($del) {
-            $this->mylog->add($userid, 'projekt', 3, $id);
+            $mylog->add($userid, 'projekt', 3, $id);
             return true;
         } else {
             return false;
@@ -143,7 +133,7 @@ class project {
      */
     function open($id)
     {
-        global $conn;
+        global $conn,$mylog;
         $id = (int) $id;
 
         $updStmt = $conn->prepare("UPDATE projekte SET status=1 WHERE ID = ?");
@@ -152,7 +142,7 @@ class project {
 		if ($upd) {
             $nam = $conn->query("SELECT name FROM projekte WHERE ID = $id")->fetch();
             $nam = $nam[0];
-            $this->mylog->add($nam, 'projekt', 4, $id);
+            $mylog->add($nam, 'projekt', 4, $id);
             return true;
         } else {
             return false;
@@ -167,7 +157,7 @@ class project {
      */
     function close($id)
     {
-        global $conn;
+        global $conn,$mylog;
         $id = (int) $id;
 
         $mile = new milestone();
@@ -203,7 +193,7 @@ class project {
 		if ($upd) {
             $nam = $conn->query("SELECT name FROM projekte WHERE ID = $id")->fetch();
             $nam = $nam[0];
-            $this->mylog->add($nam, 'projekt', 5, $id);
+            $mylog->add($nam, 'projekt', 5, $id);
             return true;
         } else {
             return false;
@@ -219,14 +209,14 @@ class project {
      */
     function assign($user, $id)
     {
-        global $conn;
+        global $conn,$mylog;
 
         $insStmt = $conn->prepare("INSERT INTO projekte_assigned (user,projekt) VALUES (?,?)");
         $ins = $insStmt->execute(array((int) $user, (int) $id));
         if ($ins) {
             $userObj = new user();
             $user = $userObj->getProfile($user);
-            $this->mylog->add($user["name"], 'user', 6, $id);
+            $mylog->add($user["name"], 'user', 6, $id);
             return true;
         } else {
             return false;
@@ -242,7 +232,7 @@ class project {
      */
     function deassign($user, $id)
     {
-        global $conn;
+        global $conn,$mylog;
 
         $sqlStmt = $conn->prepare("DELETE FROM projekte_assigned WHERE user = ? AND projekt = ?");
 
@@ -278,7 +268,7 @@ class project {
         if ($del) {
             $userObj = new user();
             $user = $userObj->getProfile($user);
-            $this->mylog->add($user["name"], 'user', 7, $id);
+            $mylog->add($user["name"], 'user', 7, $id);
             return true;
         } else {
             return false;
