@@ -19,6 +19,9 @@ Collabtive 2.1
 + Removed call to file_exists in getArrayVal() - it worked around an edge case in the installer. This safes a lot of calls to file_exists()
 + Fixed a bug that prevented files from being attached to messages
 + Fix the link in the file-uploaded email notification
++ Made mylog object global. This safes a lot of object instantiations and improves performance. (srichter)
++ Reuse $myOpenProjects from init.php in index.php , improving performance (srichter)
++ Improved SSL recognition (srichter)
 
 Collabtive 2.0
 + Fixed notice on desktop that resulted from missing network connection during update check

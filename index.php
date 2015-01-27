@@ -29,14 +29,13 @@ $milestone = new milestone();
 $mtask = new task();
 $msg = new message();
 
-$myprojects = $project->getMyProjects($userid);
 $messages = array();
 $milestones = array();
 $tasks = array();
 $cou = 0;
 // If users has projects, loop through them and get the messages and tasks belonging to those projects
-if (!empty($myprojects)) {
-    foreach($myprojects as $proj) {
+if (!empty($myOpenProjects)) {
+    foreach($myOpenProjects as $proj) {
         $task = $mtask->getAllMyProjectTasks($proj["ID"], 100);
         $msgs = $msg->getProjectMessages($proj["ID"]);
 
@@ -96,7 +95,7 @@ if ($mode == "login") {
 // Get todays date and count tasks, projects and messages for display
 $today = date("d");
 $tasknum = count($etasks);
-$projectnum = count($myprojects);
+$projectnum = count($myOpenProjects);
 $msgnum = count($messages);
 
 $title = $langfile["desktop"];
@@ -104,7 +103,7 @@ $title = $langfile["desktop"];
 $template->assign("title", $title);
 $template->assign("today", $today);
 
-$template->assign("myprojects", $myprojects);
+$template->assign("myprojects", $myOpenProjects);
 $template->assign("projectnum", $projectnum);
 $template->assign("projectov", "yes");
 

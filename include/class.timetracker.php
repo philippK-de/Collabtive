@@ -11,16 +11,7 @@
 */
 
 class timetracker {
-    private $mylog;
 
-    /**
-    * Constructor
-    * Initialize the event log
-    */
-    function __construct()
-    {
-        $this->mylog = new mylog;
-    }
 
     /**
     * Add timetracker entry

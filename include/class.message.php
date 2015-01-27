@@ -12,16 +12,7 @@
  */
 
 class message {
-    public $mylog;
 
-    /**
-     * Konstruktor
-     * Initialisiert den Eventlog
-     */
-    function __construct()
-    {
-        $this->mylog = new mylog;
-    }
 
     /**
      * Creates a new message or a reply to a message
@@ -37,14 +28,14 @@ class message {
      */
     function add($project, $title, $text, $user, $username, $replyto, $milestone)
     {
-        global $conn;
+        global $conn,$mylog;
 
         $insStmt = $conn->prepare("INSERT INTO messages (`project`,`title`,`text`,`tags`,`posted`,`user`,`username`,`replyto`,`milestone`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ? )");
         $ins = $insStmt->execute(array((int) $project, $title, $text,"", time(), (int) $user, $username, (int) $replyto, (int) $milestone));
 
         $insid = $conn->lastInsertId();
         if ($ins) {
-            $this->mylog->add($title, 'message', 1, $project);
+            $mylog->add($title, 'message', 1, $project);
             return $insid;
         } else {
             return false;
@@ -62,7 +53,7 @@ class message {
      */
     function edit($id, $title, $text)
     {
-        global $conn;
+        global $conn,$mylog;
 
         $updStmt = $conn->prepare("UPDATE `messages` SET `title`=?, `text`=? WHERE ID = ?");
         $upd = $updStmt->execute(array($title, $text, (int) $id));
@@ -70,7 +61,7 @@ class message {
         if ($upd) {
             $proj = $conn->query("SELECT project FROM messages WHERE ID = $id")->fetch();
             $proj = $proj[0];
-            $this->mylog->add($title, 'message', 2, $proj);
+            $mylog->add($title, 'message', 2, $proj);
             return true;
         } else {
             return false;
@@ -85,7 +76,7 @@ class message {
      */
     function del($id)
     {
-        global $conn;
+        global $conn,$mylog;
         $id = (int) $id;
 
         $msgStmt = $conn->prepare("SELECT title,project FROM messages WHERE ID = ?");
@@ -102,7 +93,7 @@ class message {
         $del3->execute(array($id));
 
 		if ($del) {
-            $this->mylog->add($msg[0], 'message', 3, $msg[1]);
+            $mylog->add($msg[0], 'message', 3, $msg[1]);
             return true;
         } else {
             return false;
