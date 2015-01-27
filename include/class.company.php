@@ -11,16 +11,6 @@
 * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
 */
 class company {
-    private $mylog;
-
-    /**
-    * Constructor
-    * Initializes the event log
-    */
-    function __construct()
-    {
-        $this->mylog = new mylog;
-    }
 
     /**
     * Add a company

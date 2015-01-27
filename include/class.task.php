@@ -12,16 +12,7 @@
 */
 
 class task {
-    private $mylog;
 
-    /**
-    * Constructor
-    * Initializes the event log
-    */
-    function __construct()
-    {
-        $this->mylog = new mylog;
-    }
 
     /**
     * Add a task
@@ -37,7 +28,7 @@ class task {
     */
     function add($start, $end, $title, $text, $liste, $project)
     {
-        global $conn;
+        global $conn,$mylog;
         $liste = (int) $liste;
         $project = (int) $project;
         // convert strings to timestamps
@@ -58,7 +49,7 @@ class task {
             $insid = $conn->lastInsertId();
             // logentry
             $nameproject = $this->getNameProject($insid);
-            $this->mylog->add($nameproject[0], 'task', 1, $nameproject[1]);
+            $mylog->add($nameproject[0], 'task', 1, $nameproject[1]);
             return $insid;
         } else {
             return false;
@@ -79,7 +70,7 @@ class task {
     */
     function edit($id, $start, $end, $title, $text, $liste)
     {
-        global $conn;
+        global $conn,$mylog;
         $id = (int) $id;
         $liste = (int) $liste;
         // convert time string to timestamp
@@ -93,7 +84,7 @@ class task {
             // Remove all the users from the task. Done to ensure no double assigns occur since the handler scripts call this::assign() on their own.
             $conn->query("DELETE FROM tasks_assigned WHERE `task` = $id");
             $nameproject = $this->getNameProject($id);
-            $this->mylog->add($nameproject[0], 'task', 2, $nameproject[1]);
+            $mylog->add($nameproject[0], 'task', 2, $nameproject[1]);
             return true;
         } else {
             return false;
@@ -108,7 +99,7 @@ class task {
     */
     function del($id)
     {
-        global $conn;
+        global $conn,$mylog;
         $id = (int) $id;
 
         $nameproject = $this->getNameProject($id);
@@ -117,7 +108,7 @@ class task {
 
         if ($del) {
             $del2 = $conn->query("DELETE FROM tasks_assigned WHERE task=$id");
-            $this->mylog->add($nameproject[0], 'task', 3, $nameproject[1]);
+            $mylog->add($nameproject[0], 'task', 3, $nameproject[1]);
             return true;
         } else {
             return false;
@@ -132,7 +123,7 @@ class task {
     */
     function open($id)
     {
-        global $conn;
+        global $conn,$mylog;
         $id = (int) $id;
 
         $updStmt = $conn->prepare("UPDATE tasks SET status = 1 WHERE ID = ?");
@@ -140,7 +131,7 @@ class task {
 
         if ($upd) {
             $nameproject = $this->getNameProject($id);
-            $this->mylog->add($nameproject[0], 'task', 4, $nameproject[1]);
+            $mylog->add($nameproject[0], 'task', 4, $nameproject[1]);
             return true;
         } else {
             return false;
@@ -155,7 +146,7 @@ class task {
     */
     function close($id)
     {
-        global $conn;
+        global $conn,$mylog;
         $id = (int) $id;
 
         $updStmt = $conn->prepare("UPDATE tasks SET status = 0 WHERE ID = ?");
@@ -163,7 +154,7 @@ class task {
 
         if ($upd) {
             $nameproject = $this->getNameProject($id);
-            $this->mylog->add($nameproject[0], 'task', 5, $nameproject[1]);
+            $mylog->add($nameproject[0], 'task', 5, $nameproject[1]);
             return true;
         } else {
             return false;

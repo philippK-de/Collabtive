@@ -137,6 +137,8 @@ function detectSSL()
         return true;
     } elseif (getArrayVal($_SERVER, "https") == 1) {
         return true;
+    } elseif (getArrayVal($_SERVER, "HTTPS") == 'on') {
+        return true;
     } elseif (getArrayVal($_SERVER, "HTTPS") == 1) {
         return true;
     } elseif (getArrayVal($_SERVER, "SERVER_PORT") == 443) {
