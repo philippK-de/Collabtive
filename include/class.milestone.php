@@ -11,16 +11,6 @@
 * @global $mylog
 */
 class milestone {
-    private $mylog;
-
-    /**
-    * Constructor
-    * Initialize the event log
-    */
-    function __construct()
-    {
-        $this->mylog = new mylog;
-    }
 
     /**
     * Add a milestone
@@ -34,7 +24,7 @@ class milestone {
     */
     function add($project, $name, $desc, $start, $end, $status = 1)
     {
-        global $conn;
+        global $conn,$mylog;
         // Convert end date to timestamp
         $end = strtotime($end);
         $start = strtotime($start);
@@ -44,7 +34,7 @@ class milestone {
 
         if ($ins) {
             $insid = $conn->lastInsertId();
-            $this->mylog->add($name, 'milestone' , 1, $project);
+            $mylog->add($name, 'milestone' , 1, $project);
             return $insid;
         } else {
             return false;
@@ -62,7 +52,7 @@ class milestone {
     */
     function edit($id, $name, $desc, $start, $end)
     {
-        global $conn;
+        global $conn,$mylog;
         $id = (int) $id;
         $start = strtotime($start);
         $end = strtotime($end);
@@ -74,7 +64,7 @@ class milestone {
             $project = $nam[0];
             $name = $nam[1];
 
-            $this->mylog->add($name, 'milestone' , 2, $project);
+            $mylog->add($name, 'milestone' , 2, $project);
             return true;
         } else {
             return false;
@@ -89,7 +79,7 @@ class milestone {
     */
     function del($id)
     {
-        global $conn;
+        global $conn,$mylog;
         $id = (int) $id;
 
         $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
@@ -100,7 +90,7 @@ class milestone {
             $project = $nam[0];
             $name = $nam[1];
 
-            $this->mylog->add($name, 'milestone', 3, $project);
+            $mylog->add($name, 'milestone', 3, $project);
             return true;
         } else {
             return false;
@@ -115,7 +105,7 @@ class milestone {
     */
     function open($id)
     {
-        global $conn;
+        global $conn,$mylog;
         $id = (int) $id;
 
         $updStmt = $conn->query("UPDATE milestones SET status = 1 WHERE ID = ?");
@@ -127,7 +117,7 @@ class milestone {
             $project = $nam[0];
             $name = $nam[1];
 
-            $this->mylog->add($name, 'milestone', 4, $project);
+            $mylog->add($name, 'milestone', 4, $project);
             return true;
         } else {
             return false;
@@ -143,7 +133,7 @@ class milestone {
     */
     function close($id)
     {
-        global $conn;
+        global $conn,$mylog;
         $id = (int) $id;
 
         $updStmt = $conn->prepare("UPDATE milestones SET status = 0 WHERE ID = ?");
@@ -164,7 +154,7 @@ class milestone {
             $project = $nam[0];
             $name = $nam[1];
 
-            $this->mylog->add($name, 'milestone', 5, $project);
+            $mylog->add($name, 'milestone', 5, $project);
             return true;
         } else {
             return false;
@@ -180,7 +170,7 @@ class milestone {
     */
     function assign($milestone, $user)
     {
-        global $conn;
+        global $conn,$mylog;
         $milestone = (int) $milestone;
         $user = (int) $user;
 
@@ -194,7 +184,7 @@ class milestone {
             $project = $nam[0];
             $name = $nam[1];
 
-            $this->mylog->add($name, 'milestone', 6, $project);
+            $mylog->add($name, 'milestone', 6, $project);
             return true;
         } else {
             return false;
@@ -210,7 +200,7 @@ class milestone {
     */
     function deassign($milestone, $user)
     {
-        global $conn;
+        global $conn,$mylog;
         $milestone = (int) $milestone;
         $user = (int) $user;
 
@@ -223,7 +213,7 @@ class milestone {
             $project = $nam[0];
             $name = $nam[1];
 
-            $this->mylog->add($name, 'milestone', 7, $project);
+            $mylog->add($name, 'milestone', 7, $project);
             return true;
         } else {
             return false;

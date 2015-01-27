@@ -10,16 +10,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
 class tasklist {
-    public $mylog;
 
-    /**
-     * Constructor
-     * Initialize the event log
-     */
-    function __construct()
-    {
-        $this->mylog = new mylog;
-    }
 
     /**
      * Add a tasklist
@@ -33,14 +24,14 @@ class tasklist {
      */
     function add_liste($project, $name, $desc, $access = 0, $milestone = 0)
     {
-        global $conn;
+        global $conn,$mylog;
 
         $insStmt = $conn->prepare("INSERT INTO tasklist (`project`, `name`, `desc`, `start`, `status`, `access`, `milestone`) VALUES (?, ?, ?, ?, 1, ?, ?)");
         $ins = $insStmt->execute(array((int) $project, $name, $desc, time(), (int) $access, (int) $milestone));
 
         if ($ins) {
             $insid = $conn->lastInsertId();
-            $this->mylog->add($name, 'tasklist', 1, $project);
+            $mylog->add($name, 'tasklist', 1, $project);
             return $insid;
         } else {
             return false;
@@ -58,7 +49,7 @@ class tasklist {
      */
     function edit_liste($id, $name, $desc, $milestone)
     {
-        global $conn;
+        global $conn,$mylog;
         $name = htmlspecialchars($name);
         $updStmt = $conn->prepare("UPDATE tasklist SET `name` = ?, `desc` = ?, `milestone` = ? WHERE ID = ?");
         $upd = $updStmt->execute(array($name, $desc, $milestone, $id));
@@ -66,7 +57,7 @@ class tasklist {
             $proj = $conn->query("SELECT project FROM tasklist WHERE ID = $id")->fetch();
             $proj = $proj[0];
 
-            $this->mylog->add($name, 'tasklist', 2, $proj);
+            $mylog->add($name, 'tasklist', 2, $proj);
             return true;
         } else {
             return false;
@@ -81,7 +72,7 @@ class tasklist {
      */
     function del_liste($id)
     {
-        global $conn;
+        global $conn,$mylog;
         $id = (int) $id;
 
         $sel = $conn->query("SELECT project, name FROM tasklist WHERE ID = $id");
@@ -103,7 +94,7 @@ class tasklist {
             $sel1 = $sel->fetch();
             $proj = $sel1[0];
             $name = $sel1[1];
-            $this->mylog->add($name, 'tasklist', 3, $proj);
+            $mylog->add($name, 'tasklist', 3, $proj);
             return true;
         } else {
             return false;
@@ -118,7 +109,7 @@ class tasklist {
      */
     function open_liste($id)
     {
-        global $conn;
+        global $conn,$mylog;
         $id = (int) $id;
 
         $updStmt = $conn->prepare("UPDATE tasklist SET status = 1 WHERE ID = ?");
@@ -129,7 +120,7 @@ class tasklist {
             $project = $nam[0];
             $name = $nam[1];
 
-            $this->mylog->add($name, 'tasklist', 4, $project);
+            $mylog->add($name, 'tasklist', 4, $project);
             return true;
         } else {
             return false;
@@ -147,7 +138,7 @@ class tasklist {
      */
     function close_liste($id, $closeMilestones = true)
     {
-        global $conn;
+        global $conn,$mylog;
         $id = (int) $id;
 
         $updStmt = $conn->prepare("UPDATE tasklist SET status = 0 WHERE ID = ?");
@@ -179,7 +170,7 @@ class tasklist {
             $project = $nam[0];
             $name = $nam[1];
 
-            $this->mylog->add($name, 'tasklist', 5, $project);
+            $mylog->add($name, 'tasklist', 5, $project);
             return true;
         } else {
             return false;
