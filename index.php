@@ -39,9 +39,12 @@ $cou = 0;
 // If user has projects, loop through them and get the messages and tasks belonging to those projects
 if (!empty($myOpenProjects)) {
     foreach($myOpenProjects as $proj) {
+		//get all the tasks in this project that are assigned to the current user
         $task = $mtask->getAllMyProjectTasks($proj["ID"], 100);
+		//get all messages in the project
         $msgs = $msg->getProjectMessages($proj["ID"]);
 
+		//write those to arrays
         if (!empty($msgs)) {
             array_push($messages, $msgs);
         }
@@ -53,7 +56,7 @@ if (!empty($myOpenProjects)) {
         $cou = $cou + 1;
     }
 }
-// If the user is allowed to add projects, also get users to assign to those projects
+// If the user is allowed to add projects, also get all users to assign to those projects
 if ($userpermissions["projects"]["add"]) {
     $user = new user();
     $users = $user->getAllUsers(1000000);
