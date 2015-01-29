@@ -107,7 +107,7 @@ class roles {
         global $conn;
         $id = (int) $id;
     	$del = $conn->prepare("DELETE FROM roles WHERE ID = ?");
-    	$del->execute(arrqay($id));
+    	$del->execute(array($id));
 
     	$del2 = $conn->prepare("DELETE FROM roles_assigned WHERE role = ?");
     	$del2->execute(array($id));
