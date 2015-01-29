@@ -42,8 +42,8 @@ class datei {
         $folder = preg_replace("/\W/", "", $folder);
         $folder = preg_replace("/[^-_0-9a-zA-Z]/", "_", $folder);
         // Insert folder into database
-        $insStmt = $conn->prepare("INSERT INTO projectfolders (parent, project, name, description) VALUES (?, ?, ?, ?)");
-        $ins = $insStmt->execute(array($parent, $project, $folder, $desc));
+        $insStmt = $conn->prepare("INSERT INTO projectfolders (parent, project, name, description, visible) VALUES (?, ?, ?, ?, ?)");
+        $ins = $insStmt->execute(array($parent, $project, $folder, $desc, ""));
 
         if ($ins) {
             // Create the folder
