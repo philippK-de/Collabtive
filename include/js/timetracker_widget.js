@@ -15,10 +15,8 @@ function populateEndtime()
 
 	var finVal = startVal + hrsVal;
 
-	console.log(finVal);
-
 	finVal = zeroFill(finVal,2);
-	$('ended').value = zeroFill(finVal,2) + ":00";
+	$('ended').value = finVal + ":00";
 }
 function populateHours()
 {
@@ -27,10 +25,8 @@ function populateHours()
 	var hrsVal = parseInt($('workhours').value,10);
 
 	var finVal = endVal - startVal;
-	if(hrsVal != finVal)
+	if(hrsVal != finVal && finVal >= 0)
 	{
 		$('workhours').value = finVal;
 	}
-	console.log("startval:"+startVal);
-	console.log("endval:"+endVal);
 }
