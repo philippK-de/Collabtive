@@ -22,6 +22,8 @@ Collabtive 2.1
 + Made mylog object global. This safes a lot of object instantiations and improves performance. (srichter)
 + Reuse $myOpenProjects from init.php in index.php , improving performance (srichter)
 + Improved SSL recognition (srichter)
++ Improved the timetracker widget on the project dashboard. It can now take working hours as input, and repeat an entry for subsequent days.
+
 
 Collabtive 2.0
 + Fixed notice on desktop that resulted from missing network connection during update check
