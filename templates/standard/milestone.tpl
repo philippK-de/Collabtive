@@ -1,4 +1,4 @@
-{include file="header.tpl" jsload="ajax"}
+{include file="header.tpl" jsload="ajax" jsload1="tinymce"}
 {include file="tabsmenue-project.tpl" milestab="active"}
 
 <div id="content-left">
@@ -28,21 +28,21 @@
 						<a class="close" href="managemilestone.php?action=close&amp;mid={$milestone.ID}&amp;id={$project.ID}" title="{#close#}"></a>
 					</li>
 					{/if}{/if}
-					
+
 					{if $userpermissions.milestones.edit}
 					<li class="link">
 						<a class="edit" href="javascript:void(0);" id="edit_butn" onclick="blindtoggle('form_edit');toggleClass(this,'edit-active','edit');toggleClass('sm_mile','smooth','nosmooth');" title="{#edit#}"></a>
 					</li>
 					{/if}
-					
+
 					{if $userpermissions.milestones.del}
 					<li class="link">
 						<a class="del" href="javascript:void(0);" onclick="confirmit('{#confirmdel#}','managemilestone.php?action=del&amp;mid={$milestone.ID}&amp;id={$project.ID}');" title="{#delete#}"></a>
 					</li>
 					{/if}
-	
+
 					<li><a>{#start#}: {$milestone.startstring}</a></li>
-	
+
 					<li><a>{#end#}: {$milestone.endstring}</a></li>
 				</ul>
 			</div>
@@ -54,20 +54,20 @@
 					{include file="editmilestone.tpl" showhtml="no"}
 				</div>
 			{/if}
-			
+
 			<div class="content-spacer"></div>
-			
+
 			<div class="nosmooth" id="sm_mile">
 				{*Description*}
 				<div id="descript" class="descript">
 					<h2>{#description#}</h2>
 					{$milestone.desc}
 				</div>
-				
+
 				{*Tasklists*}
 				{if $milestone.tasklists[0][0]}
 					<div class="content-spacer-b"></div>
-					
+
 					<h2>{#tasklists#}</h2>
 
 					<div class="inwrapper">
@@ -117,9 +117,9 @@
 				{*Messages*}
 				{if $milestone.messages[0][0]}
 					<div class="content-spacer-b"></div>
-					
+
 					<h2>{#messages#}</h2>
-		
+
 					<div class="inwrapper">
 						<ul>
 							{section name=msg loop=$milestone.messages}
@@ -160,9 +160,9 @@
 							{/section} {*loop Messages End*}
 						</ul>
 					</div> {*inwrapper End*}
-					
+
 				{/if}
-			
+
 			</div> {*nosmooth End*}
 
 			<div class="content-spacer"></div>
