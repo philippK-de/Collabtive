@@ -10,6 +10,7 @@ $path = "./include/phpseclib";
 set_include_path(get_include_path() . PATH_SEPARATOR . $path);
 $myfile = new datei();
 
+//read the maximum file size for file uploads from PHP
 $POST_MAX_SIZE = ini_get('post_max_size');
 $POST_MAX_SIZE = $POST_MAX_SIZE . "B";
 

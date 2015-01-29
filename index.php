@@ -1,6 +1,6 @@
 <?php
 require("./init.php");
-
+//check if the user is loged in
 if (!isset($_SESSION["userid"])) {
     $template->assign("loginerror", 0);
     $mode = getArrayVal($_GET, "mode");
@@ -29,11 +29,14 @@ $milestone = new milestone();
 $mtask = new task();
 $msg = new message();
 
+//create arrays to hold data
 $messages = array();
 $milestones = array();
 $tasks = array();
+//create a counter for the foreach loop
 $cou = 0;
-// If users has projects, loop through them and get the messages and tasks belonging to those projects
+
+// If user has projects, loop through them and get the messages and tasks belonging to those projects
 if (!empty($myOpenProjects)) {
     foreach($myOpenProjects as $proj) {
         $task = $mtask->getAllMyProjectTasks($proj["ID"], 100);
