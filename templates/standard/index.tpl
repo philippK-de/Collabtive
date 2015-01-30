@@ -145,7 +145,7 @@
 			</div> {* projects END *}
 
 {*Doneprojects*}
-				<div id="doneblock" class="doneblock" style="display: none;">
+				<div id="doneblock" class="projects" style="display: none;">
 				<table class="second-thead" cellpadding="0" cellspacing="0" border="0" onclick="blindtoggle('doneblock');toggleClass('donebutn','butn_link_active','butn_link');toggleClass('toggle-done','acc-toggle','acc-toggle-active');">
 
 						<tr>
@@ -213,9 +213,9 @@
 				</div> {*toggleblock End*}
 				</div> {*doneblock end*}
 
-			</div> {*smooth end*}
+{*			</div> {*smooth end*}
 
-		</div> {*block END*}
+{*		</div> {*block END*}
 
 
 {*Doneprojects End*}
