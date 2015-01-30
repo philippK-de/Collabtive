@@ -213,11 +213,6 @@
 				</div> {*toggleblock End*}
 				</div> {*doneblock end*}
 
-{*			</div> {*smooth end*}
-
-{*		</div> {*block END*}
-
-
 {*Doneprojects End*}
 
 
