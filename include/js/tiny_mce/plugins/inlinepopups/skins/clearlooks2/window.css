@@ -7,18 +7,18 @@
 .clearlooks2 {position:absolute; direction:ltr}
 .clearlooks2 .mceWrapper {position:static}
 .mceEventBlocker {position:fixed; left:0; top:0; background:url(img/horizontal.gif) no-repeat 0 -75px; width:100%; height:100%}
-.clearlooks2 .mcePlaceHolder {border:1px solid #000; background:#CCC; top:0; left:0; opacity:0.5; -ms-filter:'alpha(opacity=50)'; filter:alpha(opacity=50)}
-.clearlooks2_modalBlocker {position:fixed; left:0; top:0; width:100%; height:100%; background:#666; opacity:0.9; -ms-filter:'alpha(opacity=90)'; filter:alpha(opacity=60); display:none}
+.clearlooks2 .mcePlaceHolder {border:1px solid #000; background:#888; top:0; left:0; opacity:0.5; -ms-filter:'alpha(opacity=50)'; filter:alpha(opacity=50)}
+.clearlooks2_modalBlocker {position:fixed; left:0; top:0; width:100%; height:100%; background:#FFF; opacity:0.6; -ms-filter:'alpha(opacity=60)'; filter:alpha(opacity=60); display:none}
 
 /* Top */
 .clearlooks2 .mceTop, .clearlooks2 .mceTop div {top:0; width:100%; height:23px}
-.clearlooks2 .mceTop .mceLeft {width:6px; background-color:red;}
-.clearlooks2 .mceTop .mceCenter {right:6px; width:100%; height:23px; background-color:red;}
-.clearlooks2 .mceTop .mceRight {right:0; width:6px; height:23px; background-color:red;}
+.clearlooks2 .mceTop .mceLeft {width:6px; background:url(img/corners.gif)}
+.clearlooks2 .mceTop .mceCenter {right:6px; width:100%; height:23px; background:url(img/horizontal.gif) 12px 0; clip:rect(auto auto auto 12px)}
+.clearlooks2 .mceTop .mceRight {right:0; width:6px; height:23px; background:url(img/corners.gif) -12px 0}
 .clearlooks2 .mceTop span {width:100%; text-align:center; vertical-align:middle; line-height:23px; font-weight:bold}
-.clearlooks2 .mceFocus .mceTop .mceLeft {background-color:#365A76;}
-.clearlooks2 .mceFocus .mceTop .mceCenter {background-color:#365A76;}
-.clearlooks2 .mceFocus .mceTop .mceRight {background-color:#365A76;}
+.clearlooks2 .mceFocus .mceTop .mceLeft {background:url(img/corners.gif) -6px 0}
+.clearlooks2 .mceFocus .mceTop .mceCenter {background:url(img/horizontal.gif) 0 -23px}
+.clearlooks2 .mceFocus .mceTop .mceRight {background:url(img/corners.gif) -18px 0}
 .clearlooks2 .mceFocus .mceTop span {color:#FFF}
 
 /* Middle */

@@ -1,7 +1,7 @@
 /* Reset */
 .defaultSkin table, .defaultSkin tbody, .defaultSkin a, .defaultSkin img, .defaultSkin tr, .defaultSkin div, .defaultSkin td, .defaultSkin iframe, .defaultSkin span, .defaultSkin *, .defaultSkin .mceText {border:0; margin:0; padding:0; background:transparent; white-space:nowrap; text-decoration:none; font-weight:normal; cursor:default; color:#000; vertical-align:baseline; width:auto; border-collapse:separate; text-align:left}
 .defaultSkin a:hover, .defaultSkin a:link, .defaultSkin a:visited, .defaultSkin a:active {text-decoration:none; font-weight:normal; cursor:default; color:#000}
-.defaultSkin table td {vertical-align:middle;padding:0;}
+.defaultSkin table td {vertical-align:middle}
 
 /* Containers */
 .defaultSkin table {direction:ltr;background:transparent}
@@ -17,8 +17,8 @@
 
 /* Layout */
 .defaultSkin table.mceLayout {border:0; border-left:1px solid #CCC; border-right:1px solid #CCC}
-.defaultSkin table.mceLayout tr.mceFirst td {border-top:1px solid #CCC;padding:0;}
-.defaultSkin table.mceLayout tr.mceLast td {border-bottom:1px solid #CCC; padding:0;}
+.defaultSkin table.mceLayout tr.mceFirst td {border-top:1px solid #CCC}
+.defaultSkin table.mceLayout tr.mceLast td {border-bottom:1px solid #CCC}
 .defaultSkin table.mceToolbar, .defaultSkin tr.mceFirst .mceToolbar tr td, .defaultSkin tr.mceLast .mceToolbar tr td {border:0; margin:0; padding:0;}
 .defaultSkin td.mceToolbar {background:#F0F0EE; padding-top:1px; vertical-align:top}
 .defaultSkin .mceIframeContainer {border-top:1px solid #CCC; border-bottom:1px solid #CCC}
@@ -83,7 +83,7 @@
 .defaultSkin .mce_forecolor span.mceAction, .defaultSkin .mce_backcolor span.mceAction {overflow:hidden; height:16px}
 
 /* Menu */
-.defaultSkin .mceMenu {position:absolute; left:0; top:0; z-index:1000; border:1px solid #D4D0C8}
+.defaultSkin .mceMenu {position:absolute; left:0; top:0; z-index:1000; border:1px solid #D4D0C8; direction:ltr}
 .defaultSkin .mceNoIcons span.mceIcon {width:0;}
 .defaultSkin .mceNoIcons a .mceText {padding-left:10px}
 .defaultSkin .mceMenu table {background:#FFF}
@@ -103,10 +103,15 @@
 .defaultSkin .mceNoIcons .mceMenuItemSelected a {background:url(img/menu_arrow.gif) no-repeat -6px center}
 .defaultSkin .mceMenu span.mceMenuLine {display:none}
 .defaultSkin .mceMenuItemSub a {background:url(img/menu_arrow.gif) no-repeat top right;}
+.defaultSkin .mceMenuItem td, .defaultSkin .mceMenuItem th {line-height: normal}
 
 /* Progress,Resize */
 .defaultSkin .mceBlocker {position:absolute; left:0; top:0; z-index:1000; opacity:0.5; -ms-filter:'alpha(opacity=50)'; filter:alpha(opacity=50); background:#FFF}
 .defaultSkin .mceProgress {position:absolute; left:0; top:0; z-index:1001; background:url(img/progress.gif) no-repeat; width:32px; height:32px; margin:-16px 0 0 -16px}
+
+/* Rtl */
+.mceRtl .mceListBox .mceText {text-align: right; padding: 0 4px 0 0}
+.mceRtl .mceMenuItem .mceText {text-align: right}
 
 /* Formats */
 .defaultSkin .mce_formatPreview a {font-size:10px}
@@ -211,3 +216,4 @@
 .defaultSkin span.mce_pagebreak {background-position:0 -40px}
 .defaultSkin span.mce_restoredraft {background-position:-20px -40px}
 .defaultSkin span.mce_spellchecker {background-position:-540px -20px}
+.defaultSkin span.mce_visualblocks {background-position: -40px -40px}
