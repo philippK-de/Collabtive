@@ -146,7 +146,7 @@ class task {
     */
     function close($id)
     {
-        global $conn,$mylog;
+      global $conn,$mylog;
         $id = (int) $id;
 
         $updStmt = $conn->prepare("UPDATE tasks SET status = 0 WHERE ID = ?");
@@ -155,8 +155,8 @@ class task {
 
         $updStmt = $conn->prepare("SELECT liste FROM tasks WHERE ID = ?");
         $sql = $updStmt->execute(array($id));
+        $liste = $updStmt->fetch();
         
-        $liste = $sql->fetch();
         $sql2 = $conn->query("SELECT count(*) FROM tasks WHERE liste = $liste[0] AND status = 1");
         $cou = $sql2->fetch();
         // if this is the last task in its list, close the list too.
