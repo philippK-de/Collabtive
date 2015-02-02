@@ -22,7 +22,7 @@ $started = getArrayVal($_POST, "started");
 $ended = getArrayVal($_POST, "ended");
 $tproject = getArrayVal($_POST, "project");
 $task = getArrayVal($_POST, "ttask");
-$startdate = getArrayVal($_POST, "ttday");
+$startdate = getArrayVal($_POST, "ttstartday");
 $enddate = getArrayVal($_POST, "ttendday");
 $comment = getArrayVal($_POST, "comment");
 $redir = getArrayVal($_GET, "redir");
@@ -84,7 +84,7 @@ if ($action == "add") {
         $lodate = date("d.m.Y");
         $started = date("H:i:s", $started);
         $ended = date("H:i:s", $ended);
-    	$repeat = 0;
+      	$repeat = 0;
         $comment = "";
     }
 
@@ -95,11 +95,13 @@ if ($action == "add") {
 	for ($i = 0; $i <= $repeat; $i++) {
 		// more than one day will be tracked
 		if ($i > 0) {
-			$tempend = strtotime($startdate);
-			$tempend += 86400; // magic number: add 1 day to start date
-			$startdate = date("d.m.Y", $tempend);
+			$tempstart = strtotime($startdate);
+      $tempend   = strtotime($enddate);
+			$tempstart += 86400; // magic number: add 1 day to start date
+      $tempend   += 86400;
+			$startdate = date("d.m.Y", $tempstart);
+      $enddate   = date('d.m.Y', $tempend);
 		}
-		$enddate = $startdate;
 		
 		$trackerstate = $tracker->add($userid, $tproject, $task, $comment, $started, $ended, $startdate, $enddate);
 	}
