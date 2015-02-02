@@ -1022,6 +1022,10 @@ td.message ul {
 	background: url(../images/color-c-cyan.png) repeat 0 0;
 }
 
+.datepick #datepicker_addendtt{
+  left: 440px;
+}
+
 /* ## BIG CALENDAR ###################################### */
 
 .block .bigcal table.thecal {
@@ -1226,6 +1230,17 @@ td.message ul {
 .neutral .datepick td.back a {
 	background-image: url(../images/back-side-neutral.png);
 }
+
+.starttimebtn{
+  width: 60px;
+}
+
+#workhours{
+  width: 60px;
+  margin-right: 109px;
+}
+
+
 
 /* ## ONLINELISTE ######################################## */
 
