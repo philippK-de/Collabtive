@@ -10,13 +10,23 @@ function zeroFill( number, width )
 
 function populateEndtime()
 {
-	var startVal = parseInt($('started').value,10);
-	var hrsVal = parseInt($('workhours').value,10);
+	var startTime=$('started').value;
+	var parts=startTime.split(':');
+	var startHour=parseInt(parts[0]);
+	var startMin=parseInt(parts[1]);
 
-	var finVal = startVal + hrsVal;
+  // get the start time seconds
+	var startVal = 60*startHour+startMin;	
 
-	finVal = zeroFill(finVal,2);
-	$('ended').value = finVal + ":00";
+  // calculate the 'workminutes' from the work hours
+	var minDiff = 60*parseInt($('workhours').value,10);
+
+  // calculate the end time
+  var endVal = startVal + minDiff;
+	var endMin = zeroFill(endVal % 60,2);
+	var endHour = zeroFill((endVal-endMin) / 60,2);
+	
+	$('ended').value    = endHour + ":" + endMin;
 }
 function populateHours()
 {
