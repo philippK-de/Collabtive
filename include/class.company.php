@@ -158,12 +158,12 @@ class company {
 
         $project = (int) $project;
 
-        $sel = $conn->prepare("SELECT customer FROM customers_assigned WHERE project = :project");
-        $selStmt = $sel->execute(array(':project' => $project));
+        $sel = $conn->prepare("SELECT customer FROM customers_assigned WHERE project = ?");
+        $selStmt = $sel->execute(array($project));
 
         $companyId = $sel->fetch();
 
-	$company = $this->getCompany($companyId[0]);
+		$company = $this->getCompany($companyId[0]);
 
 	if (!empty($company)) {
             return $company;
