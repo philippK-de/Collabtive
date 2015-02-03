@@ -274,6 +274,7 @@ if ($action == "addform") {
     // get project's name
     $myproject = new project();
     $pro = $myproject->getProject($id);
+
     $members = $myproject->getProjectMembers($id, 10000);
     $projectname = $pro['name'];
     $template->assign("projectname", $projectname);
@@ -497,7 +498,7 @@ elseif ($action == "mymsgs-pdf") {
     $pdf->SetAutoPageBreak(true, PDF_MARGIN_BOTTOM);
     $pdf->setLanguageArray($l);
 
-    $pdf->AliasNbPages();
+
     $pdf->AddPage();
     // check if the user is allowed to edit messages
     if (!$userpermissions["messages"]["add"]) {
