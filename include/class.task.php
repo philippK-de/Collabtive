@@ -105,6 +105,9 @@ class task {
         $nameproject = $this->getNameProject($id);
         $delStmt = $conn->prepare("DELETE FROM tasks WHERE ID = ?");
 		$del = $delStmt->execute(array($id));
+    	#
+    	$delAssignStmt = $conn->prepare("DELETE FROM tasks_assigned WHERE task = ?");
+    	$delAssign = $delAssignStmt->execute(array($id));
 
         if ($del) {
             $del2 = $conn->query("DELETE FROM tasks_assigned WHERE task=$id");
@@ -515,6 +518,7 @@ class task {
 
         $user = (int) $_SESSION["userid"];
         $timeline = array();
+
 
         if ($project > 0) {
             $sql = "SELECT * FROM tasks  WHERE status=1 AND project = ? AND end = '$starttime'";
