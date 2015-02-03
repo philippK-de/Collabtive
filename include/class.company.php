@@ -67,10 +67,10 @@ class company {
 
         $id = (int) $id;
 
-        $del_assigns = $conn->prepare("DELETE FROM company_assigned WHERE customer = ?");
+        $del_assigns = $conn->prepare("DELETE FROM customers_assigned WHERE customer = ?");
     	$del_assigns->execute(array($id));
 
-        $del = $conn->prepare("DELETE FROM customer WHERE ID = ?");
+        $del = $conn->prepare("DELETE FROM company WHERE ID = ?");
 		$del->execute(array($id));
 
         if ($del) {
