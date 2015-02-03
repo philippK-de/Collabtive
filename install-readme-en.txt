@@ -1,8 +1,8 @@
 ### Requirements ###
 
     Server:
-    - PHP 5.2 or higher (recent stable build recommended)
-    - MySQL 4 or higher, SQLite 3
+    - PHP 5.3 or higher (recent stable build recommended)
+    - MySQL 5 or higher, SQLite 3
 
     It is recommended to run Collabtive on LAMP (Linux, Apache, MySQL, PHP) servers.
     Windows Servers may work, but are not supported as well.

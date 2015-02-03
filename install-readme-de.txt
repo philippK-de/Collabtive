@@ -1,8 +1,8 @@
 ### Voraussetzungen ###
 
     Server:
-	- PHP 5.2 oder neuer
-	- MySQL 4 oder neuer
+	- PHP 5.3 oder neuer
+	- MySQL 5 oder neuer
 
 	Wir empfehlen die Verwendung eines LAMP-Servers (Linux, Apache, MySQL, PHP).
 	Windows-Server können ebenfalls funktionieren, werden aber nicht im gleichen Ausmaß unterstützt.
