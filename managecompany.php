@@ -5,6 +5,14 @@ if (!isset($_SESSION['userid'])) {
     $template->display("login.tpl");
     die();
 }
+//check if the user is an admin
+if (!$userpermissions["admin"]["add"] and $action != "addpro") {
+	$errtxt = $langfile["nopermission"];
+	$noperm = $langfile["accessdenied"];
+	$template->assign("errortext", "$errtxt<br>$noperm");
+	$template->display("error.tpl");
+	die();
+}
 
 $customer = (object) new company();
 $action = getArrayVal($_GET,"action" );
