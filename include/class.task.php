@@ -105,7 +105,7 @@ class task {
         $nameproject = $this->getNameProject($id);
         $delStmt = $conn->prepare("DELETE FROM tasks WHERE ID = ?");
 		$del = $delStmt->execute(array($id));
-    	#
+
     	$delAssignStmt = $conn->prepare("DELETE FROM tasks_assigned WHERE task = ?");
     	$delAssign = $delAssignStmt->execute(array($id));
 
