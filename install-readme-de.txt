@@ -5,7 +5,7 @@
 	- MySQL 5 oder neuer
 
 	Wir empfehlen die Verwendung eines LAMP-Servers (Linux, Apache, MySQL, PHP).
-	Windows-Server können ebenfalls funktionieren, werden aber nicht im gleichen Ausmaß unterstützt.
+	Windows-Server (IIS) können ebenfalls funktionieren, werden aber nicht im gleichen Ausmaß unterstützt.
 
     Client:
 	- Firefox 3.6, Internet Explorer 7/8/9, Opera 9/10, Safari, Chrome

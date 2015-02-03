@@ -5,7 +5,7 @@
     - MySQL 5 or higher, SQLite 3
 
     It is recommended to run Collabtive on LAMP (Linux, Apache, MySQL, PHP) servers.
-    Windows Servers may work, but are not supported as well.
+    Windows (IIS) Servers may work, but are not supported as well.
 
     Client:
     - Firefox, Internet Explorer 9/10/11, Opera 9/10, Safari, Chrome
