@@ -183,8 +183,8 @@ class company {
 
         $lim = (int) $lim;
 
-        $sel = $conn->prepare("SELECT * FROM company ORDER BY `company` ASC LIMIT $lim");
-        $selStmt = $sel->execute();
+        $sel = $conn->prepare("SELECT * FROM company ORDER BY `company` ASC LIMIT ?");
+        $selStmt = $sel->execute(array($lim));
 
         $companies = $sel->fetchAll();
 
