@@ -23,6 +23,7 @@ Collabtive 2.1
 + Reuse $myOpenProjects from init.php in index.php , improving performance (srichter)
 + Improved SSL recognition (srichter)
 + Improved the timetracker widget on the project dashboard. It can now take working hours as input, and repeat an entry for subsequent days.
++ Re-Added closed projects on the desktop
 
 
 Collabtive 2.0
