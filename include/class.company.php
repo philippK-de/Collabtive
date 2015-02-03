@@ -46,7 +46,7 @@ class company {
         $id = (int) $data['id'];
 
         $updStmt = $conn->prepare("UPDATE company SET `company`=?, `contact`=?, `email`=?, `phone`=?, `mobile`=?, `url`=?, `address`=?, `zip`=?, `city`=?, `country`=?, `state`=?, `desc`=? WHERE ID = ?");
-        $upd = $updStmt->execute(array($data['company'], $data['contact'], $data['email'], $data['phone'], $data['mobile'], $data['url'], $data['address'], $data['zip'], $data['city'], $data['country'], $data['state'], $data['desc'], $id));
+        $upd = $updStmt->execute(array($data["company"], $data["contact"], $data["email"], $data["phone"], $data["mobile"], $data["url"], $data["address"], $data["zip"], $data["city"], $data["country"], $data["state"], $data["desc"], $id));
 
         if ($upd) {
             return true;
