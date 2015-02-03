@@ -24,6 +24,7 @@ Collabtive 2.1
 + Improved SSL recognition (srichter)
 + Improved the timetracker widget on the project dashboard. It can now take working hours as input, and repeat an entry for subsequent days.
 + Re-Added closed projects on the desktop
++ Fix deleting of task assignments when deleting a project
 
 
 Collabtive 2.0

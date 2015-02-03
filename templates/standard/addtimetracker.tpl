@@ -30,15 +30,13 @@
 		  		<input type="text" class="text" style="width:80px;margin:0 6px 0 0;" id="started" name="started" onkeyup=" populateHours();" required="1" regexp="^([01]?\d|2[0123]):[012345]\d$" realname="{#started#} ({#timeformat#}: hh:mm)" value="08:00" />
 
 				<label for = "ended">Endtime:</label>
-		  	<input type="text" class="text" style="width:80px;margin:0 6px 0 0;" id="ended" name="ended" onkeyup = " populateHours();" required="1" regexp="^([01]?\d|2[0123]):[012345]\d$" realname="{#started#} ({#timeformat#}: hh:mm)" value="09:00" />
+		  		<input type="text" class="text" style="width:80px;margin:0 6px 0 0;" id="ended" name="ended" onkeyup = " populateHours();" required="1" regexp="^([01]?\d|2[0123]):[012345]\d$" realname="{#started#} ({#timeformat#}: hh:mm)" value="09:00" />
+			</div>
 
+
+			<div class = "row">
 				<label for = "workhours" >Hours:</label>
 		  		<input type = "number" id = "workhours" name = "workhours" value = "1" min = "1" max = "10" step = "1" onkeyup = "populateEndtime();" onchange = "populateEndtime();" style="width:40px;"/>
-
-
-		  		<label for = "repeatTT">Repeat:</label>
-				<input type = "range" id = "repeatTT" name = "repeatTT" value = "0" min = "0" max = "7" style = "width:60px;margin:0;border:0px;" onchange="$('repeatShow').value=this.value;" oninput="$('repeatShow').value=this.value;" />
-				<span id  = "lala" style="float:left;"><input type = "text" id = "repeatShow" disabled value = "0" style = "text-align:center;width:15px;background-color:white;"></span>
 			</div>
 
 			<input type="hidden" name="project" value="{$project.ID}" />
