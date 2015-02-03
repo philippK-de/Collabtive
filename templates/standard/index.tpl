@@ -129,21 +129,7 @@
 							{/section}
 
 						</table>
-
-						<div class="tablemenue">
-							<div class="tablemenue-in">
-								{if $userpermissions.projects.add}
-									<a class="butn_link" href="javascript:blindtoggle('form_addmyproject');" id="add_butn_myprojects" onclick="toggleClass('add_myprojects','add-active','add');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_deskprojects','smooth','nosmooth');">{#addproject#}</a>
-								{/if}
-						      <a class="butn_link" href="javascript:blindtoggle('doneblock');" id="donebutn" onclick="toggleClass(this,'butn_link_active','butn_link');toggleClass('toggle-done','acc-toggle','acc-toggle-active');">{#closedprojects#}</a>
-
-							</div>
-						</div>
-					<div class="content-spacer"></div>
-					</div> {* block END *}
-			   </div> {* smooth END *}
-			</div> {* projects END *}
-
+{if $closedProjectnum > 0}
 {*Doneprojects*}
 				<div id="doneblock" class="projects" style="display: none;">
 				<table class="second-thead" cellpadding="0" cellspacing="0" border="0" onclick="blindtoggle('doneblock');toggleClass('donebutn','butn_link_active','butn_link');toggleClass('toggle-done','acc-toggle','acc-toggle-active');">
@@ -212,8 +198,24 @@
 				</table>
 				</div> {*toggleblock End*}
 				</div> {*doneblock end*}
-
+{/if}
 {*Doneprojects End*}
+
+						<div class="tablemenue">
+							<div class="tablemenue-in">
+								{if $userpermissions.projects.add}
+									<a class="butn_link" href="javascript:blindtoggle('form_addmyproject');" id="add_butn_myprojects" onclick="toggleClass('add_myprojects','add-active','add');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_deskprojects','smooth','nosmooth');">{#addproject#}</a>
+								{/if}
+						      {if $closedProjectnum > 0}
+							 	 	<a class="butn_link" href="javascript:blindtoggle('doneblock');" id="donebutn" onclick="toggleClass(this,'butn_link_active','butn_link');toggleClass('toggle-done','acc-toggle','acc-toggle-active');">{#closedprojects#}</a>
+							  {/if}
+							</div>
+						</div>
+					<div class="content-spacer"></div>
+					</div> {* block END *}
+			   </div> {* smooth END *}
+			</div> {* projects END *}
+
 
 
 		{/if} {* Projects END *}

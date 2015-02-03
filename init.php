@@ -141,9 +141,7 @@ $template->assign("theY", $they);
 if (isset($userid)) {
     $project = new project();
     $myOpenProjects = $project->getMyProjects($userid);
-    $myClosedProjects = $project->getMyProjects($userid,0);
     $template->assign("openProjects", $myOpenProjects);
-    $template->assign('oldprojects', $myClosedProjects);
 }
 // clear session data for pagination
 SmartyPaginate::disconnect();

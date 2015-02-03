@@ -56,6 +56,8 @@ if (!empty($myOpenProjects)) {
         $cou = $cou + 1;
     }
 }
+$myClosedProjects = $project->getMyProjects($userid,0);
+
 // If the user is allowed to add projects, also get all users to assign to those projects
 if ($userpermissions["projects"]["add"]) {
     $user = new user();
@@ -102,15 +104,17 @@ if ($mode == "login") {
 $today = date("d");
 $tasknum = count($etasks);
 $projectnum = count($myOpenProjects);
+$oldProjectnum = count($myClosedProjects[0]);
 $msgnum = count($messages);
-
 $title = $langfile["desktop"];
 // Assign everything to the template engine
 $template->assign("title", $title);
 $template->assign("today", $today);
 
 $template->assign("myprojects", $myOpenProjects);
+$template->assign("oldprojects", $myClosedProjects);
 $template->assign("projectnum", $projectnum);
+$template->assign("closedProjectnum", $oldProjectnum);
 $template->assign("projectov", "yes");
 
 $template->assign("mode", $mode);
