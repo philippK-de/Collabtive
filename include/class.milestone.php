@@ -60,8 +60,11 @@ class milestone {
         $updStmt = $conn->prepare("UPDATE milestones SET `name`=?, `desc`=?, `start`=?, `end`=? WHERE ID=?");
         $upd = $updStmt->execute(array($name, $desc, $start, $end, $id));
         if ($upd) {
-            $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id")->fetch();
-            $project = $nam[0];
+            $namStmt = $conn->prepare("SELECT project,name FROM milestones WHERE ID = ?");
+        	$namStmt->execute(array($id));
+        	$nam = $namStmt->fetch();
+
+			$project = $nam[0];
             $name = $nam[1];
 
             $mylog->add($name, 'milestone' , 2, $project);
@@ -82,11 +85,12 @@ class milestone {
         global $conn,$mylog;
         $id = (int) $id;
 
-        $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
+		$namStmt = $conn->prepare("SELECT project,name FROM milestones WHERE ID = ?");
+    	$namStmt->execute(array($id));
         $del = $conn->query("DELETE FROM milestones WHERE ID = $id");
         $del1 = $conn->query("DELETE FROM milestones_assigned WHERE milestone = $id");
         if ($del) {
-            $nam = $nam->fetch();
+        	$nam = $namStmt->fetch();
             $project = $nam[0];
             $name = $nam[1];
 
@@ -108,12 +112,14 @@ class milestone {
         global $conn,$mylog;
         $id = (int) $id;
 
-        $updStmt = $conn->query("UPDATE milestones SET status = 1 WHERE ID = ?");
-		$upd = $updStmt->execute(array($id));
+        $updStmt = $conn->prepare("UPDATE milestones SET status = ? WHERE ID = ?");
+		$upd = $updStmt->execute(array(1,$id));
 
 		if ($upd) {
-            $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
-            $nam = $nam->fetch();
+			$namStmt = $conn->prepare("SELECT project,name FROM milestones WHERE ID = ?");
+			$namStmt->execute(array($id));
+			$nam = $namStmt->fetch();
+
             $project = $nam[0];
             $name = $nam[1];
 
@@ -149,8 +155,10 @@ class milestone {
         }
 
         if ($upd) {
-            $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
-            $nam = $nam->fetch();
+        	$namStmt = $conn->prepare("SELECT project,name FROM milestones WHERE ID = ?");
+        	$namStmt->execute(array($id));
+        	$nam = $namStmt->fetch();
+
             $project = $nam[0];
             $name = $nam[1];
 
@@ -179,8 +187,10 @@ class milestone {
     	$upd = $updStmt->execute(array($user,$milestone));
 
         if ($upd) {
-            $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
-            $nam = $nam->fetch();
+        	$namStmt = $conn->prepare("SELECT project,name FROM milestones WHERE ID = ?");
+        	$namStmt->execute(array($id));
+        	$nam = $namStmt->fetch();
+
             $project = $nam[0];
             $name = $nam[1];
 
@@ -208,8 +218,10 @@ class milestone {
         $upd = $updStmt->execute(array($user, $milestone));
 
         if ($upd) {
-            $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
-            $nam = $nam->fetch();
+        	$namStmt = $conn->prepare("SELECT project,name FROM milestones WHERE ID = ?");
+        	$namStmt->execute(array($id));
+        	$nam = $namStmt->fetch();
+
             $project = $nam[0];
             $name = $nam[1];
 
