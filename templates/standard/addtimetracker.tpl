@@ -41,32 +41,7 @@
 			</div>
 
 			<input type="hidden" name="project" value="{$project.ID}" />
-<!--
-		 	<div class="row">
-		  		<label for="ttendday">{#endday#}:</label>
-		  		<input type="text" class="text" style="width:80px;margin:0 6px 0 0;" id="ttendday" name="ttendday" realname="{#date#}" />
-			</div>
 
-			<div class="datepick">
-				<div id="datepicker_addttend" class="picker" style="display:none;"></div>
-			</div>
-
-			<script type="text/javascript">
-				theCal2 = new calendar({$theM},{$theY});
-				theCal2.dayNames = ["{#monday#}","{#tuesday#}","{#wednesday#}","{#thursday#}","{#friday#}","{#saturday#}","{#sunday#}"];
-				theCal2.monthNames = ["{#january#}","{#february#}","{#march#}","{#april#}","{#may#}","{#june#}","{#july#}","{#august#}","{#september#}","{#october#}","{#november#}","{#december#}"];
-				theCal2.relateTo = "ttendday";
-				theCal2.keepEmpty = false;
-				theCal2.dateFormat = "{$settings.dateformat}";
-				theCal2.getDatepicker("datepicker_addttend");
-			</script>
-
-		  	<div class="row">
-		  		<label for="ended">{#ended#}:</label>
-				<input type="text" class="text" style="width:80px;margin:0 6px 0 0;" id="ended" name="ended" required="1" regexp="^([01]?\d|2[0123]):[012345]\d$" realname="{#ended#} ({#timeformat#}: hh:mm)" />
-				<button onclick="getnow('ended');return false;" onfocus="this.blur();" title="{#inserttime#}">hh:mm</button>
-			</div>
--->
 		  	<div class="row">
 		  		<label for="trackcomm">{#comment#}:</label>
 		  		<textarea name="comment" id="trackcomm"></textarea>
