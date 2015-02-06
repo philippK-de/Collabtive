@@ -28,8 +28,9 @@
 		  	<div class="row">
 		  		<label for="started">{#started#}:</label>
 		  		<input type="text" class="text" style="width:80px;margin:0 6px 0 0;" id="started" name="started" onkeyup=" populateHours();" required="1" regexp="^([01]?\d|2[0123]):[012345]\d$" realname="{#started#} ({#timeformat#}: hh:mm)" value="08:00" />
-
-				<label for = "ended">Endtime:</label>
+			</div>
+			<div class="row">
+				<label for = "ended">{#ended#}:</label>
 		  		<input type="text" class="text" style="width:80px;margin:0 6px 0 0;" id="ended" name="ended" onkeyup = " populateHours();" required="1" regexp="^([01]?\d|2[0123]):[012345]\d$" realname="{#started#} ({#timeformat#}: hh:mm)" value="09:00" />
 			</div>
 
