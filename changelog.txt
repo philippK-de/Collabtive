@@ -26,6 +26,11 @@ Collabtive 2.1
 + Re-added closed projects on the desktop
 + Fix deleting of task assignments when deleting a project
 + Enable deleting and editing of customers
++ Make the password field in add user obfuscated
++ Fix replying to messages on the desktop
++ Fix cancel buttons in desktop->add task and desktop->edit project
++ Fix inserting uploaded images from the tinyMCE image list
++ Make the datepicker fade out faster
 
 Collabtive 2.0
 + Fixed notice on desktop that resulted from missing network connection during update check
