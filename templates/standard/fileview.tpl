@@ -8,7 +8,7 @@
 					<tr>
 						<td class="leftmen" valign="top">
 							<div class="inmenue">
-								<a class="export" href="managefile.php?action=folderexport&file={$folders[fold].ID}&id={$project.ID}" title="{#export#}"></a>
+						<!--		<a class="export" href="managefile.php?action=folderexport&file={$folders[fold].ID}&id={$project.ID}" title="{#export#}"></a>-->
 							</div>
 						</td>
 						<td class="thumb">
@@ -73,7 +73,7 @@
 								{/if}
 
 								{if $userpermissions.files.edit}
-									<a class="edit" href="managefile.php?action=editform&amp;id={$project.ID}&amp;file={$files[file].ID}" title="{#editfile#}"></a>
+								<!--	<a class="edit" href="managefile.php?action=editform&amp;id={$project.ID}&amp;file={$files[file].ID}" title="{#editfile#}"></a>-->
 								{/if}
 							</div>
 						</td>
