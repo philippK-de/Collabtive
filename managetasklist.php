@@ -146,7 +146,7 @@ if ($action == "editform") {
     }
 } elseif ($action == "showtasklist") {
     $myproject = (object) new project();
-    $project_members = $myproject->getProjectMembers($id);
+    $project_members = $myproject->getProjectMembers($id,$myproject->countMembers($id),false);
 
     $pro = $myproject->getProject($id);
     $projectname = $pro["name"];
