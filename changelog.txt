@@ -26,6 +26,7 @@ Collabtive 2.1
 + Re-Added closed projects on the desktop
 + Fix deleting of task assignments when deleting a project
 + Enable deleting and editing of customers
++ Made fade out of datepicker faster
 
 
 Collabtive 2.0
