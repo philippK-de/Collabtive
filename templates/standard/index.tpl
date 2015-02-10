@@ -427,7 +427,7 @@
 								<tr>
 									<td>
 										{if $userpermissions.messages.close}
-											<a class="butn_reply" href="managemessage.php?action=replyform&amp;mid={$messages[message].ID}&amp;id={$messages[message].project}" title="{#answer#}"></a>
+											<a class="butn_reply" href="javascript:void(0);" onclick="change('managemessage.php?action=replyform&amp;mid={$messages[message].ID}&amp;id={$messages[message].project}','addmsg');toggleClass(this,'butn_reply_active','butn_reply');blindtoggle('addmsg');"  title="{#answer#}"></a>
 										{/if}
 									</td>
 									<td>
