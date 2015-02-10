@@ -103,7 +103,7 @@ elseif ($action == "jsonfiles") {
         $json = "var tinyMCEImageList = new Array(\n";
         foreach($ordner as $file) {
             if ($file["imgfile"] == 1) {
-                $json .= "[\"$file[datei]\", \"$file[datei]\"],\n";
+                $json .= "[\"$file[datei]\", \"managefile.php?action=downloadfile&id=$file[project]&file=$file[ID]\"],\n";
             }
         }
         $json = substr($json, 0, strlen($json)-2);
