@@ -19,7 +19,6 @@
         <div id="datepicker_addendtt" class="picker" style="display:none;"></div>
       </div>
 
-
       <script type="text/javascript">
         startCal = new calendar({$theM},{$theY});
         startCal.dayNames = ["{#monday#}","{#tuesday#}","{#wednesday#}","{#thursday#}","{#friday#}","{#saturday#}","{#sunday#}"];
@@ -51,16 +50,15 @@
         <input type="text" class="text" style="width:80px;margin:0 6px 0 0;" id="ended" name="ended" onkeyup = " populateHours();" required="1" regexp="^([01]?\d|2[0123]):[012345]\d$" realname="{#started#} ({#timeformat#}: hh:mm)" value="09:00" />
         <button class="settimebtn" onclick="getnow('ended');return false;" onfocus="this.blur();" title="{#inserttime#}">hh:mm</button>
       </div>
+
+
       <div class="row">
         <label for = "workhours" >Hours:</label>
         <input type = "number" id = "workhours" name = "workhours" value = "1" min = "1" max = "10" step = "1" onkeyup = "populateEndtime();" onchange = "populateEndtime();" style="width:40px;"/>
-        <label for = "repeatTT">Repeat:</label>
-        <input type = "range" id = "repeatTT" name = "repeatTT" value = "0" min = "0" max = "7" style = "width:60px;margin:0;border:0px;" onchange="$('repeatShow').value=this.value;" oninput="$('repeatShow').value=this.value;" />
-        <span id  = "lala" style="float:left;"><input type = "text" id = "repeatShow" disabled value = "0" style = "text-align:center;width:15px;background-color:white;"></span>
-
       </div>
 
       <input type="hidden" name="project" value="{$project.ID}" />
+
         <div class="row">
           <label for="trackcomm">{#comment#}:</label>
           <textarea name="comment" id="trackcomm"></textarea>

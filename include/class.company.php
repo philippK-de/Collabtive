@@ -46,7 +46,7 @@ class company {
         $id = (int) $data['id'];
 
         $updStmt = $conn->prepare("UPDATE company SET `company`=?, `contact`=?, `email`=?, `phone`=?, `mobile`=?, `url`=?, `address`=?, `zip`=?, `city`=?, `country`=?, `state`=?, `desc`=? WHERE ID = ?");
-        $upd = $updStmt->execute(array($data['company'], $data['contact'], $data['email'], $data['phone'], $data['mobile'], $data['url'], $data['address'], $data['zip'], $data['city'], $data['country'], $data['state'], $data['desc'], $id));
+        $upd = $updStmt->execute(array($data["company"], $data["contact"], $data["email"], $data["phone"], $data["mobile"], $data["url"], $data["address"], $data["zip"], $data["city"], $data["country"], $data["state"], $data["desc"], $id));
 
         if ($upd) {
             return true;
@@ -67,10 +67,10 @@ class company {
 
         $id = (int) $id;
 
-        $del_assigns = $conn->prepare("DELETE FROM company_assigned WHERE customer = ?");
+        $del_assigns = $conn->prepare("DELETE FROM customers_assigned WHERE customer = ?");
     	$del_assigns->execute(array($id));
 
-        $del = $conn->prepare("DELETE FROM customer WHERE ID = ?");
+        $del = $conn->prepare("DELETE FROM company WHERE ID = ?");
 		$del->execute(array($id));
 
         if ($del) {
@@ -158,12 +158,12 @@ class company {
 
         $project = (int) $project;
 
-        $sel = $conn->prepare("SELECT customer FROM customers_assigned WHERE project = :project");
-        $selStmt = $sel->execute(array(':project' => $project));
+        $sel = $conn->prepare("SELECT customer FROM customers_assigned WHERE project = ?");
+        $selStmt = $sel->execute(array($project));
 
         $companyId = $sel->fetch();
 
-	$company = $this->getCompany($companyId[0]);
+		$company = $this->getCompany($companyId[0]);
 
 	if (!empty($company)) {
             return $company;
@@ -183,8 +183,8 @@ class company {
 
         $lim = (int) $lim;
 
-        $sel = $conn->prepare("SELECT * FROM company ORDER BY `company` ASC LIMIT $lim");
-        $selStmt = $sel->execute();
+        $sel = $conn->prepare("SELECT * FROM company ORDER BY `company` ASC LIMIT ?");
+        $selStmt = $sel->execute(array($lim));
 
         $companies = $sel->fetchAll();
 

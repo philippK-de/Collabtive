@@ -77,38 +77,16 @@ if ($action == "add") {
 
     $worked = $_POST["worked"];
     $ajaxreq = $_GET["ajaxreq"];
-	$repeat = getArrayVal($_POST, "repeatTT");
-	
-	// auto timetracker - construct input
     if ($ajaxreq == 1) {
         $lodate = date("d.m.Y");
         $started = date("H:i:s", $started);
         $ended = date("H:i:s", $ended);
-      	$repeat = 0;
+
         $comment = "";
     }
 
-	// has the adding of the entry been successful? assume no
-	$trackerstate = false;
-	
-	// add as many entries as repeat says
-	for ($i = 0; $i <= $repeat; $i++) {
-		// more than one day will be tracked
-		if ($i > 0) {
-			$tempstart = strtotime($startdate);
-      $tempend   = strtotime($enddate);
-			$tempstart += 86400; // magic number: add 1 day to start date
-      $tempend   += 86400;
-			$startdate = date("d.m.Y", $tempstart);
-      $enddate   = date('d.m.Y', $tempend);
-		}
-		
-		$trackerstate = $tracker->add($userid, $tproject, $task, $comment, $started, $ended, $startdate, $enddate);
-	}
-	
-	if ($trackerstate) {
+    if ($tracker->add($userid, $tproject, $task, $comment, $started, $ended, $startdate, $enddate)) {
 		$redir = urldecode($redir);
-		
 		if ($redir) {
 			$redir = $url . $redir;
 			header("Location: $redir");
@@ -151,7 +129,6 @@ if ($action == "add") {
         $track["taskname"] = $taskname;
     }
     $template->assign("track", $track);
-
 	//get current and closed tasks
     $newtasks = $task->getProjectTasks($id);
     $oldtasks = $task->getProjectTasks($id, false);
@@ -182,7 +159,6 @@ if ($action == "add") {
         $template->display("error.tpl");
         die();
     }
-
 	//construct timestamps
     $started = $day . " " . $started;
     $started = strtotime($started);
@@ -261,16 +237,13 @@ if ($action == "add") {
 	//get the project name
     $pname = $conn->query("SELECT name FROM projekte WHERE ID = $id");
     $pname = $pname->fetchColumn();
-
 	//create a new PDF in portrait orientation, A4 format
     $pdf = new MYPDF("P", PDF_UNIT, "A4", true);
 	//Set the header
     $headstr = $langfile["timetable"] . " " . $pname;
     $pdf->setup($headstr, array(239, 232, 229));
-
 	//headers for table columns
     $headers = array($langfile["user"], $langfile["task"], $langfile["comment"], $langfile["started"] . " - " . $langfile["ended"], $langfile["hours"]);
-
 	//if a filter has been applied, get only those timetracks
     if (!empty($start) and !empty($end)) {
         $track = $tracker->getProjectTrack($id, $usr, $taski, $start, $end, false);
@@ -295,7 +268,6 @@ if ($action == "add") {
             array_push($thetrack, array($tra["uname"], $tra["tname"], $tra["comment"], $tra["daystring"] . "/" . $tra["startstring"] . "-" . $tra["endstring"], $hrs));
         }
 	}
-
 	//put it all to the PDF and output the file
     $pdf->table($headers, $thetrack);
     $pdf->Output("project-$id-timetable.pdf", "D");
@@ -377,7 +349,6 @@ if ($action == "add") {
     $end = getArrayVal($_POST, "end");
     $usr = getArrayVal($_POST, "usr");
     $taski = getArrayVal($_POST, "task");
-
 	//get open project tasks for filtering
     $task = new task();
     $ptasks = $task->getProjectTasks($id,1);
