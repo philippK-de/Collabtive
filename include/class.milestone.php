@@ -431,11 +431,11 @@ class milestone {
         $milestone["name"] = 'unassigned task lists';
         $milestone["desc"] = 'task lists not assigned to any milestone';
         // Get the name of the project where the message was posted for display
-        $psel = $conn->query("SELECT name FROM projekte WHERE ID = $project");
-        $pname = $psel->fetch();
-        $pname = $pname[0];
+        $stmt = $conn->prepare("SELECT name FROM projekte WHERE ID = ?");
+        $stmt->execute(array($project));
+        $res = $psel->fetch();
+        $pname = stripslashes($res['name']);
         $milestone["pname"] = $pname;
-        $milestone["pname"] = stripslashes($milestone["pname"]);
         // Daysleft contains a signed number, dayslate an unsigned one that only applies if the milestone is late
         $dayslate = 0;
         $milestone["daysleft"] = $dayslate;
