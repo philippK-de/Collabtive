@@ -37,9 +37,9 @@ $taski = getArrayVal($_GET, "task");
 $fproject = getArrayVal($_GET, "project");
 
 /**
- * Get strings from the langfile and decode them to ASCII/ANSI
- * Needed for PDF
- */
+* Get strings from the langfile and decode them to ASCII/ANSI
+* Needed for PDF
+*/
 $strproj = utf8_decode($langfile["project"]);
 $strtimetrack = utf8_decode($langfile["timetracker"]);
 $struser = utf8_decode($langfile["user"]);
@@ -77,52 +77,32 @@ if ($action == "add") {
 
     $worked = $_POST["worked"];
     $ajaxreq = $_GET["ajaxreq"];
-	$repeat = getArrayVal($_POST, "repeatTT");
-	
-	// auto timetracker - construct input
     if ($ajaxreq == 1) {
         $lodate = date("d.m.Y");
         $started = date("H:i:s", $started);
         $ended = date("H:i:s", $ended);
-    	$repeat = 0;
+
         $comment = "";
     }
 
-	// has the adding of the entry been successful? assume no
-	$trackerstate = false;
-	
-	// add as many entries as repeat says
-	for ($i = 0; $i <= $repeat; $i++) {
-		// more than one day will be tracked
-		if ($i > 0) {
-			$tempend = strtotime($startdate);
-			$tempend += 86400; // magic number: add 1 day to start date
-			$startdate = date("d.m.Y", $tempend);
-		}
-		$enddate = $startdate;
-		
-		$trackerstate = $tracker->add($userid, $tproject, $task, $comment, $started, $ended, $startdate, $enddate);
-	}
-	
-	if ($trackerstate) {
-		$redir = urldecode($redir);
-		
-		if ($redir) {
-			$redir = $url . $redir;
-			header("Location: $redir");
-		} elseif ($ajaxreq == 1) {
-			echo "ok";
-		} else {
-			$loc = $url . "manageproject.php?action=showproject&id=$tproject&mode=timeadded";
-			header("Location: $loc");
-		}
-	} else {
-		$goback = $langfile["goback"];
-		$endafterstart = $langfile["endafterstart"];
-		$template->assign("mode", "error");
-		$template->assign("errortext", "$endafterstart<br>$goback");
-		$template->display("error.tpl");
-	}
+    if ($tracker->add($userid, $tproject, $task, $comment, $started, $ended, $startdate, $enddate)) {
+        $redir = urldecode($redir);
+        if ($redir) {
+            $redir = $url . $redir;
+            header("Location: $redir");
+        } elseif ($ajaxreq == 1) {
+            echo "ok";
+        } else {
+            $loc = $url . "manageproject.php?action=showproject&id=$tproject&mode=timeadded";
+            header("Location: $loc");
+        }
+    } else {
+        $goback = $langfile["goback"];
+        $endafterstart = $langfile["endafterstart"];
+        $template->assign("mode", "error");
+        $template->assign("errortext", "$endafterstart<br>$goback");
+        $template->display("error.tpl");
+    }
 } elseif ($action == "editform") {
     if (!$userpermissions["timetracker"]["edit"]) {
         $template->assign("errortext", "Permission denied.");
@@ -149,11 +129,10 @@ if ($action == "add") {
         $track["taskname"] = $taskname;
     }
     $template->assign("track", $track);
-
-	//get current and closed tasks
+    // get current and closed tasks
     $newtasks = $task->getProjectTasks($id);
     $oldtasks = $task->getProjectTasks($id, false);
-	//if the project has both - merge them into one array
+    // if the project has both - merge them into one array
     if ($newtasks and $oldtasks) {
         $tasks = array_merge($newtasks, $oldtasks);
     } else {
@@ -180,8 +159,7 @@ if ($action == "add") {
         $template->display("error.tpl");
         die();
     }
-
-	//construct timestamps
+    // construct timestamps
     $started = $day . " " . $started;
     $started = strtotime($started);
     $ended = $endday . " " . $ended;
@@ -253,29 +231,26 @@ if ($action == "add") {
         $template->display("error.tpl");
         die();
     }
-	global $conn;
+    global $conn;
 
-	$id = (int) $id;
-	//get the project name
+    $id = (int) $id;
+    // get the project name
     $pname = $conn->query("SELECT name FROM projekte WHERE ID = $id");
     $pname = $pname->fetchColumn();
-
-	//create a new PDF in portrait orientation, A4 format
+    // create a new PDF in portrait orientation, A4 format
     $pdf = new MYPDF("P", PDF_UNIT, "A4", true);
-	//Set the header
+    // Set the header
     $headstr = $langfile["timetable"] . " " . $pname;
     $pdf->setup($headstr, array(239, 232, 229));
-
-	//headers for table columns
+    // headers for table columns
     $headers = array($langfile["user"], $langfile["task"], $langfile["comment"], $langfile["started"] . " - " . $langfile["ended"], $langfile["hours"]);
-
-	//if a filter has been applied, get only those timetracks
+    // if a filter has been applied, get only those timetracks
     if (!empty($start) and !empty($end)) {
         $track = $tracker->getProjectTrack($id, $usr, $taski, $start, $end, false);
     } else {
         $track = $tracker->getProjectTrack($id, $usr , $taski, 0, 0, false);
     }
-	//array representing the content of the table. each field is a column
+    // array representing the content of the table. each field is a column
     $thetrack = array();
     if (!empty($track)) {
         $i = 0;
@@ -289,12 +264,11 @@ if ($action == "add") {
             $tra["comment"] = strip_tags($tra["comment"]);
 
             $i = $i + 1;
-        	//write the table line
+            // write the table line
             array_push($thetrack, array($tra["uname"], $tra["tname"], $tra["comment"], $tra["daystring"] . "/" . $tra["startstring"] . "-" . $tra["endstring"], $hrs));
         }
-	}
-
-	//put it all to the PDF and output the file
+    }
+    // put it all to the PDF and output the file
     $pdf->table($headers, $thetrack);
     $pdf->Output("project-$id-timetable.pdf", "D");
 } elseif ($action == "userxls") {
@@ -363,7 +337,7 @@ if ($action == "add") {
         $template->display("error.tpl");
         die();
     }
-	//Check if the user belongs to this project
+    // Check if the user belongs to this project
     if (!chkproject($userid, $id)) {
         $errtxt = $langfile["notyourproject"];
         $noperm = $langfile["accessdenied"];
@@ -375,14 +349,13 @@ if ($action == "add") {
     $end = getArrayVal($_POST, "end");
     $usr = getArrayVal($_POST, "usr");
     $taski = getArrayVal($_POST, "task");
-
-	//get open project tasks for filtering
+    // get open project tasks for filtering
     $task = new task();
-    $ptasks = $task->getProjectTasks($id,1);
+    $ptasks = $task->getProjectTasks($id, 1);
 
     $tracker = (object) new timetracker();
-    //If the user can not read tt entries from other user, set the user filter to the current user id.
-	if (!$usr) {
+    // If the user can not read tt entries from other user, set the user filter to the current user id.
+    if (!$usr) {
         if (!$userpermissions["timetracker"]["read"]) {
             $usr = $userid;
         } else {

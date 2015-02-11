@@ -6,21 +6,21 @@
 <div id="content-left">
 	<div id="content-left-in">
 		<div class="projects">
-			
+
 			<div class="breadcrumb">
 				<a href="manageproject.php?action=showproject&amp;id={$project.ID}" title="{$project.name}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{$project.name|truncate:50:"...":true}</a>
 				<span>&nbsp;/...</span>
 			</div>
-			
+
 			<h1 class="second">
 				<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />
 				{$project.name}
 			</h1>
-			
+
 {/if}
-			
+
 {if $async|default == "yes"}
-						
+
 			{literal}
 				<script type="text/javascript">
 					//	theme_advanced_statusbar_location : "bottom",
@@ -54,33 +54,33 @@
 					});
 				</script>
 			{/literal}
-			
+
 {/if}
-			
+
 			<div class="block_in_wrapper">
-			
+
 				<h2>{$langfile.editproject}</h2>
-			
+
 				<form novalidate class="main" method="post" action="manageproject.php?action=edit&amp;id={$project.ID}" {literal}onsubmit="return validateCompleteForm(this,'input_error');"{/literal}>
 					<fieldset>
-					
+
 						<div class="row">
 							<label for="name">{$langfile.name}:</label>
 							<input type="text" class="text" name="name" id="name" required="1" realname="{$langfile.name}" value="{$project.name}" />
 						</div>
-						
+
 						<div class="row">
 							<label for="desc">{$langfile.description}:</label>
 							<div class="editor">
 								<textarea name="desc" id="desc" rows="3" cols="1">{$project.desc}</textarea>
 							</div>
 						</div>
-					
+
 						<div class="row">
 							<label for="budget">{$langfile.budget}:</label>
 							<input type="text" class="text" name="budget" id="budget" realname="{$langfile.budget}" value="{$project.budget}" />
 						</div>
-					
+
 						<div class="row">
 							<label for="end">{$langfile.due}:</label>
 							<input type="text" class="text" value="{$project.endstring}" name="end" id="end" {if $project.end == 0} disabled="disabled" {/if} realname="{$langfile.due}" />
@@ -90,11 +90,11 @@
 							<input type="checkbox" class="checkbox" value="neverdue" name="neverdue" id="neverdue" {if $project.end == 0} checked = "checked" {/if} onclick="$('end').value='';$('end').disabled=!$('end').disabled;">
 							<label>{$langfile.neverdue}</label>
 						</div>
-					
+
 						<div class="datepick">
 							<div id="datepicker_project" class="picker" style="display:none;"></div>
 						</div>
-					
+
 						<script type="text/javascript">
 							theCal{$lists[list].ID} = new calendar({$theM},{$theY});
 							theCal{$lists[list].ID}.dayNames = ["{$langfile.monday}","{$langfile.tuesday}","{$langfile.wednesday}","{$langfile.thursday}","{$langfile.friday}","{$langfile.saturday}","{$langfile.sunday}"];
@@ -103,22 +103,22 @@
 							theCal{$lists[list].ID}.relateTo = "end";
 							theCal{$lists[list].ID}.getDatepicker("datepicker_project");
 						</script>
-						
+
 						<div class="row-butn-bottom">
 							<label>&nbsp;</label>
 							<button type="submit" onfocus="this.blur();">{$langfile.send}</button>
-							<button type="button" onclick="blindtoggle('form_edit');{if $projectov == "no"} toggleClass('edit_butn','edit-active','edit');toggleClass('sm_project','smooth','nosmooth');toggleClass('sm_project_desc','smooth','nosmooth');{else}toggleClass('edit_butn{$project.ID}','tool_edit_active','tool_edit');{/if} return false;" onfocus="this.blur();" {if $showhtml != "no"} style="display:none;"{/if}>{$langfile.cancel}</button>
+							<button type="button" onclick="{if $projectov == "no"}blindtoggle('form_edit'); toggleClass('edit_butn','edit-active','edit');toggleClass('sm_project','smooth','nosmooth');toggleClass('sm_project_desc','smooth','nosmooth');{else};blindtoggle('form_addmyproject');{/if} return false;" onfocus="this.blur();" {if $showhtml != "no"} style="display:none;"{/if}>{$langfile.cancel}</button>
 						</div>
-					
+
 					</fieldset>
 				</form>
-			
+
 			</div> {*block_in_wrapper end*}
 
 {if $showhtml != "no"}
 
 			<div class="content-spacer"></div>
-				
+
 		</div> {*Projects END*}
 	</div> {*content-left-in END*}
 </div> {*content-left END*}
