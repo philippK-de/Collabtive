@@ -11,7 +11,6 @@
 * @global $mylog
 */
 class milestone {
-
     /**
     * Add a milestone
     *
@@ -24,7 +23,7 @@ class milestone {
     */
     function add($project, $name, $desc, $start, $end, $status = 1)
     {
-        global $conn,$mylog;
+        global $conn, $mylog;
         // Convert end date to timestamp
         $end = strtotime($end);
         $start = strtotime($start);
@@ -52,7 +51,7 @@ class milestone {
     */
     function edit($id, $name, $desc, $start, $end)
     {
-        global $conn,$mylog;
+        global $conn, $mylog;
         $id = (int) $id;
         $start = strtotime($start);
         $end = strtotime($end);
@@ -60,7 +59,10 @@ class milestone {
         $updStmt = $conn->prepare("UPDATE milestones SET `name`=?, `desc`=?, `start`=?, `end`=? WHERE ID=?");
         $upd = $updStmt->execute(array($name, $desc, $start, $end, $id));
         if ($upd) {
-            $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id")->fetch();
+            $namStmt = $conn->prepare("SELECT project,name FROM milestones WHERE ID = ?");
+            $namStmt->execute(array($id));
+            $nam = $namStmt->fetch();
+
             $project = $nam[0];
             $name = $nam[1];
 
@@ -79,14 +81,15 @@ class milestone {
     */
     function del($id)
     {
-        global $conn,$mylog;
+        global $conn, $mylog;
         $id = (int) $id;
 
-        $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
+        $namStmt = $conn->prepare("SELECT project,name FROM milestones WHERE ID = ?");
+        $namStmt->execute(array($id));
         $del = $conn->query("DELETE FROM milestones WHERE ID = $id");
         $del1 = $conn->query("DELETE FROM milestones_assigned WHERE milestone = $id");
         if ($del) {
-            $nam = $nam->fetch();
+            $nam = $namStmt->fetch();
             $project = $nam[0];
             $name = $nam[1];
 
@@ -105,15 +108,17 @@ class milestone {
     */
     function open($id)
     {
-        global $conn,$mylog;
+        global $conn, $mylog;
         $id = (int) $id;
 
-        $updStmt = $conn->query("UPDATE milestones SET status = 1 WHERE ID = ?");
-		$upd = $updStmt->execute(array($id));
+        $updStmt = $conn->prepare("UPDATE milestones SET status = ? WHERE ID = ?");
+        $upd = $updStmt->execute(array(1, $id));
 
-		if ($upd) {
-            $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
-            $nam = $nam->fetch();
+        if ($upd) {
+            $namStmt = $conn->prepare("SELECT project,name FROM milestones WHERE ID = ?");
+            $namStmt->execute(array($id));
+            $nam = $namStmt->fetch();
+
             $project = $nam[0];
             $name = $nam[1];
 
@@ -133,12 +138,12 @@ class milestone {
     */
     function close($id)
     {
-        global $conn,$mylog;
+        global $conn, $mylog;
         $id = (int) $id;
 
         $updStmt = $conn->prepare("UPDATE milestones SET status = 0 WHERE ID = ?");
         $upd = $updStmt->execute(array($id));
-		// Get attached tasklists
+        // Get attached tasklists
         $tasklists = $this->getMilestoneTasklists($id);
         // Loop through tasklists , close all tasks in them, then close tasklist itself
         if (!empty($tasklists)) {
@@ -149,8 +154,10 @@ class milestone {
         }
 
         if ($upd) {
-            $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
-            $nam = $nam->fetch();
+            $namStmt = $conn->prepare("SELECT project,name FROM milestones WHERE ID = ?");
+            $namStmt->execute(array($id));
+            $nam = $namStmt->fetch();
+
             $project = $nam[0];
             $name = $nam[1];
 
@@ -170,17 +177,18 @@ class milestone {
     */
     function assign($milestone, $user)
     {
-        global $conn,$mylog;
+        global $conn, $mylog;
         $milestone = (int) $milestone;
         $user = (int) $user;
 
-
-    	$updStmt = $conn->prepare("INSERT INTO milestones_assigned (NULL,?,?)");
-    	$upd = $updStmt->execute(array($user,$milestone));
+        $updStmt = $conn->prepare("INSERT INTO milestones_assigned (NULL,?,?)");
+        $upd = $updStmt->execute(array($user, $milestone));
 
         if ($upd) {
-            $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
-            $nam = $nam->fetch();
+            $namStmt = $conn->prepare("SELECT project,name FROM milestones WHERE ID = ?");
+            $namStmt->execute(array($id));
+            $nam = $namStmt->fetch();
+
             $project = $nam[0];
             $name = $nam[1];
 
@@ -200,7 +208,7 @@ class milestone {
     */
     function deassign($milestone, $user)
     {
-        global $conn,$mylog;
+        global $conn, $mylog;
         $milestone = (int) $milestone;
         $user = (int) $user;
 
@@ -208,8 +216,10 @@ class milestone {
         $upd = $updStmt->execute(array($user, $milestone));
 
         if ($upd) {
-            $nam = $conn->query("SELECT project,name FROM milestones WHERE ID = $id");
-            $nam = $nam->fetch();
+            $namStmt = $conn->prepare("SELECT project,name FROM milestones WHERE ID = ?");
+            $namStmt->execute(array($id));
+            $nam = $namStmt->fetch();
+
             $project = $nam[0];
             $name = $nam[1];
 
@@ -290,7 +300,6 @@ class milestone {
 
         if (!empty($milestones)) {
             return $milestones;
-
         } else {
             return false;
         }
@@ -380,7 +389,7 @@ class milestone {
         $sql = "SELECT ID FROM milestones WHERE project = ?  AND start > ? AND status = 1 ORDER BY end ASC LIMIT ?";
 
         $sel1 = $conn->prepare($sql);
-        $sel1->execute(array($project,$now,$lim));
+        $sel1->execute(array($project, $now, $lim));
 
         while ($milestone = $sel1->fetch()) {
             if (!empty($milestone)) {
@@ -598,8 +607,7 @@ class milestone {
      * @param project if set to a nonzero value (project id) it will search for tasks by project assignment, which can be used when no milestone is assigned, i.e. when $milestone=0 
      * @return array $lists Details of the tasklists
      */
-    private function getMilestoneTasklists($milestone,$project = 0)
-    {
+    private function getMilestoneTasklists($milestone,$project = 0)  {
         global $conn;
         $milestone = (int) $milestone;
 				$project = (int) $project;

@@ -630,15 +630,15 @@ calendar.prototype.getDatepicker = function(theDiv)
 				{
 					if(this.currmonth == this.month && this.curryear == this.year && this.currday == theDay)
 					{
-						theHtml += "<td class = \"today\" onclick = \"$('"+this.relateTo+"').value='"+dateString+"';new Effect.Fade('"+theDiv+"');\">"+ theDay + "</td>";
+						theHtml += "<td class = \"today\" onclick = \"$('"+this.relateTo+"').value='"+dateString+"';new Effect.Fade('"+theDiv+"','{duration:0.6}');\">"+ theDay + "</td>";
 					}
 					else if(this.month == (selectedVals[1]-1) && this.year == selectedVals[2] && selectedVals[0] == theDay)
 					{
-						theHtml += "<td class = \"red\" onclick = \"$('"+this.relateTo+"').value='"+dateString+"';new Effect.Fade('"+theDiv+"');\">"+ theDay + "</td>";
+						theHtml += "<td class = \"red\" onclick = \"$('"+this.relateTo+"').value='"+dateString+"';new Effect.Fade('"+theDiv+"','{duration:0.6}');\">"+ theDay + "</td>";
 					}
 					else
 					{
-						theHtml += "<td class = \"normalday\" onclick = \"$('"+this.relateTo+"').value='"+dateString+"';new Effect.Fade('"+theDiv+"');\">"+ theDay + "</td>";
+						theHtml += "<td class = \"normalday\" onclick = \"$('"+this.relateTo+"').value='"+dateString+"';new Effect.Fade('"+theDiv+"','{duration:0.6}');\">"+ theDay + "</td>";
 					}
 				}
 				else if(theDay < 1)
@@ -653,7 +653,7 @@ calendar.prototype.getDatepicker = function(theDiv)
 		theHtml += "</tr>";
 	}
 
-	theHtml += "<tr><td colspan = \"7\" class = \"dpfoot\"><a href = \"javascript:void(0);\" onclick = \"javascript:new Effect.Fade('"+theDiv+"','{duration:0.8}');\">Close</a></td></tr></table>";
+	theHtml += "<tr><td colspan = \"7\" class = \"dpfoot\"><a href = \"javascript:void(0);\" onclick = \"javascript:new Effect.Fade('"+theDiv+"','{duration:0.6}');\">Close</a></td></tr></table>";
 
 	$(theDiv).innerHTML = theHtml;
 

@@ -129,12 +129,86 @@
 							{/section}
 
 						</table>
+{if $closedProjectnum > 0}
+{*Doneprojects*}
+				<div id="doneblock" class="projects" style="display: none;">
+				<table class="second-thead" cellpadding="0" cellspacing="0" border="0" onclick="blindtoggle('doneblock');toggleClass('donebutn','butn_link_active','butn_link');toggleClass('toggle-done','acc-toggle','acc-toggle-active');">
+
+						<tr>
+							<td class="a"></td>
+							<td class="b"><span id="toggle-done" class="acc-toggle">{#closedprojects#}</span></td>
+							<td class="c"></td>
+							<td class="d"></td>
+							<td class="tools"></td>
+						</tr>
+
+				</table>
+
+
+				<div class="toggleblock">
+					<table cellpadding="0" cellspacing="0" border="0" id="acc-oldprojects">
+					{section name=clopro loop=$oldprojects}
+
+					{*Color-Mix*}
+					{if $smarty.section.clopro.index % 2 == 0}
+					<tbody class="color-a" id="proj_{$oldprojects[clopro].ID}">
+					{else}
+					<tbody class="color-b" id="proj_{$oldprojects[clopro].ID}">
+					{/if}
+						<tr>
+							<td class="a">{if $userpermissions.projects.add}<a class="butn_checked" href="manageproject.php?action=open&amp;id={$oldprojects[clopro].ID}" title="{#open#}"></a>{/if}</td>
+							<td class="b">
+								<div class="toggle-in">
+								<span class="acc-toggle" onclick="javascript:accord_oldprojects.activate($$('#acc-oldprojects .accordion_toggle')[{$smarty.section.clopro.index}]);toggleAccordeon('acc-oldprojects',this);"></span>
+									<a href="manageproject.php?action=showproject&amp;id={$oldprojects[clopro].ID}" title="{$oldprojects[clopro].name}">
+										{if $oldprojects[clopro].name != ""}
+										{$oldprojects[clopro].name|truncate:30:"...":true}
+										{else}
+										{$oldprojects[clopro].desc|truncate:30:"...":true}
+										{/if}
+									</a>
+								</div>
+							</td>
+							<td class="c"></td>
+							<td class="d" style="text-align:right">{$oldprojects[clopro].daysleft}&nbsp;&nbsp;</td>
+							<td class="tools">
+								{if $userpermissions.projects.edit}
+								<a class="tool_edit" href="manageproject.php?action=editform&amp;id={$oldprojects[clopro].ID}" title="{#edit#}"></a>
+								{/if}
+								{if $userpermissions.projects.del}
+								<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'proj_{$oldprojects[clopro].ID}\',\'manageproject.php?action=del&amp;id={$oldprojects[clopro].ID}\')');"  title="{#delete#}" ></a>
+								{/if}
+							</td>
+						</tr>
+
+						<tr class="acc">
+							<td colspan="5">
+								<div class="accordion_toggle"></div>
+								<div class="accordion_content">
+									<div class="acc-in">
+										{$oldprojects[clopro].desc}
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+					{/section}
+
+
+				</table>
+				</div> {*toggleblock End*}
+				</div> {*doneblock end*}
+{/if}
+{*Doneprojects End*}
 
 						<div class="tablemenue">
 							<div class="tablemenue-in">
 								{if $userpermissions.projects.add}
 									<a class="butn_link" href="javascript:blindtoggle('form_addmyproject');" id="add_butn_myprojects" onclick="toggleClass('add_myprojects','add-active','add');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_deskprojects','smooth','nosmooth');">{#addproject#}</a>
 								{/if}
+						      {if $closedProjectnum > 0}
+							 	 	<a class="butn_link" href="javascript:blindtoggle('doneblock');" id="donebutn" onclick="toggleClass(this,'butn_link_active','butn_link');toggleClass('toggle-done','acc-toggle','acc-toggle-active');">{#closedprojects#}</a>
+							  {/if}
 							</div>
 						</div>
 					<div class="content-spacer"></div>
@@ -158,7 +232,7 @@
 							<a class="export"><span>{#export#}</span></a>
 							<div class="export-in" style="width:69px;left: -69px;"> {* at two items *}
 								<a class="rss" href="managerss.php?action=rss-tasks&user={$userid}"><span>{#rssfeed#}</span></a>
-								<a class="ical" href="managetask.php?action=ical"><span>{#icalexport#}</span></a>
+								<!--<a class="ical" href="managetask.php?action=ical"><span>{#icalexport#}</span></a>-->
 								<a class="pdf" href="mytasks.php?action=pdf"><span>{#pdfexport#}</span></a>
 							</div>
 						</div>
@@ -353,7 +427,7 @@
 								<tr>
 									<td>
 										{if $userpermissions.messages.close}
-											<a class="butn_reply" href="managemessage.php?action=replyform&amp;mid={$messages[message].ID}&amp;id={$messages[message].project}" title="{#answer#}"></a>
+											<a class="butn_reply" href="javascript:void(0);" onclick="change('managemessage.php?action=replyform&amp;mid={$messages[message].ID}&amp;id={$messages[message].project}','addmsg');toggleClass(this,'butn_reply_active','butn_reply');blindtoggle('addmsg');"  title="{#answer#}"></a>
 										{/if}
 									</td>
 									<td>

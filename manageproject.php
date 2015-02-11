@@ -81,8 +81,7 @@ if ($action == "editform") {
         $template->display("error.tpl");
         die();
     }
-
-	//If no end is set, default to 0
+    // If no end is set, default to 0
     if (!$end) {
         $end = 0;
     }
@@ -156,11 +155,11 @@ if ($action == "editform") {
             if (!empty($user["email"])) {
                 $userlang = readLangfile($user['locale']);
 
-                $subject = $userlang["projectassignedsubject"] . ' (' .$userlang['by'].' '.$username.')';
+                $subject = $userlang["projectassignedsubject"] . ' (' . $userlang['by'] . ' ' . $username . ')';
 
                 $mailcontent = $userlang["hello"] . ",<br /><br/>" .
-                               $userlang["projectassignedtext"] .
-                               " <a href = \"" . $url . "manageproject.php?action=showproject&id=$id\">" . $url . "manageproject.php?action=showproject&id=$id</a>";
+                $userlang["projectassignedtext"] .
+                " <a href = \"" . $url . "manageproject.php?action=showproject&id=$id\">" . $url . "manageproject.php?action=showproject&id=$id</a>";
                 // send email
                 $themail = new emailer($settings);
                 $themail->send_mail($user["email"], $subject , $mailcontent);
@@ -289,7 +288,7 @@ if ($action == "editform") {
     $excelFile = fopen(CL_ROOT . "/files/" . CL_CONFIG . "/ics/project-$id-log.csv", "w");
 
     $headline = array(" ", $strtext, $straction, $strdate, $struser);
-	fputcsv($excelFile,$headline);
+    fputcsv($excelFile, $headline);
     $datlog = array();
     $tlog = $mylog->getProjectLog($id, 100000);
     $tlog = $mylog->formatdate($tlog, CL_DATEFORMAT);
@@ -339,34 +338,11 @@ if ($action == "editform") {
         die();
     }
 
-    if (getArrayVal($_COOKIE, "milehead")) {
-        $milestyle = "display:" . $_COOKIE['milehead'];
-        $template->assign("milestyle", $milestyle);
-        $milebar = "win_" . $_COOKIE['milehead'];
-    } else {
-        $milebar = "win_block";
-    }
-    if (getArrayVal($_COOKIE, "trackerhead")) {
-        $trackstyle = "display:" . $_COOKIE['trackerhead'];
-        $template->assign("trackstyle", $trackstyle);
-        $trackbar = "win_" . $_COOKIE['trackerhead'];
-    } else {
-        $trackbar = "win_block";
-    }
-    if (getArrayVal($_COOKIE, "loghead")) {
-        $logstyle = "display:" . $_COOKIE['loghead'];
-        $template->assign("logstyle", $logstyle);
-        $logbar = "win_" . $_COOKIE['loghead'];
-    } else {
-        $logbar = "win_block";
-    }
-    if (getArrayVal($_COOKIE, "status")) {
-        $statstyle = "display:" . $_COOKIE['status'];
-        $template->assign("statstyle", $statstyle);
-        $statbar = "win_" . $_COOKIE['status'];
-    } else {
-        $statbar = "win_block";
-    }
+    $milebar = "win_block";
+    $trackbar = "win_block";
+    $logbar = "win_block";
+    $statbar = "win_block";
+
     $template->assign("milebar", $milebar);
     $template->assign("trackbar", $trackbar);
     $template->assign("logbar", $logbar);
@@ -381,7 +357,6 @@ if ($action == "editform") {
 
     $log = $mylog->getProjectLog($id);
     $log = $mylog->formatdate($log);
-
 
     $tproject = $project->getProject($id);
     $done = $project->getProgress($id);
@@ -424,7 +399,7 @@ if ($action == "editform") {
     }
 
     $nm = $m + 1;
-    $pm = $m -1;
+    $pm = $m - 1;
     if ($nm > 12) {
         $nm = 1;
         $ny = $y + 1;
@@ -433,7 +408,7 @@ if ($action == "editform") {
     }
     if ($pm < 1) {
         $pm = 12;
-        $py = $y-1;
+        $py = $y - 1;
     } else {
         $py = $y;
     }
@@ -460,14 +435,11 @@ if ($action == "editform") {
     $template->assign("weeks", $weeks);
     $template->assign("id", $id);
     $template->display("calbody_project.tpl");
-}
-elseif($action == "tasklists")
-{
-	$listObj = new tasklist();
-	$theLists = $listObj->getProjectTasklists($id);
-	echo "<option value=\"-1\" selected=\"selected\">$langfile[chooseone]</option>";
-	foreach($theLists as $list)
-	{
-		echo "<option value = \"$list[ID]\">$list[name]</option>";
-	}
+}elseif ($action == "tasklists") {
+    $listObj = new tasklist();
+    $theLists = $listObj->getProjectTasklists($id);
+    echo "<option value=\"-1\" selected=\"selected\">$langfile[chooseone]</option>";
+    foreach($theLists as $list) {
+        echo "<option value = \"$list[ID]\">$list[name]</option>";
+    }
 }

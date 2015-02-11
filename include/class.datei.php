@@ -96,7 +96,8 @@ class datei {
             }
         }
 
-        $del = $conn->query("DELETE FROM projectfolders WHERE ID = $id");
+    	$delStmt = $conn->prepare("DELETE FROM projectfolders WHERE ID = ?");
+    	$del = $delStmt->execute(array($id));
 
         if ($del) {
             // Remove directory

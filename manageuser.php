@@ -151,7 +151,7 @@ if ($action == "loginerror") {
             die();
         }
         // don't upload php scripts
-        if ($erweiterung == "php" or $erweiterung == "pl") {
+        if (stristr($erweiterung,"php") or $erweiterung == "pl") {
             $loc = $url . "manageuser.php?action=profile&id=$userid";
             header("Location: $loc");
             die();
