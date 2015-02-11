@@ -60,7 +60,7 @@ class mylog {
         global $conn;
         $id = (int) $id;
 
-        $delStmt = $conn->prepare("DELETE FROM log WHERE ID = ? LIMIT 1");
+        $delStmt = $conn->prepare("DELETE FROM log WHERE ID = ?");
         $del = $delStmt->execute($id);
 
 		if ($del) {

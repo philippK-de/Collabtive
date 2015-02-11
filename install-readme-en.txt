@@ -1,12 +1,12 @@
 ### Requirements ###
 
     Server:
-    - PHP 5.2 or higher (recent stable build recommended)
-    - MySQL 4 or higher, SQLite 3
-    
+    - PHP 5.3 or higher (recent stable build recommended)
+    - MySQL 5 or higher, SQLite 3
+
     It is recommended to run Collabtive on LAMP (Linux, Apache, MySQL, PHP) servers.
-    Windows Servers may work, but are not supported as well.
-    
+    Windows (IIS) Servers may work, but are not supported as well.
+
     Client:
     - Firefox, Internet Explorer 9/10/11, Opera 9/10, Safari, Chrome
     - JavaScript enabled
@@ -29,6 +29,7 @@
 
 
 ### Update instructions ###
+You should backup your database, and the /files/ folder before running the update.
 
     1. Unpack the Collabtive Archive
     2. Retrieve your config.php from your server

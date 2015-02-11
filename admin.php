@@ -53,6 +53,7 @@ $mainclasses = array("desktop" => "",
     );
 $template->assign("mainclasses", $mainclasses);
 
+//check if the user is an admin
 if (!$userpermissions["admin"]["add"] and $action != "addpro") {
     $errtxt = $langfile["nopermission"];
     $noperm = $langfile["accessdenied"];
@@ -61,22 +62,16 @@ if (!$userpermissions["admin"]["add"] and $action != "addpro") {
     die();
 }
 
-if ($action == "index") {
-    $classes = array("overview" => "overview_active",
-        "system" => "system",
-        "users" => "users"
-        );
-    $template->assign("classes", $classes);
-    $title = $langfile['admin'];
-    $template->display("admin.tpl");
-} elseif ($action == "users") {
+//Administration of users
+if ($action == "users") {
     // Set the users tab active
     $classes = array("overview" => "overview",
         "system" => "system",
         "users" => "active"
         );
     $template->assign("classes", $classes);
-    $roleobj = (object) new roles();
+
+	$roleobj = (object) new roles();
     // Get 25 users
     $users = $user->getAllUsers(25);
     // Get All Projects
@@ -116,12 +111,16 @@ if ($action == "index") {
     $template->assign("projects", $projects);
     $template->assign("roles", $roles);
     $template->display("adminusers.tpl");
-} elseif ($action == "adduser") {
+}
+//add new user
+elseif ($action == "adduser") {
     // Get the system locale and set it as the default locale for the new user
     $sysloc = $settings["locale"];
     // Add the user
     $newid = $user->add($name, $email, $company, $pass, $sysloc, $tags, $rate);
-    if ($newid) {
+    //user has been created successfully
+	if ($newid) {
+		//are there projects the userd should be assigned to
         if (!empty($assignto)) {
             // Assign the user to all selected projects
             foreach ($assignto as $proj) {
@@ -312,22 +311,6 @@ if ($action == "index") {
     if ($user->del($id)) {
         header("Location: admin.php?action=users&mode=deleted");
     }
-} elseif ($action == "assignform") {
-    $projects = $project->getProjects(1, 10000);
-    $i = 0;
-    foreach ($projects as $project) {
-        if (chkproject($id, $project[ID])) {
-            $chk = 1;
-        } else {
-            $chk = 0;
-        }
-        $projects[$i]['assigned'] = $chk;
-        $i = $i + 1;
-    }
-    $template->assign("projects", $projects);
-    $user = $user->getProfile($id);
-    $template->assign("user", $user);
-    $template->display("assignform.tpl");
 } elseif ($action == "massassign") {
     $projects = $_POST['projects'];
 
@@ -375,7 +358,9 @@ if ($action == "index") {
     }
 
     header("Location: admin.php?action=users&mode=de-assigned");
-} elseif ($action == "projects") {
+}
+//Administer projects
+elseif ($action == "projects") {
     $classes = array("overview" => "active",
         "system" => "system",
         "users" => "users"
@@ -402,7 +387,9 @@ if ($action == "index") {
     $template->assign("users", $users);
     $template->assign("clopros", $clopros);
     $template->display("adminprojects.tpl");
-} elseif ($action == "addpro") {
+}
+//add new project
+elseif ($action == "addpro") {
     if (!$userpermissions["projects"]["add"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
@@ -415,7 +402,9 @@ if ($action == "index") {
         $end = 0;
     }
 
+	//add the project
     $add = $project->add($name, $desc, $end, $budget, 0);
+	//project has been added
     if ($add) {
         foreach ($assignto as $member) {
             $project->assign($member, $add);

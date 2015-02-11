@@ -6,3 +6,7 @@ Thumbs.db
 .buildpath
 *.swp
 *.swo
+
+templates_c/*
+files/*
+!files/collabtive.sdb
