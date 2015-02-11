@@ -433,7 +433,7 @@ class milestone {
         // Get the name of the project where the message was posted for display
         $stmt = $conn->prepare("SELECT name FROM projekte WHERE ID = ?");
         $stmt->execute(array($project));
-        $res = $sel->fetch();
+        $res = $stmt->fetch();
         $pname = stripslashes($res['name']);
         $milestone["pname"] = $pname;
         // Daysleft contains a signed number, dayslate an unsigned one that only applies if the milestone is late
