@@ -416,14 +416,14 @@ class milestone {
         global $conn;
         $project = (int) $project;
         $id = 0;
-	$milestone = array();
+				$milestone = array();
 
         // Format start and end date for display
 
         $tod = date("d.m.Y");
         $now = strtotime($tod);
         $time = date(CL_DATEFORMAT, $now);
-	$milestone['ID'] = $id;
+				$milestone['ID'] = $id;
         $milestone["endstring"] = $time;
         $milestone["fend"] = $time;
         $milestone["startstring"] = $time;
