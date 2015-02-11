@@ -1,11 +1,11 @@
 ### Voraussetzungen ###
 
     Server:
-	- PHP 5.2 oder neuer
-	- MySQL 4 oder neuer
-	
+	- PHP 5.3 oder neuer
+	- MySQL 5 oder neuer
+
 	Wir empfehlen die Verwendung eines LAMP-Servers (Linux, Apache, MySQL, PHP).
-	Windows-Server können ebenfalls funktionieren, werden aber nicht im gleichen Ausmaß unterstützt.
+	Windows-Server (IIS) können ebenfalls funktionieren, werden aber nicht im gleichen Ausmaß unterstützt.
 
     Client:
 	- Firefox 3.6, Internet Explorer 7/8/9, Opera 9/10, Safari, Chrome
@@ -29,6 +29,7 @@
 
 
 ### Update ###
+Vor dem Update sollte ein Backup der Datenbank und des /files/ Ordners erstellt werden.
 
     1. Entpacke das Collabtive-Archiv auf deinem Computer.
     2. Lade die bestehende Datei config.php aus dem Ordner ./config/standard/ vom Server runter.

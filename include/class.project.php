@@ -91,10 +91,9 @@ class project {
         $task = new task();
         $tasks = $task->getProjectTasks($id);
         if (!empty($tasks)) {
-        	$del_taskassign = $conn->prepare("DELETE FROM tasks_assigned WHERE task = ?");
-            foreach ($tasks as $tas) {
-                $del_taskassign->execute(array($tas["ID"]));
-            }
+        	foreach ($tasks as $tas) {
+            	$task->del($tas["ID"]);
+			}
         }
         // Delete files and the assignments of these files to the messages they were attached to
         $fil = new datei();
@@ -298,6 +297,7 @@ class project {
                 $project["daysleft"] = $daysleft;
                 $endstring = date(CL_DATEFORMAT, $project["end"]);
                 $project["endstring"] = $endstring;
+
             } else {
                 $project["daysleft"] = "";
             }
@@ -390,6 +390,7 @@ class project {
         global $conn;
 
         $myprojekte = array();
+
         $sel = $conn->prepare("SELECT projekt FROM projekte_assigned WHERE user = ? ORDER BY end ASC");
         $selStmt = $sel->execute(array($user));
 
@@ -453,6 +454,7 @@ class project {
         } else {
             return false;
         }
+
     }
 
     /**

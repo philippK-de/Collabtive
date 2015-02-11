@@ -37,7 +37,7 @@
 			<div class="headline">
 				<a href="javascript:void(0);" id="acc-customers_toggle" class="win_none" onclick="toggleBlock('acc-customers');"></a>
 
-				{if $userpermissions.customers.add|default}
+				{if $userpermissions.admin.add|default}
 				<div class="wintools">
 					<a class="add" href="javascript:blindtoggle('form_addcustomer');" id="add_customers" onclick="Effect.BlindUp('form_editcustomer');toggleClass(this,'add-active','add');toggleClass('add_butn_customers','butn_link_active','butn_link');toggleClass('sm_customers','smooth','nosmooth');">
 						<span>{#addcustomer#}</span>
@@ -56,7 +56,9 @@
 					{include file="addcustomer.tpl" customers="1"}
 				</div>
 
-				<div id="form_editcustomer" class="addmenue" style="display:none;"></div>
+				<div id="form_editcustomer" class="addmenue" style="display:none;">
+				{include file = "editcustomer.tpl" async="yes"}
+				</div>
 
 				<div class="nosmooth" id="sm_customers">
 
@@ -100,12 +102,12 @@
 									<td>{$allcust[cust].email}</td>
 									<td class="tools">
 
-										{if $userpermissions.customers.edit}
-										<a id="edit_butn{$allcust[cust].ID}" class="tool_edit" href="javascript:void(0);" onclick = "change('managecustomer.php?action=editform&amp;id={$allcust[cust].ID}','form_editcustomer');Effect.BlindUp('form_addcustomer');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_editcustomer');" title="{#edit#}"></a>
+										{if $userpermissions.admin.add}
+										<a id="edit_butn{$allcust[cust].ID}" class="tool_edit" href="javascript:void(0);" onclick = "change('managecompany.php?action=editform&amp;id={$allcust[cust].ID}','form_editcustomer');Effect.BlindUp('form_addcustomer');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_editcustomer');" title="{#edit#}"></a>
 										{/if}
 
-										{if $userpermissions.customers.del}
-										<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'proj_{$allcust[cust].ID}\',\'managecustomer.php?action=del&amp;id={$allcust[cust].ID}\')');" title="{#delete#}"></a>
+										{if $userpermissions.admin.add}
+										<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'proj_{$allcust[cust].ID}\',\'managecompany.php?action=del&amp;id={$allcust[cust].ID}\')');" title="{#delete#}"></a>
 										{/if}
 									</td>
 								</tr>
