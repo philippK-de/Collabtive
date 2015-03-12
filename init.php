@@ -22,6 +22,10 @@ require(CL_ROOT . "/include/SmartyPaginate.class.php");
 require(CL_ROOT . "/include/HTMLPurifier.standalone.php");
 // load init functions
 require(CL_ROOT . "/include/initfunctions.php");
+if(!isset($db_driver))
+{
+	$db_driver = "mysql";
+}
 // Start database connection
 // Depending on the DB driver, instantiate a PDO object with the necessary credentials.
 switch ($db_driver) {
