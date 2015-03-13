@@ -291,8 +291,8 @@ class milestone {
 
         $milestones = array();
 
-        $sel = $conn->prepare("SELECT ID FROM milestones WHERE `status`=?  ORDER BY `end` ASC LIMIT ?");
-        $sel->execute(array($status, $lim));
+        $sel = $conn->prepare("SELECT ID FROM milestones WHERE `status`=?  ORDER BY `end` ASC LIMIT $lim");
+        $sel->execute(array($status));
 
         while ($milestone = $sel->fetch()) {
             $themilestone = $this->getMilestone($milestone["ID"]);
