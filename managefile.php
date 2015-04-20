@@ -213,14 +213,16 @@ if ($action == "uploadAsync") {
         $template->display("error.tpl");
         die();
     }
+    
     $files = $myfile->getProjectFiles($id);
-
     $filenum = count($files);
+    
     if (empty($finfiles)) {
         $filenum = 0;
     }
-	$myproject = new project();
-	$rolesobj = new roles();
+    
+    $myproject = new project();
+    $rolesobj = new roles();
 
 	//get folders
     $folders = $myfile->getProjectFolders($id);
@@ -245,7 +247,6 @@ if ($action == "uploadAsync") {
     $template->assign("folders", $folders);
     $template->assign("members", $members);
     $template->assign("roles", $allroles);
-
     $template->assign("allfolders", $allfolders);
     $template->assign("postmax", $POST_MAX_SIZE);
     $template->display("projectfiles.tpl");
@@ -274,8 +275,10 @@ if ($action == "uploadAsync") {
         $template->display("error.tpl");
         die();
     }
+    
     $ajaxreq = $_GET["ajax"];
     $folder = getArrayVal($_GET, "folder");
+    
     if ($myfile->deleteFolder($folder, $id)) {
         if ($ajaxreq = 1) {
             echo "ok";
@@ -285,7 +288,6 @@ if ($action == "uploadAsync") {
         }
     }
 } elseif ($action == "movefile") {
-
     if (!$userpermissions["files"]["edit"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
@@ -293,6 +295,7 @@ if ($action == "uploadAsync") {
         $template->display("error.tpl");
         die();
     }
+    
     $file = $_GET["file"];
     $file = substr($file, 4, strlen($file)-4);
 
@@ -315,7 +318,6 @@ elseif($action == "downloadfile")
 
 	//getFile path and filesize
 	$filePath = $thefile["datei"];
-	$fsize =  filesize($filePath);
 
 	//Send HTTP headers for dowonload
 	header('Content-Description: File Transfer');
@@ -326,7 +328,6 @@ elseif($action == "downloadfile")
 	header('Expires: 0');
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
-	header("Content-length: $fsize");
 	//Try to decrypt the file
 	$plaintext = $myfile->decryptFile($filePath, $settings["filePass"]);
 
@@ -335,9 +336,9 @@ elseif($action == "downloadfile")
 	{
 		$plaintext = file_get_contents($filePath);
 	}
+	
 	//Render the content
 	echo $plaintext;
-
 }
 
 ?>
