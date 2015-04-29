@@ -291,8 +291,8 @@ class milestone {
 
         $milestones = array();
 
-        $sel = $conn->prepare("SELECT ID FROM milestones WHERE `status`=?  ORDER BY `end` ASC LIMIT ?");
-        $sel->execute(array($status, $lim));
+        $sel = $conn->prepare("SELECT ID FROM milestones WHERE `status`=?  ORDER BY `end` ASC LIMIT $lim");
+        $sel->execute(array($status));
 
         while ($milestone = $sel->fetch()) {
             $themilestone = $this->getMilestone($milestone["ID"]);
@@ -351,10 +351,10 @@ class milestone {
         $now = strtotime($tod);
         $milestones = array();
 
-        $sql = "SELECT ID FROM milestones WHERE project = ? AND end < ? AND status = 1 ORDER BY end ASC LIMIT ?";
+        $sql = "SELECT ID FROM milestones WHERE project = ? AND end < ? AND status = 1 ORDER BY end ASC LIMIT $lim";
 
         $sel1 = $conn->prepare($sql);
-        $sel1->execute(array($project, $now, $lim));
+        $sel1->execute(array($project, $now));
 
         while ($milestone = $sel1->fetch()) {
             if (!empty($milestone)) {
@@ -387,10 +387,10 @@ class milestone {
         $now = strtotime($tod);
         $milestones = array();
 
-        $sql = "SELECT ID FROM milestones WHERE project = ?  AND start > ? AND status = 1 ORDER BY end ASC LIMIT ?";
+        $sql = "SELECT ID FROM milestones WHERE project = ?  AND start > ? AND status = 1 ORDER BY end ASC LIMIT $lim";
 
         $sel1 = $conn->prepare($sql);
-        $sel1->execute(array($project, $now, $lim));
+        $sel1->execute(array($project, $now ));
 
         while ($milestone = $sel1->fetch()) {
             if (!empty($milestone)) {
@@ -422,10 +422,10 @@ class milestone {
         $tod = date(CL_DATEFORMAT);
         $now = strtotime($tod);
         $milestones = array();
-        $sql = "SELECT ID FROM milestones WHERE project = ? AND status = 1 ORDER BY end ASC LIMIT ?";
+        $sql = "SELECT ID FROM milestones WHERE project = ? AND status = 1 ORDER BY end ASC LIMIT $lim";
 
         $sel1 = $conn->prepare($sql);
-        $sel1->execute(array($project, $lim));
+        $sel1->execute(array($project));
 
         while ($milestone = $sel1->fetch()) {
             if (!empty($milestone)) {
