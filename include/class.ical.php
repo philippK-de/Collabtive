@@ -1984,7 +1984,7 @@ class calendarComponent {
  * @return string
  */
   function createDtstamp() {
-    if( !isset( $htis->dtstamp['value']['year'] )  &&
+    if( !isset( $this->dtstamp['value']['year'] )  &&
         !isset( $this->dtstamp['value']['month'] ) &&
         !isset( $this->dtstamp['value']['day'] )   &&
         !isset( $this->dtstamp['value']['hour'] )  &&

@@ -1,6 +1,6 @@
 <?php
 require("./init.php");
-//check if the user is loged in
+// check if the user is loged in
 if (!isset($_SESSION["userid"])) {
     $template->assign("loginerror", 0);
     $mode = getArrayVal($_GET, "mode");
@@ -10,11 +10,10 @@ if (!isset($_SESSION["userid"])) {
 }
 // collabtive doesn't seem to be installed properly , redirect to installer
 if (empty($db_name) or empty($db_user)) {
-	if($db_driver == "mysql")
-	{
-		$loc = $url . "install.php";
-		header("Location: " . $loc);
-	}
+    if ($db_driver == "mysql") {
+        $loc = $url . "install.php";
+        header("Location: " . $loc);
+    }
 }
 // Set the desktop icon in the top icon menue
 $mainclasses = array("desktop" => "active",
@@ -28,23 +27,20 @@ $customer = new company();
 $milestone = new milestone();
 $mtask = new task();
 $msg = new message();
-
-//create arrays to hold data
+// create arrays to hold data
 $messages = array();
 $milestones = array();
 $tasks = array();
-//create a counter for the foreach loop
+// create a counter for the foreach loop
 $cou = 0;
-
 // If user has projects, loop through them and get the messages and tasks belonging to those projects
 if (!empty($myOpenProjects)) {
     foreach($myOpenProjects as $proj) {
-		//get all the tasks in this project that are assigned to the current user
+        // get all the tasks in this project that are assigned to the current user
         $task = $mtask->getAllMyProjectTasks($proj["ID"], 100);
-		//get all messages in the project
+        // get all messages in the project
         $msgs = $msg->getProjectMessages($proj["ID"]);
-
-		//write those to arrays
+        // write those to arrays
         if (!empty($msgs)) {
             array_push($messages, $msgs);
         }
@@ -56,8 +52,7 @@ if (!empty($myOpenProjects)) {
         $cou = $cou + 1;
     }
 }
-$myClosedProjects = $project->getMyProjects($userid,0);
-
+$myClosedProjects = $project->getMyProjects($userid, 0);
 // If the user is allowed to add projects, also get all users to assign to those projects
 if ($userpermissions["projects"]["add"]) {
     $user = new user();
@@ -80,7 +75,6 @@ foreach($etasks as $etask) {
 }
 // Sort using array_multisort
 array_multisort($sort, SORT_NUMERIC, SORT_ASC, $etasks);
-
 // On Admin Login check for updates
 $mode = getArrayVal($_GET, "mode");
 if ($mode == "login") {
