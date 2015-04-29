@@ -332,8 +332,8 @@ class project {
 
         $projekte = array();
 
-        $sel = $conn->prepare("SELECT `ID` FROM projekte WHERE `status`= ? ORDER BY `end` ASC LIMIT ?");
-        $selStmt = $sel->execute(array($status,$lim));
+        $sel = $conn->prepare("SELECT `ID` FROM projekte WHERE `status`= ? ORDER BY `end` ASC LIMIT $lim ");
+        $selStmt = $sel->execute(array($status));
 
         while ($projekt = $sel->fetch()) {
             $project = $this->getProject($projekt["ID"]);
