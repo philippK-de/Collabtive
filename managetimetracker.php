@@ -391,6 +391,16 @@ if ($action == "add") {
     $template->assign("tracker", $track);
     SmartyPaginate::assign($template);
     $template->display("tracker_project.tpl");
+} elseif ($action == 'starteasytracking'){
+    if (!$userpermissions["timetracker"]["add"]) {
+        $template->assign("errortext", "Permission denied.");
+        $template->assign("mode", "error");
+        $template->display("error.tpl");
+        die();
+    }
+
+// store beginning time here
+    echo 'ok';
 }
 
 ?>

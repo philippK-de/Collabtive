@@ -3,23 +3,11 @@
 
 	{*Easy Tracker*}
 	<div class="content-right-in">
-			<h2><a id = "searchtoggle" class="win-up" href="javascript:blindtoggle('search');toggleClass('searchtoggle','win-up','win-down');">{#search#}</a></h2>
-
-			<form id = "search" method = "get" action = "managesearch.php" {literal} onsubmit="return validateStandard(this,'input_error');"{/literal}>
-			<fieldset>
-				<div class = "row">
-					<input type="text" class = "text" id="query" name="query" />
-				</div>
-
-				<div id="choices"></div>
-				<input type = "hidden" name = "action" value = "search" />
-
-				<div id="indicator1" style="display:none;"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/indicator_arrows.gif" alt="{#searching#}" /></div>
-
-				<button type="submit" title="{#gosearch#}"></button>
-			</fieldset>
-
-			</form>
+			<h2><a id = "trackertoggle" class="win-up" href="javascript:blindtoggle('tracker');toggleClass('trackertoggle','win-up','win-down');">{#easytracker#}</a></h3>
+			<div id="tracker">
+			<a class="button" href="javascript:startEasyTracking()">{#starttracking#}</a>
+			<a class="button" href="javascript:stopEasyTracking(0)">{#stoptracking#}</a>
+			</div>
 	</div>
 	{*Easy Tracker End*}
 

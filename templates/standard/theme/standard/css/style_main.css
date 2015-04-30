@@ -378,7 +378,7 @@ td.message ul {
 	width: 220px;
 	min-height: 20px;
 	background: url(../images/color-a.png) repeat 0 0;
-	margin: 0 0 0 0;
+	margin: 0 0 10px 0;
 	padding: 0 0 23px 0;
 	float: left;
 	color: #6d7f93;
@@ -2906,3 +2906,16 @@ span.info {
 
 
 /* ## Footer ## end ## */
+
+#tracker{
+  padding-top: 8px;
+}
+
+#tracker .button{
+  background-color: #3C556E;
+  padding: 4px;
+  margin-right: 4px;
+  margin-top: 2px;
+  color: #001e40;
+  font-weight: bold;
+}
