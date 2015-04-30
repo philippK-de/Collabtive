@@ -17,8 +17,7 @@ class timetracker {
     */
     function openTracking($user, $project = 0, $task =0){
         global $conn;
-
-	$opentrack = $this->getOpenTrackId();
+	$opentrack = $this->getOpenTrackId($user);
 	if ($opentrack != 0){
 		return 'open track existing';
 	}
@@ -34,17 +33,16 @@ class timetracker {
 
         if ($ins) {
             $insid = $conn->lastInsertId();
-            $title = $username . " " . $hours . "h";
-
             return $insid;
         } else {
             return false;
         }
     }
 
-    function getOpenTrackId(){
+    function getOpenTrackId($user){
 	global $conn;
-	$sel = $conn->query("SELECT ID FROM timetracker WHERE ended=0");
+	$sel = $conn->prepare("SELECT ID FROM timetracker WHERE ended=0 and user=?");	
+	$selStmt = $sel->execute(array((int) $user));
         $track = array();
         $track = $sel->fetch();
 	if (empty($track)){
