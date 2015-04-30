@@ -89,3 +89,5 @@
 		{/literal}
 
 </div>
+
+{include file="easy-tracker.tpl"}
