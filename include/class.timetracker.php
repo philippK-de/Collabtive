@@ -12,6 +12,46 @@
 
 class timetracker {
 
+    /**
+    * Start new timetracking
+    */
+    function openTracking($user, $project = 0, $task =0){
+        global $conn;
+
+	$opentrack = $this->getOpenTrackId();
+	if ($opentrack != 0){
+		return 'open track existing';
+	}
+
+        $username = $_SESSION['username'];
+        $started = time();
+	$ended=0;
+	$hours=0;	
+	$comment = 'pending timetrack';
+	
+        $insStmt = $conn->prepare("INSERT INTO timetracker (user,project,task,comment,started,ended,hours,pstatus) VALUES (?,?,?,?,?,?,?,0)");
+        $ins = $insStmt->execute(array((int) $user, (int) $project, (int) $task, $comment, $started, $ended, $hours));
+
+        if ($ins) {
+            $insid = $conn->lastInsertId();
+            $title = $username . " " . $hours . "h";
+
+            return $insid;
+        } else {
+            return false;
+        }
+    }
+
+    function getOpenTrackId(){
+	global $conn;
+	$sel = $conn->query("SELECT ID FROM timetracker WHERE ended=0");
+        $track = array();
+        $track = $sel->fetch();
+	if (empty($track)){
+		return 0;
+	}
+	return $track['ID'];
+    }
 
     /**
     * Add timetracker entry

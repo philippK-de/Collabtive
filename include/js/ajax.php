@@ -684,9 +684,7 @@ function startEasyTracking(){
 	new Ajax.Request('managetimetracker.php?action=starteasytracking', {
 		method: 'get',
 		onSuccess: function(payload) {
-			if (payload.responseText == "ok"){
-				alert('ok');
-			}
+			alert(payload.responseText);
 		}
 	});
 }

@@ -399,8 +399,16 @@ if ($action == "add") {
         die();
     }
 
-// store beginning time here
-    echo 'ok';
+    $pid = 0; // TODO: read, if set
+    $tid = 0; // TODO: read, if set
+    $result = $tracker->openTracking($userid, $pid, $tid);
+    if ($result === false){
+	echo 'failed';
+    } elseif ($result == 'open track existing'){
+	echo $result;
+    } else {
+	echo 'ok';
+    }
 }
 
 ?>
