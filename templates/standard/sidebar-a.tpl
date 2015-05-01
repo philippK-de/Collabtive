@@ -88,6 +88,9 @@
 			</script>
 		{/literal}
 
-</div>
+<div class="space"></div>
 
 {include file="easy-tracker.tpl"}
+
+</div>
+

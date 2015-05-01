@@ -366,6 +366,10 @@ td.message ul {
 	height: 27px;
 }
 
+#content-left>.content-spacer{
+	background-color: #28648b;
+}
+
 .content-spacer-b {
 	clear: both;
 	width: 100%;
@@ -2916,6 +2920,12 @@ span.info {
   padding: 4px;
   margin-right: 4px;
   margin-top: 2px;
-  color: #001e40;
+  color: white;
   font-weight: bold;
+}
+
+.space{
+	background-color: #28648b;
+	margin-top: 50px;
+	height: 23px;
 }

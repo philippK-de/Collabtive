@@ -285,15 +285,11 @@
 
 </div> {*Tasks END*}
 </div> {*content-left-in END*}
-</div> {*content-left END*}
 {* current tasklists end*}
-{*right sidebar*}
-{include file="sidebar-a.tpl"}
 
 {if $oldlists[0][0]} {*only show the block if there are closed tasklists*} {*Done Tasklists*}
 <div class="content-spacer"></div>
 {*closed tasklists*}
-<div id="content-left">
 <div id="content-left-in">
 <div class="tasks">
 	<h1>{$projectname|truncate:45:"...":true}<span>/ {#donetasklists#}</span></h1>
@@ -388,6 +384,8 @@
 {/if} {*Done Tasklists End*}
 
 
+{*right sidebar*}
+{include file="sidebar-a.tpl"}
 
 
 {include file="footer.tpl"}

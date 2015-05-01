@@ -1,7 +1,6 @@
-<div id="content-right">
-
 
 	{*Easy Tracker*}
+
 	<div class="content-right-in">
 			<h2><a id = "trackertoggle" class="win-up" href="javascript:blindtoggle('tracker');toggleClass('trackertoggle','win-up','win-down');">{#easytracker#}</a></h3>
 			<div id="tracker">
@@ -21,4 +20,3 @@
 	</div>
 	{*Easy Tracker End*}
 
-</div>
