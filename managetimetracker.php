@@ -399,15 +399,27 @@ if ($action == "add") {
         die();
     }
 
-    $pid = 0; // TODO: read, if set
-    $tid = 0; // TODO: read, if set
-    $result = $tracker->openTracking($userid, $pid, $tid);
+    $result = $tracker->openTracking($userid, $id, $tid);
     if ($result === false){
 	echo 'failed';
     } elseif ($result == 'open track existing'){
 	echo $result;
     } else {
 	echo 'ok';
+    }
+} elseif ($action == 'finisheasytracking'){
+    if (!$userpermissions["timetracker"]["add"]) {
+        $template->assign("errortext", "Permission denied.");
+        $template->assign("mode", "error");
+        $template->display("error.tpl");
+        die();
+    }
+    if ($id){
+	$track_id=$tracker->finishTracking($userid,$id,$tid);
+	if ($track_id){
+		$loc = 'managetimetracker.php?action=editform&tid='.$tracker_id.'&id='.$id;
+		header("Location: ".$loc);
+	}
     }
 }
 

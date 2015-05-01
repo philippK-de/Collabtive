@@ -22,7 +22,6 @@ class timetracker {
 		return 'open track existing';
 	}
 
-        $username = $_SESSION['username'];
         $started = time();
 	$ended=0;
 	$hours=0;	
@@ -39,9 +38,41 @@ class timetracker {
         }
     }
 
+    function finishTracking($user, $pid = 0, $tid =0){
+	global $conn;
+	$opentrack = $this->getOpenTrackId($user);
+	if ($opentrack == 0){
+		return false;
+	}
+	$ended = time();
+	
+	$sel = $conn->prepare("SELECT started,project,task FROM timetracker WHERE ended=0 AND user=?");
+	$selStmt = $sel->execute(array((int) $user));
+        $track = array();
+        $track = $sel->fetch();
+        if (empty($track)){
+                return false;
+        }
+	$hours = ($ended - $track['started']) / 3600;
+	if ($pid == 0){
+		$pid = $task['project'];
+	}
+	if ($task == 0){
+		$tid = $task['task'];
+	}
+
+	$updStmt = $conn->prepare("UPDATE timetracker SET project=?, task=?, ended=?, hours=? WHERE ID=?");
+	$upd = $updStmt->execute(array((int)$pid,(int)$tid,(int)$ended,$hours,(int)$opentrack));
+
+	if ($upd){
+		return $opentrack;
+	}
+	return false;
+    }
+
     function getOpenTrackId($user){
 	global $conn;
-	$sel = $conn->prepare("SELECT ID FROM timetracker WHERE ended=0 and user=?");	
+	$sel = $conn->prepare("SELECT ID FROM timetracker WHERE ended=0 AND user=?");	
 	$selStmt = $sel->execute(array((int) $user));
         $track = array();
         $track = $sel->fetch();

@@ -689,7 +689,3 @@ function startEasyTracking(){
 	});
 }
 
-function stopEasyTracking(pid){
-  alert('not implemented, yet!');
-}
-
