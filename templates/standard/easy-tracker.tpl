@@ -13,6 +13,7 @@
 						<a class="button" href="managetimetracker.php?action=finisheasytracking&id={$project.ID}">{#stoptracking#}</a>
 					{/if}
 				{/if}
+				<a class="button" href="javascript:cancelEasyTracking()">{#canceltracking#}</a>
 			{else}
 				<a class="button" href="javascript:startEasyTracking()">{#starttracking#}</a>
 			{/if}

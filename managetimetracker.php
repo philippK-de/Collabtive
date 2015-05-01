@@ -421,6 +421,16 @@ if ($action == "add") {
 		header("Location: ".$loc);
 	}
     }
+} elseif ($action == 'canceleasytracking'){
+    if (!$userpermissions["timetracker"]["add"]) {
+        $template->assign("errortext", "Permission denied.");
+        $template->assign("mode", "error");
+        $template->display("error.tpl");
+        die();
+    }
+    if ($opentrack != 0){
+	   $tracker->cancelTracking($opentrack);
+    }
 }
 
 ?>

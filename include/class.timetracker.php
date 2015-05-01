@@ -39,6 +39,11 @@ class timetracker {
         }
     }
 
+    function cancelTracking($tid){
+      $this->del($tid);
+      $_SESSION['opentrack']=0;
+    }
+
     function finishTracking($user, $pid = 0, $tid =0){
 	global $conn;
 	$opentrack = $this->getOpenTrackId($user);

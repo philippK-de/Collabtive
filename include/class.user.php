@@ -297,7 +297,6 @@ class user {
 	    $tracker = new timetracker();
 	    $_SESSION['opentrack'] = $tracker->getOpenTrackId($userid);
 
-
             $seid = session_id();
             $staylogged = getArrayVal($_POST, 'staylogged');
 

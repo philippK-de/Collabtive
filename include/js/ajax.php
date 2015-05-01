@@ -684,8 +684,27 @@ function startEasyTracking(){
 	new Ajax.Request('managetimetracker.php?action=starteasytracking', {
 		method: 'get',
 		onSuccess: function(payload) {
-			alert(payload.responseText);
+			if (payload.responseText == 'ok'){
+				var div=document.getElementById('tracker');
+				while (div.hasChildNodes()){
+					div.removeChild(div.lastChild);
+				}
+			} else {
+				alert(payload.responseText);
+			}
 		}
+	});
+}
+
+function cancelEasyTracking(){
+	new Ajax.Request('managetimetracker.php?action=canceleasytracking',{
+		method: 'get',
+		onSuccess: function(payload) {
+			var div=document.getElementById('tracker');
+			while (div.hasChildNodes()){
+				div.removeChild(div.lastChild);
+			}
+                }
 	});
 }
 
