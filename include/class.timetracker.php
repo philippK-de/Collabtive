@@ -32,6 +32,7 @@ class timetracker {
 
         if ($ins) {
             $insid = $conn->lastInsertId();
+	    $_SESSION['opentrack'] = $insid;
             return $insid;
         } else {
             return false;
@@ -65,6 +66,7 @@ class timetracker {
 	$upd = $updStmt->execute(array((int)$pid,(int)$tid,(int)$ended,$hours,(int)$opentrack));
 
 	if ($upd){
+		$_SESSION['opentrack'] = 0;
 		return $opentrack;
 	}
 	return false;
