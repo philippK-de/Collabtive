@@ -417,7 +417,7 @@ if ($action == "add") {
     if ($id){
 	$track_id=$tracker->finishTracking($userid,$id,$tid);
 	if ($track_id){
-		$loc = 'managetimetracker.php?action=editform&tid='.$tracker_id.'&id='.$id;
+		$loc = 'managetimetracker.php?action=editform&tid='.$track_id.'&id='.$id;
 		header("Location: ".$loc);
 	}
     }
