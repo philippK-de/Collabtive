@@ -58,7 +58,7 @@ class timetracker {
 	if ($pid == 0){
 		$pid = $task['project'];
 	}
-	if ($task == 0){
+	if ($tid == 0){
 		$tid = $task['task'];
 	}
 
