@@ -1,3 +1,4 @@
+test
 Collabtive 2.1
 + Removed accordion-related JS legacy code from desktop
 + Added default charset to all create table statements
