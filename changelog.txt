@@ -1,4 +1,3 @@
-
 Collabtive 2.1
 + Removed accordion-related JS legacy code from desktop
 + Added default charset to all create table statements
@@ -15,7 +14,7 @@ Collabtive 2.1
 + Fixed a problem with ambiguous field names
 + Fixed a missing GROUP BY clause
 + Implemented SQLite support. It can be chosen in the installer.
-+ Removed the tags class for good
++ Removed the tags class for good.
 + Add folder /files/standard/ics/ to the installation package
 + Removed call to file_exists in getArrayVal() - it worked around an edge case in the installer. This safes a lot of calls to file_exists()
 + Fixed a bug that prevented files from being attached to messages
