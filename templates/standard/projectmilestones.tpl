@@ -261,7 +261,7 @@
 							<table class="second-thead" cellpadding="0" cellspacing="0" border="0" onclick="blindtoggle('toggleupcoming');toggleClass('togglemilesupcoming','acc-toggle','acc-toggle-active');">
 							<tr>
 								<td class="a"></td>
-								<td class="b"><span id="togglemilesupcoming" class="acc-toggle-active">Upcoming milestones</span></td>
+								<td class="b"><span id="togglemilesupcoming" class="acc-toggle-active">{#upcomingmiles#}</span></td>
 								<td class="c"></td>
 								<td class="days"></td>
 								<td class="tools"></td>
