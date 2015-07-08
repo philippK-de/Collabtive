@@ -396,7 +396,8 @@ td.message ul {
 
 .content-right-in a {
 	color: #FFFFFF;
-//	color: #4566A4}
+//	color: #4566A4
+}
 
 .content-right-in a:hover {
 	color: #FFFFFF;
@@ -582,9 +583,9 @@ td.message ul {
 	top: -34px;
 	right: 0;
 	z-index: 9;
-	color: <? echo $colorMain; ?>;
+	/*color: <? echo $colorMain; ?>;*/
 	font-size: 12px;
-	background: <? echo $leftBlockBg; ?>;
+	/*background: <? echo $leftBlockBg; ?>;*/
 	padding: 0 7px 0 7px;
 	-moz-border-radius-topleft: 2px;
 	-moz-border-radius-topright: 2px;
@@ -594,7 +595,7 @@ td.message ul {
 
 .wintools .export-main a:hover span, .wintools .export-main .export-in a:hover span, .wintools a:hover span {
 	top: -28px;
-	color: <? echo $leftBlockBg; ?>;
+	/*color: <? echo $leftBlockBg; ?>;*/
 	font-weight: bold;
 }
 
@@ -647,7 +648,7 @@ td.message ul {
 }
 
 .projects .wintools .export-main a:hover span, .projects .wintools a:hover span {
-	background: <? echo $projectsMain; ?>;
+	/*background: <? echo $projectsMain; ?>;*/
 }
 
 .tasks .export-main, .tasks .export-main a {
@@ -659,7 +660,7 @@ td.message ul {
 }
 
 .tasks .wintools .export-main a:hover span, .tasks .wintools a:hover span, .wintools a:hover span {
-	background: <? echo $tasksMain; ?>;
+	/*background: <? echo $tasksMain; ?>;*/
 }
 
 .msgs .export-main, .msgs .export-main a {
@@ -671,7 +672,7 @@ td.message ul {
 }
 
 .msgs .wintools .export-main a:hover span, .msgs .wintools a:hover span {
-	background: <? echo $msgsMain; ?>;
+	/*background: <? echo $msgsMain; ?>;*/
 }
 
 .user .export-main, .user .export-main a {
@@ -683,7 +684,7 @@ td.message ul {
 }
 
 .user .wintools .export-main a:hover span, .user .wintools a:hover span {
-	background: <? echo $userMain; ?>;
+	/*background: <? echo $userMain; ?>;*/
 }
 
 .timetrack .wintools .export-main, .timetrack .wintools .export-main a {
@@ -691,7 +692,7 @@ td.message ul {
 }
 
 .timetrack .wintools .export-main a:hover span, .timetrack .wintools a:hover span {
-	background: <? echo $timetrackMain; ?>;
+	/*background: <? echo $timetrackMain; ?>;*/
 }
 
 .miles .wintools .export-main, .miles .wintools .export-main a {
@@ -699,7 +700,7 @@ td.message ul {
 }
 
 .miles .wintools .export-main a:hover span, .miles .wintools a:hover span {
-	background: <? echo $milesMain; ?>;
+	/*background: <? echo $milesMain; ?>;*/
 }
 
 .neutral .wintools .export-main, .neutral .wintools .export-main a {
@@ -707,7 +708,7 @@ td.message ul {
 }
 
 .neutral .wintools .export-main a:hover span, .neutral .wintools a:hover span {
-	background: <? echo $neutralMain; ?>;
+	/*background: <? echo $neutralMain; ?>;*/
 }
 
 .files .wintools .addmen .export-main, .files .wintools .addmen .export-main a {
@@ -719,7 +720,7 @@ td.message ul {
 }
 
 .files .wintools .export-main a:hover span, .files .wintools a:hover span {
-	background: <? echo $filesMain; ?>;
+	/*background: <? echo $filesMain; ?>;*/
 }
 
 .export-main a.export, .wintools .export-main a.export, .files .wintools .addmen .export-main a.export {
@@ -1434,7 +1435,7 @@ body a.butn_link, body a.butn_link_active {
 }
 .message-in ul
 {
-padding-left;
+padding-left:0px;
 }
 message-in li
 {
