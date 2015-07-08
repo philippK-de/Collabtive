@@ -8,6 +8,18 @@ if (!file_exists("./templates_c") or !is_writable("./templates_c")) {
 if (!empty($settings)) {
     die("Collabtive seems to be already installed.<br />If this is an error, please clear your database.");
 }
+// small test to get us to the next screen
+$loaded_extensions=  get_loaded_extensions();
+$needed_extensions= array (
+    'ctype' => "need ctype extention for php",
+    "pdo_mysql" => "need pdo_mysql",
+    "pdo_sqlite" => "need pdo_sqlite"
+);
+foreach ($needed_extensions as $key => $value) {
+  if(!in_array($key, $loaded_extensions))
+          die($value);
+}
+
 
 session_start();
 session_destroy();
@@ -15,7 +27,6 @@ session_unset();
 setcookie("PHPSESSID", "");
 date_default_timezone_set("Europe/Berlin");
 require("./init.php");
-error_reporting(0);
 $action = getArrayVal($_GET, "action");
 $locale = getArrayVal($_GET, "locale");
 
