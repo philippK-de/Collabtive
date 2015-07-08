@@ -71,7 +71,7 @@
 		font-weight: bold;
 		font-size: 12px;
 		text-align: center;
-		background-color: .cedbec;
+		background-color: #cedbec;
 		padding: 2px;
 		border-bottom: 1px .8b9dba solid;
 
@@ -81,8 +81,8 @@
 		font-weight: normal;
 		font-size: 11px;
 		text-align: center;
-		background-color: .e7edf4;
-		border: solid .e7edf4 1px;
+		background-color: #e7edf4;
+		border: solid #e7edf4 1px;
 		border:none;
 	}
 
@@ -92,7 +92,7 @@
 		padding: 2px 5px 2px 5px;
 		color: .0E224B;
 		text-align: right;
-		border: solid .e7edf4 1px;
+		border: solid #e7edf4 1px;
 		border-width: 0 0 1px 1px;
 		background: white;
 	}
@@ -102,7 +102,7 @@
 	}
 
 	div.calendar table td.today{
-		background: .c4d5e3;
+		background: #c4d5e3;
 	}
 
 	div.calendar table{
