@@ -150,12 +150,12 @@ if ($action == "loginerror") {
             header("Location: $loc");
             die();
         }
-        // don't upload php scripts
-        if (stristr($erweiterung,"php") or $erweiterung == "pl") {
-            $loc = $url . "manageuser.php?action=profile&id=$userid";
-            header("Location: $loc");
-            die();
+             // If it is a PHP file, treat as plain text so it is not executed when opened in the browser
+        if (stristr($erweiterung, "php") or stristr($erweiterung, "phtml")) {
+            $erweiterung = "txt";
+            $typ = "text/plain";
         }
+
 
         for ($i = 0; $i < $workteile; $i++) {
             $subname .= $teilnamen[$i];
