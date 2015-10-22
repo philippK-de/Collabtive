@@ -1,34 +1,32 @@
 <?php
 /**
-* This class provides methods to realize tasks
-*
-* @author Philipp Kiszka <info@o-dyn.de>
-* @author Eva Kiszka <eva@o-dyn.de>
-* @name task
-* @package Collabtive
-* @version 2.0
-* @link http://www.o-dyn.de
-* @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
-*/
+ * This class provides methods to realize tasks
+ *
+ * @author Philipp Kiszka <info@o-dyn.de>
+ * @author Eva Kiszka <eva@o-dyn.de>
+ * @name task
+ * @package Collabtive
+ * @version 2.0
+ * @link http://www.o-dyn.de
+ * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
+ */
 
 class task {
-
-
     /**
-    * Add a task
-    *
-    * @param string $start Start date of the task
-    * @param string $end Date the task is due
-    * @param string $title Title of the task (optional)
-    * @param string $text Description of the task
-    * @param int $liste Tasklist the task is associated with
-    * @param int $assigned ID of the user who has to complete the task
-    * @param int $project ID of the project the task is associated with
-    * @return int $insid New task's ID
-    */
+     * Add a task
+     *
+     * @param string $start Start date of the task
+     * @param string $end Date the task is due
+     * @param string $title Title of the task (optional)
+     * @param string $text Description of the task
+     * @param int $liste Tasklist the task is associated with
+     * @param int $assigned ID of the user who has to complete the task
+     * @param int $project ID of the project the task is associated with
+     * @return int $insid New task's ID
+     */
     function add($start, $end, $title, $text, $liste, $project)
     {
-        global $conn,$mylog;
+        global $conn, $mylog;
         $liste = (int) $liste;
         $project = (int) $project;
         // convert strings to timestamps
@@ -57,20 +55,20 @@ class task {
     }
 
     /**
-    * Edit a task
-    *
-    * @param int $id Task ID
-    * @param string $start Start date
-    * @param string $end Due date
-    * @param string $title Title of the task
-    * @param string $text Task description
-    * @param int $liste Tasklist
-    * @param int $assigned ID of the user who has to complete the task
-    * @return bool
-    */
+     * Edit a task
+     *
+     * @param int $id Task ID
+     * @param string $start Start date
+     * @param string $end Due date
+     * @param string $title Title of the task
+     * @param string $text Task description
+     * @param int $liste Tasklist
+     * @param int $assigned ID of the user who has to complete the task
+     * @return bool
+     */
     function edit($id, $start, $end, $title, $text, $liste)
     {
-        global $conn,$mylog;
+        global $conn, $mylog;
         $id = (int) $id;
         $liste = (int) $liste;
         // convert time string to timestamp
@@ -92,25 +90,25 @@ class task {
     }
 
     /**
-    * Delete a task
-    *
-    * @param int $id Task ID
-    * @return bool
-    */
+     * Delete a task
+     *
+     * @param int $id Task ID
+     * @return bool
+     */
     function del($id)
     {
-        global $conn,$mylog;
+        global $conn, $mylog;
         $id = (int) $id;
 
         $nameproject = $this->getNameProject($id);
-        $delStmt = $conn->prepare("DELETE FROM tasks WHERE ID = ?");
-		$del = $delStmt->execute(array($id));
 
-    	$delAssignStmt = $conn->prepare("DELETE FROM tasks_assigned WHERE task = ?");
-    	$delAssign = $delAssignStmt->execute(array($id));
+        $delStmt = $conn->prepare("DELETE FROM tasks WHERE ID = ?");
+        $del = $delStmt->execute(array($id));
 
         if ($del) {
-            $del2 = $conn->query("DELETE FROM tasks_assigned WHERE task=$id");
+            $delAssignStmt = $conn->prepare("DELETE FROM tasks_assigned WHERE task = ?");
+            $delAssign = $delAssignStmt->execute(array($id));
+
             $mylog->add($nameproject[0], 'task', 3, $nameproject[1]);
             return true;
         } else {
@@ -119,14 +117,14 @@ class task {
     }
 
     /**
-    * Reactivate / open a task
-    *
-    * @param int $id Task ID
-    * @return bool
-    */
+     * Reactivate / open a task
+     *
+     * @param int $id Task ID
+     * @return bool
+     */
     function open($id)
     {
-        global $conn,$mylog;
+        global $conn, $mylog;
         $id = (int) $id;
 
         $updStmt = $conn->prepare("UPDATE tasks SET status = 1 WHERE ID = ?");
@@ -142,14 +140,14 @@ class task {
     }
 
     /**
-    * Close a task
-    *
-    * @param int $id Task ID
-    * @return bool
-    */
+     * Close a task
+     *
+     * @param int $id Task ID
+     * @return bool
+     */
     function close($id)
     {
-        global $conn,$mylog;
+        global $conn, $mylog;
         $id = (int) $id;
 
         $updStmt = $conn->prepare("UPDATE tasks SET status = 0 WHERE ID = ?");
@@ -165,12 +163,12 @@ class task {
     }
 
     /**
-    * Assign a task to a user
-    *
-    * @param int $task Task ID
-    * @param int $id User ID
-    * @return bool
-    */
+     * Assign a task to a user
+     *
+     * @param int $task Task ID
+     * @param int $id User ID
+     * @return bool
+     */
     function assign($task, $id)
     {
         global $conn;
@@ -188,12 +186,12 @@ class task {
     }
 
     /**
-    * Delete the assignment of a task to a user
-    *
-    * @param int $task Task ID
-    * @param int $id User ID
-    * @return bool
-    */
+     * Delete the assignment of a task to a user
+     *
+     * @param int $task Task ID
+     * @param int $id User ID
+     * @return bool
+     */
     function deassign($task, $id)
     {
         global $conn;
@@ -211,11 +209,11 @@ class task {
     }
 
     /**
-    * Return a task
-    *
-    * @param int $id Task ID
-    * @return array $task Task details
-    */
+     * Return a task
+     *
+     * @param int $id Task ID
+     * @return array $task Task details
+     */
     function getTask($id)
     {
         global $conn;
@@ -290,11 +288,11 @@ class task {
     }
 
     /**
-    * Return all open tasks of a project
-    *
-    * @param int $project Project ID
-    * @return array $lists Tasks
-    */
+     * Return all open tasks of a project
+     *
+     * @param int $project Project ID
+     * @return array $lists Tasks
+     */
     function getProjectTasks($project, $status = 1)
     {
         global $conn;
@@ -322,12 +320,12 @@ class task {
     }
 
     /**
-    * Return all active / open tasks of a given project and user
-    *
-    * @param int $project Project ID
-    * @param int $limit Number of tasks to return
-    * @return array $lists Tasks
-    */
+     * Return all active / open tasks of a given project and user
+     *
+     * @param int $project Project ID
+     * @param int $limit Number of tasks to return
+     * @return array $lists Tasks
+     */
     function getMyProjectTasks($project, $limit = 10)
     {
         global $conn;
@@ -335,7 +333,7 @@ class task {
         $limit = (int) $limit;
         // Get the id of the currently logged in user.
         $user = $_SESSION['userid'];
-    	$user = (int) $user;
+        $user = (int) $user;
         $userid = (int)$userid;
 
         $lists = array();
@@ -361,13 +359,13 @@ class task {
     }
 
     /**
-    * Return open tasks from a given project a user
-    *
-    * @param int $project Project ID
-    * @param int $limit Number of tasks to return
-    * @param int $user User ID (0 means the user, to whom the session belongs)
-    * @return array $lists Tasks
-    */
+     * Return open tasks from a given project a user
+     *
+     * @param int $project Project ID
+     * @param int $limit Number of tasks to return
+     * @param int $user User ID (0 means the user, to whom the session belongs)
+     * @return array $lists Tasks
+     */
     function getAllMyProjectTasks($project, $limit = 10, $user = 0)
     {
         global $conn;
@@ -397,12 +395,12 @@ class task {
     }
 
     /**
-    * Returns all late tasks of a user from a given project
-    *
-    * @param int $project Project ID
-    * @param int $limit Number of tasks to return
-    * @return array $lists Tasks
-    */
+     * Returns all late tasks of a user from a given project
+     *
+     * @param int $project Project ID
+     * @param int $limit Number of tasks to return
+     * @return array $lists Tasks
+     */
     function getMyLateProjectTasks($project, $limit = 10)
     {
         global $conn;
@@ -430,12 +428,12 @@ class task {
     }
 
     /**
-    * Returns all tasks of today of a user from a given project
-    *
-    * @param int $project Project ID
-    * @param int $limit Number of tasks to return
-    * @return array $lists Tasks
-    */
+     * Returns all tasks of today of a user from a given project
+     *
+     * @param int $project Project ID
+     * @param int $limit Number of tasks to return
+     * @return array $lists Tasks
+     */
     function getMyTodayProjectTasks($project, $limit = 10)
     {
         global $conn;
@@ -463,12 +461,12 @@ class task {
     }
 
     /**
-    * Return all done tasks of a user from a given project
-    *
-    * @param int $project Project ID
-    * @param int $limit Number of tasks to return
-    * @return array $lists Tasks
-    */
+     * Return all done tasks of a user from a given project
+     *
+     * @param int $project Project ID
+     * @param int $limit Number of tasks to return
+     * @return array $lists Tasks
+     */
     function getMyDoneProjectTasks($project, $limit = 5)
     {
         global $conn;
@@ -495,14 +493,14 @@ class task {
     }
 
     /**
-    * Return all tasks (from a project) due on the specified date
-    *
-    * @param int $m Month
-    * @param int $y Year
-    * @param int $d Day
-    * @param int $project Project ID (Default: 0 = all projects)
-    * @return array $timeline Tasks
-    */
+     * Return all tasks (from a project) due on the specified date
+     *
+     * @param int $m Month
+     * @param int $y Year
+     * @param int $d Day
+     * @param int $project Project ID (Default: 0 = all projects)
+     * @return array $timeline Tasks
+     */
     function getTodayTasks($m, $y, $d, $project = 0)
     {
         global $conn;
@@ -519,18 +517,15 @@ class task {
         $user = (int) $_SESSION["userid"];
         $timeline = array();
 
-
         if ($project > 0) {
             $sql = "SELECT * FROM tasks  WHERE status=1 AND project = ? AND end = '$starttime'";
-        	$sel1 = $conn->prepare($sql);
-        	$sel1->execute(array($project));
+            $sel1 = $conn->prepare($sql);
+            $sel1->execute(array($project));
         } else {
             $sql = "SELECT tasks.*,tasks_assigned.user,projekte.name AS pname FROM tasks,tasks_assigned,projekte WHERE tasks.ID = tasks_assigned.task AND tasks.project = projekte.ID AND tasks_assigned.user = ? AND tasks.status=1 AND tasks.end = '$starttime'";
-        	$sel1 = $conn->prepare($sql);
-        	$sel1->execute(array($user));
-        }
-
-        while ($stone = $sel1->fetch()) {
+            $sel1 = $conn->prepare($sql);
+            $sel1->execute(array($user));
+        } while ($stone = $sel1->fetch()) {
             $stone["daysleft"] = $this->getDaysLeft($stone["end"]);
             array_push($timeline, $stone);
         }
@@ -543,19 +538,19 @@ class task {
     }
 
     /**
-    * Return the owner of a given task
-    *
-    * @param int $id Task ID
-    * @return array $user ID of the user who has to complete the task
-    */
+     * Return the owner of a given task
+     *
+     * @param int $id Task ID
+     * @return array $user ID of the user who has to complete the task
+     */
     function getUser($id)
     {
         global $conn;
         $id = (int) $id;
 
         $userStmt = $conn->prepare("SELECT user FROM tasks_assigned WHERE task = ?");
-		$userStmt->execute(array($id));
-    	$user = $userStmt->fetch();
+        $userStmt->execute(array($id));
+        $user = $userStmt->fetch();
 
         if (!empty($user)) {
             $uname = $conn->query("SELECT name FROM user WHERE ID = $user[0]")->fetch();
@@ -569,11 +564,11 @@ class task {
     }
 
     /**
-    * Return the owner of a given task
-    *
-    * @param int $id Task ID
-    * @return array $user ID of the users who has to complete the task
-    */
+     * Return the owner of a given task
+     *
+     * @param int $id Task ID
+     * @return array $user ID of the users who has to complete the task
+     */
     function getUsers($id)
     {
         global $conn;
@@ -595,12 +590,12 @@ class task {
     }
 
     /**
-    * Export all tasks of a user via iCal
-    *
-    * @param int $user User ID
-    * @param bool $show_long
-    * @return bool
-    */
+     * Export all tasks of a user via iCal
+     *
+     * @param int $user User ID
+     * @param bool $show_long
+     * @return bool
+     */
     function getIcal($user, $show_long = true)
     {
         $user = (int) $user;
@@ -675,22 +670,22 @@ class task {
     }
 
     /**
-    * Return a task's project name and tasklist name
-    *
-    * @param array $task Task ID
-    * @return array $details Name of associated project and tasklist
-    */
+     * Return a task's project name and tasklist name
+     *
+     * @param array $task Task ID
+     * @return array $details Name of associated project and tasklist
+     */
     private function getTaskDetails(array $task)
     {
         global $conn;
         $psel = $conn->prepare("SELECT name FROM projekte WHERE ID = ?");
-    	$psel->execute(array($task["project"]));
+        $psel->execute(array($task["project"]));
         $pname = $psel->fetch();
         $pname = stripslashes($pname[0]);
 
         $listStmt = $conn->prepare("SELECT name FROM tasklist WHERE ID = ?");
-    	$listStmt->execute(array($task["liste"]));
-    	$list = $listStmt->fetch();
+        $listStmt->execute(array($task["liste"]));
+        $list = $listStmt->fetch();
         $list = stripslashes($list[0]);
 
         if (isset($list) or isset($pname)) {
@@ -705,11 +700,11 @@ class task {
     }
 
     /**
-    * Return the number of days left until a task is due
-    *
-    * @param string $end Timestamp of the date the task is due
-    * @return int $days Days left
-    */
+     * Return the number of days left until a task is due
+     *
+     * @param string $end Timestamp of the date the task is due
+     * @return int $days Days left
+     */
     private function getDaysLeft($end)
     {
         $tod = date("d.m.Y");
@@ -720,22 +715,28 @@ class task {
     }
 
     /**
-    * Return the name of the associated project and text of a given task
-    *
-    * @param int $id Task ID
-    * @return array $nameproject Name and project
-    */
+     * Return the name of the associated project and text of a given task
+     *
+     * @param int $id Task ID
+     * @return array $nameproject Name and project
+     */
     private function getNameProject($id)
     {
         global $conn;
         $id = (int) $id;
 
-        $nam = $conn->query("SELECT text,liste,title FROM tasks WHERE ID = $id")->fetch();
-        $list = $nam[1];
-        $project = $conn->query("SELECT project FROM tasklist WHERE ID = $list")->fetch();
-        $project = $project[0];
-        $nameproject = array($nam[0], $project);
+        $namStmt = $conn->prepare("SELECT `text`,`liste`,`title` FROM `tasks` WHERE ID = ?");
+        $namStmt->execute(array($id));
 
+        $name = $namStmt->fetch();
+        $list = $name[1];
+        $projectStmt = $conn->prepare("SELECT `project` FROM `tasklist` WHERE ID = ?");
+        $projectStmt->execute(array($list));
+
+        $project = $projectStmt->fetch();
+        $project = $project[0];
+
+        $nameproject = array($name[0], $project);
         if (!empty($nameproject)) {
             return $nameproject;
         } else {

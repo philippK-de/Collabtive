@@ -518,9 +518,11 @@ class datei {
         // If folder is given, return files from this folder, otherwise return files from root folder
         if ($folder > 0) {
             $fold = "files/" . CL_CONFIG . "/$id/$folder/";
-            $sel = $conn->query("SELECT COUNT(*) FROM files WHERE project = $id AND folder = $folder ORDER BY ID DESC");
+            $sel = $conn->prepare("SELECT COUNT(*) FROM files WHERE project = ? AND folder = ? ORDER BY ID DESC");
+            $sel->execute(array($id,$folder));
         } else {
-            $sel = $conn->query("SELECT COUNT(*) FROM files WHERE project = $id AND folder = 0 ORDER BY ID DESC");
+            $sel = $conn->prepare("SELECT COUNT(*) FROM files WHERE project = ? AND folder = 0 ORDER BY ID DESC");
+            $sel->execute(array($id));
         }
         $num = $sel->fetch();
         $num = $num[0];

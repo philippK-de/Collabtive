@@ -104,19 +104,35 @@ class project {
             }
         }
 
-        $del_messages = $conn->query("DELETE FROM messages WHERE project = $id");
-        $del_milestones = $conn->query("DELETE FROM milestones WHERE project = $id");
-        $del_projectassignments = $conn->query("DELETE FROM projekte_assigned WHERE projekt = $id");
-        $del_tasklists = $conn->query("DELETE FROM tasklist WHERE project = $id");
-        $del_tasks = $conn->query("DELETE FROM tasks WHERE project = $id");
-        $del_timetracker = $conn->query("DELETE FROM timetracker WHERE project = $id");
-    	$del_customer = $conn->query("DELETE FROM customers_assigned WHERE project = $id");
+        $del_messages = $conn->prepare("DELETE FROM messages WHERE project = ?");
+        $del_messages->execute(array($id));
 
-        $del_logentries = $conn->query("DELETE FROM log WHERE project = $id");
-        $del = $conn->query("DELETE FROM projekte WHERE ID = $id");
+        $del_milestones = $conn->prepare("DELETE FROM milestones WHERE project = ?");
+        $del_milestones->execute(array($id));
+
+        $del_projectassignments = $conn->prepare("DELETE FROM projekte_assigned WHERE projekt = ?");
+        $del_projectassignments->execute(array($id));
+
+        $del_tasklists = $conn->prepare("DELETE FROM tasklist WHERE project = ?");
+        $del_tasklists->execute(array($id));
+
+        $del_tasks = $conn->prepare("DELETE FROM tasks WHERE project = ?");
+        $del_tasks->execute(array($id));
+
+        $del_timetracker = $conn->prepare("DELETE FROM timetracker WHERE project = ?");
+        $del_timetracker->execute(array($id));
+
+    	$del_customer = $conn->prepare("DELETE FROM customers_assigned WHERE project = ?");
+    	$del_customer->execute(array($id));
+
+        $del_logentries = $conn->prepare("DELETE FROM log WHERE project = ?");
+        $del_logentries->execute(array($id));
+
+        $del = $conn->prepare("DELETE FROM projekte WHERE ID = ?");
+        $delchk = $del->execute(array($id));
 
         delete_directory(CL_ROOT . "/files/" . CL_CONFIG . "/$id");
-        if ($del) {
+        if ($delchk) {
             $mylog->add($userid, 'projekt', 3, $id);
             return true;
         } else {

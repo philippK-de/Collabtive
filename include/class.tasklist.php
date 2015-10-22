@@ -54,8 +54,11 @@ class tasklist {
         $updStmt = $conn->prepare("UPDATE tasklist SET `name` = ?, `desc` = ?, `milestone` = ? WHERE ID = ?");
         $upd = $updStmt->execute(array($name, $desc, $milestone, $id));
         if ($upd) {
-            $proj = $conn->query("SELECT project FROM tasklist WHERE ID = $id")->fetch();
-            $proj = $proj[0];
+            $projectStmt = $conn->query("SELECT project FROM tasklist WHERE ID = ?");
+            $projectStmt->execute(array($id));
+
+            $project = $projectStmt->fetch();
+            $project = $project[0];
 
             $mylog->add($name, 'tasklist', 2, $proj);
             return true;
