@@ -316,8 +316,9 @@ class message {
             $thisfile = $sel2->fetch();
             $thisfile["type"] = str_replace("/", "-", $thisfile["type"]);
 
-            $set = new settings();
-            $settings = $set->getSettings();
+            //get systemSettings
+            $settingsObj = new settings();
+            $settings = $settingsObj->getSettings();
             // Construct the path to the MIME-type icon
             $myfile = "./templates/" . $settings["template"] . "/theme/" . $settings["theme"] . "/images/files/" . $thisfile['type'] . ".png";
             if (!file_exists($myfile)) {

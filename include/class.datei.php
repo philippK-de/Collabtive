@@ -1,38 +1,39 @@
 <?php
 /**
-* Class datei (file) provides methods to handle files and folders
-*
-* @author Philipp Kiszka <info@o-dyn.de>
-* @name datei
-* @package Collabtive
-* @version 2.0
-* @link http://www.o-dyn.de
-* @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
-*/
+ * Class datei (file) provides methods to handle files and folders
+ *
+ * @author Philipp Kiszka <info@o-dyn.de>
+ * @name datei
+ * @package Collabtive
+ * @version 2.0
+ * @link http://www.o-dyn.de
+ * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
+ */
 class datei {
-
     // FOLDER METHODS
     /**
-    * Create a new folder
-    *
-    * @param int $parent ID of the parent folder
-    * @param int $project ID of the project the folder belongs to
-    * @param string $folder Name of the new folder
-    * @param string $desc Description of the new folder
-    * @param strin $visible Visibility of the new folder
-    * @return bool
-    */
+     * Create a new folder
+     *
+     * @param int $parent ID of the parent folder
+     * @param int $project ID of the project the folder belongs to
+     * @param string $folder Name of the new folder
+     * @param string $desc Description of the new folder
+     * @param strin $visible Visibility of the new folder
+     * @return bool
+     */
     function addFolder($parent, $project, $folder, $desc)
     {
-        global $conn,$mylog;
+        global $conn, $mylog;
 
         $project = (int) $project;
-        $folderOrig = $folder;
         $thepath = $this->getAbsolutePathName($this->getFolder($parent));
         // if its the root path, don't append any slashes
         if ($thepath == "/") {
             $thepath = "";
         }
+        // Make a copy of the original folder name before replacing umlauts
+        // This is for display in the system log
+        $folderOrig = $folder;
         // Replace umlauts
         $folder = str_replace("ä", "ae" , $folder);
         $folder = str_replace("ö", "oe" , $folder);
@@ -46,10 +47,9 @@ class datei {
         $ins = $insStmt->execute(array($parent, $project, $folder, $desc, ""));
 
         if ($ins) {
-            // Create the folder
-            // $makefolder = CL_ROOT . "/files/" . CL_CONFIG . "/$project/$folder/";
+            // Construct the path to the new folder
             $makefolder = CL_ROOT . "/files/" . CL_CONFIG . "/$project" . $thepath . "/" . $folder . "/";
-            // echo "<br><br>" .  $makefolder . "<br>" . $makefolder2;
+            // Create the folder in the filesystem, if it doesnt exist
             if (!file_exists($makefolder)) {
                 if (mkdir($makefolder, 0777, true)) {
                     // Folder created
@@ -67,21 +67,22 @@ class datei {
     }
 
     /**
-    * Delete a folder
-    * Deletes the given folder as well as all of its files and subfolders.
-    *
-    * @param int $id Folder ID
-    * @param int $project Project ID
-    * @return bool
-    */
+     * Delete a folder
+     * Deletes the given folder as well as all of its files and subfolders.
+     *
+     * @param int $id Folder ID
+     * @param int $project Project ID
+     * @return bool
+     */
     function deleteFolder($id, $project)
     {
-        global $conn,$mylog;
+        global $conn, $mylog;
 
         $id = (int) $id;
         $project = (int) $project;
-
+        // retrieve the folder info from the database
         $folder = $this->getFolder($id);
+        // get files for this folder
         $files = $this->getProjectFiles($project, 10000, $id);
         // Delete all files in the folder from database and filesystem
         if (!empty($files)) {
@@ -95,9 +96,9 @@ class datei {
                 $this->deleteFolder($sub["ID"], $sub["project"]);
             }
         }
-
-    	$delStmt = $conn->prepare("DELETE FROM projectfolders WHERE ID = ?");
-    	$del = $delStmt->execute(array($id));
+        // Delete the folder from the database
+        $delStmt = $conn->prepare("DELETE FROM projectfolders WHERE ID = ?");
+        $del = $delStmt->execute(array($id));
 
         if ($del) {
             // Remove directory
@@ -110,11 +111,11 @@ class datei {
     }
 
     /**
-    * Get a folder
-    *
-    * @param int $id Folder ID
-    * @return array $folder
-    */
+     * Get a folder
+     *
+     * @param int $id Folder ID
+     * @return array $folder
+     */
     function getFolder($id)
     {
         global $conn;
@@ -128,6 +129,7 @@ class datei {
         if (!$folder) {
             return false;
         }
+        //recursively get subfolders
         $folder["subfolders"] = $this->getSubFolders($folder["ID"]);
         $folder["abspath"] = $this->getAbsolutePathName($folder);
 
@@ -135,11 +137,11 @@ class datei {
     }
 
     /**
-    * Recursively get all subfolders of a folder
-    *
-    * @param int $parent ID of the parent folder
-    * @return array $folders
-    */
+     * Recursively get all subfolders of a folder
+     *
+     * @param int $parent ID of the parent folder
+     * @return array $folders
+     */
     function getSubFolders($parent)
     {
         global $conn;
@@ -165,12 +167,12 @@ class datei {
     }
 
     /**
-    * Get all the folders in a project, starting from a given folder
-    *
-    * @param int $project Project ID
-    * @param int $parent Parent folder ID (default: 0 => root folder)
-    * @return array $folders
-    */
+     * Get all the folders in a project, starting from a given folder
+     *
+     * @param int $project Project ID
+     * @param int $parent Parent folder ID (default: 0 => root folder)
+     * @return array $folders
+     */
     function getProjectFolders($project, $parent = 0)
     {
         global $conn;
@@ -178,7 +180,7 @@ class datei {
         $project = (int) $project;
 
         $sel = $conn->prepare("SELECT * FROM projectfolders WHERE project = ? AND parent = ? ORDER BY ID ASC");
-		$sel->execute(array($project,$parent));
+        $sel->execute(array($project, $parent));
 
         $folders = array();
 
@@ -197,11 +199,11 @@ class datei {
     }
 
     /**
-    * Get all the folders in a project
-    *
-    * @param string $id project Project ID
-    * @return array $folders
-    */
+     * Get all the folders in a project
+     *
+     * @param string $id project Project ID
+     * @return array $folders
+     */
     function getAllProjectFolders($project)
     {
         global $conn;
@@ -209,7 +211,7 @@ class datei {
         $project = (int) $project;
 
         $sel = $conn->prepare("SELECT * FROM projectfolders WHERE project = ? ORDER BY ID ASC");
-    	$sel->execute(array($project));
+        $sel->execute(array($project));
 
         $folders = array();
 
@@ -228,12 +230,12 @@ class datei {
     }
 
     /**
-    * Get an absolute path name of a folder
-    * Returns the absolute name (relative to the root directory of the project) of a folder.
-    *
-    * @param array $folder The folder to be inspected
-    * @return string Absolute path/name of the folder
-    */
+     * Get an absolute path name of a folder
+     * Returns the absolute name (relative to the root directory of the project) of a folder.
+     *
+     * @param array $folder The folder to be inspected
+     * @return string Absolute path/name of the folder
+     */
     function getAbsolutePathName($folder)
     {
         global $conn;
@@ -247,20 +249,19 @@ class datei {
         }
     }
     // FILE METHODS
-
     /**
-    * Upload a file
-    * Does filename sanitizing as well as MIME-type determination
-    * Also adds the file to the database using add_file()
-    *
-    * @param string $fname Name of the HTML form field POSTed from
-    * @param string $ziel Destination directory
-    * @param int $project Project ID of the associated project
-    * @return bool
-    */
+     * Upload a file
+     * Does filename sanitizing as well as MIME-type determination
+     * Also adds the file to the database using add_file()
+     *
+     * @param string $fname Name of the HTML form field POSTed from
+     * @param string $ziel Destination directory
+     * @param int $project Project ID of the associated project
+     * @return bool
+     */
     function uploadAsync($name, $tmp_name, $typ, $size, $ziel, $project, $folder = 0)
     {
-    	  global $mylog;
+        global $mylog;
         $visible = "";
         $visstr = "";
         $root = CL_ROOT;
@@ -340,17 +341,17 @@ class datei {
     }
 
     /**
-    * Edit a file
-    *
-    * @param int $id File ID
-    * @param string $title Title of the file
-    * @param string $desc Description text
-    * @param string $tags Associated tags (not yet implemented)
-    * @return bool
-    */
+     * Edit a file
+     *
+     * @param int $id File ID
+     * @param string $title Title of the file
+     * @param string $desc Description text
+     * @param string $tags Associated tags (not yet implemented)
+     * @return bool
+     */
     function edit($id, $title, $desc, $tags)
     {
-        global $conn,$mylog;
+        global $conn, $mylog;
 
         $id = (int) $id;
         // Get project for logging
@@ -370,14 +371,14 @@ class datei {
     }
 
     /**
-    * Delete a file
-    *
-    * @param int $datei File ID
-    * @return bool
-    */
+     * Delete a file
+     *
+     * @param int $datei File ID
+     * @return bool
+     */
     function loeschen($datei)
     {
-        global $conn,$mylog;
+        global $conn, $mylog;
         $datei = (int) $datei;
 
         $thisfile = $conn->query("SELECT datei, name, project, title FROM files WHERE ID = $datei")->fetch();
@@ -398,7 +399,6 @@ class datei {
             // Delete attachments of the file (prevents abandoned objects in messages)
             $del2 = $conn->query("DELETE FROM files_attached WHERE file = $datei");
 
-
             if ($del) {
                 // Only remove the file from file system if deletion from database was successful
                 if (unlink($delfile)) {
@@ -418,11 +418,11 @@ class datei {
     }
 
     /**
-    * Return a file
-    *
-    * @param string $id File ID
-    * @return array $file File details
-    */
+     * Return a file
+     *
+     * @param string $id File ID
+     * @return array $file File details
+     */
     function getFile($id)
     {
         global $conn;
@@ -430,9 +430,9 @@ class datei {
         $id = (int) $id;
         // Get the file from the database
         $fileStmt = $conn->prepare("SELECT * FROM files WHERE ID= ?");
-    	$fileStmt->execute(array($id));
+        $fileStmt->execute(array($id));
 
-    	$file = $fileStmt->fetch();
+        $file = $fileStmt->fetch();
 
         if (!empty($file)) {
             // Determine if there is a MIME-type icon corresponding to the file's MIME-type. If not, set 'none'
@@ -453,9 +453,7 @@ class datei {
             } else {
                 $file['imgfile'] = 0;
             }
-            // Strip slashes from title, desc and tags
-            //$file["title"] = stripslashes($file["title"]);
-            //$file["desc"] = stripslashes($file["desc"]);
+
             $file["size"] = filesize(realpath($file["datei"])) / 1024;
             $file["size"] = round($file["size"]);
             $file["addedstr"] = date(CL_DATEFORMAT, $file["added"]);
@@ -470,12 +468,12 @@ class datei {
     }
 
     /**
-    * Move a file to another folder
-    *
-    * @param int $file File ID
-    * @param int $folder Folder ID
-    * @return bool
-    */
+     * Move a file to another folder
+     *
+     * @param int $file File ID
+     * @param int $folder Folder ID
+     * @return bool
+     */
     function moveFile($file, $target)
     {
         global $conn;
@@ -501,13 +499,13 @@ class datei {
     }
 
     /**
-    * List all files associated to a given project
-    *
-    * @param string $id Project ID
-    * @param int $lim Limit
-    * @param int $folder Folder
-    * @return array $files Found files
-    */
+     * List all files associated to a given project
+     *
+     * @param string $id Project ID
+     * @param int $lim Limit
+     * @param int $folder Folder
+     * @return array $files Found files
+     */
     function getProjectFiles($id, $lim = 5000, $folder = "")
     {
         global $conn;
@@ -519,7 +517,7 @@ class datei {
         if ($folder > 0) {
             $fold = "files/" . CL_CONFIG . "/$id/$folder/";
             $sel = $conn->prepare("SELECT COUNT(*) FROM files WHERE project = ? AND folder = ? ORDER BY ID DESC");
-            $sel->execute(array($id,$folder));
+            $sel->execute(array($id, $folder));
         } else {
             $sel = $conn->prepare("SELECT COUNT(*) FROM files WHERE project = ? AND folder = 0 ORDER BY ID DESC");
             $sel->execute(array($id));
@@ -554,11 +552,11 @@ class datei {
     }
 
     /**
-    * List all files associated to a given project regardless of folder
-    *
-    * @param string $id Project ID
-    * @return array $files Found files
-    */
+     * List all files associated to a given project regardless of folder
+     *
+     * @param string $id Project ID
+     * @return array $files Found files
+     */
     function getAllProjectFiles($id)
     {
         global $conn;
@@ -568,7 +566,7 @@ class datei {
         $files = array();
 
         $sel2 = $conn->prepare("SELECT ID FROM files WHERE project = ? ORDER BY ID DESC");
-		$sel2->execute(array($id));
+        $sel2->execute(array($id));
 
         while ($file = $sel2->fetch()) {
             if (!empty($file)) {
@@ -584,10 +582,10 @@ class datei {
     }
 
     /**
-    * Seed the random number generator
-    *
-    * @return float $value Initial value
-    */
+     * Seed the random number generator
+     *
+     * @return float $value Initial value
+     */
     private function make_seed()
     {
         list($usec, $sec) = explode(' ', microtime());
@@ -596,19 +594,19 @@ class datei {
     }
 
     /**
-    * Add a file to the database
-    *
-    * @param string $name File name
-    * @param string $desc Description
-    * @param int $project ID of the associated project
-    * @param int $milestone ID of the associated milestone
-    * @param string $tags Tags for the file (not yet implemented)
-    * @param string $datei File path
-    * @param string $type MIME type
-    * @param string $title Title of the file
-    * @param int $ folder Optional parameter (holds ID of subfolder the file is uploaded to [0 = root directory])
-    * @return bool $insid
-    */
+     * Add a file to the database
+     *
+     * @param string $name File name
+     * @param string $desc Description
+     * @param int $project ID of the associated project
+     * @param int $milestone ID of the associated milestone
+     * @param string $tags Tags for the file (not yet implemented)
+     * @param string $datei File path
+     * @param string $type MIME type
+     * @param string $title Title of the file
+     * @param int $ folder Optional parameter (holds ID of subfolder the file is uploaded to [0 = root directory])
+     * @return bool $insid
+     */
     function add_file($name, $desc, $project, $milestone, $datei, $type, $title = " ", $folder = 0, $visstr = "")
     {
         global $conn;
@@ -633,12 +631,12 @@ class datei {
     }
 
     /**
-    * Encrypts a file with AES
-    *
-    * @param string $filename Filename
-    * @param string $key Encryption key
-    * @return bool file was written
-    */
+     * Encrypts a file with AES
+     *
+     * @param string $filename Filename
+     * @param string $key Encryption key
+     * @return bool file was written
+     */
     function encryptFile($filename, $key)
     {
         include_once(CL_ROOT . "/include/phpseclib/Crypt/AES.php");
@@ -651,12 +649,12 @@ class datei {
     }
 
     /**
-    * Decrypts a file with AES
-    *
-    * @param string $filename Filename
-    * @param string $key Encryption key
-    * @return string cleartext
-    */
+     * Decrypts a file with AES
+     *
+     * @param string $filename Filename
+     * @param string $key Encryption key
+     * @return string cleartext
+     */
     function decryptFile($filename, $key)
     {
         include_once(CL_ROOT . "/include/phpseclib/Crypt/AES.php");

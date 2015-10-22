@@ -80,7 +80,9 @@ class task {
 
         if ($upd) {
             // Remove all the users from the task. Done to ensure no double assigns occur since the handler scripts call this::assign() on their own.
-            $conn->query("DELETE FROM tasks_assigned WHERE `task` = $id");
+            $delAssignStmt = $conn->prepare("DELETE FROM tasks_assigned WHERE `task` = ?");
+            $delAssignStmt->execute(array($id));
+
             $nameproject = $this->getNameProject($id);
             $mylog->add($nameproject[0], 'task', 2, $nameproject[1]);
             return true;
@@ -99,7 +101,8 @@ class task {
     {
         global $conn, $mylog;
         $id = (int) $id;
-
+        // get task text and project
+        // we need to do this before deleting the task here
         $nameproject = $this->getNameProject($id);
 
         $delStmt = $conn->prepare("DELETE FROM tasks WHERE ID = ?");
@@ -108,7 +111,7 @@ class task {
         if ($del) {
             $delAssignStmt = $conn->prepare("DELETE FROM tasks_assigned WHERE task = ?");
             $delAssign = $delAssignStmt->execute(array($id));
-
+            // Add a log entry with the task text
             $mylog->add($nameproject[0], 'task', 3, $nameproject[1]);
             return true;
         } else {
@@ -131,7 +134,9 @@ class task {
         $upd = $updStmt->execute(array($id));
 
         if ($upd) {
+            // get task text and project
             $nameproject = $this->getNameProject($id);
+            // Add a log entry with the task text
             $mylog->add($nameproject[0], 'task', 4, $nameproject[1]);
             return true;
         } else {
@@ -154,7 +159,9 @@ class task {
         $upd = $updStmt->execute(array($id));
 
         if ($upd) {
+            // get task text and project
             $nameproject = $this->getNameProject($id);
+            // Add a log entry with the task text
             $mylog->add($nameproject[0], 'task', 5, $nameproject[1]);
             return true;
         } else {
@@ -218,7 +225,7 @@ class task {
     {
         global $conn;
         $id = (int) $id;
-
+        // get the task
         $taskStmt = $conn->prepare("SELECT * FROM tasks WHERE ID = ?");
         $taskStmt->execute(array($id));
         $task = $taskStmt->fetch();
@@ -587,86 +594,6 @@ class task {
             $result[] = $user;
         }
         return $result;
-    }
-
-    /**
-     * Export all tasks of a user via iCal
-     *
-     * @param int $user User ID
-     * @param bool $show_long
-     * @return bool
-     */
-    function getIcal($user, $show_long = true)
-    {
-        $user = (int) $user;
-        $show_long = (bool) $show_long;
-
-        $username = $_SESSION["username"];
-        $project = new project();
-        $myprojects = $project->getMyProjects($user);
-        $tasks = array();
-        if (!empty($myprojects)) {
-            foreach($myprojects as $proj) {
-                $task = $this->getAllMyProjectTasks($proj["ID"], 10000);
-
-                if (!empty($task)) {
-                    array_push($tasks, $task);
-                }
-            }
-        }
-
-        $etasks = reduceArray($tasks);
-        require("class.ical.php");
-        $heute = date("d-m-y");
-
-        $cal = new vcalendar();
-        $fname = "tasks_" . $username . ".ics";
-        $cal->setConfig('directory', CL_ROOT . '/files/' . CL_CONFIG . '/ics');
-        $cal->setConfig('filename', $fname);
-        $cal->setConfig('unique_id' , '');
-        $cal->setProperty('X-WR-CALNAME' , "Collabtive Aufgaben für " . $username);
-        $cal->setProperty('X-WR-CALDESC' , '');
-        $cal->setProperty('CALSCALE' , 'GREGORIAN');
-        $cal->setProperty('METHOD' , 'PUBLISH');
-        foreach($etasks as $etask) {
-            // split date in Y / M / D / h / min / sek variables
-            $jahr = date("Y", $etask["start"]);
-            $monat = date("m", $etask["start"]);
-            $tag = date("d", $etask["start"]);
-            $std = date("h", $etask["start"]);
-            $min = date("i", $etask["start"]);
-            $sek = date("s", $etask["start"]);
-            // split date in Y / M / D / h / min / sek variables
-            $ejahr = date("Y", $etask['end']);
-            $emonat = date("m", $etask['end']);
-            $etag = date("d", $etask['end']);
-            $estd = date("h", $etask['end']);
-            $emin = date("i", $etask['end']);
-            $esek = date("s", $etask['end']);
-
-            $e = new vevent();
-            $e->setProperty('categories' , $etask['list']);
-            if ($show_long) {
-                // if we have a task lasting 10 month, normally it will be displayed every day within this time span.
-                $e->setProperty('dtstart' , $jahr, $monat, $tag, $std, $min); // 24 dec 2007 19.30
-
-            } else {
-                // if the show_long flag is set, it will only be shown at the due date
-                $e->setProperty('dtstart' , $ejahr, $emonat, $etag, $estd, $emin);
-            }
-            $e->setProperty('due' , $ejahr, $emonat, $etag, $estd, $emin); // 24 dec 2007 19.30
-            $e->setProperty('dtend' , $ejahr, $emonat, $etag, $estd, $emin);
-            $e->setProperty('description' , $etask["text"]);
-            $e->setProperty('status' , "NEEDS-ACTION");
-            // $e->setProperty('comment' , $etask[text]);
-            $e->setProperty('summary' , $etask["title"]);
-
-            $e->setProperty('location' , 'Work');
-            $cal->setComponent($e);
-        }
-        $cal->returnCalendar();
-
-        return true;
     }
 
     /**
