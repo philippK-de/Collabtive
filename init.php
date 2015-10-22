@@ -36,8 +36,8 @@ if (!in_array($db_driver,$db_drivers)){
 switch ($db_driver) {
     case "mysql":
         if (empty($db_name) or empty($db_user)){
-            die('You must set $db_name and $db_user in /config/'.CL_CONFIG . '/config.php to use mysql, or set $db_driver to "sqlite" to use an SQLite database!');
-        } 
+            die("You must set db_name and db_user in /config/". CL_CONFIG . "/config.php to use mysql, or set db_driver to \"sqlite\" to use an SQLite database!");
+        }
         $conn = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8", $db_user, $db_pass);
         break;
     case "sqlite":
