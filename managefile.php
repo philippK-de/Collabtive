@@ -100,13 +100,13 @@ if ($action == "uploadAsync") {
 
                     // check if subfolder exists, else root folder
                     $whichfolder = (!empty($thefolder)) ? $thefolder : $userlang["rootdir"];
-
+					$fileUrl= $url . "managefile.php?action=downloadfile&id=".$fileprops["project"]."&file=" .  $fileprops["ID"] ;
                     // assemble content only once. no need to do this repeatedly
                     $mailcontent = $userlang["hello"] . ",<br /><br/>" .
                                    $userlang["filecreatedtext"] . "<br /><br />" .
                                    $userlang["project"] . ": " . $pname["name"] . "<br />" .
                                    $userlang["folder"] . ": " . $whichfolder . "<br />" .
-                                   $userlang["file"] . ":  <a href = \"" . $url . "managefile.php?action=downloadfile&file=" .  $fileprops["ID"] . "\">" . $url . "managefile.php?action=downloadfile&file=" . $fileprops["ID"] . "</a>";
+                                   $userlang["file"] . ":  <a href = \"" . $fileUrl . "\">" . $fileUrl . "</a>";
                 	//$userlang["file"] . ":  <a href = \"" . $url . $fileprops["datei"] . "\">" . $url . $fileprops["datei"] . "</a>";
 
                     $subject = $userlang["filecreatedsubject"] . " (". $userlang['by'] . ' '. $username . ")";
