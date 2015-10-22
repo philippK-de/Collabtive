@@ -1,4 +1,10 @@
-test
+Collabtive 2.2
++ Changed constructor of SmartyPaginate.class.php to be compatible with PHP 7
++ Fixed unfiltered variables
++ Improved database checks in init.php (srichter)
++ Fixed file download link in file upload email notification
++ Performance improved in getMyProjects() SQL query by using a JOIN (srichter)
+
 Collabtive 2.1
 + Removed accordion-related JS legacy code from desktop
 + Added default charset to all create table statements
