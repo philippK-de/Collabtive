@@ -88,6 +88,21 @@ if ($action == "editform") {
 
     if ($project->edit($id, $name, $desc, $end, $budget)) {
         header("Location: manageproject.php?action=showproject&id=$id&mode=edited");
+        $users = $project->getProjectMembers($id, 10000);
+        foreach($users as $user) {
+            if (!empty($user["email"])) {
+                $userlang=readLangfile($user['locale']);
+
+                $mailcontent = $userlang["hello"] . ",<br /><br/>" . $userlang["projectwasedited"] . ": " .
+                               " <a href = \"" . $url . "manageproject.php?action=showproject&id=$id\">" . $url . "manageproject.php?action=showproject&id=$id</a>";
+
+                $subject = $userlang["projecdeschanged"] . " (". $userlang['by'] . ' '. $username . ")";
+
+                // send email
+                $themail = new emailer($settings);
+                $themail->send_mail($user["email"], $subject, $mailcontent);
+            }
+        }
     } else {
         $template->assign("editproject", 0);
     }
