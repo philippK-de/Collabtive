@@ -60,7 +60,7 @@ class tasklist {
             $project = $projectStmt->fetch();
             $project = $project[0];
 
-            $mylog->add($name, 'tasklist', 2, $proj);
+            $mylog->add($name, 'tasklist', 2, $project);
             return true;
         } else {
             return false;

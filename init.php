@@ -74,7 +74,9 @@ if (isset($_SESSION["userid"])) {
     $userpermissions = $_SESSION["userpermissions"];
     // update user lastlogin for the onlinelist
     $mynow = time();
-    $upd = $conn->exec("UPDATE user SET lastlogin='$mynow' WHERE ID = $userid");
+    if(isset($conn)) {
+        $conn->exec("UPDATE user SET lastlogin='$mynow' WHERE ID = $userid");
+    }
     // assign it all to the templates
     $template->assign("userid", $userid);
     $template->assign("username", $username);
@@ -84,6 +86,9 @@ if (isset($_SESSION["userid"])) {
     $template->assign("loggedin", 1);
 }else {
     $template->assign("loggedin", 0);
+    $userpermissions = array();
+    $settings = array();
+    $userid = 0;
 }
 // get system settings
 if (isset($conn)) {
@@ -104,10 +109,10 @@ if (isset($conn)) {
 // Set template directory
 // If no directory is set in the system settings, default to the standard theme
 if (isset($settings['template'])) {
-    $template->template_dir = CL_ROOT . "/templates/$settings[template]/";
+    $template->setTemplateDir(CL_ROOT . "/templates/$settings[template]/");
     // $template->tname = $settings["template"];
 }else {
-    $template->template_dir = CL_ROOT . "/templates/standard/";
+    $template->setTemplateDir(CL_ROOT . "/templates/standard/");
     // $template->tname = "standard";
 }
 // If no locale is set, get the settings locale or default to english
@@ -126,7 +131,7 @@ if (!file_exists(CL_ROOT . "/language/$locale/lng.conf")) {
     $_SESSION['userlocale'] = $locale;
 }
 // Set locale directory
-$template->config_dir = CL_ROOT . "/language/$locale/";
+$template->setConfigDir(CL_ROOT . "/language/$locale/");
 // Smarty 3 seems to have a problem with re-compiling the config if the user config is different than the system config.
 // this forces a compile of the config.
 // uncomment this if you have issues with language switching

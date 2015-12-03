@@ -76,7 +76,7 @@ class project {
 
         $customer = $companyObj->getCompanyByName($projectcustomer);
         if ($customer) {
-            $companyObj->assign($customer["ID"], $add);
+            $companyObj->assign($customer["ID"], $projectId);
         }
 
         // USERS

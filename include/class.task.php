@@ -341,13 +341,13 @@ class task {
         // Get the id of the currently logged in user.
         $user = $_SESSION['userid'];
         $user = (int) $user;
-        $userid = (int)$userid;
+        $userid = (int) $_SESSION["userid"];
 
         $lists = array();
         $now = time();
 
         $sel2 = $conn->prepare("SELECT ID FROM tasks WHERE project = ? AND status=1 AND end > ? ORDER BY `end` ASC LIMIT $limit");
-        $sel2->execute(array($id, $now));
+        $sel2->execute(array($project, $now));
 
         while ($tasks = $sel2->fetch()) {
             $chk = $conn->query("SELECT ID FROM tasks_assigned WHERE user = $user AND task = $tasks[ID]")->fetch();
