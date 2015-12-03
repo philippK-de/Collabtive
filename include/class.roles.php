@@ -142,7 +142,7 @@ class roles {
         } else {
             $insStmt = $conn->prepare("INSERT INTO roles_assigned (user,role) VALUES (?,?)");
         }
-        $ins = $insStmt->execute(array($role, $user));
+        $ins = $insStmt->execute(array($user, $role));
         if ($ins) {
             return true;
         } else {
