@@ -154,7 +154,9 @@ if ($action == "loginerror") {
         }
 
         // If it is a PHP file, treat as plain text so it is not executed when opened in the browser
-        if (stristr($erweiterung, "php") or stristr($erweiterung, "phtml")) {
+
+        $allowedExtensions = array(".jpg",".jpeg",".gif",".pjpeg");
+        if (!in_array($erweiterung,$allowedExtensions)) {
             $erweiterung = "txt";
             $typ = "text/plain";
         }
