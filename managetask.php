@@ -387,9 +387,10 @@ if ($action == "addform") {
     $task = $mytask->getTask($tid);
 
     $members = $myproject->getProjectMembers($cleanGet["id"], $myproject->countMembers($cleanGet["id"]));
-    $cleanPost["tasklist"]= new tasklist();
-    $tasklists = $cleanGet["tasklist"]->getProjectTasklists($cleanGet["id"]);
-    $tl = $cleanGet["tasklist"]->getTasklist($task['liste']);
+
+    $tasklist = new tasklist();
+    $tasklists = $tasklist->getProjectTasklists($cleanGet["id"]);
+    $tl = $tasklist->getTasklist($task['liste']);
     $task['listid'] = $tl['ID'];
     $task['listname'] = $tl['name'];
 
