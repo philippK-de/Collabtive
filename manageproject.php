@@ -11,17 +11,6 @@ $company = (object) new company();
 
 $action = getArrayVal($_GET, "action");
 
-$usr = getArrayVal($_GET, "user");
-$assignto = getArrayVal($_POST, "assignto");
-$name = getArrayVal($_POST, "name");
-$desc = getArrayVal($_POST, "desc");
-$end = getArrayVal($_POST, "end");
-$status = getArrayVal($_POST, "status");
-$user = getArrayVal($_POST, "user");
-$assign = getArrayVal($_POST, "assginme");
-$budget = getArrayVal($_POST, "budget");
-$customerID = getArrayVal($_POST, "customerlist");
-
 $cleanGet = cleanArray($_GET);
 $cleanPost = cleanArray($_POST);
 
@@ -84,11 +73,11 @@ if ($action == "editform") {
         die();
     }
     // If no end is set, default to 0
-    if (!$end) {
-        $end = 0;
+    if (!$cleanPost["end"]) {
+        $cleanPost["end"] = 0;
     }
 
-    if ($project->edit($cleanGet["id"], $name, $desc, $end, $budget)) {
+    if ($project->edit($cleanGet["id"], $cleanPost["name"], $cleanPost["desc"], $cleanPost["end"], $cleanPost["budget"])) {
         header("Location: manageproject.php?action=showproject&id=" . $cleanGet["id"] . "&mode=edited");
     } else {
         $template->assign("editproject", 0);
@@ -149,13 +138,13 @@ if ($action == "editform") {
         $template->display("error.tpl");
         die();
     }
-    if ($project->assign($user, $cleanGet["id"])) {
+    if ($project->assign($cleanPost["user"], $cleanGet["id"])) {
         if ($settings["mailnotify"]) {
-            $usr = (object) new user();
-            $user = $usr->getProfile($user);
+            $cleanGet["user"] = (object) new user();
+            $cleanPost["user"] = $cleanGet["user"]->getProfile($cleanPost["user"]);
 
-            if (!empty($user["email"])) {
-                $userlang = readLangfile($user['locale']);
+            if (!empty($cleanPost["user"]["email"])) {
+                $userlang = readLangfile($cleanPost["user"]['locale']);
 
                 $subject = $userlang["projectassignedsubject"] . ' (' . $userlang['by'] . ' ' . $username . ')';
 
@@ -164,7 +153,7 @@ if ($action == "editform") {
                 " <a href = \"" . $url . "manageproject.php?action=showproject&id=" . $cleanGet["id"]. "\">" . $url . "manageproject.php?action=showproject&id=" . $cleanGet["id"] . "</a>";
                 // send email
                 $themail = new emailer($settings);
-                $themail->send_mail($user["email"], $subject , $mailcontent);
+                $themail->send_mail($cleanPost["user"]["email"], $subject , $mailcontent);
             }
         }
         if ($cleanGet["redir"]) {
@@ -184,7 +173,7 @@ if ($action == "editform") {
     }
 
     $userobj = new user();
-    $user = $userobj->getProfile($usr);
+    $cleanPost["user"] = $userobj->getProfile($cleanGet["user"]);
     $proj = $project->getProject($cleanGet["id"]);
     // Get members of the project
     $members = $project->getProjectMembers($cleanGet["id"]);
@@ -193,7 +182,7 @@ if ($action == "editform") {
 
     $template->assign("title", $title);
     $template->assign("redir", $cleanGet["redir"]);
-    $template->assign("user", $user);
+    $template->assign("user", $cleanPost["user"]);
     $template->assign("project", $proj);
     $template->assign("members", $members);
     $template->display("deassignuserform.tpl");
@@ -207,13 +196,13 @@ if ($action == "editform") {
     }
 
     $task = new task();
-    $tasks = $task->getAllMyProjectTasks($cleanGet["id"], 100, $usr);
+    $tasks = $task->getAllMyProjectTasks($cleanGet["id"], 100, $cleanGet["user"]);
 
-    if ($cleanGet["id"] > 0 and $assignto > 0) {
+    if ($cleanGet["id"] > 0 and $cleanPost["assignto"] > 0) {
         if (!empty($tasks)) {
             foreach($tasks as $mytask) {
-                if ($task->deassign($mytask["ID"], $usr)) {
-                    $task->assign($mytask["ID"], $assignto);
+                if ($task->deassign($mytask["ID"], $cleanGet["user"])) {
+                    $task->assign($mytask["ID"], $cleanPost["assignto"]);
                 }
             }
         }
@@ -225,7 +214,7 @@ if ($action == "editform") {
         }
     }
 
-    if ($project->deassign($usr, $cleanGet["id"])) {
+    if ($project->deassign($cleanGet["user"], $cleanGet["id"])) {
         if ($cleanGet["redir"]) {
             $cleanGet["redir"] = $url . $cleanGet["redir"];
             $cleanGet["redir"] = $cleanGet["redir"] . "&mode=deassigned";
