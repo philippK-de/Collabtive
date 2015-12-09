@@ -15,11 +15,10 @@ $cleanPost = cleanArray($_POST);
 
 $tid = getArrayVal($_GET, "tid");
 
-$start = getArrayVal($_POST, "start");
-$end = getArrayVal($_POST, "end");
 $project = getArrayVal($_POST, "project");
+
 $assigned = getArrayVal($_POST, "assigned");
-$cleanGet["tasklist"] = getArrayVal($_POST, "tasklist");
+
 $text = getArrayVal($_POST, "text");
 $title = getArrayVal($_POST, "title");
 $redir = getArrayVal($_GET, "redir");
@@ -74,7 +73,7 @@ if ($action == "addform") {
     }
 
     // check dates' consistency
-    if (strtotime($end) < strtotime($start)) {
+    if (strtotime($cleanPost["end"]) < strtotime($cleanPost["start"])) {
 		$goback = $langfile["goback"];
 		$endafterstart = $langfile["endafterstart"];
 		$template->assign("mode", "error");
@@ -82,7 +81,7 @@ if ($action == "addform") {
 		$template->display("error.tpl");
 	} else {
 		// add the task
-		$tid = $task->add($start, $end, $title, $text, $cleanGet["tasklist"], $cleanGet["id"]);
+		$tid = $task->add($cleanPost["start"], $cleanPost["end"], $title, $text, $cleanGet["tasklist"], $cleanGet["id"]);
 		if ($tid) {
 			// Loop through the selected users from the form and assign them to the task
 			foreach($assigned as $member) {
@@ -137,7 +136,7 @@ if ($action == "addform") {
     // Get all the members of the current project
     $members = $project->getProjectMembers($cleanGet["id"], $project->countMembers($cleanGet["id"]));
     // Get the project tasklists and the tasklist the task belongs to
-    $cleanGet["tasklist"] = new tasklist();
+    $cleanPost["tasklist"]= new tasklist();
     $tasklists = $cleanGet["tasklist"]->getProjectTasklists($cleanGet["id"]);
     $tl = $cleanGet["tasklist"]->getTasklist($thistask['liste']);
     $thistask['listid'] = $tl['ID'];
@@ -178,7 +177,7 @@ if ($action == "addform") {
     }
 
     // check dates' consistency
-    if (strtotime($end) < strtotime($start)) {
+    if (strtotime($cleanPost["end"]) < strtotime($cleanPost["start"])) {
 		$goback = $langfile["goback"];
 		$endafterstart = $langfile["endafterstart"];
 		$template->assign("mode", "error");
@@ -186,7 +185,7 @@ if ($action == "addform") {
 		$template->display("error.tpl");
 	} else {
 		// edit the task
-		if ($task->edit($tid, $start, $end, $title, $text, $cleanGet["tasklist"])) {
+		if ($task->edit($tid, $cleanPost["start"], $cleanPost["end"], $title, $text, $cleanGet["tasklist"])) {
 			$redir = urldecode($redir);
 			if (!empty($assigned)) {
 				//loop through the users to be assigned
@@ -339,7 +338,7 @@ if ($action == "addform") {
         $template->display("error.tpl");
         die();
     }
-    $cleanGet["tasklist"] = new tasklist();
+    $cleanPost["tasklist"]= new tasklist();
 	$myproject = new project();
 	$milestone = new milestone();
 
@@ -388,7 +387,7 @@ if ($action == "addform") {
     $task = $mytask->getTask($tid);
 
     $members = $myproject->getProjectMembers($cleanGet["id"], $myproject->countMembers($cleanGet["id"]));
-    $cleanGet["tasklist"] = new tasklist();
+    $cleanPost["tasklist"]= new tasklist();
     $tasklists = $cleanGet["tasklist"]->getProjectTasklists($cleanGet["id"]);
     $tl = $cleanGet["tasklist"]->getTasklist($task['liste']);
     $task['listid'] = $tl['ID'];
