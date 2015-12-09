@@ -13,22 +13,19 @@ if (!isset($_SESSION["userid"])) {
 
 $task = (object)new task();
 
+$cleanGet = cleanArray($_GET);
+$cleanPost = cleanArray($_POST);
+
 $tasklist = getArrayVal($_GET, "tasklist");
-$mode = getArrayVal($_GET, "mode");
-$tid = getArrayVal($_GET, "tid");
-$start = getArrayVal($_POST, "start");
-$end = getArrayVal($_POST, "end");
-$project = getArrayVal($_POST, "project");
-$assigned = getArrayVal($_POST, "assigned");
 $tasklist = getArrayVal($_POST, "tasklist");
-$text = getArrayVal($_POST, "text");
-$title = getArrayVal($_POST, "title");
+$mode = getArrayVal($_GET, "mode");
+
 $redir = getArrayVal($_GET, "redir");
 $id = getArrayVal($_GET, "id");
 
-$project = array();
-$project['ID'] = $id;
-$template->assign("project", $project);
+$cleanPost["project"] = array();
+$cleanPost["project"]['ID'] = $id;
+$template->assign("project", $cleanPost["project"]);
 // define the active tab in the project navigation
 $classes = array("overview" => "overview", "msgs" => "msgs", "tasks" => "tasks_active", "miles" => "miles", "files" => "files", "users" => "users", "tracker" => "tracking");
 $template->assign("classes", $classes);
@@ -73,7 +70,7 @@ if ($action == "addform") {
     }
 
     // check dates' consistency
-    if (strtotime($end) < strtotime($start)) {
+    if (strtotime($cleanPost["end"]) < strtotime($cleanPost["start"])) {
         $goback = $langfile["goback"];
         $endafterstart = $langfile["endafterstart"];
         $template->assign("mode", "error");
@@ -81,19 +78,19 @@ if ($action == "addform") {
         $template->display("error.tpl");
     } else {
         // add the task
-        $tid = $task->add($start, $end, $title, $text, $tasklist, $id);
-        if ($tid) {
+        $taskId = $task->add($cleanPost["start"], $cleanPost["end"], $cleanPost["title"], $cleanPost["text"], $tasklist, $id);
+        if ($taskId) {
             // Loop through the selected users from the form and assign them to the task
-            foreach ($assigned as $member) {
-                $task->assign($tid, $member);
+            foreach ($cleanPost["assigned"] as $member) {
+                $task->assign($taskId, $member);
             }
             // if tasks was added and mailnotify is activated, send an email
             if ($settings["mailnotify"]) {
                 $projobj = new project();
-                $theproject = $projobj->getProject($project["ID"]);
+                $theproject = $projobj->getProject($cleanPost["project"]["ID"]);
                 // Check project status
                 if ($theproject["status"] != 2) {
-                    foreach ($assigned as $member) {
+                    foreach ($cleanPost["assigned"] as $member) {
                         $usr = (object)new user();
                         $user = $usr->getProfile($member);
                         if (!empty($user["email"]) && $userid != $user["ID"]) {
@@ -104,8 +101,8 @@ if ($action == "addform") {
 
                             $mailcontent = $userlang["hello"] . ",<br /><br/>" .
                                 $userlang["taskassignedtext"] .
-                                "<h3><a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a></h3>" .
-                                $text;
+                                "<h3><a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$taskId\">" . $cleanPost["title"] ."</a></h3>" .
+                                $cleanPost["text"];
 
                             $themail = new emailer($settings);
 
@@ -130,7 +127,7 @@ if ($action == "addform") {
         die();
     }
 
-    $thistask = $task->getTask($tid);
+    $thistask = $task->getTask($cleanGet["tid"]);
     $projectObj = new project();
 
     // Get all the members of the current project
@@ -139,7 +136,7 @@ if ($action == "addform") {
     // Get the project tasklists and the tasklist the task belongs to
     $tasklistObj = new tasklist();
     $tasklists = $tasklistObj->getProjectTasklists($id);
-    $tl = $tasklist->getTasklist($thistask['liste']);
+    $tl = $tasklistObj->getTasklist($thistask['liste']);
     $thistask['listid'] = $tl['ID'];
     $thistask['listname'] = $tl['name'];
 
@@ -155,10 +152,10 @@ if ($action == "addform") {
             $thistask['users'][] = $value[0];
         }
     }
-    $title = $langfile["edittask"];
+    $cleanPost["title"] = $langfile["edittask"];
 
     $template->assign("members", $members);
-    $template->assign("title", $title);
+    $template->assign("title", $cleanPost["title"]);
     $template->assign("tasklists", $tasklists);
     $template->assign("tl", $tl);
     $template->assign("task", $thistask);
@@ -178,7 +175,7 @@ if ($action == "addform") {
     }
 
     // check dates' consistency
-    if (strtotime($end) < strtotime($start)) {
+    if (strtotime($cleanPost["end"]) < strtotime($cleanPost["start"])) {
         $goback = $langfile["goback"];
         $endafterstart = $langfile["endafterstart"];
         $template->assign("mode", "error");
@@ -186,13 +183,13 @@ if ($action == "addform") {
         $template->display("error.tpl");
     } else {
         // edit the task
-        if ($task->edit($tid, $start, $end, $title, $text, $tasklist)) {
+        if ($task->edit($cleanGet["tid"], $cleanPost["start"], $cleanPost["end"], $cleanPost["title"], $cleanPost["text"], $tasklist)) {
             $redir = urldecode($redir);
-            if (!empty($assigned)) {
+            if (!empty($cleanPost["assigned"])) {
                 //loop through the users to be assigned
-                foreach ($assigned as $assignee) {
+                foreach ($cleanPost["assigned"] as $assignee) {
                     //assign the user
-                    $assignChk = $task->assign($tid, $assignee);
+                    $assignChk = $task->assign($cleanGet["tid"], $assignee);
                     if ($assignChk) {
                         if ($settings["mailnotify"]) {
                             $usr = (object)new user();
@@ -205,8 +202,8 @@ if ($action == "addform") {
 
                                 $mailcontent = $userlang["hello"] . ",<br /><br/>" .
                                     $userlang["taskassignedtext"] .
-                                    "<h3><a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a></h3>" .
-                                    $text;
+                                    "<h3><a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=" . $cleanGet["tid"] ."\">" . $cleanPost["title"] ."</a></h3>" .
+                                    $cleanPost["text"];
 
                                 // send email
                                 $themail = new emailer($settings);
@@ -237,7 +234,7 @@ if ($action == "addform") {
         $template->display("error.tpl");
         die();
     }
-    if ($task->del($tid)) {
+    if ($task->del($cleanGet["tid"])) {
         // $redir = urldecode($redir);
         if ($redir) {
             $redir = $url . $redir;
@@ -258,7 +255,7 @@ if ($action == "addform") {
         die();
     }
 
-    if ($task->open($tid)) {
+    if ($task->open($cleanGet["tid"])) {
         // Redir is the url where the user should be redirected, supplied with the initial request
         $redir = urldecode($redir);
         if ($redir) {
@@ -279,7 +276,7 @@ if ($action == "addform") {
         $template->display("error.tpl");
         die();
     }
-    if ($task->close($tid)) {
+    if ($task->close($cleanGet["tid"])) {
         $redir = urldecode($redir);
         if ($redir) {
             $redir = $url . $redir;
@@ -305,8 +302,8 @@ if ($action == "addform") {
                 $subject = $userlang["taskassignedsubject"] . ' (' . $userlang['by'] . ' ' . $username . ')';
                 $mailcontent = $userlang["hello"] . ",<br /><br/>" .
                     $userlang["taskassignedtext"] .
-                    "<h3><a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=$tid\">$title</a></h3>" .
-                    $text;
+                    "<h3><a href = \"" . $url . "managetask.php?action=showtask&id=$id&tid=" .$cleanGet["tid"] . "\">" . $cleanPost["title"] . "</a></h3>" .
+                    $cleanPost["text"];
 
                 $themail = new emailer($settings);
                 $themail->send_mail($user["email"], $subject, $mailcontent);
@@ -353,9 +350,9 @@ if ($action == "addform") {
     //get the current project
     $pro = $projectObj->getProject($id);
     $projectname = $pro["name"];
-    $title = $langfile['tasks'];
+    $cleanPost["title"] = $langfile['tasks'];
 
-    $template->assign("title", $title);
+    $template->assign("title", $cleanPost["title"]);
     $template->assign("milestones", $milestones);
     $template->assign("projectname", $projectname);
     $template->assign("assignable_users", $project_members);
@@ -382,10 +379,10 @@ if ($action == "addform") {
     $pro = $myproject->getProject($id);
     $projectname = $pro["name"];
 
-    $title = $langfile['task'];
+    $cleanPost["title"] = $langfile['task'];
 
     $taskObj = new task();
-    $task = $taskObj->getTask($tid);
+    $task = $taskObj->getTask($cleanGet["tid"]);
 
     $members = $myproject->getProjectMembers($id, $myproject->countMembers($id));
     $tasklistObj = new tasklist();
@@ -411,7 +408,7 @@ if ($action == "addform") {
     $template->assign("pid", $id);
 
     $template->assign("projectname", $projectname);
-    $template->assign("title", $title);
+    $template->assign("title", $cleanPost["title"]);
     $template->assign("task", $task);
     $template->display("task.tpl");
 }
