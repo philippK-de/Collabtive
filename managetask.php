@@ -347,7 +347,7 @@ if ($action == "addform") {
     $lists = $tasklistObj->getProjectTasklists($id);
     $oldlists = $tasklistObj->getProjectTasklists($id, 0);
     // Get number of assignable users
-    $project_members = $projectObj->getProjectMembers($id, $myproject->countMembers($id));
+    $project_members = $projectObj->getProjectMembers($id, $projectObj->countMembers($id));
     // Get all the milestones in the project
     $milestones = $milestoneObj->getAllProjectMilestones($id);
     //get the current project
