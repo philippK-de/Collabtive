@@ -56,7 +56,7 @@ $url = getMyUrl();
 $template->assign("url", $url);
 $template->assign("languages", $languages);
 // set the version number for display
-$template->assign("myversion", "2.1.1");
+$template->assign("myversion", "2.2");
 $template->assign("cl_config", CL_CONFIG);
 // Assign globals to all templates
 if (isset($_SESSION["userid"])) {
