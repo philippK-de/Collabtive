@@ -13,13 +13,13 @@ Keperluan Pelayar Internet:
 ### Arahan Pemasangan ###
   1. Ekstrak file arkib.
   2. Muat naik seluruh fail, termasuk direktori kosong `/files` dan `/templates_c` kedalam server anda. (Anda dibenarkan membuat sendiri direktori `/files` dan `/templates_c` pada server.)
-	3. Benarkan hak akses tulis pada folder dan fail berikut:
-	  - `/templates_c`
-	  - `/files`
-		- `/config/standard/config.php`
-	4. Buat database MySQL baru untuk bagi kegunaan Collabtive  (collation: utf8_general_ci).
-	5. Arahkan pelayar internet anda ke install.php dan ikut arahan yang tertera.
-	6. Apabila pemasangan sudah siap, sila hapuskan fail install.php dan juga update.php
+  3. Benarkan hak akses tulis pada folder dan fail berikut:
+  	- `/templates_c`
+  	- `/files`
+  	- `/config/standard/config.php`
+  4. Buat database MySQL baru untuk bagi kegunaan Collabtive  (collation: utf8_general_ci).
+  5. Arahkan pelayar internet anda ke install.php dan ikut arahan yang tertera.
+  6. Apabila pemasangan sudah siap, sila hapuskan fail install.php dan juga update.php
 
 ### Arahan Kemaskini ###
 	 1. Ekstrak fail arkib Collabtive.
@@ -40,10 +40,10 @@ Sila semak fail `license.txt` untuk syarat dan terma.
 - Sebahagian citra ikon diambil dari Oxygen Iconset.
 - Pelbagai bahasa yang dikendali oleh penggiat dari seantero dunia:
   - Bahasa Perancis diusahakan oleh Jean-Christophe Breboin (www.fairytree.fr)
-	- Bahasa Bulgaria diusahakan oleh Jordan Hlebarov
-	- Bahasa Cina diusahakan oleh Hu Yanggang
-	- Bahasa Polandia diusahakan oleh Hubert Miazek, Jakub Dyda dan Maciej Smolinski
-	- Bahasa Serbia diusahakan oleh Vladimir Mincev
-	- Bahasa Turki diusahakan oleh Mustafa Sarac
-	- Bahasa Indonesia diusahakan oleh Doni Marshall
-	- Bahasa Melayu digiatkan oleh [Abdul Muhaimin](https://github.com/infacq)
+  - Bahasa Bulgaria diusahakan oleh Jordan Hlebarov
+  - Bahasa Cina diusahakan oleh Hu Yanggang
+  - Bahasa Polandia diusahakan oleh Hubert Miazek, Jakub Dyda dan Maciej Smolinski
+  - Bahasa Serbia diusahakan oleh Vladimir Mincev
+  - Bahasa Turki diusahakan oleh Mustafa Sarac
+  - Bahasa Indonesia diusahakan oleh Doni Marshall
+  - Bahasa Melayu digiatkan oleh [Abdul Muhaimin](https://github.com/infacq)
