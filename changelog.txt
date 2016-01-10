@@ -6,6 +6,8 @@ Collabtive 2.2
 + Performance improved in getMyProjects() SQL query by using a JOIN (srichter)
 + Fixed a bug in thumb.php where not-logged in users could load thumbnails of images they know the path to
 + Converted the filetype check int he user image upload to a whitelist to be more secure from malicious file uploads.
++ Added code for excel import
++ Code refactoring to use arrays $cleanPost, and $cleanGet
 
 Collabtive 2.1
 + Removed accordion-related JS legacy code from desktop
