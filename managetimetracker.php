@@ -6,35 +6,24 @@ if (!isset($_SESSION["userid"])) {
     $template->display("login.tpl");
     die();
 }
-$l = Array();
-$l['a_meta_charset'] = 'UTF-8';
-$l['a_meta_dir'] = 'ltr';
-$l['a_meta_language'] = 'en';
-// TRANSLATIONS --------------------------------------
-$l['w_page'] = 'page';
+$language = Array();
+$language['a_meta_charset'] = 'UTF-8';
+$language['a_meta_dir'] = 'ltr';
+$language['a_meta_language'] = 'en';
+$language['w_page'] = 'page';
+
 // create timetracker instance
 $tracker = new timetracker();
 
+//Get data from $_POST and $_GET filtered and sanitized by htmlpurifier
+$cleanGet = cleanArray($_GET);
+$cleanPost = cleanArray($_POST);
+
 $action = getArrayVal($_GET, "action");
-$day = getArrayVal($_POST, "day");
-$endday = getArrayVal($_POST, "endday");
-$started = getArrayVal($_POST, "started");
-$ended = getArrayVal($_POST, "ended");
-$tproject = getArrayVal($_POST, "project");
-$task = getArrayVal($_POST, "ttask");
-$startdate = getArrayVal($_POST, "ttday");
-$enddate = getArrayVal($_POST, "ttendday");
-$comment = getArrayVal($_POST, "comment");
 $redir = getArrayVal($_GET, "redir");
 $mode = getArrayVal($_GET, "mode");
 $id = getArrayVal($_GET, "id");
-$tid = getArrayVal($_GET, "tid");
-$user = getArrayVal($_GET, "user");
-$start = getArrayVal($_GET, "start");
-$end = getArrayVal($_GET, "end");
-$usr = getArrayVal($_GET, "usr");
-$taski = getArrayVal($_GET, "task");
-$fproject = getArrayVal($_GET, "project");
+
 
 /**
 * Get strings from the langfile and decode them to ASCII/ANSI
@@ -51,11 +40,11 @@ $strtask = utf8_decode($langfile["task"]);
 // $strtimetable = utf8_decode($langfile["timetable"]);
 $strcomment = utf8_decode($langfile["comment"]);
 
-if (empty($usr)) {
-    $usr = 0;
+if (empty($cleanGet["usr"])) {
+    $cleanGet["usr"] = 0;
 }
-if (empty($taski)) {
-    $taski = 0;
+if (empty($cleanGet["task"])) {
+    $cleanGet["task"] = 0;
 }
 
 $template->assign("mode", $mode);
@@ -79,13 +68,13 @@ if ($action == "add") {
     $ajaxreq = $_GET["ajaxreq"];
     if ($ajaxreq == 1) {
         $lodate = date("d.m.Y");
-        $started = date("H:i:s", $started);
-        $ended = date("H:i:s", $ended);
+        $cleanPost["started"] = date("H:i:s", $cleanPost["started"]);
+        $cleanPost["ended"] = date("H:i:s", $cleanPost["ended"]);
 
-        $comment = "";
+        $cleanPost["comment"] = "";
     }
 
-    if ($tracker->add($userid, $tproject, $task, $comment, $started, $ended, $startdate, $enddate)) {
+    if ($tracker->add($userid, $cleanPost["project"], $cleanPost["ttask"], $cleanPost["comment"], $cleanPost["started"], $cleanPost["ended"], $cleanPost["ttday"], $cleanPost["ttendday"])) {
         $redir = urldecode($redir);
         if ($redir) {
             $redir = $url . $redir;
@@ -93,7 +82,7 @@ if ($action == "add") {
         } elseif ($ajaxreq == 1) {
             echo "ok";
         } else {
-            $loc = $url . "manageproject.php?action=showproject&id=$tproject&mode=timeadded";
+            $loc = $url . "manageproject.php?action=showproject&id=" . $cleanPost["project"] . "&mode=timeadded";
             header("Location: $loc");
         }
     } else {
@@ -111,16 +100,16 @@ if ($action == "add") {
         die();
     }
     // create task and user instance
-    $task = new task();
-    $user = new user();
+    $cleanPost["ttask"] = new task();
+    $cleanGet["user"] = new user();
     // get track to edit
-    $track = $tracker->getTrack($tid);
+    $track = $tracker->getTrack($cleanGet["tid"]);
     // get username
-    $member = $user->getProfile($track["user"]);
+    $member = $cleanGet["user"]->getProfile($track["user"]);
     $track["username"] = $member["name"];
     if ($track["task"] != 0) {
         // get task
-        $thetask = $task->getTask($track["task"]);
+        $thetask = $cleanPost["ttask"]->getTask($track["task"]);
         if (empty($thetask["title"])) {
             $taskname = substr($thetask["text"], 0, 30);
         } else {
@@ -130,8 +119,8 @@ if ($action == "add") {
     }
     $template->assign("track", $track);
     // get current and closed tasks
-    $newtasks = $task->getProjectTasks($id);
-    $oldtasks = $task->getProjectTasks($id, false);
+    $newtasks = $cleanPost["ttask"]->getProjectTasks($id);
+    $oldtasks = $cleanPost["ttask"]->getProjectTasks($id, false);
     // if the project has both - merge them into one array
     if ($newtasks and $oldtasks) {
         $tasks = array_merge($newtasks, $oldtasks);
@@ -160,11 +149,11 @@ if ($action == "add") {
         die();
     }
     // construct timestamps
-    $started = $day . " " . $started;
-    $started = strtotime($started);
-    $ended = $endday . " " . $ended;
-    $ended = strtotime($ended);
-    if ($tracker->edit($tid, $task, $comment, $started, $ended)) {
+    $cleanPost["started"] = $cleanPost["day"] . " " . $cleanPost["started"];
+    $cleanPost["started"] = strtotime($cleanPost["started"]);
+    $cleanPost["ended"] = $cleanPost["endday"] . " " . $cleanPost["ended"];
+    $cleanPost["ended"] = strtotime($cleanPost["ended"]);
+    if ($tracker->edit($cleanGet["tid"], $cleanPost["ttask"], $cleanPost["comment"], $cleanPost["started"], $cleanPost["ended"])) {
         if ($redir) {
             $redir = $url . $redir;
             header("Location: $redir");
@@ -181,7 +170,7 @@ if ($action == "add") {
         die();
     }
 
-    if ($tracker->del($tid)) {
+    if ($tracker->del($cleanGet["tid"])) {
         $redir = urldecode($redir);
         if ($redir) {
             $loc = $url . $redir;
@@ -205,10 +194,10 @@ if ($action == "add") {
     $line = array($struser, $strtask, $strcomment, $strday, $strstarted, $strended, $strhours);
     fputcsv($excelFile, $line);
 
-    if (!empty($start) and !empty($end)) {
-        $track = $tracker->getProjectTrack($id, $usr, $taski, $start, $end, false);
+    if (!empty($cleanGet["start"]) and !empty($cleanGet["end"])) {
+        $track = $tracker->getProjectTrack($id, $cleanGet["usr"], $cleanGet["task"], $cleanGet["start"], $cleanGet["end"], false);
     } else {
-        $track = $tracker->getProjectTrack($id, $usr , $taski, 0, 0, false);
+        $track = $tracker->getProjectTrack($id, $cleanGet["usr"] , $cleanGet["task"], 0, 0, false);
     }
 
     if (!empty($track)) {
@@ -245,10 +234,10 @@ if ($action == "add") {
     // headers for table columns
     $headers = array($langfile["user"], $langfile["task"], $langfile["comment"], $langfile["started"] . " - " . $langfile["ended"], $langfile["hours"]);
     // if a filter has been applied, get only those timetracks
-    if (!empty($start) and !empty($end)) {
-        $track = $tracker->getProjectTrack($id, $usr, $taski, $start, $end, false);
+    if (!empty($cleanGet["start"]) and !empty($cleanGet["end"])) {
+        $track = $tracker->getProjectTrack($id, $cleanGet["usr"], $cleanGet["task"], $cleanGet["start"], $cleanGet["end"], false);
     } else {
-        $track = $tracker->getProjectTrack($id, $usr , $taski, 0, 0, false);
+        $track = $tracker->getProjectTrack($id, $cleanGet["usr"] , $cleanGet["task"], 0, 0, false);
     }
     // array representing the content of the table. each field is a column
     $thetrack = array();
@@ -276,10 +265,10 @@ if ($action == "add") {
 
     $line = array($strproj, $strtask, $strcomment, $strday, $strstarted, $strended, $strhours);
     fputcsv($excelFile, $line);
-    if (!empty($start) and !empty($end)) {
-        $track = $tracker->getUserTrack($id, $fproject, $taski, $start, $end, false);
+    if (!empty($cleanGet["start"]) and !empty($cleanGet["end"])) {
+        $track = $tracker->getUserTrack($id, $cleanGet["project"], $cleanGet["task"], $cleanGet["start"], $cleanGet["end"], false);
     } else {
-        $track = $tracker->getUserTrack($id, $fproject, $taski, 0, 0 , false);
+        $track = $tracker->getUserTrack($id, $cleanGet["project"], $cleanGet["task"], 0, 0 , false);
     }
     if (!empty($track)) {
         foreach($track as $tra) {
@@ -293,10 +282,10 @@ if ($action == "add") {
     $loc = $url . "files/" . CL_CONFIG . "/ics/user-$id-timetrack.csv";
     header("Location: $loc");
 } elseif ($action == "userpdf") {
-    if (!empty($start) and !empty($end)) {
-        $track = $tracker->getUserTrack($id, $fproject, $taski, $start, $end, false);
+    if (!empty($cleanGet["start"]) and !empty($cleanGet["end"])) {
+        $track = $tracker->getUserTrack($id, $cleanGet["project"], $cleanGet["task"], $cleanGet["start"], $cleanGet["end"], false);
     } else {
-        $track = $tracker->getUserTrack($id, $fproject, $taski, 0, 0, false);
+        $track = $tracker->getUserTrack($id, $cleanGet["project"], $cleanGet["task"], 0, 0, false);
     }
     $thetrack = array();
 
@@ -345,35 +334,35 @@ if ($action == "add") {
         $template->display("error.tpl");
         die();
     }
-    $start = getArrayVal($_POST, "start");
-    $end = getArrayVal($_POST, "end");
-    $usr = getArrayVal($_POST, "usr");
-    $taski = getArrayVal($_POST, "task");
+    $cleanGet["start"] = getArrayVal($_POST, "start");
+    $cleanGet["end"] = getArrayVal($_POST, "end");
+    $cleanGet["usr"] = getArrayVal($_POST, "usr");
+    $cleanGet["task"] = getArrayVal($_POST, "task");
     // get open project tasks for filtering
-    $task = new task();
-    $ptasks = $task->getProjectTasks($id, 1);
+    $cleanPost["ttask"] = new task();
+    $ptasks = $cleanPost["ttask"]->getProjectTasks($id, 1);
 
     $tracker = (object) new timetracker();
     // If the user can not read tt entries from other user, set the user filter to the current user id.
-    if (!$usr) {
+    if (!$cleanGet["usr"]) {
         if (!$userpermissions["timetracker"]["read"]) {
-            $usr = $userid;
+            $cleanGet["usr"] = $userid;
         } else {
-            $usr = 0;
+            $cleanGet["usr"] = 0;
         }
     }
 
-    if (!empty($start) and !empty($end)) {
-        $track = $tracker->getProjectTrack($id, $usr, $taski, $start, $end, 50);
+    if (!empty($cleanGet["start"]) and !empty($cleanGet["end"])) {
+        $track = $tracker->getProjectTrack($id, $cleanGet["usr"], $cleanGet["task"], $cleanGet["start"], $cleanGet["end"], 50);
     } else {
-        $track = $tracker->getProjectTrack($id, $usr, $taski, 0, 0, 50);
+        $track = $tracker->getProjectTrack($id, $cleanGet["usr"], $cleanGet["task"], 0, 0, 50);
     }
     if (!empty($track)) {
         $totaltime = $tracker->getTotalTrackTime($track);
         $template->assign("totaltime", $totaltime);
-        $template->assign("fproject", $fproject);
-        $template->assign("start", $start);
-        $template->assign("end", $end);
+        $template->assign("fproject", $cleanGet["project"]);
+        $template->assign("start", $cleanGet["start"]);
+        $template->assign("end", $cleanGet["end"]);
     }
     $pro = new project();
     $usrs = $pro->getProjectMembers($id, 1000, false);
@@ -384,10 +373,10 @@ if ($action == "add") {
     $title = $langfile["timetracker"];
     $template->assign("title", $title);
     $template->assign("ptasks", $ptasks);
-    $template->assign("start", $start);
-    $template->assign("end", $end);
-    $template->assign("usr", $usr);
-    $template->assign("task", $taski);
+    $template->assign("start", $cleanGet["start"]);
+    $template->assign("end", $cleanGet["end"]);
+    $template->assign("usr", $cleanGet["usr"]);
+    $template->assign("task", $cleanGet["task"]);
     $template->assign("tracker", $track);
     SmartyPaginate::assign($template);
     $template->display("tracker_project.tpl");
