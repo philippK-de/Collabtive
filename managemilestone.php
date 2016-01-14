@@ -15,13 +15,11 @@ $mid = getArrayVal($_GET, "mid");
 $mode = getArrayVal($_GET, "mode");
 $template->assign("mode", $mode);
 
+//Get data from $_POST and $_GET filtered and sanitized by htmlpurifier
+$cleanGet = cleanArray($_GET);
+$cleanPost = cleanArray($_POST);
+
 $id = getArrayVal($_GET, "id");
-$name = getArrayVal($_POST, "name");
-$desc = getArrayVal($_POST, "desc");
-$status = getArrayVal($_POST, "status");
-$user = getArrayVal($_POST, "user");
-$end = getArrayVal($_POST, "end");
-$lim = getArrayVal($_POST, "lim");
 
 $project = array();
 $project['ID'] = $id;
@@ -73,11 +71,11 @@ if ($action == "addform") {
     }
     // Get start date from form
     $start = getArrayVal($_POST, "start");
-    $status = 1;
-    $milestone_id = $milestone->add($id, $name, $desc, $start, $end, $status);
+    $cleanPost["status"] = 1;
+    $milestone_id = $milestone->add($id, $cleanPost["name"], $cleanPost["desc"], $start, $cleanPost["end"], $cleanPost["status"]);
     if ($milestone_id) {
         $liste = (object) new tasklist();
-        if ($liste->add_liste($id, $name, $desc, 0, $milestone_id)) {
+        if ($liste->add_liste($id, $cleanPost["name"], $cleanPost["desc"], 0, $milestone_id)) {
             //$loc = $url . "managetask.php?action=showproject&id=$id&mode=listadded";
         	$loc = $url . "managemilestone.php?action=showproject&id=$id&mode=added";
         } else {
@@ -117,7 +115,7 @@ if ($action == "addform") {
     $mid = $_POST['mid'];
     $start = getArrayVal($_POST, "start");
     // Edit the milestone
-    if ($milestone->edit($mid, $name, $desc, $start, $end)) {
+    if ($milestone->edit($mid, $cleanPost["name"], $cleanPost["desc"], $start, $cleanPost["end"])) {
         $loc = $url . "managemilestone.php?action=showproject&id=$id&mode=edited";
         header("Location: $loc");
     } else {
@@ -158,14 +156,14 @@ if ($action == "addform") {
         $template->assign("closemilestone", 0);
     }
 } elseif ($action == "assign") {
-    if ($milestone->assign($user, $mid)) {
+    if ($milestone->assign($cleanPost["user"], $mid)) {
         $template->assign("assignmilestone", 1);
         $template->display("projectmilestones.tpl");
     } else {
         $template->assign("assignmilestone", 0);
     }
 } elseif ($action == "deassign") {
-    if ($milestone->deassign($user, $mid)) {
+    if ($milestone->deassign($cleanPost["user"], $mid)) {
         $template->assign("deassignmilestone", 1);
         $template->display("projectmilestones.tpl");
     } else {

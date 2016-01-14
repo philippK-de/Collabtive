@@ -8,15 +8,15 @@ if (!isset($_SESSION["userid"])) {
 $liste = (object) new tasklist();
 $objmilestone = (object) new milestone();
 
+//Get data from $_POST and $_GET filtered and sanitized by htmlpurifier
+$cleanGet = cleanArray($_GET);
+$cleanPost = cleanArray($_POST);
+
 $action = getArrayVal($_GET, "action");
 $id = getArrayVal($_GET, "id");
 $tlid = getArrayVal($_GET, "tlid");
 $mode = getArrayVal($_GET, "mode");
 
-$name = getArrayVal($_POST, "name");
-$desc = getArrayVal($_POST, "desc");
-$access = getArrayVal($_POST, "email");
-$milestone = getArrayVal($_POST, "milestone");
 
 $project = array();
 $project['ID'] = $id;
@@ -48,7 +48,7 @@ if ($action == "addform") {
     $template->assign("projectid", $project);
     $template->display("addtasklist.tpl");
 } elseif ($action == "add") {
-    if ($liste->add_liste($id, $name, $desc, 0, $milestone)) {
+    if ($liste->add_liste($id, $cleanPost["name"], $cleanPost["desc"], 0, $cleanPost["milestone"])) {
         $loc = $url . "managetask.php?action=showproject&id=$id&mode=listadded";
         header("Location: $loc");
     } else {
@@ -94,7 +94,7 @@ if ($action == "editform") {
         die();
     }
 
-    if ($liste->edit_liste($tlid, $name, $desc, $milestone)) {
+    if ($liste->edit_liste($tlid, $cleanPost["name"], $cleanPost["desc"], $cleanPost["milestone"])) {
         $loc = $url . "managetasklist.php?action=showtasklist&id=$id&tlid=$tlid&mode=edited";
         header("Location: $loc");
     } else {

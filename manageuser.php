@@ -287,7 +287,7 @@ if ($action == "loginerror") {
         echo "<ul>";
         foreach($onlinelist as $online) {
 
-            echo "<li>" . "<a class=\"user\" href = \"manageuser.php?action=profile&id=$online[ID]\">$online[name]</a></li>";
+            echo "<li>" . "<a class=\"user\" href = \"manageuser.php?action=profile&id=" . $online["ID"] . "\">". $online["name"] . "</a></li>";
         }
         echo "</ul>";
     }
