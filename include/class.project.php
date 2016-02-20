@@ -405,6 +405,24 @@ class project {
             if ($project["end"]) {
                 $daysleft = $this->getDaysLeft($project["end"]);
                 $project["daysleft"] = $daysleft;
+
+                /*
+                 * Determine if project is late or is today
+                 * This is for display
+                 */
+                $project["islate"] = false;
+                if($project["daysleft"] < 1)
+                {
+                    $project["islate"] = true;
+                }
+
+                $project["istoday"] = false;
+                if($project["daysleft"] == 0)
+                {
+                    $project["istoday"] = true;
+                }
+
+                //Format endstring according to system dateformat
                 $endstring = date(CL_DATEFORMAT, $project["end"]);
                 $project["endstring"] = $endstring;
             } else {

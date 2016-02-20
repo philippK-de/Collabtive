@@ -15,13 +15,18 @@ if (empty($db_name) or empty($db_user)) {
         header("Location: " . $loc);
     }
 }
+
+$action = getArrayVal($_GET,"action");
+
 // Set the desktop icon in the top icon menue
 $mainclasses = array("desktop" => "active",
     "profil" => "",
     "admin" => ""
     );
 $template->assign("mainclasses", $mainclasses);
+
 // create objects
+
 $project = new project();
 $customer = new company();
 $milestone = new milestone();
@@ -101,23 +106,40 @@ $projectnum = count($myOpenProjects);
 $oldProjectnum = count($myClosedProjects[0]);
 $msgnum = count($messages);
 $title = $langfile["desktop"];
+
+if(!$action) {
 // Assign everything to the template engine
-$template->assign("title", $title);
-$template->assign("today", $today);
+    $template->assign("title", $title);
+    $template->assign("today", $today);
 
-$template->assign("myprojects", $myOpenProjects);
-$template->assign("oldprojects", $myClosedProjects);
-$template->assign("projectnum", $projectnum);
-$template->assign("closedProjectnum", $oldProjectnum);
-$template->assign("projectov", "yes");
+    $template->assign("myprojects", $myOpenProjects);
+    $template->assign("oldprojects", $myClosedProjects);
+    $template->assign("projectnum", $projectnum);
+    $template->assign("closedProjectnum", $oldProjectnum);
+    $template->assign("projectov", "yes");
 
-$template->assign("mode", $mode);
+    $template->assign("mode", $mode);
 
-$template->assign("tasks", $etasks);
-$template->assign("tasknum", $tasknum);
+    $template->assign("tasks", $etasks);
+    $template->assign("tasknum", $tasknum);
 
-$template->assign("messages", $messages);
-$template->assign("msgnum", $msgnum);
-$template->display("index.tpl");
+    $template->assign("messages", $messages);
+    $template->assign("msgnum", $msgnum);
+    $template->display("index.tpl");
+}
+elseif($action == "myprojects")
+{
+    echo json_encode($myOpenProjects);
 
+}
+elseif($action == "mytasks")
+{
+    echo json_encode($etasks);
+
+}
+elseif($action == "mymessages")
+{
+    echo json_encode($messages);
+
+}
 ?>

@@ -8,6 +8,8 @@ Collabtive 2.2
 + Converted the filetype check int he user image upload to a whitelist to be more secure from malicious file uploads.
 + Added code for excel import
 + Code refactoring to use arrays $cleanPost, and $cleanGet
++ Converted a few remaining SQL queries to prepared statements
+
 
 Collabtive 2.1
 + Removed accordion-related JS legacy code from desktop

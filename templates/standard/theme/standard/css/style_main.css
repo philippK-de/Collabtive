@@ -79,7 +79,9 @@ td.message ul {
 	color:red;
 }
 
-
+[v-cloak] {
+    display: none;
+}
 /* ## Basic-XHTML-Elements ############### END ############## */
 
 
@@ -1441,7 +1443,7 @@ padding-left;
 
 }
 
-message-in li
+.message-in li
 {
 list-style-type: disc;
 padding: 0;
@@ -2277,6 +2279,12 @@ th.tools, td.tools {
 .projects .color-a, .projects .statuswrapper li, .projects .datepick table td, .projects .datepick tr.head td {
 	background: url(../images/tables-projects-bg-a.png);
 }
+.projects tbody.alternateColors:nth-child(even) {
+    background: url(../images/tables-projects-bg-a.png);
+}
+.projects tbody.alternateColors:nth-child(odd) {
+    background: url(../images/tables-projects-bg-b.png);
+}
 
 .projects .color-b, .projects .datepick td.wrong, .projects .datepick tr.weekday td {
 	background: url(../images/tables-projects-bg-b.png);
@@ -2329,6 +2337,12 @@ th.tools, td.tools {
 
 .tasks .color-a, .tasks .datepick table td, .tasks .datepick tr.head td, .tasks .statuswrapper li {
 	background: url(../images/tables-tasks-bg-a.png);
+}
+.tasks tbody.alternateColors:nth-child(even) {
+    background: url(../images/tables-tasks-bg-a.png);
+}
+.tasks tbody.alternateColors:nth-child(odd) {
+    background: url(../images/tables-tasks-bg-b.png);
 }
 
 .tasks .color-b, .tasks .datepick td.wrong, .tasks .datepick tr.weekday td {
@@ -2387,7 +2401,12 @@ th.tools, td.tools {
 .msgs .color-a ul.files table, .msgs .color-b ul.files table {
 	background: url(../images/tables-msgs-bg-c.png);
 }
-
+.msgs tbody.alternateColors:nth-child(even) {
+    background: url(../images/tables-msgs-bg-a.png);
+}
+.msgs tbody.alternateColors:nth-child(odd) {
+    background: url(../images/tables-msgs-bg-b.png);
+}
 .msgs, .msgs .block, .msgs a, .msgs h1, .msgs .block .tablemenue, .msgs .block .addmenue, .msgs p.tags-miles {
 	border-color: #65635e;
 	color: #65635e;

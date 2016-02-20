@@ -282,11 +282,22 @@ class task {
             $task["startstring"] = $startstring;
             $task["endstring"] = $endstring;
 
-            $task["title"] = $task["title"];
-            $task["text"] = $task["text"];
             $task["pname"] = $pname;
             $task["list"] = $list;
             $task["daysleft"] = $tage;
+
+
+            $task["islate"] = false;
+            if($task["daysleft"] < 1)
+            {
+                $task["islate"] = true;
+            }
+
+            $task["istoday"] = false;
+            if($task["daysleft"] == 0)
+            {
+                $task["istoday"] = true;
+            }
 
             return $task;
         } else {

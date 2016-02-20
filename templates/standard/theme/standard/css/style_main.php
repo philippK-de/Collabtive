@@ -191,7 +191,9 @@ td.message ul {
 .error_message {
 	color:red;
 }
-
+[v-cloak] {
+display: none;
+}
 
 /* ## Basic-XHTML-Elements ############### END ############## */
 
@@ -2425,13 +2427,15 @@ th.tools, td.tools {
 }
 
 .projects .color-a, .projects .statuswrapper li, .projects .datepick table td, .projects .datepick tr.head td {
-	background: <?php echo $projectsColorA;
-?>;
+	background: <?php echo $projectsColorA;?>;
+.projects tbody.alternateColors:nth-child(even) {
+background: <?php echo $projectsColorA;?>;
 }
-
+.projects tbody.alternateColors:nth-child(odd) {
+background: <?php echo $projectsColorB;?>;
+}
 .projects .color-b, .projects .datepick td.wrong, .projects .datepick tr.weekday td {
-	background: <?php echo $projectsColorB;
-?>;
+	background: <?php echo $projectsColorB;?>;
 }
 
 .projects .block, .projects a, .projects h1, .projects .block .tablemenue, .projects .block .addmenue, .projects p.tags-miles {
@@ -2496,7 +2500,13 @@ th.tools, td.tools {
 	background: <?php echo $tasksColorA;
 ?>;
 }
-
+.tasks tbody.alternateColors:nth-child(even) {
+background: 	background: <?php echo $tasksColorB;
+?>;
+}
+.tasks tbody.alternateColors:nth-child(odd) {
+background: url(../images/tables-tasks-bg-b.png);
+}
 .tasks .color-b, .tasks .datepick td.wrong, .tasks .datepick tr.weekday td {
 	background: <?php echo $tasksColorB;
 ?>;
@@ -2558,7 +2568,12 @@ th.tools, td.tools {
 	background: <?php echo $msgsColorA;
 ?>;
 }
-
+.msgs tbody.alternateColors:nth-child(even) {
+background: url(../images/tables-msgs-bg-a.png);
+}
+.msgs tbody.alternateColors:nth-child(odd) {
+background: url(../images/tables-msgs-bg-b.png);
+}
 .msgs .color-b {
 	background: <?php echo $msgsColorB;
 ?>;

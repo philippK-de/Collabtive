@@ -23,6 +23,42 @@ function changeshow(script,element,theindicator) {
 function changePost(script,element,pbody) {
    var ajax = new Ajax.Updater({success: element},script,{method:'post', postBody:pbody,evalScripts:true});
 }
+
+function createView(myEl,myURL)
+{
+
+var myModel = {
+    items: []
+};
+var vueview = new Vue({
+    el :"#"+myEl,
+    data:myModel
+});
+
+new Ajax.Request(myURL, {
+    method: 'get',
+    onSuccess: function (myData) {
+        myModel.items = JSON.parse(myData.responseText)
+    },
+    onLoading: function()
+    {
+          startWait("progress"+myEl);
+    },
+    onComplete: function()
+    {
+        stopWait("progress"+myEl);
+    },
+    onFailure: function () {
+        alert('Something went wrong...');
+    }
+}
+);
+
+
+
+return vueview;
+}
+
 function startWait(indic)
 {
 
@@ -213,13 +249,21 @@ function confirmit(text,url)
 
 function confirmfunction(text,toCall)
 {
-	check = confirm(text);
+	var check = confirm(text);
 	if(check == true)
 	{
 		eval(toCall);
 	}
 }
 
+function confirmDelete(message,element,url)
+{
+    var check = confirm(message);
+    if(check==true)
+    {
+        deleteElement(element,url);
+    }
+}
 function selectFolder(folderId)
 {
     var theOptions = $('folderparent').options;

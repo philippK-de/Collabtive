@@ -92,7 +92,7 @@ if ($action == "editform") {
         die();
     }
     if ($project->del($cleanGet["id"])) {
-        if ($cleanGet["redir"]) {
+        if (isset($cleanGet["redir"])) {
             $cleanGet["redir"] = $url . $cleanGet["redir"];
             header("Location: " . $cleanGet["redir"]);
         } else {

@@ -23,7 +23,9 @@ $message = getArrayVal($_POST, "text");
 
 $project = array('ID' => $id);
 $template->assign("project", $project);
-$template->assign("mode", $cleanGet["mode"]);
+if(isset($cleanGet["mode"])) {
+    $template->assign("mode", $cleanGet["mode"]);
+}
 // define the active tab in the project navigation
 $classes = array("overview" => "overview", "msgs" => "msgs_active", "tasks" => "tasks", "miles" => "miles", "files" => "files", "users" => "users", "tracker" => "tracking");
 $template->assign("classes", $classes);
