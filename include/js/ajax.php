@@ -145,7 +145,8 @@ function removeRow(row,color)
 new Effect.Highlight(row,{duration:1.5,startcolor:'#FFFFFF',endcolor:color});
 new Effect.Fade(row,{duration:1.5,
 rowid:row,
-afterFinish:recolorRows});
+afterFinish:recolorRows
+});
 }
 function make_inputs(num){
 	url = 'manageajax.php?action=makeinputs&num='+num;
