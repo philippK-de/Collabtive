@@ -575,7 +575,7 @@ accordion.prototype = {
 		}, options || {});
 
 		//this.duration = ((11-this.options.resizeSpeed)*0.15);
-		this.duration = 0.3;
+		this.duration = 0.4;
 
 		var accordions = $$('#'+container+' .'+this.options.classNames.toggle);
 		accordions.each(function(accordion) {

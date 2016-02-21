@@ -38,19 +38,19 @@
                 </tfoot>
 
                 {literal}
-                    <tbody v-for="item in items" id="proj_{{ item.ID }}" class="alternateColors" rel="{{ item.ID}},{{ item.name }},{{ item.daysleft }},0,0,{{ item.done }}" >
+                    <tbody v-for="item in items" id="proj_{{ item.ID }}" class="alternateColors" rel="{{*item.ID}},{{*item.name }},{{*item.daysleft }},0,0,{{ item.done }}" >
                     <tr  v-bind:class="{ 'marker-late': item.islate, 'marker-today': item.istoday }">
                         <td>
                             <a class="butn_check"
-                               href="javascript:closeElement('proj_{{ item.ID }}','manageproject.php?action=close&amp;id={{item.ID }}');"
+                               href="javascript:closeElement('proj_{{*item.ID}}','manageproject.php?action=close&amp;id={{*item.ID}}');"
                                title="{#close#}"></a>
                         </td>
                         <td>
                             <div class="toggle-in">
                                 <span id="desktopprojectstoggle{{ item.ID }}" class="acc-toggle"
                                       onclick="javascript:accord_projects.activate($$('#projecthead .accordion_toggle')[{{$index}}]);toggleAccordeon('projecthead',this);"></span>
-                                <a href="manageproject.php?action=showproject&amp;id={{ item.ID }}" title="{{ item.name }}">
-                                    {{ item.name }}
+                                <a href="manageproject.php?action=showproject&amp;id={{*item.ID}}" title="{{*item.name}}">
+                                    {{*item.name}}
                                 </a>
                             </div>
                         </td>
@@ -58,7 +58,7 @@
                             <div class="statusbar_b">
                                 <div class="complete" id="completed" style="width:{{item.done}}"></div>
                             </div>
-                            <span>{{item.done}}%</span>
+                            <span>{{*item.done}}%</span>
                         </td>
                         <td style="text-align:right">{{*item.daysleft}}&nbsp;&nbsp;</td>
                         <td class="tools">
@@ -69,7 +69,7 @@
                                title="{#edit#}"></a>
 
 
-                            <a class="tool_del" href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','proj_{{item.ID}}','manageproject.php?action=del&amp;id={{item.ID}}');"  title="{/literal}{#delete#}{literal}"></a>
+                            <a class="tool_del" href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','proj_{{*item.ID}}','manageproject.php?action=del&amp;id={{*item.ID}}');"  title="{/literal}{#delete#}{literal}"></a>
 
 
                         </td>
@@ -81,7 +81,7 @@
                             <div class="accordion_content">
                                 <div class="acc-in">
                                     <div class="message-in">
-                                        {{{* item.desc}}}
+                                        {{{*item.desc}}}
                                     </div>
                                 </div>
                             </div>

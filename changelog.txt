@@ -9,6 +9,7 @@ Collabtive 2.2
 + Added code for excel import
 + Code refactoring to use arrays $cleanPost, and $cleanGet
 + Converted a few remaining SQL queries to prepared statements
++ Converted loading of content on the desktop to an asyncronous method using vue.js. This speeds up the loading of the desktop page considerably.
 
 
 Collabtive 2.1

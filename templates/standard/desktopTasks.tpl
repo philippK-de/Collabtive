@@ -53,32 +53,32 @@
 
                     {*Color-Mix*}
                     {literal}
-                    <tbody v-for="item in items" class="alternateColors" id="task_{{item.ID}}" rel="{{item.ID}},{{item.title},{{item.daysleft}},
+                    <tbody v-for="item in items" class="alternateColors" id="task_{{*item.ID}}" rel="{{*item.ID}},{{*item.title}},{{*item.daysleft}},
                     {{item.pname}}">
 
                         <tr v-bind:class="{ 'marker-late': item.islate, 'marker-today': item.istoday }" >
                             <td>
                                 {/literal}{if $userpermissions.tasks.close}{literal}
-                                    <a class="butn_check" href="javascript:closeElement('task_{{item.ID}}','managetask.php?action=close&amp;tid={{item.ID}}&amp;id={{item.project}}');" title="{/literal}{#close#}"></a>
+                                    <a class="butn_check" href="javascript:closeElement('task_{{*item.ID}}','managetask.php?action=close&amp;tid={{*item.ID}}&amp;id={{*item.project}}');" title="{/literal}{#close#}"></a>
                                 {/if}{literal}
 
                             </td>
                             <td>
                                 <div class="toggle-in">
                                     <span id="desktoptaskstoggle{{item.ID}}" class="acc-toggle" onclick="javascript:accord_tasks.activate($$('#taskhead .accordion_toggle')[{{$index}}]);toggleAccordeon('taskhead',this);"></span>
-                                    <a href="managetask.php?action=showtask&amp;id={{item.project}}&amp;tid={{item.ID}}" title="{{item.title}}">
+                                    <a href="managetask.php?action=showtask&amp;id={{*item.project}}&amp;tid={{*item.ID}}" title="{{*item.title}}">
                                         {{item.title}}
                                     </a>
                                 </div>
                             </td>
                             <td>
-                                <a href="managetask.php?action=showproject&amp;id={{item.project}}">{{item.pname}}</a>
+                                <a href="managetask.php?action=showproject&amp;id={{*item.project}}">{{*item.pname}}</a>
                             </td>
                             <td style="text-align:right">{{item.daysleft}}&nbsp;&nbsp;</td>
                             <td class="tools">
 
                                 {/literal}{if $userpermissions.tasks.edit} {literal}
-                                    <a class="tool_edit" href="javascript:void(0);" onclick="change('managetask.php?action=editform&amp;tid={{item.ID}}&amp;id={{item.project}}','form_addmytask');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_addmytask');"
+                                    <a class="tool_edit" href="javascript:void(0);" onclick="change('managetask.php?action=editform&amp;tid={{*item.ID}}&amp;id={{*item.project}}','form_addmytask');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_addmytask');"
                                        title="{/literal}{#edit#}"></a>
                                 {/if}{literal}
 
@@ -95,7 +95,7 @@
                                 <div class="accordion_content">
                                     <div class="acc-in">
                                         <div class="message-in">
-                                            {{{item.text}}}
+                                            {{{*item.text}}}
                                         </div>
                                     </div>
                                 </div>
