@@ -1,8 +1,100 @@
-Vue.config.silent = true;
+//Vue.config.silent = true;
 //create the vue views, binding data to DOM elements
-projectsView = createView("desktopprojects","index.php?action=myprojects");
-tasksView = createView("desktoptasks","index.php?action=mytasks");
-msgsView = createView("desktopmessages","index.php?action=mymessages");
+function createView(myEl) {
+    var myModel = {
+        items: [],
+        dependencies : myEl.dependencies,
+        url: myEl.url
+    };
+
+    var vueview = new Vue({
+        el: "#" + myEl.el,
+        data: myModel
+    });
+
+    new Ajax.Request(myEl.url, {
+            method: 'get',
+            onSuccess: function (myData) {
+                //update the model with the retrieved data
+                myModel.items = JSON.parse(myData.responseText);
+            },
+            onLoading: function () {
+                //show loading indicator
+                startWait("progress" + myEl.el);
+            },
+            onComplete: function () {
+                //hide loading indicator
+                stopWait("progress" + myEl.el);
+            },
+            onFailure: function () {
+
+            }
+        }
+    );
+
+    return vueview;
+}
+function updateView(view) {
+    new Ajax.Request(view.url, {
+            method: 'get',
+            onSuccess: function (myData) {
+                //console.log(myData.responseText);
+                console.log("loaded "+ view.url);
+                view.$set("items", JSON.parse(myData.responseText));
+                console.log(view.$el.id);
+
+                var viewsToUpdate = view.$get("dependencies");
+
+                if (viewsToUpdate.length > 0) {
+                    for(i=0;i<viewsToUpdate.length;i++)
+                    {
+                        console.log("updated: "+viewsToUpdate[i][0]);
+                        updateView(viewsToUpdate[i],viewsToUpdate[i].url);
+                    }
+                }
+            },
+            onLoading: function () {
+                console.log(view.$el.id);
+                startWait("progress" + view.$el.id);
+            },
+            onComplete: function () {
+                stopWait("progress" + view.$el.id);
+            },
+            onFailure: function () {
+
+            }
+        }
+    );
+}
+
+
+//create the objects representing the Widgets with their DOM element, DataURL, Dependencies and view managing them
+var projects = {
+    el: "desktopprojects",
+    url: "index.php?action=myprojects",
+    dependencies: []
+};
+
+var tasks = {
+    el: "desktoptasks",
+    url: "index.php?action=mytasks",
+    dependencies: []
+};
+
+var messages = {
+    el: "desktopmessages",
+    url: "index.php?action=mymessages",
+    dependencies: []
+};
+
+//create views - binding the data to the dom element
+var projectsView = createView(projects);
+var tasksView = createView(tasks);
+var msgsView = createView(messages);
+
+//setup dependenciens
+projectsView.$set("dependencies",[tasksView, msgsView]);
+
 
 
 //initialize accordeons

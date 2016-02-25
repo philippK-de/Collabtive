@@ -24,40 +24,11 @@ function changePost(script,element,pbody) {
    var ajax = new Ajax.Updater({success: element},script,{method:'post', postBody:pbody,evalScripts:true});
 }
 
-function createView(myEl,myURL)
+function fetchData(myURL)
 {
 
-var myModel = {
-    items: []
-};
-var vueview = new Vue({
-    el :"#"+myEl,
-    data:myModel
-});
-
-new Ajax.Request(myURL, {
-    method: 'get',
-    onSuccess: function (myData) {
-        myModel.items = JSON.parse(myData.responseText)
-    },
-    onLoading: function()
-    {
-          startWait("progress"+myEl);
-    },
-    onComplete: function()
-    {
-        stopWait("progress"+myEl);
-    },
-    onFailure: function () {
-        alert('Something went wrong...');
-    }
 }
-);
 
-
-
-return vueview;
-}
 
 function startWait(indic)
 {
@@ -69,7 +40,7 @@ function stopWait(indic)
 	$(indic).style.display = 'none';
 }
 
-function deleteElement(theElement,theUrl)
+function deleteElement(theElement,theUrl, theView)
 {
 	new Ajax.Request(theUrl, {
 		  method: 'get',
@@ -77,7 +48,11 @@ function deleteElement(theElement,theUrl)
 		    if (payload.responseText == "ok")
 		    	{
 		    		removeRow(theElement,deleteEndcolor);
-		    		result = true;
+                    if(theView)
+                    {
+                        updateView(theView);
+		    		}
+                    result = true;
 		    	}
 		   }
 		});
@@ -112,31 +87,34 @@ new Ajax.Request(theUrl, {
 function recolorRows(therow)
 {
     row = therow.options.rowid;
-    var theTable = $(row).parentNode;
-    tbodys = $$('#'+theTable.id +' tbody:not([id='+row+'])');
-    bodies = new Array();
+    try{
+        var theTable = $(row).parentNode;
+        tbodys = $$('#'+theTable.id +' tbody:not([id='+row+'])');
+        bodies = new Array();
 
-    tbodys.each(function(s)
-    {
-        if(s.style.display != 'none')
+        tbodys.each(function(s)
         {
-            bodies.push(s);
+            if(s.style.display != 'none')
+            {
+                bodies.push(s);
+            }
+        }
+        );
+
+        for(i=0;i<bodies.length;i++)
+        {
+            if(i % 2 == 0)
+            {
+                $(bodies[i].id).className = 'color-a';
+            }
+            else
+            {
+
+                $(bodies[i].id).className = 'color-b';
+            }
         }
     }
-    );
-
-    for(i=0;i<bodies.length;i++)
-    {
-        if(i % 2 == 0)
-        {
-            $(bodies[i].id).className = 'color-a';
-        }
-        else
-        {
-
-            $(bodies[i].id).className = 'color-b';
-        }
-    }
+    catch(e){}
 }
 
 function removeRow(row,color)
@@ -257,12 +235,12 @@ function confirmfunction(text,toCall)
 	}
 }
 
-function confirmDelete(message,element,url)
+function confirmDelete(message,element,url,view)
 {
     var check = confirm(message);
     if(check==true)
     {
-        deleteElement(element,url);
+        deleteElement(element,url,view);
     }
 }
 function selectFolder(folderId)

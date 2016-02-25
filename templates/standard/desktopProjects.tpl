@@ -16,7 +16,6 @@
         <div id="form_addmyproject" class="addmenue" style="display:none;">
             {include file="addproject.tpl" myprojects="1"}
         </div>
-
         <div class="nosmooth" id="sm_deskprojects">
             <table id="desktopprojects" cellpadding="0" cellspacing="0" border="0" v-cloak>    {literal}
 
@@ -69,7 +68,7 @@
                                title="{#edit#}"></a>
 
 
-                            <a class="tool_del" href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','proj_{{*item.ID}}','manageproject.php?action=del&amp;id={{*item.ID}}');"  title="{/literal}{#delete#}{literal}"></a>
+                            <a class="tool_del" href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','proj_{{*item.ID}}','manageproject.php?action=del&amp;id={{*item.ID}}',projectsView);"  title="{/literal}{#delete#}{literal}"></a>
 
 
                         </td>
