@@ -51,9 +51,13 @@
 
                 <tr v-bind:class="{ 'marker-late': item.islate, 'marker-today': item.istoday }">
                     <td>
-                        <a class="butn_check"
-                           href="javascript:closeElement('proj_{{*item.ID}}','manageproject.php?action=close&amp;id={{*item.ID}}');"
-                           title="{#close#}"></a>
+                        {/literal}
+                        {if $userpermissions.projects.close}
+                            {literal}
+                            <a class="butn_check" href="javascript:closeElement('proj_{{*item.ID}}','manageproject.php?action=close&amp;id={{*item.ID}}');" title="{/literal}{#close#}{literal}"></a>
+                            {/literal}
+                         {/if}
+                        {literal}
                     </td>
                     <td>
                         <div class="toggle-in">
@@ -72,17 +76,20 @@
                     </td>
                     <td style="text-align:right">{{*item.daysleft}}&nbsp;&nbsp;</td>
                     <td class="tools">
-
-
-                        <a class="tool_edit" href="javascript:void(0);"
-                           onclick="change('manageproject.php?action=editform&amp;id={{ item.ID }}','form_addmyproject');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_addmyproject');"
-                           title="{#edit#}"></a>
-
-
-                        <a class="tool_del"
-                           href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','proj_{{*item.ID}}','manageproject.php?action=del&amp;id={{*item.ID}}',projectsView);"
-                           title="{/literal}{#delete#}{literal}"></a>
-
+                        {/literal}
+                        {if $userpermissions.projects.edit}
+                            {literal}
+                            <a class="tool_edit" href="javascript:void(0);" onclick="change('manageproject.php?action=editform&amp;id={{ item.ID }}','form_addmyproject');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_addmyproject');"
+                               title="{#edit#}"></a>
+                            {/literal}
+                        {/if}
+                        {if $userpermissions.projects.del}
+                            {literal}
+                            <a class="tool_del"
+                               href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','proj_{{*item.ID}}','manageproject.php?action=del&amp;id={{*item.ID}}',projectsView);" title="{/literal}{#delete#}{literal}"></a>
+                            {/literal}
+                        {/if}
+                        {literal}
 
                     </td>
                 </tr>
@@ -102,7 +109,6 @@
                 </tbody>
                 {/literal}
             </table>
-
 
             {if $closedProjectnum > 0}
                 {*Doneprojects*}
@@ -195,9 +201,10 @@
                     {/if}
                 </div>
             </div>
+            <div class="content-spacer"></div>
         </div> {* block END *}
     </div> {* smooth END *}
-
 </div> {* projects END *}
+
 
 
