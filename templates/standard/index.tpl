@@ -74,6 +74,6 @@
         <div class="content-spacer"></div>
     </div> {* content-left-in END *}
 </div> {* content-left END *}
-<script type="text/javascript" src="include/js/views/index.js"></script>
+<script type="text/javascript" src="include/js/views/index.min.js"></script>
 {include file="sidebar-a.tpl"}
 {include file="footer.tpl"}

@@ -5,7 +5,7 @@
 
         <div class="wintools">
             <div class="progress" id="progressdesktopprojects" style="display:none;">
-                <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-cal.gif"/>
+                <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-project3.gif"/>
             </div>
         </div>
 
@@ -17,15 +17,15 @@
             {include file="addproject.tpl" myprojects="1"}
         </div>
         <div class="nosmooth" id="sm_deskprojects">
-            <table  cellpadding="0" cellspacing="0" border="0" v-cloak>    {literal}
+            <table  cellpadding="0" cellspacing="0" border="0" id="desktoProjectsTable" v-cloak>    {literal}
 
                 {/literal}
                 <thead>
                 <tr>
                     <th class="a"></th>
-                    <th class="b" style="cursor:pointer;" onclick="sortBlock('desktopprojects','');">{#project#}</th>
-                    <th class="c" style="cursor:pointer" onclick="sortBlock('desktopprojects','done');">{#done#}</th>
-                    <th class="d" style="text-align:right" onclick="sortBlock('desktopprojects','daysleft');">{#daysleft#}&nbsp;&nbsp;</th>
+                    <th class="b" style="cursor:pointer;" >{#project#}</th>
+                    <th class="c" style="cursor:pointer" >{#done#}</th>
+                    <th class="d" style="text-align:right" >{#daysleft#}&nbsp;&nbsp;</th>
                     <th class="tools"></th>
                 </tr>
                 </thead>
@@ -37,7 +37,7 @@
                 </tfoot>
 
                 {literal}
-                    <tbody v-for="item in items" id="proj_{{ item.ID }}" class="alternateColors" rel="{{*item.ID}},{{*item.name }},{{*item.daysleft }},0,0,{{ item.done }}" >
+                    <tbody v-for="item in items" id="proj_{{item.ID}}" class="alternateColors" rel="{{item.ID}},{{item.name}},{{item.daysleft}},0,0,{{item.done}}" >
 
                     <tr  v-bind:class="{ 'marker-late': item.islate, 'marker-today': item.istoday }">
                         <td>

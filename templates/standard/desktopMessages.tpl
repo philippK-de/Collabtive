@@ -48,7 +48,7 @@
                 </tfoot>
 
                 {literal}
-                <tbody v-for="item in items" class="alternateColors" id="messages_{{item.ID}}" rel="{{item.ID}},{{item.title}},{{item..posted}},0,0,0">
+                <tbody v-for="item in items" class="alternateColors" id="messages_{{item.ID}}" rel="{{item.ID}},{{item.title}},{{item.posted}},0,0,0">
 
 
                 <tr>

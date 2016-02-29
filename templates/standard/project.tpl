@@ -251,7 +251,7 @@
 				duration: 4.0
 			});
 		});
-		var accord_dashboard = new accordion('block_dashboard');
+		    var accord_dashboard = new accordion('block_dashboard');
 
 				function activateAccordeon(theAccord){
 
