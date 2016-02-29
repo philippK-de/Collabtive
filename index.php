@@ -60,7 +60,7 @@ $template->assign("openProjects", $myOpenProjects);
 if (!empty($myOpenProjects)) {
     foreach($myOpenProjects as $proj) {
         // get all the tasks in this project that are assigned to the current user
-        $task = $mtask->getAllMyProjectTasks($proj["ID"], $offset, $limit);
+        $task = $mtask->getAllMyProjectTasks($proj["ID"], 100);
         // get all messages in the project
         $msgs = $msg->getProjectMessages($proj["ID"]);
         // write those to arrays

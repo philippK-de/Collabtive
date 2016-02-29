@@ -40,7 +40,12 @@ function createView(myEl) {
 
     return vueview;
 }
-function updateView(view) {
+function updateView(view, updateDependencies) {
+    if(updateDependencies === undefined)
+    {
+        updateDependencies = true;
+    }
+
     var myUrl = view.url;
 
     if(view.limit > 0) {
@@ -57,11 +62,14 @@ function updateView(view) {
                 view.$set("items", responseData.items);
                 view.$set("pages", pagination.listPages(responseData.count));
 
-                var viewsToUpdate = view.$get("dependencies");
+                if(updateDependencies == true)
+                {
+                    var viewsToUpdate = view.$get("dependencies");
 
-                if (viewsToUpdate.length > 0) {
-                    for (i = 0; i < viewsToUpdate.length; i++) {
-                        updateView(viewsToUpdate[i], viewsToUpdate[i].url);
+                    if (viewsToUpdate.length > 0) {
+                        for (i = 0; i < viewsToUpdate.length; i++) {
+                            updateView(viewsToUpdate[i], viewsToUpdate[i].url);
+                        }
                     }
                 }
             },
@@ -133,7 +141,7 @@ var pagination = {
         view.$set("offset", offset);
         view.$set("url", viewUrl);
 
-        updateView(view);
+        updateView(view, false);
     }
 };
 
