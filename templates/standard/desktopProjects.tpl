@@ -1,4 +1,4 @@
-<div class="projects" style="padding-bottom:2px;">
+<div id="desktopprojects" class="projects" style="padding-bottom:2px;">
     <div class="headline">
         <a href="javascript:void(0);" id="projecthead_toggle" class="win_block"
            onclick="changeElements('a.win_block','win_none');toggleBlock('projecthead');"></a>
@@ -17,7 +17,7 @@
             {include file="addproject.tpl" myprojects="1"}
         </div>
         <div class="nosmooth" id="sm_deskprojects">
-            <table id="desktopprojects" cellpadding="0" cellspacing="0" border="0" v-cloak>    {literal}
+            <table  cellpadding="0" cellspacing="0" border="0" v-cloak>    {literal}
 
                 {/literal}
                 <thead>
@@ -38,6 +38,7 @@
 
                 {literal}
                     <tbody v-for="item in items" id="proj_{{ item.ID }}" class="alternateColors" rel="{{*item.ID}},{{*item.name }},{{*item.daysleft }},0,0,{{ item.done }}" >
+
                     <tr  v-bind:class="{ 'marker-late': item.islate, 'marker-today': item.istoday }">
                         <td>
                             <a class="butn_check"
@@ -89,6 +90,8 @@
                     </tbody>
                 {/literal}
             </table>
+
+
             {if $closedProjectnum > 0}
                 {*Doneprojects*}
                 <div id="doneblock" class="projects" style="display: none;">
@@ -182,6 +185,11 @@
             </div>
         </div> {* block END *}
     </div> {* smooth END *}
+    {literal}
+     <div id = "paging" v-for="page in pages">
+         <a href ="javascript:pagination.loadPage(projectsView,{{page.index}});">{{page.index}}</a>
+     </div>
+    {/literal}
 </div> {* projects END *}
 
 

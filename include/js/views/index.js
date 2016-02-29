@@ -3,7 +3,8 @@
 function createView(myEl) {
     var myModel = {
         items: [],
-        dependencies : myEl.dependencies,
+        pages: [],
+        dependencies: myEl.dependencies,
         url: myEl.url
     };
 
@@ -16,7 +17,12 @@ function createView(myEl) {
             method: 'get',
             onSuccess: function (myData) {
                 //update the model with the retrieved data
-                myModel.items = JSON.parse(myData.responseText);
+                var responseData = JSON.parse(myData.responseText);
+                myModel.items = responseData.items;
+                var pages = pagination.listPages(responseData.count);
+                console.log("pages" + pages);
+                myModel.pages = pages;
+                console.log(myModel);
             },
             onLoading: function () {
                 //show loading indicator
@@ -35,26 +41,31 @@ function createView(myEl) {
     return vueview;
 }
 function updateView(view) {
-    new Ajax.Request(view.url, {
+    var myUrl = view.url;
+
+    if(view.limit > 0) {
+        myUrl += "&limit=" + view.limit
+    }
+    if(view.offset > 0) {
+      myUrl += "&offset=" + view.offset;
+    }
+    new Ajax.Request(myUrl, {
             method: 'get',
             onSuccess: function (myData) {
-                //console.log(myData.responseText);
-                console.log("loaded "+ view.url);
-                view.$set("items", JSON.parse(myData.responseText));
-                console.log(view.$el.id);
+                console.log(myUrl);
+                var responseData = JSON.parse(myData.responseText);
+                view.$set("items", responseData.items);
+                view.$set("pages", pagination.listPages(responseData.count));
 
                 var viewsToUpdate = view.$get("dependencies");
 
                 if (viewsToUpdate.length > 0) {
-                    for(i=0;i<viewsToUpdate.length;i++)
-                    {
-                        console.log("updated: "+viewsToUpdate[i][0]);
-                        updateView(viewsToUpdate[i],viewsToUpdate[i].url);
+                    for (i = 0; i < viewsToUpdate.length; i++) {
+                        updateView(viewsToUpdate[i], viewsToUpdate[i].url);
                     }
                 }
             },
             onLoading: function () {
-                console.log(view.$el.id);
                 startWait("progress" + view.$el.id);
             },
             onComplete: function () {
@@ -93,8 +104,38 @@ var tasksView = createView(tasks);
 var msgsView = createView(messages);
 
 //setup dependenciens
-projectsView.$set("dependencies",[tasksView, msgsView]);
+projectsView.$set("dependencies", [tasksView, msgsView]);
 
+var pagination = {
+    itemsPerPage: 10,
+    listPages: function (numTotal) {
+        var pagenum = Math.ceil(numTotal / this.itemsPerPage);
+        var pages = [];
+
+        for (i = 0; i < pagenum; i++) {
+            var index = i + 1;
+            var page = {
+                index: index,
+                limit: index * this.itemsPerPage
+            };
+            pages.push(page);
+        }
+
+        return pages;
+
+    },
+    loadPage: function (view, page) {
+        var viewUrl = view.$get("url");
+
+        var offset = page * this.itemsPerPage - this.itemsPerPage;
+
+        view.$set("limit", this.itemsPerPage);
+        view.$set("offset", offset);
+        view.$set("url", viewUrl);
+
+        updateView(view);
+    }
+};
 
 
 //initialize accordeons

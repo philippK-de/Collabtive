@@ -481,24 +481,29 @@ class project {
      * @param int $status Bearbeitungsstatus von Projekten (1 = offenes Projekt)
      * @return array $myprojekte Projekte des Mitglieds
      */
-    function getMyProjects($user, $status = 1)
+    function getMyProjects($user, $status = 1, $offset = 0, $limit = 10)
     {
         global $conn;
 
         $myprojekte = array();
         $user = (int) $user;
         $status = (int) $status;
+        $offset = (int) $offset;
+        $limit = (int) $limit;
 
-        $sel = $conn->prepare("SELECT projekt FROM projekte_assigned WHERE user = ? ORDER BY ID ASC");
-        $selStmt = $sel->execute(array($user));
+        //$sel = $conn->prepare("SELECT projekt FROM projekte_assigned WHERE user = ? ORDER BY ID ASC LIMIT $offset,$limit ");
+        $sel = $conn->query("SELECT projekt FROM projekte_assigned WHERE user = $user LIMIT $limit OFFSET $offset");
+        //$selStmt = $sel->execute(array($user));
 
         $projektStmt = $conn->prepare("SELECT ID FROM projekte WHERE ID = ? AND status=?");
-        while ($projs = $sel->fetch()) {
-            $projektStmt->execute(array($projs[0],$status));
+
+        while ($projects = $sel->fetch()) {
+            //fetch ID for this project
+            $projektStmt->execute(array($projects[0],$status));
             $projekt = $projektStmt->fetch();
+            //if ID was loaded get data for the project and add it to the list
             if ($projekt) {
-                $project = $this->getProject($projekt["ID"]);
-                array_push($myprojekte, $project);
+                array_push($myprojekte, $this->getProject($projekt["ID"]));
             }
         }
 

@@ -18,6 +18,8 @@ if (empty($db_name) or empty($db_user)) {
 
 $action = getArrayVal($_GET,"action");
 
+$cleanGet = cleanArray($_GET);
+
 // Set the desktop icon in the top icon menue
 $mainclasses = array("desktop" => "active",
     "profil" => "",
@@ -38,11 +40,27 @@ $milestones = array();
 $tasks = array();
 // create a counter for the foreach loop
 $cou = 0;
+
+$offset = 0;
+if(isset($cleanGet["offset"]))
+{
+    $offset = $cleanGet["offset"];
+}
+$limit = 10;
+if(isset($cleanGet["limit"]))
+{
+    $limit = $cleanGet["limit"];
+}
+
+$myOpenProjects = $project->getMyProjects($userid, 1, $offset, $limit);
+$projectnum = count($project->getMyProjects($userid, 1, 0, 100000000000));
+$template->assign("openProjects", $myOpenProjects);
+
 // If user has projects, loop through them and get the messages and tasks belonging to those projects
 if (!empty($myOpenProjects)) {
     foreach($myOpenProjects as $proj) {
         // get all the tasks in this project that are assigned to the current user
-        $task = $mtask->getAllMyProjectTasks($proj["ID"], 100);
+        $task = $mtask->getAllMyProjectTasks($proj["ID"], $offset, $limit);
         // get all messages in the project
         $msgs = $msg->getProjectMessages($proj["ID"]);
         // write those to arrays
@@ -102,7 +120,6 @@ if ($mode == "login") {
 // Get todays date and count tasks, projects and messages for display
 $today = date("d");
 $tasknum = count($etasks);
-$projectnum = count($myOpenProjects);
 $oldProjectnum = count($myClosedProjects[0]);
 $msgnum = count($messages);
 $title = $langfile["desktop"];
@@ -112,34 +129,35 @@ if(!$action) {
     $template->assign("title", $title);
     $template->assign("today", $today);
 
-    $template->assign("myprojects", $myOpenProjects);
     $template->assign("oldprojects", $myClosedProjects);
-    $template->assign("projectnum", $projectnum);
     $template->assign("closedProjectnum", $oldProjectnum);
     $template->assign("projectov", "yes");
 
     $template->assign("mode", $mode);
 
-    $template->assign("tasks", $etasks);
     $template->assign("tasknum", $tasknum);
-
-    $template->assign("messages", $messages);
     $template->assign("msgnum", $msgnum);
     $template->display("index.tpl");
 }
 elseif($action == "myprojects")
 {
-    echo json_encode($myOpenProjects);
+    $myprojects["items"] = $myOpenProjects;
+    $myprojects["count"] = $projectnum;
+    echo json_encode($myprojects);
 
 }
 elseif($action == "mytasks")
 {
-    echo json_encode($etasks);
+    $myTasks["items"] = $etasks;
+    $myTasks["count"] = count($etasks);
 
+    echo json_encode($myTasks);
 }
 elseif($action == "mymessages")
 {
-    echo json_encode($messages);
+    $myMessages["items"] = $messages;
+    $myMessages["count"] = count($messages);
+    echo json_encode($myMessages);
 
 }
 ?>
