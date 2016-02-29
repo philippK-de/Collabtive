@@ -6,7 +6,9 @@
                onclick="changeElements('a.win_block','win_none');toggleBlock('activityhead');"></a>
 
             <div class="wintools">
-
+                <div class="progress" id="progressdesktopmessages" style="display:none;width:20px;float:left">
+                    <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-messages.gif"/>
+                </div>
                 <div class="export-main">
                     <a class="export"><span>{#export#}</span></a>
 
@@ -15,9 +17,7 @@
                         <a class="pdf" href="managemessage.php?action=mymsgs-pdf&amp;id={$userid}"><span>{#pdfexport#}</span></a>
                     </div>
                 </div>
-                <div class="progress" id="progressdesktopmessages" style="display:none;">
-                    <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-cal.gif"/>
-                </div>
+
             </div>
 
             <h2>
