@@ -9,7 +9,16 @@
             </div>
         </div>
 
-        <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt=""/>{#myprojects#}</h2>
+        <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt=""/>{#myprojects#}
+            {literal}
+                    <span id="paging" style="margin-left:10px;">
+                        <span id="page{{page.index}}" v-for="page in pages" style="margin-left:2px;" >
+                             <a style="color:#38bf42;font-size:8pt;" href="javascript:pagination.loadPage(projectsView,{{page.index}});">{{page.index}}</a>
+                        </span>
+                    </span>
+            {/literal}
+        </h2>
+
     </div>
     <div class="acc_toggle"></div>
     <div class="block acc_content" id="projecthead" style="overflow:hidden;">{* Add project *}
@@ -17,15 +26,15 @@
             {include file="addproject.tpl" myprojects="1"}
         </div>
         <div class="nosmooth" id="sm_deskprojects">
-            <table  cellpadding="0" cellspacing="0" border="0" id="desktoProjectsTable" v-cloak>    {literal}
+            <table cellpadding="0" cellspacing="0" border="0" id="desktoProjectsTable" v-cloak>    {literal}
 
                 {/literal}
                 <thead>
                 <tr>
                     <th class="a"></th>
-                    <th class="b" style="cursor:pointer;" >{#project#}</th>
-                    <th class="c" style="cursor:pointer" >{#done#}</th>
-                    <th class="d" style="text-align:right" >{#daysleft#}&nbsp;&nbsp;</th>
+                    <th class="b" style="cursor:pointer;">{#project#}</th>
+                    <th class="c" style="cursor:pointer">{#done#}</th>
+                    <th class="d" style="text-align:right">{#daysleft#}&nbsp;&nbsp;</th>
                     <th class="tools"></th>
                 </tr>
                 </thead>
@@ -37,57 +46,60 @@
                 </tfoot>
 
                 {literal}
-                    <tbody v-for="item in items" id="proj_{{item.ID}}" class="alternateColors" rel="{{item.ID}},{{item.name}},{{item.daysleft}},0,0,{{item.done}}" >
+                <tbody v-for="item in items" id="proj_{{item.ID}}" class="alternateColors"
+                       rel="{{item.ID}},{{item.name}},{{item.daysleft}},0,0,{{item.done}}">
 
-                    <tr  v-bind:class="{ 'marker-late': item.islate, 'marker-today': item.istoday }">
-                        <td>
-                            <a class="butn_check"
-                               href="javascript:closeElement('proj_{{*item.ID}}','manageproject.php?action=close&amp;id={{*item.ID}}');"
-                               title="{#close#}"></a>
-                        </td>
-                        <td>
-                            <div class="toggle-in">
+                <tr v-bind:class="{ 'marker-late': item.islate, 'marker-today': item.istoday }">
+                    <td>
+                        <a class="butn_check"
+                           href="javascript:closeElement('proj_{{*item.ID}}','manageproject.php?action=close&amp;id={{*item.ID}}');"
+                           title="{#close#}"></a>
+                    </td>
+                    <td>
+                        <div class="toggle-in">
                                 <span id="desktopprojectstoggle{{ item.ID }}" class="acc-toggle"
                                       onclick="javascript:accord_projects.activate($$('#projecthead .accordion_toggle')[{{$index}}]);toggleAccordeon('projecthead',this);"></span>
-                                <a href="manageproject.php?action=showproject&amp;id={{*item.ID}}" title="{{*item.name}}">
-                                    {{*item.name}}
-                                </a>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="statusbar_b">
-                                <div class="complete" id="completed" style="width:{{item.done}}"></div>
-                            </div>
-                            <span>{{*item.done}}%</span>
-                        </td>
-                        <td style="text-align:right">{{*item.daysleft}}&nbsp;&nbsp;</td>
-                        <td class="tools">
+                            <a href="manageproject.php?action=showproject&amp;id={{*item.ID}}" title="{{*item.name}}">
+                                {{*item.name}}
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="statusbar_b">
+                            <div class="complete" id="completed" style="width:{{item.done}}"></div>
+                        </div>
+                        <span>{{*item.done}}%</span>
+                    </td>
+                    <td style="text-align:right">{{*item.daysleft}}&nbsp;&nbsp;</td>
+                    <td class="tools">
 
 
-                            <a class="tool_edit" href="javascript:void(0);"
-                               onclick="change('manageproject.php?action=editform&amp;id={{ item.ID }}','form_addmyproject');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_addmyproject');"
-                               title="{#edit#}"></a>
+                        <a class="tool_edit" href="javascript:void(0);"
+                           onclick="change('manageproject.php?action=editform&amp;id={{ item.ID }}','form_addmyproject');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_addmyproject');"
+                           title="{#edit#}"></a>
 
 
-                            <a class="tool_del" href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','proj_{{*item.ID}}','manageproject.php?action=del&amp;id={{*item.ID}}',projectsView);"  title="{/literal}{#delete#}{literal}"></a>
+                        <a class="tool_del"
+                           href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','proj_{{*item.ID}}','manageproject.php?action=del&amp;id={{*item.ID}}',projectsView);"
+                           title="{/literal}{#delete#}{literal}"></a>
 
 
-                        </td>
-                    </tr>
+                    </td>
+                </tr>
 
-                    <tr class="acc">
-                        <td colspan="5">
-                            <div class="accordion_toggle"></div>
-                            <div class="accordion_content">
-                                <div class="acc-in">
-                                    <div class="message-in">
-                                        {{{*item.desc}}}
-                                    </div>
+                <tr class="acc">
+                    <td colspan="5">
+                        <div class="accordion_toggle"></div>
+                        <div class="accordion_content">
+                            <div class="acc-in">
+                                <div class="message-in">
+                                    {{{*item.desc}}}
                                 </div>
                             </div>
-                        </td>
-                    </tr>
-                    </tbody>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
                 {/literal}
             </table>
 
@@ -185,11 +197,7 @@
             </div>
         </div> {* block END *}
     </div> {* smooth END *}
-    {literal}
-     <div id = "paging" v-for="page in pages">
-         <a href ="javascript:pagination.loadPage(projectsView,{{page.index}});">{{page.index}}</a>
-     </div>
-    {/literal}
+
 </div> {* projects END *}
 
 
