@@ -70,7 +70,7 @@
                     </td>
                     <td>
                         <div class="statusbar_b">
-                            <div class="complete" id="completed" style="width:{{item.done}}"></div>
+                            <div class="complete" id="completed" style="width:{{item.done}}%"></div>
                         </div>
                         <span>{{*item.done}}%</span>
                     </td>

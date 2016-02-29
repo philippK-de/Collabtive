@@ -2,7 +2,7 @@
 
 	<h2>{#addproject#}</h2>
 
-	<form novalidate class="main" method="post" action="admin.php?action=addpro" {literal} onsubmit="return validateCompleteForm(this);" {/literal} >
+	<form id="addprojectform" novalidate class="main" method="post" action="admin.php?action=addpro" {literal} {/literal} >
 		<fieldset>
 
 			<div class="row">

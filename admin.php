@@ -406,7 +406,8 @@ elseif ($action == "addpro") {
     	{
     		$companyObj->assign($cleanPost["company"], $add);
     	}
-    	header("Location: manageproject.php?action=showproject&id=$add");
+    	//header("Location: manageproject.php?action=showproject&id=$add");
+        echo "ok";
     }
 } elseif ($action == "closepro") {
     if ($project->close($id)) {

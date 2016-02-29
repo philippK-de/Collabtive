@@ -19,6 +19,7 @@ function fetchData(myURL) {
 
 }
 
+
 //Vue.config.silent = true;
 //create the vue views, binding data to DOM elements
 function createView(myEl) {
@@ -41,9 +42,7 @@ function createView(myEl) {
                 var responseData = JSON.parse(myData.responseText);
                 myModel.items = responseData.items;
                 var pages = pagination.listPages(responseData.count);
-                console.log("pages" + pages);
                 myModel.pages = pages;
-                console.log(myModel);
             },
             onLoading: function () {
                 //show loading indicator
@@ -78,7 +77,6 @@ function updateView(view, updateDependencies) {
     new Ajax.Request(myUrl, {
             method: 'get',
             onSuccess: function (myData) {
-                console.log(myUrl);
                 var responseData = JSON.parse(myData.responseText);
                 view.$set("items", responseData.items);
                 view.$set("pages", pagination.listPages(responseData.count));
