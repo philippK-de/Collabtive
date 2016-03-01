@@ -30,10 +30,7 @@ function createView(myEl) {
         url: myEl.url
     };
 
-    var vueview = new Vue({
-        el: "#" + myEl.el,
-        data: myModel
-    });
+
 
     new Ajax.Request(myEl.url, {
             method: 'get',
@@ -57,7 +54,10 @@ function createView(myEl) {
             }
         }
     );
-
+    var vueview = new Vue({
+        el: "#" + myEl.el,
+        data: myModel
+    });
     return vueview;
 }
 
@@ -136,6 +136,62 @@ var pagination = {
         updateView(view, false);
     }
 };
+function submitForm(event, view) {
+    //get the form
+    var theForm = event.currentTarget;
+    //validate the form
+    var validates = validateCompleteForm(theForm);
+    var url = theForm.action;
+    console.log("validates:" + validates);
+
+    //stop the form event from bubbling up. stops form submit
+    event.stopPropagation();
+    event.preventDefault();
+
+    if(validates==true) {
+
+        //string holding the final post body
+        var pbody = "";
+        //loop over form elements
+        for (i = 0; i < theForm.elements.length; i++) {
+            //one element
+            var element = theForm.elements[i];
+            //construct post body
+            if(element.value != undefined ) {
+                pbody += "&" + element.name + "=" + element.value;
+            }
+        }
+
+        //send asyncronous request
+        new Ajax.Request(url, {
+                method: "POST",
+                postBody: pbody,
+                onSuccess: function (myData) {
+                    if(myData.status == 200) {
+                        //update the view belonging to the form
+                        updateView(formView, false);
+                    }
+                },
+                onLoading: function () {
+                    //show loading indicator
+                    startWait("progress" + formView.$el);
+                },
+                onComplete: function () {
+                    //hide loading indicator
+                    console.log("added");
+
+                    stopWait("progress" + formView.$el);
+                },
+                onFailure: function () {
+                    console.log("error");
+                }
+            }
+        );
+
+    }
+
+
+}
 /*
 Show loading indicator
  */

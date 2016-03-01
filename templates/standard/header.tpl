@@ -83,7 +83,12 @@ tinyMCE.init({
 	force_p_newlines : false,
 	convert_newlines_to_brs : false,
 	forced_root_block : false,
-	external_image_list_url: 'manageajax.php?action=jsonfiles&id={/literal}{$project.ID}{literal}'
+	external_image_list_url: 'manageajax.php?action=jsonfiles&id={/literal}{$project.ID}{literal}' ,
+    setup: function (editor) {
+    editor.onChange.add(function () {
+        tinyMCE.triggerSave();
+    });
+}
 
 });
 

@@ -35,53 +35,8 @@ catch (e) {}
 
 
 var form = document.getElementById("addprojectform");
-console.log(form);
-form.addEventListener("submit", function(event) {
-    var validates = validateCompleteForm(form);
-    var url = form.action;
-    console.log("validates:" + validates);
-
-    if(validates==true) {
-        var pbody = "";
-        for (i = 0; i < form.elements.length; i++) {
-            var element = form.elements[i];
-            console.log(element.name + " "+  element.value);
-            if(element.value != undefined && element.value != "") {
-                pbody += "&" + element.name + "=" + element.value;
-            }
-        }
-        var postbody = pbody.substring(1);
-        console.log(postBody);
-        new Ajax.Request(url, {
-                method: 'post',
-                postBody: postbody,
-                onSuccess: function (myData) {
-                    //update the model with the retrieved data
-                    var responseData = JSON.parse(myData.responseText);
-                    myModel.items = responseData.items;
-                    var pages = pagination.listPages(responseData.count);
-                    myModel.pages = pages;
-                },
-                onLoading: function () {
-                    //show loading indicator
-                    startWait("progress" + myEl.el);
-                },
-                onComplete: function () {
-                    //hide loading indicator
-                    stopWait("progress" + myEl.el);
-                },
-                onFailure: function () {
-
-                }
-            }
-        );
-
-        event.preventDefault();
-    }
-    else {
-        event.preventDefault();
-    }
-});
+var formView = projectsView;
+form.addEventListener("submit", submitForm.bind(formView));
 
 
 //load calendar

@@ -513,7 +513,7 @@ class project {
             foreach ($myprojekte as $key => $row) {
                 $date[$key] = $row['end'];
             }
-            array_multisort($date, SORT_ASC, $myprojekte);
+            array_multisort($date, SORT_DESC, $myprojekte);
 
             return $myprojekte;
         } else {

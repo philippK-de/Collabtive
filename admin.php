@@ -409,6 +409,7 @@ elseif ($action == "addpro") {
     	//header("Location: manageproject.php?action=showproject&id=$add");
         echo "ok";
     }
+
 } elseif ($action == "closepro") {
     if ($project->close($id)) {
         echo "ok";

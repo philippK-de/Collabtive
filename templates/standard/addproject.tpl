@@ -54,7 +54,7 @@
 
 			<div class="row">
 				<label for="budget">{#budget#}:</label>
-				<input type="text" class="text" name="budget" id="budget" />
+				<input type="text" class="text" name="budget" id="budget" value="0" />
 			</div>
 
 			<div class = "row">
@@ -86,7 +86,7 @@
 
 			<div class="row-butn-bottom">
 				<label>&nbsp;</label>
-				<button type="submit" onfocus="this.blur();">{#addbutton#}</button>
+				<button type="submit" onfocus="this.blur();" onclick="tinyMCE.triggerSave();">{#addbutton#}</button>
 
 				{if $myprojects == "1"}
 				<button type="reset" onclick="blindtoggle('form_addmyproject');toggleClass('add_myprojects','add-active','add');toggleClass('add_butn_myprojects','butn_link_active','butn_link');toggleClass('sm_myprojects','smooth','nosmooth');return false;" onfocus="this.blur();">{#cancel#}</button>
