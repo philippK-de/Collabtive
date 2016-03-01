@@ -10,7 +10,7 @@
 {elseif $stage == "project" and $loggedin}
 <link rel="search" type="application/opensearchdescription+xml" title="{$project.name} {#search#}" href="manageajax.php?action=addfx-project&amp;project={$project.ID}" />
 <link rel="stylesheet" href="templates/{$settings.template}/theme/{$settings.theme}/css/dtree.css" type="text/css"  />
-<script type="text/javascript" src="include/js/dtree.js"></script>
+<script type="text/javascript" src="include/js/dtree.min.js"></script>
 {/if}
 {if $loggedin}
 <link rel="alternate" type="application/rss+xml" title="{#mymessages#}" href="managerss.php?action=mymsgs-rss&amp;user={$userid}" />
@@ -23,7 +23,7 @@
 <script type = "text/javascript" src = "include/js/ajax.min.js" ></script>
     <script type = "text/javascript" src = "include/js/vue.js" ></script>
 
-<script type = "text/javascript" src="include/js/jsval.js"></script>
+<script type = "text/javascript" src="include/js/jsval.min.js"></script>
      <script type = "text/javascript">
         function _jsVal_Language() {
             this.err_enter = "{/literal}{#wrongfield#}{literal}";

@@ -25,14 +25,6 @@ var msgsView = createView(messages);
 //setup dependenciens
 projectsView.$set("dependencies", [tasksView, msgsView]);
 
-//initialize accordeons
-try {
-    var accord_projects = new accordion('projecthead');
-    var accord_tasks = new accordion('taskhead');
-    var accord_msgs = new accordion('activityhead');
-}
-catch (e) {}
-
 
 var form = document.getElementById("addprojectform");
 var formView = projectsView;
@@ -41,6 +33,15 @@ form.addEventListener("submit", submitForm.bind(formView));
 
 //load calendar
 changeshow('manageajax.php?action=newcal', 'thecal', 'progress');
+
+//initialize accordeons
+try {
+    var accord_projects = new accordion('projecthead');
+    var accord_tasks = new accordion('taskhead');
+    var accord_msgs = new accordion('activityhead');
+}
+catch (e) {}
+
 
 //create blocks accordeon
 var accordIndex = new accordion('block_index', {

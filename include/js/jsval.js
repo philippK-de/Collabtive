@@ -22,7 +22,6 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 **
 ** END HEADER ***************************************************/
-
 function validateCompleteForm (objForm, strErrorClass) {
     return _validateInternal(objForm, strErrorClass, 0);
 };
@@ -413,7 +412,7 @@ function _parseBoolean(value){
 function _checkRegExp(regx, value){
   switch (regx){
   case "JSVAL_RX_EMAIL":
-    return ((/^[a-zA-ZüöäßÄÖÜ]+([\.-]?[a-zA-ZüöäßÄÖÜ]+)*@[a-zA-ZüöäßÄÖÜ]+([\.-]?[a-zA-ZüöäßÄÖÜ]+)*(\.\w{2,5})+$/).test(value));
+    return ((/^[a-zA-Zï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½]+([\.-]?[a-zA-Zï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½]+)*@[a-zA-Zï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½]+([\.-]?[a-zA-Zï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½]+)*(\.\w{2,5})+$/).test(value));
   case "JSVAL_RX_TEL":
     return ((/^1?[\- ]?\(?\d{3}\)?[\- ]?\d{3}[\- ]?\d{4}$/).test(value));
   case "JSVAL_RX_PC":

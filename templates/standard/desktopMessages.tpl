@@ -48,7 +48,7 @@
                 </tfoot>
 
                 {literal}
-                <tbody v-for="item in items" class="alternateColors" id="messages_{{item.ID}}" rel="{{item.ID}},{{item.title}},{{item.posted}},0,0,0">
+                <tbody v-for="item in items" class="alternateColors" id="messages_{{*item.ID}}" rel="{{*item.ID}},{{*item.title}},{{*item.posted}},0,0,0">
 
 
                 <tr>
@@ -63,14 +63,14 @@
                         <div class="toggle-in">
                                             <span class="acc-toggle"
                                                   onclick="javascript:accord_msgs.activate($$('#activityhead .accordion_toggle')[{{$index}}]);toggleAccordeon('activityhead',this);"></span>
-                            <a href="managemessage.php?action=showmessage&amp;mid={item.ID}&amp;id={item.project}" title="{{item.title}}">{{item.title}}</a>
+                            <a href="managemessage.php?action=showmessage&amp;mid={{*item.ID}}&amp;id={{*item.project}}" title="{{*item.title}}">{{*item.title}}</a>
                         </div>
                     </td>
                     <td>
-                        <a href="managemessage.php?action=showproject&amp;id={{item.project}}">{{item.pname}}</a>
+                        <a href="managemessage.php?action=showproject&amp;id={{*item.project}}">{{*item.pname}}</a>
                     </td>
                     <td>
-                        <a href="manageuser.php?action=profile&amp;id={{item.user}}">{{item.username}}</a>
+                        <a href="manageuser.php?action=profile&amp;id={{*item.user}}">{{*item.username}}</a>
                     </td>
                     <td>{{item.postdate}}</td>
                     <td class="tools">
@@ -109,7 +109,7 @@
 
                                 <div class="message">
                                     <div class="message-in">
-                                        {{{item.text}}}
+                                        {{{*item.text}}}
                                     </div>
 
                                     {* MILESTONE and TAGS *}
