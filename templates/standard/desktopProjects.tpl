@@ -54,7 +54,7 @@
                         {/literal}
                         {if $userpermissions.projects.close}
                             {literal}
-                            <a class="butn_check" href="javascript:closeElement('proj_{{*item.ID}}','manageproject.php?action=close&amp;id={{*item.ID}}');" title="{/literal}{#close#}{literal}"></a>
+                            <a class="butn_check" href="javascript:closeElement('proj_{{*item.ID}}','manageproject.php?action=close&amp;id={{*item.ID}}', projectsView);" title="{/literal}{#close#}{literal}"></a>
                             {/literal}
                          {/if}
                         {literal}

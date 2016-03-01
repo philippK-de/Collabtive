@@ -212,7 +212,7 @@ function deleteElement(theElement, theUrl, theView) {
         onSuccess: function (payload) {
             if (payload.responseText == "ok") {
                 removeRow(theElement, deleteEndcolor);
-                if (theView) {
+                if (theView != undefined) {
                     updateView(theView);
                 }
                 var result = true;
@@ -227,13 +227,16 @@ function deleteElement(theElement, theUrl, theView) {
 }
 
 
-function closeElement(theElement, theUrl) {
+function closeElement(theElement, theUrl, theView) {
 
     new Ajax.Request(theUrl, {
         method: 'get',
         onSuccess: function (payload) {
             if (payload.responseText == "ok") {
                 removeRow(theElement, closeEndcolor);
+                if (theView != undefined) {
+                    updateView(theView);
+                }
             }
         }
     });
