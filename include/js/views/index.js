@@ -26,9 +26,13 @@ var msgsView = createView(messages);
 projectsView.$set("dependencies", [tasksView, msgsView]);
 
 
-var form = document.getElementById("addprojectform");
+//get the form to be submitted
+var addProjectForm = document.getElementById("addprojectform");
+//assign the view to be updated after submitting to the formView variable
 var formView = projectsView;
-form.addEventListener("submit", submitForm.bind(formView));
+//add an event listener capaturing the submit event of the form
+//add submitForm() as the handler for the event, and bind the form view to it
+addProjectForm.addEventListener("submit", submitForm.bind(formView));
 
 
 //load calendar
