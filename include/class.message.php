@@ -138,16 +138,24 @@ class message {
             $message["endstring"] = $posted;
             $message["replies"] = $replies;
             $message["avatar"] = $avatar;
-            $message["title"] = $message["title"];
-            $message["text"] = $message["text"];
-            $message["username"] = $message["username"];
 
+            $message["hasFiles"] = false;
+
+            //get files attached to this message
             $attached = $this->getAttachedFiles($message["ID"]);
             $message["files"] = $attached;
+
+            //if there is files set hasFiles to true, else false
+            if(!empty($attached))
+            {
+                $message["hasFiles"] = true;
+            }
+
+            $message["hasMilestones"] = false;
+            $miles = array();
             if ($message["milestone"] > 0) {
                 $miles = $milesobj->getMilestone($message["milestone"]);
-            } else {
-                $miles = array();
+                $message["hasMilestones"] = true;
             }
 
             $message["milestones"] = $miles;
@@ -332,6 +340,8 @@ class message {
             } else {
                 $thisfile['imgfile'] = 0;
             }
+
+            $thisfile["shortName"] = substr($thisfile["name"],0,12);
 
             array_push($files, $thisfile);
         }
