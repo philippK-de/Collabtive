@@ -23,21 +23,32 @@ function fetchData(myURL) {
 //Vue.config.silent = true;
 //create the vue views, binding data to DOM elements
 function createView(myEl) {
+
     var myModel = {
         items: [],
         pages: [],
         dependencies: myEl.dependencies,
-        url: myEl.url
+        url: myEl.url,
+        limit: 10,
+        offset:0
     };
 
+    var myUrl = myEl.url;
 
-
-    new Ajax.Request(myEl.url, {
+    if (myModel.limit > 0) {
+        myUrl += "&limit=" + myModel.limit
+    }
+        if (myModel.offset > 0) {
+        myUrl += "&offset=" + myModel.offset;
+    }
+    new Ajax.Request(myUrl, {
             method: 'get',
             onSuccess: function (myData) {
                 //update the model with the retrieved data
+                console.log("url " + myUrl);
                 var responseData = JSON.parse(myData.responseText);
                 myModel.items = responseData.items;
+                //get the list of pages and add it to the model
                 var pages = pagination.listPages(responseData.count);
                 myModel.pages = pages;
             },
@@ -77,15 +88,21 @@ function updateView(view, updateDependencies) {
     new Ajax.Request(myUrl, {
             method: 'get',
             onSuccess: function (myData) {
+                //retrieve data and update the views model with it
                 var responseData = JSON.parse(myData.responseText);
                 view.$set("items", responseData.items);
                 view.$set("pages", pagination.listPages(responseData.count));
 
+
+                //update dependencies
                 if (updateDependencies == true) {
                     var viewsToUpdate = view.$get("dependencies");
 
                     if (viewsToUpdate.length > 0) {
                         for (var i = 0; i < viewsToUpdate.length; i++) {
+                            //load the same sub pages for dependant views that are loaded for the root view
+                            viewsToUpdate[i].$set("limit", view.limit);
+                            viewsToUpdate[i].$set("offset", view.offset);
                             updateView(viewsToUpdate[i], viewsToUpdate[i].url);
                         }
                     }
@@ -133,7 +150,7 @@ var pagination = {
         view.$set("offset", offset);
         view.$set("url", viewUrl);
 
-        updateView(view, false);
+        updateView(view, true);
     }
 };
 function submitForm(event, view) {
