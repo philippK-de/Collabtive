@@ -281,7 +281,7 @@ function calctime() {
 
 function systemMsg(ele) {
     new Effect.Appear(ele, {duration: 2.0})
-    makeTimer("new Effect.Fade('" + ele + "', { duration: 2.0 })", 4000);
+    makeTimer("new Effect.Fade('" + ele + "', { duration: 2.0 })", 5000);
 }
 
 //add search provider
