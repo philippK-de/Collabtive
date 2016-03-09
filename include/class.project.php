@@ -486,35 +486,32 @@ class project
     {
         global $conn;
 
-        $myprojekte = array();
+        $myProjects = array();
         $user = (int)$user;
         $status = (int)$status;
         $offset = (int)$offset;
         $limit = (int)$limit;
 
         //$sel = $conn->prepare("SELECT projekt FROM projekte_assigned WHERE user = ? ORDER BY ID ASC LIMIT $offset,$limit ");
+
+        //get the projekt IDs of projects assigned to this user
         $selAssigned = $conn->query("SELECT projekt FROM projekte_assigned WHERE user = $user ORDER BY projekt DESC LIMIT $limit OFFSET $offset");
         $projectsAssigned = $selAssigned->fetchAll();
 
-
+        //only get the projects with the correct status
         $projectIdStmt = $conn->prepare("SELECT ID FROM projekte WHERE ID = ? AND status=?");
 
-        //loop by reference
+        //loop by reference and assign the project details to eahc project
         foreach ($projectsAssigned as &$project) {
             $projectIdStmt->execute(array($project["projekt"], $status));
             $projectId = $projectIdStmt->fetch();
-            $project = $this->getProject($projectId[0]);
+            if($projectId) {
+                array_push($myProjects,$this->getProject($projectId[0]));
+            }
         }
 
-        if (!empty($projectsAssigned)) {
-            // Sort projects by due date ascending
-            /*$date = array();
-            foreach ($projectsAssigned as $key => $row) {
-                $date[$key] = $row['end'];
-            }
-            */
-            array_multisort($date, SORT_ASC, $projectsAssigned);
-            return $projectsAssigned;
+        if (!empty($myProjects)) {
+            return $myProjects;
         } else {
             return false;
         }
