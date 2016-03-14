@@ -494,18 +494,14 @@ class project
         //$sel = $conn->prepare("SELECT projekt FROM projekte_assigned WHERE user = ? ORDER BY ID ASC LIMIT $offset,$limit ");
 
         //get the projekt IDs of projects assigned to this user
-        $selAssigned = $conn->query("SELECT projekt FROM projekte_assigned WHERE user = $user ORDER BY projekt DESC LIMIT $limit OFFSET $offset");
-        $projectsAssigned = $selAssigned->fetchAll();
+        $selAssigned = $conn->query("SELECT projekt, status FROM projekte_assigned JOIN projekte ON projekte.ID = projekte_assigned.projekt WHERE user = $user AND projekte.status = $status ORDER BY projekt DESC LIMIT $limit OFFSET $offset");
 
-        //only get the projects with the correct status
-        $projectIdStmt = $conn->prepare("SELECT ID FROM projekte WHERE ID = ? AND status=?");
+        $projectsAssigned = $selAssigned->fetchAll();
 
         //loop by reference and assign the project details to eahc project
         foreach ($projectsAssigned as $project) {
-            $projectIdStmt->execute(array($project["projekt"], $status));
-            $projectId = $projectIdStmt->fetch();
-            if($projectId) {
-                array_push($myProjects,$this->getProject($projectId[0]));
+            if (!empty($project[0])) {
+                array_push($myProjects,$this->getProject($project[0]));
             }
         }
 
