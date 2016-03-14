@@ -4,6 +4,10 @@ var projects = {
     url: "index.php?action=myprojects",
     dependencies: []
 };
+var oldProjects = {
+    el: "projectsDoneblock",
+    url: "index.php?action=myClosedProjects"
+}
 
 var tasks = {
     el: "desktoptasks",
@@ -19,6 +23,7 @@ var messages = {
 
 //create views - binding the data to the dom element
 var projectsView = createView(projects);
+var oldProjectsView = createView(oldProjects);
 var tasksView = createView(tasks);
 var msgsView = createView(messages);
 
@@ -41,6 +46,7 @@ changeshow('manageajax.php?action=newcal', 'thecal', 'progress');
 //initialize accordeons
 try {
     var accord_projects = new accordion('projecthead');
+    var accord_oldprojects = new accordion('projectsDoneblock');
     var accord_tasks = new accordion('taskhead');
     var accord_msgs = new accordion('activityhead');
 }
@@ -63,14 +69,15 @@ var accordIndex = new accordion('block_index', {
  **/
 function activateAccordeon(theAccord) {
     //activate the block in the block accordion
-    accordIndex.activate($$('#block_index .acc_toggle')[theAccord]);
+    accordIndex.activate(document.querySelectorAll('#block_index .acc_toggle')[theAccord]);
     //change the state of the arrow in the titlebar
     changeElements("#" + blockIds[theAccord] + " > a.win_block", "win_none");
     //set a cookie to save the accordeon last clicked
     setCookie("activeSlideIndex", theAccord);
 }
 //get the blocks
-var theBlocks = $$("#block_index > div .headline > a");
+//var theBlocks = $$("#block_index > div .headline > a");
+var theBlocks = document.querySelectorAll("#block_index > div .headline > a");
 //console.log(theBlocks);
 
 //loop through the blocks and add the accordion toggle link

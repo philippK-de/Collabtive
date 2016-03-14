@@ -23,7 +23,6 @@ function createView(myEl) {
         offset: 0,
         dependencies: myEl.dependencies,
         url: myEl.url
-
     };
 
     /*

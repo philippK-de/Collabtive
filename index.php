@@ -143,6 +143,15 @@ elseif($action == "myprojects")
 {
     $myprojects["items"] = $myOpenProjects;
     $myprojects["count"] = $projectnum;
+
+    echo json_encode($myprojects);
+
+}
+elseif($action == "myClosedProjects")
+{
+    $myprojects["items"] = $myClosedProjects;
+    $myprojects["count"] = $oldProjectnum;
+
     echo json_encode($myprojects);
 
 }

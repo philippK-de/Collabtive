@@ -6,7 +6,7 @@
  * @author Philipp Kiszka <info@o-dyn.de>
  * @name project
  * @package Collabtive
- * @version 1.2
+ * @version 3
  * @link http://www.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
