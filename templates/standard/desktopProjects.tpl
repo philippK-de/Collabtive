@@ -62,7 +62,8 @@
                     <td>
                         <div class="toggle-in">
                                 <span id="desktopprojectstoggle{{ item.ID }}" class="acc-toggle"
-                                      onclick="javascript:accord_projects.activate($$('#projecthead .accordion_toggle')[{{$index}}]);toggleAccordeon('projecthead',this);"></span>
+                                      onclick="javascript:accord_projects.activate(document.querySelectorAll('#projecthead .accordion_toggle')[{{$index}}]);
+                                      toggleAccordeon('projecthead',this);"></span>
                             <a href="manageproject.php?action=showproject&amp;id={{*item.ID}}" title="{{*item.name}}">
                                 {{*item.name}}
                             </a>
@@ -130,7 +131,7 @@
                 <div class="toggleblock">
                     <table cellpadding="0" cellspacing="0" border="0" id="acc-oldprojects">
 
-                        <tbody v-for="item in items" class="alternateColors" id="proj_{$oldprojects[clopro].ID}">
+                        <tbody v-for="item in items" class="alternateColors" id="proj_{{item.ID}}">
                         <tr>
                             <td class="a">
                                 {/literal}
@@ -144,7 +145,8 @@
                             <td class="b">
                                 <div class="toggle-in">
                                             <span class="acc-toggle"
-                                                  onclick="javascript:accord_oldprojects.activate($$('#acc-oldprojects .accordion_toggle')[{{$index}}]);toggleAccordeon('acc-oldprojects',this);"></span>
+                                                  onclick="javascript:accord_oldprojects.activate(document.querySelectorAll('#acc-oldprojects .accordion_toggle')
+                                                  [{{$index}}]);toggleAccordeon('acc-oldprojects',this);"></span>
                                     <a href="manageproject.php?action=showproject&amp;id={{item.ID}}" title="{{item.name}}">
                                         {{item.name}}
                                     </a>
