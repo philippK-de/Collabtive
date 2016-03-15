@@ -267,8 +267,7 @@ if ($action == "addform") {
         $template->display("error.tpl");
         die();
     }
-    // get all messages of this project
-    $messages = $msg->getProjectMessages($id);
+
     // get project's name
     $myproject = new project();
     $pro = $myproject->getProject($id);
@@ -293,11 +292,20 @@ if ($action == "addform") {
     $template->assign("milestones", $milestones);
     $template->assign("projectname", $projectname);
     $template->assign("files", $cleanPost["thefiles"]);
-    $template->assign("messages", $messages);
     $template->assign("members", $members);
     $template->assign("messagenum", $mcount);
     $template->display("projectmessages.tpl");
-} elseif ($action == "showmessage") {
+}
+elseif($action = "projectMessages")
+{
+    // get all messages of this project
+    $messages = $msg->getProjectMessages($id);
+    $jsonMessages["items"] = $messages;
+    $jsonMessages["count"] = count($messages);
+
+    echo json_encode($jsonMessages);
+}
+elseif ($action == "showmessage") {
     // get the message and its replies
     $message = $msg->getMessage($cleanGet["mid"]);
     $replies = $msg->getReplies($cleanGet["mid"]);

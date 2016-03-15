@@ -3,7 +3,7 @@
 
 <div id="content-left">
 	<div id="content-left-in">
-		<div class="msgs">
+		<div class="msgs" id="projectMessages">
 
 			<div class = "infowin_left">
 				<span id = "deleted" style = "display:none;" class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#messagewasdeleted#}</span>
@@ -32,6 +32,9 @@
 				<a href="javascript:void(0);" id="block_msgs_toggle" class="win_block" onclick = "toggleBlock('block_msgs');"></a>
 
 				<div class="wintools">
+                    <div class="progress" id="progressprojectMessages" style="display:none;width:20px;float:left">
+                        <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-messages.gif"/>
+                    </div>
 					<div class="export-main">
 						<a class="export"><span>{#export#}</span></a>
 						<div class="export-in"  style="width:46px;left: -46px;"> {*at one item*}
@@ -76,44 +79,40 @@
 								<td colspan="6"></td>
 							</tr>
 						</tfoot>
-
-						{section name=message loop=$messages}
-
-						{*Color-Mix*}
-						{if $smarty.section.message.index % 2 == 0}
-						<tbody class="color-a" id="msgs_{$messages[message].ID}">
-						{else}
-						<tbody class="color-b" id="msgs_{$messages[message].ID}">
-						{/if}
+                        {literal}
+						<tbody v-for = "message in items" class="alternateColors" id="msgs_{{message.ID}}">
 							<tr>
 								<td>
-									{if $userpermissions.messages.close}
-											<a class="butn_reply" href="javascript:void(0);" onclick="change('managemessage.php?action=replyform&amp;mid={$messages[message].ID}&amp;id={$project.ID}','addmsg');toggleClass(this,'butn_reply_active','butn_reply');blindtoggle('addmsg');" title="{#edit#}"></a>
+									{/literal}
+                                    {if $userpermissions.messages.close}
+                                    {literal}
+										<a class="butn_reply" href="javascript:void(0);" onclick="change('managemessage.php?action=replyform&amp;mid={{*message.ID}}&amp;id={{*message.project}}','addmsg');toggleClass(this,'butn_reply_active','butn_reply');blindtoggle('addmsg');" title="{/literal}{#edit#}"></a>
 									{/if}
 								</td>
+                                {literal}
 								<td>
 									<div class="toggle-in">
-									<span class="acc-toggle" onclick="javascript:accord_messages.activate($$('#block_msgs .accordion_toggle')[{$smarty.section.message.index}]);toggleAccordeon('accord_messages',this);"></span>
-										<a href="managemessage.php?action=showmessage&amp;mid={$messages[message].ID}&amp;id={$project.ID}" title="{$messages[message].title}">{$messages[message].title|truncate:35:"...":true}</a>
+									<span class="acc-toggle" onclick="javascript:accord_messages.activate($$('#block_msgs .accordion_toggle')[{{$index}}]);toggleAccordeon('accord_messages',this);"></span>
+                                        <a href="managemessage.php?action=showmessage&amp;mid={{*message.ID}}&amp;id={{*message.project}}" title="{{*message.title}}">{{message.title}}</a>
 									</div>
 								</td>
 								<td style="text-align:right">
-									{if $messages[message].replies > 0}
-										<a href = "managemessage.php?action=showmessage&amp;mid={$messages[message].ID}&amp;id={$project.ID}#replies">{$messages[message].replies}</a>
-									{else}
-										{$messages[message].replies}
-									{/if}
+                                    <a href = "managemessage.php?action=showmessage&amp;mid={{message.ID}}&amp;id={{message.project}}#replies">{{*message.replies}}</a>
 									&nbsp;
 								</td>
-								<td><a href="manageuser.php?action=profile&amp;id={$messages[message].user}">{$messages[message].username|truncate:20:"...":true}</a></td>
-								<td>{$messages[message].postdate}</td>
+								<td><a href="manageuser.php?action=profile&amp;id={{message.user}}">{{*message.username}}</a></td>
+								<td>{{*message.postdate}}</td>
 								<td class="tools">
+                                    {/literal}
 									{if $userpermissions.messages.edit}
-										<a class="tool_edit" href="javascript:void(0);" onclick="change('managemessage.php?action=editform&amp;mid={$messages[message].ID}&amp;id={$project.ID}','addmsg');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('addmsg');" title="{#edit#}"></a>
+                                    {literal}
+										<a class="tool_edit" href="javascript:void(0);" onclick="change('managemessage.php?action=editform&amp;mid={{*message.ID}}&amp;id={{*message.project}}','addmsg');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('addmsg');" title="{/literal}{#edit#}"></a>
 									{/if}
 									{if $userpermissions.messages.del}
-										<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'msgs_{$messages[message].ID}\',\'managemessage.php?action=del&amp;mid={$messages[message].ID}&amp;id={$project.ID}\')');"  title="{#delete#}"></a>
+                                    {literal}
+										<a class="tool_del" href="javascript:confirmfunction('{/literal}{#confirmdel#}{literal}','deleteElement(\'msgs_{{message].ID}}\',\'managemessage.php?action=del&amp;mid={{*message.ID}}&amp;id={{*message.project}}\')');"  title="{/literal}{#delete#}"></a>
 									{/if}
+                                    {literal}
 								</td>
 							</tr>
 
@@ -213,27 +212,30 @@
 								</td>
 							</tr>
 						</tbody>
-						{/section}
 
 						</table>
-					</div> {*smooth End*}
+					</div> <!--smooth End-->
 
 					<div class="tablemenue">
 						<div class="tablemenue-in">
+                            {/literal}
 							{if $userpermissions.messages.add}
 							<a class="butn_link" href="javascript:blindtoggle('addmsg');"  id="add_butn" onclick="toggleClass('add','add-active','add');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_msgs','smooth','nosmooth');">{#addmessage#}</a>
 							{/if}
+                            {literal}
 						</div>
 					</div>
-				</div> {*block END*}
+				</div> <!-- block END  -->
 			<div class="content-spacer"></div>
 
-		</div> {*Msgs END*}
-	</div> {*content-left-in END*}
-</div> {*content-left END*}
+		</div> <!-- Msgs END-->
+	</div> <!-- content-left-in END-->
+</div> <!-- content-left END -->
 
-{literal}
+    <script type="text/javascript" src="include/js/views/projectMessages.min.js"></script>
 	<script type = "text/javascript">
+        projectMessages.url = projectMessages.url + "&id=" + {/literal}{$project.ID}{literal};
+        projectMessagesView = createView(projectMessages);
 		var accord_messages = new accordion('block_msgs');
 	</script>
 {/literal}

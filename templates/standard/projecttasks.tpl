@@ -107,7 +107,7 @@
                         {/literal}
                         {if $userpermissions.tasks.close}
                         {literal}
-                            <a class="close" href="managetasklist.php?action=close&amp;tlid={{list.ID}}&amp;id={{*list.project}}"><span>{/literal}{#close#}</span>
+                            <a class="close" href="managetasklist.php?action=close&amp;tlid={{*list.ID}}&amp;id={{*list.project}}"><span>{/literal}{#close#}</span>
                             </a>
                         {/if}
                         {if $userpermissions.tasks.edit}
@@ -122,14 +122,14 @@
                         {/if}
                         {if $userpermissions.tasks.add}
                         {literal}
-                            <a class="add" href="javascript:blindtoggle('form_{{*list.ID}}');" id="add_{{*list.ID}}" onclick="toggleClass(this,'add-active','add');toggleClass('add_butn_{{*list.ID}}','butn_link_active','butn_link');toggleClass('sm_{{list.ID}}','smooth','nosmooth');"><span>{/literal}{#addtask#}</span>
+                            <a class="add" href="javascript:blindtoggle('form_{{*list.ID}}');" id="add_{{*list.ID}}" onclick="toggleClass(this,'add-active','add');toggleClass('add_butn_{{*list.ID}}','butn_link_active','butn_link');toggleClass('sm_{{*list.ID}}','smooth','nosmooth');"><span>{/literal}{#addtask#}</span>
                             </a>
                         {/if}
                         {literal}
                     </div>
 
                     <h2>
-                        <a href="managetasklist.php?action=showtasklist&amp;id={{list.project}}&amp;tlid={{list.ID}}" title="{{list.name}}">
+                        <a href="managetasklist.php?action=showtasklist&amp;id={{*list.project}}&amp;tlid={{*list.ID}}" title="{{*list.name}}">
                             <img src="./templates/{/literal}{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt=""/>
                             {literal}
                             {{*list.name}}
@@ -137,16 +137,16 @@
                     </h2>
                 </div>
 
-                <div id="block-{{list.ID}}" class="block">
+                <div id="block-{{*list.ID}}" class="block">
                     {/literal}
                     {if $userpermissions.tasks.add}
                     {literal}
-                        <div id="form_{{list.ID}}" class="addmenue" style="display:none;">
+                        <div id="form_{{*list.ID}}" class="addmenue" style="display:none;">
                     {/literal}{include file="addtask.tpl" }
                         </div>
                     {/if}
                     {literal}
-                    <div class="nosmooth" id="sm_{{list.ID}}">
+                    <div class="nosmooth" id="sm_{{*list.ID}}">
                         <table id="acc_{{list.ID}}" cellpadding="0" cellspacing="0" border="0">
                             {/literal}
                             <thead>
@@ -165,30 +165,30 @@
                             </tr>
                             </tfoot>
                             {literal}
-                            <tbody v-for="task in list.tasks" class="alternateColors" id="task_{{task.ID}}">
+                            <tbody v-for="task in list.tasks" class="alternateColors" id="task_{{*task.ID}}">
                             <tr v-bind:class="{ 'marker-late': task.islate, 'marker-today': task.istoday }">
                                 <td>
                                     {/literal}
                                     {if $userpermissions.tasks.close}
                                     {literal}
-                                        <a class="butn_check" href="javascript:closeElement('task_{{task.ID}}','managetask.php?action=close&amp;tid={{task.ID}}&ampid={{task.project}}');" title="{/literal}{#close#}"></a>
+                                        <a class="butn_check" href="javascript:closeElement('task_{{*task.ID}}','managetask.php?action=close&amp;tid={{*task.ID}}&ampid={{*task.project}}');" title="{/literal}{#close#}"></a>
                                     {/if}
                                 </td>
                                 {literal}
                                 <td>
                                     <div class="toggle-in">
                                         <span class="acc-toggle"
-                                              onclick="javascript:accord_{{list.ID}}.activate($$('#acc_{{list.ID}} .accordion_toggle')[{$index}])toggleAccordeon('acc_{{list.ID}}',this);"></span>
-                                        <a href="managetask.php?action=showtask&amp;tid={{task.ID}}&amp;id={{task.project}}"
-                                           title="{$lists[list].tasks[task].title}">
-                                            {{{task.title}}}
+                                              onclick="javascript:accord_{{list.ID}}.activate($$('#acc_{{*list.ID}} .accordion_toggle')[{$index}])toggleAccordeon('acc_{{*list.ID}}',this);"></span>
+                                        <a href="managetask.php?action=showtask&amp;tid={{*task.ID}}&amp;id={{*task.project}}"
+                                           title="{{*task.title}}">
+                                            {{{*task.title}}}
                                         </a>
                                     </div>
                                 </td>
                                 <td>
                                     <a v-for="user in task.users" href="manageuser.php?action=profile&amp;id={{user.ID}}">{{*user.name}}</a>
                                 </td>
-                                <td style="text-align:right">{{task.daysleft}}&nbsp;&nbsp;</td>
+                                <td style="text-align:right">{{*task.daysleft}}&nbsp;&nbsp;</td>
                                 <td class="tools">
                                     {/literal}
                                     {if $userpermissions.tasks.edit}
