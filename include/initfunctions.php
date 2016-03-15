@@ -25,7 +25,6 @@ function chkproject($user, $project)
     $user = (int) $user;
     $project = (int) $project;
     $chk = @$conn->query("SELECT ID FROM projekte_assigned WHERE projekt = $project AND user = $user")->fetch();
-
     $chk = $chk[0];
 
     if ($chk != "") {

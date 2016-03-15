@@ -98,13 +98,17 @@ if (isset($conn)) {
     // create a global mylog object for loging system events
     $mylog = new mylog();
     // get a settings object, and fetch an array containing the system settings
-    $set = (object) new settings();
-    $settings = $set->getSettings();
+    $settingsObj = (object) new settings();
+    $settings = $settingsObj->getSettings();
     // define a constant that holds the default dateformat
     define("CL_DATEFORMAT", $settings["dateformat"]);
     // set the default TZ for date etc
     date_default_timezone_set($settings["timezone"]);
     $template->assign("settings", $settings);
+}
+else
+{
+    $settings = array();
 }
 // Set template directory
 // If no directory is set in the system settings, default to the standard theme
