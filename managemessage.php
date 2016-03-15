@@ -41,70 +41,7 @@ if ($action != "mymsgs" and $action != "mymsgs-pdf") {
     }
 }
 
-if ($action == "addform") {
-    // display addform
-    $template->display("addmessageform.tpl");
-} elseif ($action == "add") {
-    // check if the user is allowed to add messages
-    if (!$userpermissions["messages"]["add"]) {
-        $errtxt = $langfile["nopermission"];
-        $noperm = $langfile["accessdenied"];
-        $template->assign("errortext", "<h2>$errtxt</h2><br>$noperm");
-        $template->display("error.tpl");
-        die();
-    }
-    // add message
-    $themsg = $msg->add($id, $cleanPost["title"], $message, $userid, $username, 0, $cleanPost["milestone"]);
-
-    if ($themsg) {
-        if ($cleanPost["thefiles"] > 0) {
-            // attach existing file
-            $msg->attachFile($cleanPost["thefiles"], $themsg);
-        } elseif ($cleanPost["thefiles"] == 0 and $cleanPost["numfiles"] > 0) {
-            // if upload files are set, upload and attach
-            $msg->attachFile(0, $themsg, $id);
-        }
-
-        if ($settings["mailnotify"]) {
-            $sendto = getArrayVal($_POST, "sendto");
-            $usr = (object) new project();
-            $users = $usr->getProjectMembers($id, 10000);
-            if ($sendto[0] == "all") {
-                $sendto = $users;
-                $sendto = reduceArray($sendto);
-            } elseif ($sendto[0] == "none") {
-                $sendto = array();
-            }
-            foreach($users as $user) {
-                if (!empty($user["email"])) {
-                    $userlang = readLangfile($user['locale']);
-
-                    $subject = $userlang["messagewasaddedsubject"] . ' ("' . $cleanPost["title"] . '" - ' . $userlang['by'] . ' ' . $username . ')'; // added message title and author  to subject
-
-                    $mailcontent = $userlang["hello"] . ",<br /><br/>" .
-                        $userlang["messagewasaddedtext"] . "<br /><br />" .
-                        "<h3><a href = \"" . $url . "managemessage.php?action=showmessage&id=$id&mid=$themsg\">" . $cleanPost["title"] . "</a></h3>".
-                         // no need for line break after heading
-                        $message;
-
-                    if (is_array($sendto)) {
-                        if (in_array($user["ID"], $sendto) && $userid != $user["ID"]) {
-                            // send email
-                            $themail = new emailer($settings);
-                            $themail->send_mail($user["email"], $subject, $mailcontent);
-                        }
-                    } else {
-                        // send email
-                        $themail = new emailer($settings);
-                        $themail->send_mail($user["email"], $subject, $mailcontent);
-                    }
-                }
-            }
-        }
-        $loc = $url . "managemessage.php?action=showproject&id=$id&mode=added";
-        header("Location: $loc");
-    }
-} elseif ($action == "editform") {
+if ($action == "editform") {
     // check if the user is allowed to edit messages
     if (!$userpermissions["messages"]["edit"]) {
         $errtxt = $langfile["nopermission"];
