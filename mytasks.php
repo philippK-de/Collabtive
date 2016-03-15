@@ -23,7 +23,7 @@ if (!$action) {
     $alltasks = array();
     if (!empty($myprojects)) {
         foreach($myprojects as $proj) {
-            $tasks = $task->getAllMyProjectTasks($proj["ID"], 10000);
+            $tasks = $task->getAllMyProjectTasks($proj["ID"]);
             $lists = $tlist->getProjectTasklists($proj["ID"], 1);
             $donetasks = $task->getMyDoneProjectTasks($proj["ID"], 10000);
 
@@ -69,7 +69,7 @@ if (!$action) {
     $tasks = array();
     if (!empty($myprojects)) {
         foreach($myprojects as $proj) {
-            $task = $mtask->getAllMyProjectTasks($proj["ID"], 100);
+            $task = $mtask->getAllMyProjectTasks($proj["ID"]);
             if (!empty($task)) {
                 array_push($tasks, $task);
             }

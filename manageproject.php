@@ -196,7 +196,7 @@ if ($action == "editform") {
     }
 
     $task = new task();
-    $tasks = $task->getAllMyProjectTasks($cleanGet["id"], 100, $cleanGet["user"]);
+    $tasks = $task->getAllMyProjectTasks($cleanGet["id"], $cleanGet["user"]);
 
     if ($cleanGet["id"] > 0 and $cleanPost["assignto"] > 0) {
         if (!empty($tasks)) {

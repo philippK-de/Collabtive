@@ -265,7 +265,7 @@ elseif ($action == "adduser") {
         $task = new task();
 
         foreach($proarr as $proj) {
-            $tasks = $task->getAllMyProjectTasks($proj["project"], 100, $id);
+            $tasks = $task->getAllMyProjectTasks($proj["project"], $id);
             if ($proj["project"] > 0 and $proj["user"] > 0) {
                 if (!empty($tasks)) {
                     foreach($tasks as $mytask) {

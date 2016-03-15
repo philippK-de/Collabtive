@@ -30,10 +30,10 @@ $template->assign("mainclasses", $mainclasses);
 // create objects
 
 $project = new project();
-$customer = new company();
 $milestone = new milestone();
 $mtask = new task();
 $msg = new message();
+
 // create arrays to hold data
 $messages = array();
 $milestones = array();
@@ -60,7 +60,7 @@ $template->assign("openProjects", $myOpenProjects);
 if (!empty($myOpenProjects)) {
     foreach($myOpenProjects as $proj) {
         // get all the tasks in this project that are assigned to the current user
-        $task = $mtask->getAllMyProjectTasks($proj["ID"], 100);
+        $task = $mtask->getAllMyProjectTasks($proj["ID"]);
         // get all messages in the project
         $msgs = $msg->getProjectMessages($proj["ID"]);
         // write those to arrays
@@ -89,15 +89,21 @@ if ($userpermissions["projects"]["add"]) {
 // by default the arrays have a level for each project, whcih contains arrays for each message/task . reduce array flattens this to have all messages/tasks of all projects in one structure
 if (!empty($messages)) {
     $messages = reduceArray($messages);
+
 }
+$messageCount = count($messages);
+
 $etasks = reduceArray($tasks);
+
 // Create sort array for multisort by adding the daysleft value to a sort array
 $sort = array();
 foreach($etasks as $etask) {
-    array_push($sort, $etask["daysleft"]);
+    array_push($sort, $etask["project"]);
 }
 // Sort using array_multisort
-array_multisort($sort, SORT_NUMERIC, SORT_ASC, $etasks);
+array_multisort($sort, SORT_NUMERIC, SORT_DESC, $etasks);
+$taskCount = count($etasks);
+
 // On Admin Login check for updates
 $mode = getArrayVal($_GET, "mode");
 if ($mode == "login") {
@@ -119,24 +125,21 @@ if ($mode == "login") {
 }
 // Get todays date and count tasks, projects and messages for display
 $today = date("d");
-$tasknum = count($etasks);
+
 $oldProjectnum = count($myClosedProjects[0]);
-$msgnum = count($messages);
-$title = $langfile["desktop"];
 
 if(!$action) {
 // Assign everything to the template engine
-    $template->assign("title", $title);
+    $template->assign("title", $langfile["desktop"]);
     $template->assign("today", $today);
 
-    $template->assign("oldprojects", $myClosedProjects);
     $template->assign("closedProjectnum", $oldProjectnum);
     $template->assign("projectov", "yes");
 
     $template->assign("mode", $mode);
 
-    $template->assign("tasknum", $tasknum);
-    $template->assign("msgnum", $msgnum);
+    $template->assign("tasknum", $taskCount);
+    $template->assign("msgnum", $messageCount);
     $template->display("index.tpl");
 }
 elseif($action == "myprojects")
