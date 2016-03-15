@@ -22,6 +22,7 @@ class message {
      * @param int $user User ID of the user adding the message
      * @param string $username Name of the user adding the message
      * @param int $replyto ID of the message this message is replying to. Standardmessage: 0
+     * @param int $milestone ID of the milestone to attach this message to
      * @return bool
      */
     function add($project, $title, $text, $user, $username, $replyto, $milestone)
@@ -182,9 +183,7 @@ class message {
 
         $replies = array();
 
-        $milesobj = new milestone();
-        $user = new user();
-        while ($reply = $sel->fetch()) {
+       while ($reply = $sel->fetch()) {
             if (!empty($reply)) {
                 $thereply = $this->getMessage($reply["ID"]);
                 array_push($replies, $thereply);
@@ -224,8 +223,7 @@ class message {
             $sel1 = $conn->query("SELECT ID FROM messages WHERE project IN($prstring) ORDER BY posted DESC LIMIT $limit ");
             $messages = array();
 
-            $milesobj = new milestone();
-            while ($message = $sel1->fetch()) {
+           while ($message = $sel1->fetch()) {
                 $themessage = $this->getMessage($message["ID"]);
                 array_push($messages, $themessage);
             }
@@ -252,8 +250,6 @@ class message {
         $sel1 = $conn->prepare("SELECT ID FROM messages WHERE project = ? AND replyto = 0 ORDER BY posted DESC");
         $sel1->execute(array($project));
 
-        $milesobj = new milestone();
-
         while ($message = $sel1->fetch()) {
             $themessage = $this->getMessage($message["ID"]);
             array_push($messages, $themessage);
@@ -269,33 +265,22 @@ class message {
     /**
      * Attach a file to a message
      *
-     * @param int $fid ID of the file to be attached
-     * @param int $mid ID of the message where the file will be attached
-     * @param int $id optional param denoting the project ID where the file will be uploaded to (if so)
+     * @param int $fileId ID of the file to be attached
+     * @param int $messageId ID of the message where the file will be attached
+     * @param int $project optional param denoting the project ID where the file will be uploaded to (if so)
      * @return bool
      */
-    function attachFile($fid, $mid, $id = 0)
+    function attachFile($fileId, $messageId, $project = 0)
     {
         global $conn;
-        $fid = (int) $fid;
-        $mid = (int) $mid;
-        $id = (int) $id;
+        $fileId = (int) $fileId;
+        $messageId = (int) $messageId;
 
-        $myfile = new datei();
         // If a file ID is given, the given file will be attached
         // If no file ID is given, the file will be uploaded to the project defined by $id and then attached
-        if ($fid > 0) {
+        if ($fileId > 0) {
             $insStmt = $conn->prepare("INSERT INTO files_attached (file,message) VALUES (?,?)");
-            $insStmt->execute(array($fid,$mid));
-        } else {
-            $num = $_POST["numfiles"];
-
-            $chk = 0;
-            $insStmt = $conn->prepare("INSERT INTO files_attached (file,message) VALUES (?,?)");
-            for($i = 1;$i <= $num;$i++) {
-                $fid = $myfile->upload("userfile$i", "files/" . CL_CONFIG . "/$id", $id);
-                $ins = $insStmt->execute(array($fid, $mid));
-            }
+           $ins = $insStmt->execute(array($fileId,$messageId));
         }
         if ($ins) {
             return true;
