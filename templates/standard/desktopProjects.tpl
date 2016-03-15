@@ -46,7 +46,7 @@
                 </tfoot>
 
                 {literal}
-                <tbody v-for="item in items" id="proj_{{item.ID}}" class="alternateColors"
+                <tbody v-for="item in items.open" id="proj_{{item.ID}}" class="alternateColors"
                        rel="{{item.ID}},{{item.name}},{{item.daysleft}},0,0,{{item.done}}">
 
                 <tr v-bind:class="{ 'marker-late': item.islate, 'marker-today': item.istoday }">
@@ -131,7 +131,7 @@
                 <div class="toggleblock">
                     <table cellpadding="0" cellspacing="0" border="0" id="acc-oldprojects">
 
-                        <tbody v-for="item in items" class="alternateColors" id="proj_{{item.ID}}">
+                        <tbody v-for="item in items.closed" class="alternateColors" id="proj_{{item.ID}}">
                         <tr>
                             <td class="a">
                                 {/literal}

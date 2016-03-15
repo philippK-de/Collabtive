@@ -53,7 +53,6 @@ if ($action == "addform") {
         $template->display("error.tpl");
         die();
     }
-    echo "Bla";
     // add message
     $themsg = $msg->add($id, $cleanPost["title"], $message, $userid, $username, 0, $cleanPost["milestone"]);
 
