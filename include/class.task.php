@@ -591,18 +591,18 @@ class task
     private function getTaskDetails(array $task)
     {
         global $conn;
-        $psel = $conn->prepare("SELECT name FROM projekte WHERE ID = ?");
-        $psel->execute(array($task["project"]));
-        $pname = $psel->fetch();
-        $pname = stripslashes($pname[0]);
+        $projectNameStmt = $conn->prepare("SELECT name FROM projekte WHERE ID = ?");
+        $projectNameStmt->execute(array($task["project"]));
+        $projectName = $projectNameStmt->fetch();
+        $projectName = stripslashes($projectName[0]);
 
         $listStmt = $conn->prepare("SELECT name FROM tasklist WHERE ID = ?");
         $listStmt->execute(array($task["liste"]));
         $list = $listStmt->fetch();
         $list = stripslashes($list[0]);
 
-        if (isset($list) or isset($pname)) {
-            $details = array("list" => $list, "pname" => $pname);
+        if (isset($list) or isset($projectName)) {
+            $details = array("list" => $list, "projectName" => $projectName);
         }
 
         if (!empty($details)) {
