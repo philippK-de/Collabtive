@@ -144,9 +144,7 @@
                             </td>
                             <td class="b">
                                 <div class="toggle-in">
-                                            <span class="acc-toggle"
-                                                  onclick="javascript:accord_oldprojects.activate(document.querySelectorAll('#acc-oldprojects .accordion_toggle')
-                                                  [{{$index}}]);toggleAccordeon('acc-oldprojects',this);"></span>
+                                            <span class="acc-toggle" onclick="javascript:accord_oldprojects.activate(document.querySelectorAll('#acc-oldprojects .accordion_toggle')[{{$index}}]);toggleAccordeon('acc-oldprojects',this);"></span>
                                     <a href="manageproject.php?action=showproject&amp;id={{item.ID}}" title="{{item.name}}">
                                         {{item.name}}
                                     </a>
@@ -156,9 +154,8 @@
                                 {/literal}
                                 {if $userpermissions.projects.del}
                                 {literal}
-                                <a class="tool_del"
-                                   href="javascript:confirmfunction('{/literal}{#confirmdel#}{literal}','deleteElement(\'proj_{{item.id}]\',\'manageproject.php?action=del&amp;id={{item.ID}}\')');"
-                                   title="{#delete#}"></a>
+                                    <a class="tool_del"
+                                    href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','proj_{{*item.ID}}','manageproject.php?action=del&amp;id={{*item.ID}}',projectsView);" title="{/literal}{#delete#}{literal}"></a>
                                 {/literal}
                                 {/if}
                                 {literal}
