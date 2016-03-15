@@ -64,22 +64,20 @@ if ($action == "editform") {
         die();
     }
     $tasklist = $liste->getTasklist($tlid);
-    $mile_id = $tasklist["milestone"];
-    $m = $objmilestone->getMilestone($mile_id);
-    $tasklist["milestonename"] = $m["name"];
+
+    $milestone = $objmilestone->getMilestone($tasklist["milestone"]);
+    $tasklist["milestonename"] = $milestone["name"];
+
     $milestones = $objmilestone->getAllProjectMilestones($id, 10000);
     $project = array();
-    $project['ID'] = $id;
+    $project["ID"] = $id;
 
-    $myproject = (object) new project();
+    $projectObj = (object) new project();
 
-    $pro = $myproject->getProject($id);
-    $projectname = $pro["name"];
+    $projectDetails = $projectObj->getProject($id);
 
-    $title = $langfile["edittasklist"];
-
-    $template->assign("title", $title);
-    $template->assign("projectname", $projectname);
+    $template->assign("title", $langfile["edittasklist"]);
+    $template->assign("projectname",  $projectDetails["name"]);
     $template->assign("showhead", 1);
     $template->assign("milestones", $milestones);
     $template->assign("tasklist", $tasklist);

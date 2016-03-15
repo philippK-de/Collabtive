@@ -148,11 +148,12 @@ if ($action == "add") {
         $template->display("error.tpl");
         die();
     }
-    // construct timestamps
+    // construct timestamps;
     $cleanPost["started"] = $cleanPost["day"] . " " . $cleanPost["started"];
     $cleanPost["started"] = strtotime($cleanPost["started"]);
     $cleanPost["ended"] = $cleanPost["endday"] . " " . $cleanPost["ended"];
     $cleanPost["ended"] = strtotime($cleanPost["ended"]);
+    //edit the entry
     if ($tracker->edit($cleanGet["tid"], $cleanPost["ttask"], $cleanPost["comment"], $cleanPost["started"], $cleanPost["ended"])) {
         if ($redir) {
             $redir = $url . $redir;
@@ -189,8 +190,10 @@ if ($action == "add") {
         $template->display("error.tpl");
         die();
     }
+    //create a new CSV file
     $excelFile = fopen(CL_ROOT . "/files/" . CL_CONFIG . "/ics/timetrack-$id.csv", "w");
 
+    //put the column headers to csv
     $line = array($struser, $strtask, $strcomment, $strday, $strstarted, $strended, $strhours);
     fputcsv($excelFile, $line);
 
@@ -224,15 +227,17 @@ if ($action == "add") {
 
     $id = (int) $id;
     // get the project name
-    $pname = $conn->query("SELECT name FROM projekte WHERE ID = $id");
-    $pname = $pname->fetchColumn();
+    $projectNameQuery = $conn->query("SELECT name FROM projekte WHERE ID = $id");
+    $projectName = $projectNameQuery->fetchColumn();
     // create a new PDF in portrait orientation, A4 format
     $pdf = new MYPDF("P", PDF_UNIT, "A4", true);
     // Set the header
-    $headstr = $langfile["timetable"] . " " . $pname;
+    $headstr = $langfile["timetable"] . " " . $projectName;
     $pdf->setup($headstr, array(239, 232, 229));
+
     // headers for table columns
     $headers = array($langfile["user"], $langfile["task"], $langfile["comment"], $langfile["started"] . " - " . $langfile["ended"], $langfile["hours"]);
+
     // if a filter has been applied, get only those timetracks
     if (!empty($cleanGet["start"]) and !empty($cleanGet["end"])) {
         $track = $tracker->getProjectTrack($id, $cleanGet["usr"], $cleanGet["task"], $cleanGet["start"], $cleanGet["end"], false);
@@ -243,18 +248,18 @@ if ($action == "add") {
     $thetrack = array();
     if (!empty($track)) {
         $i = 0;
-        foreach($track as $tra) {
-            if (empty($tra["tname"])) {
-                $tra["tname"] = "";
+        foreach($track as $timetrack) {
+            if (empty($timetrack["tname"])) {
+                $timetrack["tname"] = "";
             }
-            $hrs = round($tra["hours"], 2);
+            $hrs = round($timetrack["hours"], 2);
             $hrs = number_format($hrs, 2, ",", ".");
 
-            $tra["comment"] = strip_tags($tra["comment"]);
+            $timetrack["comment"] = strip_tags($timetrack["comment"]);
 
             $i = $i + 1;
             // write the table line
-            array_push($thetrack, array($tra["uname"], $tra["tname"], $tra["comment"], $tra["daystring"] . "/" . $tra["startstring"] . "-" . $tra["endstring"], $hrs));
+            array_push($thetrack, array($timetrack["uname"], $timetrack["tname"], $timetrack["comment"], $timetrack["daystring"] . "/" . $timetrack["startstring"] . "-" . $timetrack["endstring"], $hrs));
         }
     }
     // put it all to the PDF and output the file
