@@ -325,9 +325,7 @@ if ($action == "add") {
     $projectObj = new project();
     $milestoneObj = new milestone();
 
-    // Get open and closed tasklists
-    $lists = $tasklistObj->getProjectTasklists($id);
-    $oldlists = $tasklistObj->getProjectTasklists($id, 0);
+
     // Get number of assignable users
     $project_members = $projectObj->getProjectMembers($id, $projectObj->countMembers($id));
     // Get all the milestones in the project
@@ -342,10 +340,21 @@ if ($action == "add") {
     $template->assign("projectname", $projectname);
     $template->assign("assignable_users", $project_members);
 
-    $template->assign("lists", $lists);
-    $template->assign("oldlists", $oldlists);
-    $template->display("projecttasks.tpl");
-} elseif ($action == "showtask") {
+
+   $template->display("projecttasks.tpl");
+}
+elseif($action = "projectTasks")
+{
+    $tasklistObj = new tasklist();
+    // Get open and closed tasklists
+    $lists = $tasklistObj->getProjectTasklists($id);
+    $oldlists = $tasklistObj->getProjectTasklists($id, 0);
+
+    $openLists["items"] = $lists;
+    $openLists["count"] = count($lists);
+    echo json_encode($openLists);
+}
+elseif ($action == "showtask") {
     if (!$userpermissions["tasks"]["view"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
