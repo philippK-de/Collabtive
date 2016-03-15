@@ -301,13 +301,12 @@ class message {
         $msg = (int) $msg;
 
         $files = array();
-        $messageFilesStmt = $conn->prepare("SELECT file FROM files_attached WHERE message = ?");
-        $messageFilesStmt->execute(array($msg));
+        $sel = $conn->prepare("SELECT file FROM files_attached WHERE message = ?");
+        $sel->execute(array($msg));
 
-        while ($file = $messageFilesStmt->fetch()) {
-            $fileDetailsQuery = $conn->query("SELECT * FROM files WHERE ID = $file[0]");
-
-            $thisfile = $fileDetailsQuery->fetch();
+        while ($file = $sel->fetch()) {
+            $sel2 = $conn->query("SELECT * FROM files WHERE ID = $file[0]");
+            $thisfile = $sel2->fetch();
             $thisfile["type"] = str_replace("/", "-", $thisfile["type"]);
 
             //get systemSettings
