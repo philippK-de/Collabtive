@@ -8,7 +8,7 @@
  * @name task
  * @package Collabtive
  * @version 2.0
- * @link http://www.o-dyn.de
+ * @link http://collabtive.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
 class task

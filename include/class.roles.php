@@ -5,8 +5,8 @@
  * @author Philipp Kiszka <info@o-dyn.de>
  * @name roles
  * @package Collabtive
- * @version 0.5
- * @link http://www.o-dyn.de
+ * @version 3
+ * @link http://collabtive.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
 class roles {
