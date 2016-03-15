@@ -10,6 +10,9 @@ Collabtive 2.2
 + Code refactoring to use arrays $cleanPost, and $cleanGet
 + Converted a few remaining SQL queries to prepared statements
 + Converted loading of content on the desktop to an asyncronous method using vue.js. This speeds up the loading of the desktop page considerably.
++ Adding of projects now done asyncronously
++ Refactoring of code
++ Converted several queries into JOINs to improve performance
 
 
 Collabtive 2.1
