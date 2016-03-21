@@ -339,14 +339,35 @@ if ($action == "add") {
         $template->display("error.tpl");
         die();
     }
-    $cleanGet["start"] = getArrayVal($_POST, "start");
-    $cleanGet["end"] = getArrayVal($_POST, "end");
-    $cleanGet["usr"] = getArrayVal($_POST, "usr");
-    $cleanGet["task"] = getArrayVal($_POST, "task");
+    $start = getArrayVal($_POST, "start");
+    $end = getArrayVal($_POST, "end");
+    $usr = getArrayVal($_POST, "usr");
+    $task = getArrayVal($_POST, "task");
     // get open project tasks for filtering
-    $cleanPost["ttask"] = new task();
-    $ptasks = $cleanPost["ttask"]->getProjectTasks($id, 1);
+    $projectObj = new project();
+    $projectUsers = $projectObj->getProjectMembers($id, 1000, false);
+    $project = $projectObj->getProject($id);
 
+    $taskObj = new task();
+    $projectTasks = $taskObj->getProjectTasks($id, 1);
+
+
+
+    $template->assign("projectname", $project["name"]);
+    $template->assign("users", $projectUsers);
+    $title = $langfile["timetracker"];
+    $template->assign("title", $title);
+    $template->assign("ptasks", $projectTasks);
+    $template->assign("start", $cleanGet["start"]);
+    $template->assign("end", $cleanGet["end"]);
+    $template->assign("usr", $cleanGet["usr"]);
+    $template->assign("task", $cleanGet["task"]);
+    $template->assign("tracker", $track);
+    SmartyPaginate::assign($template);
+    $template->display("tracker_project.tpl");
+}
+elseif($action == "projectTimetracker")
+{
     $tracker = (object) new timetracker();
     // If the user can not read tt entries from other user, set the user filter to the current user id.
     if (!$cleanGet["usr"]) {
@@ -363,28 +384,11 @@ if ($action == "add") {
         $track = $tracker->getProjectTrack($id, $cleanGet["usr"], $cleanGet["task"], 0, 0, 50);
     }
     if (!empty($track)) {
-        $totaltime = $tracker->getTotalTrackTime($track);
-        $template->assign("totaltime", $totaltime);
-        $template->assign("fproject", $cleanGet["project"]);
-        $template->assign("start", $cleanGet["start"]);
-        $template->assign("end", $cleanGet["end"]);
+        $projectTrack["items"] = $track;
+        $projectTrack["count"] = count($projectTrack);
+        echo json_encode($projectTrack);
     }
-    $pro = new project();
-    $usrs = $pro->getProjectMembers($id, 1000, false);
-    $proj = $pro->getProject($id);
-    $projectname = $proj["name"];
-    $template->assign("projectname", $projectname);
-    $template->assign("users", $usrs);
-    $title = $langfile["timetracker"];
-    $template->assign("title", $title);
-    $template->assign("ptasks", $ptasks);
-    $template->assign("start", $cleanGet["start"]);
-    $template->assign("end", $cleanGet["end"]);
-    $template->assign("usr", $cleanGet["usr"]);
-    $template->assign("task", $cleanGet["task"]);
-    $template->assign("tracker", $track);
-    SmartyPaginate::assign($template);
-    $template->display("tracker_project.tpl");
+
 }
 
 ?>

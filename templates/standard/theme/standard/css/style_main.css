@@ -697,6 +697,7 @@ td.message ul {
 	background: #8f5f45;
 }
 
+
 .miles .wintools .export-main, .miles .wintools .export-main a {
 	background-image: url(../images/export-headline.png);
 }
@@ -2568,6 +2569,13 @@ th.tools, td.tools {
 
 .timetrack .color-a ul.files table, .timetrack .color-b ul.files table {
 	background: url(../images/tables-timetracking-bg-c.png);
+}
+
+.timetrack tbody.alternateColors:nth-child(even) {
+    background: url(../images/tables-timetracking-bg-a.png));
+}
+.timetrack tbody.alternateColors:nth-child(odd) {
+    background: url(../images/tables-timetracking-bg-b.png);
 }
 
 .timetrack .block, .timetrack a, .timetrack h1, .timetrack .block .tablemenue, .timetrack .block .addmenue, .timetrack p.tags-miles {
