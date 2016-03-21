@@ -7,15 +7,18 @@
             <div class="progress" id="progressdesktopprojects" style="display:none;">
                 <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-project3.gif"/>
             </div>
+
         </div>
 
         <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt=""/>{#myprojects#}
             {* Pagination *}
             {literal}
                 <span id="paging" style="margin-left:10px;">
+                        <a style="color:#38bf42;font-size:8pt;" href="javascript:pagination.loadPrevPage(projectsView)">[prev]</a>
                         <span id="page{{page.index}}" v-for="page in pages" style="margin-left:2px;">
                              <a style="color:#38bf42;font-size:8pt;" href="javascript:pagination.loadPage(projectsView,{{page.index}});">{{page.index}}</a>
                         </span>
+                         <a style="color:#38bf42;font-size:8pt;" href="javascript:pagination.loadNextPage(projectsView)">[next]</a>
                     </span>
             {/literal}
         </h2>
