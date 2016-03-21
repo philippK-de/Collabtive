@@ -456,6 +456,7 @@ accordion.prototype = {
 
         this.options = Object.extend({
             resizeSpeed: 8,
+            bindOnclickHandler:true,
             classNames: {
                 toggle: 'accordion_toggle',
                 toggleActive: 'accordion_toggle_active',
@@ -475,9 +476,10 @@ accordion.prototype = {
         var accordions = $$('#' + container + ' .' + this.options.classNames.toggle);
         accordions.each(function (accordion) {
             Event.observe(accordion, this.options.onEvent, this.activate.bind(this, accordion), false);
-            if (this.options.onEvent == 'click') {
-                accordion.onclick = function () {
-                    return false;
+
+            if (this.options.onEvent == 'click' && this.options.bindOnclickHandler == true) {
+             accordion.onclick = function () {
+                 return false;
                 };
             }
 
@@ -489,6 +491,7 @@ accordion.prototype = {
 //			options.merge({display: 'none'});
 
             this.currentAccordion = $(accordion.next(0)).setStyle(options);
+
         }.bind(this));
     },
 

@@ -10,6 +10,7 @@
         </div>
 
         <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt=""/>{#myprojects#}
+            {* Pagination *}
             {literal}
                 <span id="paging" style="margin-left:10px;">
                         <span id="page{{page.index}}" v-for="page in pages" style="margin-left:2px;">

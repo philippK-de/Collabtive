@@ -278,11 +278,7 @@ if ($action == "addform") {
     $cleanPost["title"] = $langfile['messages'];
     $template->assign("title", $cleanPost["title"]);
 
-    if (!empty($messages)) {
-        $mcount = count($messages);
-    } else {
-        $mcount = 0;
-    }
+
     // get files of the project
     $datei = new datei();
     $cleanPost["thefiles"] = $datei->getAllProjectFiles($id);
@@ -299,9 +295,22 @@ if ($action == "addform") {
 elseif($action = "projectMessages")
 {
     // get all messages of this project
-    $messages = $msg->getProjectMessages($id);
+
+    $offset = 0;
+    if(isset($cleanGet["offset"]))
+    {
+        $offset = $cleanGet["offset"];
+    }
+    $limit = 10;
+    if(isset($cleanGet["limit"]))
+    {
+        $limit = $cleanGet["limit"];
+    }
+
+    $messages = $msg->getProjectMessages($id, $limit, $offset);
+
     $jsonMessages["items"] = $messages;
-    $jsonMessages["count"] = count($messages);
+    $jsonMessages["count"] = $number = $msg->countProjectMessages($id);
 
     echo json_encode($jsonMessages);
 }

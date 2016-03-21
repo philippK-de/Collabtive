@@ -56,6 +56,13 @@
 
                 <h2>
                     <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#messages#}
+                    {literal}
+                        <span id="paging" style="margin-left:10px;">
+                        <span id="page{{page.index}}" v-for="page in pages" style="margin-left:2px;">
+                             <a style="color:#38bf42;font-size:8pt;" href="javascript:pagination.loadPage(projectMessagesView,{{page.index}});">{{page.index}}</a>
+                        </span>
+                    </span>
+                    {/literal}
                 </h2>
             </div>
 

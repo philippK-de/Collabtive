@@ -239,20 +239,28 @@ class message {
      * Returns all messages belonging to a project (without answers)
      *
      * @param int $project Eindeutige Nummer des Projekts
+     * @param int $offset Offset for the DB query
+     * @param int $limit Limit for the DB query
      * @return array $messages Nachrichten zum Projekt
      */
-    function getProjectMessages($project)
+    function getProjectMessages($project, $limit = 0, $offset = 0)
     {
         global $conn;
         $project = (int) $project;
 
         $messages = array();
-        $sel1 = $conn->prepare("SELECT ID FROM messages WHERE project = ? AND replyto = 0 ORDER BY posted DESC");
-        $sel1->execute(array($project));
+        if($limit > 0)
+        {
+            $projectMessagesStmt = $conn->prepare("SELECT ID FROM messages WHERE project = ? AND replyto = 0 ORDER BY posted DESC LIMIT $limit OFFSET $offset");
+        }
+        else {
+            $projectMessagesStmt = $conn->prepare("SELECT ID FROM messages WHERE project = ? AND replyto = 0 ORDER BY posted DESC");
+        }
+        $projectMessagesStmt->execute(array($project));
 
-        while ($message = $sel1->fetch()) {
-            $themessage = $this->getMessage($message["ID"]);
-            array_push($messages, $themessage);
+        while ($messageId = $projectMessagesStmt->fetch()) {
+            $message = $this->getMessage($messageId["ID"]);
+            array_push($messages, $message);
         }
 
         if (!empty($messages)) {
@@ -261,7 +269,27 @@ class message {
             return false;
         }
     }
+    /**
+     * Returns all messages belonging to a project (without answers)
+     *
+     * @param int $project Eindeutige Nummer des Projekts
+     * @return array $messages Nachrichten zum Projekt
+     */
+    function countProjectMessages($project)
+    {
+        global $conn;
+        $project = (int) $project;
 
+        $messages = array();
+        $sel1 = $conn->prepare("SELECT COUNT(*) FROM messages WHERE project = ? AND replyto = 0");
+        $sel1->execute(array($project));
+
+        $number = $sel1->fetch();
+
+        $number = $number["COUNT(*)"];
+
+        return $number;
+    }
     /**
      * Attach a file to a message
      *

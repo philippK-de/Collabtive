@@ -71,10 +71,10 @@
     {*Tasks*}
 	{if $lists[0][0]}
 		{section name=list loop=$lists}
-			<div class="headline accordion_toggle" style="margin-top:5px">
-				<a href="javascript:void(0);" id="block-{$lists[list].ID}_toggle" class="win_block" onclick = "toggleBlock('block-{$lists[list].ID}');"></a>
+			<div class="headline accordion_toggle" style="margin-top:5px;">
+				<a href="javascript:void(0);" id="toggle-{$lists[list].ID}" class="win_block" onclick = "changeElements('a.win_block','win_none');toggleBlock('contentblock-{$lists[list].ID}');" style="z-index:1"></a>
 
-				<div class="wintools">
+				<div class="wintools" style="z-index:999;">
                     <div class="progress" id="progressacc_{$lists[list].ID}" style="display:none;width:22px;float:left">
                         <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-tasks.gif"/>
                     </div>
@@ -94,7 +94,7 @@
 				</h2>
 			</div>
 
-			<div id="block-{$lists[list].ID}" class="block accordion_content" style="overflow:hidden;">
+			<div id="contentblock-{$lists[list].ID}" class="block accordion_content" style="overflow:hidden;">
 
 				{*Add Task*}
 				{if $userpermissions.tasks.add}
@@ -175,7 +175,9 @@
 								</tr>
 							</tbody>
 								<script type = "text/javascript">
-									var accord_{/literal}{$lists[list].ID}{literal} = new accordion('block-{/literal}{$lists[list].ID}{literal}');
+									var accord_{/literal}{$lists[list].ID}{literal} = new accordion('contentblock-{/literal}{$lists[list].ID}{literal}',{
+                                        bindOnclickHandler: false
+                                    });
 								</script>
 							{/literal}
 
@@ -274,7 +276,7 @@
                     el: "acc_{/literal}{$lists[list].ID}{literal}",
                     url: "managetask.php?action=projectTasks&id={/literal}{$lists[list].ID}{literal}",
                     dependencies: []
-                }
+                };
                 var projectTasksView_{/literal}{$lists[list].ID}{literal} = createView(projectTasks);
             </script>
         {/literal}

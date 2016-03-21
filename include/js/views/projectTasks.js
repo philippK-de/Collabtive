@@ -8,7 +8,7 @@ function activateAccordeon(theAccord){
 }
 
 //var theBlocks = $$("#block_dashboard > div .headline > a");
-var theBlocks = document.querySelectorAll("#blockTasks > div .headline > a");
+var theBlocks = document.querySelectorAll("#blockTasks > div[class~='headline'] > a");
 console.log(theBlocks);
 
 //loop through the blocks and add the accordion toggle link
