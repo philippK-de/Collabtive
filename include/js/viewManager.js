@@ -112,6 +112,7 @@ function updateView(view, updateDependencies) {
             },
             onComplete: function () {
                 stopWait("progress" + view.$el.id);
+                view.$emit("updated");
             },
             onFailure: function () {
 

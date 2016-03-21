@@ -325,6 +325,9 @@ if ($action == "add") {
     $projectObj = new project();
     $milestoneObj = new milestone();
 
+    // Get open and closed tasklists
+    $lists = $tasklistObj->getProjectTasklists($id);
+    $oldlists = $tasklistObj->getProjectTasklists($id, 0);
 
     // Get number of assignable users
     $project_members = $projectObj->getProjectMembers($id, $projectObj->countMembers($id));
@@ -334,7 +337,8 @@ if ($action == "add") {
     $project = $projectObj->getProject($id);
     $projectname = $project["name"];
 
-
+    $template->assign("lists", $lists);
+    $template->assign("oldlists", $oldlists);
     $template->assign("title", $langfile["tasks"]);
     $template->assign("milestones", $milestones);
     $template->assign("projectname", $projectname);
@@ -347,11 +351,10 @@ elseif($action = "projectTasks")
 {
     $tasklistObj = new tasklist();
     // Get open and closed tasklists
-    $lists = $tasklistObj->getProjectTasklists($id);
-    $oldlists = $tasklistObj->getProjectTasklists($id, 0);
+    $tasks = $tasklistObj->getTasksFromList($id);
 
-    $openLists["items"] = $lists;
-    $openLists["count"] = count($lists);
+    $openLists["items"] = $tasks;
+    $openLists["count"] = count($tasks);
     echo json_encode($openLists);
 }
 elseif ($action == "showtask") {
