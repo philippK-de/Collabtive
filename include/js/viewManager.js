@@ -157,6 +157,28 @@ var pagination = {
 
         //triger the view to be updated
         updateView(view, true);
+    },
+    loadNextPage: function(view){
+        var page = 1;
+        page += view.$get("offset") / this.itemsPerPage;
+
+        var nextPage = page + 1;
+
+        console.log("next" + nextPage);
+        this.loadPage(view,nextPage);
+    },
+    loadPrevPage: function(view){
+        var page = 1;
+        page += view.$get("offset") / this.itemsPerPage;
+
+        var nextPage = page - 1;
+
+        if(nextPage < 1)
+        {
+            nextPage = 1;
+        }
+        console.log("prev" + nextPage);
+        this.loadPage(view,nextPage);
     }
 };
 
