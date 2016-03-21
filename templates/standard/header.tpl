@@ -36,14 +36,6 @@
 <script type="text/javascript" src="include/js/mycalendar.js"></script>
 {/literal}
 {/if}
-{if $jsload2 == "chat"}
-{literal}
-<script type="text/javascript">
-window.onunload = quitchat;
-
-</script>
-{/literal}
-{/if}
 
 {if $jsload3 == "lightbox"}
 <link rel="stylesheet" href="templates/{$settings.template}/theme/{$settings.theme}/css/lytebox.css" type="text/css"  />
