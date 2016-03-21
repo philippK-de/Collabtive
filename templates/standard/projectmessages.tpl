@@ -234,6 +234,7 @@
 
     <script type="text/javascript" src="include/js/views/projectMessages.min.js"></script>
 <script type="text/javascript">
+    pagination.itemsPerPage = 15;
     projectMessages.url = projectMessages.url + "&id=" + {/literal}{$project.ID}{literal};
     projectMessagesView = createView(projectMessages);
     var accord_messages = new accordion('block_msgs');
