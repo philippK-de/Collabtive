@@ -157,6 +157,24 @@ if ($action == "add") {
     }
     $projectObj = new project();
     $today = date("d");
+
+    // Get closed milestones and milestones that are late
+    $donestones = $milestone->getDoneProjectMilestones($id);
+
+    // Get the project name
+    $project = $projectObj->getProject($id);
+
+
+    $template->assign("title", $langfile["milestones"]);
+    $template->assign("projectname",  $project["name"]);
+
+    $template->assign("upcomingStones", $upcomingStones);
+    $template->assign("donemilestones", $donestones);
+    $template->assign("project", $project);
+    $template->display("projectmilestones.tpl");
+}
+elseif($action == "projectMilestones")
+{
     // Get projects milestones, and todays project milestones
     $stones = $milestone->getProjectMilestones($id);
     $stones2 = $milestone->getTodayProjectMilestones($id);
@@ -169,38 +187,37 @@ if ($action == "add") {
     }
     // merge the current milestones
     $stones = array_merge($stones, $stones2);
-    // Get closed milestones and milestones that are late
-    $donestones = $milestone->getDoneProjectMilestones($id);
+
+    $projectStones["items"] = $stones;
+    $projectStones["count"] = count($stones);
+
+    echo json_encode($projectStones);
+}
+elseif($action == "lateProjectMilestones")
+{
     //get late miletones
     $latestones = $milestone->getLateProjectMilestones($id);
     // Count late milestones
     if (!empty($latestones)) {
         $latestones = $milestone->formatdate($latestones);
     }
-    $countlate = 0;
-    if (!empty($latestones)) {
-        $countlate = count($latestones);
-    }
+
+    $lateProjectStones["items"] = $latestones;
+    $lateProjectStones["count"] = count($latestones);
+
+    echo json_encode($lateProjectStones);
+}
+elseif($action == "upcomingProjectMilestones")
+{
     // Get upcoming milestones, that is milestones with a start date in the future
     $upcomingStones = $milestone->getUpcomingProjectMilestones($id);
-    $countUpcoming = 0;
-    if (!empty($upcomingStones)) {
-        $countUpcoming = count($upcomingStones);
-    }
-    // Get the project name
-    $project = $projectObj->getProject($id);
 
-    $template->assign("milestones", $stones);
-    $template->assign("title", $langfile["milestones"]);
-    $template->assign("projectname",  $project["name"]);
-    $template->assign("latemilestones", $latestones);
-    $template->assign("upcomingStones", $upcomingStones);
-    $template->assign("upcomingcount", $countUpcoming);
-    $template->assign("donemilestones", $donestones);
-    $template->assign("countlate", $countlate);
-    $template->assign("project", $project);
-    $template->display("projectmilestones.tpl");
-} elseif ($action == "mileslist") {
+    $upcomingProjectStones["items"] = $upcomingStones;
+    $upcomingProjectStones["count"] = count($upcomingStones);
+
+    echo json_encode($upcomingProjectStones);
+}
+elseif ($action == "mileslist") {
     $stones = $milestone->getProjectMilestones($id);
     if (!empty($stones)) {
         $stones2 = $milestone->getTodayProjectMilestones($id);
