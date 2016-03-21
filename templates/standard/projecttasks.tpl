@@ -75,6 +75,9 @@
 				<a href="javascript:void(0);" id="block-{$lists[list].ID}_toggle" class="win_block" onclick = "toggleBlock('block-{$lists[list].ID}');"></a>
 
 				<div class="wintools">
+                    <div class="progress" id="progressacc_{$lists[list].ID}" style="display:none;width:22px;float:left">
+                        <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-tasks.gif"/>
+                    </div>
 					{if $userpermissions.tasks.close}
 						<a class="close" href="managetasklist.php?action=close&amp;tlid={$lists[list].ID}&amp;id={$project.ID}"><span>{#close#}</span></a>
 					{/if}
