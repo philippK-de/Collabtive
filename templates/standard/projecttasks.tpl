@@ -87,9 +87,6 @@
 					{if $userpermissions.tasks.del}
 						<a class="del" href="javascript:confirmit('{#confirmdel#}','managetasklist.php?action=del&amp;tlid={$lists[list].ID}&amp;id={$project.ID}');"><span>{#delete#}</span></a>
 					{/if}
-					{if $userpermissions.tasks.add}
-						<a class="add" href="javascript:blindtoggle('form_{$lists[list].ID}');" id="add_{$lists[list].ID}" onclick="toggleClass(this,'add-active','add');toggleClass('add_butn_{$lists[list].ID}','butn_link_active','butn_link');toggleClass('sm_{$lists[list].ID}','smooth','nosmooth');"><span>{#addtask#}</span></a>
-					{/if}
 				</div>
 
 				<h2>
