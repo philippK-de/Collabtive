@@ -2634,6 +2634,13 @@ background: url(../images/tables-msgs-bg-b.png);
 	background: <?php echo $userColorA;
 ?>;
 }
+.user tbody.alternateColors:nth-child(even) {
+background: <?php echo $userColorA;?>;
+}
+.user tbody.alternateColors:nth-child(odd) {
+background: <?php echo $userColorB;?>;
+}
+
 
 .user .color-b, .user .content_in_wrapper {
 	background: <?php echo $userColorB;
@@ -2852,7 +2859,12 @@ background: url(../images/tables-msgs-bg-b.png);
 	background: <?php echo $milesColorC;
 ?>;
 }
-
+.miles tbody.alternateColors:nth-child(even) {
+background: <?php echo $milesColorA;?>;
+}
+.miles tbody.alternateColors:nth-child(odd) {
+background: <?php echo $milesColorB;?>;
+}
 .miles, .miles a, .miles h1, .miles .block .tablemenue, .miles .block .addmenue, .miles p.tags-miles, .bigcal tbody.content td {
 	border-color: <?php echo $milesMain;
 ?>;
