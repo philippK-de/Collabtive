@@ -2337,10 +2337,10 @@ th.tools, td.tools {
     background: url(../images/tables-tasks-bg-a.png);
 }
 .tasks tbody.alternateColors:nth-child(even) {
-    background: 	background: url(../images/tables-tasks-bg-a.png);
+    background: url(../images/tables-tasks-bg-a.png);
 }
 .tasks tbody.alternateColors:nth-child(odd) {
-url(../images/tables-tasks-bg-b.png);
+background: url(../images/tables-tasks-bg-b.png);
 }
 .tasks .color-b, .tasks .datepick td.wrong, .tasks .datepick tr.weekday td {
     background: url(../images/tables-tasks-bg-b.png);

@@ -2502,12 +2502,11 @@ background: <?php echo $projectsColorB;?>;
 ?>;
 }
 .tasks tbody.alternateColors:nth-child(even) {
-background: 	background: <?php echo $tasksColorA;
+background: <?php echo $tasksColorA;
 ?>;
 }
 .tasks tbody.alternateColors:nth-child(odd) {
-<?php echo $tasksColorB;
-?>;
+background: <?php echo $tasksColorB; ?>;
 }
 .tasks .color-b, .tasks .datepick td.wrong, .tasks .datepick tr.weekday td {
 	background: <?php echo $tasksColorB;
