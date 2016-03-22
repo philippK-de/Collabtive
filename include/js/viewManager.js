@@ -21,6 +21,8 @@ function createView(myEl) {
         pages: [],
         limit: 10,
         offset: 0,
+        currentPage: 1,
+        itemsCount: 0,
         dependencies: myEl.dependencies,
         url: myEl.url
     };
@@ -36,6 +38,7 @@ function createView(myEl) {
                 console.log("url " + myModel.url);
                 var responseData = JSON.parse(myData.responseText);
                 myModel.items = responseData.items;
+                myModel.itemsCount = responseData.count;
                 //get the list of pages and add it to the model
                 var pages = pagination.listPages(responseData.count);
                 myModel.pages = pages;
@@ -128,6 +131,7 @@ function updateView(view, updateDependencies) {
  */
 var pagination = {
     itemsPerPage: 10,
+    numOfPages: 1,
     listPages: function (numTotal) {
         //round up the number of pages
         var pagenum = Math.ceil(numTotal / this.itemsPerPage);
@@ -154,24 +158,35 @@ var pagination = {
         //set the new limit and offset to the view
         view.$set("limit", this.itemsPerPage);
         view.$set("offset", offset);
+        view.$set("currentPage",page);
+
 
         //triger the view to be updated
         updateView(view, true);
     },
     loadNextPage: function(view){
-        var page = 1;
-        page += view.$get("offset") / this.itemsPerPage;
+        //get current page
+        var currentPage = view.$get("currentPage");
+        //get total number of pages
+        var numberOfPages =   Math.ceil(view.$get("itemsCount") / this.itemsPerPage);
 
-        var nextPage = page + 1;
+        //increment by one
+        var nextPage = currentPage + 1;
+
+        //if the next page would be beyond the last page, set nextPage to lastPage
+        if(nextPage > numberOfPages)
+        {
+            nextPage = numberOfPages;
+        }
 
         console.log("next" + nextPage);
         this.loadPage(view,nextPage);
     },
     loadPrevPage: function(view){
-        var page = 1;
-        page += view.$get("offset") / this.itemsPerPage;
+        //get current page
+        var currentPage = view.$get("currentPage");
 
-        var nextPage = page - 1;
+        var nextPage = currentPage - 1;
 
         if(nextPage < 1)
         {
