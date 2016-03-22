@@ -159,11 +159,12 @@ var pagination = {
         //set the new limit and offset to the view
         view.$set("limit", this.itemsPerPage);
         view.$set("offset", offset);
-        view.$set("currentPage",page);
 
 
         //triger the view to be updated
         updateView(view, true);
+        //update the current page for the view
+        view.$set("currentPage",page);
     },
     loadNextPage: function(view){
         //get current page

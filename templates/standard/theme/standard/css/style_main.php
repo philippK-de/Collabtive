@@ -1570,7 +1570,7 @@ padding-left;
 
 }
 
-message-in li
+.message-in li
 {
 list-style-type: disc;
 padding: 0;
@@ -2428,6 +2428,7 @@ th.tools, td.tools {
 
 .projects .color-a, .projects .statuswrapper li, .projects .datepick table td, .projects .datepick tr.head td {
 	background: <?php echo $projectsColorA;?>;
+}
 .projects tbody.alternateColors:nth-child(even) {
 background: <?php echo $projectsColorA;?>;
 }
@@ -2501,11 +2502,12 @@ background: <?php echo $projectsColorB;?>;
 ?>;
 }
 .tasks tbody.alternateColors:nth-child(even) {
-background: 	background: <?php echo $tasksColorB;
+background: 	background: <?php echo $tasksColorA;
 ?>;
 }
 .tasks tbody.alternateColors:nth-child(odd) {
-background: url(../images/tables-tasks-bg-b.png);
+<?php echo $tasksColorB;
+?>;
 }
 .tasks .color-b, .tasks .datepick td.wrong, .tasks .datepick tr.weekday td {
 	background: <?php echo $tasksColorB;
@@ -2787,6 +2789,13 @@ background: <?php echo $userColorB;?>;
 .timetrack .color-b, .timetrack .datepick td.wrong, .timetrack .datepick tr.weekday td {
 	background: <?php echo $timetrackColorB;
 ?>;
+}
+.timetrack tbody.alternateColors:nth-child(even) {
+background: <?php echo $timetrackColorA;
+?>;
+}
+.timetrack tbody.alternateColors:nth-child(odd) {
+background: <?php echo $timetrackColorB;?>
 }
 
 .timetrack .color-a ul.files table, .timetrack .color-b ul.files table {
