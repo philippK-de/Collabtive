@@ -13,6 +13,12 @@ Collabtive 2.2
 + Adding of projects now done asyncronously
 + Refactoring of code
 + Converted several queries into JOINs to improve performance
++ Converted loading of project tasks to asnycronous loading
++ Converted loading of timetracker to asyncronous loading
++ Converted loading of milestones to asyncronous loading
++ Converted loading of messages to asyncronous loading
++ Made adding of projects asyncronous
++ Project tasks are now arranged as a block accordion
 
 
 Collabtive 2.1

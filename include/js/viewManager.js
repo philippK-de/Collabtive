@@ -128,6 +128,8 @@ function updateView(view, updateDependencies) {
  * @param int itemsPerPage defines how many items go on a page
  * @param function listPages return an array representing the the number of pages given a total number of items and itemsPerPage
  * @param function loadPage Load a specific page of data to a view
+ * @param function loadNextPage Load the next page relative to the current one
+ * @param function loadPrevPage Load the previous page relative to the current one
  */
 var pagination = {
     itemsPerPage: 10,
