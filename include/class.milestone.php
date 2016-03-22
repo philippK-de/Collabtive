@@ -272,11 +272,22 @@ class milestone
             $milestone["daysleft"] = $dayslate;
             $dayslate = str_replace("-", "", $dayslate);
             $milestone["dayslate"] = $dayslate;
+
             // Get attached tasklists and messages
             $tasks = $this->getMilestoneTasklists($milestone["ID"]);
             $milestone["tasklists"] = $tasks;
+            $milestone["hasTasklist"] = false;
+            if(count($tasks) > 0 )
+            {
+                $milestone["hasTasklist"] = true;
+            }
             $messages = $this->getMilestoneMessages($milestone["ID"]);
             $milestone["messages"] = $messages;
+            $milestone["hasMessages"] = false;
+            if(count($messages) > 0)
+            {
+                $milestone["hasMessages"] = true;
+            }
 
             return $milestone;
         } else {

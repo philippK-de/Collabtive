@@ -260,6 +260,7 @@ class message {
 
         while ($messageId = $projectMessagesStmt->fetch()) {
             $message = $this->getMessage($messageId["ID"]);
+
             array_push($messages, $message);
         }
 

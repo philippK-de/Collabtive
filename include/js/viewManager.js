@@ -1,4 +1,4 @@
-//Vue.config.silent = true;
+Vue.config.silent = true;
 //create the vue views, binding data to DOM elements
 /*
  * Function to create Vue.js view.
@@ -131,7 +131,6 @@ function updateView(view, updateDependencies) {
  */
 var pagination = {
     itemsPerPage: 10,
-    numOfPages: 1,
     listPages: function (numTotal) {
         //round up the number of pages
         var pagenum = Math.ceil(numTotal / this.itemsPerPage);
