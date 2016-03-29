@@ -78,7 +78,7 @@
                         {/if}
                         {if $userpermissions.messages.del}{literal}
                             <a class="tool_del"
-                            href="javascript:confirmfunction('{/literal}{#confirmdel#}{literal}','deleteElement(\'messages_{{item.ID}}\',\'managemessage.php?action=del&amp;mid={$messages[message].ID}&amp;id={$messages[message].project}\')');"
+                            href="javascript:confirmfunction('{/literal}{#confirmdel#}{literal}','deleteElement(\'messages_{{*item.ID}}\',\'managemessage.php?action=del&amp;mid={{*item.ID}}&amp;id={{*item.project}}\')');"
                             title="{/literal}{#delete#}"></a>
                         {/if}{literal}
                     </td>
@@ -105,8 +105,7 @@
                                     <p v-if="item.hasMilestones">
                                     <div v-if="item.hasMilestones" class="content-spacer-b"></div>
                                     <strong v-if="item.hasMilestones">{/literal}{#milestone#}{literal}:</strong>
-                                        <a v-if="item.hasMilestones" href="managemilestone.php?action=showmilestone&amp;msid={{*item.milestones
-                                        .ID}}&amp;id={{*item.milestones.project}}">{{*item.milestones.name}}</a>
+                                        <a v-if="item.hasMilestones" href="managemilestone.php?action=showmilestone&amp;msid={{*item.milestones.ID}}&amp;id={{*item.milestones.project}}">{{*item.milestones.name}}</a>
                                     </p>
 
                                     <!-- message files -->

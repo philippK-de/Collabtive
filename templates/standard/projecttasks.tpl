@@ -119,7 +119,7 @@
 										{/if}
 										{if $userpermissions.tasks.del}
                                             {literal}
-											<a class="tool_del" href="javascript:confirmfunction('{/literal}{#confirmdel#}{literal}','deleteElement(\'task_{{task.ID}}\',\'managetask.php?action=del&amp;tid={{task.ID}}&amp;id={{task.project}}\')');"  title="{/literal}{#delete#}"></a>
+											<a class="tool_del" href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','task_{{task.ID}}','managetask.php?action=del&amp;tid={{task.ID}}&amp;id={{task.project}}');"  title="{/literal}{#delete#}"></a>
 										{/if}
 									</td>
 								</tr>

@@ -58,7 +58,7 @@
                     {*Color-Mix*}
                     {literal}
                     <tbody v-for="item in items" class="alternateColors" id="task_{{*item.ID}}" rel="{{*item.ID}},{{*item.title}},{{*item.daysleft}},
-                    {{item.pname}}">
+                    {{*item.pname}}">
 
                         <tr v-bind:class="{ 'marker-late': item.islate, 'marker-today': item.istoday }" >
                             <td>
@@ -87,7 +87,7 @@
                                 {/if}{literal}
 
                                 {/literal}{if $userpermissions.tasks.del}{literal}
-                                    <a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'task_{$tasks[task].ID}\',\'managetask.php?action=del&amp;tid={$tasks[task].ID}&amp;id={$tasks[task].project}\')');"  title="{/literal}{#delete#}"></a>
+                                    <a class="tool_del" href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','task_{{*item.ID}}','managetask.php?action=del&amp;tid={{*item.ID}}&amp;id={{*item.project}}',tasksView);"  title="{/literal}{#delete#}"></a>
                                 {/if}{literal}
 
                             </td>
