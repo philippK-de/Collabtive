@@ -5,7 +5,7 @@
 <div id="content-left-in">
 <div class="tasks" >
     <div class="infowin_left"
-         id="systemMessage"
+         id="taskSystemMessage"
          data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png"
          data-text-deleted = "{#taskwasdeleted#}"
          data-text-edited = "{#taskwasedited#}"
@@ -95,7 +95,7 @@
                                         {/literal}
 										{if $userpermissions.tasks.close}
                                             {literal}
-											<a class="butn_check" href="javascript:closeElement('task_{{task.ID}}','managetask.php?action=close&amp;tid={{*task.ID}}&amp;id={{*task.project}}');" title="{/literal}{#close#}"></a>
+											<a class="butn_check" href="javascript:closeElement('task_{{task.ID}}','managetask.php?action=close&amp;tid={{*task.ID}}&amp;id={{*task.project}}',projectTasksView_{/literal}{$lists[list].ID}{literal});" title="{/literal}{#close#}"></a>
 										{/if}
 									</td>
                                     {literal}
