@@ -4,28 +4,15 @@
 <div id="content-left">
     <div id="content-left-in">
 
-        {* Display system messages *}
-        <div class="infowin_left" style="display:none;" id="systemmsg">
-            {if $mode == "projectadded"}
-                <span class="info_in_green">
-					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt=""/>{#projectwasadded#}
-				</span>
-            {/if}
-
-            {* For async display *}
-            <span id="closed" style="display:none;" class="info_in_green">
-				<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt=""/>{#projectwasclosed#}
-			</span>
-			<span id="deleted" style="display:none;" class="info_in_red">
-				<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt=""/>{#projectwasdeleted#}
-			</span>
+        <div class="infowin_left"
+             id="systemMessage"
+             data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png"
+             data-text-deleted = "{#projectwasdeleted#}"
+             data-text-edited = "{#projectwasedited#}"
+             data-text-added = "{#projectwasadded#}"
+             data-text-closed = "{#projectwasclosed#}"
+             style="display:none">
         </div>
-
-        {literal}
-            <script type="text/javascript">
-                systemMsg('systemmsg');
-            </script>
-        {/literal}
 
         {if $isUpdated|default}
             {include file="updateNotify.tpl"}

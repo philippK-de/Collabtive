@@ -242,6 +242,7 @@ function submitForm(event) {
                 onSuccess: function (myData) {
                     if (myData.status == 200) {
                         //update the view belonging to the form
+                        systemMessage.added();
                         updateView(formView, false);
                     }
                 },

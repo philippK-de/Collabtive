@@ -15,12 +15,6 @@ function changePost(script, element, pbody) {
     var ajax = new Ajax.Updater({success: element}, script, {method: 'post', postBody: pbody, evalScripts: true});
 }
 
-function fetchData(myURL) {
-
-}
-
-
-
 function deleteElement(theElement, theUrl, theView) {
     new Ajax.Request(theUrl, {
         method: 'get',
