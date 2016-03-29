@@ -20,9 +20,9 @@
 {literal}
 
 <script type = "text/javascript" src = "include/js/prototype.js" ></script>
+<script type = "text/javascript" src = "include/js/ajax.min.js" ></script>
 <script type = "text/javascript" src = "include/js/vue.js" ></script>
 <script type = "text/javascript" src = "include/js/viewManager.min.js" ></script>
-<script type = "text/javascript" src = "include/js/ajax.min.js" ></script>
 <script type = "text/javascript" src = "include/js/systemMessage.min.js" ></script>
 
 <script type = "text/javascript" src="include/js/jsval.min.js"></script>

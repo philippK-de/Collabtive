@@ -15,47 +15,7 @@ function changePost(script, element, pbody) {
     var ajax = new Ajax.Updater({success: element}, script, {method: 'post', postBody: pbody, evalScripts: true});
 }
 
-function deleteElement(theElement, theUrl, theView) {
-    new Ajax.Request(theUrl, {
-        method: 'get',
-        onSuccess: function (payload) {
-            if (payload.responseText == "ok") {
-                removeRow(theElement, deleteEndcolor);
-                if (theView != undefined) {
-                    updateView(theView);
-                }
-                var result = true;
-            }
-        }
-    });
-    try {
-        systemMessage.deleted();
-    }
-    catch (e) {
-    }
-}
 
-
-function closeElement(theElement, theUrl, theView) {
-
-    new Ajax.Request(theUrl, {
-        method: 'get',
-        onSuccess: function (payload) {
-            if (payload.responseText == "ok") {
-                removeRow(theElement, closeEndcolor);
-                if (theView != undefined) {
-                    updateView(theView);
-                }
-            }
-        }
-    });
-
-    try {
-        systemMessage.closed();
-    }
-    catch (e) {
-    }
-}
 function recolorRows(therow) {
     var row = therow.options.rowid;
     try {
@@ -192,12 +152,7 @@ function confirmfunction(text, toCall) {
     }
 }
 
-function confirmDelete(message, element, url, view) {
-    var check = confirm(message);
-    if (check == true) {
-        deleteElement(element, url, view);
-    }
-}
+
 function selectFolder(folderId) {
     var theParentOptions = $('folderparent').options;
     for (i = 0; i < theParentOptions.length; i++) {

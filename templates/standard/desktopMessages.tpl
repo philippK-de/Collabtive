@@ -78,8 +78,7 @@
                         {/if}
                         {if $userpermissions.messages.del}{literal}
                             <a class="tool_del"
-                            href="javascript:confirmfunction('{/literal}{#confirmdel#}{literal}','deleteElement(\'messages_{{*item.ID}}\',\'managemessage.php?action=del&amp;mid={{*item.ID}}&amp;id={{*item.project}}\')');"
-                            title="{/literal}{#delete#}"></a>
+                            href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','messages_{{*item.ID}}','managemessage.php?action=del&amp;mid={{*item.ID}}&amp;id={{*item.project}}', msgsView);" title="{/literal}{#delete#}"></a>
                         {/if}{literal}
                     </td>
                 </tr>

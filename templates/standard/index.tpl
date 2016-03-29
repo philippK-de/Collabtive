@@ -5,7 +5,7 @@
     <div id="content-left-in">
 
         <div class="infowin_left"
-             id="systemMessage"
+             id="projectSystemMessage"
              data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png"
              data-text-deleted = "{#projectwasdeleted#}"
              data-text-edited = "{#projectwasedited#}"
@@ -13,7 +13,23 @@
              data-text-closed = "{#projectwasclosed#}"
              style="display:none">
         </div>
-
+        <div class="infowin_left"
+             id="taskSystemMessage"
+             data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png"
+             data-text-deleted = "{#taskwasdeleted#}"
+             data-text-edited = "{#taskwasedited#}"
+             data-text-added = "{#taskwasadded#}"
+             data-text-closed = "{#taskwasclosed#}"
+             style="display:none">
+        </div>
+        <div class="infowin_left"
+             id="messageSystemMessage"
+             data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png"
+             data-text-deleted = "{#messagewasdeleted#}"
+             data-text-edited = "{#messagewasedited#}"
+             data-text-added = "{#messagewasadded#}"
+             style="display:none">
+        </div>
         {if $isUpdated|default}
             {include file="updateNotify.tpl"}
             <br/>

@@ -238,6 +238,7 @@
             <script type="text/javascript">
                 var projectTasks = {
                     el: "acc_{/literal}{$lists[list].ID}{literal}",
+                    itemType: "task",
                     url: "managetask.php?action=projectTasks&id={/literal}{$lists[list].ID}{literal}",
                     dependencies: []
                 };

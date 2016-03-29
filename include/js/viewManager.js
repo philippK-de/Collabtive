@@ -23,6 +23,7 @@ function createView(myEl) {
         offset: 0,
         currentPage: 1,
         itemsCount: 0,
+        itemType: myEl.itemType,
         dependencies: myEl.dependencies,
         url: myEl.url
     };
@@ -244,7 +245,7 @@ function submitForm(event) {
                         //update the view belonging to the form
                         updateView(formView, false);
                         //show system message for element added
-                        systemMessage.added();
+                        systemMessage.added(formView.$get("itemType"));
                     }
                 },
                 onLoading: function () {
@@ -278,4 +279,49 @@ function startWait(indic) {
  */
 function stopWait(indic) {
     $(indic).style.display = 'none';
+}
+//endcolor for close element flashing
+closeEndcolor = '#377814';
+//endcolor for delete element flashing
+deleteEndcolor = '#c62424';
+function confirmDelete(message, element, url, view) {
+    var check = confirm(message);
+    if (check == true) {
+        deleteElement(element, url, view);
+    }
+}
+function deleteElement(theElement, theUrl, theView) {
+    new Ajax.Request(theUrl, {
+        method: 'get',
+        onSuccess: function (payload) {
+            if (payload.responseText == "ok") {
+                removeRow(theElement, deleteEndcolor);
+                if (theView != undefined) {
+
+                    updateView(theView);
+                    console.log("element deleted");
+                    systemMessage.deleted(theView.$get("itemType"));
+                }
+                var result = true;
+            }
+        }
+    });
+}
+function closeElement(theElement, theUrl, theView) {
+
+    new Ajax.Request(theUrl, {
+        method: 'get',
+        onSuccess: function (payload) {
+            if (payload.responseText == "ok") {
+                removeRow(theElement, closeEndcolor);
+                if (theView != undefined) {
+                    updateView(theView);
+
+                    console.log("element closed");
+                    systemMessage.closed(theView.$get("itemType"));
+                }
+            }
+        }
+    });
+
 }

@@ -63,7 +63,7 @@
                         <tr v-bind:class="{ 'marker-late': item.islate, 'marker-today': item.istoday }" >
                             <td>
                                 {/literal}{if $userpermissions.tasks.close}{literal}
-                                    <a class="butn_check" href="javascript:closeElement('task_{{*item.ID}}','managetask.php?action=close&amp;tid={{*item.ID}}&amp;id={{*item.project}}');" title="{/literal}{#close#}"></a>
+                                    <a class="butn_check" href="javascript:closeElement('task_{{*item.ID}}','managetask.php?action=close&amp;tid={{*item.ID}}&amp;id={{*item.project}}', tasksView);" title="{/literal}{#close#}"></a>
                                 {/if}{literal}
 
                             </td>

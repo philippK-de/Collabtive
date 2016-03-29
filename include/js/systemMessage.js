@@ -6,28 +6,28 @@ var systemMessage = {
         new Effect.Appear(elementId, {duration: this.fadeDuration})
         window.setTimeout("new Effect.Fade('" + elementId + "', { duration: "+ this.fadeDuration + " })",this.showFor);
     },
-    notify: function(type){
+    notify: function(messageType, itemType){
         //get the container element
-        var notificationContainer = document.querySelector("#systemMessage");
+        var notificationContainer = document.querySelector("#" + itemType + "SystemMessage");
         var icon = notificationContainer.dataset.icon;
         var cssClass = "";
         var text = "";
-        if(type == "added")
+        if(messageType == "added")
         {
             cssClass = "info_in_green";
             text = notificationContainer.dataset.textAdded;
         }
-        else if(type == "closed")
+        else if(messageType == "closed")
         {
             cssClass = "info_in_green";
             text = notificationContainer.dataset.textClosed;
         }
-        else if(type == "edited")
+        else if(messageType == "edited")
         {
             cssClass = "info_in_yellow";
             text = notificationContainer.dataset.textEdited;
         }
-        else if(type == "deleted")
+        else if(messageType == "deleted")
         {
             cssClass = "info_in_red";
             text = notificationContainer.dataset.textDeleted;
@@ -43,20 +43,20 @@ var systemMessage = {
         this.createMessage(notificationContainer.id);
         console.log(notificationHTML);
     },
-    added: function()
+    added: function(itemType)
     {
-         this.notify("added");
+         this.notify("added", itemType);
     },
-    closed: function()
+    closed: function(itemType)
     {
-        this.notify("closed");
+        this.notify("closed", itemType);
     },
-    edited: function()
+    edited: function(itemType)
     {
-        this.notify("edited");
+        this.notify("edited", itemType);
     },
-    deleted: function()
+    deleted: function(itemType)
     {
-        this.notify("deleted");
+        this.notify("deleted", itemType);
     }
 };

@@ -2,21 +2,25 @@
 var projects = {
     el: "desktopprojects",
     url: "index.php?action=myprojects",
+    itemType: "project",
     dependencies: []
 };
 var oldProjects = {
     el: "projectsDoneblock",
+    itemType: "project",
     url: "index.php?action=myClosedProjects"
 }
 
 var tasks = {
     el: "desktoptasks",
+    itemType: "task",
     url: "index.php?action=mytasks",
     dependencies: []
 };
 
 var messages = {
     el: "desktopmessages",
+    itemType: "message",
     url: "index.php?action=mymessages",
     dependencies: []
 };
