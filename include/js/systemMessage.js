@@ -1,4 +1,11 @@
 var systemMessage = {
+    showFor: 5000,
+    fadeDuration: 2.0,
+    createMessage: function(elementId)
+    {
+        new Effect.Appear(elementId, {duration: this.fadeDuration})
+        window.setTimeout("new Effect.Fade('" + elementId + "', { duration: "+ this.fadeDuration + " })",this.showFor);
+    },
     notify: function(type){
         //get the container element
         var notificationContainer = document.querySelector("#systemMessage");
@@ -30,13 +37,19 @@ var systemMessage = {
         var notificationHTML = "<span class = \"" + cssClass + "\">";
         notificationHTML += "<img src = \"" + icon + "\" />"  + text + "</span>";
 
+        //write the notification element to the notification container
         notificationContainer.innerHTML = notificationHTML;
-        systemMsg(notificationContainer.id);
+        //create the system message
+        this.createMessage(notificationContainer.id);
         console.log(notificationHTML);
     },
     added: function()
     {
          this.notify("added");
+    },
+    closed: function()
+    {
+        this.notify("closed");
     },
     edited: function()
     {

@@ -4,54 +4,18 @@
 <div id="content-left">
 <div id="content-left-in">
 <div class="tasks" >
-
-	{*System Message*}
-	<div class="infowin_left" style="display:none;" id="systemmsg">
-		{if $mode == "added"}
-			<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasadded#}</span>
-		{elseif $mode == "edited"}
-			<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasedited#}</span>
-		{elseif $mode == "deleted"}
-			<span class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasdeleted#}</span>
-		{elseif $mode == "opened"}
-			<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasopened#}</span>
-		{elseif $mode == "closed"}
-			<span class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasclosed#}</span>
-		{elseif $mode == "assigned"}
-			<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasassigned#}</span>
-		{elseif $mode == "deassigned"}
-			<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasdeassigned#}</span>
-		{elseif $mode == "error"}
-			<span class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#error#}</span>
-		{elseif $mode == "listadded"}
-			<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt=""/>{#tasklistwasadded#}</span>
-		{elseif $mode == "listclosed"}
-			<span class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist-done.png" alt=""/>{#tasklistwasclosed#}</span>
-		{elseif $mode == "listdeleted"}
-			<span class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt=""/>{#tasklistwasdeleted#}</span>
-		{elseif $mode == "listopened"}
-			<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt=""/>{#tasklistwasopened#}</span>
-		{/if}
-
-		{*for async display*}
-		<span id = "added" style = "display:none;" class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasadded#}</span>
-		<span id = "edited" style = "display:none;" class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasedited#}</span>
-		<span id = "deleted" style = "display:none;" class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasdeleted#}</span>
-		<span id = "opened" style = "display:none;" class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasopened#}</span>
-		<span id = "closed" style = "display:none;" class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasclosed#}</span>
-		<span id = "assigned" style = "display:none;" class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasassigned#}</span>
-		<span id = "deassigned" style = "display:none;" class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt=""/>{#taskwasdeassigned#}</span>
-		<span id = "listadded" style = "display:none;" class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt=""/>{#tasklistwasadded#}</span>
-        <span id = "listclosed" style = "display:none;" class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist-done.png" alt=""/>{#tasklistwasclosed#}</span>
-		<span id = "listdeleted" style = "display:none;" class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt=""/>{#tasklistwasdeleted#}</span>
-		<span id = "listopened" style = "display:none;" class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt=""/>{#tasklistwasopened#}</span>
-	</div>
-
-	{literal}
-		<script type = "text/javascript">
-			systemMsg('systemmsg');
-		</script>
-	{/literal}{*/System Message*}
+    <div class="infowin_left"
+         id="systemMessage"
+         data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png"
+         data-text-deleted = "{#taskwasdeleted#}"
+         data-text-edited = "{#taskwasedited#}"
+         data-text-added = "{#taskwasadded#}"
+         data-text-closed = "{#taskwasclosed#}"
+         data-text-opened = "{#taskwasopened#}"
+         data-text-assigned = "{#taskwasassigned#}"
+         data-text-deassigned = "{#taskwasdeassigned#}"
+         style="display:none">
+    </div>
 
 	<h1>{$projectname|truncate:45:"...":true}<span>/ {#tasklists#}</span></h1>
 
@@ -283,7 +247,9 @@
       {/section}
     </div>
     {/if} {*if $lists[0][0]*}
+
 {if !$lists[0][0] and !$oldlists[0][0]}
+
 	<tbody class="color-a">
 		<tr>
 			<td></td>
@@ -291,16 +257,15 @@
 			<td class="tools"></td>
 		</tr>
 	</tbody>
+</div><!-- content left end -->
 {/if}
     <div class="content-spacer"></div>
 </div> {*Tasks END*}
 </div> {*content-left-in END*}
 </div> {*content-left END*}
-
 {* current tasklists end*}
 {*right sidebar*}
 {include file="sidebar-a.tpl"}
-
 {if $oldlists[0][0]} {*only show the block if there are closed tasklists*} {*Done Tasklists*}
 <div class="content-spacer"></div>
 {*closed tasklists*}
@@ -384,7 +349,7 @@
 		</div> {*dones End*}
 	</div> {*block End*}
 
-	<div class="content-spacer"></div>
+
 
 	{literal}
 		<script type = "text/javascript">
@@ -397,6 +362,8 @@
 </div> {*content-left END*}
 
 {/if} {*Done Tasklists End*}
+
+
 
 
 <script type="text/javascript" src="include/js/views/projectTasks.min.js"></script>

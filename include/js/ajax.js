@@ -29,7 +29,7 @@ function deleteElement(theElement, theUrl, theView) {
         }
     });
     try {
-        systemMsg("deleted");
+        systemMessage.deleted();
     }
     catch (e) {
     }
@@ -51,8 +51,7 @@ function closeElement(theElement, theUrl, theView) {
     });
 
     try {
-        systemMsg("closed");
-
+        systemMessage.closed();
     }
     catch (e) {
     }
@@ -275,7 +274,7 @@ function calctime() {
 
 function systemMsg(ele) {
     new Effect.Appear(ele, {duration: 2.0})
-    makeTimer("new Effect.Fade('" + ele + "', { duration: 2.0 })", 5000);
+    window.setTimeout("new Effect.Fade('" + ele + "', { duration: 2.0 })", 5000);
 }
 
 //add search provider

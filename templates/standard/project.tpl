@@ -5,19 +5,15 @@
 <div id="content-left-in">
 <div class="projects">
 
-
-	<div class="infowin_left" style = "display:none;" id = "systemmsg">
-		{if $mode == "edited"}
-		<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt=""/>{#projectwasedited#}</span>
-		{elseif $mode == "timeadded"}
-		<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/timetracker.png" alt=""/>{#timetrackeradded#}</span>
-		{/if}
-	</div>
-	{literal}
-	<script type = "text/javascript">
-		systemMsg('systemmsg');
-	 </script>
-	{/literal}
+    <div class="infowin_left"
+         id="systemMessage"
+         data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png"
+         data-text-deleted = "{#projectwasdeleted#}"
+         data-text-edited = "{#projectwasedited#}"
+         data-text-added = "{#projectwasadded#}"
+         data-text-closed = "{#projectwasclosed#}"
+         style="display:none">
+    </div>
 
 <h1>{$project.name|truncate:45:"...":true}<span>/ {#overview#}</span></h1>
 
