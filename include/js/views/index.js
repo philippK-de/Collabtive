@@ -71,12 +71,17 @@ var accordIndex = new accordion2('block_index', {
  *
  * This will activate the accordion with the supplied index
  *
- **/
+ */
+// /loop through the blocks and add the accordion toggle link
+openSlide = 0;
+blockIds = [];
 function activateAccordeon(theAccord) {
+    console.log("activate accordion");
     //activate the block in the block accordion
     accordIndex.toggle(document.querySelectorAll('#block_index .acc_toggle')[theAccord]);
     //change the state of the arrow in the titlebar
-    changeElements("#" + blockIds[theAccord] + " > a.win_block", "win_none");
+    console.log("#" + blockIds[theAccord] + " > a.win_block");
+    //changeElements("#" + blockIds[theAccord] + " > a.win_none", "win_block");
     //set a cookie to save the accordeon last clicked
     setCookie("activeSlideIndex", theAccord);
 }
@@ -85,9 +90,7 @@ function activateAccordeon(theAccord) {
 var theBlocks = document.querySelectorAll("#block_index > div .headline > a");
 //console.log(theBlocks);
 
-//loop through the blocks and add the accordion toggle link
-openSlide = 0;
-blockIds = [];
+
 for (i = 0; i < theBlocks.length; i++) {
     //get the id of the current html element
     var theId = theBlocks[i].getAttribute("id");
