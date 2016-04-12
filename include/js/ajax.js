@@ -422,6 +422,7 @@ accordion.prototype = {
         this.duration = 0.4;
 
         var accordions = $$('#' + container + ' .' + this.options.classNames.toggle);
+
         accordions.each(function (accordion) {
             Event.observe(accordion, this.options.onEvent, this.activate.bind(this, accordion), false);
 

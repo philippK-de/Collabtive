@@ -48,7 +48,7 @@
                 <div class="miles" style="padding-bottom:2px;">
                     <div class="headline">
                         <a href="javascript:void(0);" id="mileshead_toggle" class="win_none"
-                           onclick="changeElements('a.win_block','win_none');toggleBlock('mileshead');"></a>
+                           onclick=""></a>
 
                         <div class="wintools">
                             <div class="progress" id="progress" style="display:none;">
@@ -77,6 +77,7 @@
         <div class="content-spacer"></div>
     </div> {* content-left-in END *}
 </div> {* content-left END *}
+<script type="text/javascript" src="include/js/accordion.js"></script>
 <script type="text/javascript" src="include/js/views/index.min.js"></script>
 {include file="sidebar-a.tpl"}
 {include file="footer.tpl"}

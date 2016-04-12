@@ -364,9 +364,6 @@
 
 {/if} {*Done Tasklists End*}
 
-
-
-
 <script type="text/javascript" src="include/js/views/projectTasks.min.js"></script>
 
 {include file="footer.tpl"}

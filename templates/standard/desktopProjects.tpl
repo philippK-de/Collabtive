@@ -1,7 +1,6 @@
 <div id="desktopprojects" class="projects" style="padding-bottom:2px;">
     <div class="headline">
-        <a href="javascript:void(0);" id="projecthead_toggle" class="win_block"
-           onclick="changeElements('a.win_block','win_none');toggleBlock('projecthead');"></a>
+        <a href="javascript:void(0);" id="projecthead_toggle" class="win_block" onclick=""></a>
 
         <div class="wintools">
             <div class="progress" id="progressdesktopprojects" style="display:none;">
@@ -66,8 +65,7 @@
                     <td>
                         <div class="toggle-in">
                                 <span id="desktopprojectstoggle{{ item.ID }}" class="acc-toggle"
-                                      onclick="javascript:accord_projects.activate(document.querySelectorAll('#projecthead .accordion_toggle')[{{$index}}]);
-                                      toggleAccordeon('projecthead',this);"></span>
+                                      onclick="javascript:accord_projects.activate(document.querySelector('#projectheadtoggle{{$index}}'));"></span>
                             <a href="manageproject.php?action=showproject&amp;id={{*item.ID}}" title="{{*item.name}}">
                                 {{*item.name}}
                             </a>
@@ -102,8 +100,8 @@
 
                 <tr class="acc">
                     <td colspan="5">
-                        <div class="accordion_toggle"></div>
-                        <div class="accordion_content">
+                        <div class="accordion_toggle" data-slide="{{$index}}" id = "projectheadtoggle{{$index}}"></div>
+                        <div class="accordion_content" id="projectheadcontent{{$index}}">
                             <div class="acc-in">
                                 <div class="message-in">
                                     {{{*item.desc}}}

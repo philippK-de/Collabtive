@@ -2,8 +2,7 @@
 {if $msgnum > 0}
     <div class="msgs" style="padding-bottom:2px;">
         <div class="headline">
-            <a href="javascript:void(0);" id="activityhead_toggle" class="win_none"
-               onclick="changeElements('a.win_block','win_none');toggleBlock('activityhead');"></a>
+            <a href="javascript:void(0);" id="activityhead_toggle" class="win_none" onclick=""></a>
 
             <div class="wintools">
                 <div class="progress" id="progressdesktopmessages" style="display:none;width:20px;float:left">

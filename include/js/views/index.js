@@ -48,7 +48,9 @@ changeshow('manageajax.php?action=newcal', 'thecal', 'progress');
 
 //initialize accordeons
 try {
-    var accord_projects = new accordion('projecthead');
+   //var accord_projects = new accordion('projecthead');
+    var accord_projects = new accordion2('projecthead');
+
     var accord_oldprojects = new accordion('projectsDoneblock');
     var accord_tasks = new accordion('taskhead');
     var accord_msgs = new accordion('activityhead');
@@ -57,7 +59,7 @@ catch (e) {}
 
 
 //create blocks accordeon
-var accordIndex = new accordion('block_index', {
+var accordIndex = new accordion2('block_index', {
     classNames: {
         toggle: 'acc_toggle',
         toggleActive: 'acctoggle_active',
@@ -72,7 +74,7 @@ var accordIndex = new accordion('block_index', {
  **/
 function activateAccordeon(theAccord) {
     //activate the block in the block accordion
-    accordIndex.activate(document.querySelectorAll('#block_index .acc_toggle')[theAccord]);
+    accordIndex.toggle(document.querySelectorAll('#block_index .acc_toggle')[theAccord]);
     //change the state of the arrow in the titlebar
     changeElements("#" + blockIds[theAccord] + " > a.win_block", "win_none");
     //set a cookie to save the accordeon last clicked

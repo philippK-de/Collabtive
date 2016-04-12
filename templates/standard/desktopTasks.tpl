@@ -3,7 +3,7 @@
 
     <div class="tasks" style = "padding-bottom:2px;">
         <div class="headline">
-            <a href="javascript:void(0);" id="taskhead_toggle" class="win_none" onclick="changeElements('a.win_block','win_none');toggleBlock('taskhead');"></a>
+            <a href="javascript:void(0);" id="taskhead_toggle" class="win_none" onclick=""></a>
 
             <div class="wintools">
 
