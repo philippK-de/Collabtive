@@ -76,12 +76,8 @@ var accordIndex = new accordion2('block_index', {
 openSlide = 0;
 blockIds = [];
 function activateAccordeon(theAccord) {
-    console.log("activate accordion");
     //activate the block in the block accordion
     accordIndex.toggle(document.querySelectorAll('#block_index .acc_toggle')[theAccord]);
-    //change the state of the arrow in the titlebar
-    console.log("#" + blockIds[theAccord] + " > a.win_block");
-    //changeElements("#" + blockIds[theAccord] + " > a.win_none", "win_block");
     //set a cookie to save the accordeon last clicked
     setCookie("activeSlideIndex", theAccord);
 }

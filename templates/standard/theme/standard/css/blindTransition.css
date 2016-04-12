@@ -17,13 +17,13 @@
 .blind-content.in
 {
     -webkit-animation: blind-in 2s 1;
-    animation: blind-in 2s 1;
+    animation: blind-in 1s 1;
 }
 
 .blind-content.out
 {
     -webkit-animation: blind-out 2s 1;
-    animation: blind-out 2s 1;
+    animation: blind-out 1s 1;
 }
 
 @-webkit-keyframes blind-in {

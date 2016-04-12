@@ -64,7 +64,6 @@ accordion2.prototype.activate = function (toggle) {
     for (var i = 0; i < this.accordionContents.length; i++) {
         this.accordionContents[i].id = this.container + "content" + i;
 
-        console.log(this.accordionContents[i].id);
         if (i == numSlide) {
 
             this.accordionContents[i].className = "accordion_content blind-content in origin-top";
