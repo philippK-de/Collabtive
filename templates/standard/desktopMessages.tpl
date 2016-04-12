@@ -60,7 +60,7 @@
                     </td>
                     <td>
                         <div class="toggle-in">
-                            <span class="acc-toggle" onclick="javascript:accord_msgs.activate($$('#activityhead .accordion_toggle')[{{$index}}]);toggleAccordeon('activityhead',this);"></span>
+                            <span class="acc-toggle" onclick="javascript:accord_msgs.activate(document.querySelector('#activityheadtoggle{{$index}}'));"></span>
                             <a href="managemessage.php?action=showmessage&amp;mid={{*item.ID}}&amp;id={{*item.project}}" title="{{*item.title}}">{{*item.title}}</a>
                         </div>
                     </td>
@@ -84,8 +84,8 @@
 
                 <tr class="acc">
                     <td colspan="6">
-                        <div class="accordion_toggle"></div>
-                        <div class="accordion_content">
+                        <div class="accordion_toggle" data-slide="{{$index}}" id = "activityheadtoggle{{$index}}"></div>
+                        <div class="accordion_content" id="activityheadcontent{{$index}}">
                             <div class="acc-in">
 
 

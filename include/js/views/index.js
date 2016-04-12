@@ -52,8 +52,8 @@ try {
     var accord_projects = new accordion2('projecthead');
 
     var accord_oldprojects = new accordion('projectsDoneblock');
-    var accord_tasks = new accordion('taskhead');
-    var accord_msgs = new accordion('activityhead');
+    var accord_tasks = new accordion2('taskhead');
+    var accord_msgs = new accordion2('activityhead');
 }
 catch (e) {}
 

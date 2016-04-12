@@ -69,7 +69,7 @@
                             </td>
                             <td>
                                 <div class="toggle-in">
-                                    <span id="desktoptaskstoggle{{item.ID}}" class="acc-toggle" onclick="javascript:accord_tasks.activate($$('#taskhead .accordion_toggle')[{{$index}}]);toggleAccordeon('taskhead',this);"></span>
+                                    <span id="desktoptaskstoggle{{item.ID}}" class="acc-toggle" onclick="javascript:accord_tasks.activate(document.querySelector('#taskheadtoggle{{$index}}'));"></span>
                                     <a href="managetask.php?action=showtask&amp;id={{*item.project}}&amp;tid={{*item.ID}}" title="{{*item.title}}">
                                         {{item.title}}
                                     </a>
@@ -95,8 +95,8 @@
 
                         <tr class="acc">
                             <td colspan="5">
-                                <div class="accordion_toggle"></div>
-                                <div class="accordion_content">
+                                <div class="accordion_toggle" data-slide="{{$index}}" id = "taskheadtoggle{{$index}}"></div>
+                                <div class="accordion_content" id="taskheadcontent{{$index}}">
                                     <div class="acc-in">
                                         <div class="message-in">
                                             {{{*item.text}}}
