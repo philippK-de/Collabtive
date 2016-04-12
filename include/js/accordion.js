@@ -21,7 +21,6 @@ function accordion2(container, options)
     this.accordionToggles = this.rootElement.querySelectorAll("." + this.classNames.toggle);
     this.accordionContents = this.rootElement.querySelectorAll("." + this.classNames.content);
 
-    console.log(this.accordionToggles);
     this.initializeAccordion();
 
 }
@@ -30,8 +29,6 @@ accordion2.prototype.initializeAccordion = function()
 {
     if(this.accordionToggles.length > 0 && this.accordionContents.length > 0) {
         for (var i = 0; i < this.accordionToggles.length; i++) {
-            console.log(this.accordionToggles[i]);
-            this.accordionToggles[i].style.display = "none";
             this.accordionToggles[i].dataset.slide = i;
             this.accordionToggles[i].id = this.container + "toggle" + i;
             this.accordionToggles[i].addEventListener("click", this.toggle);
@@ -65,28 +62,34 @@ accordion2.prototype.toggle = function(toggle)
 accordion2.prototype.activate = function(toggle)
 {
     var numSlide = toggle.dataset.slide;
-   console.log(numSlide);
     this.accordionContents = this.rootElement.querySelectorAll("." + this.classNames.content);
-
-    console.log(this.accordionContents);
-
 
     for(var i=0;i<this.accordionContents.length;i++)
     {
         this.accordionContents[i].id = this.container + "content" + i;
+
+    }
+    for(var i=0;i<this.accordionContents.length;i++)
+    {
+        console.log(this.accordionContents[i].id);
         if(i == numSlide)
         {
 
-           // Effect.BlindDown(this.accordionContents[i].id);
+            this.accordionContents[i].className = "accordion_content blind-content in origin-top";
             this.accordionContents[i].style.display = "block";
         }
         else
         {
-           // Effect.BlindUp(this.accordionContents[i].id);
-            this.accordionContents[i].style.display = "none";
+            // Effect.BlindUp(this.accordionContents[i].id);
+
+            this.accordionContents[i].className = "accordion_content blind-content out origin-top";
+              this.accordionContents[i].style.display = "none";
+
         }
 
     }
+
+
     console.log(toggle);
 
 }

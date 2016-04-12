@@ -77,6 +77,7 @@
         <div class="content-spacer"></div>
     </div> {* content-left-in END *}
 </div> {* content-left END *}
+<link rel="stylesheet" type = "text/css" href="templates/standard/theme/standard/css/blindTransition.css" />
 <script type="text/javascript" src="include/js/accordion.js"></script>
 <script type="text/javascript" src="include/js/views/index.min.js"></script>
 {include file="sidebar-a.tpl"}
