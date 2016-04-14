@@ -95,7 +95,7 @@
 {if $tree[0][0] > 0}
 <div class="projects dtree" style="padding-bottom:2px;" >
 	<div class="headline accordion_toggle">
-		<a href="javascript:void(0);" id="treehead_toggle" class="win_block" onclick="changeElements('a.win_block','win_none');toggleBlock('treehead');"></a>
+		<a href="javascript:void(0);" id="treehead_toggle" class="win_block" onclick=""></a>
 		<h2>
 			<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{#projecttree#}
 		</h2>
@@ -161,7 +161,7 @@
 {*Milestones*}
 <div class="miles" style="padding-bottom:2px;">
 			<div class="headline accordion_toggle" >
-				<a href="javascript:void(0);" id="milehead_toggle" class="win_none" onclick="changeElements('a.win_block','win_none');toggleBlock('milehead');"></a>
+				<a href="javascript:void(0);" id="milehead_toggle" class="win_none" onclick="" ></a>
 
 				<div class="wintools">
 					<!-- <div class="export-main">
@@ -195,7 +195,7 @@
 {if $userpermissions.timetracker.add}
 <div class="timetrack" style = "padding-bottom:2px;">
 	<div class="headline accordion_toggle">
-		<a href="javascript:void(0);" id="trackerhead_toggle" class="win_none" onclick = "changeElements('a.win_block','win_none');toggleBlock('trackerhead');"></a>
+		<a href="javascript:void(0);" id="trackerhead_toggle" class="win_none" onclick=""></a>
 
 		<h2>
 			<a href="managetimetracker.php?action=showproject&amp;id={$project.ID}" title="{#timetracker#}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/timetracker.png" alt="" />{#timetracker#}</a>
@@ -237,7 +237,7 @@
 </div> {*content-left END*}
 
 {include file="sidebar-a.tpl" showcloud="1"}
-
+<script type="text/javascript" src="include/js/accordion.min.js"></script>
 <script type = "text/javascript" src="include/js/views/project.min.js"></script>
 
 

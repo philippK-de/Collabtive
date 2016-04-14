@@ -6,17 +6,22 @@ window.addEventListener("load",function()
     });
 });
 
-var accord_dashboard = new accordion('block_dashboard');
+var accord_dashboard = new accordion2('block_dashboard',{
+    classNames: {
+        toggle: 'win_none',
+        toggleActive: 'win_block',
+        content: 'accordion_content'
+    }
+});
 
 function activateAccordeon(theAccord){
 
-    accord_dashboard.activate($$('#block_dashboard .accordion_toggle')[theAccord]);
+    accord_dashboard.toggle(document.querySelectorAll('#block_dashboard .accordion_content')[theAccord]);
     setCookie("activeSlideProject",theAccord);
 }
 
 //var theBlocks = $$("#block_dashboard > div .headline > a");
 var theBlocks = document.querySelectorAll("#block_dashboard > div .headline > a");
-console.log(theBlocks);
 
 //loop through the blocks and add the accordion toggle link
 openSlide = 0;
