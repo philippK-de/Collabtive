@@ -3,6 +3,7 @@
  */
 
 function accordion2(container, options) {
+    //set defaults for CSS class names
     if (options === undefined) {
         this.classNames = {
             toggle: "acc-toggle",
@@ -14,18 +15,32 @@ function accordion2(container, options) {
     else {
         this.classNames = options.classNames;
     }
+    //setup base elements
     this.container = container;
     this.rootElement = document.getElementById(this.container);
+
+    //instance variable to hold the currently handled slide and toggle
+    this.currentContent = {};
+    this.currentToggle = {};
 
     this.initializeToggles();
     this.initializeAccordion();
 
 }
 
+/*
+ * initialize toggle and content lists
+ */
 accordion2.prototype.initializeToggles = function () {
+    //get accordion toggle - these are the visual arrows representing the toggle state
     this.accordionToggles = this.rootElement.querySelectorAll("." + this.classNames.toggle + ",." + this.classNames.toggleActive);
+    //get accordion contents - these are the content areas representing the slides
     this.accordionContents = this.rootElement.querySelectorAll("." + this.classNames.content + ",." + this.classNames.contentActive);
 }
+
+/*
+ * loop over contents and set some properties
+ */
 accordion2.prototype.initializeAccordion = function () {
     if (this.accordionContents.length > 0) {
         for (var i = 0; i < this.accordionContents.length; i++) {
@@ -37,7 +52,10 @@ accordion2.prototype.initializeAccordion = function () {
         }
     }
 }
+
+// this method is used for block accordions and new accordions
 accordion2.prototype.toggle = function (contentSlide) {
+    //get number of the slide to be opened
     var numSlide = contentSlide.dataset.slide;
 
     for (var i = 0; i < this.accordionContents.length; i++) {
@@ -52,23 +70,40 @@ accordion2.prototype.toggle = function (contentSlide) {
     }
 
 }
+//this method is a legacy drop in for the old accordion / inner accordions
 accordion2.prototype.activate = function (contentSlide) {
     this.initializeToggles();
     var numSlide = contentSlide.dataset.slide;
 
     for (var i = 0; i < this.accordionContents.length; i++) {
+        this.currentContent = this.accordionContents[i];
+        this.currentToggle = this.accordionToggles[i];
+
         if (i == numSlide) {
             //this.accordionContents[i].className = "accordion_content blind-content in origin-top";
-            this.accordionContents[i].className = this.classNames.contentActive;
-            this.accordionToggles[i].className = this.classNames.toggleActive;
-
-             Effect.BlindDown(this.accordionContents[i].id);
+            new Effect.BlindDown(this.accordionContents[i].id, {
+                duration: 0.4,
+                beforeStart: this.showSlide()
+            });
         }
         else {
-            this.accordionContents[i].className = this.classNames.content;
-            this.accordionToggles[i].className = this.classNames.toggle;
+            new Effect.BlindUp(this.accordionContents[i].id, {
+                duration: 0.4,
+                afterFinish: this.hideSlide()
+            });
+
+
         }
 
     }
 
 }
+
+accordion2.prototype.showSlide = function () {
+    this.currentContent.className = this.classNames.contentActive;
+    this.currentToggle.className = this.classNames.toggleActive;
+}
+accordion2.prototype.hideSlide = function () {
+    this.currentToggle.className = this.classNames.toggle;
+}
+
