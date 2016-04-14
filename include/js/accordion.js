@@ -7,7 +7,8 @@ function accordion2(container, options) {
         this.classNames = {
             toggle: "acc-toggle",
             toggleActive: "acc-toggle-active",
-            content: "accordion_content"
+            content: "accordion_content",
+            contentActive: "accordion_content_active"
         }
     }
     else {
@@ -23,7 +24,7 @@ function accordion2(container, options) {
 
 accordion2.prototype.initializeToggles = function () {
     this.accordionToggles = this.rootElement.querySelectorAll("." + this.classNames.toggle + ",." + this.classNames.toggleActive);
-    this.accordionContents = this.rootElement.querySelectorAll("." + this.classNames.content);
+    this.accordionContents = this.rootElement.querySelectorAll("." + this.classNames.content + ",." + this.classNames.contentActive);
 }
 accordion2.prototype.initializeAccordion = function () {
     if (this.accordionContents.length > 0) {
@@ -57,16 +58,14 @@ accordion2.prototype.activate = function (contentSlide) {
 
     for (var i = 0; i < this.accordionContents.length; i++) {
         if (i == numSlide) {
-            this.accordionContents[i].className = "accordion_content blind-content in origin-top";
-
-            this.accordionContents[i].style.display = "block";
+            //this.accordionContents[i].className = "accordion_content blind-content in origin-top";
+            this.accordionContents[i].className = this.classNames.contentActive;
             this.accordionToggles[i].className = this.classNames.toggleActive;
+
+             Effect.BlindDown(this.accordionContents[i].id);
         }
         else {
-            // Effect.BlindUp(this.accordionContents[i].id);
-            this.accordionContents[i].className = "accordion_content blind-content out origin-top";
-            this.accordionContents[i].style.display = "none";
-
+            this.accordionContents[i].className = this.classNames.content;
             this.accordionToggles[i].className = this.classNames.toggle;
         }
 
