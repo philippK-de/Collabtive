@@ -61,8 +61,8 @@ catch (e) {}
 //create blocks accordeon
 var accordIndex = new accordion2('block_index', {
     classNames: {
-        toggle: 'acc_toggle',
-        toggleActive: 'acctoggle_active',
+        toggle: 'win_none',
+        toggleActive: 'win_block',
         content: 'blockaccordion_content'
     }
 });

@@ -23,7 +23,6 @@ function accordion2(container, options) {
 
 accordion2.prototype.initializeToggles = function () {
     this.accordionToggles = this.rootElement.querySelectorAll("." + this.classNames.toggle + ",." + this.classNames.toggleActive);
-    this.blockToggles = this.rootElement.querySelectorAll("a.win_block, a.win_none");
     this.accordionContents = this.rootElement.querySelectorAll("." + this.classNames.content);
 }
 accordion2.prototype.initializeAccordion = function () {
@@ -32,6 +31,7 @@ accordion2.prototype.initializeAccordion = function () {
             this.accordionContents[i].dataset.slide = i;
             this.accordionContents[i].style.display = "none";
             this.accordionContents[i].style.overflow = "hidden";
+
             this.accordionContents[i].id = this.container + "content" + i;
         }
     }
@@ -41,12 +41,11 @@ accordion2.prototype.toggle = function (contentSlide) {
 
     for (var i = 0; i < this.accordionContents.length; i++) {
         if (i == numSlide) {
-            this.blockToggles[i].className = "win_block";
+            this.accordionToggles[i].className = this.classNames.toggleActive;
             Effect.BlindDown(this.accordionContents[i].id);
         }
         else {
-
-            this.blockToggles[i].className = "win_none";
+            this.accordionToggles[i].className = this.classNames.toggle;
             Effect.BlindUp(this.accordionContents[i].id);
         }
     }
@@ -56,14 +55,11 @@ accordion2.prototype.activate = function (contentSlide) {
     this.initializeToggles();
     var numSlide = contentSlide.dataset.slide;
 
-
-    console.log(this.accordionContents.length);
-    console.log(this.accordionToggles.length);
     for (var i = 0; i < this.accordionContents.length; i++) {
         if (i == numSlide) {
             this.accordionContents[i].className = "accordion_content blind-content in origin-top";
-            this.accordionContents[i].style.display = "block";
 
+            this.accordionContents[i].style.display = "block";
             this.accordionToggles[i].className = this.classNames.toggleActive;
         }
         else {
