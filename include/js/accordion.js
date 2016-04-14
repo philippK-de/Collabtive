@@ -59,13 +59,20 @@ accordion2.prototype.toggle = function (contentSlide) {
     var numSlide = contentSlide.dataset.slide;
 
     for (var i = 0; i < this.accordionContents.length; i++) {
+        //save the current content and toggle in an instance var so it can be used in other method scopes
+        this.currentContent = this.accordionContents[i];
+        this.currentToggle = this.accordionToggles[i];
+
         if (i == numSlide) {
-            this.accordionToggles[i].className = this.classNames.toggleActive;
-            Effect.BlindDown(this.accordionContents[i].id);
+            Effect.BlindDown(this.accordionContents[i].id, {
+                afterFinish: this.showToggle()
+            });
         }
         else {
             this.accordionToggles[i].className = this.classNames.toggle;
-            Effect.BlindUp(this.accordionContents[i].id);
+            Effect.BlindUp(this.accordionContents[i].id,{
+                afterFinish: this.hideToggle()
+            });
         }
     }
 
@@ -76,34 +83,33 @@ accordion2.prototype.activate = function (contentSlide) {
     var numSlide = contentSlide.dataset.slide;
 
     for (var i = 0; i < this.accordionContents.length; i++) {
+        //save the current content and toggle in an instance var so it can be used in other method scopes
         this.currentContent = this.accordionContents[i];
         this.currentToggle = this.accordionToggles[i];
 
         if (i == numSlide) {
-            //this.accordionContents[i].className = "accordion_content blind-content in origin-top";
-            new Effect.BlindDown(this.accordionContents[i].id, {
+            Effect.BlindDown(this.accordionContents[i].id, {
                 duration: 0.4,
                 beforeStart: this.showSlide()
             });
         }
         else {
-            new Effect.BlindUp(this.accordionContents[i].id, {
+            Effect.BlindUp(this.accordionContents[i].id, {
                 duration: 0.4,
-                afterFinish: this.hideSlide()
+                afterFinish: this.hideToggle()
             });
-
-
         }
-
     }
-
 }
 
 accordion2.prototype.showSlide = function () {
     this.currentContent.className = this.classNames.contentActive;
     this.currentToggle.className = this.classNames.toggleActive;
 }
-accordion2.prototype.hideSlide = function () {
+accordion2.prototype.showToggle = function () {
+    this.currentToggle.className = this.classNames.toggleActive;
+}
+accordion2.prototype.hideToggle = function () {
     this.currentToggle.className = this.classNames.toggle;
 }
 
