@@ -23,8 +23,7 @@
         </h2>
 
     </div>
-    <div class="acc_toggle"></div>
-    <div class="block acc_content" id="projecthead" style="overflow:hidden;">{* Add project *}
+    <div class="block blockaccordion_content" id="projecthead" style="overflow:hidden;">
         <div id="form_addmyproject" class="addmenue" style="display:none;">
             {include file="addproject.tpl" myprojects="1"}
         </div>
@@ -64,8 +63,8 @@
                     </td>
                     <td>
                         <div class="toggle-in">
-                                <span id="desktopprojectstoggle{{ item.ID }}" class="acc-toggle"
-                                      onclick="javascript:accord_projects.activate(document.querySelector('#projectheadtoggle{{$index}}'));"></span>
+                                <span id="desktopprojects_toggle{{ item.ID }}" class="acc-toggle"
+                                      onclick="javascript:accord_projects.activate(document.querySelector('#projecthead_content{{$index}}'));"></span>
                             <a href="manageproject.php?action=showproject&amp;id={{*item.ID}}" title="{{*item.name}}">
                                 {{*item.name}}
                             </a>
@@ -100,8 +99,7 @@
 
                 <tr class="acc">
                     <td colspan="5">
-                        <div class="accordion_toggle" data-slide="{{$index}}" id = "projectheadtoggle{{$index}}"></div>
-                        <div class="accordion_content" id="projectheadcontent{{$index}}">
+                        <div class="accordion_content" data-slide="{{$index}}" id="projecthead_content{{$index}}">
                             <div class="acc-in">
                                 <div class="message-in">
                                     {{{*item.desc}}}
@@ -121,7 +119,7 @@
                        onclick="blindtoggle('projectsDoneblock');toggleClass('donebutn','butn_link_active','butn_link');toggleClass('toggle-done','acc-toggle','acc-toggle-active');">
 
                     <tr>
-                        <td class="a"><span id="toggle-done" class="acc-toggle">{#closedprojects#}</span></td>
+                        <td class="a"><span id="toggle-done">{#closedprojects#}</span></td>
                         <td class="b"></td>
 
                         <td class="tools"></td>
@@ -165,7 +163,6 @@
                         </tr>
                         <tr class="acc">
                             <td colspan="5">
-                                <div class="accordion_toggle"></div>
                                 <div class="accordion_content">
                                     <div class="acc-in">
                                         {{item.desc}}

@@ -5,8 +5,8 @@
 function accordion2(container, options) {
     if (options === undefined) {
         this.classNames = {
-            toggle: "accordion_toggle",
-            toggleActive: "accordion_toggle_active",
+            toggle: "acc-toggle",
+            toggleActive: "acc-toggle-active",
             content: "accordion_content"
         }
     }
@@ -15,7 +15,6 @@ function accordion2(container, options) {
     }
     this.container = container;
     this.rootElement = document.getElementById(this.container);
-    this.blockToggles = this.rootElement.querySelectorAll("a.win_block, a.win_none");
 
     this.initializeToggles();
     this.initializeAccordion();
@@ -23,25 +22,22 @@ function accordion2(container, options) {
 }
 
 accordion2.prototype.initializeToggles = function () {
-    this.accordionArrows = this.rootElement.querySelectorAll("." + this.classNames.toggleActive);
-    this.accordionToggles = this.rootElement.querySelectorAll("." + this.classNames.toggle);
+    this.accordionToggles = this.rootElement.querySelectorAll("." + this.classNames.toggle + ",." + this.classNames.toggleActive);
+    this.blockToggles = this.rootElement.querySelectorAll("a.win_block, a.win_none");
     this.accordionContents = this.rootElement.querySelectorAll("." + this.classNames.content);
 }
 accordion2.prototype.initializeAccordion = function () {
-    if (this.accordionToggles.length > 0 && this.accordionContents.length > 0) {
-        for (var i = 0; i < this.accordionToggles.length; i++) {
-            this.accordionToggles[i].dataset.slide = i;
-            this.accordionToggles[i].id = this.container + "toggle" + i;
-            this.accordionToggles[i].addEventListener("click", this.toggle);
-
-
+    if (this.accordionContents.length > 0) {
+        for (var i = 0; i < this.accordionContents.length; i++) {
+            this.accordionContents[i].dataset.slide = i;
             this.accordionContents[i].style.display = "none";
+            this.accordionContents[i].style.overflow = "hidden";
             this.accordionContents[i].id = this.container + "content" + i;
         }
     }
 }
-accordion2.prototype.toggle = function (toggle) {
-    var numSlide = toggle.dataset.slide;
+accordion2.prototype.toggle = function (contentSlide) {
+    var numSlide = contentSlide.dataset.slide;
 
     for (var i = 0; i < this.accordionContents.length; i++) {
         if (i == numSlide) {
@@ -53,32 +49,31 @@ accordion2.prototype.toggle = function (toggle) {
             this.blockToggles[i].className = "win_none";
             Effect.BlindUp(this.accordionContents[i].id);
         }
-
     }
 
 }
-accordion2.prototype.activate = function (toggle) {
-    var numSlide = toggle.dataset.slide;
+accordion2.prototype.activate = function (contentSlide) {
     this.initializeToggles();
+    var numSlide = contentSlide.dataset.slide;
 
+
+    console.log(this.accordionContents.length);
+    console.log(this.accordionToggles.length);
     for (var i = 0; i < this.accordionContents.length; i++) {
-        this.accordionContents[i].id = this.container + "content" + i;
-
         if (i == numSlide) {
-
             this.accordionContents[i].className = "accordion_content blind-content in origin-top";
             this.accordionContents[i].style.display = "block";
 
+            this.accordionToggles[i].className = this.classNames.toggleActive;
         }
         else {
             // Effect.BlindUp(this.accordionContents[i].id);
-
             this.accordionContents[i].className = "accordion_content blind-content out origin-top";
             this.accordionContents[i].style.display = "none";
 
+            this.accordionToggles[i].className = this.classNames.toggle;
         }
 
     }
-    console.log(toggle);
 
 }

@@ -49,9 +49,9 @@ changeshow('manageajax.php?action=newcal', 'thecal', 'progress');
 //initialize accordeons
 try {
    //var accord_projects = new accordion('projecthead');
-    var accord_projects = new accordion2('projecthead');
+    var accord_projects = new accordion2('desktopprojects');
 
-    var accord_oldprojects = new accordion('projectsDoneblock');
+    var accord_oldprojects = new accordion2('projectsDoneblock');
     var accord_tasks = new accordion2('taskhead');
     var accord_msgs = new accordion2('activityhead');
 }
@@ -63,7 +63,7 @@ var accordIndex = new accordion2('block_index', {
     classNames: {
         toggle: 'acc_toggle',
         toggleActive: 'acctoggle_active',
-        content: 'acc_content'
+        content: 'blockaccordion_content'
     }
 });
 
@@ -77,7 +77,7 @@ openSlide = 0;
 blockIds = [];
 function activateAccordeon(theAccord) {
     //activate the block in the block accordion
-    accordIndex.toggle(document.querySelectorAll('#block_index .acc_toggle')[theAccord]);
+    accordIndex.toggle(document.querySelectorAll('#block_index .blockaccordion_content')[theAccord]);
     //set a cookie to save the accordeon last clicked
     setCookie("activeSlideIndex", theAccord);
 }

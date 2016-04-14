@@ -23,8 +23,7 @@
                 <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#mymessages#}
             </h2>
         </div>
-        <div class="acc_toggle"></div>
-        <div class="block acc_content" id="activityhead" style="overflow:hidden;">
+        <div class="block blockaccordion_content" id="activityhead" style="overflow:hidden;">
             <div id="addmsg" class="addmenue" style="display:none;">
             </div>
             <table id="desktopmessages" cellpadding="0" cellspacing="0" border="0" v-cloak>
@@ -60,7 +59,7 @@
                     </td>
                     <td>
                         <div class="toggle-in">
-                            <span class="acc-toggle" onclick="javascript:accord_msgs.activate(document.querySelector('#activityheadtoggle{{$index}}'));"></span>
+                            <span class="acc-toggle" onclick="javascript:accord_msgs.activate(document.querySelector('#activityhead_content{{$index}}'));"></span>
                             <a href="managemessage.php?action=showmessage&amp;mid={{*item.ID}}&amp;id={{*item.project}}" title="{{*item.title}}">{{*item.title}}</a>
                         </div>
                     </td>
@@ -84,8 +83,7 @@
 
                 <tr class="acc">
                     <td colspan="6">
-                        <div class="accordion_toggle" data-slide="{{$index}}" id = "activityheadtoggle{{$index}}"></div>
-                        <div class="accordion_content" id="activityheadcontent{{$index}}">
+                        <div class="accordion_content" data-slide="{{$index}}" id="activityhead_content{{$index}}">
                             <div class="acc-in">
 
 

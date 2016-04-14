@@ -28,7 +28,7 @@
         </div>
 
         <div class = "acc_toggle"></div>
-        <div class="block acc_content" id="taskhead" style = "overflow:hidden;" >
+        <div class="block blockaccordion_content" id="taskhead" style = "overflow:hidden;" >
             <div id="form_addmytask" class="addmenue" style="display:none;">
                 {include file="addmytask_index.tpl" }
             </div>
@@ -69,7 +69,7 @@
                             </td>
                             <td>
                                 <div class="toggle-in">
-                                    <span id="desktoptaskstoggle{{item.ID}}" class="acc-toggle" onclick="javascript:accord_tasks.activate(document.querySelector('#taskheadtoggle{{$index}}'));"></span>
+                                    <span id="desktoptaskstoggle{{item.ID}}" class="acc-toggle" onclick="javascript:accord_tasks.activate(document.querySelector('#taskhead_content{{$index}}'));"></span>
                                     <a href="managetask.php?action=showtask&amp;id={{*item.project}}&amp;tid={{*item.ID}}" title="{{*item.title}}">
                                         {{item.title}}
                                     </a>
@@ -95,8 +95,7 @@
 
                         <tr class="acc">
                             <td colspan="5">
-                                <div class="accordion_toggle" data-slide="{{$index}}" id = "taskheadtoggle{{$index}}"></div>
-                                <div class="accordion_content" id="taskheadcontent{{$index}}">
+                                <div class="accordion_content" data-slide="{{$index}}" id="taskhead_content{{$index}}">
                                     <div class="acc-in">
                                         <div class="message-in">
                                             {{{*item.text}}}

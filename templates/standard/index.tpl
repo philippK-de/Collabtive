@@ -61,8 +61,7 @@
                         </h2>
                     </div>
 
-                    <div class="acc_toggle"></div>
-                    <div class="block acc_content" id="mileshead" style="overflow:hidden;">
+                    <div class="block blockaccordion_content" id="mileshead" style="overflow:hidden;">
                         <div id="thecal" class="bigcal" style="height:270px;"></div>
                         <div class="content-spacer"></div>
                     </div> {* block END *}
