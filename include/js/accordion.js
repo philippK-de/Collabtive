@@ -28,9 +28,6 @@ function accordion2(container, options) {
 
 }
 
-/*
- * initialize toggle and content lists
- */
 accordion2.prototype.initializeToggles = function () {
     //get accordion toggle - these are the visual arrows representing the toggle state
     this.accordionToggles = this.rootElement.querySelectorAll("." + this.classNames.toggle + ",." + this.classNames.toggleActive);
@@ -38,9 +35,6 @@ accordion2.prototype.initializeToggles = function () {
     this.accordionContents = this.rootElement.querySelectorAll("." + this.classNames.content + ",." + this.classNames.contentActive);
 }
 
-/*
- * loop over contents and set some properties
- */
 accordion2.prototype.initializeAccordion = function () {
     if (this.accordionContents.length > 0) {
         for (var i = 0; i < this.accordionContents.length; i++) {

@@ -241,14 +241,21 @@ function addEngine(url) {
 function sortit() {
 
 }
-function sortBlock(theblock, sortmode) {
-    var tbodies = $$("#" + theblock + " tbody");
-    var bodyIds = new Array();
-    theParent = $(theblock).parentNode;
+function sortBlock(blockId, sortmode) {
+    var theBlock = document.getElementById(blockId);
+    var tbodyCollection = theBlock.getElementsByTagName("tbody");
+    var tbodies = [];
 
-    for (i = 0; i < tbodies.length; i++) {
+    for(var j= 0;j<tbodyCollection.length;j++)
+    {
+        tbodies.push(tbodyCollection[j]);
+    }
+    console.log(tbodies);
+
+    var bodyIds = new Array();
+    for (var i = 0; i < tbodies.length; i++) {
         var tdtitle = tbodies[i].getAttribute("rel");
-        titleArr = tdtitle.split(",");
+        var titleArr = tdtitle.split(",");
 
         tbodies[i].setAttribute("theid", Number(titleArr[0]));
         tbodies[i].setAttribute("title", titleArr[1]);
@@ -263,9 +270,7 @@ function sortBlock(theblock, sortmode) {
             tbodies[i].setAttribute("sortorder", "asc");
         }
 
-
-        $(theblock).removeChild(tbodies[i]);
-        //$('jslog').innerHTML += tbodies[i].id + "<br />";
+       theBlock.removeChild(tbodies[i]);
     }
 
     if (sortmode == "daysleft") {
@@ -284,18 +289,11 @@ function sortBlock(theblock, sortmode) {
         tbodies.sort(sortByTitle);
     }
 
-    //$('jslog').innerHTML += " <br /> <br />sorted:<br/>";
-    for (i = 0; i < tbodies.length; i++) {
-        var theEl = $(theblock).appendChild(tbodies[i]);
-        if (i % 2 == 0) {
-            theEl.setAttribute("class", "color-a");
-        }
-        else {
-            theEl.setAttribute("class", "color-b");
-        }
-        $(theblock + "toggle" + tbodies[i].getAttribute("theid")).setAttribute("onclick", "javascript:accord_tasks.activate($$('#'+theParent.id+' .accordion_toggle')[" + i + "]);toggleAccordeon(theParent.id,this);");
-
-        //$('jslog').innerHTML += tbodies[i].id + "<br />";
+    for (var a = 0; a < tbodies.length; a++) {
+        theBlock.appendChild(tbodies[a]);
+        var tbodyId = tbodies[a].getAttribute("theid");
+        var toggle = document.getElementById(blockId + "toggle" + tbodyId);
+        toggle.setAttribute("onclick", "javascript:accord_tasks.activate(document.querySelector('#taskhead_content"+a+"'));");
     }
 }
 
