@@ -1,22 +1,25 @@
 
-var accord_dashboard = new accordion('blockTasks');
+var accord_dashboard = new accordion2('blockTasks',{
+    classNames: {
+        toggle: 'win_none',
+            toggleActive: 'win_block',
+            content: 'blockaccordion_content'
+    }
+});
 
 function activateAccordeon(theAccord){
-
-    accord_dashboard.activate($$('#blockTasks .accordion_toggle')[theAccord]);
+    accord_dashboard.toggle($$('#blockTasks .blockaccordion_content')[theAccord]);
     setCookie("activeSlideProject",theAccord);
 }
 
 //var theBlocks = $$("#block_dashboard > div .headline > a");
 var theBlocks = document.querySelectorAll("#blockTasks > div[class~='headline'] > a");
-console.log(theBlocks);
 
 //loop through the blocks and add the accordion toggle link
 openSlide = 0;
 for(i=0;i<theBlocks.length;i++)
 {
     theCook = readCookie("activeSlideProject");
-    console.log(theCook);
     if(theCook > 0)
     {
         openSlide = theCook;
