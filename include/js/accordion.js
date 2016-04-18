@@ -1,7 +1,6 @@
-/**
- * Created by philipp on 12.04.2016.
+/*
+* Accordion slides for dom elements
  */
-
 function accordion2(container, options) {
     //set defaults for CSS class names
     if (options === undefined) {
@@ -15,6 +14,9 @@ function accordion2(container, options) {
     else {
         this.classNames = options.classNames;
     }
+
+    //slide speed
+    this.slideDuration = 0.6;
     //setup base elements
     this.container = container;
     this.rootElement = document.getElementById(this.container);
@@ -28,6 +30,9 @@ function accordion2(container, options) {
 
 }
 
+/*
+* This method finds the visual toggles and content slides in the root element
+ */
 accordion2.prototype.initializeToggles = function () {
     //get accordion toggle - these are the visual arrows representing the toggle state
     this.accordionToggles = this.rootElement.querySelectorAll("." + this.classNames.toggle + ",." + this.classNames.toggleActive);
@@ -35,13 +40,20 @@ accordion2.prototype.initializeToggles = function () {
     this.accordionContents = this.rootElement.querySelectorAll("." + this.classNames.content + ",." + this.classNames.contentActive);
 }
 
+/*
+* Called in the constructor to enumerate the content slides and set their attributes
+ */
 accordion2.prototype.initializeAccordion = function () {
+    //loop through the accordion content slides
     if (this.accordionContents.length > 0) {
         for (var i = 0; i < this.accordionContents.length; i++) {
+            //enumerate the content slides
+            //and hide their content and overflow
             this.accordionContents[i].dataset.slide = i;
             this.accordionContents[i].style.display = "none";
             this.accordionContents[i].style.overflow = "hidden";
 
+            //set the ID of the content slide
             this.accordionContents[i].id = this.container + "content" + i;
         }
     }
@@ -60,12 +72,14 @@ accordion2.prototype.toggle = function (contentSlide) {
         if (i == numSlide) {
             console.log(this.accordionContents[i].id);
             Effect.BlindDown(this.accordionContents[i].id, {
+                duration: this.slideDuration,
                 afterFinish: this.showToggle()
             });
         }
         else {
             this.accordionToggles[i].className = this.classNames.toggle;
             Effect.BlindUp(this.accordionContents[i].id,{
+                duration: this.slideDuration,
                 afterFinish: this.hideToggle()
             });
         }
@@ -84,13 +98,13 @@ accordion2.prototype.activate = function (contentSlide) {
 
         if (i == numSlide) {
             Effect.BlindDown(this.accordionContents[i].id, {
-                duration: 0.3,
+                duration: this.slideDuration,
                 beforeStart: this.showSlide()
             });
         }
         else {
             Effect.BlindUp(this.accordionContents[i].id, {
-                duration: 0.3,
+                duration: this.slideDuration,
                 afterFinish: this.hideToggle()
             });
         }
