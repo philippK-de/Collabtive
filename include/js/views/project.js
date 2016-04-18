@@ -24,11 +24,10 @@ function activateAccordeon(theAccord){
 var theBlocks = document.querySelectorAll("#block_dashboard > div .headline > a");
 
 //loop through the blocks and add the accordion toggle link
-openSlide = 0;
+var openSlide = 0;
 for(i=0;i<theBlocks.length;i++)
 {
-    theCook = readCookie("activeSlideProject");
-    console.log(theCook);
+    var theCook = readCookie("activeSlideProject");
     if(theCook > 0)
     {
         openSlide = theCook;

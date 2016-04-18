@@ -39,7 +39,7 @@ accordion2.prototype.initializeAccordion = function () {
     if (this.accordionContents.length > 0) {
         for (var i = 0; i < this.accordionContents.length; i++) {
             this.accordionContents[i].dataset.slide = i;
-            this.accordionContents[i].style.display = "none";
+           // this.accordionContents[i].style.display = "none";
             this.accordionContents[i].style.overflow = "hidden";
 
             this.accordionContents[i].id = this.container + "content" + i;
@@ -51,13 +51,17 @@ accordion2.prototype.initializeAccordion = function () {
 accordion2.prototype.toggle = function (contentSlide) {
     //get number of the slide to be opened
     var numSlide = contentSlide.dataset.slide;
+    console.log(contentSlide);
+    console.log(numSlide);
 
     for (var i = 0; i < this.accordionContents.length; i++) {
         //save the current content and toggle in an instance var so it can be used in other method scopes
         this.currentContent = this.accordionContents[i];
         this.currentToggle = this.accordionToggles[i];
 
+
         if (i == numSlide) {
+            console.log(this.accordionContents[i].id);
             Effect.BlindDown(this.accordionContents[i].id, {
                 afterFinish: this.showToggle()
             });
@@ -83,13 +87,13 @@ accordion2.prototype.activate = function (contentSlide) {
 
         if (i == numSlide) {
             Effect.BlindDown(this.accordionContents[i].id, {
-                duration: 0.4,
+                duration: 0.3,
                 beforeStart: this.showSlide()
             });
         }
         else {
             Effect.BlindUp(this.accordionContents[i].id, {
-                duration: 0.4,
+                duration: 0.3,
                 afterFinish: this.hideToggle()
             });
         }
