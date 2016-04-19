@@ -70,14 +70,12 @@ accordion2.prototype.toggle = function (contentSlide) {
 
 
         if (i == numSlide) {
-            console.log(this.accordionContents[i].id);
             Effect.BlindDown(this.accordionContents[i].id, {
                 duration: this.slideDuration,
                 afterFinish: this.showToggle()
             });
         }
         else {
-            this.accordionToggles[i].className = this.classNames.toggle;
             Effect.BlindUp(this.accordionContents[i].id,{
                 duration: this.slideDuration,
                 afterFinish: this.hideToggle()

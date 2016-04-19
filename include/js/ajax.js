@@ -250,8 +250,6 @@ function sortBlock(blockId, sortmode) {
     {
         tbodies.push(tbodyCollection[j]);
     }
-    console.log(tbodies);
-
     var bodyIds = new Array();
     for (var i = 0; i < tbodies.length; i++) {
         var tdtitle = tbodies[i].getAttribute("rel");
