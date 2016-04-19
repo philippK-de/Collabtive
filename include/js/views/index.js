@@ -50,8 +50,6 @@ changeshow('manageajax.php?action=newcal', 'thecal', 'progress');
 try {
    //var accord_projects = new accordion('projecthead');
     var accord_projects = new accordion2('desktopprojects');
-
-    var accord_oldprojects = new accordion2('projectsDoneblock');
     var accord_tasks = new accordion2('taskhead');
     var accord_msgs = new accordion2('activityhead');
 }

@@ -143,12 +143,7 @@
                                 {literal}
                             </td>
                             <td class="b">
-                                <div class="toggle-in">
-                                            <span class="acc-toggle" onclick="javascript:accord_oldprojects.activate(document.querySelectorAll('#acc-oldprojects .accordion_toggle')[{{$index}}]);toggleAccordeon('acc-oldprojects',this);"></span>
-                                    <a href="manageproject.php?action=showproject&amp;id={{item.ID}}" title="{{item.name}}">
-                                        {{item.name}}
-                                    </a>
-                                </div>
+                                {{item.name}}
                             </td>
                            <td class="tools">
                                 {/literal}
@@ -159,15 +154,6 @@
                                 {/literal}
                                 {/if}
                                 {literal}
-                            </td>
-                        </tr>
-                        <tr class="acc">
-                            <td colspan="5">
-                                <div class="accordion_content">
-                                    <div class="acc-in">
-                                        {{item.desc}}
-                                    </div>
-                                </div>
                             </td>
                         </tr>
                         </tbody>
