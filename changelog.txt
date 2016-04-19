@@ -1,4 +1,4 @@
-Collabtive 2.2
+Collabtive 3.0
 + Changed constructor of SmartyPaginate.class.php to be compatible with PHP 7
 + Fixed unfiltered variables
 + Improved database checks in init.php (srichter)
@@ -19,7 +19,7 @@ Collabtive 2.2
 + Converted loading of messages to asyncronous loading
 + Made adding of projects asyncronous
 + Project tasks are now arranged as a block accordion
-
++ Rewrote accordion code to no longer depend on prototype.js
 
 Collabtive 2.1
 + Removed accordion-related JS legacy code from desktop

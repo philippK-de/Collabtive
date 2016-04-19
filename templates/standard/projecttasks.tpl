@@ -169,21 +169,21 @@
                                     <table cellpadding="0" cellspacing="0" border="0" id="done_{$lists[list].ID}">
                                         {section name=oldtask loop=$lists[list].oldtasks}
 
-                                        {if $smarty.section.oldtask.index % 2 == 0}
-                                            <tbody class="color-a" id="task_{$lists[list].oldtasks[oldtask].ID}">
-                                            {else}
-                                            <tbody class="color-b" id="task_{$lists[list].oldtasks[oldtask].ID}">
+                                            {if $smarty.section.oldtask.index % 2 == 0}
+                                                <tbody class="color-a" id="task_{$lists[list].oldtasks[oldtask].ID}">
+                                                {else}
+                                                <tbody class="color-b" id="task_{$lists[list].oldtasks[oldtask].ID}">
                                             {/if}
-
-
                                             <tr>
-                                                <td class="a">{if $userpermissions.tasks.close}<a class="butn_checked"
-                                                                                                  href="javascript:closeElement('task_{$lists[list].oldtasks[oldtask].ID}','managetask.php?action=open&amp;tid={$lists[list].oldtasks[oldtask].ID}&amp;id={$project.ID}');"
-                                                                                                  title="{#open#}"></a>{/if}</td>
+                                                <td class="a">
+                                                    {if $userpermissions.tasks.close}
+                                                        <a class="butn_checked"
+                                                           href="javascript:closeElement('task_{$lists[list].oldtasks[oldtask].ID}','managetask.php?action=open&amp;tid={$lists[list].oldtasks[oldtask].ID}&amp;id={$project.ID}');"
+                                                           title="{#open#}"></a>
+                                                    {/if}
+                                                </td>
                                                 <td class="b">
                                                     <div class="toggle-in">
-                                                        <span class="acc-toggle"
-                                                              onclick="javascript:accord_done_{$lists[list].ID}.activate($$('#done_{$lists[list].ID} .accordion_toggle')[{$smarty.section.oldtask.index}]);toggleAccordeon('done_{$lists[list].ID}',this);"></span>
                                                         <a href="managetask.php?action=showtask&amp;tid={$lists[list].oldtasks[oldtask].ID}&amp;id={$lists[list].oldtasks[oldtask].project}"
                                                            title="{$lists[list].oldtasks[oldtask].title}">
                                                             {if $lists[list].oldtasks[oldtask].title != ""}
@@ -199,11 +199,6 @@
                                                 </td>
                                                 <td class="days" style="text-align:right">{$lists[list].oldtasks[oldtask].daysleft}&nbsp;&nbsp;</td>
                                                 <td class="tools">
-                                                    {if $userpermissions.tasks.edit}
-                                                        <a class="tool_edit" href="javascript:void(0);"
-                                                           onclick="change('managetask.php?action=editform&amp;tid={$lists[list].oldtasks[oldtask].ID}&amp;id={$project.ID}','form_{$lists[list].ID}');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_{$lists[list].ID}');"
-                                                           title="{#edit#}"></a>
-                                                    {/if}
                                                     {if $userpermissions.tasks.del}
                                                         <a class="tool_del"
                                                            href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'task_{$lists[list].oldtasks[oldtask].ID}\',\'managetask.php?action=del&amp;tid={$lists[list].oldtasks[oldtask].ID}&amp;id={$project.ID}\')');"
@@ -211,24 +206,7 @@
                                                     {/if}
                                                 </td>
                                             </tr>
-
-                                            <tr class="acc">
-                                                <td colspan="5">
-                                                    <div class="accordion_content">
-                                                        <div class="acc-in">
-                                                            <div class="message-in">
-                                                                {$lists[list].oldtasks[oldtask].text|nl2br}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
                                             </tbody>
-                                        {literal}
-                                            <script type="text/javascript">
-                                                var accord_done_{/literal}{$lists[list].ID}{literal} = new accordion('done_{/literal}{$lists[list].ID}{literal}');
-                                            </script>
-                                        {/literal}
                                         {/section} {*Tasks donetasks END*}
 
                                     </table>
