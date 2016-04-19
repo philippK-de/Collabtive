@@ -33,7 +33,7 @@
             <h1>{$projectname|truncate:45:"...":true}<span>/ {#messages#}</span></h1>
 
             <div class="headline">
-                <a href="javascript:void(0);" id="block_msgs_toggle" class="win_block" onclick="toggleBlock('block_msgs');"></a>
+                <a href="javascript:void(0);" id="acc-toggle" class="win_block" onclick="toggleBlock('block_msgs');"></a>
 
                 <div class="wintools">
                     <div class="progress" id="progressprojectMessages" style="display:none;width:20px;float:left">
@@ -109,7 +109,7 @@
                             <td>
                                 <div class="toggle-in">
                                     <span class="acc-toggle"
-                                          onclick="javascript:accord_messages.activate($$('#block_msgs .accordion_toggle')[{{$index}}]);toggleAccordeon('accord_messages',this);"></span>
+                                          onclick="javascript:accord_messages.activate(document.querySelector('#block_msgs_content{{$index}}'));"></span>
                                     <a href="managemessage.php?action=showmessage&amp;mid={{*message.ID}}&amp;id={{*message.project}}"
                                        title="{{*message.title}}">{{message.title}}</a>
                                 </div>
@@ -136,8 +136,7 @@
 
                         <tr class="acc">
                             <td colspan="6">
-                                <div class="accordion_toggle"></div>
-                                <div class="accordion_content">
+                                <div class="accordion_content" data-slide="{{$index}}" id="block_msgs_content{{$index}}">
                                     <div class="acc-in">
                                         <img src="thumb.php?width=80&amp;height=80&amp;pic=templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/no-avatar-male.jpg" />
                                         <div class="message">
@@ -235,12 +234,13 @@
     <!-- content-left-in END-->
 </div> <!-- content-left END -->
 
+    <script type="text/javascript" src="include/js/accordion.min.js"></script>
     <script type="text/javascript" src="include/js/views/projectMessages.min.js"></script>
 <script type="text/javascript">
     pagination.itemsPerPage = 15;
     projectMessages.url = projectMessages.url + "&id=" + {/literal}{$project.ID}{literal};
     projectMessagesView = createView(projectMessages);
-    var accord_messages = new accordion('block_msgs');
+    var accord_messages = new accordion2('block_msgs');
 </script>
 {/literal}
 

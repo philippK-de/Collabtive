@@ -2307,7 +2307,7 @@ a.dir_up_butn:hover {
 	display: none;
 }
 
-.block table tr.acc td .accordion_content .acc-in {
+.block table tr.acc td .accordion_content,.accordion_content_active .acc-in {
 
 	border-top: 1px solid <?php echo $leftBlockBg;
 ?>;

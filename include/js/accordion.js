@@ -16,7 +16,7 @@ function accordion2(container, options) {
     }
 
     //slide speed
-    this.slideDuration = 0.6;
+    this.slideDuration = 0.5;
     //setup base elements
     this.container = container;
     this.rootElement = document.getElementById(this.container);
@@ -54,7 +54,7 @@ accordion2.prototype.initializeAccordion = function () {
             this.accordionContents[i].style.overflow = "hidden";
 
             //set the ID of the content slide
-            this.accordionContents[i].id = this.container + "content" + i;
+            this.accordionContents[i].id = this.container + "_content" + i;
         }
     }
 }
@@ -91,6 +91,7 @@ accordion2.prototype.activate = function (contentSlide) {
     this.initializeToggles();
     var numSlide = contentSlide.dataset.slide;
 
+    console.log("slide " + numSlide + " toggled");
     for (var i = 0; i < this.accordionContents.length; i++) {
         //save the current content and toggle in an instance var so it can be used in other method scopes
         this.currentContent = this.accordionContents[i];

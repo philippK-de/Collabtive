@@ -52,7 +52,7 @@
 				
 			</div>
 			
-			<div class="block" id="acc-projects"> {*Add Project*}
+			<div class="block" id="acc_projects"> {*Add Project*}
 				<div id="form_addmyproject" class="addmenue" style="display:none;">
 					{include file="addproject.tpl" myprojects="1"}
 				</div>
@@ -94,7 +94,7 @@
 									</td>
 									<td>
 										<div class="toggle-in">
-											<span id="adminprojectstoggle{$opros[opro].ID}" class="acc-toggle" onclick="javascript:accord_projects.activate($$('#acc-projects .accordion_toggle')[{$smarty.section.opro.index}]);toggleAccordeon('acc-projects',this);"></span>
+											<span id="adminprojectstoggle{$opros[opro].ID}" class="acc-toggle" onclick="javascript:accord_projects.activate(document.querySelector('#acc_projects_content{$smarty.section.opro.index}'));"></span>
 											<a href="manageproject.php?action=showproject&amp;id={$opros[opro].ID}" title="{$opros[opro].name}">
 												{$opros[opro].name|truncate:30:"...":true}
 											</a>
@@ -122,7 +122,6 @@
 								
 								<tr class="acc">
 									<td colspan="5">
-										<div class="accordion_toggle"></div>
 										<div class="accordion_content">
 											<div class="acc-in">
 												{$opros[opro].desc}
@@ -330,9 +329,10 @@
 			</div> {*block END*} {*Doneprojects End*}
 			
 			{literal}
+                <script type="text/javascript" src="include/js/accordion.min.js"></script>
 				<script type="text/javascript">
-					var accord_projects = new accordion('acc-projects');
-					var accord_oldprojects = new accordion('acc-oldprojects');
+					var accord_projects = new accordion2('acc_projects');
+					//var accord_oldprojects = new accordion('acc_oldprojects');
 				</script>
 			{/literal}
 			

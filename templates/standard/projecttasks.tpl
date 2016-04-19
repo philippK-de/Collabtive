@@ -108,7 +108,7 @@
                                     <td>
                                         <div class="toggle-in">
                                             <span class="acc-toggle"
-                                                  onclick="javascript:accord_{{task.liste}}.activate(document.querySelector('#contentblock-{/literal}{$lists[list].ID}{literal}content{{$index}}'));"></span>
+                                                  onclick="javascript:accord_{{task.liste}}.activate(document.querySelector('#contentblock-{/literal}{$lists[list].ID}{literal}_content{{$index}}'));"></span>
                                             <a href="managetask.php?action=showtask&amp;tid={{task.ID}}&amp;id={{task].project}}"
                                                title="{{task.title}}">
                                                 {{task.title}}
@@ -136,7 +136,7 @@
                                 <tr class="acc">
                                     <td colspan="5">
                                         <div class="accordion_content" data-slide="{{$index}}"
-                                             id="contentblock-{/literal}{$lists[list].ID}{literal}content{{$index}}">
+                                             id="contentblock-{/literal}{$lists[list].ID}{literal}_content{{$index}}">
                                             <div class="acc-in">
                                                 <div class="message-in">
                                                     {{{task.text}}}

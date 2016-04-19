@@ -49,7 +49,7 @@
 			</h2>
 		</div>
 
-		<div class="block" id="acc-tracker" v-cloak>
+		<div class="block" id="acc_tracker" v-cloak>
 
 		<div id = "filter" class="addmenue" style = "display:none;"> {*Filter Report*}
 			{include file="filtertracker.tpl" }
@@ -81,7 +81,7 @@
 							<td></td>
 							<td>
 								<div class="toggle-in">
-								<span class="acc-toggle" onclick="javascript:accord_tracker.activate($$('#acc-tracker .accordion_toggle')[{{$index}}]);toggleAccordeon('acc-tracker',this);"></span>
+								<span class="acc-toggle" onclick="javascript:accord_tracker.activate(document.querySelector('#acc_tracker_content{{$index}}'));"></span>
 									<a href = "manageuser.php?action=profile&amp;id={{track.user}}" title="{{track.pname}}">
 										{{track.uname}}
 									</a>
@@ -106,8 +106,7 @@
                         {literal}
 						<tr class="acc">
 							<td colspan="7">
-								<div class="accordion_toggle"></div>
-								<div class="accordion_content">
+								<div class="accordion_content" data-slide="{{$index}}" id="acc_tracker_content{{$index}}">
 									<div class="acc-in">
 											<strong v-if="track.comment">{/literal}{#comment#}:{literal}</strong><br />{{{*track.comment}}}
 
@@ -144,11 +143,12 @@
 <div class="content-spacer"></div>
 
 {literal}
+    <script type="text/javascript" src="include/js/accordion.min.js"></script>
     <script type="text/javascript" src="include/js/views/timetrackerProject.min.js"></script>
 	<script type = "text/javascript">
         projectTimetracker.url = projectTimetracker.url + "&id=" + {/literal}{$project.ID}{literal};
         projectTimetrackerView = createView(projectTimetracker);
-		var accord_tracker = new accordion('acc-tracker');
+		var accord_tracker = new accordion2('acc_tracker');
 	</script>
 {/literal}
 
