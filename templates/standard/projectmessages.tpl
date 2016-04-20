@@ -57,14 +57,16 @@
                 <h2>
                     <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#messages#}
                     {literal}
-                        <span id="paging" style="margin-left:10px;">
+                   <!--     <span id="paging" style="margin-left:10px;">
                             <a style="color:#38bf42;font-size:8pt;" href="javascript:pagination.loadPrevPage(projectMessagesView)">[prev]</a>
                             <span id="page{{page.index}}" v-for="page in pages" style="margin-left:2px;">
                                  <a v-bind:style="currentPage == page.index ? 'font-size:18px;color:red' : 'color:#38bf42;font-size:8pt;' " href="javascript:pagination.loadPage(projectMessagesView,{{page.index}});
 ">[{{page.index}}]</a>
                             </span>
-                            <a style="color:#38bf42;font-size:8pt;" href="javascript:pagination.loadNextPage(projectMessagesView)">[next]</a>
+                            <a style="color:#38bf42;font-size:8pt;" href="javascript:pagination.loadNextPage(projectMessagesView)">[next]</a>  -->
                     </span>
+
+                        <pagination view="projectMessagesView" :pages="pages" :current-page="currentPage"></pagination>
                     {/literal}
                 </h2>
             </div>

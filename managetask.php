@@ -350,15 +350,17 @@ if ($action == "add") {
 elseif($action = "projectTasks")
 {
     $tasklistObj = new tasklist();
-    // Get open and closed tasklists
+    // Get open and closed tasks from list
     $openTasks = $tasklistObj->getTasksFromList($id);
     $closedTasks = $tasklistObj->getTasksFromList($id,0);
 
+    //assemble array
     $tasks["open"] = $openTasks;
     $tasks["closed"] = $closedTasks;
 
+    //assemble data structure for view
     $openLists["items"] = $tasks;
-    $openLists["count"] = count($tasks);
+    $openLists["count"] = count($openTasks);
     echo json_encode($openLists);
 }
 

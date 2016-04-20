@@ -25,6 +25,8 @@ var messages = {
     dependencies: []
 };
 
+
+
 //create views - binding the data to the dom element
 var projectsView = createView(projects);
 var tasksView = createView(tasks);
@@ -48,12 +50,13 @@ changeshow('manageajax.php?action=newcal', 'thecal', 'progress');
 
 //initialize accordeons
 try {
-   //var accord_projects = new accordion('projecthead');
+    //var accord_projects = new accordion('projecthead');
     var accord_projects = new accordion2('desktopprojects');
     var accord_tasks = new accordion2('taskhead');
     var accord_msgs = new accordion2('activityhead');
 }
-catch (e) {}
+catch (e) {
+}
 
 
 //create blocks accordeon
