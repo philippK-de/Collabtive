@@ -5,11 +5,6 @@ var projects = {
     itemType: "project",
     dependencies: []
 };
-var oldProjects = {
-    el: "projectsDoneblock",
-    itemType: "project",
-    url: "index.php?action=myClosedProjects"
-}
 
 var tasks = {
     el: "desktoptasks",

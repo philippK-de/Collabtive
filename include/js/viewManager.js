@@ -38,7 +38,9 @@ function createView(myEl) {
                 //update the model with the retrieved data
                 console.log("url " + myModel.url);
                 var responseData = JSON.parse(myData.responseText);
+                //one page of data
                 myModel.items = responseData.items;
+                //total number of items
                 myModel.itemsCount = responseData.count;
                 //get the list of pages and add it to the model
                 var pages = pagination.listPages(responseData.count);

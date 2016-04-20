@@ -3,7 +3,7 @@
 
 <div id="content-left">
     <div id="content-left-in">
-
+        <!-- project text -->
         <div class="infowin_left"
              id="projectSystemMessage"
              data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png"
@@ -13,6 +13,7 @@
              data-text-closed = "{#projectwasclosed#}"
              style="display:none">
         </div>
+        <!-- task text -->
         <div class="infowin_left"
              id="taskSystemMessage"
              data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png"
@@ -22,6 +23,7 @@
              data-text-closed = "{#taskwasclosed#}"
              style="display:none">
         </div>
+        <!-- messages text -->
         <div class="infowin_left"
              id="messageSystemMessage"
              data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png"
@@ -30,7 +32,8 @@
              data-text-added = "{#messagewasadded#}"
              style="display:none">
         </div>
-        {if $isUpdated|default}
+
+        {if $isUpdated}
             {include file="updateNotify.tpl"}
             <br/>
         {/if}
