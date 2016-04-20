@@ -351,12 +351,17 @@ elseif($action = "projectTasks")
 {
     $tasklistObj = new tasklist();
     // Get open and closed tasklists
-    $tasks = $tasklistObj->getTasksFromList($id);
+    $openTasks = $tasklistObj->getTasksFromList($id);
+    $closedTasks = $tasklistObj->getTasksFromList($id,0);
+
+    $tasks["open"] = $openTasks;
+    $tasks["closed"] = $closedTasks;
 
     $openLists["items"] = $tasks;
     $openLists["count"] = count($tasks);
     echo json_encode($openLists);
 }
+
 elseif ($action == "showtask") {
     if (!$userpermissions["tasks"]["view"]) {
         $errtxt = $langfile["nopermission"];

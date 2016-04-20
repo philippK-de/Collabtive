@@ -94,7 +94,7 @@
 
                                 {*Color-Mix*}
                                 {literal}
-                                <tbody v-for="task in items" class="alternateColors" id="task_{{task.ID}}" v-cloak>
+                                <tbody v-for="task in items.open" class="alternateColors" id="task_{{task.ID}}" v-cloak>
 
                                 <tr v-bind:class="{ 'marker-late': item.islate, 'marker-today': item.istoday }">
                                     <td>
@@ -109,7 +109,7 @@
                                         <div class="toggle-in">
                                             <span class="acc-toggle"
                                                   onclick="javascript:accord_{{task.liste}}.activate(document.querySelector('#contentblock-{/literal}{$lists[list].ID}{literal}_content{{$index}}'));"></span>
-                                            <a href="managetask.php?action=showtask&amp;tid={{task.ID}}&amp;id={{task].project}}"
+                                            <a href="managetask.php?action=showtask&amp;tid={{task.ID}}&amp;id={{task.project}}"
                                                title="{{task.title}}">
                                                 {{task.title}}
                                             </a>
@@ -127,7 +127,7 @@
                                         {/if}
                                         {if $userpermissions.tasks.del}
                                         {literal}
-                                            <a class="tool_del" href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','task_{{task.ID}}','managetask.php?action=del&amp;tid={{task.ID}}&amp;id={{task.project}}');"  title="{/literal}{#delete#}"></a>
+                                            <a class="tool_del" href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','task_{{task.ID}}','managetask.php?action=del&amp;tid={{task.ID}}&amp;id={{task.project}}', projectTasksView_{/literal}{$lists[list].ID}{literal});"  title="{/literal}{#delete#}"></a>
                                         {/if}
                                     </td>
                                 </tr>
@@ -152,7 +152,7 @@
 
                             {*Tasks donetasks*}
                             <div id="doneblock_{$lists[list].ID}" class="doneblock" style="display: none;">
-                                <table class="second-thead" cellpadding="0" cellspacing="0" border="0"
+                                <table id="acc_donetasks_{$lists[list].ID}" class="second-thead" cellpadding="0" cellspacing="0" border="0"
                                        onclick="blindtoggle('doneblock_{$lists[list].ID}');toggleClass('donebutn_{$lists[list].ID}','butn_link_active','butn_link');toggleClass('toggle-done-{$lists[list].ID}','acc-toggle','acc-toggle-active');">
 
                                     <tr>
@@ -167,52 +167,45 @@
 
                                 <div class="toggleblock">
                                     <table cellpadding="0" cellspacing="0" border="0" id="done_{$lists[list].ID}">
-                                        {section name=oldtask loop=$lists[list].oldtasks}
+                                        {literal}
+                                        <tbody v-for="oldtask in items.closed" class="alternateColors" id="oldtask_{{*oldtask.ID}">
 
-                                            {if $smarty.section.oldtask.index % 2 == 0}
-                                                <tbody class="color-a" id="task_{$lists[list].oldtasks[oldtask].ID}">
-                                                {else}
-                                                <tbody class="color-b" id="task_{$lists[list].oldtasks[oldtask].ID}">
-                                            {/if}
-                                            <tr>
-                                                <td class="a">
-                                                    {if $userpermissions.tasks.close}
-                                                        <a class="butn_checked"
-                                                           href="javascript:closeElement('task_{$lists[list].oldtasks[oldtask].ID}','managetask.php?action=open&amp;tid={$lists[list].oldtasks[oldtask].ID}&amp;id={$project.ID}');"
-                                                           title="{#open#}"></a>
-                                                    {/if}
-                                                </td>
-                                                <td class="b">
-                                                    <div class="toggle-in">
-                                                        <a href="managetask.php?action=showtask&amp;tid={$lists[list].oldtasks[oldtask].ID}&amp;id={$lists[list].oldtasks[oldtask].project}"
-                                                           title="{$lists[list].oldtasks[oldtask].title}">
-                                                            {if $lists[list].oldtasks[oldtask].title != ""}
-                                                                {$lists[list].oldtasks[oldtask].title|truncate:30:"...":true}
-                                                            {else}
-                                                                {$lists[list].oldtasks[oldtask].text|truncate:30:"...":true}
-                                                            {/if}
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                                <td class="c"><a
-                                                            href="manageuser.php?action=profile&amp;id={$lists[list].oldtasks[oldtask].user_id}">{$lists[list].oldtasks[oldtask].user|truncate:23:"...":true}</a>
-                                                </td>
-                                                <td class="days" style="text-align:right">{$lists[list].oldtasks[oldtask].daysleft}&nbsp;&nbsp;</td>
-                                                <td class="tools">
-                                                    {if $userpermissions.tasks.del}
-                                                        <a class="tool_del"
-                                                           href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'task_{$lists[list].oldtasks[oldtask].ID}\',\'managetask.php?action=del&amp;tid={$lists[list].oldtasks[oldtask].ID}&amp;id={$project.ID}\')');"
-                                                           title="{#delete#}"></a>
-                                                    {/if}
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        {/section} {*Tasks donetasks END*}
-
+                                        <tr>
+                                            <td class="a">
+                                                {/literal}
+                                                {if $userpermissions.tasks.close}
+                                                {literal}
+                                                    <a class="butn_checked" href="javascript:closeElement('oldtask_{{*oldtask.ID}}','managetask.php?action=open&amp;tid={{*oldtask.ID}}&amp;id={{*oldtask.project}}',projectTasksView_{/literal}{$lists[list].ID}{literal});" title="{/literal}{#open#}"></a>
+                                                {/if}
+                                                {literal}
+                                            </td>
+                                            <td class="b">
+                                                <div class="toggle-in">
+                                                    <a href="managetask.php?action=showtask&amp;tid={{*oldtask.ID}}&amp;id={{                                                   *oldtask.project}}" title="{{*oldtask.title}}">{{*oldtask.title}}</a>
+                                                </div>
+                                            </td>
+                                            <td class="c">
+                                                <a href="manageuser.php?action=profile&amp;id={{*oldtask.user_id}}">{{*oldtask.user}}</a>
+                                            </td>
+                                            <td class="days" style="text-align:right">{{*oldtask.daysleft}}&nbsp;&nbsp;</td>
+                                            <td class="tools">
+                                                {/literal}
+                                                {if $userpermissions.tasks.del}
+                                                {literal}
+                                                <a class="tool_del"
+                                                   href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'task_{{*oldtask.ID}}\',\'managetask.php?action=del&amp;tid={{*oldtask.ID}}&amp;id={{*oldtask.project}}\')');" title="{/literal}{#delete#}"></a>
+                                                {/if}
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                         {*Tasks donetasks END*}
                                     </table>
-                                </div> {*toggleblock End*}
-                            </div> {*done_block End*}
-                        </div> {*smooth End*}
+                                </div>
+                                {*toggleblock End*}
+                            </div>
+                            {*done_block End*}
+                        </div>
+                        {*smooth End*}
 
                         <div class="tablemenue">
                             <div class="tablemenue-in">
@@ -226,10 +219,11 @@
                         </div>
                     </div>
                     {*block END*}
-                {literal}
+
+                    {literal}
                     <script type="text/javascript">
                         var projectTasks = {
-                            el: "acc_{/literal}{$lists[list].ID}{literal}",
+                            el: "contentblock-{/literal}{$lists[list].ID}{literal}",
                             itemType: "task",
                             url: "managetask.php?action=projectTasks&id={/literal}{$lists[list].ID}{literal}",
                             dependencies: []

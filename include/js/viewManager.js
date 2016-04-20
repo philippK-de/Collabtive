@@ -66,9 +66,9 @@ function createView(myEl) {
 }
 
 /*
-* Function to recursively update a view and its dependencies
-* @param Object view A vue.js view to be updated
-* @param boolean updateDependencies A bool to determine whether dependencies should be updated (default = true)
+ * Function to recursively update a view and its dependencies
+ * @param Object view A vue.js view to be updated
+ * @param boolean updateDependencies A bool to determine whether dependencies should be updated (default = true)
  */
 function updateView(view, updateDependencies) {
     //Default update dependencies to true
@@ -161,42 +161,40 @@ var pagination = {
         view.$set("limit", this.itemsPerPage);
         view.$set("offset", offset);
         //update the current page for the view
-        view.$set("currentPage",page);
+        view.$set("currentPage", page);
 
         //triger the view to be updated
         updateView(view, true);
 
     },
-    loadNextPage: function(view){
+    loadNextPage: function (view) {
         //get current page
         var currentPage = view.$get("currentPage");
         //get total number of pages
-        var numberOfPages =   Math.ceil(view.$get("itemsCount") / this.itemsPerPage);
+        var numberOfPages = Math.ceil(view.$get("itemsCount") / this.itemsPerPage);
 
         //increment by one
         var nextPage = currentPage + 1;
 
         //if the next page would be beyond the last page, set nextPage to lastPage
-        if(nextPage > numberOfPages)
-        {
+        if (nextPage > numberOfPages) {
             nextPage = numberOfPages;
         }
 
         console.log("next" + nextPage);
-        this.loadPage(view,nextPage);
+        this.loadPage(view, nextPage);
     },
-    loadPrevPage: function(view){
+    loadPrevPage: function (view) {
         //get current page
         var currentPage = view.$get("currentPage");
 
         var nextPage = currentPage - 1;
 
-        if(nextPage < 1)
-        {
+        if (nextPage < 1) {
             nextPage = 1;
         }
         console.log("prev" + nextPage);
-        this.loadPage(view,nextPage);
+        this.loadPage(view, nextPage);
     }
 };
 
@@ -313,13 +311,20 @@ function closeElement(theElement, theUrl, theView) {
         method: 'get',
         onSuccess: function (payload) {
             if (payload.responseText == "ok") {
-                removeRow(theElement, closeEndcolor);
+                console.log("payload ok" + theElement + theView);
+                try {
+                    removeRow(theElement, closeEndcolor);
+                }
+                catch(e){
+                    console.log(e);
+                }
                 if (theView != undefined) {
                     updateView(theView);
 
                     console.log("element closed");
                     systemMessage.closed(theView.$get("itemType"));
                 }
+
             }
         }
     });
