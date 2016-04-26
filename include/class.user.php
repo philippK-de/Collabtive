@@ -239,7 +239,18 @@ class user {
             return false;
         }
     }
+    function getUserByName($name){
+        global $conn;
+        $name = $conn->quote($name);
 
+        $sel = $conn->query("SELECT ID FROM user WHERE name = $name");
+        $profileId = $sel->fetch();
+        if($profileId > 0){
+            return $this->getProfile($profileId["ID"]);
+        } else {
+            return false;
+        }
+    }
     /**
      * Get the avatar of a user
      *

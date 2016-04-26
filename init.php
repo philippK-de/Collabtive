@@ -29,12 +29,17 @@ if(!isset($db_driver))
 }
 // Start database connection
 // Depending on the DB driver, instantiate a PDO object with the necessary credentials.
+$db_drivers = PDO::getAvailableDrivers();
+if (!in_array($db_driver,$db_drivers)){
+	die('Requested to use '.$db_driver.', which is not enabled!');
+}
 switch ($db_driver) {
     case "mysql":
-        if (!empty($db_name) and !empty($db_user)) {
-            $conn = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8", $db_user, $db_pass);
-            break;
+        if (empty($db_name) or empty($db_user)){
+            die("You must set db_name and db_user in /config/". CL_CONFIG . "/config.php to use mysql, or set db_driver to \"sqlite\" to use an SQLite database!");
         }
+        $conn = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8", $db_user, $db_pass);
+        break;
     case "sqlite":
         $conn = new PDO("sqlite:" . CL_ROOT . "/files/collabtive.sdb");
         break;
@@ -51,7 +56,7 @@ $url = getMyUrl();
 $template->assign("url", $url);
 $template->assign("languages", $languages);
 // set the version number for display
-$template->assign("myversion", "2.1");
+$template->assign("myversion", "2.1.1");
 $template->assign("cl_config", CL_CONFIG);
 // Assign globals to all templates
 if (isset($_SESSION["userid"])) {
@@ -70,7 +75,9 @@ if (isset($_SESSION["userid"])) {
     $opentrack = $_SESSION['opentrack'];
     // update user lastlogin for the onlinelist
     $mynow = time();
-    $upd = $conn->exec("UPDATE user SET lastlogin='$mynow' WHERE ID = $userid");
+    if(isset($conn)) {
+        $conn->exec("UPDATE user SET lastlogin='$mynow' WHERE ID = $userid");
+    }
     // assign it all to the templates
     $template->assign("userid", $userid);
     $template->assign("username", $username);
@@ -81,6 +88,9 @@ if (isset($_SESSION["userid"])) {
     $template->assign("loggedin", 1);
 }else {
     $template->assign("loggedin", 0);
+    $userpermissions = array();
+    $settings = array();
+    $userid = 0;
 }
 // get system settings
 if (isset($conn)) {
@@ -101,10 +111,10 @@ if (isset($conn)) {
 // Set template directory
 // If no directory is set in the system settings, default to the standard theme
 if (isset($settings['template'])) {
-    $template->template_dir = CL_ROOT . "/templates/$settings[template]/";
+    $template->setTemplateDir(CL_ROOT . "/templates/$settings[template]/");
     // $template->tname = $settings["template"];
 }else {
-    $template->template_dir = CL_ROOT . "/templates/standard/";
+    $template->setTemplateDir(CL_ROOT . "/templates/standard/");
     // $template->tname = "standard";
 }
 // If no locale is set, get the settings locale or default to english
@@ -123,7 +133,7 @@ if (!file_exists(CL_ROOT . "/language/$locale/lng.conf")) {
     $_SESSION['userlocale'] = $locale;
 }
 // Set locale directory
-$template->config_dir = CL_ROOT . "/language/$locale/";
+$template->setConfigDir(CL_ROOT . "/language/$locale/");
 // Smarty 3 seems to have a problem with re-compiling the config if the user config is different than the system config.
 // this forces a compile of the config.
 // uncomment this if you have issues with language switching
