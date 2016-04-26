@@ -10,7 +10,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
 class project {
-
     /**
      * Add a project
      *
@@ -23,7 +22,7 @@ class project {
      */
     function add($name, $desc, $end, $budget, $assignme = 0)
     {
-        global $conn,$mylog;
+        global $conn, $mylog;
 
         if ($end > 0) {
             $end = strtotime($end);
@@ -48,6 +47,101 @@ class project {
         }
     }
 
+    function addProjectFromExcel($inputFileName)
+    {
+        include("./include/PHPExcel/IOFactory.php");
+
+        $objReader = new PHPExcel_Reader_Excel2007();
+
+        $objPHPExcel = $objReader->load($inputFileName);
+        $sheetData = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
+
+        $limiter = "#";
+
+        $projectObj = new project();
+        $userObj = new user();
+        $milestoneObj = new milestone();
+        $tasklistObj = new tasklist();
+        $taskObj = new task();
+        $companyObj = new company();
+
+        $projectname = $sheetData[2]["A"];
+        $projectdescription = $sheetData[3]["A"];
+        $projectdue = $sheetData[4]["A"];
+        $projectbudget = $sheetData[5]["A"];
+        $projectcustomer = $sheetData[6]["A"];
+        $projectpriority = $sheetData[7]["A"];
+
+        $projectId = $projectObj->add($projectname, $projectdescription, $projectdue, $projectbudget, $projectpriority);
+
+        $customer = $companyObj->getCompanyByName($projectcustomer);
+        if ($customer) {
+            $companyObj->assign($customer["ID"], $projectId);
+        }
+
+        // USERS
+        for($i = 1;$i < count($sheetData);$i++) {
+            $username = $sheetData[$i]["B"];
+
+            if ($username) {
+                $user = $userObj->getUserByName($username);
+
+                if ($user) {
+                    $projectObj->assign($user["ID"], $projectId);
+                }
+            } else {
+                break;
+            }
+        }
+        // MILESTONES
+        for($i = 1;$i < count($sheetData);$i++) {
+            $milestone = explode($limiter, $sheetData[$i]["C"]);
+
+            if ($milestone) {
+                $milestoneObj->add($projectId, $milestone[0], $milestone[1], $milestone[2], $milestone[3]);
+            } else {
+                break;
+            }
+        }
+        // TASK LISTS
+        for($i = 1;$i < count($sheetData);$i++) {
+            $tasklist = explode($limiter, $sheetData[$i]["D"]);
+
+            if ($tasklist) {
+                if ($tasklist[3]) {
+                    $milestone = $milestoneObj->getMilestoneByName($tasklist[3]);
+                    if ($milestone) {
+                        $tasklistObj->add_liste($projectId, $tasklist[0], $tasklist[1], $tasklist[2], 0, $milestone["ID"]);
+                    }
+                } else {
+                    $tasklistObj->add_liste($projectId, $tasklist[0], $tasklist[1], $tasklist[2]);
+                }
+            } else {
+                break;
+            }
+        }
+        // TASKS
+        for($i = 1;$i < count($sheetData);$i++) {
+            $task = explode($limiter, $sheetData[$i]["E"]);
+
+            if ($task) {
+                $tasklist = $tasklistObj->getTasklistByName($task[5]); {
+                    $taskid = $taskObj->add($task[2], $task[3], $task[0], $task[4], $tasklist["ID"], $projectId, $task[6], $task[7]);
+                }
+                $user = $userObj->getUserByName($task[1]);
+                if ($taskid) {
+                    if ($user) {
+                        $taskObj->assign($taskid, $user["ID"]);
+                    }
+                }
+            } else {
+                break;
+            }
+        }
+
+        return $projectId;
+    }
+
     /**
      * Bearbeitet ein Projekt
      *
@@ -60,7 +154,7 @@ class project {
      */
     function edit($id, $name, $desc, $end, $budget)
     {
-        global $conn,$mylog;
+        global $conn, $mylog;
         $end = strtotime($end);
         $id = (int) $id;
         $budget = (float) $budget;
@@ -84,16 +178,16 @@ class project {
      */
     function del($id)
     {
-        global $conn,$mylog;
+        global $conn, $mylog;
         $userid = $_SESSION["userid"];
         $id = (int) $id;
         // Delete assignments of tasks of this project to users
         $task = new task();
         $tasks = $task->getProjectTasks($id);
         if (!empty($tasks)) {
-        	foreach ($tasks as $tas) {
-            	$task->del($tas["ID"]);
-			}
+            foreach ($tasks as $tas) {
+                $task->del($tas["ID"]);
+            }
         }
         // Delete files and the assignments of these files to the messages they were attached to
         $fil = new datei();
@@ -104,19 +198,35 @@ class project {
             }
         }
 
-        $del_messages = $conn->query("DELETE FROM messages WHERE project = $id");
-        $del_milestones = $conn->query("DELETE FROM milestones WHERE project = $id");
-        $del_projectassignments = $conn->query("DELETE FROM projekte_assigned WHERE projekt = $id");
-        $del_tasklists = $conn->query("DELETE FROM tasklist WHERE project = $id");
-        $del_tasks = $conn->query("DELETE FROM tasks WHERE project = $id");
-        $del_timetracker = $conn->query("DELETE FROM timetracker WHERE project = $id");
-    	$del_customer = $conn->query("DELETE FROM customers_assigned WHERE project = $id");
+        $del_messages = $conn->prepare("DELETE FROM messages WHERE project = ?");
+        $del_messages->execute(array($id));
 
-        $del_logentries = $conn->query("DELETE FROM log WHERE project = $id");
-        $del = $conn->query("DELETE FROM projekte WHERE ID = $id");
+        $del_milestones = $conn->prepare("DELETE FROM milestones WHERE project = ?");
+        $del_milestones->execute(array($id));
+
+        $del_projectassignments = $conn->prepare("DELETE FROM projekte_assigned WHERE projekt = ?");
+        $del_projectassignments->execute(array($id));
+
+        $del_tasklists = $conn->prepare("DELETE FROM tasklist WHERE project = ?");
+        $del_tasklists->execute(array($id));
+
+        $del_tasks = $conn->prepare("DELETE FROM tasks WHERE project = ?");
+        $del_tasks->execute(array($id));
+
+        $del_timetracker = $conn->prepare("DELETE FROM timetracker WHERE project = ?");
+        $del_timetracker->execute(array($id));
+
+        $del_customer = $conn->prepare("DELETE FROM customers_assigned WHERE project = ?");
+        $del_customer->execute(array($id));
+
+        $del_logentries = $conn->prepare("DELETE FROM log WHERE project = ?");
+        $del_logentries->execute(array($id));
+
+        $del = $conn->prepare("DELETE FROM projekte WHERE ID = ?");
+        $delchk = $del->execute(array($id));
 
         delete_directory(CL_ROOT . "/files/" . CL_CONFIG . "/$id");
-        if ($del) {
+        if ($delchk) {
             $mylog->add($userid, 'projekt', 3, $id);
             return true;
         } else {
@@ -132,13 +242,13 @@ class project {
      */
     function open($id)
     {
-        global $conn,$mylog;
+        global $conn, $mylog;
         $id = (int) $id;
 
         $updStmt = $conn->prepare("UPDATE projekte SET status=1 WHERE ID = ?");
         $upd = $updStmt->execute(array($id));
 
-		if ($upd) {
+        if ($upd) {
             $nam = $conn->query("SELECT name FROM projekte WHERE ID = $id")->fetch();
             $nam = $nam[0];
             $mylog->add($nam, 'projekt', 4, $id);
@@ -156,22 +266,22 @@ class project {
      */
     function close($id)
     {
-        global $conn,$mylog;
+        global $conn, $mylog;
         $id = (int) $id;
 
         $mile = new milestone();
         $milestones = $mile->getAllProjectMilestones($id, 100000);
         if (!empty($milestones)) {
-        		$close_milestones = $conn->prepare("UPDATE milestones SET status = 0 WHERE ID = ?");
-	        foreach ($milestones as $miles) {
-            	$close_milestones->execute(array($miles["ID"]));
+            $close_milestones = $conn->prepare("UPDATE milestones SET status = 0 WHERE ID = ?");
+            foreach ($milestones as $miles) {
+                $close_milestones->execute(array($miles["ID"]));
             }
         }
 
         $task = new task();
         $tasks = $task->getProjectTasks($id);
         if (!empty($tasks)) {
-        	$close_tasks = $conn->prepare("UPDATE tasks SET status = 0 WHERE ID = ?");
+            $close_tasks = $conn->prepare("UPDATE tasks SET status = 0 WHERE ID = ?");
             foreach ($tasks as $tas) {
                 $close_tasks->execute(array($tas["ID"]));
             }
@@ -180,16 +290,16 @@ class project {
         $tasklist = new tasklist();
         $tasklists = $tasklist->getProjectTasklists($id);
         if (!empty($tasklists)) {
-        	$close_tasklists = $conn->prepare("UPDATE tasklist SET status = 0 WHERE ID = ?");
-	        foreach ($tasklists as $tl) {
-	        	$close_tasklists->execute(array($tl["ID"]));
+            $close_tasklists = $conn->prepare("UPDATE tasklist SET status = 0 WHERE ID = ?");
+            foreach ($tasklists as $tl) {
+                $close_tasklists->execute(array($tl["ID"]));
             }
         }
 
         $updStmt = $conn->prepare("UPDATE projekte SET status=0 WHERE ID = ?");
         $upd = $updStmt->execute(array($id));
 
-		if ($upd) {
+        if ($upd) {
             $nam = $conn->query("SELECT name FROM projekte WHERE ID = $id")->fetch();
             $nam = $nam[0];
             $mylog->add($nam, 'projekt', 5, $id);
@@ -208,7 +318,7 @@ class project {
      */
     function assign($user, $id)
     {
-        global $conn,$mylog;
+        global $conn, $mylog;
 
         $insStmt = $conn->prepare("INSERT INTO projekte_assigned (user,projekt) VALUES (?,?)");
         $ins = $insStmt->execute(array((int) $user, (int) $id));
@@ -231,7 +341,7 @@ class project {
      */
     function deassign($user, $id)
     {
-        global $conn,$mylog;
+        global $conn, $mylog;
 
         $sqlStmt = $conn->prepare("DELETE FROM projekte_assigned WHERE user = ? AND projekt = ?");
 
@@ -297,7 +407,6 @@ class project {
                 $project["daysleft"] = $daysleft;
                 $endstring = date(CL_DATEFORMAT, $project["end"]);
                 $project["endstring"] = $endstring;
-
             } else {
                 $project["daysleft"] = "";
             }
@@ -307,8 +416,8 @@ class project {
 
             $project["done"] = $this->getProgress($project["ID"]);
 
-        	$companyObj = new company();
-        	$project["customer"] = $companyObj->getProjectCompany($id);
+            $companyObj = new company();
+            $project["customer"] = $companyObj->getProjectCompany($id);
 
             return $project;
         } else {
@@ -360,17 +469,14 @@ class project {
 
         $myprojekte = array();
         $user = (int) $user;
-    	$status = (int) $status;
+        $status = (int) $status;
 
-        $sel = $conn->prepare("SELECT projekt FROM projekte_assigned WHERE user = ? ORDER BY ID ASC");
-        $selStmt = $sel->execute(array($user));
+        $sel = $conn->prepare('SELECT projekte.ID as ID FROM projekte RIGHT JOIN projekte_assigned on (projekte.ID = projekte_assigned.projekt) WHERE user = ? AND status = ? ORDER BY ID ASC');
+        $selStmt = $sel->execute(array($user, $status));
 
-    	$projektStmt = $conn->prepare("SELECT ID FROM projekte WHERE ID = ? AND status=?");
-        while ($projs = $sel->fetch()) {
-        	$projektStmt->execute(array($projs[0],$status));
-        	$projekt = $projektStmt->fetch();
-            if ($projekt) {
-                $project = $this->getProject($projekt["ID"]);
+        while ($db_projekt = $sel->fetch()) {
+            if ($db_projekt) {
+                $project = $this->getProject($db_projekt["ID"]);
                 array_push($myprojekte, $project);
             }
         }
@@ -464,7 +570,6 @@ class project {
         } else {
             return false;
         }
-
     }
 
     /**
@@ -478,10 +583,10 @@ class project {
         global $conn;
         $project = (int) $project;
 
-		$numStmt = $conn->prepare("SELECT COUNT(*) FROM projekte_assigned WHERE projekt = ?");
-    	$numStmt->execute(array($project));
+        $numStmt = $conn->prepare("SELECT COUNT(*) FROM projekte_assigned WHERE projekt = ?");
+        $numStmt->execute(array($project));
 
-		$num = $numStmt->fetch();
+        $num = $numStmt->fetch();
 
         return $num[0];
     }
@@ -498,16 +603,16 @@ class project {
         $project = (int) $project;
 
         $otasksStmt = $conn->prepare("SELECT COUNT(*) FROM tasks WHERE project = ? AND status = 1");
-    	$otasksStmt->execute(array($project));
+        $otasksStmt->execute(array($project));
 
-    	$otasks = $otasksStmt->fetch();
+        $otasks = $otasksStmt->fetch();
         $otasks = $otasks[0];
 
         $clotasksStmt = $conn->prepare("SELECT COUNT(*) FROM tasks WHERE project = ? AND status = 0");
         $clotasksStmt->execute(array($project));
 
-    	$clotasks = $clotasksStmt->fetch();
-		$clotasks = $clotasks[0];
+        $clotasks = $clotasksStmt->fetch();
+        $clotasks = $clotasks[0];
 
         $totaltasks = $otasks + $clotasks;
         if ($totaltasks > 0 and $clotasks > 0) {

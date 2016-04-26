@@ -1,8 +1,11 @@
 <?php
 error_reporting(0);
 // Check if directory templates_c exists and is writable
-if (!file_exists("./templates_c") or !is_writable("./templates_c")) {
-    die("Required folder templates_c does not exist or is not writable. <br>Please create the folder or make it writable in order to proceed.");
+if (!file_exists('./templates_c') and !mkdir('./templates_c')){
+	die("Required folder templates_c does not exist and can not be creted. <br>Please create the folder and make it writable in order to proceed.");
+}
+if (!is_writable("./templates_c")) {
+	die("Required folder templates_c is not writable. <br>Please make the folder writable in order to proceed.");
 }
 // check if the settings table / object is present. if yes, assume collabtive is already installed and abort
 if (!empty($settings)) {

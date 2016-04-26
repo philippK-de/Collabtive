@@ -8,7 +8,7 @@
     Windows (IIS) Servers may work, but are not supported as well.
 
     Client:
-    - Firefox, Internet Explorer 9/10/11, Opera 9/10, Safari, Chrome
+    - Firefox, Internet Explorer 9/10/11, Safari, Chrome
     - JavaScript enabled
     - Cookies enabled
 

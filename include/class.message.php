@@ -12,8 +12,6 @@
  */
 
 class message {
-
-
     /**
      * Creates a new message or a reply to a message
      *
@@ -28,10 +26,10 @@ class message {
      */
     function add($project, $title, $text, $user, $username, $replyto, $milestone)
     {
-        global $conn,$mylog;
+        global $conn, $mylog;
 
         $insStmt = $conn->prepare("INSERT INTO messages (`project`,`title`,`text`,`tags`,`posted`,`user`,`username`,`replyto`,`milestone`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ? )");
-        $ins = $insStmt->execute(array((int) $project, $title, $text,"", time(), (int) $user, $username, (int) $replyto, (int) $milestone));
+        $ins = $insStmt->execute(array((int) $project, $title, $text, "", time(), (int) $user, $username, (int) $replyto, (int) $milestone));
 
         $insid = $conn->lastInsertId();
         if ($ins) {
@@ -53,15 +51,18 @@ class message {
      */
     function edit($id, $title, $text)
     {
-        global $conn,$mylog;
+        global $conn, $mylog;
 
         $updStmt = $conn->prepare("UPDATE `messages` SET `title`=?, `text`=? WHERE ID = ?");
         $upd = $updStmt->execute(array($title, $text, (int) $id));
 
         if ($upd) {
-            $proj = $conn->query("SELECT project FROM messages WHERE ID = $id")->fetch();
-            $proj = $proj[0];
-            $mylog->add($title, 'message', 2, $proj);
+            $projStmt = $conn->prepare("SELECT project FROM messages WHERE ID = ?");
+            $projStmt->execute(array($id));
+
+            $project = $projStmt->fetch();
+            $projectId = $project[0];
+            $mylog->add($title, 'message', 2, $projectId);
             return true;
         } else {
             return false;
@@ -76,23 +77,23 @@ class message {
      */
     function del($id)
     {
-        global $conn,$mylog;
+        global $conn, $mylog;
         $id = (int) $id;
 
         $msgStmt = $conn->prepare("SELECT title,project FROM messages WHERE ID = ?");
-		$msgStmt->execute(array($id));
-    	$msg = $msgStmt->fetch();
+        $msgStmt->execute(array($id));
+        $msg = $msgStmt->fetch();
 
         $delStmt = $conn->prepare("DELETE FROM messages WHERE ID = ?");
-    	$del = $delStmt->execute(array($id));
+        $del = $delStmt->execute(array($id));
 
         $del2 = $conn->prepare("DELETE FROM messages WHERE replyto = ?");
         $del2->execute(array($id));
 
-		$del3 = $conn->prepare("DELETE FROM files_attached WHERE message = ?");
+        $del3 = $conn->prepare("DELETE FROM files_attached WHERE message = ?");
         $del3->execute(array($id));
 
-		if ($del) {
+        if ($del) {
             $mylog->add($msg[0], 'message', 3, $msg[1]);
             return true;
         } else {
@@ -112,19 +113,22 @@ class message {
         $id = (int) $id;
 
         $messageStmt = $conn->prepare("SELECT * FROM messages WHERE ID = ? LIMIT 1");
-		$messageStmt->execute(array($id));
-    	$message = $messageStmt->fetch();
+        $messageStmt->execute(array($id));
+        $message = $messageStmt->fetch();
 
         $milesobj = new milestone();
         if (!empty($message)) {
-            $replies = $conn->query("SELECT COUNT(*) FROM messages WHERE replyto = $id")->fetch();
+            $repliesStmt = $conn->prepare("SELECT COUNT(*) FROM messages WHERE replyto = ?");
+            $repliesStmt->execute(array($id));
+            $replies = $repliesStmt->fetch();
+
             $replies = $replies[0];
 
             $user = new user();
             $avatar = $user->getAvatar($message["user"]);
 
-            $ds = $conn->query("SELECT gender FROM user WHERE ID = $message[user]")->fetch();
-            $gender = $ds[0];
+            $userGender = $conn->query("SELECT gender FROM user WHERE ID = $message[user]")->fetch();
+            $gender = $userGender[0];
             $message["gender"] = $gender;
 
             $project = $conn->query("SELECT name FROM projekte WHERE ID = $message[project]")->fetch();
@@ -166,7 +170,7 @@ class message {
         $id = (int) $id;
 
         $sel = $conn->prepare("SELECT ID FROM messages WHERE replyto = ? ORDER BY posted DESC");
-    	$sel->execute(array($id));
+        $sel->execute(array($id));
 
         $replies = array();
 
@@ -197,7 +201,7 @@ class message {
         $limit = (int) $limit;
         // Get the id of the logged in user and get his projects
         $userid = $_SESSION["userid"];
-    	$userid = (int)$userid;
+        $userid = (int)$userid;
 
         $sel3 = $conn->query("SELECT projekt FROM projekte_assigned WHERE user = $userid");
         // Assemble a string of project IDs the user belongs to for IN() query.
@@ -238,7 +242,7 @@ class message {
 
         $messages = array();
         $sel1 = $conn->prepare("SELECT ID FROM messages WHERE project = ? AND replyto = 0 ORDER BY posted DESC");
-		$sel1->execute(array($project));
+        $sel1->execute(array($project));
 
         $milesobj = new milestone();
 
@@ -273,7 +277,8 @@ class message {
         // If a file ID is given, the given file will be attached
         // If no file ID is given, the file will be uploaded to the project defined by $id and then attached
         if ($fid > 0) {
-            $ins = $conn->query("INSERT INTO files_attached (file,message) VALUES ($fid,$mid)");
+            $insStmt = $conn->prepare("INSERT INTO files_attached (file,message) VALUES (?,?)");
+            $insStmt->execute(array($fid,$mid));
         } else {
             $num = $_POST["numfiles"];
 
@@ -304,29 +309,29 @@ class message {
 
         $files = array();
         $sel = $conn->prepare("SELECT file FROM files_attached WHERE message = ?");
-    	$sel->execute(array($msg));
+        $sel->execute(array($msg));
 
         while ($file = $sel->fetch()) {
             $sel2 = $conn->query("SELECT * FROM files WHERE ID = $file[0]");
             $thisfile = $sel2->fetch();
             $thisfile["type"] = str_replace("/", "-", $thisfile["type"]);
 
-            $set = new settings();
-            $settings = $set->getSettings();
-        	// Construct the path to the MIME-type icon
-        	$myfile = "./templates/" . $settings["template"] . "/theme/" . $settings["theme"] . "/images/files/" . $thisfile['type'] . ".png";
-        	if (!file_exists($myfile)) {
-        		$thisfile['type'] = "none";
-        	}
-
-        	// Determine if it is an image or text file or some other kind of file (required for lightbox)
-        	if (stristr($thisfile['type'], "image")) {
-        		$thisfile['imgfile'] = 1;
-        	} elseif (stristr($thisfile['type'], "text")) {
-        		$thisfile['imgfile'] = 2;
-        	} else {
-        		$thisfile['imgfile'] = 0;
-        	}
+            //get systemSettings
+            $settingsObj = new settings();
+            $settings = $settingsObj->getSettings();
+            // Construct the path to the MIME-type icon
+            $myfile = "./templates/" . $settings["template"] . "/theme/" . $settings["theme"] . "/images/files/" . $thisfile['type'] . ".png";
+            if (!file_exists($myfile)) {
+                $thisfile['type'] = "none";
+            }
+            // Determine if it is an image or text file or some other kind of file (required for lightbox)
+            if (stristr($thisfile['type'], "image")) {
+                $thisfile['imgfile'] = 1;
+            } elseif (stristr($thisfile['type'], "text")) {
+                $thisfile['imgfile'] = 2;
+            } else {
+                $thisfile['imgfile'] = 0;
+            }
 
             array_push($files, $thisfile);
         }
