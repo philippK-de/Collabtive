@@ -202,6 +202,14 @@ function getArrayVal(array $array, $name)
     }
 }
 
+function cleanArray(array $theArray)
+{
+    $outArray = array();
+    foreach ($theArray as $anArrayKey => $anArrayVal) {
+        $outArray[$anArrayKey] = getArrayVal($theArray, $anArrayKey);
+    }
+    return $outArray;
+}
 function delete_directory($dirname)
 {
     if (is_dir($dirname)) {
