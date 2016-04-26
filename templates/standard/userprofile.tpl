@@ -70,7 +70,7 @@
 										<tbody class="color-b">
 											<tr>
 												<td><strong>{#url#}:</strong></td>
-												<td class="right"><a href="{$user.url}" target="_blank">{$user.url}</a></td>
+												<td class="right">{$user.url}</td>
 											</tr>
 										</tbody>
 

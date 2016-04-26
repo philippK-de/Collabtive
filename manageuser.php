@@ -145,17 +145,22 @@ if ($action == "loginerror") {
         $erweiterung = $teilnamen[$workteile];
 
         $subname = "";
-        if ($typ != "image/jpeg" and $typ != "image/png" and $typ != "image/gif" and $typ != "image/pjpeg") {
+
+        $allowedFiletypes = array("image/jpeg","image/png","image/gif","image/pjpeg");
+        if (!in_array($typ, $allowedFiletypes)) {
             $loc = $url . "manageuser.php?action=profile&id=$userid";
             header("Location: $loc");
             die();
         }
-        // don't upload php scripts
-        if (stristr($erweiterung,"php") or $erweiterung == "pl") {
-            $loc = $url . "manageuser.php?action=profile&id=$userid";
-            header("Location: $loc");
-            die();
+
+        // If it is a PHP file, treat as plain text so it is not executed when opened in the browser
+
+        $allowedExtensions = array(".jpg",".jpeg",".gif",".pjpeg");
+        if (!in_array($erweiterung,$allowedExtensions)) {
+            $erweiterung = "txt";
+            $typ = "text/plain";
         }
+
 
         for ($i = 0; $i < $workteile; $i++) {
             $subname .= $teilnamen[$i];
