@@ -1,3 +1,4 @@
+bla
 Collabtive 3.0
 + Changed constructor of SmartyPaginate.class.php to be compatible with PHP 7
 + Fixed unfiltered variables
