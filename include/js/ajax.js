@@ -228,7 +228,7 @@ function calctime() {
 }
 
 function systemMsg(ele) {
-    new Effect.Appear(ele, {duration: 2.0})
+    new Effect.Appear(ele, {duration: 2.0});
     window.setTimeout("new Effect.Fade('" + ele + "', { duration: 2.0 })", 5000);
 }
 
