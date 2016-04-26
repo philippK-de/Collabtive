@@ -1,3 +1,11 @@
+Collabtive 2.2
++ Changed constructor of SmartyPaginate.class.php to be compatible with PHP 7
++ Fixed unfiltered variables
++ Improved database checks in init.php (srichter)
++ Fixed file download link in file upload email notification
++ Performance improved in getMyProjects() SQL query by using a JOIN (srichter)
++ Fixed a bug in thumb.php where not-logged in users could load thumbnails of images they know the path to
++ Converted the filetype check int he user image upload to a whitelist to be more secure from malicious file uploads.
 
 Collabtive 2.1
 + Removed accordion-related JS legacy code from desktop
@@ -15,7 +23,7 @@ Collabtive 2.1
 + Fixed a problem with ambiguous field names
 + Fixed a missing GROUP BY clause
 + Implemented SQLite support. It can be chosen in the installer.
-+ Removed the tags class for good
++ Removed the tags class for good.
 + Add folder /files/standard/ics/ to the installation package
 + Removed call to file_exists in getArrayVal() - it worked around an edge case in the installer. This safes a lot of calls to file_exists()
 + Fixed a bug that prevented files from being attached to messages

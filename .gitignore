@@ -9,4 +9,5 @@ Thumbs.db
 
 templates_c/*
 files/*
+.idea/
 !files/collabtive.sdb
