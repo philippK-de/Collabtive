@@ -2,240 +2,248 @@
 {include file="tabsmenue-project.tpl" msgstab = "active"}
 
 <div id="content-left">
-	<div id="content-left-in">
-		<div class="msgs">
+    <div id="content-left-in">
+        <div class="msgs" id="projectMessages">
 
-			<div class = "infowin_left">
-				<span id = "deleted" style = "display:none;" class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#messagewasdeleted#}</span>
-			</div>
+            <div class="infowin_left">
+                <span id="deleted" style="display:none;" class="info_in_red"><img
+                            src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#messagewasdeleted#}</span>
+            </div>
 
-			<div class="infowin_left" style = "display:none;" id = "systemmsg">
-				{if $mode == "added"}
-					<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#messagewasadded#}</span>
-				{elseif $mode == "edited"}
-					<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#messagewasedited#}</span>
-				{elseif $mode == "replied"}
-					<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#replywasadded#}</span>
-				{/if}
-			</div>
+            <div class="infowin_left" style="display:none;" id="systemmsg">
+                {if $mode == "added"}
+                    <span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png"
+                                                     alt=""/>{#messagewasadded#}</span>
+                {elseif $mode == "edited"}
+                    <span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png"
+                                                      alt=""/>{#messagewasedited#}</span>
+                {elseif $mode == "replied"}
+                    <span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png"
+                                                     alt=""/>{#replywasadded#}</span>
+                {/if}
+            </div>
 
-			{literal}
-				<script type = "text/javascript">
-					systemMsg('systemmsg');
-				</script>
-			{/literal}
+            {literal}
+                <script type="text/javascript">
+                    systemMsg('systemmsg');
+                </script>
+            {/literal}
 
 
-			<h1>{$projectname|truncate:45:"...":true}<span>/ {#messages#}</span></h1>
+            <h1>{$projectname|truncate:45:"...":true}<span>/ {#messages#}</span></h1>
 
-			<div class="headline">
-				<a href="javascript:void(0);" id="block_msgs_toggle" class="win_block" onclick = "toggleBlock('block_msgs');"></a>
+            <div class="headline">
+                <a href="javascript:void(0);" id="acc-toggle" class="win_block" onclick="toggleBlock('block_msgs');"></a>
 
-				<div class="wintools">
-					<div class="export-main">
-						<a class="export"><span>{#export#}</span></a>
-						<div class="export-in"  style="width:46px;left: -46px;"> {*at one item*}
-							<a class="pdf" href="managemessage.php?action=export-project&amp;id={$project.ID}"><span>{#pdfexport#}</span></a>
-							<a class="rss" href="managerss.php?action=mymsgs-rss&amp;user={$userid}"><span>{#rssfeed#}</span></a>
-						</div>
-					</div>
+                <div class="wintools">
+                    <div class="progress" id="progressprojectMessages" style="display:none;width:20px;float:left">
+                        <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-messages.gif"/>
+                    </div>
+                    <div class="export-main">
+                        <a class="export"><span>{#export#}</span></a>
 
-					{if $userpermissions.messages.add}
-						<a class="add" href="javascript:blindtoggle('addmsg{$myprojects[project].ID}');" id="add" onclick="toggleClass(this,'add-active','add');toggleClass('add_butn','butn_link_active','butn_link');toggleClass('sm_msgs','smooth','nosmooth');"><span>{#addmessage#}</span></a>
-					{/if}
-				</div>
+                        <div class="export-in" style="width:46px;left: -46px;"> {*at one item*}
+                            <a class="pdf" href="managemessage.php?action=export-project&amp;id={$project.ID}"><span>{#pdfexport#}</span></a>
+                            <a class="rss" href="managerss.php?action=mymsgs-rss&amp;user={$userid}"><span>{#rssfeed#}</span></a>
+                        </div>
+                    </div>
 
-				<h2>
-					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt="" />{#messages#}
-				</h2>
-			</div>
+                    {if $userpermissions.messages.add}
+                        <a class="add" href="javascript:blindtoggle('addmsg{$myprojects[project].ID}');" id="add"
+                           onclick="toggleClass(this,'add-active','add');toggleClass('add_butn','butn_link_active','butn_link');toggleClass('sm_msgs','smooth','nosmooth');"><span>{#addmessage#}</span></a>
+                    {/if}
+                </div>
 
-			<div id="block_msgs" class="block" >
+                <h2>
+                    <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#messages#}
+                    {literal}
+                   <!--     <span id="paging" style="margin-left:10px;">
+                            <a style="color:#38bf42;font-size:8pt;" href="javascript:pagination.loadPrevPage(projectMessagesView)">[prev]</a>
+                            <span id="page{{page.index}}" v-for="page in pages" style="margin-left:2px;">
+                                 <a v-bind:style="currentPage == page.index ? 'font-size:18px;color:red' : 'color:#38bf42;font-size:8pt;' " href="javascript:pagination.loadPage(projectMessagesView,{{page.index}});
+">[{{page.index}}]</a>
+                            </span>
+                            <a style="color:#38bf42;font-size:8pt;" href="javascript:pagination.loadNextPage(projectMessagesView)">[next]</a>  -->
+                    </span>
 
-				{*Add Message*}
-				<div id = "addmsg" class="addmenue" style = "display:none;">
-					{include file="addmessageform.tpl" }
-				</div>
+                        <pagination view="projectMessagesView" :pages="pages" :current-page="currentPage"></pagination>
+                    {/literal}
+                </h2>
+            </div>
 
-				<div class="nosmooth" id="sm_msgs">
+            <div id="block_msgs" class="block">
 
-					<table id="acc_msgs" cellpadding="0" cellspacing="0" border="0">
-						<thead>
-							<tr>
-								<th class="a"></th>
-								<th class="b">{#message#}</th>
-								<th class="ce" style="text-align:right">{#replies#}&nbsp;&nbsp;</th>
-								<th class="de">{#by#}</th>
-								<th class="e">{#on#}</th>
-								<th class="tools"></th>
-							</tr>
-						</thead>
+                {*Add Message*}
+                <div id="addmsg" class="addmenue" style="display:none;">
+                    {include file="addmessageform.tpl" }
+                </div>
 
-						<tfoot>
-							<tr>
-								<td colspan="6"></td>
-							</tr>
-						</tfoot>
+                <div class="nosmooth" id="sm_msgs">
 
-						{section name=message loop=$messages}
+                    <table id="acc_msgs" cellpadding="0" cellspacing="0" border="0">
+                        <thead>
+                        <tr>
+                            <th class="a"></th>
+                            <th class="b">{#message#}</th>
+                            <th class="ce" style="text-align:right">{#replies#}&nbsp;&nbsp;</th>
+                            <th class="de">{#by#}</th>
+                            <th class="e">{#on#}</th>
+                            <th class="tools"></th>
+                        </tr>
+                        </thead>
 
-						{*Color-Mix*}
-						{if $smarty.section.message.index % 2 == 0}
-						<tbody class="color-a" id="msgs_{$messages[message].ID}">
-						{else}
-						<tbody class="color-b" id="msgs_{$messages[message].ID}">
-						{/if}
-							<tr>
-								<td>
-									{if $userpermissions.messages.close}
-											<a class="butn_reply" href="javascript:void(0);" onclick="change('managemessage.php?action=replyform&amp;mid={$messages[message].ID}&amp;id={$project.ID}','addmsg');toggleClass(this,'butn_reply_active','butn_reply');blindtoggle('addmsg');" title="{#edit#}"></a>
-									{/if}
-								</td>
-								<td>
-									<div class="toggle-in">
-									<span class="acc-toggle" onclick="javascript:accord_messages.activate($$('#block_msgs .accordion_toggle')[{$smarty.section.message.index}]);toggleAccordeon('accord_messages',this);"></span>
-										<a href="managemessage.php?action=showmessage&amp;mid={$messages[message].ID}&amp;id={$project.ID}" title="{$messages[message].title}">{$messages[message].title|truncate:35:"...":true}</a>
-									</div>
-								</td>
-								<td style="text-align:right">
-									{if $messages[message].replies > 0}
-										<a href = "managemessage.php?action=showmessage&amp;mid={$messages[message].ID}&amp;id={$project.ID}#replies">{$messages[message].replies}</a>
-									{else}
-										{$messages[message].replies}
-									{/if}
-									&nbsp;
-								</td>
-								<td><a href="manageuser.php?action=profile&amp;id={$messages[message].user}">{$messages[message].username|truncate:20:"...":true}</a></td>
-								<td>{$messages[message].postdate}</td>
-								<td class="tools">
-									{if $userpermissions.messages.edit}
-										<a class="tool_edit" href="javascript:void(0);" onclick="change('managemessage.php?action=editform&amp;mid={$messages[message].ID}&amp;id={$project.ID}','addmsg');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('addmsg');" title="{#edit#}"></a>
-									{/if}
-									{if $userpermissions.messages.del}
-										<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'msgs_{$messages[message].ID}\',\'managemessage.php?action=del&amp;mid={$messages[message].ID}&amp;id={$project.ID}\')');"  title="{#delete#}"></a>
-									{/if}
-								</td>
-							</tr>
+                        <tfoot>
+                        <tr>
+                            <td colspan="6"></td>
+                        </tr>
+                        </tfoot>
+                        {literal}
+                        <tbody v-for="message in items" class="alternateColors" id="msgs_{{message.ID}}">
+                        <tr>
+                            <td>
+                                {/literal}
+                                {if $userpermissions.messages.close}
+                                {literal}
+                                    <a class="butn_reply" href="javascript:void(0);" onclick="change('managemessage.php?action=replyform&amp;mid={{*message.ID}}&amp;id={{*message.project}}','addmsg');toggleClass(this,'butn_reply_active','butn_reply');blindtoggle('addmsg');" title="{/literal}{#edit#}"></a>
+                                {/if}
+                            </td>
+                            {literal}
+                            <td>
+                                <div class="toggle-in">
+                                    <span class="acc-toggle"
+                                          onclick="javascript:accord_messages.activate(document.querySelector('#block_msgs_content{{$index}}'));"></span>
+                                    <a href="managemessage.php?action=showmessage&amp;mid={{*message.ID}}&amp;id={{*message.project}}"
+                                       title="{{*message.title}}">{{message.title}}</a>
+                                </div>
+                            </td>
+                            <td style="text-align:right">
+                                <a href="managemessage.php?action=showmessage&amp;mid={{message.ID}}&amp;id={{message.project}}#replies">{{*message.replies}}</a>
+                                &nbsp;
+                            </td>
+                            <td><a href="manageuser.php?action=profile&amp;id={{message.user}}">{{*message.username}}</a></td>
+                            <td>{{*message.postdate}}</td>
+                            <td class="tools">
+                                {/literal}
+                                {if $userpermissions.messages.edit}
+                                {literal}
+                                    <a class="tool_edit" href="javascript:void(0);" onclick="change('managemessage.php?action=editform&amp;mid={{*message.ID}}&amp;id={{*message.project}}','addmsg');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('addmsg');" title="{/literal}{#edit#}"></a>
+                                {/if}
+                                {if $userpermissions.messages.del}
+                                {literal}
+                                    <a class="tool_del" href="javascript:confirmfunction('{/literal}{#confirmdel#}{literal}','deleteElement(\'msgs_{{message].ID}}\',\'managemessage.php?action=del&amp;mid={{*message.ID}}&amp;id={{*message.project}}\')');"  title="{/literal}{#delete#}"></a>
+                                {/if}
+                                {literal}
+                            </td>
+                        </tr>
 
-							<tr class="acc">
-								<td colspan="6">
-									<div class="accordion_toggle"></div>
-									<div class="accordion_content">
-										<div class="acc-in">
-											{if $messages[message].avatar != ""}
-												<div class="avatar"><img src = "thumb.php?width=80&amp;height=80&amp;pic=files/{$cl_config}/avatar/{$messages[message].avatar}" alt="" /></div>
-											{else}
-												{if $messages[message].gender == "f"}
-													<div class="avatar"><img src = "thumb.php?pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-female.jpg&amp;width=80;" alt="" /></div>
-												{else}
-													<div class="avatar"><img src = "thumb.php?pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-male.jpg&amp;width=80;" alt="" /></div>
-												{/if}
-											{/if}
-											<div class="message">
-												<div class="message-in">
-													{$messages[message].text}
-												</div>
+                        <tr class="acc">
+                            <td colspan="6">
+                                <div class="accordion_content" data-slide="{{$index}}" id="block_msgs_content{{$index}}">
+                                    <div class="acc-in">
+                                        <img src="thumb.php?width=80&amp;height=80&amp;pic=templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/no-avatar-male.jpg" />
+                                        <div class="message">
+                                            <div class="message-in">
+                                                {{{*message.text}}}
+                                            </div>
 
-												{*MILESTONE and TAGS*}
-												{if $messages[message].tagnum > 1 or $messages[message].milestones[0] != ""}
-													<div class="content-spacer-b"></div>
+                                            <!-- message milestones -->
+                                            <p v-if="message.hasMilestones">
 
-													{*MESSAGES-MILESTONES*}
-													{if $messages[message].milestones[0] != ""}
-														<p>
-															<strong>{#milestone#}:</strong>
-															<a href = "managemilestone.php?action=showmilestone&amp;msid={$messages[message].milestones.ID}&amp;id={$project.ID}">{$messages[message].milestones.name}</a>
-														</p>
-													{/if}
+                                            <div v-if="message.hasMilestones" class="content-spacer-b"></div>
+                                            <strong v-if="message.hasMilestones">{/literal}{#milestone#}{literal}:</strong>
+                                            <a v-if="message.hasMilestones"
+                                               href="managemilestone.php?action=showmilestone&amp;msid={{*message.milestones.ID}}&amp;id={{*message.milestones.project}}">{{*message.milestones.name}}</a>
+                                            </p>
+                                            <!-- message files -->
+                                            <p v-if="message.hasFiles" class="tags-miles">
+                                                <strong>{/literal}{#files#}:{literal}</strong>
+                                            </p>
 
-													{*MESSAGES-TAGS*}
-													{if $messages[message].tagnum > 1}
-														<p>
-															<strong>{#tags#}:</strong>
-															{section name = tag loop=$messages[message].tagsarr}
-																<a href = "managetags.php?action=gettag&tag={$messages[message].tagsarr[tag]}&amp;id={$messages[message].project}">{$messages[message].tagsarr[tag]}</a>,
-															{/section}
-														</p>
-													{/if}
-												{/if}
+                                            <div v-if="message.hasFiles" class="inwrapper">
+                                                <ul>
+                                                    <li v-for="file in message.files" id="fli_{{*file.ID}}">
+                                                        <div class="itemwrapper">
+                                                            <table cellpadding="0" cellspacing="0" border="0">
+                                                                <tr>
+                                                                    <td class="leftmen" valign="top">
+                                                                        <div class="inmenue"></div>
+                                                                    </td>
+                                                                    <td class="thumb">
+                                                                        {/literal}
+                                                                        <img src="templates/{$settings.template}/theme/{$settings.theme}/images/files/{literal}{{file.type}}.png" alt=""/>
+                                                                        </a>
+                                                                    </td>
+                                                                    {/literal}
+                                                                    <td class="rightmen" valign="top">
+                                                                        <div class="inmenue">
+                                                                            {if $userpermissions.files.del}
+                                                                            {literal}
+                                                                                <a class="del" href="javascript:confirmfunction
+																					('{/literal}{$langfile.confirmdel}{literal}','deleteElement(\'fli_{{file.ID}}\',\'managefile.php?action=delete&id={{message.project}}&file={{file.ID}}\')');" title="{/literal}{#delete#}"></a>
+                                                                            {/if}
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                {literal}
+                                                                <tr>
+                                                                    <td colspan="3"><span class="name">
+																			<a href="managefile.php?action=downloadfile&amp;id={{*file.project}}&amp;file={{*file.ID}}">
+                                                                                {{*file.shortName}}
+                                                                            </a>
+                                                                                </span>
+                                                                    </td>
+                                                                <tr/>
+                                                            </table>
 
-												{*MESSAGES-FILES*}
-												{if $messages[message].files[0][0] > 0}
-													<p class="tags-miles">
-														<strong>{#files#}:</strong>
-													</p>
+                                                        </div>
+                                                        <!-- itemwrapper End -->
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <!-- inwrapper End -->
+                                            <div style="clear:both"></div>
 
-													<div class="inwrapper">
-														<ul>
-															{section name = file loop=$messages[message].files}
-															<li id="fli_{$messages[message].files[file].ID}">
-																<div class="itemwrapper">
-																	<table cellpadding="0" cellspacing="0" border="0">
-																		<tr>
-																			<td class="leftmen" valign="top">
-																				<div class="inmenue"></div>
-																			</td>
-																			<td class="thumb">
-																				{*<a href = "{$messages[message].files[file].datei}"{if $messages[message].files[file].imgfile == 1} rel="lytebox[img{$messages[message].ID}]" {elseif $messages[message].files[file].imgfile == 2} rel = "lyteframe[text{$messages[message].ID}]"{/if} title="{$messages[message].files[file].name}">*}
-																				<a href = "managefile.php?action=downloadfile&amp;id={$messages[message].files[file].project}&amp;file={$messages[message].files[file].ID}"{if $messages[message].files[file].imgfile == 1} rel="lytebox[img{$messages[message].ID}]"{/if} title="{$messages[message].files[file].name}">
-																					{*if $messages[message].files[file].imgfile == 1}
-																					<img src = "thumb.php?pic={$messages[message].files[file].datei}&amp;width=32" alt="" />
-																					{else}
-																					<img src = "templates/{$settings.template}/theme/{$settings.theme}/images/files/{$messages[message].files[file].type}.png" alt="" />
-																					{/if*}
-																					<img src = "templates/{$settings.template}/theme/{$settings.theme}/images/files/{$messages[message].files[file].type}.png" alt="" />
-																				</a>
-																			</td>
-																			<td class="rightmen" valign="top">
-																				<div class="inmenue">
-																				{if $userpermissions.files.del}
-																					<a class="del" href="javascript:confirmfunction('{$langfile.confirmdel}','deleteElement(\'fli_{$messages[message].files[file].ID}\',\'managefile.php?action=delete&id={$project.ID}&file={$messages[message].files[file].ID}\')');" title="{#delete#}"></a>{/if}
-																				</div>
-																			</td>
-																		</tr>
-																		<tr>
-																			<td colspan="3"><span class="name">
-																			<a href = "managefile.php?action=downloadfile&amp;id={$messages[message].files[file].project}&amp;file={$messages[message].files[file].ID}"{if $messages[message].files[file].imgfile == 1} rel="lytebox[img{$messages[message].ID}]"{/if} title="{$messages[message].files[file].name}">{$messages[message].files[file].name|truncate:15:"...":true}</a></span>	</td>
-																		<tr/>
-																	</table>
 
-																</div> {*itemwrapper End*}
-															</li>
-															{/section}
-														</ul>
-													</div> {*inwrapper End*}
-													<div style="clear:both"></div>
-												{/if}
+                                        </div>
+                                        <!-- div messages end -->
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
 
-											</div> {*div messages end*}
-										</div>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-						{/section}
+                    </table>
+                </div>
+                <!--smooth End-->
 
-						</table>
-					</div> {*smooth End*}
+                <div class="tablemenue">
+                    <div class="tablemenue-in">
+                        {/literal}
+                        {if $userpermissions.messages.add}
+                            <a class="butn_link" href="javascript:blindtoggle('addmsg');" id="add_butn"
+                               onclick="toggleClass('add','add-active','add');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_msgs','smooth','nosmooth');">{#addmessage#}</a>
+                        {/if}
+                        {literal}
+                    </div>
+                </div>
+            </div>
+            <!-- block END  -->
+            <div class="content-spacer"></div>
 
-					<div class="tablemenue">
-						<div class="tablemenue-in">
-							{if $userpermissions.messages.add}
-							<a class="butn_link" href="javascript:blindtoggle('addmsg');"  id="add_butn" onclick="toggleClass('add','add-active','add');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_msgs','smooth','nosmooth');">{#addmessage#}</a>
-							{/if}
-						</div>
-					</div>
-				</div> {*block END*}
-			<div class="content-spacer"></div>
+        </div>
+        <!-- Msgs END-->
+    </div>
+    <!-- content-left-in END-->
+</div> <!-- content-left END -->
 
-		</div> {*Msgs END*}
-	</div> {*content-left-in END*}
-</div> {*content-left END*}
-
-{literal}
-	<script type = "text/javascript">
-		var accord_messages = new accordion('block_msgs');
-	</script>
+    <script type="text/javascript" src="include/js/accordion.min.js"></script>
+    <script type="text/javascript" src="include/js/views/projectMessages.min.js"></script>
+<script type="text/javascript">
+    pagination.itemsPerPage = 15;
+    projectMessages.url = projectMessages.url + "&id=" + {/literal}{$project.ID}{literal};
+    projectMessagesView = createView(projectMessages);
+    var accord_messages = new accordion2('block_msgs');
+</script>
 {/literal}
 
 {include file="sidebar-a.tpl"}

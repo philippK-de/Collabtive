@@ -51,7 +51,7 @@
 				</h2>
 			</div>
 
-			<div class="block" id="acc-customers"> {*Add Customer*}
+			<div class="block" id="acc_customers"> {*Add Customer*}
 				<div id="form_addcustomer" class="addmenue" style="display:none;">
 					{include file="addcustomer.tpl" customers="1"}
 				</div>
@@ -92,8 +92,8 @@
 									<td>&nbsp;</td>
 									<td>
 										<div class="toggle-in">
-											<span class="acc-toggle" onclick="javascript:accord_customers.activate($$('#acc-customers .accordion_toggle')[{$smarty.section.cust.index}]);toggleAccordeon('acc-customers',this);"></span>
-											<a href="#" onclick="javascript:accord_customers.activate($$('#acc-customers .accordion_toggle')[{$smarty.section.cust.index}]);toggleAccordeon('acc-customers',this);" title="{$allcust[cust].company}">
+											<span class="acc-toggle" onclick="javascript:accord_customers.activate(document.querySelector('#acc_customers_content{$smarty.section.cust.index}'))"></span>
+											<a href="#" title="{$allcust[cust].company}">
 												{$allcust[cust].company|truncate:30:"...":true}
 											</a>
 										</div>
@@ -114,7 +114,6 @@
 
 								<tr class="acc">
 									<td colspan="5">
-										<div class="accordion_toggle"></div>
 										<div class="accordion_content">
 											<div class="acc-in">
 
@@ -160,8 +159,9 @@
 			</div> {*block END*} {*Donecustomers End*}
 
 			{literal}
+                <script type="text/javascript" src="include/js/accordion.min.js"></script>
 				<script type="text/javascript">
-					var accord_customers = new accordion('acc-customers');
+					var accord_customers = new accordion2('acc_customers');
 				</script>
 			{/literal}
 

@@ -7,7 +7,7 @@
  * @private $writer PHP XML Writer object
  * @version 0.4.8
  * @package Collabtive
- * @link http://www.o-dyn.de
+ * @link http://collabtive.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
 class toXml
