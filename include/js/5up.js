@@ -3,6 +3,7 @@
  * @access public
  * @return void
  **/
+
 function finisher() {
     blindtoggle('form_file');
     toggleClass('addfile', 'addfile-active', 'addfile');

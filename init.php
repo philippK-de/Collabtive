@@ -14,7 +14,7 @@ define("CL_CONFIG", "standard");
 define("CL_VERSION", 2.0);
 define("CL_PUBDATE", "1426201200");
 // uncomment next line for debugging
-// error_reporting(E_ALL || E_STRICT);
+ error_reporting(E_ALL || E_STRICT);
 // include config file , pagination and global functions
 require(CL_ROOT . "/config/" . CL_CONFIG . "/config.php");
 require(CL_ROOT . "/include/SmartyPaginate.class.php");
@@ -56,7 +56,7 @@ $url = getMyUrl();
 $template->assign("url", $url);
 $template->assign("languages", $languages);
 // set the version number for display
-$template->assign("myversion", "2.1.1");
+$template->assign("myversion", "2.2");
 $template->assign("cl_config", CL_CONFIG);
 // Assign globals to all templates
 if (isset($_SESSION["userid"])) {
@@ -94,17 +94,21 @@ if (isset($_SESSION["userid"])) {
 if (isset($conn)) {
     // Set PDO options
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-    //$conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+   // $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     // create a global mylog object for loging system events
     $mylog = new mylog();
     // get a settings object, and fetch an array containing the system settings
-    $set = (object) new settings();
-    $settings = $set->getSettings();
+    $settingsObj = (object) new settings();
+    $settings = $settingsObj->getSettings();
     // define a constant that holds the default dateformat
     define("CL_DATEFORMAT", $settings["dateformat"]);
     // set the default TZ for date etc
     date_default_timezone_set($settings["timezone"]);
     $template->assign("settings", $settings);
+}
+else
+{
+    $settings = array();
 }
 // Set template directory
 // If no directory is set in the system settings, default to the standard theme
@@ -155,8 +159,8 @@ $template->assign("theY", $they);
 // Get the user's projects for the quickfinder in the sidebar
 if (isset($userid)) {
     $project = new project();
-    $myOpenProjects = $project->getMyProjects($userid);
-    $template->assign("openProjects", $myOpenProjects);
+   // $myOpenProjects = $project->getMyProjects($userid);
+
 }
 // clear session data for pagination
 SmartyPaginate::disconnect();

@@ -1441,7 +1441,7 @@ padding-left;
 
 }
 
-message-in li
+.message-in li
 {
 list-style-type: disc;
 padding: 0;
@@ -2167,6 +2167,14 @@ a.dir_up_butn:hover {
 	overflow: hidden;
 }
 
+
+.block table tr.acc td .accordion_content_active .acc-in {
+
+    border-top: 1px solid #fff;
+    padding: 12px 9px 18px 9px;
+    line-height: normal;
+    overflow: hidden;
+}
 .smooth {
 	opacity:.6;
 	/*filter:alpha(opacity=60);*/
