@@ -7,7 +7,7 @@
  * @name message
  * @version 2.0
  * @package Collabtive
- * @link http://www.o-dyn.de
+ * @link http://collabtive.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
 
@@ -22,6 +22,7 @@ class message {
      * @param int $user User ID of the user adding the message
      * @param string $username Name of the user adding the message
      * @param int $replyto ID of the message this message is replying to. Standardmessage: 0
+     * @param int $milestone ID of the milestone to attach this message to
      * @return bool
      */
     function add($project, $title, $text, $user, $username, $replyto, $milestone)
@@ -138,16 +139,24 @@ class message {
             $message["endstring"] = $posted;
             $message["replies"] = $replies;
             $message["avatar"] = $avatar;
-            $message["title"] = $message["title"];
-            $message["text"] = $message["text"];
-            $message["username"] = $message["username"];
 
+            $message["hasFiles"] = false;
+
+            //get files attached to this message
             $attached = $this->getAttachedFiles($message["ID"]);
             $message["files"] = $attached;
+
+            //if there is files set hasFiles to true, else false
+            if(!empty($attached))
+            {
+                $message["hasFiles"] = true;
+            }
+
+            $message["hasMilestones"] = false;
+            $miles = array();
             if ($message["milestone"] > 0) {
                 $miles = $milesobj->getMilestone($message["milestone"]);
-            } else {
-                $miles = array();
+                $message["hasMilestones"] = true;
             }
 
             $message["milestones"] = $miles;
@@ -174,9 +183,7 @@ class message {
 
         $replies = array();
 
-        $milesobj = new milestone();
-        $user = new user();
-        while ($reply = $sel->fetch()) {
+       while ($reply = $sel->fetch()) {
             if (!empty($reply)) {
                 $thereply = $this->getMessage($reply["ID"]);
                 array_push($replies, $thereply);
@@ -216,8 +223,7 @@ class message {
             $sel1 = $conn->query("SELECT ID FROM messages WHERE project IN($prstring) ORDER BY posted DESC LIMIT $limit ");
             $messages = array();
 
-            $milesobj = new milestone();
-            while ($message = $sel1->fetch()) {
+           while ($message = $sel1->fetch()) {
                 $themessage = $this->getMessage($message["ID"]);
                 array_push($messages, $themessage);
             }
@@ -233,22 +239,29 @@ class message {
      * Returns all messages belonging to a project (without answers)
      *
      * @param int $project Eindeutige Nummer des Projekts
+     * @param int $offset Offset for the DB query
+     * @param int $limit Limit for the DB query
      * @return array $messages Nachrichten zum Projekt
      */
-    function getProjectMessages($project)
+    function getProjectMessages($project, $limit = 0, $offset = 0)
     {
         global $conn;
         $project = (int) $project;
 
         $messages = array();
-        $sel1 = $conn->prepare("SELECT ID FROM messages WHERE project = ? AND replyto = 0 ORDER BY posted DESC");
-        $sel1->execute(array($project));
+        if($limit > 0)
+        {
+            $projectMessagesStmt = $conn->prepare("SELECT ID FROM messages WHERE project = ? AND replyto = 0 ORDER BY posted DESC LIMIT $limit OFFSET $offset");
+        }
+        else {
+            $projectMessagesStmt = $conn->prepare("SELECT ID FROM messages WHERE project = ? AND replyto = 0 ORDER BY posted DESC");
+        }
+        $projectMessagesStmt->execute(array($project));
 
-        $milesobj = new milestone();
+        while ($messageId = $projectMessagesStmt->fetch()) {
+            $message = $this->getMessage($messageId["ID"]);
 
-        while ($message = $sel1->fetch()) {
-            $themessage = $this->getMessage($message["ID"]);
-            array_push($messages, $themessage);
+            array_push($messages, $message);
         }
 
         if (!empty($messages)) {
@@ -257,37 +270,46 @@ class message {
             return false;
         }
     }
+    /**
+     * Returns all messages belonging to a project (without answers)
+     *
+     * @param int $project Eindeutige Nummer des Projekts
+     * @return array $messages Nachrichten zum Projekt
+     */
+    function countProjectMessages($project)
+    {
+        global $conn;
+        $project = (int) $project;
 
+        $messages = array();
+        $sel1 = $conn->prepare("SELECT COUNT(*) FROM messages WHERE project = ? AND replyto = 0");
+        $sel1->execute(array($project));
+
+        $number = $sel1->fetch();
+
+        $number = $number["COUNT(*)"];
+
+        return $number;
+    }
     /**
      * Attach a file to a message
      *
-     * @param int $fid ID of the file to be attached
-     * @param int $mid ID of the message where the file will be attached
-     * @param int $id optional param denoting the project ID where the file will be uploaded to (if so)
+     * @param int $fileId ID of the file to be attached
+     * @param int $messageId ID of the message where the file will be attached
+     * @param int $project optional param denoting the project ID where the file will be uploaded to (if so)
      * @return bool
      */
-    function attachFile($fid, $mid, $id = 0)
+    function attachFile($fileId, $messageId, $project = 0)
     {
         global $conn;
-        $fid = (int) $fid;
-        $mid = (int) $mid;
-        $id = (int) $id;
+        $fileId = (int) $fileId;
+        $messageId = (int) $messageId;
 
-        $myfile = new datei();
         // If a file ID is given, the given file will be attached
         // If no file ID is given, the file will be uploaded to the project defined by $id and then attached
-        if ($fid > 0) {
+        if ($fileId > 0) {
             $insStmt = $conn->prepare("INSERT INTO files_attached (file,message) VALUES (?,?)");
-            $insStmt->execute(array($fid,$mid));
-        } else {
-            $num = $_POST["numfiles"];
-
-            $chk = 0;
-            $insStmt = $conn->prepare("INSERT INTO files_attached (file,message) VALUES (?,?)");
-            for($i = 1;$i <= $num;$i++) {
-                $fid = $myfile->upload("userfile$i", "files/" . CL_CONFIG . "/$id", $id);
-                $ins = $insStmt->execute(array($fid, $mid));
-            }
+           $ins = $insStmt->execute(array($fileId,$messageId));
         }
         if ($ins) {
             return true;
@@ -332,6 +354,8 @@ class message {
             } else {
                 $thisfile['imgfile'] = 0;
             }
+
+            $thisfile["shortName"] = substr($thisfile["name"],0,12);
 
             array_push($files, $thisfile);
         }

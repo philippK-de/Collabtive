@@ -5,8 +5,8 @@
  * @author Philipp Kiszka <info@o-dyn.de>
  * @name roles
  * @package Collabtive
- * @version 0.5
- * @link http://www.o-dyn.de
+ * @version 3
+ * @link http://collabtive.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
 class roles {
@@ -138,7 +138,7 @@ class roles {
         // If there already is a role assigned to the user, just update this entry
         // Otherwise create a new entry
         if ($chk > 0) {
-            $insStmt = $conn->prepare("UPDATE roles_assigned SET role = ? WHERE user = ?");
+            $insStmt = $conn->prepare("UPDATE roles_assigned SET user = ? WHERE role = ?");
         } else {
             $insStmt = $conn->prepare("INSERT INTO roles_assigned (user,role) VALUES (?,?)");
         }

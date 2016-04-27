@@ -26,8 +26,6 @@
 
 <h1>{$projectname|truncate:45:"...":true}<span>/ {#members#}</span></h1>
 
-
-
 			<div class="headline">
 				<a href="javascript:void(0);" id="block_members_toggle" class="win_block" onclick = "toggleBlock('block_members');"></a>
 
