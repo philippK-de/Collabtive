@@ -92,7 +92,6 @@
 <div id="block_dashboard" class="block">
 
 {*Miles tree*}
-{if $tree[0][0] > 0}
 <div class="projects dtree" style="padding-bottom:2px;" >
 	<div class="headline accordion_toggle">
 		<a href="javascript:void(0);" id="treehead_toggle" class="win_block" onclick=""></a>
@@ -155,7 +154,6 @@
 		</div> {*block end*}
 	</div> {*block in wrapper end*}
 </div>
-{/if}
 {*Tree end*}
 
 {*Milestones*}

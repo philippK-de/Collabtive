@@ -355,7 +355,7 @@ if ($action == "editform") {
     $title = $langfile['project'];
     $title = $title . " " . $tproject["name"];
     $template->assign("title", $title);
-    $template->assign("tree", $milestone->getAllProjectMilestones($cleanGet["id"], 1000));
+    $template->assign("tree", $milestone->getAllProjectMilestones($cleanGet["id"], 1000, true));
 
     $template->assign("project", $tproject);
     $template->assign("done", $done);

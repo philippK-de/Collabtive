@@ -11,8 +11,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  * @global $mylog
  */
-class milestone
-{
+class milestone {
     /**
      * Add a milestone
      *
@@ -450,17 +449,62 @@ class milestone
     }
 
     /**
+     * Return a dummy milestone, which is used to collect task lists not assinged to any other milestone
+     *
+     * @param int $project the id of the project for which it is used
+     * @return array $milestone Milestone details
+     */
+    function dummyMilestone($project)
+    {
+        global $conn;
+        $project = (int) $project;
+        $id = 0;
+		$milestone = array();
+
+        // Format start and end date for display
+
+        $tod = date("d.m.Y");
+        $now = strtotime($tod);
+        $time = date(CL_DATEFORMAT, $now);
+		$milestone['ID'] = $id;
+        $milestone["endstring"] = $time;
+        $milestone["fend"] = $time;
+        $milestone["startstring"] = $time;
+
+        $milestone["name"] = 'unassigned task lists';
+        $milestone["desc"] = 'task lists not assigned to any milestone';
+        // Get the name of the project where the message was posted for display
+        $stmt = $conn->prepare("SELECT name FROM projekte WHERE ID = ?");
+        $stmt->execute(array($project));
+        $res = $stmt->fetch();
+        $pname = stripslashes($res['name']);
+        $milestone["pname"] = $pname;
+        // Daysleft contains a signed number, dayslate an unsigned one that only applies if the milestone is late
+        $dayslate = 0;
+        $milestone["daysleft"] = $dayslate;
+        $milestone["dayslate"] = $dayslate;
+        // Get attached tasklists and messages
+        $tasks = $this->getMilestoneTasklists(0,$project);
+        $milestone["tasklists"] = $tasks;
+        $messages = $this->getMilestoneMessages(0,$project);
+        $milestone["messages"] = $messages;
+        return $milestone;
+    }
+
+    /**
      * Return all open milestones of a given project
      *
      * @param int $project Project ID
      * @param int $lim Number of milestones to return
+     * @param $showdummy if set to true, the method will add a dummy milestone for all task lists not assinged to a milestone
      * @return array $milestones Details of the open milestones
      */
-    function getAllProjectMilestones($project, $lim = 100)
+    function getAllProjectMilestones($project, $lim = 100, $showdummy = false)
     {
         global $conn;
         $project = (int)$project;
         $lim = (int)$lim;
+		$showdummy = (bool) $showdummy;
 
         $milestones = array();
 
@@ -472,6 +516,13 @@ class milestone
                 array_push($milestones, $this->getMilestone($milestone["ID"]));
             }
         }
+
+		if ($showdummy) {
+	  		$themilestone = $this->dummyMilestone($project);
+	  		if (!empty($themilestone['tasklists'])) {
+	    		array_push($milestones, $themilestone);
+	  		}
+		}
 
         if (!empty($milestones)) {
             return $milestones;
@@ -571,11 +622,11 @@ class milestone
         $timeline = array();
 
         if ($project > 0) {
-            $sel1 = $conn->prepare("SELECT * FROM milestones WHERE project =  ? AND status=1 AND end = '$starttime' ORDER BY `end` ASC");
-            $sel1->execute(array($project));
+            $sel1 = $conn->prepare("SELECT * FROM milestones WHERE project =  ? AND status=1 AND end = ? ORDER BY `end` ASC");
+            $sel1->execute(array($project,$starttime));
         } else {
-            $sel1 = $conn->prepare("SELECT milestones.*,projekte_assigned.user,projekte.name AS pname,projekte.status AS pstatus FROM milestones,projekte_assigned,projekte WHERE milestones.project = projekte_assigned.projekt AND milestones.project = projekte.ID AND projekte_assigned.user = ? AND milestones.status=1 AND projekte.status != 2 AND milestones.end = '$starttime'");
-            $sel1->execute(array($user));
+            $sel1 = $conn->prepare("SELECT milestones.*,projekte_assigned.user,projekte.name AS pname,projekte.status AS pstatus FROM milestones,projekte_assigned,projekte WHERE milestones.project = projekte_assigned.projekt AND milestones.project = projekte.ID AND projekte_assigned.user = ? AND milestones.status=1 AND projekte.status != 2 AND milestones.end = ?");
+            $sel1->execute(array($user,$starttime));
         }
         while ($stone = $sel1->fetch()) {
             $stone["daysleft"] = $this->getDaysLeft($stone["end"]);
@@ -593,22 +644,25 @@ class milestone
      * Return all open tasklists associated to a given milestones
      *
      * @param int $milestone Milestone ID
+     * @param project if set to a nonzero value (project id) it will search for tasks by project assignment, which can be used when no milestone is assigned, i.e. when $milestone=0 
      * @return array $lists Details of the tasklists
      */
-    private function getMilestoneTasklists($milestone)
-    {
+    private function getMilestoneTasklists($milestone,$project = 0)  {
         global $conn;
         $milestone = (int)$milestone;
+		$project = (int) $project;
 
         $objtasklist = new tasklist();
-
-        $sel = $conn->query("SELECT ID FROM tasklist WHERE milestone = $milestone AND status = 1 ORDER BY ID ASC");
+	
+		if ($project>0){
+			$sel = $conn->query("SELECT ID FROM tasklist WHERE project = $project AND milestone = $milestone AND status = 1 ORDER BY ID ASC");
+		} else {
+        	$sel = $conn->query("SELECT ID FROM tasklist WHERE milestone = $milestone AND status = 1 ORDER BY ID ASC");
+		}
         $lists = array();
-        if ($milestone) {
-            while ($listId = $sel->fetch()) {
-                array_push($lists, $objtasklist->getTasklist($listId["ID"]));
-            }
-        }
+        while ($listId = $sel->fetch()) {
+			array_push($lists, $objtasklist->getTasklist($listId["ID"]));
+		}
         if (!empty($lists)) {
             return $lists;
         } else {
@@ -616,13 +670,26 @@ class milestone
         }
     }
 
-    private function getMilestoneMessages($milestone)
+    /**
+     * Return all messages associated to a given milestones
+     *
+     * @param int $milestone Milestone ID
+     * @param project if set to a nonzero value (project id) it will search for tasks by project assignment, which can be used when no milestone is assigned, i.e. when $milestone=0 
+     * @return array $lists messages of the milestone
+     */
+    private function getMilestoneMessages($milestone,$project = 0)
     {
         global $conn;
         $milestone = (int)$milestone;
+        $project = (int) $project;
+
         $objmessage = new message();
 
-        $sel = $conn->query("SELECT title,ID,milestone FROM messages WHERE milestone = $milestone");
+		if ($project>0){
+			$sel = $conn->query("SELECT title,ID,milestone FROM messages WHERE project = $project AND milestone = $milestone");
+		} else {
+			$sel = $conn->query("SELECT title,ID,milestone FROM messages WHERE milestone = $milestone");
+		}
         $msgs = array();
         while ($msg = $sel->fetch()) {
             array_push($msgs, $msg);
