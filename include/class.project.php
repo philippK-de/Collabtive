@@ -461,8 +461,7 @@ class project
         $projectIdStmt->execute(array($status));
 
         while ($projectId = $projectIdStmt->fetch()) {
-            $project = $this->getProject($projectId["ID"]);
-            array_push($projects, $project);
+            $projects[] = $this->getProject($projectId["ID"]); // unneeded array_push would create overhead
         }
 
         if (!empty($projects)) {
@@ -473,7 +472,7 @@ class project
     }
 
     /**
-     * Lists all projects assigned to a given member ordered by due date ascending
+     * Lists all projects assigned to a given member ordered by name ascending
      *
      * @param int $user User id
      * @param int $status Status of a project (1= open, 0 = closed)
@@ -493,16 +492,17 @@ class project
 
         //$sel = $conn->prepare("SELECT projekt FROM projekte_assigned WHERE user = ? ORDER BY ID ASC LIMIT $offset,$limit ");
 
-        //get the projekt IDs of projects assigned to this user
-        $selAssigned = $conn->query("SELECT projekt, status FROM projekte_assigned JOIN projekte ON projekte.ID = projekte_assigned.projekt WHERE user = $user AND projekte.status = $status ORDER BY projekt DESC LIMIT $limit OFFSET $offset");
+        $selAssigned = $conn->prepare("SELECT projekte.ID
+								FROM projekte LEFT JOIN projekte_assigned
+								ON projekte.ID = projekte_assigned.projekt
+								WHERE user=? AND status=?
+								ORDER BY name
+								LIMIT $limit
+								OFFSET $offset"); // you may apply id here, but i prefere sorting by name
+        $selStmt = $selAssigned->execute(array($user,$status));
 
-        $projectsAssigned = $selAssigned->fetchAll();
-
-        //loop by reference and assign the project details to eahc project
-        foreach ($projectsAssigned as $project) {
-            if (!empty($project[0])) {
-                array_push($myProjects,$this->getProject($project[0]));
-            }
+        while ($project = $selAssigned->fetch()) {
+        	$myProjects[] = $this->getProject($project["ID"]); // useless array_push would create overhead
         }
 
         if (!empty($myProjects)) {
