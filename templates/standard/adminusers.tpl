@@ -217,8 +217,9 @@
 		</div> {*block END*}
 		
 		{literal}
+            <script type="text/javascript" src="include/js/accordion.min.js"></script>
 			<script type="text/javascript">
-				var accord_roles = new accordion('acc-roles');
+				var accord_roles = new accordion2('acc_roles');
 			</script>
 		{/literal}
 		

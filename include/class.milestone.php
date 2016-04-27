@@ -7,7 +7,7 @@
  * @name milestone
  * @package Collabtive
  * @version 2.0
- * @link http://www.o-dyn.de
+ * @link http://collabtive.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  * @global $mylog
  */
@@ -85,12 +85,16 @@ class milestone {
         global $conn, $mylog;
         $id = (int)$id;
 
-        $namStmt = $conn->prepare("SELECT project,name FROM milestones WHERE ID = ?");
-        $namStmt->execute(array($id));
         $del = $conn->query("DELETE FROM milestones WHERE ID = $id");
-        $del1 = $conn->query("DELETE FROM milestones_assigned WHERE milestone = $id");
         if ($del) {
+            //delet assignments as well
+            $conn->query("DELETE FROM milestones_assigned WHERE milestone = $id");
+
+            //get project and title of the milestone
+            $namStmt = $conn->prepare("SELECT project,name FROM milestones WHERE ID = ?");
+            $namStmt->execute(array($id));
             $nam = $namStmt->fetch();
+
             $project = $nam[0];
             $name = $nam[1];
 
@@ -255,21 +259,34 @@ class milestone {
 
             $startstring = date(CL_DATEFORMAT, $milestone["start"]);
             $milestone["startstring"] = $startstring;
+
             // Get the name of the project where the message was posted for display
-            $psel = $conn->query("SELECT name FROM projekte WHERE ID = $milestone[project]");
-            $pname = $psel->fetch();
-            $pname = $pname[0];
-            $milestone["pname"] = $pname;
+            $projectNameQuery = $conn->query("SELECT name FROM projekte WHERE ID = $milestone[project]");
+            $projectName = $projectNameQuery->fetch();
+            $projectName = $projectName[0];
+            $milestone["pname"] = $projectName;
+
             // Daysleft contains a signed number, dayslate an unsigned one that only applies if the milestone is late
             $dayslate = $this->getDaysLeft($milestone["end"]);
             $milestone["daysleft"] = $dayslate;
             $dayslate = str_replace("-", "", $dayslate);
             $milestone["dayslate"] = $dayslate;
+
             // Get attached tasklists and messages
             $tasks = $this->getMilestoneTasklists($milestone["ID"]);
             $milestone["tasklists"] = $tasks;
+            $milestone["hasTasklist"] = false;
+            if(count($tasks) > 0 )
+            {
+                $milestone["hasTasklist"] = true;
+            }
             $messages = $this->getMilestoneMessages($milestone["ID"]);
             $milestone["messages"] = $messages;
+            $milestone["hasMessages"] = false;
+            if(count($messages) > 0)
+            {
+                $milestone["hasMessages"] = true;
+            }
 
             return $milestone;
         } else {
@@ -442,14 +459,14 @@ class milestone {
         global $conn;
         $project = (int) $project;
         $id = 0;
-				$milestone = array();
+		$milestone = array();
 
         // Format start and end date for display
 
         $tod = date("d.m.Y");
         $now = strtotime($tod);
         $time = date(CL_DATEFORMAT, $now);
-				$milestone['ID'] = $id;
+		$milestone['ID'] = $id;
         $milestone["endstring"] = $time;
         $milestone["fend"] = $time;
         $milestone["startstring"] = $time;
@@ -467,9 +484,9 @@ class milestone {
         $milestone["daysleft"] = $dayslate;
         $milestone["dayslate"] = $dayslate;
         // Get attached tasklists and messages
-        $tasks = $this->getMilestoneTasklists($milestone["ID"],$project);
+        $tasks = $this->getMilestoneTasklists(0,$project);
         $milestone["tasklists"] = $tasks;
-        $messages = $this->getMilestoneMessages($milestone["ID"],$project);
+        $messages = $this->getMilestoneMessages(0,$project);
         $milestone["messages"] = $messages;
         return $milestone;
     }
@@ -489,18 +506,14 @@ class milestone {
         $lim = (int)$lim;
 		$showdummy = (bool) $showdummy;
 
-        $tod = date(CL_DATEFORMAT);
-        $now = strtotime($tod);
         $milestones = array();
-        $sql = "SELECT ID FROM milestones WHERE project = ? AND status = 1 ORDER BY end ASC LIMIT $lim";
 
-        $sel1 = $conn->prepare($sql);
-        $sel1->execute(array($project));
+        $projectMilestonesStmt = $conn->prepare("SELECT ID FROM milestones WHERE project = ? AND status = 1 ORDER BY end ASC LIMIT $lim");
+        $projectMilestonesStmt->execute(array($project));
 
-        while ($milestone = $sel1->fetch()) {
+        while ($milestone = $projectMilestonesStmt->fetch()) {
             if (!empty($milestone)) {
-                $themilestone = $this->getMilestone($milestone["ID"]);
-                array_push($milestones, $themilestone);
+                array_push($milestones, $this->getMilestone($milestone["ID"]));
             }
         }
 
@@ -640,18 +653,16 @@ class milestone {
 		$project = (int) $project;
 
         $objtasklist = new tasklist();
-
+	
 		if ($project>0){
-			  $sel = $conn->query("SELECT ID FROM tasklist WHERE project = $project AND milestone = $milestone AND status = 1 ORDER BY ID ASC");
+			$sel = $conn->query("SELECT ID FROM tasklist WHERE project = $project AND milestone = $milestone AND status = 1 ORDER BY ID ASC");
 		} else {
         	$sel = $conn->query("SELECT ID FROM tasklist WHERE milestone = $milestone AND status = 1 ORDER BY ID ASC");
 		}
         $lists = array();
-        if ($milestone) {
-            while ($listId = $sel->fetch()) {
-                array_push($lists, $objtasklist->getTasklist($listId["ID"]));
-            }
-        }
+        while ($listId = $sel->fetch()) {
+			array_push($lists, $objtasklist->getTasklist($listId["ID"]));
+		}
         if (!empty($lists)) {
             return $lists;
         } else {

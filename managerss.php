@@ -56,7 +56,7 @@ if ($action == "rss-tasks")
     $tasks = array();
     foreach($myprojects as $proj)
     {
-        $task = $thetask->getAllMyProjectTasks($proj["ID"], 10000, $user);
+        $task = $thetask->getAllMyProjectTasks($proj["ID"], $user);
 
         if (!empty($task))
         {

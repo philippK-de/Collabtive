@@ -12,7 +12,7 @@
 				</h2>
 			</div>
 
-			<div class="block" id="acc-roles">
+			<div class="block" id="acc_roles">
 
 			{*Add Roles*}
 				<div id = "form_addmyroles" class="addmenue" style = "display:none;">
@@ -48,8 +48,8 @@
 							<td></td>
 							<td>
 								<div class="toggle-in">
-								<span class="acc-toggle" onclick="accord_roles.activate($$('#acc-roles .accordion_toggle')[{$smarty.section.role.index}]);toggleAccordeon('acc-roles',this);"></span>
-									<a href="javascript:accord_roles.activate($$('#acc-roles .accordion_toggle')[{$smarty.section.role.index}]);toggleAccordeon('acc-roles',this);">
+								<span class="acc-toggle" onclick="accord_roles.activate(document.querySelector('#acc_roles_content{$smarty.section.role.index}'));"></span>
+									<a href="#">
 										{$roles[role].name|truncate:30:"...":true}
 									</a>
 								</div>
@@ -64,7 +64,6 @@
 					<tr class="acc">
 					<td></td>
 							<td colspan="4">
-								<div class="accordion_toggle"></div>
 								<div class="accordion_content">
                                     	<form class="main" method="post" action="manageroles.php?action=editrole&id={$roles[role].ID}" {literal}onsubmit="return validateCompleteForm(this);"{/literal} >
 	<fieldset>
