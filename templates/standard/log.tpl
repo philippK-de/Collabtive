@@ -1,5 +1,5 @@
-<div class="headline accordion_toggle">
-	<a href="javascript:void(0);" id="loghead_toggle" class="win_none" onclick="changeElements('a.win_block','win_none');toggleBlock('loghead');"></a>
+<div class="headline">
+	<a href="javascript:void(0);" id="loghead_toggle" class="win_none" onclick=""></a>
 
 	{if $userpermissions.admin.add}
 		<div class="wintools">

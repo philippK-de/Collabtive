@@ -5,8 +5,8 @@
  * @author Philipp Kiszka <info@o-dyn.de>
  * @name roles
  * @package Collabtive
- * @version 0.5
- * @link http://www.o-dyn.de
+ * @version 3
+ * @link http://collabtive.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
 class roles {
@@ -106,11 +106,11 @@ class roles {
     {
         global $conn;
         $id = (int) $id;
-    	$del = $conn->prepare("DELETE FROM roles WHERE ID = ?");
-    	$del->execute(array($id));
+        $del = $conn->prepare("DELETE FROM roles WHERE ID = ?");
+        $del->execute(array($id));
 
-    	$del2 = $conn->prepare("DELETE FROM roles_assigned WHERE role = ?");
-    	$del2->execute(array($id));
+        $del2 = $conn->prepare("DELETE FROM roles_assigned WHERE role = ?");
+        $del2->execute(array($id));
 
         if ($del) {
             return true;
@@ -138,11 +138,11 @@ class roles {
         // If there already is a role assigned to the user, just update this entry
         // Otherwise create a new entry
         if ($chk > 0) {
-            $ins = $conn->query("UPDATE roles_assigned SET role = $role WHERE user = $user");
+            $insStmt = $conn->prepare("UPDATE roles_assigned SET user = ? WHERE role = ?");
         } else {
-            $ins = $conn->query("INSERT INTO roles_assigned (user,role) VALUES ($user,$role)");
+            $insStmt = $conn->prepare("INSERT INTO roles_assigned (user,role) VALUES (?,?)");
         }
-
+        $ins = $insStmt->execute(array($user, $role));
         if ($ins) {
             return true;
         } else {
@@ -164,8 +164,8 @@ class roles {
         $role = (int) $role;
         $user = (int) $user;
 
-    	$del = $conn->prepare("DELETE FROM roles_assigned WHERE user = ? AND role = ? LIMIT 1");
-    	$del->execute(array($user,$role));
+        $del = $conn->prepare("DELETE FROM roles_assigned WHERE user = ? AND role = ? LIMIT 1");
+        $del->execute(array($user, $role));
 
         if ($del) {
             return true;
@@ -190,16 +190,6 @@ class roles {
         } else {
             $sel = $conn->query("SELECT ID FROM roles ORDER BY ID DESC LIMIT $limit");
         } while ($role = $sel->fetch()) {
-            /**
-             * $role["projects"] = unserialize($role["projects"]);
-             * $role["tasks"] = unserialize($role["tasks"]);
-             * $role["milestones"] = unserialize($role["milestones"]);
-             * $role["messages"] = unserialize($role["messages"]);
-             * $role["files"] = unserialize($role["files"]);
-             * $role["timetracker"] = unserialize($role["timetracker"]);
-             * $role["admin"] = unserialize($role["admin"]);
-             */
-            // array_push($roles, $role);
             $therole = $this->getRole($role["ID"]);
             array_push($roles, $therole);
         }
@@ -236,8 +226,12 @@ class roles {
         global $conn;
         $user = (int) $user;
 
-        $usr = $conn->query("SELECT role FROM roles_assigned WHERE user = $user")->fetch();
+        $userStmt = $conn->prepare("SELECT role FROM roles_assigned WHERE user = ?");
+        $userStmt->execute(array($user));
+
+        $usr = $userStmt->fetch();
         $usr = $usr[0];
+
         if ($usr) {
             $role = $this->getRole($usr);
         } else {
@@ -296,10 +290,10 @@ class roles {
         global $conn;
         $role = (int) $role;
         // Get the serialized strings from the db
-    	$sel2 = $conn->prepare("SELECT * FROM roles WHERE ID = ?");
-    	$sel2->execute(array($role));
+        $sel = $conn->prepare("SELECT * FROM roles WHERE ID = ?");
+        $sel->execute(array($role));
 
-        $therole = $sel2->fetch();
+        $therole = $sel->fetch();
         // Unserialize to an array
         $therole["projects"] = unserialize($therole["projects"]);
         $therole["tasks"] = unserialize($therole["tasks"]);

@@ -1,0 +1,48 @@
+.blind-content
+{
+}
+.blind-content.origin-top
+{
+    transform-origin: top;
+}
+.blind-content.origin-middle
+{
+    transform-origin: middle;
+}
+.blind-content.origin-bottom
+{
+    transform-origin: bottom;
+}
+
+.blind-content.in
+{
+    -webkit-animation: blind-in 2s 1;
+    animation: blind-in 1s 1;
+}
+
+.blind-content.out
+{
+    -webkit-animation: blind-out 2s 1;
+    animation: blind-out 1s 1;
+}
+
+@-webkit-keyframes blind-in {
+    0% { transform: scaleY(0); }
+    100% { transform: scaleY(1); }
+}
+
+@-webkit-keyframes blind-out {
+    0% { transform: scaleY(1); }
+    100% { transform: scaleY(0); }
+}
+
+
+@keyframes blind-in {
+    0% { transform: scaleY(0); }
+    100% { transform: scaleY(1); }
+}
+
+@keyframes blind-out {
+    0% { transform: scaleY(1); }
+    100% { transform: scaleY(0); }
+}

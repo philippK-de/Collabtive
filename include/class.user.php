@@ -6,7 +6,7 @@
  * @name user
  * @version 0.7
  * @package Collabtive
- * @link http://www.o-dyn.de
+ * @link http://collabtive.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or laterg
  */
 class user {
@@ -239,7 +239,18 @@ class user {
             return false;
         }
     }
+    function getUserByName($name){
+        global $conn;
+        $name = $conn->quote($name);
 
+        $sel = $conn->query("SELECT ID FROM user WHERE name = $name");
+        $profileId = $sel->fetch();
+        if($profileId > 0){
+            return $this->getProfile($profileId["ID"]);
+        } else {
+            return false;
+        }
+    }
     /**
      * Get the avatar of a user
      *

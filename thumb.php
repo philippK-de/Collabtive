@@ -1,4 +1,9 @@
 <?php
+ob_start('ob_gzhandler');
+session_start();
+if (!isset($_SESSION["userid"])) {
+die("not logged in");
+}
 define('CL_ROOT', realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR));
 
 function strip_only_tags($str, $tags, $stripContent=false) {

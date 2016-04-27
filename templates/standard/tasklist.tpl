@@ -127,7 +127,7 @@
 										</a>
 									</div>
 								</td>
-								<td><a href="manageuser.php?action=profile&amp;tlid={$tasks[task].user_id}&amp;id={$project.ID}">{$tasks[task].user|truncate:23:"...":true}</a></td>
+								<td><a href="manageuser.php?action=profile&amp;id={$tasks[task].user_id}">{$tasks[task].user|truncate:23:"...":true}</a></td>
 								<td style="text-align:right">{$tasks[task].daysleft}&nbsp;&nbsp;</td>
 								<td class="tools">
 									{if $userpermissions.tasks.edit}
@@ -203,7 +203,7 @@
 												</a>
 											</div>
 										</td>
-										<td class="c"><a href="manageuser.php?action=profile&amp;tlid={$donetasks[donetask].user_id}&amp;id={$project.ID}">{$donetasks[donetask].user|truncate:23:"...":true}</a></td>
+										<td class="c"><a href="manageuser.php?action=profile&amp;id={$donetasks[donetask].user_id}">{$donetasks[donetask].user|truncate:23:"...":true}</a></td>
 										<td class="days" style="text-align:right">{$donetasks[donetask].daysleft}&nbsp;&nbsp;</td>
 										<td class="tools">
 											{if $userpermissions.tasks.edit}
