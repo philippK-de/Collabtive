@@ -5,19 +5,15 @@
 <div id="content-left-in">
 <div class="projects">
 
-
-	<div class="infowin_left" style = "display:none;" id = "systemmsg">
-		{if $mode == "edited"}
-		<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt=""/>{#projectwasedited#}</span>
-		{elseif $mode == "timeadded"}
-		<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/timetracker.png" alt=""/>{#timetrackeradded#}</span>
-		{/if}
-	</div>
-	{literal}
-	<script type = "text/javascript">
-		systemMsg('systemmsg');
-	 </script>
-	{/literal}
+    <div class="infowin_left"
+         id="systemMessage"
+         data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png"
+         data-text-deleted = "{#projectwasdeleted#}"
+         data-text-edited = "{#projectwasedited#}"
+         data-text-added = "{#projectwasadded#}"
+         data-text-closed = "{#projectwasclosed#}"
+         style="display:none">
+    </div>
 
 <h1>{$project.name|truncate:45:"...":true}<span>/ {#overview#}</span></h1>
 
@@ -99,7 +95,7 @@
 {if $tree[0][0] > 0}
 <div class="projects dtree" style="padding-bottom:2px;" >
 	<div class="headline accordion_toggle">
-		<a href="javascript:void(0);" id="treehead_toggle" class="win_block" onclick="changeElements('a.win_block','win_none');toggleBlock('treehead');"></a>
+		<a href="javascript:void(0);" id="treehead_toggle" class="win_block" onclick=""></a>
 		<h2>
 			<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{#projecttree#}
 		</h2>
@@ -165,7 +161,7 @@
 {*Milestones*}
 <div class="miles" style="padding-bottom:2px;">
 			<div class="headline accordion_toggle" >
-				<a href="javascript:void(0);" id="milehead_toggle" class="win_none" onclick="changeElements('a.win_block','win_none');toggleBlock('milehead');"></a>
+				<a href="javascript:void(0);" id="milehead_toggle" class="win_none" onclick="" ></a>
 
 				<div class="wintools">
 					<!-- <div class="export-main">
@@ -199,7 +195,7 @@
 {if $userpermissions.timetracker.add}
 <div class="timetrack" style = "padding-bottom:2px;">
 	<div class="headline accordion_toggle">
-		<a href="javascript:void(0);" id="trackerhead_toggle" class="win_none" onclick = "changeElements('a.win_block','win_none');toggleBlock('trackerhead');"></a>
+		<a href="javascript:void(0);" id="trackerhead_toggle" class="win_none" onclick=""></a>
 
 		<h2>
 			<a href="managetimetracker.php?action=showproject&amp;id={$project.ID}" title="{#timetracker#}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/timetracker.png" alt="" />{#timetracker#}</a>
@@ -241,48 +237,8 @@
 </div> {*content-left END*}
 
 {include file="sidebar-a.tpl" showcloud="1"}
+<script type="text/javascript" src="include/js/accordion.min.js"></script>
+<script type = "text/javascript" src="include/js/views/project.min.js"></script>
 
-{literal}
-	<script type = "text/javascript">
-		Event.observe(window,"load",function()
-		{
-			new Effect.Morph('completed', {
-				style: 'width:{/literal}{$done}{literal}%',
-				duration: 4.0
-			});
-		});
-		var accord_dashboard = new accordion('block_dashboard');
-
-				function activateAccordeon(theAccord){
-
-					accord_dashboard.activate($$('#block_dashboard .accordion_toggle')[theAccord]);
-					setCookie("activeSlideProject",theAccord);
-				}
-				var theBlocks = $$("#block_dashboard > div .headline > a");
-				console.log(theBlocks);
-
-				//loop through the blocks and add the accordion toggle link
-				openSlide = 0;
-				for(i=0;i<theBlocks.length;i++)
-				{
-					theCook = readCookie("activeSlideProject");
-					console.log(theCook);
-					if(theCook > 0)
-					{
-						openSlide = theCook;
-					}
-
-					var theAction = theBlocks[i].getAttribute("onclick");
-					theAction += "activateAccordeon("+i+");";
-					theBlocks[i].setAttribute("onclick",theAction);
-					//console.log(theBlocks[i].getAttribute("onclick"));
-				}
-
-
-				//accordIndex.activate($$('#block_index .acc_toggle')[0]);
-				activateAccordeon(0);
-
-	</script>
-{/literal}
 
 {include file="footer.tpl"}

@@ -25,7 +25,6 @@ function chkproject($user, $project)
     $user = (int) $user;
     $project = (int) $project;
     $chk = @$conn->query("SELECT ID FROM projekte_assigned WHERE projekt = $project AND user = $user")->fetch();
-
     $chk = $chk[0];
 
     if ($chk != "") {
@@ -215,7 +214,7 @@ function delete_directory($dirname)
     if (is_dir($dirname)) {
         $dir_handle = opendir($dirname);
     }
-    if (!$dir_handle) {
+    if (!isset($dir_handle)) {
         return false;
     } while ($file = readdir($dir_handle)) {
         if ($file != "." && $file != "..") {
