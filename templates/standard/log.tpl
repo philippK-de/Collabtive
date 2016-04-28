@@ -38,7 +38,7 @@
         <tbody v-for="logitem in items" class="alternateColors" id="log_{{*logitem.ID}}">
         <tr>
             <td style="padding:0" class="symbols">
-                <img style="margin:0 0 0 3px;" src = "./templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/symbols/{{*logitem.type}}.png" alt="{{*logitem.type}}" title="{{*logitem.type}}" />
+                <img style="margin:0 0 0 3px;" src = "./templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/symbols/{{logitem.type}}.png" alt="{{*logitem.type}}" title="{{*logitem.type}}" />
             </td>
             <td>
                 <div class="toggle-in">
