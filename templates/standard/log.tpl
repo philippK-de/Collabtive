@@ -1,21 +1,22 @@
 <div class="headline">
     <a href="javascript:void(0);" id="loghead_toggle" class="win_none" onclick=""></a>
 
-        <div class="wintools">
-            <div class="progress" id="progressprojectLog" style="display:none;">
-                <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-project3.gif"/>
-            </div>
-            <div class="export-main">
-                <a class="export"><span>{#export#}</span></a>
-                <div class="export-in" style="width:46px;left: -46px;"> {* at one item *}
-                    <a class="pdf" href="manageproject.php?action=projectlogpdf&amp;id={$project.ID}"><span>{#pdfexport#}</span></a>
-                    <a class="excel" href="manageproject.php?action=projectlogxls&amp;id={$project.ID}"><span>{#excelexport#}</span></a>
-                </div>
+    <div class="wintools">
+        <div class="progress" id="progressprojectLog" style="display:none;">
+            <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-project3.gif"/>
+        </div>
+        <div class="export-main">
+            <a class="export"><span>{#export#}</span></a>
+
+            <div class="export-in" style="width:46px;left: -46px;"> {* at one item *}
+                <a class="pdf" href="manageproject.php?action=projectlogpdf&amp;id={$project.ID}"><span>{#pdfexport#}</span></a>
+                <a class="excel" href="manageproject.php?action=projectlogxls&amp;id={$project.ID}"><span>{#excelexport#}</span></a>
             </div>
         </div>
+    </div>
 
     <h2>
-        <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/activity.png" alt="" />{#activity#}
+        <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/activity.png" alt=""/>{#activity#}
     </h2>
 </div>
 
@@ -38,44 +39,45 @@
         <tbody v-for="logitem in items" class="alternateColors" id="log_{{*logitem.ID}}">
         <tr>
             <td style="padding:0" class="symbols">
-                <img style="margin:0 0 0 3px;" src = "./templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/symbols/{{logitem.type}}.png" alt="{{*logitem.type}}" title="{{*logitem.type}}" />
+                <img style="margin:0 0 0 3px;"
+                     src="./templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/symbols/{{logitem.type}}.png"
+                     alt="{{*logitem.type}}" title="{{*logitem.type}}"/>
             </td>
             <td>
                 <div class="toggle-in">
-                    <strong>{{*logitem.name}}</strong><br />
-
+                    <strong>{{*logitem.name}}</strong><br/>
 							<span class="info">{/literal}{#was#}{literal}
-                                <span v-show="logitem.action == 1">
+                                <span v-if="logitem.action == 1">
                                     {/literal}
                                     {#added#}
                                     {literal}
                                 </span>
-								<span v-show="logitem.action == 2">
+								<span v-if="logitem.action == 2">
                                     {/literal}
                                     {#edited#}
                                     {literal}
                                 </span>
-								<span v-show="logitem.action == 3">
+								<span v-if="logitem.action == 3">
                                     {/literal}
                                     {#deleted#}
                                     {literal}
                                 </span>
-								<span v-show="logitem.action == 4">
+								<span v-if="logitem.action == 4">
                                     {/literal}
                                     {#opened#}
                                     {literal}
                                 </span>
-						        <span v-show="logitem.action == 5">
+						        <span v-if="logitem.action == 5">
                                     {/literal}
                                     {#closed#}
                                     {literal}
                                 </span>
-						        <span v-show="logitem.action == 6">
+						        <span v-if="logitem.action == 6">
                                     {/literal}
                                     {#assigned#}
                                     {literal}
                                 </span>
-						        <span v-show="logitem.action == 7">
+						        <span v-if="logitem.action == 7">
                                     {/literal}
                                     {#deassigned#}
                                     {literal}
@@ -119,7 +121,7 @@
         url: "manageproject.php?action=projectLog",
         dependencies: []
     }
-    projectLog.url = projectLog.url  + "&id=" + {/literal}{$project.ID}{literal};
+    projectLog.url = projectLog.url + "&id=" + {/literal}{$project.ID}{literal};
 
     pagination.itemsPerPage = 25;
     var projectLogView = createView(projectLog);

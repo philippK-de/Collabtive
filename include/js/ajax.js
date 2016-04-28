@@ -15,42 +15,12 @@ function changePost(script, element, pbody) {
     var ajax = new Ajax.Updater({success: element}, script, {method: 'post', postBody: pbody, evalScripts: true});
 }
 
-
-function recolorRows(therow) {
-    var row = therow.options.rowid;
-    try {
-        var theTable = $(row).parentNode;
-        var tbodys = $$('#' + theTable.id + ' tbody:not([id=' + row + '])');
-        var bodies = [];
-
-        tbodys.each(function (s) {
-                if (s.style.display != 'none') {
-                    bodies.push(s);
-                }
-            }
-        );
-
-        for (var i = 0; i < bodies.length; i++) {
-            if (i % 2 == 0) {
-                $(bodies[i].id).className = 'color-a';
-            }
-            else {
-
-                $(bodies[i].id).className = 'color-b';
-            }
-        }
-    }
-    catch (e) {
-    }
-}
-
 function removeRow(row, color) {
 
     new Effect.Highlight(row, {duration: 1.5, startcolor: '#FFFFFF', endcolor: color});
     new Effect.Fade(row, {
         duration: 1.5,
-        rowid: row,
-        afterFinish: recolorRows
+        rowid: row
     });
 }
 function make_inputs(num) {
