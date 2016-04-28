@@ -197,13 +197,17 @@ class company {
     /**
      * Get a list of all companies
      *
+     * @param int Limit Number of entries to return
+     * @param int Offset Offset from which to return data
      * @return array $companies List of all companies
      */
-    function getAllCompanies()
+    function getAllCompanies($limit = 25,$offset = 0)
     {
         global $conn;
+        $limit = (int)$limit;
+        $offset = (int)$offset;
 
-        $sel = $conn->prepare("SELECT * FROM company");
+        $sel = $conn->prepare("SELECT * FROM company LIMIT $limit OFFSET $offset");
         $sel->execute();
         $companies = array();
 

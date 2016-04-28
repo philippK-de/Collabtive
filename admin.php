@@ -344,24 +344,16 @@ elseif ($action == "projects") {
     $title = $langfile['projectadministration'];
     $template->assign("title", $title);
     $template->assign("classes", $classes);
-    $opros = $project->getProjects(1, 10000);
-    $clopros = $project->getProjects(0, 10000);
+
     $i = 0;
     $users = $user->getAllUsers(1000000);
-    if (!empty($opros)) {
-        foreach($opros as $opro) {
-            $membs = $project->getProjectMembers($opro["ID"], 1000);
-            $opros[$i]['members'] = $membs;
-            $i = $i + 1;
-        }
-        $template->assign("opros", $opros);
-    }
+
 
     $customers = $companyObj->getAllCompanies();
 
     $template->assign("customers", $customers);
     $template->assign("users", $users);
-    $template->assign("clopros", $clopros);
+
     $template->display("adminprojects.tpl");
 }
 elseif($action == "adminProjects")
@@ -378,6 +370,12 @@ elseif($action == "adminProjects")
     }
     //get one page of open projects
     $openProjects = $project->getProjects(1, $limit, $offset);
+    if (!empty($openProjects)) {
+        foreach($openProjects as &$openProject) {
+            $projectMembers = $project->getProjectMembers($openProject["ID"], 1000);
+            $openProject["members"] = $projectMembers;
+        }
+    }
     //get total number of open projects for pagination
     $openProjectsNum = count($project->getProjects(1, 10000000));
 
@@ -478,7 +476,31 @@ elseif ($action == "addpro") {
 
     $template->assign("allcust", $allcust);
     $template->display("admincustomers.tpl");
-} elseif ($action == "addcust") {
+}
+elseif($action == "adminCustomers")
+{
+    $offset = 0;
+    if(isset($cleanGet["offset"]))
+    {
+        $offset = $cleanGet["offset"];
+    }
+    $limit = 25;
+    if(isset($cleanGet["limit"]))
+    {
+        $limit = $cleanGet["limit"];
+    }
+
+    $allCustomers = $companyObj->getAllCompanies($limit,$offset);
+    $allCustomersNum = count($companyObj->getAllCompanies(10000000000));
+
+    $customers["items"] = $allCustomers;
+    $customers["count"] = $allCustomersNum;
+
+    echo json_encode($customers);
+
+
+}
+elseif ($action == "addcust") {
     if (!$userpermissions["admin"]["add"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
