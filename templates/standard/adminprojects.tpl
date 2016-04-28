@@ -91,7 +91,7 @@
                                 {if $userpermissions.projects.del}
                                 {literal}
                                     <a class="butn_check"
-                                    href="javascript:closeElement('proj_{{project.ID}}','manageproject.php?action=close&amp;id={{project.ID}}');"
+                                    href="javascript:closeElement('proj_{{project.ID}}','manageproject.php?action=close&amp;id={{project.ID}}',adminProjectsView);"
                                     title="{/literal}{#close#}"></a>
                                 {/if}
                             </td>

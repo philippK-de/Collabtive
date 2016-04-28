@@ -19,7 +19,7 @@ function createView(myEl) {
     var myModel = {
         items: [],
         pages: [],
-        limit: 10,
+        limit: pagination.itemsPerPage,
         offset: 0,
         currentPage: 1,
         itemsCount: 0,
