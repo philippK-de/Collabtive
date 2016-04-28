@@ -38,6 +38,8 @@ accordion2.prototype.initializeToggles = function () {
     this.accordionToggles = this.rootElement.querySelectorAll("." + this.classNames.toggle + ",." + this.classNames.toggleActive);
     //get accordion contents - these are the content areas representing the slides
     this.accordionContents = this.rootElement.querySelectorAll("." + this.classNames.content + ",." + this.classNames.contentActive);
+    console.log( this.accordionToggles );
+    console.log(this.accordionContents);
 }
 
 /*
@@ -118,6 +120,6 @@ accordion2.prototype.showToggle = function () {
     this.currentToggle.className = this.classNames.toggleActive;
 }
 accordion2.prototype.hideToggle = function () {
-    this.currentToggle.className = this.classNames.toggle;
+        this.currentToggle.className = this.classNames.toggle;
 }
 

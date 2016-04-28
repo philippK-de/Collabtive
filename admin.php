@@ -364,6 +364,36 @@ elseif ($action == "projects") {
     $template->assign("clopros", $clopros);
     $template->display("adminprojects.tpl");
 }
+elseif($action == "adminProjects")
+{
+    $offset = 0;
+    if(isset($cleanGet["offset"]))
+    {
+        $offset = $cleanGet["offset"];
+    }
+    $limit = 25;
+    if(isset($cleanGet["limit"]))
+    {
+        $limit = $cleanGet["limit"];
+    }
+    //get one page of open projects
+    $openProjects = $project->getProjects(1, $limit, $offset);
+    //get total number of open projects for pagination
+    $openProjectsNum = count($project->getProjects(1, 10000000));
+
+    //get all closed projects
+    $closedProjects = $project->getProjects(0, 100000000);
+
+    //assign to datastructure
+    $projects["open"] = $openProjects;
+    $projects["closed"] = $closedProjects;
+
+    $allProjects["items"] = $projects;
+    $allProjects["count"] = $openProjectsNum;
+
+    echo json_encode($allProjects);
+
+}
 //add new project
 elseif ($action == "addpro") {
     if (!$userpermissions["projects"]["add"]) {

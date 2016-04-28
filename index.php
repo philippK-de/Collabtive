@@ -144,10 +144,13 @@ if(!$action) {
 }
 elseif($action == "myprojects")
 {
+    //create datastructure for projects
     $projects["open"] = $myOpenProjects;
     $projects["closed"] = $myClosedProjects;
 
+    //add projects to datastructure for JSON
     $myprojects["items"] = $projects;
+    //number of open projects total
     $myprojects["count"] = $projectnum;
 
     echo json_encode($myprojects);

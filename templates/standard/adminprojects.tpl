@@ -2,334 +2,324 @@
 {include file="tabsmenue-admin.tpl" projecttab="active"}
 
 <div id="content-left">
-	<div id="content-left-in">
-		<div class="projects">
+    <div id="content-left-in">
+        <div class="projects" id="adminProjects">
 
-			<div class="infowin_left" style="display:none;" id="systemmsg">
+            <div class="infowin_left" style="display:none;" id="systemmsg">
 
-				{if $mode == "assigned"}
-				<span class="info_in_yellow">
-					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/system-settings.png" alt="" />
-					{#settingsedited#}
+                {if $mode == "assigned"}
+                    <span class="info_in_yellow">
+					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/system-settings.png" alt=""/>
+                        {#settingsedited#}
 				</span>
-				{elseif $mode == "deassigned"}
-				<span class="info_in_red">
-					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-male.png" alt="" />
-					{#userwasdeassigned#}
+                {elseif $mode == "deassigned"}
+                    <span class="info_in_red">
+					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-male.png" alt=""/>
+                        {#userwasdeassigned#}
 				</span>
-				{elseif $mode == "added"}
-				<span class="info_in_green">
-					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />
-					{#projectwasadded#}
+                {elseif $mode == "added"}
+                    <span class="info_in_green">
+					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt=""/>
+                        {#projectwasadded#}
 				</span>
-				{/if}
+                {/if}
 
-			</div>
+            </div>
 
-			{literal}
-				<script type="text/javascript">
-					systemMsg('systemmsg');
-				</script>
-			{/literal}
+            
+                <script type="text/javascript">
+                    systemMsg('systemmsg');
+                </script>
+            
 
-			<h1>{#administration#}<span>/ {#projectadministration#}</span></h1>
+            <h1>{#administration#}<span>/ {#projectadministration#}</span></h1>
 
-			<div class="headline">
-				<a href="javascript:void(0);" id="acc-projects_toggle" class="win_none" onclick="toggleBlock('acc-projects');"></a>
+            <div class="headline">
+                <a href="javascript:void(0);" id="acc-projects_toggle" class="win_none" onclick="toggleBlock('acc-projects');"></a>
 
-				{if $userpermissions.projects.add}
-				<div class="wintools">
-					<a class="add" href="javascript:blindtoggle('form_addmyproject');" id="add_myprojects" onclick="toggleClass(this,'add-active','add');toggleClass('add_butn_myprojects','butn_link_active','butn_link');toggleClass('sm_myprojects','smooth','nosmooth');">
-						<span>{#addproject#}</span>
-					</a>
-				</div>
-				{/if}
+                {if $userpermissions.projects.add}
+                    <div class="wintools">
+                        <a class="add" href="javascript:blindtoggle('form_addmyproject');" id="add_myprojects"
+                           onclick="toggleClass(this,'add-active','add');toggleClass('add_butn_myprojects','butn_link_active','butn_link');toggleClass('sm_myprojects','smooth','nosmooth');">
+                            <span>{#addproject#}</span>
+                        </a>
+                    </div>
+                {/if}
 
-				<h2>
-					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />
-					{#openprojects#}
-				</h2>
+                <h2>
+                    <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt=""/>
+                    {#openprojects#}
+                </h2>
 
-			</div>
+            </div>
 
-			<div class="block" id="acc_projects"> {*Add Project*}
-				<div id="form_addmyproject" class="addmenue" style="display:none;">
-					{include file="addproject.tpl" myprojects="1"}
-				</div>
+            <div class="block" id="acc_projects"> {*Add Project*}
+                <div id="form_addmyproject" class="addmenue" style="display:none;">
+                    {include file="addproject.tpl" myprojects="1"}
+                </div>
 
-				<div class="nosmooth" id="sm_myprojects">
+                <div class="nosmooth" id="sm_myprojects">
 
-					<table id="adminprojects" cellpadding="0" cellspacing="0" border="0">
+                    <table id="adminprojects" cellpadding="0" cellspacing="0" border="0">
 
-						<thead>
-							<tr>
-								<th class="a"></th>
-								<th class="b">{#project#}</th>
-								<th class="c">{#done#}</th>
-								<th class="days" style="text-align:right">{#daysleft#}&nbsp;&nbsp;</th>
-								<th class="tools"></th>
-							</tr>
-						</thead>
+                        <thead>
+                        <tr>
+                            <th class="a"></th>
+                            <th class="b">{#project#}</th>
+                            <th class="c">{#done#}</th>
+                            <th class="days" style="text-align:right">{#daysleft#}&nbsp;&nbsp;</th>
+                            <th class="tools"></th>
+                        </tr>
+                        </thead>
 
-						<tfoot>
-							<tr>
-								<td colspan="5"></td>
-							</tr>
-						</tfoot>
+                        <tfoot>
+                        <tr>
+                            <td colspan="5"></td>
+                        </tr>
+                        </tfoot>
 
-						{section name=opro loop=$opros|default}
+                        {literal}
+                        <tbody v-for="project in items.open" class="alternateColors" id="proj_{{project.ID}}">
 
-							{*Color-Mix*}
-							{if $smarty.section.opro.index % 2 == 0}
-							<tbody class="color-a" id="proj_{$opros[opro].ID}">
-							{else}
-							<tbody class="color-b" id="proj_{$opros[opro].ID}">
-							{/if}
+                        <tr v-bind:class="{ 'marker-late': project.islate, 'marker-today': project.istoday }">
+                            <td>
+                                {/literal}
+                                {if $userpermissions.projects.del}
+                                {literal}
+                                    <a class="butn_check"
+                                    href="javascript:closeElement('proj_{{project.ID}}','manageproject.php?action=close&amp;id={{project.ID}}');"
+                                    title="{/literal}{#close#}"></a>
+                                {/if}
+                            </td>
+                            {literal}
+                            <td>
+                                <div class="toggle-in">
+                                    <span id="acc_projects_toggle{{project.ID}}" class="acc-toggle"
+                                          onclick="javascript:accord_projects.activate(document.querySelector('#acc_projects_content{{$index}}'));"></span>
+                                    <a href="manageproject.php?action=showproject&amp;id={{*project.ID}}" title="{{*project.name}}">
+                                        {{*project.name}}
+                                    </a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="statusbar_b">
+                                    <div class="complete" id="completed" style="width:{{*project.done}}%;"></div>
+                                </div>
+                                <span>{{*project.done}}%</span>
+                            </td>
+                            <td style="text-align:right">{{*project.daysleft}}&nbsp;&nbsp;</td>
+                            <td class="tools">
 
-								<tr {if $opros[opro].daysleft < 0 && $opros[opro].daysleft != ""} class="marker-late" {elseif $opros[opro].daysleft == "0"} class="marker-today" {/if} >
-									<td>
-										{if $userpermissions.projects.del}
-										<a class="butn_check" href="javascript:closeElement('proj_{$opros[opro].ID}','manageproject.php?action=close&amp;id={$opros[opro].ID}');" title="{#close#}"></a>
-										{/if}
-									</td>
-									<td>
-										<div class="toggle-in">
-											<span id="adminprojectstoggle{$opros[opro].ID}" class="acc-toggle" onclick="javascript:accord_projects.activate(document.querySelector('#acc_projects_content{$smarty.section.opro.index}'));"></span>
-											<a href="manageproject.php?action=showproject&amp;id={$opros[opro].ID}" title="{$opros[opro].name}">
-												{$opros[opro].name|truncate:30:"...":true}
-											</a>
-										</div>
-									</td>
-									<td>
-										<div class="statusbar_b">
-											<div class="complete" id="completed" style="width:{$opros[opro].done}%;"></div>
-										</div>
-										<span>{$opros[opro].done}%</span>
-									</td>
-									<td style="text-align:right">{$opros[opro].daysleft}&nbsp;&nbsp;</td>
-									<td class="tools">
+                                {/literal}
+                                {if $userpermissions.projects.edit}
+                                 {literal}
+                                    <a class="tool_edit" href="javascript:void(0);" onclick="change('manageproject.php?action=editform&amp;id={{*project.ID}}','form_addmyproject');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_addmyproject');" title="{/literal}{#edit#}"></a>
+                                {/if}
 
-										{if $userpermissions.projects.edit}
-										<a class="tool_edit" href="javascript:void(0);" onclick="change('manageproject.php?action=editform&amp;id={$opros[opro].ID}','form_addmyproject');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_addmyproject');" title="{#edit#}"></a>
-										{/if}
+                                {if $userpermissions.projects.del}
+                                {literal}
+                                    <a class="tool_del"
+                                       href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'proj_{{project.ID}\',\'manageproject.php?action=del&amp;id={{project.ID}}\')');"
+                                       title="{/literal}{#delete#}"></a>
+                                
+                                {/if}
+                                
 
-										{if $userpermissions.projects.del}
-										<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'proj_{$opros[opro].ID}\',\'manageproject.php?action=del&amp;id={$opros[opro].ID}\')');" title="{#delete#}"></a>
-										{/if}
+                            </td>
+                        </tr>
+                        {literal}
+                        <tr class="acc">
+                            <td colspan="5">
+                                <div class="accordion_content" data-slide="{{$index}}" id="acc_projects_content{{$index}}">
+                                    <div class="acc-in">
+                                        {{*project.desc}}
+                                        <p class="tags-miles">
+                                            {/literal}<strong>{#user#}:</strong>{literal}
+                                        </p>
 
-									</td>
-								</tr>
+                                        <div class="inwrapper">
+                                            <ul>
+                                                <li v-for="member in project.members">
+                                                    <div class="itemwrapper" id="iw_{{*project.ID}_{{*member.ID}}">
 
-								<tr class="acc">
-									<td colspan="5">
-										<div class="accordion_content">
-											<div class="acc-in">
-												{$opros[opro].desc}
-												<p class="tags-miles">
-													<strong>{#user#}:</strong>
-												</p>
+                                                        <table cellpadding="0" cellspacing="0" border="0">
+                                                            <tr>
+                                                                <td class="leftmen" valign="top">
+                                                                    <div class="inmenue">
+                                                                        <a v-show="member.avatar != ''" class="more"
+                                                                           href="javascript:fadeToggle('info_{{project.ID}_{{*member.ID}}');"></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="thumb">
+                                                                    <a href="manageuser.php?action=profile&amp;id={{project.members[member].ID}"
+                                                                       title="{{project.members[member].name}">
+                                                                        <img v-if="member.gender == 'f'"
+                                                                             src="./templates/{$settings.template}/theme/{/literal}{$setting.theme}/{literal}images/symbols/user-icon-female.png" alt=""/>
+                                                                        <img v-if="member.gender == 'm'"
+                                                                             src="./templates/{/literal}{$settings.template}/theme/{$settings.theme}/{literal}images/symbols/user-icon-male.png" alt=""/>
+                                                                    </a>
+                                                                </td>
+                                                                <td class="rightmen" valign="top">
+                                                                    <div class="inmenue">
+                                                                        <a class="del"
+                                                                           href="manageproject.php?action=deassign&amp;user={{*member.ID}}&amp;id={{*project.ID}}&amp;redir=admin.php?action=projects"
+                                                                           title="{/literal}{#deassignuser#}{literal}"
+                                                                           onclick="fadeToggle('iw_{{*project.ID}}_{{*member.ID}}');"></a>
+                                                                        <a class="edit"
+                                                                           href="admin.php?action=editform&amp;id={{project.members[member].ID}"
+                                                                           title="{/literal}{#edituser#}{literal}"></a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="3">
+                                                                    <span class="name">
+                                                                        <a href="manageuser.php?action=profile&amp;id={{*member.ID}}" title="{{*member.name}}">
+                                                                            {{*member.name}}
+                                                                        </a>
+                                                                    </span>
+                                                                </td>
+                                                            <tr/>
 
-												<div class="inwrapper">
-													<ul>
+                                                        </table>
 
-														{section name=member loop=$opros[opro].members}
-															<li>
-																<div class="itemwrapper" id="iw_{$opros[opro].ID}_{$opros[opro].members[member].ID}">
-
-																	<table cellpadding="0" cellspacing="0" border="0">
-																		<tr>
-																			<td class="leftmen" valign="top">
-																				<div class="inmenue">
-																					{if $opros[opro].members[member].avatar != ""}
-																					<a class="more" href="javascript:fadeToggle('info_{$opros[opro].ID}_{$opros[opro].members[member].ID}');"></a>
-																					{/if}
-																				</div>
-																			</td>
-																			<td class="thumb">
-																				<a href="manageuser.php?action=profile&amp;id={$opros[opro].members[member].ID}" title="{$opros[opro].members[member].name}">
-
-																					{if $opros[opro].members[member].gender == "f"}
-																					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-female.png" alt="" />
-																					{else}
-																					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-male.png" alt="" />
-																					{/if}
-
-																				</a>
-																			</td>
-																			<td class="rightmen" valign="top">
-																				<div class="inmenue">
-																					<a class="del" href="manageproject.php?action=deassign&amp;user={$opros[opro].members[member].ID}&amp;id={$opros[opro].ID}&amp;redir=admin.php?action=projects" title="{#deassignuser#}" onclick="fadeToggle('iw_{$opros[opro].ID}_{$opros[opro].members[member].ID}');"></a>
-																					<a class="edit" href="admin.php?action=editform&amp;id={$opros[opro].members[member].ID}" title="{#edituser#}"></a>
-																				</div>
-																			</td>
-																		</tr>
-																		<tr>
-																			<td colspan="3">
-																				<span class="name">
-																					<a href="manageuser.php?action=profile&amp;id={$opros[opro].members[member].ID}" title="{$opros[opro].members[member].name}">
-																						{$opros[opro].members[member].name|truncate:15:"...":true}
-																					</a>
-																				</span>
-																			</td>
-																		<tr/>
-
-																	</table>
-
-																	{if $opros[opro].members[member].avatar != ""}
-																	<div class="moreinfo" id="info_{$opros[opro].ID}_{$opros[opro].members[member].ID}" style="display:none">
-																		<img src="thumb.php?pic=files/{$cl_config}/avatar/{$opros[opro].members[member].avatar}&amp;width=82" alt="" onclick="fadeToggle('info_{$opros[opro].ID}_{$opros[opro].members[member].ID}');" />
+                                                        <div v-show="member.avatar != ''" class="moreinfo" id="info_{{*project.ID}_{{*member.ID}" style="display:none">
+                                                            <img src="thumb.php?pic=files/{$cl_config}/avatar/{{project.members[member].avatar}&amp;width=82"
+                                                                 alt="" onclick="fadeToggle('info_{{project.ID}_{{project.members[member].ID}');"/>
 																		<span class="name">
-																			<a href="manageuser.php?action=profile&amp;id={$opros[opro].members[member].ID}">
-																				{$opros[opro].members[member].name|truncate:15:"...":true}
-																			</a>
+																			<a href="manageuser.php?action=profile&amp;id={{*member.ID}}">
+                                                                                {{*member.name}}
+                                                                            </a>
 																		</span>
-																	</div>
-																	{/if}
+                                                        </div>
+                                                    </div>
+                                                    <!--itemwrapper end-->
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!--inwrapper End-->
+                                         {/literal}
+                                        <p class="tags-miles"> <!--assign users-->
+                                            <strong>{#adduser#}:</strong>
+                                        </p>
+                                        {literal}
+                                        <div class="inwrapper">
 
-																</div> {*itemwrapper end*}
+                                            <form class="main" method="post"
+                                                  action="manageproject.php?action=assign&amp;id={{*project.ID}}&redir=admin.php?action=projects&mode=useradded" onsubmit="return validateCompleteForm(this);">
+                                                <fieldset>
 
-															</li>
-														{/section}
+                                                    {/literal}
+                                                    <div class="row">
+                                                        <label for="addtheuser">{#user#}</label>
+                                                        <select name="user" id="addtheuser">
+                                                            <option value="">{#chooseone#}</option>
+                                                            {section name=usr loop=$users}
+                                                                <option value="{$users[usr].ID}">{$users[usr].name}</option>
+                                                            {/section}
+                                                        </select>
+                                                    </div>
 
-													</ul>
-												</div> {*inwrapper End*}
+                                                    <div class="row-butn-bottom">
+                                                        <label>&nbsp;</label>
+                                                        <button type="submit" onfocus="this.blur();">{#addbutton#}</button>
+                                                    </div>
 
-												<p class="tags-miles"> {*assign users*}
-													<strong>{#adduser#}:</strong>
-												</p>
-												<div class="inwrapper">
+                                                </fieldset>
+                                            </form>
+                                        </div><!--assign users end-->
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
 
-													<form class="main" method="post" action="manageproject.php?action=assign&amp;id={$opros[opro].ID}&redir=admin.php?action=projects&mode=useradded" {literal}onsubmit="return validateCompleteForm(this);"{/literal}>
-														<fieldset>
 
-															<div class="row">
-																<label for="addtheuser">{#user#}</label>
-																<select name="user" id="addtheuser">
-																	<option value="">{#chooseone#}</option>
-																	{section name=usr loop=$users}
-																		<option value="{$users[usr].ID}">{$users[usr].name}</option>
-																	{/section}
-																</select>
-															</div>
+                    </table> <!--Projects End-->
+                     {literal}
+                    <!--Doneprojects-->
+                    <div id="doneblock" class="doneblock" style="display: none;">
 
-															<div class="row-butn-bottom">
-																<label>&nbsp;</label>
-																<button type="submit" onfocus="this.blur();">{#addbutton#}</button>
-															</div>
+                        <table class="second-thead" cellpadding="0" cellspacing="0" border="0"
+                               onclick="blindtoggle('doneblock');toggleClass('donebutn','butn_link_active','butn_link');toggleClass('toggle-done','acc-toggle','acc-toggle-active');">
+                            <tr>
+                                <td class="a"></td>
+                                <td class="b"><span id="toggle-done">{/literal}{#closedprojects#}{literal}</span></td>
+                                <td class="c"></td>
+                                <td class="days"></td>
+                                <td class="tools"></td>
+                            </tr>
+                        </table>
 
-														</fieldset>
-													</form>
+                        <div class="toggleblock">
 
-												</div>{*assign users end*}
+                            <table cellpadding="0" cellspacing="0" border="0" id="acc-oldprojects">
 
-											</div>
-										</div>
-									</td>
-								</tr>
-							</tbody>
+                                <tbody v-for="closedProject in items.closed" class="alternateColors" id="proj_{{*closedProject.ID}}">
+                                <tr>
+                                    <td class="a">
+                                        {/literal}
+                                        {if $userpermissions.projects.add}
+                                         {literal}
+                                            <a class="butn_checked" href="manageproject.php?action=open&amp;id={{*closedProject.ID}}"
+                                            title="{/literal}{#open#}"></a>
+                                        {/if}
+                                    </td>
+                                    {literal}
+                                    <td class="b">
+                                        <div class="toggle-in">
+                                            <a href="manageproject.php?action=showproject&amp;id={{*closedProject.ID}}"
+                                               title="{{*closedProject.name}}">
+                                                {{*closedProject.name}}
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td class="c">
 
-						{/section}
+                                    </td>
+                                    <td class="days" style="text-align:right">{{*closedProject.daysleft}}&nbsp;&nbsp;</td>
+                                    <td class="tools">
+                                        {/literal}
+                                        {if $userpermissions.projects.del}
+                                        {literal}
+                                            <a class="tool_del"
+                                            href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'proj_{{*closedProject.ID}\',\'manageproject.php?action=del&amp;id={{*closedProject.ID}\')');"
+                                            title="{/literal}{#delete#}"></a>
+                                        {/if}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div> <!--toggleblock End-->
+                    </div> <!--doneblock end-->
+                </div> <!--smooth end-->
+                {literal}
+                <div class="tablemenue">
+                    <div class="tablemenue-in">
+                        {/literal}
+                        {if $userpermissions.projects.add}
+                        {literal}
+                            <a class="butn_link" href="javascript:blindtoggle('form_addmyproject');" id="add_butn_myprojects"
+                               onclick="toggleClass('add_myprojects','add-active','add');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_myprojects','smooth','nosmooth');">
+                             {/literal}{#addproject#}
+                            </a>
+                        {/if}
+                         {literal}
+                        <a class="butn_link" href="javascript:blindtoggle('doneblock');" id="donebutn"
+                           onclick="toggleClass(this,'butn_link_active','butn_link');toggleClass('toggle-done','acc-toggle','acc-toggle-active');">
+                            {#closedprojects#}
+                        </a>
+                    </div>
+                </div>
+            </div> <!-- block END Doneprojects End-->
 
-					</table> {*Projects End*}
+            <div class="content-spacer"></div>
 
-					{*Doneprojects*}
-					<div id="doneblock" class="doneblock" style="display: none;">
+        </div> <!--Projects END-->
+    </div> <!--content-left-in END-->
+</div> <!--content-left END-->
 
-						<table class="second-thead" cellpadding="0" cellspacing="0" border="0" onclick="blindtoggle('doneblock');toggleClass('donebutn','butn_link_active','butn_link');toggleClass('toggle-done','acc-toggle','acc-toggle-active');">
-							<tr>
-								<td class="a"></td>
-								<td class="b"><span id="toggle-done">{#closedprojects#}</span></td>
-								<td class="c"></td>
-								<td class="days"></td>
-								<td class="tools"></td>
-							</tr>
-						</table>
-
-						<div class="toggleblock">
-
-							<table cellpadding="0" cellspacing="0" border="0" id="acc-oldprojects">
-
-								{section name=clopro loop=$clopros}
-
-									{*Color-Mix*}
-									{if $smarty.section.clopro.index % 2 == 0}
-									<tbody class="color-a" id="proj_{$clopros[clopro].ID}">
-									{else}
-									<tbody class="color-b" id="proj_{$clopros[clopro].ID}">
-									{/if}
-
-										<tr>
-											<td class="a">
-												{if $userpermissions.projects.add}
-												<a class="butn_checked" href="manageproject.php?action=open&amp;id={$clopros[clopro].ID}" title="{#open#}"></a>
-												{/if}
-											</td>
-											<td class="b">
-												<div class="toggle-in">
-													<a href="manageproject.php?action=showproject&amp;id={$clopros[clopro].ID}" title="{$clopros[clopro].name}">
-														{$clopros[clopro].name|truncate:30:"...":true}
-													</a>
-												</div>
-											</td>
-											<td class="c">
-
-											</td>
-											<td class="days" style="text-align:right">{$clopros[clopro].daysleft}&nbsp;&nbsp;</td>
-											<td class="tools">
-												{if $userpermissions.projects.del}
-													<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'proj_{$clopros[clopro].ID}\',\'manageproject.php?action=del&amp;id={$clopros[clopro].ID}\')');" title="{#delete#}"></a>
-												{/if}
-
-											</td>
-										</tr>
-
-										<tr class="acc">
-											<td colspan="5">
-												<div class="accordion_content">
-													<div class="acc-in">
-														{$clopros[clopro].desc}
-													</div>
-												</div>
-											</td>
-										</tr>
-									</tbody>
-
-								{/section}
-
-							</table>
-
-						</div> {*toggleblock End*}
-					</div> {*doneblock end*}
-				</div> {*smooth end*}
-
-				<div class="tablemenue">
-					<div class="tablemenue-in">
-
-						{if $userpermissions.projects.add}
-						<a class="butn_link" href="javascript:blindtoggle('form_addmyproject');" id="add_butn_myprojects" onclick="toggleClass('add_myprojects','add-active','add');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_myprojects','smooth','nosmooth');">
-							{#addproject#}
-						</a>
-						{/if}
-
-						<a class="butn_link" href="javascript:blindtoggle('doneblock');" id="donebutn" onclick="toggleClass(this,'butn_link_active','butn_link');toggleClass('toggle-done','acc-toggle','acc-toggle-active');">
-							{#closedprojects#}
-						</a>
-					</div>
-				</div>
-			</div> {*block END*} {*Doneprojects End*}
-
-			{literal}
-                <script type="text/javascript" src="include/js/accordion.min.js"></script>
-				<script type="text/javascript">
-					var accord_projects = new accordion2('acc_projects');
-				</script>
-			{/literal}
-
-			<div class="content-spacer"></div>
-
-		</div> {*Projects END*}
-	</div> {*content-left-in END*}
-</div> {*content-left END*}
-
+    <script type="text/javascript" src="include/js/accordion.min.js"></script>
+    <script type="text/javascript" src="include/js/views/adminProjectsView.min.js"></script>
+{/literal}
 {include file="sidebar-a.tpl"}
 {include file="footer.tpl"}

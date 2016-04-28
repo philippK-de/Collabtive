@@ -444,20 +444,22 @@ class project
     /**
      * Listet die aktuellsten Projekte auf
      *
-     * @param int $status Bearbeitungsstatus der Projekte (1 = offenes Projekt)
-     * @param int $lim Anzahl der anzuzeigenden Projekte
+     * @param int $status Status of the project (1=open, 2= closed)
+     * @param int $limit Anzahl der anzuzeigenden Projekte
+     * @param int offset The offset from which to fetch data from
      * @return array $projekte Active projects
      */
-    function getProjects($status = 1, $lim = 10)
+    function getProjects($status = 1, $limit = 10, $offset = 0)
     {
         global $conn;
 
         $status = (int)$status;
-        $lim = (int)$lim;
+        $limit = (int)$limit;
+        $offset = (int)$offset;
 
         $projects = array();
 
-        $projectIdStmt = $conn->prepare("SELECT `ID` FROM projekte WHERE `status`= ? ORDER BY `end` ASC LIMIT $lim ");
+        $projectIdStmt = $conn->prepare("SELECT `ID` FROM projekte WHERE `status`= ? ORDER BY `end` ASC LIMIT $limit OFFSET $offset");
         $projectIdStmt->execute(array($status));
 
         while ($projectId = $projectIdStmt->fetch()) {
