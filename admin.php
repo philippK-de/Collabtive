@@ -342,17 +342,15 @@ elseif ($action == "projects") {
         "users" => "users"
         );
     $title = $langfile['projectadministration'];
-    $template->assign("title", $title);
-    $template->assign("classes", $classes);
 
     $i = 0;
     $users = $user->getAllUsers(1000000);
-
-
     $customers = $companyObj->getAllCompanies();
 
     $template->assign("customers", $customers);
     $template->assign("users", $users);
+    $template->assign("title", $title);
+    $template->assign("classes", $classes);
 
     $template->display("adminprojects.tpl");
 }

@@ -198,19 +198,6 @@ if ($action == "loginerror") {
 } elseif ($action == "profile") {
     $start = getArrayVal($_GET, "start");
     $end = getArrayVal($_GET, "end");
-    $proj = (object) new project();
-    if ($userpermissions["admin"]["add"]) {
-        $projects = $proj->getMyProjects($id);
-        $i = 0;
-        if (!empty($projects)) {
-            foreach($projects as $opro) {
-                $membs = $proj->getProjectMembers($opro["ID"], 1000);
-                $projects[$i]['members'] = $membs;
-                $i = $i + 1;
-            }
-            $template->assign("opros", $projects);
-        }
-    }
     $tracker = (object) new timetracker();
 
     $track = array();
@@ -244,7 +231,43 @@ if ($action == "loginerror") {
     $template->assign("user", $profile);
 
     $template->display("userprofile.tpl");
-} elseif ($action == "showproject") {
+}
+elseif($action == "userProfile")
+{
+    if ($userpermissions["admin"]["add"]) {
+        $offset = 0;
+        if(isset($cleanGet["offset"]))
+        {
+            $offset = $cleanGet["offset"];
+        }
+        $limit = 10;
+        if(isset($cleanGet["limit"]))
+        {
+            $limit = $cleanGet["limit"];
+        }
+
+        $projectObj = (object) new project();
+
+        $openProjects = $projectObj->getMyProjects($id, 1, $offset, $limit);
+        $openProjectsNum = count($projectObj->getMyProjects($id, 0 , 0 , 1000000000));
+        $i = 0;
+        if (!empty($openProjects)) {
+            foreach($openProjects as &$openProject) {
+                $projectMembers = $projectObj->getProjectMembers($openProject["ID"], 1000);
+                $openProject["members"] = $projectMembers;
+                $i = $i + 1;
+            }
+        }
+
+        $projects["items"] = $openProjects;
+        $projects["count"] = $openProjectsNum;
+
+        echo json_encode($projects);
+
+
+    }
+}
+elseif ($action == "showproject") {
     if (!chkproject($userid, $id)) {
         $errtxt = $langfile["notyourproject"];
         $noperm = $langfile["accessdenied"];
@@ -258,7 +281,7 @@ if ($action == "loginerror") {
         "admin" => "admin"
         );
     $template->assign("mainclasses", $mainclasses);
-    $proj = (object) new project();
+    $projectObj = (object) new project();
     $alluser = $user->getAllUsers(10000);
     $users = array();
 
@@ -269,8 +292,8 @@ if ($action == "loginerror") {
     }
     SmartyPaginate::disconnect();
 
-    $members = $proj->getProjectMembers($id, 14);
-    $pro = $proj->getProject($id);
+    $members = $projectObj->getProjectMembers($id, 14);
+    $pro = $projectObj->getProject($id);
 
     $projectname = $pro['name'];
     $title = $langfile['members'];

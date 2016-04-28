@@ -127,155 +127,9 @@
 		</div> {*User END*}
 		<div class="content-spacer"></div>
 
-		{if $userpermissions.admin.add}{if $opros|default}{*Projects*}
-			<div class="projects">
-				<div class="headline">
-					<a href="javascript:void(0);" id="projecthead_toggle" class="win_block" onclick = "toggleBlock('projecthead');"></a>
-
-					<h2>
-						<a href="myprojects.php" title="{#myprojects#}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{#projects#}</a>
-					</h2>
-				</div>
-
-				<div class="block" id="projecthead" style = "{$projectstyle|default}">
-
-					<table cellpadding="0" cellspacing="0" border="0">
-						<thead>
-							<tr>
-								<th class="a"></th>
-								<th class="b">{#project#}</th>
-								<th class="c"></th>
-								<th class="d" style="text-align:right">{#daysleft#}&nbsp;&nbsp;</th>
-								<th class="tools"></th>
-							</tr>
-						</thead>
-
-						<tfoot>
-							<tr>
-								<td colspan="5"></td>
-							</tr>
-						</tfoot>
-
-							{section name=opro loop=$opros}
-							{*Color-Mix*}
-							{if $smarty.section.opro.index % 2 == 0}
-							<tbody class="color-a" id="proj_{$opros[opro].ID}">
-							{else}
-							<tbody class="color-b" id="proj_{$opros[opro].ID}">
-							{/if}
-								<tr {if $opros[opro].daysleft < 0} class="marker-late"{elseif $opros[opro].daysleft == 0} class="marker-today"{/if}>
-									<td>
-										{if $adminstate|default > 4}
-											<a class="butn_check" href="javascript:closeElement('proj_{$opros[opro].ID}','manageproject.php?action=close&amp;id={$opros[opro].ID}');" title="{#close#}"></a>
-										{/if}
-									</td>
-									<td>
-										<div class="toggle-in">
-											<span class="acc-toggle" onclick="javascript:accord_projects.activate($$('#projecthead .accordion_toggle')[{$smarty.section.opro.index}]);toggleAccordeon('projecthead',this);"></span>
-											<a href="manageproject.php?action=showproject&amp;id={$opros[opro].ID}" title="{$opros[opro].name}">
-												{$opros[opro].name|truncate:30:"...":true}
-											</a>
-										</div>
-									</td>
-									<td></td>
-									<td style="text-align:right">{$opros[opro].daysleft}&nbsp;&nbsp;</td>
-									<td class="tools">
-
-									</td>
-								</tr>
-
-								<tr class="acc">
-									<td colspan="5">
-										<div class="accordion_toggle"></div>
-										<div class="accordion_content">
-											<div class="acc-in">
-												{$opros[opro].desc}
-												<p class="tags-miles">
-													<strong>{#user#}:</strong>
-												</p>
-
-												<div class="inwrapper">
-													<ul>
-														{section name = member loop=$opros[opro].members}
-															<li>
-																<div class="itemwrapper" id="iw_{$opros[opro].ID}_{$opros[opro].members[member].ID}">
-
-																	<table cellpadding="0" cellspacing="0" border="0">
-																		<tr>
-																			<td class="leftmen" valign="top">
-																				<div class="inmenue">
-																					{if $opros[opro].members[member].avatar != ""}
-																						<a class="more" href="javascript:fadeToggle('info_{$opros[opro].ID}_{$opros[opro].members[member].ID}');"></a>
-																					{/if}
-																				</div>
-																			</td>
-																			<td class="thumb">
-																				<a href="manageuser.php?action=profile&amp;id={$opros[opro].members[member].ID}" title="{$opros[opro].members[member].name}">
-																					{if $opros[opro].members[member].gender == "f"}
-																						<img src = "./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-female.png" alt="" />
-																					{else}
-																						<img src = "./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-male.png" alt="" />
-																					{/if}
-																				</a>
-																			</td>
-																			<td class="rightmen" valign="top">
-																				<div class="inmenue">
-																					<a class="del" href="manageproject.php?action=deassign&amp;user={$opros[opro].members[member].ID}&amp;id={$opros[opro].ID}&amp;redir=admin.php?action=projects" title="{#deassignuser#}" onclick="fadeToggle('iw_{$opros[opro].ID}_{$opros[opro].members[member].ID}');"></a>
-																					<a class="edit" href="admin.php?action=editform&amp;id={$opros[opro].members[member].ID}" title="{#edituser#}"></a>
-																				</div>
-																			</td>
-																		</tr>
-																		<tr>
-																			<td colspan="3">
-																				<span class="name"><a href="manageuser.php?action=profile&amp;id={$opros[opro].members[member].ID}" title="{$opros[opro].members[member].name}">{$opros[opro].members[member].name|truncate:15:"...":true}</a></span>
-																			</td>
-																		<tr/>
-																	</table>
-
-																	{if $opros[opro].members[member].avatar != ""}
-																		<div class="moreinfo-wrapper">
-																			<div class="moreinfo" id="info_{$opros[opro].ID}_{$opros[opro].members[member].ID}" style="display:none">
-																				<img src = "thumb.php?pic=files/{$cl_config}/avatar/{$opros[opro].members[member].avatar}&amp;width=82" alt="" onclick="fadeToggle('info_{$opros[opro].ID}_{$opros[opro].members[member].ID}');" />
-																				<span class="name"><a href="manageuser.php?action=profile&amp;id={$opros[opro].members[member].ID}">{$opros[opro].members[member].name|truncate:15:"...":true}</a></span>
-																			</div>
-																		</div>
-																	{/if}
-																</div> {*itemwrapper end*}
-
-															</li>
-														{/section}
-													</ul>
-												</div> {*inwrapper End*}
-
-											</div>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						{/section}
-					</table>
-
-					<div class="tablemenue"></div>
-				</div> {*block END*}
-			</div> {*projects END*}
-			<div class="content-spacer"></div> {*Projects End*}
+		{include file="userProfileProjects.tpl"}
 
 
-			{literal}
-				<script type = "text/javascript">
-					var accord_projects = new accordion('projecthead');
-					new Control.Modal('ausloeser',{
-					opacity: 0.8,
-					position: 'absolute',
-					width: 480,
-					height: 480,
-					fade:true,
-					containerClassName: 'pics',
-					overlayClassName: 'useroverlay'
-					});
-				</script>
-			{/literal}
-		{/if}{/if} {*if admin end*}
 
 		{if $userpermissions.admin.add or $userid == $user.ID}{if $tracker} {*timetracker start*}
 			<div class="timetrack">
@@ -412,11 +266,7 @@
 		{/if}{/if}
 		<div class="content-spacer"></div>
 
-		{literal}
-			<script type = "text/javascript">
-				var accord_tracker = new accordion('acc-tracker');
-			</script>
-		{/literal}
+
 
 	</div> {*content-left-in END*}
 </div> {*content-left END*}
