@@ -214,7 +214,6 @@
 {/if}
 {*Timetracker End*}
 
-
 {*Activity Log*}
 <div class="neutral" style = "padding-bottom:2px;">
 	{include file="log.tpl" }
@@ -231,14 +230,16 @@
 	<script type = "text/javascript">
 	changeshow('manageproject.php?action=cal&id={/literal}{$project.ID}{literal}','thecal','progress');
 	</script>
+    <script type="text/javascript" src="include/js/accordion.min.js"></script>
+    <script type = "text/javascript" src="include/js/views/project.min.js"></script>
 {/literal}
+
 
 </div> {*content-left-in END*}
 </div> {*content-left END*}
 
 {include file="sidebar-a.tpl" showcloud="1"}
-<script type="text/javascript" src="include/js/accordion.min.js"></script>
-<script type = "text/javascript" src="include/js/views/project.min.js"></script>
+
 
 
 {include file="footer.tpl"}

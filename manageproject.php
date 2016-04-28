@@ -341,13 +341,11 @@ if ($action == "editform") {
     $template->assign("projectov", "no");
 
     $milestone = (object) new milestone();
-    $mylog = (object) new mylog();
     $task = new task();
     $ptasks = $task->getProjectTasks($cleanGet["id"], 1);
     $today = date("d");
 
-    $log = $mylog->getProjectLog($cleanGet["id"]);
-    $log = $mylog->formatdate($log);
+
 
     $tproject = $project->getProject($cleanGet["id"]);
     $done = $project->getProgress($cleanGet["id"]);
@@ -363,10 +361,32 @@ if ($action == "editform") {
     $template->assign("ptasks", $ptasks);
     $template->assign("today", $today);
 
-    $template->assign("log", $log);
-    SmartyPaginate::assign($template);
+    $template->assign("log",array());
     $template->display("project.tpl");
-} elseif ($action == "cal") {
+}
+elseif($action == "projectLog")
+{
+    $offset = 0;
+    if(isset($cleanGet["offset"]))
+    {
+        $offset = $cleanGet["offset"];
+    }
+    $limit = 25;
+    if(isset($cleanGet["limit"]))
+    {
+        $limit = $cleanGet["limit"];
+    }
+
+    $mylog = (object) new mylog();
+    $log = $mylog->getProjectLog($cleanGet["id"], $limit, $offset);
+    $log = $mylog->formatdate($log);
+
+    $projectLog["items"] = $log;
+    $projectLog["count"] = count($mylog->getProjectLog($cleanGet["id"],1000000000));
+
+    echo json_encode($projectLog);
+}
+elseif ($action == "cal") {
     if (!chkproject($userid, $cleanGet["id"])) {
         $errtxt = $langfile["notyourproject"];
         $noperm = $langfile["accessdenied"];

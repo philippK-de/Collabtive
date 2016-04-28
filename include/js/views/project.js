@@ -6,6 +6,8 @@ window.addEventListener("load",function()
     });
 });
 
+
+
 var accord_dashboard = new accordion2('block_dashboard',{
     classNames: {
         toggle: 'win_none',

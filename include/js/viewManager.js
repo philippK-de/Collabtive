@@ -1,4 +1,4 @@
-Vue.config.silent = true;
+//Vue.config.silent = true;
 //create the vue views, binding data to DOM elements
 /*
  * Function to create Vue.js view.
