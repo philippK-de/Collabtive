@@ -1566,7 +1566,7 @@ body a.butn_link, body a.butn_link_active {
 }
 .message-in ul
 {
-padding-left;
+padding-left: inherit;
 
 }
 
@@ -2727,6 +2727,12 @@ background: <?php echo $userColorB;?>;
 .neutral .color-b, .neutral .content_in_wrapper {
 	background: <?php echo $neutralColorB;
 ?>;
+}
+.neutral tbody.alternateColors:nth-child(even) {
+background: <?php echo $neutralColorA;?>;
+}
+.neutral tbody.alternateColors:nth-child(odd) {
+background: <?php echo $neutralColorB;?>;
 }
 
 .neutral .color-a ul.files table, .neutral .color-b ul.files table {

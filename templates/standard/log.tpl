@@ -1,8 +1,10 @@
 <div class="headline">
     <a href="javascript:void(0);" id="loghead_toggle" class="win_none" onclick=""></a>
 
-    {if $userpermissions.admin.add}
         <div class="wintools">
+            <div class="progress" id="progressprojectLog" style="display:none;">
+                <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-project3.gif"/>
+            </div>
             <div class="export-main">
                 <a class="export"><span>{#export#}</span></a>
                 <div class="export-in" style="width:46px;left: -46px;"> {* at one item *}
@@ -11,7 +13,6 @@
                 </div>
             </div>
         </div>
-    {/if}
 
     <h2>
         <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/activity.png" alt="" />{#activity#}
@@ -37,7 +38,7 @@
         <tbody v-for="logitem in items" class="alternateColors" id="log_{{*logitem.ID}}">
         <tr>
             <td style="padding:0" class="symbols">
-                <img style="margin:0 0 0 3px;" src = "./templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/symbols/{{*logitem.type}}.png" alt="" />
+                <img style="margin:0 0 0 3px;" src = "./templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/symbols/{{*logitem.type}}.png" alt="{{*logitem.type}}" title="{{*logitem.type}}" />
             </td>
             <td>
                 <div class="toggle-in">

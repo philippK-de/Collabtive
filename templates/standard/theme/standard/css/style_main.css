@@ -1438,7 +1438,7 @@ body a.butn_link, body a.butn_link_active {
 }
 .message-in ul
 {
-    padding-left;
+    padding-left: inherit;
 
 }
 
@@ -2521,6 +2521,14 @@ background: url(../images/tables-tasks-bg-b.png);
 .neutral .color-b, .neutral .content_in_wrapper {
     background: url(../images/tables-neutral-bg-b.png);
 }
+
+.neutral tbody.alternateColors:nth-child(even) {
+    background: url(../images/tables-neutral-bg-a.png);
+}
+.neutral tbody.alternateColors:nth-child(odd) {
+    background: url(../images/tables-neutral-bg-b.png);
+}
+
 
 .neutral .color-a ul.files table, .neutral .color-b ul.files table {
     background: url(../images/tables-neutral-bg-c.png);
