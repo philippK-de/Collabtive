@@ -363,7 +363,7 @@ elseif($action == "adminProjects")
     {
         $offset = $cleanGet["offset"];
     }
-    $limit = 25;
+    $limit = 20;
     if(isset($cleanGet["limit"]))
     {
         $limit = $cleanGet["limit"];

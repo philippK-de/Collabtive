@@ -4,7 +4,7 @@ adminProjects = {
     url: "admin.php?action=adminProjects",
     dependencies: []
 };
-pagination.itemsPerPage = 25;
+pagination.itemsPerPage = 20;
 var adminProjectsView = createView(adminProjects);
 
 
