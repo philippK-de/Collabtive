@@ -39,6 +39,9 @@
 
                 {if $userpermissions.projects.add}
                     <div class="wintools">
+                        <div class="progress" id="progressadminProjects" style="display:none;">
+                            <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-project3.gif"/>
+                        </div>
                         <a class="add" href="javascript:blindtoggle('form_addmyproject');" id="add_myprojects"
                            onclick="toggleClass(this,'add-active','add');toggleClass('add_butn_myprojects','butn_link_active','butn_link');toggleClass('sm_myprojects','smooth','nosmooth');">
                             <span>{#addproject#}</span>
@@ -49,6 +52,7 @@
                 <h2>
                     <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt=""/>
                     {#openprojects#}
+                    <pagination view="adminProjectsView" :pages="pages" :current-page="currentPage"></pagination>
                 </h2>
 
             </div>
@@ -306,7 +310,7 @@
                          {literal}
                         <a class="butn_link" href="javascript:blindtoggle('doneblock');" id="donebutn"
                            onclick="toggleClass(this,'butn_link_active','butn_link');toggleClass('toggle-done','acc-toggle','acc-toggle-active');">
-                            {#closedprojects#}
+                            {/literal}{#closedprojects#}{literal}
                         </a>
                     </div>
                 </div>
