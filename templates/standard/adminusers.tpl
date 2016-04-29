@@ -3,7 +3,7 @@
 
 <div id="content-left">
 	<div id="content-left-in">
-		<div class="user">
+		<div class="user" id="adminUsers">
 		
 			<div class="infowin_left" style="display:none;" id="systemmsg">
 				
@@ -88,7 +88,7 @@
 						</div>
 					</div>
 					
-					<div id="adminUsers" class="content_in_wrapper">
+					<div  class="content_in_wrapper">
 						<div class="content_in_wrapper_in">
 							<div class="inwrapper">
 								  {literal}
@@ -201,7 +201,7 @@
 		
 		{literal}
             <script type="text/javascript" src="include/js/accordion.min.js"></script>
-            <script type="text/javascript" src="include/js/adminUsersView.min.js"></script>
+            <script type="text/javascript" src="include/js/views/adminUsersView.min.js"></script>
 			<script type="text/javascript">
 				var accord_roles = new accordion2('acc_roles');
 			</script>
