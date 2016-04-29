@@ -3,10 +3,12 @@
         <a href="javascript:void(0);" id="projecthead_toggle" class="win_block" onclick=""></a>
 
         <div class="wintools">
-            <div class="progress" id="progressdesktopprojects" style="display:none;">
+           <!-- <div class="progress" id="progressdesktopprojects" style="display:none;">
                 <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-project3.gif"/>
             </div>
-
+             -->
+            <loader block="desktopprojects" loader="loader-project3.gif"></loader>
+            <loader block="desktopprojects" loader="loader-project3.gif"></loader>
         </div>
 
         <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt=""/>{#myprojects#}

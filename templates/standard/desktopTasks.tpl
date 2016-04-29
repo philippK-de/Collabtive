@@ -1,15 +1,12 @@
 
 {if $tasknum > 0}
 
-    <div class="tasks" style = "padding-bottom:2px;">
+    <div class="tasks" style = "padding-bottom:2px;" id="desktoptasks">
         <div class="headline">
             <a href="javascript:void(0);" id="taskhead_toggle" class="win_none" onclick=""></a>
 
             <div class="wintools">
-
-                <div class="progress" id="progressdesktoptasks" style="display:none;width:22px;float:left">
-                    <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-tasks.gif"/>
-                </div>
+                <loader block="desktoptasks" loader="loader-tasks.gif"></loader>
                 <div class="export-main">
 
 
@@ -34,7 +31,7 @@
 
             <div class="nosmooth" id="sm_desktoptasks">
 
-                <table id="desktoptasks" cellpadding="0" cellspacing="0" border="0" v-cloak>
+                <table  cellpadding="0" cellspacing="0" border="0" v-cloak>
 
                     <thead>
                     <tr>

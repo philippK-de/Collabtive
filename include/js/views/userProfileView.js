@@ -4,9 +4,15 @@
 var userProfileProjects = {
     el: "userProjects",
     itemType: "project",
-    url: "manageuser.php?action=userProfile",
+    url: "manageuser.php?action=userProjects",
     dependencies: []
 };
 
 
+var userProfileTimetracker = {
+    el: "",
+    itemType: "timetracker",
+    url: "",
+    dependencies: []
+}
 var accord_tracker = new accordion('acc-tracker');

@@ -1,13 +1,12 @@
 {* Messages *}
 {if $msgnum > 0}
-    <div class="msgs" style="padding-bottom:2px;">
+    <div class="msgs" style="padding-bottom:2px;" id="desktopmessages">
         <div class="headline">
             <a href="javascript:void(0);" id="activityhead_toggle" class="win_none" onclick=""></a>
 
             <div class="wintools">
-                <div class="progress" id="progressdesktopmessages" style="display:none;width:20px;float:left">
-                    <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-messages.gif"/>
-                </div>
+                <loader block="desktopmessages" loader="loader-messages.gif"></loader>
+
                 <div class="export-main">
                     <a class="export"><span>{#export#}</span></a>
 
@@ -26,7 +25,7 @@
         <div class="block blockaccordion_content" id="activityhead" style="overflow:hidden;">
             <div id="addmsg" class="addmenue" style="display:none;">
             </div>
-            <table id="desktopmessages" cellpadding="0" cellspacing="0" border="0" v-cloak>
+            <table  cellpadding="0" cellspacing="0" border="0" v-cloak>
 
                 <thead>
                 <tr>

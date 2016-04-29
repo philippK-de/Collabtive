@@ -1,7 +1,7 @@
 <?php
 include("init.php");
 
-$user = (object) new user();
+$user = (object)new user();
 
 $action = getArrayVal($_GET, "action");
 $id = getArrayVal($_GET, "id");
@@ -33,7 +33,7 @@ $classes = array("overview" => "overview", "msgs" => "msgs", "tasks" => "tasks",
 $mainclasses = array("desktop" => "",
     "profil" => "active",
     "admin" => ""
-    );
+);
 $template->assign("mainclasses", $mainclasses);
 $template->assign("classes", $classes);
 
@@ -42,14 +42,14 @@ if ($action == "loginerror") {
 } elseif ($action == "resetpassword") {
     $cleanPost["newpass"] = $user->resetPassword($cleanPost["email"]);
     if ($cleanPost["newpass"] !== false) {
-        $langFile=readLangfile($cleanPost["newpass"]['locale']);
+        $langFile = readLangfile($cleanPost["newpass"]['locale']);
 
         $subject = $langfile["projectpasswordsubject"];
 
         $mailcontent = $langfile["hello"] . ",<br /><br/>" .
-                       $langfile["projectpasswordtext"] . "<br /><br />" .
-                       $langfile["newpass"] . ": " . $cleanPost["newpass"]['newpass'] ."<br />" .
-                       $langfile["login"] . ": <a href = \"$url\">$url</a>";
+            $langfile["projectpasswordtext"] . "<br /><br />" .
+            $langfile["newpass"] . ": " . $cleanPost["newpass"]['newpass'] . "<br />" .
+            $langfile["login"] . ": <a href = \"$url\">$url</a>";
         // Send e-mail with new password
         $themail = new emailer($settings);
         $themail->send_mail($cleanPost["email"], $subject, $mailcontent);
@@ -68,8 +68,7 @@ if ($action == "loginerror") {
     if ($user->login($username, $pass)) {
         $loc = $url . "index.php?mode=login";
         header("Location: $loc");
-    }
-    // Login Error
+    } // Login Error
     else {
         $template->assign("loginerror", 1);
         $template->assign("mailnotify", $settings["mailnotify"]);
@@ -85,7 +84,7 @@ if ($action == "loginerror") {
     $template->display("adduserform.tpl");
 } elseif ($action == "editform") {
     $languages_fin = array();
-    foreach($languages as $lang) {
+    foreach ($languages as $lang) {
         $fin = countLanguageStrings($lang);
 
         if (!($langfile[$lang] == "")) {
@@ -127,7 +126,7 @@ if ($action == "loginerror") {
 
         $subname = "";
 
-        $allowedFiletypes = array("image/jpeg","image/png","image/gif","image/pjpeg");
+        $allowedFiletypes = array("image/jpeg", "image/png", "image/gif", "image/pjpeg");
         if (!in_array($typ, $allowedFiletypes)) {
             $loc = $url . "manageuser.php?action=profile&id=$userid";
             header("Location: $loc");
@@ -136,8 +135,8 @@ if ($action == "loginerror") {
 
         // If it is a PHP file, treat as plain text so it is not executed when opened in the browser
 
-        $allowedExtensions = array(".jpg",".jpeg",".gif",".pjpeg");
-        if (!in_array($erweiterung,$allowedExtensions)) {
+        $allowedExtensions = array(".jpg", ".jpeg", ".gif", ".pjpeg");
+        if (!in_array($erweiterung, $allowedExtensions)) {
             $erweiterung = "txt";
             $typ = "text/plain";
         }
@@ -147,7 +146,7 @@ if ($action == "loginerror") {
             $subname .= $teilnamen[$i];
         }
         list($usec, $sec) = explode(' ', microtime());
-        $seed = (float) $sec + ((float) $usec * 100000);
+        $seed = (float)$sec + ((float)$usec * 100000);
         srand($seed);
         $randval = rand(1, 999999);
 
@@ -198,7 +197,7 @@ if ($action == "loginerror") {
 } elseif ($action == "profile") {
     $start = getArrayVal($_GET, "start");
     $end = getArrayVal($_GET, "end");
-    $tracker = (object) new timetracker();
+    $tracker = (object)new timetracker();
 
     $track = array();
     if (!empty($start) and !empty($end)) {
@@ -231,28 +230,24 @@ if ($action == "loginerror") {
     $template->assign("user", $profile);
 
     $template->display("userprofile.tpl");
-}
-elseif($action == "userProfile")
-{
+} elseif ($action == "userProjects") {
     if ($userpermissions["admin"]["add"]) {
         $offset = 0;
-        if(isset($cleanGet["offset"]))
-        {
+        if (isset($cleanGet["offset"])) {
             $offset = $cleanGet["offset"];
         }
         $limit = 10;
-        if(isset($cleanGet["limit"]))
-        {
+        if (isset($cleanGet["limit"])) {
             $limit = $cleanGet["limit"];
         }
 
-        $projectObj = (object) new project();
+        $projectObj = (object)new project();
 
         $openProjects = $projectObj->getMyProjects($id, 1, $offset, $limit);
-        $openProjectsNum = count($projectObj->getMyProjects($id, 0 , 0 , 1000000000));
+        $openProjectsNum = count($projectObj->getMyProjects($id, 0, 0, 1000000000));
         $i = 0;
         if (!empty($openProjects)) {
-            foreach($openProjects as &$openProject) {
+            foreach ($openProjects as &$openProject) {
                 $projectMembers = $projectObj->getProjectMembers($openProject["ID"], 1000);
                 $openProject["members"] = $projectMembers;
                 $i = $i + 1;
@@ -266,8 +261,19 @@ elseif($action == "userProfile")
 
 
     }
-}
-elseif ($action == "showproject") {
+} elseif ($action == "userTimetracker") {
+    if ($userpermissions["admin"]["add"]) {
+        $offset = 0;
+        if (isset($cleanGet["offset"])) {
+            $offset = $cleanGet["offset"];
+        }
+        $limit = 10;
+        if (isset($cleanGet["limit"])) {
+            $limit = $cleanGet["limit"];
+        }
+
+    }
+} elseif ($action == "showproject") {
     if (!chkproject($userid, $id)) {
         $errtxt = $langfile["notyourproject"];
         $noperm = $langfile["accessdenied"];
@@ -279,13 +285,13 @@ elseif ($action == "showproject") {
     $mainclasses = array("desktop" => "desktop",
         "profil" => "profil",
         "admin" => "admin"
-        );
+    );
     $template->assign("mainclasses", $mainclasses);
-    $projectObj = (object) new project();
+    $projectObj = (object)new project();
     $alluser = $user->getAllUsers(10000);
     $users = array();
 
-    foreach($alluser as $all) {
+    foreach ($alluser as $all) {
         if (!chkproject($all['ID'], $id)) {
             array_push($users, $all);
         }
@@ -308,16 +314,16 @@ elseif ($action == "showproject") {
     $onlinelist = $user->getOnlinelist();
     if (!empty($onlinelist)) {
         echo "<ul>";
-        foreach($onlinelist as $online) {
+        foreach ($onlinelist as $online) {
 
-            echo "<li>" . "<a class=\"user\" href = \"manageuser.php?action=profile&id=" . $online["ID"] . "\">". $online["name"] . "</a></li>";
+            echo "<li>" . "<a class=\"user\" href = \"manageuser.php?action=profile&id=" . $online["ID"] . "\">" . $online["name"] . "</a></li>";
         }
         echo "</ul>";
     }
 } elseif ($action == "vcard") {
     $theuser = $user->getProfile($id);
 
-    $vCard = (object) new vCard($theuser["locale"]);
+    $vCard = (object)new vCard($theuser["locale"]);
 
     $vCard->setFirstName($theuser["name"]);
     $vCard->setCompany($theuser["company"]);

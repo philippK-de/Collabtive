@@ -79,12 +79,11 @@
                                                         <td class="leftmen" valign="top">
                                                             <div class="inmenue">
                                                                 <a v-if="member.avatar != ''" class="more"
-                                                                   href="javascript:fadeToggle('info_{{*project.ID}_{{*project.members[member].ID}');"></a>
+                                                                   href="javascript:fadeToggle('info_{{*project.ID}_{{*member.ID}}');"></a>
                                                             </div>
                                                         </td>
                                                         <td class="thumb">
-                                                            <a href="manageuser.php?action=profile&amp;id={{*project.members[member].ID}"
-                                                               title="{{*member.name}}">
+                                                            <a href="manageuser.php?action=profile&amp;id={{*member.ID}}" title="{{*member.name}}">
                                                                 <img src="./templates/{/literal}{$settings.template}/theme/{$settings.theme}/{literal}images/symbols/user-icon-male.png" alt=""/>
                                                             </a>
                                                         </td>
@@ -99,8 +98,7 @@
                                                     <tr>
                                                         <td colspan="3">
                                                             <span class="name">
-                                                                <a href="manageuser.php?action=profile&amp;id={{*project.members[member].ID}"
-                                                                   title="{{*project.members[member].name}">
+                                                                <a href="manageuser.php?action=profile&amp;id={{*member.ID}}" title="{{*member.name}}">
                                                                     {{*member.name}}
                                                                 </a>
                                                             </span>
@@ -108,17 +106,15 @@
                                                     <tr/>
                                                 </table>
 
-                                                {if $opros[opro].members[member].avatar != ""}
+                                                <template v-if="member.avatar != ''">
                                                 <div class="moreinfo-wrapper">
-                                                    <div class="moreinfo" id="info_{{*project.ID}_{{*project.members[member].ID}"
-                                                         style="display:none">
-                                                        <img src="thumb.php?pic=files/{$cl_config}/avatar/{{*project.members[member].avatar}&amp;width=82"
-                                                             alt="" onclick="fadeToggle('info_{{*project.ID}_{{*project.members[member].ID}');"/>
-                                                        <span class="name"><a
-                                                                    href="manageuser.php?action=profile&amp;id={{*project.members[member].ID}">{{*project.members[member].name|truncate:15:"...":true}</a></span>
+                                                    <div class="moreinfo" id="info_{{*project.ID}_{{*member.ID}}" style="display:none">
+                                                        <img src="thumb.php?pic=files/{$cl_config}/avatar/{{*member.avatar}}&amp;width=82" alt="" onclick="fadeToggle('info_{{*project.ID}_{{*project.members[member].ID}');"/>
+                                                        <span class="name">
+                                                            <a href="manageuser.php?action=profile&amp;id={{*member.ID}}">{{*member.name}}</a></span>
                                                     </div>
                                                 </div>
-                                                {/if}
+                                                </template>
                                             </div>
                                             <!--itemwrapper end-->
                                         </li>

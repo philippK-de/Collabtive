@@ -347,3 +347,11 @@ var paginationComponent = Vue.extend({
     "</template>"
 });
 Vue.component("pagination", paginationComponent);
+
+var progressComponent = Vue.extend({
+    props: ["block","loader"],
+    template: "<div class=\"progress\" id=\"progress{{block}}\" style=\"float:left;display:none;\"> " +
+    "   <img src=\"templates/standard/theme/standard/images/symbols/{{loader}}\"/> " +
+    "</div>"
+});
+Vue.component("loader",progressComponent);
