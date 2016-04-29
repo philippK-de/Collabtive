@@ -335,25 +335,17 @@ class user {
      * Returns all users
      *
      * @param int $lim Limit
-     * @return array $users Registrierte Mitglieder
+     * @param int $offset Offset
+     * @return array $users Registered members
      */
-    function getAllUsers($lim = 10)
+    function getAllUsers($limit = 10, $offset = 0)
     {
         global $conn;
 
-        $lim = (int) $lim;
+        $limit = (int) $limit;
+        $offset = (int) $offset;
 
-        $num = $conn->query("SELECT COUNT(*) FROM `user`")->fetch();
-        $num = $num[0];
-        SmartyPaginate::connect();
-        // set items per page
-        SmartyPaginate::setLimit($lim);
-        SmartyPaginate::setTotal($num);
-
-        $start = SmartyPaginate::getCurrentIndex();
-        $lim = SmartyPaginate::getLimit();
-
-        $sel2 = $conn->query("SELECT ID FROM `user` ORDER BY ID DESC LIMIT $start,$lim");
+        $sel2 = $conn->query("SELECT ID FROM `user` ORDER BY ID DESC LIMIT $limit OFFSET $offset");
 
         $users = array();
         while ($user = $sel2->fetch()) {

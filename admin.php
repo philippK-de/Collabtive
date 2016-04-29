@@ -46,6 +46,7 @@ if ($action == "users") {
     $template->assign("classes", $classes);
 
 	$roleobj = (object) new roles();
+
     // Get 25 users
     $users = $user->getAllUsers(25);
     // Get All Projects
@@ -85,6 +86,29 @@ if ($action == "users") {
     $template->assign("projects", $projects);
     $template->assign("roles", $roles);
     $template->display("adminusers.tpl");
+}
+elseif($action == "adminUsers")
+{
+    $offset = 0;
+    if(isset($cleanGet["offset"]))
+    {
+        $offset = $cleanGet["offset"];
+    }
+
+    $limit = 25;
+    if(isset($cleanGet["limit"]))
+    {
+        $limit = $cleanGet["limit"];
+    }
+
+    // Get 25 users
+    $allUsers = $user->getAllUsers($limit,$offset);
+    $allUsersNum = count($user->getAllUsers(10000000));
+
+    $users["items"] = $allUsers;
+    $users["count"] = $allUsersNum;
+
+    echo json_encode($users);
 }
 //add new user
 elseif ($action == "adduser") {
@@ -495,8 +519,6 @@ elseif($action == "adminCustomers")
     $customers["count"] = $allCustomersNum;
 
     echo json_encode($customers);
-
-
 }
 elseif ($action == "addcust") {
     if (!$userpermissions["admin"]["add"]) {
