@@ -39,9 +39,7 @@
 
                 {if $userpermissions.projects.add}
                     <div class="wintools">
-                        <div class="progress" id="progressadminProjects" style="display:none;">
-                            <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-project3.gif"/>
-                        </div>
+                        <loader block="adminProjects" loader="loader-project3.gif" ></loader>
                         <a class="add" href="javascript:blindtoggle('form_addmyproject');" id="add_myprojects"
                            onclick="toggleClass(this,'add-active','add');toggleClass('add_butn_myprojects','butn_link_active','butn_link');toggleClass('sm_myprojects','smooth','nosmooth');">
                             <span>{#addproject#}</span>

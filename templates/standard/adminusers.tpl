@@ -95,9 +95,7 @@
 								<ul>
 									<li>
 											<div v-for="user in items" class="itemwrapper" id="iw_{{*user.ID}}">
-												
 												<table  cellpadding="0" cellspacing="0" border="0">
-												
 													<tr>
 														<td class="leftmen" valign="top">
 															<div class="inmenue">
