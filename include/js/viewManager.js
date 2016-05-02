@@ -40,12 +40,11 @@ function createView(myEl) {
                 var responseData = JSON.parse(myData.responseText);
                 //one page of data
                 myModel.items = responseData.items;
-                //total number of items
+                //total number of items available
                 myModel.itemsCount = responseData.count;
                 //get the list of pages and add it to the model
                 var pages = pagination.listPages(responseData.count);
                 myModel.pages = pages;
-                vueview.$emit("iloaded");
 
             },
             onLoading: function () {
@@ -55,6 +54,8 @@ function createView(myEl) {
             onComplete: function () {
                 //hide loading indicator
                 stopWait("progress" + myEl.el);
+                //emit an event that indicates the view has finished loading data
+                vueview.$emit("iloaded");
             },
             onFailure: function () {
 
