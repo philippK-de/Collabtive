@@ -163,10 +163,14 @@ var pagination = {
         var offset = page * this.itemsPerPage - this.itemsPerPage;
 
         //set the new limit and offset to the view
-        view.$set("limit", this.itemsPerPage);
-        view.$set("offset", offset);
+        Vue.set(view,"limit",this.itemsPerPage);
+        Vue.set(view,"offset",offset);
+
+        //view.$set("limit", this.itemsPerPage);
+        //view.$set("offset", offset);
         //update the current page for the view
-        view.$set("currentPage", page);
+        Vue.set(view, "currentPage",page);
+        //view.$set("currentPage", page);
 
         //triger the view to be updated
         updateView(view, true);
@@ -186,7 +190,6 @@ var pagination = {
             nextPage = numberOfPages;
         }
 
-        console.log("next" + nextPage);
         this.loadPage(view, nextPage);
     },
     loadPrevPage: function (view) {
@@ -198,7 +201,6 @@ var pagination = {
         if (nextPage < 1) {
             nextPage = 1;
         }
-        console.log("prev" + nextPage);
         this.loadPage(view, nextPage);
     }
 };
@@ -322,7 +324,6 @@ function closeElement(theElement, theUrl, theView) {
                     removeRow(theElement, closeEndcolor);
                 }
                 catch (e) {
-                    console.log(e);
                 }
                 //if a view is passed in, update the view and emit a system message
                 if (theView != undefined) {
