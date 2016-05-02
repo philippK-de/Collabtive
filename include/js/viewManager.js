@@ -96,9 +96,9 @@ function updateView(view, updateDependencies) {
             onSuccess: function (myData) {
                 //retrieve data and update the views model with it
                 var responseData = JSON.parse(myData.responseText);
-                view.$set("items", responseData.items);
-                view.$set("pages", pagination.listPages(responseData.count));
 
+                Vue.set(view,"items",responseData.items);
+                Vue.set(view,"pages",pagination.listPages(responseData.count));
 
                 //update dependencies
                 if (updateDependencies == true) {
@@ -276,7 +276,6 @@ function submitForm(event) {
  Show loading indicator
  */
 function startWait(indic) {
-
     document.getElementById(indic).style.display = 'block';
 }
 /*
