@@ -53,13 +53,14 @@
 				<a href="javascript:void(0);" id="block_files_toggle" class="win_block" onclick="toggleBlock('block_files');"></a>
 				
 				<div class="wintools">
+
 					{if $userpermissions.admin.add}
-					<a class="add" href="javascript:blindtoggle('form_member');" id="addmember" onclick="toggleClass(this,'add-active','add');toggleClass('add_butn_member','butn_link_active','butn_link');toggleClass('sm_member','smooth','nosmooth');">
+                        <a class="add" href="javascript:blindtoggle('form_member');" id="addmember" onclick="toggleClass(this,'add-active','add');toggleClass('add_butn_member','butn_link_active','butn_link');toggleClass('sm_member','smooth','nosmooth');">
 						<span>
-							{#adduser#}
+                            {#adduser#}
 						</span>
 					</a>
-					{/if}
+                    {/if}
 				</div>
 				
 				<h2>
@@ -70,7 +71,7 @@
 			
 			<div id="block_files" class="blockwrapper">
 			
-				{*Add User*}
+				<!--Add User-->
 				{if $userpermissions.admin.add}
 				<div id="form_member" class="addmenue" style="display:none;">
 					{include file="adduserform.tpl"}
@@ -81,10 +82,10 @@
 					
 					<div class="contenttitle">
 						<div class="contenttitle_menue">
-							{*place for tool under ne title-icon*}
+							<!--place for tool under ne title-icon-->
 						</div>
 						<div class="contenttitle_in">
-							{*place for header-informations*}
+							<!--place for header-informations-->
 						</div>
 					</div>
 					
@@ -105,14 +106,14 @@
 														<td class="thumb">
 															<a href="manageuser.php?action=profile&amp;id={{*user.ID}}" title="{{*user.name}}">
 
-																<img v-if="user.gender == 'f'" src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-female.png" alt="" />
-																<img v-else src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-male.png" alt="" />
+																<img v-if="user.gender == 'f'" {/literal} src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-female.png" {literal} alt="" />
+																<img v-else {/literal} src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-male.png" {literal} alt="" />
 															</a>
 														</td>
 														<td class="rightmen" valign="top">
 															<div class="inmenue">
 																<a class="edit" href="admin.php?action=editform&amp;id={{*user.ID}}" title="{#edit#}"></a>
-																<a class="del" href="javascript:confirmit('{#confirmdel#}','admin.php?action=deleteuserform&amp;id={{*user.ID}}');" title="{#delete#}"></a>
+                                                                <a v-if="{{*user.ID}} != </literal>{$userid}<literal>" class="del" href="javascript:confirmit('{#confirmdel#}','admin.php?action=deleteuserform&amp;id={{*user.ID}}');" title="{#delete#}"></a>
 															</div>
 														</td>
 													</tr>
@@ -131,7 +132,7 @@
 												<template v-if="{{user.avatar != ''}}">
                                                     <div class="moreinfo-wrapper">
                                                         <div class="moreinfo" id="info_{{*user.ID}}" style="display:none">
-                                                            <img src="thumb.php?pic=files/{$cl_config}/avatar/{{*user.avatar}}&amp;width=82" alt="" onclick="fadeToggle('info_{{*user.ID}');" />
+                                                            <img src="thumb.php?pic=files/{/literal}{$cl_config}{literal}/avatar/{{*user.avatar}}&amp;width=82" alt="" onclick="fadeToggle('info_{{*user.ID}');" />
                                                             <span class="name">
                                                                 <a href="manageuser.php?action=profile&amp;id={{*user.ID}}">
                                                                     {{*user.name}}
@@ -141,19 +142,19 @@
                                                     </div>
 												</template>
 												
-											</div> {*itemwrapper End*}
+											</div> <!--itemwrapper End-->
 										</li>
-									{/literal} {*lop folder End*}
+									{/literal} <!--loop folder End-->
 	
 								</ul>
 								
-							</div> {*inwrapper End*}
-						</div> {*content_in_wrapper_in End*}
-					</div> {*content_in_wrapper End*}
+							</div> <!--inwrapper End-->
+						</div> <!--content_in_wrapper_in End-->
+					</div> <!--content_in_wrapper End-->
 					
 					<div class="staterow">
 						<div class="staterowin">
-							{*place for whatever*}
+							<!--place for whatever-->
 						</div>
 						<div class="staterowin_right">
 							<span>
@@ -162,7 +163,7 @@
 						</div>
 					</div>
 						
-				</div> {*nosmooth End*}
+				</div> <!--nosmooth End-->
 					
 				<div class="tablemenue">
 					<div class="tablemenue-in">
@@ -176,12 +177,12 @@
 					</div>
 				</div>
 					
-			</div> {*block_files End*}
+			</div> <!--block_files End-->
 			<div class="content-spacer"></div>
 			
-			{* Roles *}
+			<!-- Roles -->
 			{include file = "rolesadmin.tpl"}
-			{* Roles End *}
+			<!-- Roles End -->
 
 			<div class="tablemenue">
 				<div class="tablemenue-in">
@@ -195,7 +196,7 @@
 				</div>
 			</div>
 		
-		</div> {*block END*}
+		</div> <!--block END-->
 		
 		{literal}
             <script type="text/javascript" src="include/js/accordion.min.js"></script>
@@ -207,9 +208,9 @@
 		
 		<div class="content-spacer"></div>
 
-		</div> {*User END*}
-	</div> {*content-left-in END*}
-</div> {*Content_left end*}
+		</div> <!--User END-->
+	</div> <!--content-left-in END-->
+</div> <!--Content_left end-->
 
 {include file="sidebar-a.tpl"}
 {include file="footer.tpl"}
