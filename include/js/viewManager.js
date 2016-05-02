@@ -206,8 +206,8 @@ var pagination = {
  * Function to asyncronously submit a form
  * This is to be used with form.addEventListener()
  * the event gets automatically passed in
- *
- *
+ * formView has to be passed in with bind(formView)
+ * ex: formElement.addEventListener("submit", submitForm.bind(formView));
  *
  */
 function submitForm(event) {
@@ -274,13 +274,13 @@ function submitForm(event) {
  */
 function startWait(indic) {
 
-    $(indic).style.display = 'block';
+    document.getElementById(indic).style.display = 'block';
 }
 /*
  hide loading indicator
  */
 function stopWait(indic) {
-    $(indic).style.display = 'none';
+    document.getElementById(indic).style.display = 'none';
 }
 //endcolor for close element flashing
 closeEndcolor = '#377814';
@@ -296,12 +296,13 @@ function deleteElement(theElement, theUrl, theView) {
     new Ajax.Request(theUrl, {
         method: 'get',
         onSuccess: function (payload) {
+            //check if server returns OK response code
             if (payload.responseText == "ok") {
+                //remove the DOM element animated
                 removeRow(theElement, deleteEndcolor);
+                //if a view is passed in, update the view and emit a system message
                 if (theView != undefined) {
-
                     updateView(theView);
-                    console.log("element deleted");
                     systemMessage.deleted(theView.$get("itemType"));
                 }
                 var result = true;
@@ -315,17 +316,16 @@ function closeElement(theElement, theUrl, theView) {
         method: 'get',
         onSuccess: function (payload) {
             if (payload.responseText == "ok") {
-                console.log("payload ok" + theElement + theView);
+                //remove the DOM element animated
                 try {
                     removeRow(theElement, closeEndcolor);
                 }
-                catch(e){
+                catch (e) {
                     console.log(e);
                 }
+                //if a view is passed in, update the view and emit a system message
                 if (theView != undefined) {
                     updateView(theView);
-
-                    console.log("element closed");
                     systemMessage.closed(theView.$get("itemType"));
                 }
 
@@ -334,8 +334,20 @@ function closeElement(theElement, theUrl, theView) {
     });
 
 }
+/*
+ * VUE COMPONENTS
+ * Vue components are JS objects that represent dynamic HTML fragments.
+ * These can be bound to custom HTML elements - i.e. <element></element>
+ */
+
+/*
+ * Pagination Component
+ * @param obj view a Vue JS view to be paginated
+ * @param obj pages a pagination array, representing the available pages for this view
+ * @param obj current page Object representing the currently opened page for this view
+ */
 var paginationComponent = Vue.extend({
-    props: ["view","pages","currentPage"],
+    props: ["view", "pages", "currentPage"],
     template: "<template v-if='pages.length > 1'>" +
     "<span id=\"paging\" style=\"margin-left:10px;\"> " +
     "<button style=\"float:none;font-size:9pt;margin:0 1px 0 1px;\" onclick=\"pagination.loadPrevPage({{view}})\"><<</button>" +
@@ -346,12 +358,20 @@ var paginationComponent = Vue.extend({
     "</span>" +
     "</template>"
 });
+//bind to <pagination> element
 Vue.component("pagination", paginationComponent);
 
+/*
+ * Progress element
+ * This component renders a visual loading indictaor
+ * @param str block The block the loader corresponds to - needed for startWait() / stopWait()
+ * @param str loader the image to be shown
+ */
 var progressComponent = Vue.extend({
-    props: ["block","loader"],
+    props: ["block", "loader"],
     template: "<div class=\"progress\" id=\"progress{{block}}\" style=\"float:left;display:none;\"> " +
     "   <img src=\"templates/standard/theme/standard/images/symbols/{{loader}}\"/> " +
     "</div>"
 });
-Vue.component("loader",progressComponent);
+//bind to <loader> elemet
+Vue.component("loader", progressComponent);
