@@ -4,48 +4,27 @@
 <div id="content-left">
 	<div id="content-left-in">
 		<div class="user" id="adminUsers">
-		
-			<div class="infowin_left" style="display:none;" id="systemmsg">
-				
-				{if $mode == "deleted"}
-				<span class="info_in_red">
-					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/userlist.png" alt="" />
-					{#userwasdeleted#}
-				</span>
-				{elseif $mode == "added"}
-				<span class="info_in_green">
-					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/userlist.png" alt="" />
-					{#userwasadded#}
-				</span>
-				{elseif $mode == "roleadded"}
-				<span class="info_in_green">
-					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/userlist.png" alt="" />
-					{#roleadded#}
-				</span>
-				{elseif $mode == "roleedited"}
-				<span class="info_in_yellow">
-					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/userlist.png" alt="" />
-					{#roleedited#}
-				</span>
-				{elseif $mode == "edited"}
-					<span class="info_in_yellow">
-					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/userlist.png" alt="" />
-					{#userwasedited#}
-				</span>
-		        {elseif $mode == "de-assigned"}
-				<span class="info_in_yellow">
-					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/userlist.png" alt="" />
-					{#permissionswereedited#}
-				</span>
-				{/if}
-				
-			</div>
-			
-			{literal}
-				<script type="text/javascript">
-					systemMsg('systemmsg');
-				 </script>
-			{/literal}
+
+            <!-- user text -->
+            <div class="infowin_left"
+                 id="userSystemMessage"
+                 data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/userlist.png"
+                 data-text-deleted = "{#userwasdeleted#}"
+                 data-text-edited = "{#userwasedited#}"
+                 data-text-added = "{#userwasadded#}"
+                 data-text-assigned = "{#userwasassigned#}"
+                 data-text-deassigned = "{#permissionswereedited#}"
+                 style="display:none">
+            </div>
+
+            <!-- role text -->
+            <div class="infowin_left"
+                 id="roleSystemMessage"
+                 data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/userlist.png"
+                 data-text-edited = "{#rolewasedited#}"
+                 data-text-added = "{#rolewasadded#}"
+                 style="display:none">
+            </div>
 		
 			<h1>{#administration#}<span>/ {#useradministration#}</span></h1>
 		

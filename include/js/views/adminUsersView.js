@@ -8,6 +8,5 @@ var adminUsers = {
     dependencies: []
 };
 
-
-pagination.itemsPerPage = 7;
+pagination.itemsPerPage = 21;
 var adminUsersView = createView(adminUsers);
