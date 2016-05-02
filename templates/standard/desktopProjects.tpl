@@ -3,6 +3,7 @@
         <a href="javascript:void(0);" id="projecthead_toggle" class="win_block" onclick=""></a>
 
         <div class="wintools">
+          <!--  <loader block="desktopprojects" loader="loader-project3.gif"></loader>   -->
             <loader block="desktopprojects" loader="loader-project3.gif"></loader>
         </div>
 

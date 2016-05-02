@@ -5,33 +5,16 @@
     <div id="content-left-in">
         <div class="projects" id="adminProjects">
 
-            <div class="infowin_left" style="display:none;" id="systemmsg">
-
-                {if $mode == "assigned"}
-                    <span class="info_in_yellow">
-					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/system-settings.png" alt=""/>
-                        {#settingsedited#}
-				</span>
-                {elseif $mode == "deassigned"}
-                    <span class="info_in_red">
-					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-male.png" alt=""/>
-                        {#userwasdeassigned#}
-				</span>
-                {elseif $mode == "added"}
-                    <span class="info_in_green">
-					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt=""/>
-                        {#projectwasadded#}
-				</span>
-                {/if}
-
+            <!-- project text -->
+            <div class="infowin_left"
+                 id="projectSystemMessage"
+                 data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png"
+                 data-text-deleted = "{#projectwasdeleted#}"
+                 data-text-edited = "{#projectwasedited#}"
+                 data-text-added = "{#projectwasadded#}"
+                 data-text-closed = "{#projectwasclosed#}"
+                 style="display:none">
             </div>
-
-            
-                <script type="text/javascript">
-                    systemMsg('systemmsg');
-                </script>
-            
-
             <h1>{#administration#}<span>/ {#projectadministration#}</span></h1>
 
             <div class="headline">
@@ -54,14 +37,11 @@
                 </h2>
 
             </div>
-
             <div class="block" id="acc_projects"> {*Add Project*}
                 <div id="form_addmyproject" class="addmenue" style="display:none;">
                     {include file="addproject.tpl" myprojects="1"}
                 </div>
-
                 <div class="nosmooth" id="sm_myprojects">
-
                     <table id="adminprojects" cellpadding="0" cellspacing="0" border="0">
 
                         <thead>
@@ -121,12 +101,8 @@
                                 {if $userpermissions.projects.del}
                                 {literal}
                                     <a class="tool_del"
-                                       href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'proj_{{project.ID}\',\'manageproject.php?action=del&amp;id={{project.ID}}\')');"
-                                       title="{/literal}{#delete#}"></a>
-                                
+                                       href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','proj_{{*project.ID}}','manageproject.php?action=del&amp;id={{*project.ID}}',adminProjectsView);" title="{/literal}{#delete#}"></a>
                                 {/if}
-                                
-
                             </td>
                         </tr>
                         {literal}
@@ -235,8 +211,6 @@
                             </td>
                         </tr>
                         </tbody>
-
-
                     </table> <!--Projects End-->
                      {literal}
                     <!--Doneprojects-->

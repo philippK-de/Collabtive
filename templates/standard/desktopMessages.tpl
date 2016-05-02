@@ -3,21 +3,16 @@
     <div class="msgs" style="padding-bottom:2px;" id="desktopmessages">
         <div class="headline">
             <a href="javascript:void(0);" id="activityhead_toggle" class="win_none" onclick=""></a>
-
             <div class="wintools">
                 <loader block="desktopmessages" loader="loader-messages.gif"></loader>
-
                 <div class="export-main">
                     <a class="export"><span>{#export#}</span></a>
-
                     <div class="export-in" style="width:46px;left: -46px;"> {* at one item *}
                         <a class="rss" href="managerss.php?action=mymsgs-rss&amp;user={$userid}"><span>{#rssfeed#}</span></a>
                         <a class="pdf" href="managemessage.php?action=mymsgs-pdf&amp;id={$userid}"><span>{#pdfexport#}</span></a>
                     </div>
                 </div>
-
             </div>
-
             <h2>
                 <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#mymessages#}
             </h2>
