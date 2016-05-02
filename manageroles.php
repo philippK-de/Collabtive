@@ -76,5 +76,30 @@ elseif ($action == "editrole")
         header("Location: $loc");
     }
 }
+elseif($action == "adminRoles")
+{
+    $offset = 0;
+    if(isset($cleanGet["offset"]))
+    {
+        $offset = $cleanGet["offset"];
+    }
+
+    $limit = 10;
+    if(isset($cleanGet["limit"]))
+    {
+        $limit = $cleanGet["limit"];
+    }
+
+    $roleobj = (object) new roles();
+
+    // Get 10 roles
+    $allRoles = $roleobj->getAllRoles($limit, $offset);
+    $allRolesNum = count($roleobj->getAllRoles(10000));
+
+    $roles["items"] = $allRoles;
+    $roles["count"] = $allRolesNum;
+
+    echo json_encode($roles);
+}
 
 ?>

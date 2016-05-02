@@ -45,14 +45,12 @@ if ($action == "users") {
         );
     $template->assign("classes", $classes);
 
-	$roleobj = (object) new roles();
 
     // Get 25 users
     $users = $user->getAllUsers(25);
     // Get All Projects
     $projects = $project->getProjects(1, 10000);
 
-    $roles = $roleobj->getAllRoles();
     $i2 = 0;
 
     if (!empty($users)) {
@@ -81,10 +79,8 @@ if ($action == "users") {
     }
     $title = $langfile['useradministration'];
     $template->assign("title", $title);
-    SmartyPaginate::assign($template);
     $template->assign("users", $users);
     $template->assign("projects", $projects);
-    $template->assign("roles", $roles);
     $template->display("adminusers.tpl");
 }
 elseif($action == "adminUsers")
@@ -102,7 +98,7 @@ elseif($action == "adminUsers")
     }
 
     // Get 25 users
-    $allUsers = $user->getAllUsers($limit,$offset);
+    $allUsers = $user->getAllUsers($limit, $offset);
     $allUsersNum = count($user->getAllUsers(10000000));
 
     $users["items"] = $allUsers;

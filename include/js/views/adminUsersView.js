@@ -8,5 +8,21 @@ var adminUsers = {
     dependencies: []
 };
 
+var adminRoles = {
+  el: "adminRoles",
+  itemType: "role",
+  url: "manageroles.php?action=adminRoles",
+  dependencies: []
+};
+
 pagination.itemsPerPage = 21;
 var adminUsersView = createView(adminUsers);
+
+pagination.itemsPerPage = 10;
+var adminRolesView = createView(adminRoles);
+
+var accord_roles;
+adminRolesView.$on("iloaded",function(){
+
+    accord_roles = new accordion2('acc_roles');
+});

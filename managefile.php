@@ -234,7 +234,7 @@ if ($action == "uploadAsync") {
 	//get the project members
     $members = $myproject->getProjectMembers($id, 10000);
    	//get all roles
-    $allroles = $rolesobj->getAllRoles();
+    $allroles = $rolesobj->getAllRoles(10000);
 
     $projectname = $pro["name"];
     $title = $langfile['files'];

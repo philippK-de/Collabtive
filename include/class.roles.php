@@ -177,27 +177,27 @@ class roles {
     /**
      * Get all available roles
      *
-     * @param bool $limit Limit the query or show all ?
+     * @param int $limit Limit to number of entries
+     * @param int $offset Start from number of entry
      * @return array $roles Array with roles
      */
-    function getAllRoles($limit = false)
+    function getAllRoles($limit = 10, $offset = 0)
     {
-        global $conn;
-        $roles = array();
+        $limit = (int) $limit;
+        $offset = (int) $offset;
 
-        if (!$limit) {
-            $sel = $conn->query("SELECT ID FROM roles ORDER BY ID DESC");
-        } else {
-            $sel = $conn->query("SELECT ID FROM roles ORDER BY ID DESC LIMIT $limit");
-        } while ($role = $sel->fetch()) {
-            $therole = $this->getRole($role["ID"]);
-            array_push($roles, $therole);
+        global $conn;
+        $sel = $conn->query("SELECT ID FROM roles ORDER BY ID DESC LIMIT $limit OFFSET $offset");
+
+        $roles = array();
+        while ($role = $sel->fetch()) {
+            array_push($roles, $this->getRole($role["ID"]));
         }
 
         if (!empty($roles)) {
             return $roles;
         } else {
-            return array();
+            return false;
         }
     }
 
