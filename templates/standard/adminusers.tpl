@@ -53,8 +53,9 @@
 				<a href="javascript:void(0);" id="block_files_toggle" class="win_block" onclick="toggleBlock('block_files');"></a>
 				
 				<div class="wintools">
+                    <loader block="adminUsers" loader="loader-project3.gif"></loader>
 
-					{if $userpermissions.admin.add}
+                    {if $userpermissions.admin.add}
                         <a class="add" href="javascript:blindtoggle('form_member');" id="addmember" onclick="toggleClass(this,'add-active','add');toggleClass('add_butn_member','butn_link_active','butn_link');toggleClass('sm_member','smooth','nosmooth');">
 						<span>
                             {#adduser#}
@@ -64,9 +65,10 @@
 				</div>
 				
 				<h2>
-					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/userlist.png" alt="" />
+                    <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/userlist.png" alt="" />
 					{#useradministration#}
-				</h2>
+                    <pagination view="adminUsersView" :pages="pages" :current-page="currentPage"></pagination>
+                </h2>
 			</div>
 			
 			<div id="block_files" class="blockwrapper">
@@ -94,8 +96,8 @@
 							<div class="inwrapper">
 								  {literal}
 								<ul>
-									<li>
-											<div v-for="user in items" class="itemwrapper" id="iw_{{*user.ID}}">
+									<li v-for="user in items">
+											<div class="itemwrapper" id="iw_{{*user.ID}}">
 												<table  cellpadding="0" cellspacing="0" border="0">
 													<tr>
 														<td class="leftmen" valign="top">
@@ -113,7 +115,7 @@
 														<td class="rightmen" valign="top">
 															<div class="inmenue">
 																<a class="edit" href="admin.php?action=editform&amp;id={{*user.ID}}" title="{#edit#}"></a>
-                                                                <a v-if="{{*user.ID}} != </literal>{$userid}<literal>" class="del" href="javascript:confirmit('{#confirmdel#}','admin.php?action=deleteuserform&amp;id={{*user.ID}}');" title="{#delete#}"></a>
+                                                                <a v-if="user.ID != {/literal}{$userid}{literal}" class="del" href="javascript:confirmit('{#confirmdel#}','admin.php?action=deleteuserform&amp;id={{*user.ID}}');" title="{#delete#}"></a>
 															</div>
 														</td>
 													</tr>

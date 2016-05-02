@@ -95,7 +95,7 @@ elseif($action == "adminUsers")
         $offset = $cleanGet["offset"];
     }
 
-    $limit = 25;
+    $limit = 7;
     if(isset($cleanGet["limit"]))
     {
         $limit = $cleanGet["limit"];
