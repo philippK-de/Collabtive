@@ -150,139 +150,137 @@
                                         <label></label>
                                         <input type="checkbox" class="checkbox" value="1"
                                                               name="permissions_tasks[view]"
-                                                              v-model="role.tasks.view" />{#view#}
+                                                              v-model="role.tasks.view" />{/literal}{#view#}{literal}
                                     </div>
                                     <div class="row">
                                         <label></label><input type="checkbox" class="checkbox" value="1"
                                                               name="permissions_tasks[add]"
-                                                              {if $roles[role].tasks.add}checked{/if} />{#add#}
+                                                              v-model="role.tasks.add" />{/literal}{#add#}{literal}
                                     </div>
                                     <div class="row">
                                         <label></label><input type="checkbox" class="checkbox" value="1"
                                                               name="permissions_tasks[edit]"
-                                                              {if $roles[role].tasks.edit}checked{/if} />{#edit#}
+                                                              v-model="role.tasks.edit" />{/literal}{#edit#}{literal}
                                     </div>
                                     <div class="row">
                                         <label></label><input type="checkbox" class="checkbox" value="1"
                                                               name="permissions_tasks[del]"
-                                                              {if $roles[role].tasks.del}checked{/if} />{#delete#}
+                                                              v-model="role.tasks.del" />{/literal}{#delete#}{literal}
                                     </div>
                                     <div class="row">
                                         <label></label><input type="checkbox" class="checkbox" value="1"
                                                               name="permissions_tasks[close]"
-                                                              {if $roles[role].tasks.close}checked{/if} />{#close#}
+                                                              v-model="role.tasks.close" />{/literal}{#close#}{literal}
                                     </div>
 
 
                                     <!-- Permissions for messages, close = reply -->
                                     <div class="row">
                                         <label></label>
-                                        <label>{#messages#}</label>
+                                        <label>{/literal}{#messages#}{literal}</label>
                                     </div>
                                     <div class="row">
                                         <label></label><input type="checkbox" class="checkbox" value="1"
                                                               name="permissions_messages[view]"
-                                                              {if $roles[role].messages.view}checked{/if} />{#view#}
+                                                              v-model="role.messages.view" />{/literal}{#view#}{literal}
                                     </div>
                                     <div class="row">
                                         <label></label><input type="checkbox" class="checkbox" value="1"
                                                               name="permissions_messages[add]"
-                                                              {if $roles[role].messages.add}checked{/if} />{#add#}
+                                                              v-model="role.messages.add" />{/literal}{#add#}{literal}
                                     </div>
                                     <div class="row">
                                         <label></label><input type="checkbox" class="checkbox" value="1"
                                                               name="permissions_messages[edit]"
-                                                              {if $roles[role].messages.edit}checked{/if} />{#edit#}
+                                                              v-model="role.messages.edit" />{/literal}{#edit#}{literal}
                                     </div>
                                     <div class="row">
                                         <label></label><input type="checkbox" class="checkbox" value="1"
                                                               name="permissions_messages[del]"
-                                                              {if $roles[role].messages.del}checked{/if} />{#delete#}
+                                                              v-model="role.messages.del" />{/literal}{#delete#}{literal}
                                     </div>
                                     <div class="row">
                                         <label></label><input type="checkbox" class="checkbox" value="1"
                                                               name="permissions_messages[close]"
-                                                              {if $roles[role].messages.close}checked{/if} />{#answer#}
+                                                              v-model="role.messages.close" />{/literal}{#answer#}{literal}
                                     </div>
 
                                     <!-- Permissions for files -->
                                     <div class="row">
                                         <label></label>
-                                        <label>{#files#}</label>
+                                        <label>{/literal}{#files#}{literal}</label>
                                     </div>
                                     <div class="row">
                                         <label></label><input type="checkbox" class="checkbox" value="1"
                                                               name="permissions_files[view]"
-                                                              {if $roles[role].files.view}checked{/if} />{#view#}
+                                                              v-model="role.files.view" />{/literal}{#view#}{literal}
                                     </div>
                                     <div class="row">
                                         <label></label><input type="checkbox" class="checkbox" value="1"
                                                               name="permissions_files[add]"
-                                                              {if $roles[role].files.add}checked{/if} />{#add#}
+                                                              v-model="role.files.add" />{/literal}{#add#}{literal}
                                     </div>
                                     <div class="row">
                                         <label></label><input type="checkbox" class="checkbox" value="1"
                                                               name="permissions_files[edit]"
-                                                              {if $roles[role].files.edit}checked{/if} />{#edit#}
+                                                              v-model="role.files.edit" />{/literal}{#edit#}{literal}
                                     </div>
                                     <div class="row">
                                         <label></label><input type="checkbox" class="checkbox" value="1"
                                                               name="permissions_files[del]"
-                                                              {if $roles[role].files.del}checked{/if} />{#delete#}
+                                                              v-model="role.files.del" />{/literal}{#delete#}{literal}
                                     </div>
 
                                     <!-- Permissions for timetracker, read = read other's entries -->
                                     <div class="row">
                                         <label></label>
-                                        <label>{#timetracker#}</label>
+                                        <label>{/literal}{#timetracker#}{literal}</label>
                                     </div>
                                     <div class="row">
                                         <label></label><input type="checkbox" class="checkbox" value="1"
                                                               name="permissions_timetracker[view]"
-                                                              {if $roles[role].timetracker.view}checked{/if} />{#view#}
+                                                              v-model="role.timetracker.view" />{/literal}{#view#}{literal}
                                     </div>
                                     <div class="row">
                                         <label></label><input type="checkbox" class="checkbox" value="1"
                                                               name="permissions_timetracker[read]"
-                                                              {if $roles[role].timetracker.read}checked{/if}
-                                        />{#permissionread#}
+                                                              v-model="role.timetracker.read"
+                                        />{/literal}{#permissionread#}{literal}
                                     </div>
                                     <div class="row">
                                         <label></label><input type="checkbox" class="checkbox" value="1"
                                                               name="permissions_timetracker[add]"
-                                                              {if $roles[role].timetracker.add}checked{/if} />{#add#}
+                                                              v-model="role.timetracker.add" />{/literal}{#add#}{literal}
                                     </div>
                                     <div class="row">
                                         <label></label><input type="checkbox" class="checkbox" value="1"
                                                               name="permissions_timetracker[edit]"
-                                                              {if $roles[role].timetracker.edit}checked{/if} />{#edit#}
+                                                              v-model="role.timetracker.edit" />{/literal}{#edit#}{literal}
                                     </div>
                                     <div class="row">
                                         <label></label><input type="checkbox" class="checkbox" value="1"
                                                               name="permissions_timetracker[del]"
-                                                              {if $roles[role].timetracker.del}checked{/if} />{#delete#}
+                                                              v-model="role.timetracker.del" />{/literal}{#delete#}{literal}
                                     </div>
 
                                     <div class="row">
                                         <label></label>
-                                        <label>{#chat#}</label>
+                                        <label>{/literal}{#chat#}{literal}</label>
                                     </div>
                                     <div class="row">
                                         <label></label><input type="checkbox" class="checkbox" value="1"
                                                               name="permissions_chat[add]"
-                                                              {if $roles[role].chat.add}checked{/if} />{#chat#}
+                                                              v-model="role.chat.add" />{/literal}{#chat#}{literal}
                                     </div>
-
-
-                                    <div class="row">
+                                   <div class="row">
                                         <label></label>
-                                        <label>{#admin#}</label>
+                                        <label>{/literal}{#admin#}{literal}</label>
                                     </div>
                                     <div class="row">
                                         <label></label><input type="checkbox" class="checkbox" value="1"
                                                               name="permissions_admin[add]"
-                                                              {if $roles[role].admin.add}checked{/if}
-                                        />{#administration#}
+                                                              v-model="role.admin.add"
+                                        />{/literal}{#administration#}{literal}
                                     </div>
 
                                 </div>

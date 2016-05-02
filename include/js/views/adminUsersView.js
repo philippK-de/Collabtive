@@ -23,6 +23,6 @@ var adminRolesView = createView(adminRoles);
 
 var accord_roles;
 adminRolesView.$on("iloaded",function(){
-
+        console.log("roles loaded");
     accord_roles = new accordion2('acc_roles');
 });
