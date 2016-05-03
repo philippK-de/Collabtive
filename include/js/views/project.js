@@ -1,3 +1,12 @@
+//function to update the calendar
+function updateCalendar(myCalendar, newMonth, newYear)
+{
+    var currentUrl = myCalendar.$get("url");
+    var calendarUrl = currentUrl + "&y=" + newYear + "&m=" + newMonth;
+    Vue.set(myCalendar,"url",calendarUrl);
+    updateView(myCalendar);
+
+}
 window.addEventListener("load", function () {
     new Effect.Morph('completed', {
         style: 'width:{/literal}{$done}{literal}%',

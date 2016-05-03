@@ -28,7 +28,7 @@
                     </th>
                     <th colspan="5" align="center">
                         <!--Localized month & year -->
-                        {{items.monthName}} {{items.currentYear}}
+                        {{items.monthName}} {{items.selectedYear}}
                     </th>
                     <th>
                         <a class="scroll_right" href="javascript:updateCalendar(calendarView,'{{items.nextMonth}}','{{items.nextYear}}');"></a>
@@ -73,7 +73,7 @@
                                     <div class="modaltitle">
                                         <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt=""/>
                                         {/literal}{$langfile.milestones}{literal}
-                                        {{*day.val}}.{{*items.currentMonth}}.{{items.currentYear}}
+                                        {{*day.val}}.{{*items.currentMonth}}.{{*items.currentYear}}
                                         <a class="winclose" href="javascript:Control.Modal.close();"></a>
                                     </div>
 
@@ -102,8 +102,7 @@
                                                     <tr>
                                                         {/literal}
                                                         <td class="icon">
-                                                            <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png"
-                                                                 alt=""/>
+                                                            <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt=""/>
                                                         </td>
                                                         {literal}
                                                         <td>
