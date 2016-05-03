@@ -1,3 +1,13 @@
+//function to update the calendar
+function updateCalendar(myCalendar, newMonth, newYear)
+{
+    var currentUrl = myCalendar.$get("url");
+    var calendarUrl = currentUrl + "&y=" + newYear + "&m=" + newMonth;
+    Vue.set(myCalendar,"url",calendarUrl);
+    updateView(myCalendar);
+
+}
+
 //create the objects representing the Widgets with their DOM element, DataURL, Dependencies and view managing them
 var projects = {
     el: "desktopprojects",
@@ -20,12 +30,20 @@ var messages = {
     dependencies: []
 };
 
+var calendar = {
+  el: "desktopCalendar",
+  itemType: "calendar",
+  url: "manageajax.php?action=indexCalendar",
+  dependencies: []
+};
+
 
 
 //create views - binding the data to the dom element
 var projectsView = createView(projects);
 var tasksView = createView(tasks);
 var msgsView = createView(messages);
+var calendarView = createView(calendar);
 
 //setup dependenciens
 projectsView.$set("dependencies", [tasksView, msgsView]);
@@ -41,7 +59,7 @@ addProjectForm.addEventListener("submit", submitForm.bind(formView));
 
 
 //load calendar
-changeshow('manageajax.php?action=newcal', 'thecal', 'progress');
+//changeshow('manageajax.php?action=newcal', 'thecal', 'progress');
 
 //initialize accordeons
 try {

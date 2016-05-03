@@ -236,55 +236,119 @@ elseif ($action == "fileview") {
 }
 //this is used to display the calendar on the desktop
 elseif ($action == "newcal") {
-    $thisd = date("j");
-    $thism = date("n");
-    $thisy = date("Y");
+    $currentDay = date("j");
+    $currentMonth = date("n");
+    $currentYear = date("Y");
 
-    $m = getArrayVal($_GET, "m");
-    $y = getArrayVal($_GET, "y");
-    if (!$m) {
-        $m = $thism;
+    $selectedMonth = getArrayVal($_GET, "m");
+    $selectedYear = getArrayVal($_GET, "y");
+    if (!$selectedMonth) {
+        $selectedMonth = $currentMonth;
     }
-    if (!$y) {
-        $y = $thisy;
+    if (!$selectedYear) {
+        $selectedYear = $currentYear;
     }
 
-    $nm = $m + 1;
-    $pm = $m -1;
-    if ($nm > 12) {
-        $nm = 1;
-        $ny = $y + 1;
+    $nextMonth = $selectedMonth + 1;
+    $previousMonth = $selectedMonth -1;
+    if ($nextMonth > 12) {
+        $nextMonth = 1;
+        $nextYear = $selectedYear + 1;
     } else {
-        $ny = $y;
+        $nextYear = $selectedYear;
     }
-    if ($pm < 1) {
-        $pm = 12;
-        $py = $y-1;
+    if ($previousMonth < 1) {
+        $previousMonth = 12;
+        $previousYear = $selectedYear-1;
     } else {
-        $py = $y;
+        $previousYear = $selectedYear;
     }
 
     $today = date("d");
 
     $calobj = new calendar();
-    $cal = $calobj->getCal($m, $y);
+    $cal = $calobj->getCal($selectedMonth, $selectedYear);
     $weeks = $cal->calendar;
     // print_r($weeks);
-    $mstring = strtolower(date('F', mktime(0, 0, 0, $m, 1, $y)));
-    $mstring = $langfile[$mstring];
-    $template->assign("mstring", $mstring);
 
-    $template->assign("m", $m);
-    $template->assign("y", $y);
-    $template->assign("thism", $thism);
-    $template->assign("thisd", $thisd);
-    $template->assign("thisy", $thisy);
-    $template->assign("nm", $nm);
-    $template->assign("pm", $pm);
-    $template->assign("ny", $ny);
-    $template->assign("py", $py);
+    $monthName = strtolower(date('F', mktime(0, 0, 0, $selectedMonth, 1, $selectedYear)));
+    $monthName = $langfile[$monthName];
+    $template->assign("mstring", $monthName);
+
+    $template->assign("m", $selectedMonth);
+    $template->assign("y", $selectedYear);
+    $template->assign("thism", $currentMonth);
+    $template->assign("thisd", $currentDay);
+    $template->assign("thisy", $currentYear);
+    $template->assign("nm", $nextMonth);
+    $template->assign("pm", $previousMonth);
+    $template->assign("ny", $nextYear);
+    $template->assign("py", $previousYear);
     $template->assign("weeks", $weeks);
     $template->display("calbody.tpl");
+}
+elseif($action == "indexCalendar")
+{
+    $currentDay = date("j");
+    $currentMonth = date("n");
+    $currentYear = date("Y");
+
+    $selectedMonth = getArrayVal($_GET, "m");
+    $selectedYear = getArrayVal($_GET, "y");
+    if (!$selectedMonth) {
+        $selectedMonth = $currentMonth;
+    }
+    if (!$selectedYear) {
+        $selectedYear = $currentYear;
+    }
+
+    $nextMonth = $selectedMonth + 1;
+    $previousMonth = $selectedMonth -1;
+    if ($nextMonth > 12) {
+        $nextMonth = 1;
+        $nextYear = $selectedYear + 1;
+    } else {
+        $nextYear = $selectedYear;
+    }
+    if ($previousMonth < 1) {
+        $previousMonth = 12;
+        $previousYear = $selectedYear-1;
+    } else {
+        $previousYear = $selectedYear;
+    }
+
+    $today = date("d");
+
+    $calobj = new calendar();
+    $cal = $calobj->getCal($selectedMonth, $selectedYear);
+    $weeks = $cal->calendar;
+    // print_r($weeks);
+
+    $monthName = strtolower(date('F', mktime(0, 0, 0, $selectedMonth, 1, $selectedYear)));
+    $monthName = $langfile[$monthName];
+
+    $calendar["weeks"] = $weeks;
+    $calendar["monthName"] = $monthName;
+
+
+    $calendar["selectedYear"] = $selectedYear;
+    $calendar["currentYear"] = $currentYear;
+    $calendar["nextYear"] = $nextYear;
+    $calendar["previousYear"] = $previousYear;
+
+    $calendar["selectedMonth"] = $selectedMonth;
+    $calendar["currentMonth"] = $currentMonth;
+    $calendar["nextMonth"] = $nextMonth;
+    $calendar["previousMonth"] = $previousMonth;
+
+    $calendar["currentDay"] = $currentDay;
+
+    $indexCalendar["items"] = $calendar;
+    $indexCalendar["count"] = count($weeks);
+
+    echo json_encode($indexCalendar);
+
+
 }
 elseif($action == "chkconn")
 {

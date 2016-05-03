@@ -5,8 +5,6 @@
 
 
         <div class="wintools">
-            <a id="addrolelink" class="add" href="javascript:blindtoggle('form_addmyroles');" id="add_myroles"
-               onclick="toggleClass(this,'add-active','add');toggleClass('add_butn_myroles','butn_link_active','butn_link');toggleClass('sm_myrolls','smooth','nosmooth');"><span>{#addrole#}</span></a>
         </div>
 
         <h2>

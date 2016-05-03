@@ -108,8 +108,10 @@ function updateView(view, updateDependencies) {
                     if (viewsToUpdate.length > 0) {
                         for (var i = 0; i < viewsToUpdate.length; i++) {
                             //load the same sub pages for dependant views that are loaded for the root view
-                            viewsToUpdate[i].$set("limit", view.limit);
-                            viewsToUpdate[i].$set("offset", view.offset);
+                            //viewsToUpdate[i].$set("limit", view.limit);
+                            Vue.set(viewsToUpdate[i],"limit",view.limit);
+                            Vue.set(viewsToUpdate[i],"offset",view.offset);
+                            //viewsToUpdate[i].$set("offset", view.offset);
                             //recursive call
                             updateView(viewsToUpdate[i], viewsToUpdate[i].url);
                         }
@@ -288,12 +290,18 @@ function stopWait(indic) {
 closeEndcolor = '#377814';
 //endcolor for delete element flashing
 deleteEndcolor = '#c62424';
+/*
+* Function to display a confirm prompt, then call deleteElement();
+ */
 function confirmDelete(message, element, url, view) {
     var check = confirm(message);
     if (check == true) {
         deleteElement(element, url, view);
     }
 }
+/*
+* Function to delete an element from the datamodel / db as well as the DOM
+ */
 function deleteElement(theElement, theUrl, theView) {
     new Ajax.Request(theUrl, {
         method: 'get',

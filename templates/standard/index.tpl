@@ -65,7 +65,7 @@
                     </div>
 
                     <div class="block blockaccordion_content" id="mileshead" style="overflow:hidden;">
-                        <div id="thecal" class="bigcal" style="height:270px;"></div>
+                        {include file="calendar.tpl"}
                         <div class="content-spacer"></div>
                     </div> {* block END *}
                 </div>
