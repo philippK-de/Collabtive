@@ -16,6 +16,8 @@ $milestone = new milestone();
 $action = getArrayVal($_GET, "action");
 $mid = getArrayVal($_GET, "mid");
 
+$cleanGet = cleanArray($_GET);
+
 $mode = getArrayVal($_GET, "mode");
 $template->assign("mode", $mode);
 
@@ -348,6 +350,76 @@ elseif($action == "indexCalendar")
 
     echo json_encode($indexCalendar);
 
+
+}
+elseif ($action == "projectCalendar") {
+    if (!chkproject($userid, $cleanGet["id"])) {
+        $errtxt = $langfile["notyourproject"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->assign("mode", "error");
+        $template->display("error.tpl");
+        die();
+    }
+
+    $currentDay = date("j");
+    $currentMonth = date("n");
+    $currentYear = date("Y");
+
+    $selectedMonth = getArrayVal($_GET, "m");
+    $selectedYear = getArrayVal($_GET, "y");
+    if (!$selectedMonth) {
+        $selectedMonth = $currentMonth;
+    }
+    if (!$selectedYear) {
+        $selectedYear = $currentYear;
+    }
+
+    $nextMonth = $selectedMonth + 1;
+    $previousMonth = $selectedMonth -1;
+    if ($nextMonth > 12) {
+        $nextMonth = 1;
+        $nextYear = $selectedYear + 1;
+    } else {
+        $nextYear = $selectedYear;
+    }
+    if ($previousMonth < 1) {
+        $previousMonth = 12;
+        $previousYear = $selectedYear-1;
+    } else {
+        $previousYear = $selectedYear;
+    }
+
+    $today = date("d");
+
+    $calobj = new calendar();
+    $cal = $calobj->getCal($selectedMonth, $selectedYear, $cleanGet["id"]);
+    $weeks = $cal->calendar;
+    // print_r($weeks);
+
+    $monthName = strtolower(date('F', mktime(0, 0, 0, $selectedMonth, 1, $selectedYear)));
+    $monthName = $langfile[$monthName];
+
+    $calendar["weeks"] = $weeks;
+    $calendar["monthName"] = $monthName;
+
+
+    $calendar["selectedYear"] = $selectedYear;
+    $calendar["currentYear"] = $currentYear;
+    $calendar["nextYear"] = $nextYear;
+    $calendar["previousYear"] = $previousYear;
+
+    $calendar["selectedMonth"] = $selectedMonth;
+    $calendar["currentMonth"] = $currentMonth;
+    $calendar["nextMonth"] = $nextMonth;
+    $calendar["previousMonth"] = $previousMonth;
+
+    $calendar["currentDay"] = $currentDay;
+
+    $indexCalendar["items"] = $calendar;
+    $indexCalendar["count"] = count($weeks);
+
+    echo json_encode($indexCalendar);
 
 }
 elseif($action == "chkconn")

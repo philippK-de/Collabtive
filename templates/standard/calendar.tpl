@@ -1,7 +1,6 @@
 <div id="desktopCalendar" class="miles" style="padding-bottom:2px;">
     <div class="headline">
-        <a href="javascript:void(0);" id="mileshead_toggle" class="win_none"
-           onclick=""></a>
+        <a href="javascript:void(0);" id="mileshead_toggle" class="win_none" onclick=""></a>
 
         <div class="wintools">
             <loader block="desktopCalendar" loader="loader-calendar.gif"></loader>
@@ -13,10 +12,13 @@
         </h2>
     </div>
 
+    {if $context == "project"}
+    <div class="block accordion_content" id="mileshead" style="overflow:hidden;">
+    {else}
     <div class="block blockaccordion_content" id="mileshead" style="overflow:hidden;">
+    {/if}
         <div class="bigcal">
             <table cellpadding="0" cellspacing="1" border="0" class="thecal">
-
                 {literal}
                 <!--Calender head area -->
                 <thead class="calhead">
@@ -64,15 +66,13 @@
                             <!--Milestones -->
                             <template v-if="day.milesnum > 0">
                                 <a href="#miles{{*day.val}}" id="mileslink{{*day.val}}">
-                                    <img src="templates/{/literal}{$settings.template}/theme/{$settings.theme}/{literal}images/symbols/miles.png"
-                                         alt=""/>
+                                    <img src="templates/{/literal}{$settings.template}/theme/{$settings.theme}/{literal}images/symbols/miles.png" alt=""/>
                                 </a>
 
                                 <div id="miles{{*day.val}}" style="display:none;">
-
                                     <div class="modaltitle">
                                         <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt=""/>
-                                        {$langfile.milestones}
+                                        {/literal}{$langfile.milestones}{literal}
                                         {{*day.val}}.{{*items.currentMonth}}.{{items.currentYear}}
                                         <a class="winclose" href="javascript:Control.Modal.close();"></a>
                                     </div>
@@ -122,7 +122,7 @@
                                                     </tr>
                                                     <tr class="acc">
                                                         <td colspan="3">
-                                                            <div class="accordion_content" data-slide="{{$index}}">
+                                                            <div class="maccordion_content" >
                                                                 <div class="content_in">
                                                                     {{*milestone.desc}}
                                                                 </div>
@@ -150,8 +150,6 @@
 
                             </template>
                             <!--Milestones End -->
-
-
                             <!--Tasks -->
                             <a v-if="day.tasksnum > 0" href="#tasks{{*day.val}}" id="tasklink{{*day.val}}">
                                 <img src="templates/{/literal}{$settings.template}/theme/{$settings.theme}/{literal}images/symbols/task.png" alt=""/>
@@ -169,9 +167,7 @@
                                 <div class="inmodal">
                                     <div class="tasks">
                                         <div class="block">
-
                                             <table class="acc_modal" id="acc_mb_{{*day.val}}" cellpadding="0" cellspacing="0" border="0">
-
                                                 <colgroup>
                                                     <col class="m_a"/>
                                                     <col class="m_b"/>
@@ -204,7 +200,7 @@
                                                 </tr>
                                                 <tr class="acc">
                                                     <td colspan="3">
-                                                        <div class="accordion_content">
+                                                        <div class="maccordion_content">
                                                             <div class="content_in">
                                                                 {{*task.text}}
                                                             </div>
@@ -212,10 +208,7 @@
                                                     </td>
                                                 </tr>
                                                 </tbody>
-
-
                                             </table>
-
                                         </div>
                                     </div>
                                 </div>
