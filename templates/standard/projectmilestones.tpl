@@ -91,9 +91,7 @@
                             <td class="c"></td>
                             <td class="days"></td>
                             <td class="tools">
-                                <div id="progresslateMilestones" style="display:none;width:20px;float:left">
-                                    <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-messages.gif"/>
-                                </div>
+                                <loader block="lateMilestones" loader="loader-calendar.gif"></loader>
                             </td>
                         </tr>
                     </table>
@@ -165,9 +163,7 @@
                             <td class="c"></td>
                             <td class="days"></td>
                             <td class="tools">
-                                <div id="progresscurrentMilestones" style="display:none;width:20px;float:left">
-                                    <img src="templates/standard/theme/standard/images/symbols/loader-messages.gif"/>
-                                </div>
+                                <loader block="currentMilestones" loader="loader-calendar.gif"></loader>
                             </td>
                         </tr>
                     </table>
@@ -276,9 +272,7 @@
                             <td class="c"></td>
                             <td class="days"></td>
                             <td class="tools">
-                                <div id="progressupcomingMilestones" style="display:none;width:20px;float:left">
-                                    <img src="templates/standard/theme/standard/images/symbols/loader-messages.gif"/>
-                                </div>
+                                <loader block="upcomingMilestones" loader="loader-calendar.gif"></loader>
                             </td>
                         </tr>
                     </table>

@@ -59,10 +59,9 @@
                            'othermonth': day.currmonth != 1
                            }"
                         id="{{*day.val}}">
-                        {{day.val}}
+                        {{*day.val}}
                         <!--Only output tasks/milestones if the day belongs to the current month -->
                         <div v-if="day.currmonth == 1" class="calcontent">
-
                             <!--Milestones -->
                             <template v-if="day.milesnum > 0">
                                 <a href="#miles{{*day.val}}" id="mileslink{{*day.val}}">
@@ -145,15 +144,12 @@
                                         overlayClassName: 'milesoverlay'
                                     });
                                 </script>
-
-
                             </template>
                             <!--Milestones End -->
                             <!--Tasks -->
                             <a v-if="day.tasksnum > 0" href="#tasks{{*day.val}}" id="tasklink{{*day.val}}">
                                 <img src="templates/{/literal}{$settings.template}/theme/{$settings.theme}/{literal}images/symbols/task.png" alt=""/>
                             </a>
-
                             <div id="tasks{{*day.val}}" style="display:none;">
                                 <div class="modaltitle">
                                     <img src="./templates/{/literal}{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt=""/>
@@ -162,7 +158,6 @@
                                     {{*day.val}}.{{*items.currentMonth}}.{{items.currentYear}}
                                     <a class="winclose" href="javascript:Control.Modal.close();"></a>
                                 </div>
-
                                 <div class="inmodal">
                                     <div class="tasks">
                                         <div class="block">
