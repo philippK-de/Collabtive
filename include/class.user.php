@@ -304,6 +304,10 @@ class user {
             $_SESSION["userpermissions"] = $rolesobj->getUserRole($chk["ID"]);
 
             $userid = $_SESSION['userid'];
+
+	    $tracker = new timetracker();
+	    $_SESSION['opentrack'] = $tracker->getOpenTrackId($userid);
+
             $seid = session_id();
             $staylogged = getArrayVal($_POST, 'staylogged');
 

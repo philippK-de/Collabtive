@@ -12,6 +12,82 @@
 
 class timetracker {
 
+    /**
+    * Start new timetracking
+    */
+    function openTracking($user, $project = 0, $task =0){
+        global $conn;
+	$opentrack = $this->getOpenTrackId($user);
+	if ($opentrack != 0){
+		return 'open track existing';
+	}
+
+        $started = time();
+	$ended=0;
+	$hours=0;	
+	$comment = 'pending timetrack';
+	
+        $insStmt = $conn->prepare("INSERT INTO timetracker (user,project,task,comment,started,ended,hours,pstatus) VALUES (?,?,?,?,?,?,?,0)");
+        $ins = $insStmt->execute(array((int) $user, (int) $project, (int) $task, $comment, $started, $ended, $hours));
+
+        if ($ins) {
+            $insid = $conn->lastInsertId();
+	    $_SESSION['opentrack'] = $insid;
+            return $insid;
+        } else {
+            return false;
+        }
+    }
+
+    function cancelTracking($tid){
+      $this->del($tid);
+      $_SESSION['opentrack']=0;
+    }
+
+    function finishTracking($user, $pid = 0, $tid =0){
+	global $conn;
+	$opentrack = $this->getOpenTrackId($user);
+	if ($opentrack == 0){
+		return false;
+	}
+	$ended = time();
+	
+	$sel = $conn->prepare("SELECT started,project,task FROM timetracker WHERE ended=0 AND user=?");
+	$selStmt = $sel->execute(array((int) $user));
+        $track = array();
+        $track = $sel->fetch();
+        if (empty($track)){
+                return false;
+        }
+	$hours = ($ended - $track['started']) / 3600;
+	if ($pid == 0){
+		$pid = $task['project'];
+	}
+	if ($tid == 0){
+		$tid = $task['task'];
+	}
+
+	$updStmt = $conn->prepare("UPDATE timetracker SET project=?, task=?, ended=?, hours=? WHERE ID=?");
+	$upd = $updStmt->execute(array((int)$pid,(int)$tid,(int)$ended,$hours,(int)$opentrack));
+
+	if ($upd){
+		$_SESSION['opentrack'] = 0;
+		return $opentrack;
+	}
+	return false;
+    }
+
+    function getOpenTrackId($user){
+	global $conn;
+	$sel = $conn->prepare("SELECT ID FROM timetracker WHERE ended=0 AND user=?");	
+	$selStmt = $sel->execute(array((int) $user));
+        $track = array();
+        $track = $sel->fetch();
+	if (empty($track)){
+		return 0;
+	}
+	return $track['ID'];
+    }
 
     /**
     * Add timetracker entry

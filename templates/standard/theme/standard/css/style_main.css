@@ -367,6 +367,10 @@ td.message ul {
     height: 27px;
 }
 
+#content-left>.content-spacer{
+	background-color: #28648b;
+}
+
 .content-spacer-b {
     clear: both;
     width: 100%;
@@ -379,7 +383,7 @@ td.message ul {
     width: 220px;
     min-height: 20px;
     background: url(../images/color-a.png) repeat 0 0;
-    margin: 0 0 0 0;
+	margin: 0 0 10px 0;
     padding: 0 0 23px 0;
     float: left;
     color: #6d7f93;
@@ -483,6 +487,17 @@ td.message ul {
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
     border-radius: 6px;
+}
+
+/* ## Tracker ################################### */
+
+#tracker .button {
+    background-color: #3c556e;
+    color: white;
+    font-weight: bold;
+    margin-right: 4px;
+    margin-top: 2px;
+    padding: 4px;
 }
 
 /* ## WINTOOLS ######################################## */
@@ -1230,6 +1245,9 @@ td.message ul {
 
 /* ## ONLINELISTE ######################################## */
 
+#onlinelist {
+	overflow: hidden;
+}
 #onlinelist ul {
     border-bottom: 1px solid #3c5570;
     float: left;

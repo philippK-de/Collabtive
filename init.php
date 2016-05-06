@@ -72,6 +72,7 @@ if (isset($_SESSION["userid"])) {
     $gender = $_SESSION["usergender"];
     // what the user may or may not do
     $userpermissions = $_SESSION["userpermissions"];
+    $opentrack = $_SESSION['opentrack'];
     // update user lastlogin for the onlinelist
     $mynow = time();
     if(isset($conn)) {
@@ -83,6 +84,7 @@ if (isset($_SESSION["userid"])) {
     $template->assign("lastlogin", $lastlogin);
     $template->assign("usergender", $gender);
     $template->assign("userpermissions", $userpermissions);
+    $template->assign('opentrack',$opentrack);
     $template->assign("loggedin", 1);
 }else {
     $template->assign("loggedin", 0);
