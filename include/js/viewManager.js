@@ -28,6 +28,7 @@ function createView(myEl) {
         url: myEl.url
     };
 
+
     /*
      * Send asyncronous request to the url specified in the model.
      *
@@ -97,8 +98,8 @@ function updateView(view, updateDependencies) {
                 //retrieve data and update the views model with it
                 var responseData = JSON.parse(myData.responseText);
 
-                Vue.set(view,"items",responseData.items);
-                Vue.set(view,"pages",pagination.listPages(responseData.count));
+                Vue.set(view, "items", responseData.items);
+                Vue.set(view, "pages", pagination.listPages(responseData.count));
 
                 //update dependencies
                 if (updateDependencies == true) {
@@ -109,8 +110,8 @@ function updateView(view, updateDependencies) {
                         for (var i = 0; i < viewsToUpdate.length; i++) {
                             //load the same sub pages for dependant views that are loaded for the root view
                             //viewsToUpdate[i].$set("limit", view.limit);
-                            Vue.set(viewsToUpdate[i],"limit",view.limit);
-                            Vue.set(viewsToUpdate[i],"offset",view.offset);
+                            Vue.set(viewsToUpdate[i], "limit", view.limit);
+                            Vue.set(viewsToUpdate[i], "offset", view.offset);
                             //viewsToUpdate[i].$set("offset", view.offset);
                             //recursive call
                             updateView(viewsToUpdate[i], viewsToUpdate[i].url);
@@ -165,13 +166,13 @@ var pagination = {
         var offset = page * this.itemsPerPage - this.itemsPerPage;
 
         //set the new limit and offset to the view
-        Vue.set(view,"limit",this.itemsPerPage);
-        Vue.set(view,"offset",offset);
+        Vue.set(view, "limit", this.itemsPerPage);
+        Vue.set(view, "offset", offset);
 
         //view.$set("limit", this.itemsPerPage);
         //view.$set("offset", offset);
         //update the current page for the view
-        Vue.set(view, "currentPage",page);
+        Vue.set(view, "currentPage", page);
         //view.$set("currentPage", page);
 
         //triger the view to be updated
@@ -291,7 +292,7 @@ closeEndcolor = '#377814';
 //endcolor for delete element flashing
 deleteEndcolor = '#c62424';
 /*
-* Function to display a confirm prompt, then call deleteElement();
+ * Function to display a confirm prompt, then call deleteElement();
  */
 function confirmDelete(message, element, url, view) {
     var check = confirm(message);
@@ -300,7 +301,7 @@ function confirmDelete(message, element, url, view) {
     }
 }
 /*
-* Function to delete an element from the datamodel / db as well as the DOM
+ * Function to delete an element from the datamodel / db as well as the DOM
  */
 function deleteElement(theElement, theUrl, theView) {
     new Ajax.Request(theUrl, {
@@ -384,3 +385,10 @@ var progressComponent = Vue.extend({
 });
 //bind to <loader> elemet
 Vue.component("loader", progressComponent);
+
+/*
+ * Register a vue filter to limit the length of strings rendered
+ */
+Vue.filter("truncate", function (value, maxLength) {
+    return value.substr(0, maxLength) + "...";
+});
