@@ -42,8 +42,6 @@
                 {literal}
                 <tbody v-for="item in items" class="alternateColors" id="messages_{{*item.ID}}"
                        rel="{{*item.ID}},{{*item.title}},{{*item.posted}},0,0,0">
-
-
                 <tr>
                     <td>
                         {/literal}{if $userpermissions.messages.close}{literal}
@@ -54,14 +52,14 @@
                     <td>
                         <div class="toggle-in">
                             <span class="acc-toggle" onclick="javascript:accord_msgs.activate(document.querySelector('#activityhead_content{{$index}}'));"></span>
-                            <a href="managemessage.php?action=showmessage&amp;mid={{*item.ID}}&amp;id={{*item.project}}" title="{{*item.title}}">{{*item.title}}</a>
+                            <a href="managemessage.php?action=showmessage&amp;mid={{*item.ID}}&amp;id={{*item.project}}" title="{{*item.title}}">{{*item.title | truncate '30' }}</a>
                         </div>
                     </td>
                     <td>
-                        <a href="managemessage.php?action=showproject&amp;id={{*item.project}}">{{*item.pname}}</a>
+                        <a href="managemessage.php?action=showproject&amp;id={{*item.project}}">{{*item.pname | truncate '30' }}</a>
                     </td>
                     <td>
-                        <a href="manageuser.php?action=profile&amp;id={{*item.user}}">{{*item.username}}</a>
+                        <a href="manageuser.php?action=profile&amp;id={{*item.user}}">{{*item.username | truncate '30' }}</a>
                     </td>
                     <td>{{*item.postdate}}</td>
                     <td class="tools">
@@ -79,18 +77,13 @@
                     <td colspan="6">
                         <div class="accordion_content" data-slide="{{$index}}" id="activityhead_content{{$index}}">
                             <div class="acc-in">
-
-
                                 <div class="avatar">
                                     <img src="thumb.php?width=80&amp;height=80&amp;pic=templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/no-avatar-male.jpg" />
-
                                 </div>
-
                                 <div class="message">
                                     <div class="message-in">
                                         {{{*item.text}}}
                                     </div>
-
                                     <!-- message milestones -->
                                     <p v-if="item.hasMilestones">
                                     <div v-if="item.hasMilestones" class="content-spacer-b"></div>
@@ -139,13 +132,9 @@
 
                                         </ul>
                                     </div>
-
                                     <div style="clear:both"></div>
-
-
                                 </div>
                                 <!-- div messages end -->
-
                             </div>
                         </div>
                     </td>
@@ -155,9 +144,7 @@
             </table>
 
             <div class="tablemenue"></div>
-
         </div> {* block END *}
     </div>
     {* messages END *}
-
 {/if}

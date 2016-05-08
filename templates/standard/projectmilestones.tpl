@@ -114,16 +114,17 @@
                                             <span class="acc-toggle"
                                                   onclick="javascript:accord_miles_late.activate($$('#accordion_miles_late .accordion_toggle')[{{$index}}]);toggleAccordeon('done_{{milestone.project}}',this);"></span>
                                             <a href="managemilestone.php?action=showmilestone&amp;msid={{*milestone.ID}}&amp;id={{*milestone.project}}"
-                                               title="{{*milestone.name}}">{{*milestone.name}}</a>
+                                               title="{{*milestone.name}}">{{*milestone.name | truncate '30' }}</a>
                                         </div>
                                     </td>
                                     <td class="c">{{milestone.fend}}</td>
-                                    <td class="days" style="text-align:right">-{{milestone.dayslate}}&nbsp;&nbsp;</td>
+                                    <td class="days" style="text-align:right">-{{*milestone.dayslate}}&nbsp;&nbsp;</td>
                                 {/literal}
                                 <td class="tools">
                                     {if $userpermissions.milestones.edit}
                                     {literal}
-                                        <a class="tool_edit" href="managemilestone.php?action=editform&amp;mid={{milestone.ID}}&amp;id={{milestone.project}}" title="{/literal}{#edit#}"></a>
+                                        <a class="tool_edit" href="managemilestone.php?action=editform&amp;mid={{*milestone.ID}}&amp;id={{*milestone.project}}"
+                                        title="{/literal}{#edit#}"></a>
                                     {/if}
                                     {if $userpermissions.milestones.del}
                                     {literal}
@@ -141,7 +142,7 @@
                                     <div class="accordion_content">
                                         <div class="acc-in">
                                             <div class="message-in">
-                                                {{milestone.desc}}
+                                                {{*milestone.desc}}
                                             </div>
                                         </div>
                                     </div>
@@ -183,13 +184,13 @@
                                     <td class="b">
                                         <div class="toggle-in">
                                             <span class="acc-toggle"
-                                                  onclick="javascript:accord_miles_new.activate($$('#accordion_miles_new .accordion_toggle')[{{$index}}]);toggleAccordeon('done_{{milestone.project}}',this);"></span>
-                                            <a href="managemilestone.php?action=showmilestone&amp;msid={{milestone.ID}}&amp;id={{milestone.project}}"
-                                               title="{{milestone.name}}">{{milestone.name}}</a>
+                                                  onclick="javascript:accord_miles_new.activate($$('#accordion_miles_new .accordion_toggle')[{{$index}}]);toggleAccordeon('done_{{*milestone.project}}',this);"></span>
+                                            <a href="managemilestone.php?action=showmilestone&amp;msid={{milestone.ID}}&amp;id={{*milestone.project}}"
+                                               title="{{*milestone.name}}">{{*milestone.name}}</a>
                                         </div>
                                     </td>
                                     <td class="c">{{milestone.fend}}</td>
-                                    <td class="days" style="text-align:right">{{milestone.dayslate}}&nbsp;&nbsp;</td>
+                                    <td class="days" style="text-align:right">{{*milestone.dayslate}}&nbsp;&nbsp;</td>
                                 {/literal}
                                 <td class="tools">
                                     {if $userpermissions.milestones.edit}
@@ -250,7 +251,8 @@
                                                         </li>
 
                                                     </ul>
-                                                </div><!--inwrapper End-->
+                                                </div>
+                                                <!--inwrapper End-->
                                             </div>
                                         </div>
                                     </div>
@@ -294,11 +296,11 @@
                                             <span class="acc-toggle"
                                                   onclick="javascript:accord_miles_new.activate($$('#accordion_miles_new .accordion_toggle')[{{$index}}]);toggleAccordeon('done_{{milestone.project}}',this);"></span>
                                             <a href="managemilestone.php?action=showmilestone&amp;msid={{*milestone.ID}}&amp;id={{*milestone.project}}"
-                                               title="{{*milestone.name}}">{{*milestone.name}}</a>
+                                               title="{{*milestone.name}}">{{*milestone.name | truncate '30' }}</a>
                                         </div>
                                     </td>
-                                    <td class="c">{{milestone.startstring}} - {{milestone.endstring}}</td>
-                                    <td class="days" style="text-align:right">{{milestone.dayslate}}&nbsp;&nbsp;</td>
+                                    <td class="c">{{*milestone.startstring}} - {{*milestone.endstring}}</td>
+                                    <td class="days" style="text-align:right">{{*milestone.dayslate}}&nbsp;&nbsp;</td>
                                 {/literal}
                                 <td class="tools">
                                     {if $userpermissions.milestones.edit}

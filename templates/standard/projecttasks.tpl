@@ -59,8 +59,8 @@
 
                         <h2>
                             <a href="managetasklist.php?action=showtasklist&amp;id={$project.ID}&amp;tlid={$lists[list].ID}"
-                               title="{#tasklist#} {$lists[list].name}"><img
-                                        src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png"
+                               title="{#tasklist#} {$lists[list].name}">
+                                        <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png"
                                         alt=""/>{$lists[list].name|truncate:70:"...":true}</a>
                         </h2>
                     </div>
@@ -101,7 +101,7 @@
                                         {/literal}
                                         {if $userpermissions.tasks.close}
                                         {literal}
-                                            <a class="butn_check" href="javascript:closeElement('task_{{task.ID}}','managetask.php?action=close&amp;tid={{*task.ID}}&amp;id={{*task.project}}',projectTasksView_{/literal}{$lists[list].ID}{literal});" title="{/literal}{#close#}"></a>
+                                            <a class="butn_check" href="javascript:closeElement('task_{{*task.ID}}','managetask.php?action=close&amp;tid={{*task.ID}}&amp;id={{*task.project}}',projectTasksView_{/literal}{$lists[list].ID}{literal});" title="{/literal}{#close#}"></a>
                                         {/if}
                                     </td>
                                     {literal}
@@ -109,25 +109,25 @@
                                         <div class="toggle-in">
                                             <span class="acc-toggle"
                                                   onclick="javascript:accord_{{task.liste}}.activate(document.querySelector('#contentblock-{/literal}{$lists[list].ID}{literal}_content{{$index}}'));"></span>
-                                            <a href="managetask.php?action=showtask&amp;tid={{task.ID}}&amp;id={{task.project}}"
-                                               title="{{task.title}}">
-                                                {{task.title}}
+                                            <a href="managetask.php?action=showtask&amp;tid={{*task.ID}}&amp;id={{*task.project}}"
+                                               title="{{*task.title}}">
+                                                {{*task.title | truncate '30' }}
                                             </a>
                                         </div>
                                     </td>
                                     <td>
-                                        <a v-for="user in task.users" href="manageuser.php?action=profile&amp;id={{user.ID}}">{{user.name}}</a>
+                                        <a v-for="user in task.users" href="manageuser.php?action=profile&amp;id={{*user.ID}}">{{*user.name}}</a>
                                     </td>
-                                    <td style="text-align:right">{{task.daysleft}}&nbsp;&nbsp;</td>
+                                    <td style="text-align:right">{{*task.daysleft}}&nbsp;&nbsp;</td>
                                     <td class="tools">
                                         {/literal}
                                         {if $userpermissions.tasks.edit}
                                         {literal}
-                                            <a class="tool_edit" href="javascript:void(0);" onclick="change('managetask.php?action=editform&amp;tid={{task.ID}}&amp;id={{task.project}}','form_{{task.liste}}');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_{{task.liste}}');" title="{/literal}{#edit#}"></a>
+                                            <a class="tool_edit" href="javascript:void(0);" onclick="change('managetask.php?action=editform&amp;tid={{task.ID}}&amp;id={{*task.project}}','form_{{*task.liste}}');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_{{*task.liste}}');" title="{/literal}{#edit#}"></a>
                                         {/if}
                                         {if $userpermissions.tasks.del}
                                         {literal}
-                                            <a class="tool_del" href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','task_{{task.ID}}','managetask.php?action=del&amp;tid={{task.ID}}&amp;id={{task.project}}', projectTasksView_{/literal}{$lists[list].ID}{literal});"  title="{/literal}{#delete#}"></a>
+                                            <a class="tool_del" href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','task_{{*task.ID}}','managetask.php?action=del&amp;tid={{*task.ID}}&amp;id={{*task.project}}', projectTasksView_{/literal}{$lists[list].ID}{literal});"  title="{/literal}{#delete#}"></a>
                                         {/if}
                                     </td>
                                 </tr>
@@ -181,7 +181,9 @@
                                             </td>
                                             <td class="b">
                                                 <div class="toggle-in">
-                                                    <a href="managetask.php?action=showtask&amp;tid={{*oldtask.ID}}&amp;id={{                                                   *oldtask.project}}" title="{{*oldtask.title}}">{{*oldtask.title}}</a>
+                                                    <a href="managetask.php?action=showtask&amp;tid={{*oldtask.ID}}&amp;id={{*oldtask.project}}" title="{{*oldtask.title}}">
+                                                        {{*oldtask.title | truncate '30' }}
+                                                    </a>
                                                 </div>
                                             </td>
                                             <td class="c">

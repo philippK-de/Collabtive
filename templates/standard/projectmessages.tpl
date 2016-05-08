@@ -113,7 +113,7 @@
                                     <span class="acc-toggle"
                                           onclick="javascript:accord_messages.activate(document.querySelector('#block_msgs_content{{$index}}'));"></span>
                                     <a href="managemessage.php?action=showmessage&amp;mid={{*message.ID}}&amp;id={{*message.project}}"
-                                       title="{{*message.title}}">{{message.title}}</a>
+                                       title="{{*message.title}}">{{message.title | truncate '30' }}</a>
                                 </div>
                             </td>
                             <td style="text-align:right">
@@ -170,7 +170,7 @@
                                                                     </td>
                                                                     <td class="thumb">
                                                                         {/literal}
-                                                                        <img src="templates/{$settings.template}/theme/{$settings.theme}/images/files/{literal}{{file.type}}.png" alt=""/>
+                                                                        <img src="templates/{$settings.template}/theme/{$settings.theme}/images/files/{literal}{{*file.type}}.png" alt=""/>
                                                                         </a>
                                                                     </td>
                                                                     {/literal}
@@ -179,7 +179,7 @@
                                                                             {if $userpermissions.files.del}
                                                                             {literal}
                                                                                 <a class="del" href="javascript:confirmfunction
-																					('{/literal}{$langfile.confirmdel}{literal}','deleteElement(\'fli_{{file.ID}}\',\'managefile.php?action=delete&id={{message.project}}&file={{file.ID}}\')');" title="{/literal}{#delete#}"></a>
+																					('{/literal}{$langfile.confirmdel}{literal}','deleteElement(\'fli_{{file.ID}}\',\'managefile.php?action=delete&id={{*message.project}}&file={{file.ID}}\')');" title="{/literal}{#delete#}"></a>
                                                                             {/if}
                                                                         </div>
                                                                     </td>
@@ -202,8 +202,6 @@
                                             </div>
                                             <!-- inwrapper End -->
                                             <div style="clear:both"></div>
-
-
                                         </div>
                                         <!-- div messages end -->
                                     </div>
@@ -211,7 +209,6 @@
                             </td>
                         </tr>
                         </tbody>
-
                     </table>
                 </div>
                 <!--smooth End-->

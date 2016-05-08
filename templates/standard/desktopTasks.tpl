@@ -67,14 +67,14 @@
                                 <div class="toggle-in">
                                     <span id="desktoptaskstoggle{{item.ID}}" class="acc-toggle" onclick="javascript:accord_tasks.activate(document.querySelector('#taskhead_content{{$index}}'));"></span>
                                     <a href="managetask.php?action=showtask&amp;id={{*item.project}}&amp;tid={{*item.ID}}" title="{{*item.title}}">
-                                        {{item.title}}
+                                        {{*item.title | truncate '30' }}
                                     </a>
                                 </div>
                             </td>
                             <td>
                                 <a href="managetask.php?action=showproject&amp;id={{*item.project}}">{{*item.pname}}</a>
                             </td>
-                            <td style="text-align:right">{{item.daysleft}}&nbsp;&nbsp;</td>
+                            <td style="text-align:right">{{*item.daysleft}}&nbsp;&nbsp;</td>
                             <td class="tools">
 
                                 {/literal}{if $userpermissions.tasks.edit} {literal}

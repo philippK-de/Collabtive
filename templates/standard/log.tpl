@@ -45,7 +45,7 @@
             </td>
             <td>
                 <div class="toggle-in">
-                    <strong>{{*logitem.name}}</strong><br/>
+                    <strong>{{*logitem.name | truncate '30' }}</strong><br/>
 							<span class="info">{/literal}{#was#}{literal}
                                 <span v-if="logitem.action == 1">
                                     {/literal}
@@ -87,7 +87,7 @@
                 </div>
             </td>
             <td>
-                <a href="manageuser.php?action=profile&amp;id={{*logitem.user}}">{{*logitem.username}}</a>
+                <a href="manageuser.php?action=profile&amp;id={{*logitem.user}}">{{*logitem.username | truncate '30' }}</a>
             </td>
             <td class="tools"></td>
         </tr>

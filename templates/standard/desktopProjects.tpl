@@ -122,19 +122,19 @@
                 <div class="toggleblock">
                     <table cellpadding="0" cellspacing="0" border="0" id="acc-oldprojects">
 
-                        <tbody v-for="item in items.closed" class="alternateColors" id="proj_{{item.ID}}">
+                        <tbody v-for="item in items.closed" class="alternateColors" id="proj_{{*item.ID}}">
                         <tr>
                             <td class="a">
                                 {/literal}
                                 {if $userpermissions.projects.add}
                                 <a class="butn_checked"
-                                   href="manageproject.php?action=open&amp;id={literal}{{item.ID}}{/literal}"
+                                   href="manageproject.php?action=open&amp;id={literal}{{*item.ID}}{/literal}"
                                    title="{#open#}"></a>
                                 {/if}
                                 {literal}
                             </td>
                             <td class="b">
-                                {{item.name}}
+                                {{*item.name | truncate '30' }}
                             </td>
                            <td class="tools">
                                 {/literal}

@@ -49,7 +49,7 @@
                             <span class="acc-toggle"
                                   onclick="javascript:accord_projects.activate(document.querySelectorAll('#projecthead .accordion_toggle')[{{$index}}]);toggleAccordeon('projecthead',this);"></span>
                             <a href="manageproject.php?action=showproject&amp;id={{*project.ID}}" title="{{*project.name}}">
-                                {{*project.name}}
+                                {{*project.name | truncate '30' }}
                             </a>
                         </div>
                     </td>

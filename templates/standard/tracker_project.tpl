@@ -82,15 +82,15 @@
 							<td>
 								<div class="toggle-in">
 								<span class="acc-toggle" onclick="javascript:accord_tracker.activate(document.querySelector('#acc_tracker_content{{$index}}'));"></span>
-									<a href = "manageuser.php?action=profile&amp;id={{track.user}}" title="{{track.pname}}">
-										{{track.uname}}
+									<a href = "manageuser.php?action=profile&amp;id={{*track.user}}" title="{{*track.pname}}">
+										{{*track.uname | truncate '30' }}
 									</a>
 								</div>
 							</td>
 							<td>{{*track.daystring}}</td>
 							<td>{{*track.startstring}}</td>
 							<td>{{*track.endstring}}</td>
-							<td style="text-align:right">{{track.hours}}&nbsp;&nbsp;</td>
+							<td style="text-align:right">{{*track.hours}}&nbsp;&nbsp;</td>
 							<td class="tools">
 							    {/literal}
 								{if $userpermissions.timetracker.edit}
