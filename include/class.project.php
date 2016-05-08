@@ -475,6 +475,27 @@ class project
     }
 
     /**
+     * Counts all open or closed projects.
+     *
+     * @param int $status Status of the project (1=open, 2= closed)
+     * @return int $count Number of open or closed projects
+     */
+    function countProjects($status = 1)
+    {
+        global $conn;
+
+        $status = (int) $status;
+
+        $countStmt = $conn->prepare("SELECT COUNT(*) FROM projekte WHERE `status`= ?");
+        $countStmt->execute(array($status));
+
+        $count = $countStmt->fetch();
+        $count = $count["COUNT(*)"];
+
+        return $count;
+    }
+
+    /**
      * Lists all projects assigned to a given member ordered by due date ascending
      *
      * @param int $user User id
@@ -512,6 +533,29 @@ class project
         } else {
             return false;
         }
+    }
+
+    /**
+     * Counts all project assigned to a given member.
+     *
+     * @param int $user ID of the user
+     * @param int $status Status of the project (1=open, 2= closed)
+     * @return int $count Number of member's projects
+     */
+    function countMyProjects($user, $status = 1)
+    {
+        global $conn;
+
+        $user = (int) $user;
+        $status = (int) $status;
+
+        $countStmt = $conn->prepare("SELECT COUNT(*) FROM projekte_assigned JOIN projekte ON projekte.ID = projekte_assigned.projekt WHERE user = $user AND projekte.status = $status");
+        $countStmt->execute(array($status));
+
+        $count = $countStmt->fetch();
+        $count = $count["COUNT(*)"];
+
+        return $count;
     }
 
     /**
@@ -594,7 +638,7 @@ class project
     }
 
     /**
-     * Count members in a project
+     * Counts all members in a project.
      *
      * @param int $project Project ID
      * @return int $num Number of members
@@ -602,7 +646,7 @@ class project
     function countMembers($project)
     {
         global $conn;
-        $project = (int)$project;
+        $project = (int) $project;
 
         $numStmt = $conn->prepare("SELECT COUNT(*) FROM projekte_assigned WHERE projekt = ?");
         $numStmt->execute(array($project));

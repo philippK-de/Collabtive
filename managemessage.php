@@ -458,7 +458,7 @@ elseif ($action == "mymsgs")
     $project = new project();
     $myfile = new datei();
     // get all uof the users projects
-    $myprojects = $project->getMyProjects($userid);
+    $myprojects = $project->getMyProjects($userid, 1, 0, 10000);
     $cou = 0;
     $messages = array();
     // loop through the projects and get messages and files for each project
@@ -534,7 +534,7 @@ elseif ($action == "mymsgs-pdf") {
     $project = new project();
     $myfile = new datei();
     // get all uof the users projects
-    $myprojects = $project->getMyProjects($userid);
+    $myprojects = $project->getMyProjects($userid, 1, 0, 10000);
     $cou = 0;
     $messages = array();
     // loop through the projects and get messages and files for each project

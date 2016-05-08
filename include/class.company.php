@@ -223,6 +223,24 @@ class company {
     }
 
     /**
+     * Counts all companies.
+     *
+     * @return int $count Number of companies
+     */
+    function countAllCompanies()
+    {
+        global $conn;
+
+        $countStmt = $conn->prepare("SELECT COUNT(*) FROM company");
+        $countStmt->execute();
+
+        $count = $countStmt->fetch();
+        $count = $count["COUNT(*)"];
+
+        return $count;
+    }
+
+    /**
      * Get a company including all of its members
      *
      * @param int $id Company ID

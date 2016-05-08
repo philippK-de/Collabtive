@@ -53,7 +53,7 @@ if(isset($cleanGet["limit"]))
 }
 
 $myOpenProjects = $project->getMyProjects($userid, 1, $offset, $limit);
-$projectnum = count($project->getMyProjects($userid, 1, 0, 100000000000));
+$projectnum = $project->countMyProjects($userid, 1);
 $template->assign("openProjects", $myOpenProjects);
 
 // If user has projects, loop through them and get the messages and tasks belonging to those projects
@@ -75,7 +75,6 @@ if (!empty($myOpenProjects)) {
         $cou = $cou + 1;
     }
 }
-$myClosedProjects = $project->getMyProjects($userid, 0);
 // If the user is allowed to add projects, also get all users to assign to those projects
 if ($userpermissions["projects"]["add"]) {
     $user = new user();
@@ -123,17 +122,13 @@ if ($mode == "login") {
         }
     }
 }
-// Get todays date and count tasks, projects and messages for display
-$today = date("d");
-
-$oldProjectnum = count($myClosedProjects[0]);
 
 if(!$action) {
 // Assign everything to the template engine
     $template->assign("title", $langfile["desktop"]);
     $template->assign("today", $today);
 
-    $template->assign("closedProjectnum", $oldProjectnum);
+    $template->assign("closedProjectnum", $project->countMyProjects($userid, 0));
     $template->assign("projectov", "yes");
 
     $template->assign("mode", $mode);
@@ -146,7 +141,7 @@ elseif($action == "myprojects")
 {
     //create datastructure for projects
     $projects["open"] = $myOpenProjects;
-    $projects["closed"] = $myClosedProjects;
+    $projects["closed"] = $project->getMyProjects($userid, 0);
 
     //add projects to datastructure for JSON
     $myprojects["items"] = $projects;
@@ -154,7 +149,6 @@ elseif($action == "myprojects")
     $myprojects["count"] = $projectnum;
 
     echo json_encode($myprojects);
-
 }
 elseif($action == "mytasks")
 {

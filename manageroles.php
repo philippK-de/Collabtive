@@ -94,7 +94,7 @@ elseif($action == "adminRoles")
 
     // Get 10 roles
     $allRoles = $roleobj->getAllRoles($limit, $offset);
-    $allRolesNum = count($roleobj->getAllRoles(10000));
+    $allRolesNum = $roleobj->countAllRoles();
 
     $roles["items"] = $allRoles;
     $roles["count"] = $allRolesNum;

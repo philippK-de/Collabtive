@@ -251,7 +251,7 @@ elseif ($action == "adduser") {
     $usr = $user->getProfile($id);
     // Get user's projects
     $proj = new project();
-    $projects = $proj->getMyProjects($id);
+    $projects = $proj->getMyProjects($id, 1, 0, 10000);
     // Get members of each project
     if (!empty($projects)) {
         for ($i = 0; $i < count($projects); $i++) {
@@ -395,7 +395,7 @@ elseif($action == "adminProjects")
         }
     }
     //get total number of open projects for pagination
-    $openProjectsNum = count($project->getProjects(1, 10000000));
+    $openProjectsNum = $project->countProjects(1);
 
     //get all closed projects
     $closedProjects = $project->getProjects(0, 100000000);
@@ -408,7 +408,6 @@ elseif($action == "adminProjects")
     $allProjects["count"] = $openProjectsNum;
 
     echo json_encode($allProjects);
-
 }
 //add new project
 elseif ($action == "addpro") {
@@ -509,7 +508,7 @@ elseif($action == "adminCustomers")
     }
 
     $allCustomers = $companyObj->getAllCompanies($limit,$offset);
-    $allCustomersNum = count($companyObj->getAllCompanies(10000000000));
+    $allCustomersNum = $companyObj->countAllCompanies();
 
     $customers["items"] = $allCustomers;
     $customers["count"] = $allCustomersNum;

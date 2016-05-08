@@ -202,6 +202,24 @@ class roles {
     }
 
     /**
+     * Counts all roles.
+     *
+     * @return int $count Number of roles
+     */
+    function countAllRoles()
+    {
+        global $conn;
+
+        $countStmt = $conn->prepare("SELECT COUNT(*) FROM roles");
+        $countStmt->execute();
+
+        $count = $countStmt->fetch();
+        $count = $count["COUNT(*)"];
+
+        return $count;
+    }
+
+    /**
      * Translate name of default roles
      *
      * Intended for viewing translated list of AllRoles.
