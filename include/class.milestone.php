@@ -595,7 +595,7 @@ class milestone
      * @param int $milestone Milestone ID
      * @return array $lists Details of the tasklists
      */
-    private function getMilestoneTasklists($milestone)
+    function getMilestoneTasklists($milestone)
     {
         global $conn;
         $milestone = (int)$milestone;

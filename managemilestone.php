@@ -84,8 +84,33 @@ if ($action == "add") {
         $template->display("error.tpl");
         die();
     }
+
+    // Get milestone ID and start date from form
+    $mid = $cleanPost["mid"];
+    $start = $cleanPost["start"];
+    $end = $cleanPost["end"];
+
     // Edit the milestone
-    if ($milestone->edit($cleanPost["mid"], $cleanPost["name"], $cleanPost["desc"], $cleanPost["start"], $cleanPost["end"])) {
+    $changeAllDueDates = $cleanPost["changeallduedates"];
+
+    if ($changeAllDueDates == "on") {
+        $milestoneData = $milestone->getMilestone($mid);
+
+        $endOffset = strtotime($end) - $milestoneData["end"];
+
+        $milestoneTasklist = $milestone->getMilestoneTasklists($mid);
+
+        $updStmt = $conn->prepare("UPDATE tasks SET `end`=? WHERE ID = ?");
+        foreach($milestoneTasklist as $tasklist) {
+            foreach($tasklist["tasks"] as $task) {
+                $newEnd = $task["end"] + $endOffset;
+                $upd = $updStmt->execute(array($newEnd, $task["ID"]));
+            }
+        }
+    }
+
+    // Edit the milestone
+    if ($milestone->edit($mid, $cleanPost["name"], $cleanPost["desc"], $start, $end)) {
         $loc = $url . "managemilestone.php?action=showproject&id=$id&mode=edited";
         header("Location: $loc");
     } else {

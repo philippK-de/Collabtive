@@ -20,6 +20,7 @@ Collabtive 3.0
 + Made adding of projects asyncronous
 + Project tasks are now arranged as a block accordion
 + Rewrote accordion code to no longer depend on prototype.js
++ Added feature to optionally adapt all lower-level deadlines upon changing a project or milestone deadline
 
 Collabtive 2.1
 + Removed accordion-related JS legacy code from desktop

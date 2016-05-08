@@ -90,6 +90,11 @@
 							<input type="checkbox" class="checkbox" value="neverdue" name="neverdue" id="neverdue" {if $project.end == 0} checked = "checked" {/if} onclick="$('end').value='';$('end').disabled=!$('end').disabled;">
 							<label>{$langfile.neverdue}</label>
 						</div>
+                        <div class="row">
+                            <label for="changeallduedates"></label>
+                            <input type="checkbox" class="checkbox" name="changeallduedates" id="changeallduedates" />
+                            <label>{$langfile.changeallduedates}</label>
+                        </div>
 
 						<div class="datepick">
 							<div id="datepicker_project" class="picker" style="display:none;"></div>

@@ -77,7 +77,43 @@ if ($action == "editform") {
         $cleanPost["end"] = 0;
     }
 
-    if ($project->edit($cleanGet["id"], $cleanPost["name"], $cleanPost["desc"], $cleanPost["end"], $cleanPost["budget"])) {
+    $id = $cleanGet["id"];
+    $end = $cleanPost["end"];
+    $changeAllDueDates = $cleanPost["changeallduedates"];
+
+    if($changeAllDueDates == "on"){
+        $projectData = $project->getProject($id);
+        $oldEnd = $projectData["end"];
+
+        // Only update dependencies if project has an old and new due date
+        if ($end != 0 && $oldEnd) {
+            $endOffset = strtotime($end) - $oldEnd;
+
+            // Update tasks
+            $taskObj = new task();
+            $projectTasks = $taskObj->getProjectTasks($id);
+
+            $taskUpdStmt = $conn->prepare("UPDATE tasks SET `end`=? WHERE ID = ?");
+            foreach($projectTasks as $task)
+            {
+                $newEnd = $task["end"] + $endOffset;
+                $upd = $taskUpdStmt->execute(array($newEnd, $task["ID"]));
+            }
+
+            // Update milestones
+            $milestoneObj = new milestone();
+            $projectMilestones = $milestoneObj->getAllProjectMilestones($id, 10000);
+
+            $milestoneUpdStmt = $conn->prepare("UPDATE milestones SET `end`=? WHERE ID = ?");
+            foreach($projectMilestones as $milestone)
+            {
+                $newEnd = $milestone["end"] + $endOffset;
+                $upd = $milestoneUpdStmt->execute(array($newEnd, $milestone["ID"]));
+            }
+        }
+    }
+
+    if ($project->edit($id, $cleanPost["name"], $cleanPost["desc"], $end, $cleanPost["budget"])) {
         header("Location: manageproject.php?action=showproject&id=" . $cleanGet["id"] . "&mode=edited");
     } else {
         $template->assign("editproject", 0);

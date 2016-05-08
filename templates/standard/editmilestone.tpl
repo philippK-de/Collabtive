@@ -63,6 +63,11 @@
 							<label for="end">{#end#}:</label>
 							<input type="text" value="{$milestone.endstring}" name="end" id="end" required="1" realname="{#end#}" />
 						</div>
+                        <div class="row">
+                            <label for="changeallduedates"></label>
+                            <input type="checkbox" class="checkbox" name="changeallduedates" id="changeallduedates" />
+                            <label>{$langfile.changeallduedates}</label>
+                        </div>
 						
 						<div class="datepick">
 							<div id="datepicker_mile" class="picker" style="display:none;"></div>
