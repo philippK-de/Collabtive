@@ -1,4 +1,5 @@
 <div id="desktopprojects" class="projects" style="padding-bottom:2px;">
+    <test></test>
     <div class="headline">
         <a href="javascript:void(0);" id="projecthead_toggle" class="win_block" onclick=""></a>
 
@@ -56,7 +57,7 @@
                                 <span id="desktopprojects_toggle{{ item.ID }}" class="acc-toggle"
                                       onclick="javascript:accord_projects.activate(document.querySelector('#projecthead_content{{$index}}'));"></span>
                             <a href="manageproject.php?action=showproject&amp;id={{*item.ID}}" title="{{*item.name}}">
-                                {{*item.name}}
+                                {{*item.name | truncate '30' }}
                             </a>
                         </div>
                     </td>
