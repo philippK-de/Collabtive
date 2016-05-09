@@ -33,7 +33,7 @@
 
     <div id="upcomingMilestones" class="toggleblock" v-cloak>
 
-        <table id="accordion_miles_new" cellpadding="0" cellspacing="0" border="0" style="clear:both;">
+        <table id="accordion_miles_upcoming" cellpadding="0" cellspacing="0" border="0" style="clear:both;">
             <tbody v-for="milestone in items" class="alternateColors" id="miles_upcoming_{{milestone.ID}}">
             <tr>
                 <td class="a">
@@ -46,8 +46,8 @@
                 {literal}
                     <td class="b">
                         <div class="toggle-in">
-                                            <span class="acc-toggle"
-                                                  onclick="javascript:accord_miles_new.activate($$('#accordion_miles_new .accordion_toggle')[{{$index}}]);toggleAccordeon('done_{{milestone.project}}',this);"></span>
+                            <span class="acc-toggle"
+                                  onclick="javascript:accord_miles_upcoming.activate(document.querySelector('#upcomingMilestones_content{{$index}}'));"></span>
                             <a href="managemilestone.php?action=showmilestone&amp;msid={{*milestone.ID}}&amp;id={{*milestone.project}}"
                                title="{{*milestone.name}}">{{*milestone.name | truncate '30' }}</a>
                         </div>
@@ -70,79 +70,62 @@
             {literal}
             <tr class="acc">
                 <td colspan="5">
-                    <div class="accordion_toggle"></div>
-                    <div class="accordion_content">
+                    <div class="accordion_content" data-slide="{{$index}}" id="upcomingMilestones_content{{$index}}">
                         <div class="acc-in">
                             <div class="message-in">
-                                {{{milestone.desc}}}
+                                {{{*milestone.desc}}}
 
                                 <!--Tasklists-->
-                                {if $upcomingStones[ustone].tasklists[0][0]}
-                                <div class="content-spacer-b"></div>
-                                <h2>{#tasklists#}</h2>
+                                <template v-if="milestone.tasklists.length > 0">
+                                    <div class="content-spacer-b"></div>
+                                    <h2>{/literal}{#tasklists#}{literal}</h2>
 
-                                <div class="inwrapper">
-                                    <ul style="list-style-type:none;">
-                                        {section name=task loop=$upcomingStones[ustone].tasklists}
-                                        <li>
-                                            <div class="itemwrapper">
-
-                                                <table cellpadding="0" cellspacing="0" border="0">
-                                                    <tr>
-                                                        <td class="leftmen" valign="top">
-                                                            <div class="inmenue">
-                                                                <!-- <a class="more" href="javascript:fadeToggle('info_{$members[member].ID}');"></a>	-->
-                                                            </div>
-                                                        </td>
-                                                        <td class="thumb">
-                                                            <a href="managetasklist.php?action=showtasklist&amp;tlid={$upcomingStones[ustone].tasklists[task].ID}&amp;id={$project.ID}"
-                                                               title="{$upcomingStones[ustone].tasklists[task].name}">
-                                                                <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png"
-                                                                     style="width: 32px; height: auto;" alt=""/>
-                                                            </a>
-                                                        </td>
-                                                        <td class="rightmen" valign="top">
-                                                            <div class="inmenue">
-                                                                <!--
-                                                                    <a class="del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'files_focus{$ordner[file].ID}\',\'managefile.php?action=delete&amp;id={$project.ID}&amp;file={$folders[fold].ID}\')');" title="{#delete#}" onclick="fadeToggle('iw_{$folders[fold].ID}');"></a>
-                                                                    <a class="edit" href="#" title="{#editfile#}"></a>
-                                                                -->
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="3">
-																							<span class="name">
-																								<a href="managetasklist.php?action=showtasklist&amp;tlid={$upcomingStones[ustone].tasklists[task].ID}&amp;id={$project.ID}"
-                                                                                                   title="{$upcomingStones[ustone].tasklists[task].name}">
-                                                                                                    {if $upcomingStones[ustone].tasklists[task].name
-                                                                                                    != ""}
-                                                                                                    {$upcomingStones[ustone].tasklists[task].name|truncate:13:"...":true}
-                                                                                                    {else}
-                                                                                                    {#tasklist#}
-                                                                                                    {/if}
-                                                                                                </a>
+                                    <div class="inwrapper">
+                                        <ul style="list-style-type:none;">
+                                            <li v-for="tasklist in milestone.tasklists">
+                                                <div class="itemwrapper">
+                                                    <table cellpadding="0" cellspacing="0" border="0">
+                                                        <tr>
+                                                            <td class="leftmen" valign="top">
+                                                            </td>
+                                                            <td class="thumb">
+                                                                <a href="managetasklist.php?action=showtasklist&amp;tlid={{tasklist.ID}}&amp;id={{*tasklist.project}}"
+                                                                   title="{{*tasklist.name}}">
+                                                                    <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt=""/>
+                                                                </a>
+                                                            </td>
+                                                            <td class="rightmen" valign="top">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3">
+                                                            <span class="name">
+                                                                <a href="managetasklist.php?action=showtasklist&amp;tlid={{*tasklist.ID}}&amp;id={{*taklist.project}}"
+                                                                   title="{{*tasklist.name}}">
+                                                                    {{tasklist.name | truncate '10' }}
+                                                                </a>
 																							</span>
-                                                        </td>
-                                                    <tr/>
-                                                </table>
+                                                            </td>
+                                                        <tr/>
+                                                    </table>
 
-                                            </div>
-                                            {*itemwrapper End*}
-                                        </li>
-                                        {/section} <!--loop Tasklists End-->
+                                                </div>
+                                                {*itemwrapper End*}
+                                            </li>
+                                            {/section} <!--loop Tasklists End-->
 
-                                    </ul>
-                                </div>
-                                <!--inwrapper End-->
+                                        </ul>
+                                    </div>
+                                    <!--inwrapper End-->
 
-                                {/if}
+                                </template>
                             </div>
                         </div>
                     </div>
                 </td>
             </tr>
             </tbody>
+
 
         </table>
     </div>

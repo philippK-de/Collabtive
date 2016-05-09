@@ -42,8 +42,10 @@
                 {literal}
                     <td class="b">
                         <div class="toggle-in">
-                                            <span class="acc-toggle"
-                                                  onclick="javascript:accord_miles_late.activate($$('#accordion_miles_late .accordion_toggle')[{{$index}}]);toggleAccordeon('done_{{milestone.project}}',this);"></span>
+                            <span class="acc-toggle"
+                                  onclick="javascript:accord_miles_late.activate(document.querySelector('#lateMilestones_content{{$index}}'));">
+
+                            </span>
                             <a href="managemilestone.php?action=showmilestone&amp;msid={{*milestone.ID}}&amp;id={{*milestone.project}}"
                                title="{{*milestone.name}}">{{*milestone.name | truncate '30' }}</a>
                         </div>
@@ -69,8 +71,7 @@
             </tr>
             <tr class="acc">
                 <td colspan="5">
-                    <div class="accordion_toggle"></div>
-                    <div class="accordion_content">
+                    <div class="accordion_content" data-slide="{{$index}}" id="lateMilestones_content{{$index}}">
                         <div class="acc-in">
                             <div class="message-in">
                                 {{*milestone.desc}}

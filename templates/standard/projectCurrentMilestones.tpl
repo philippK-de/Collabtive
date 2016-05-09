@@ -60,12 +60,14 @@
                         <td class="b">
                             <div class="toggle-in">
                                             <span class="acc-toggle"
-                                                  onclick="javascript:accord_miles_new.activate($$('#accordion_miles_new .accordion_toggle')[{{$index}}]);toggleAccordeon('done_{{*milestone.project}}',this);"></span>
+                                                  onclick="javascript:accord_miles_new.activate(document.querySelector('#currentMilestones_content{{$index}}'));">
+
+                                            </span>
                                 <a href="managemilestone.php?action=showmilestone&amp;msid={{milestone.ID}}&amp;id={{*milestone.project}}"
-                                   title="{{*milestone.name}}">{{*milestone.name}}</a>
+                                   title="{{*milestone.name}}">{{*milestone.name | truncate '30'}}</a>
                             </div>
                         </td>
-                        <td class="c">{{milestone.fend}}</td>
+                        <td class="c">{{*milestone.fend}}</td>
                         <td class="days" style="text-align:right">{{*milestone.dayslate}}&nbsp;&nbsp;</td>
                     {/literal}
                     <td class="tools">
@@ -74,20 +76,20 @@
                             <a class="tool_edit" href="managemilestone.php?action=editform&amp;mid={{milestone.ID}}&amp;id={{*milestone.project}}" title="{/literal}{#edit#}"></a>
                         {/if}
                         {if $userpermissions.milestones.del}
+                         {literal}
                             <a class="tool_del"
-                               href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'miles_{$milestones[stone].ID}\',\'managemilestone.php?action=del&amp;mid={$milestones[stone].ID}&amp;id={$project.ID}\')');"
-                               title="{#delete#}"></a>
+                               href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','miles_{{*milestone.ID}}','managemilestone.php?action=del&amp;mid={{*milestone.ID}}&amp;id={{*milestone.project}}');"
+                               title="{/literal}{#delete#}"></a>
                         {/if}
                     </td>
                 </tr>
                 {literal}
                 <tr class="acc">
                     <td colspan="5">
-                        <div class="accordion_toggle"></div>
-                        <div class="accordion_content">
+                        <div class="accordion_content" data-slide="{{$index}}" id="currentMilestones_content{{$index}}">
                             <div class="acc-in">
                                 <div class="message-in">
-                                    {{{milestone.desc}}}
+                                    {{{*milestone.desc}}}
 
                                     <!--Tasklists-->
                                     <div v-if="milestone.hasTasklist" class="content-spacer-b"></div>
@@ -103,9 +105,9 @@
                                                             <td class="leftmen" valign="top">
                                                             </td>
                                                             <td class="thumb">
-                                                                <a href="managetasklist.php?action=showtasklist&amp;tlid={{*tasklist.ID}}&amp;id={{tasklist.project}}"
-                                                                   title="{{tasklist.name}}"><img
-                                                                            src="./templates/standard/theme/standard/images/symbols/tasklist.png"
+                                                                <a href="managetasklist.php?action=showtasklist&amp;tlid={{*tasklist.ID}}&amp;id={{*tasklist.project}}"
+                                                                   title="{{*tasklist.name}}">
+                                                                    <img src="./templates/standard/theme/standard/images/symbols/tasklist.png"
                                                                             style="width: 32px; height: auto;" alt=""/>
                                                                 </a>
                                                             </td>
@@ -114,10 +116,12 @@
                                                         </tr>
                                                         <tr>
                                                             <td colspan="3">
-																							<span class="name">
-                                                                                                <a href="managetasklist.php?action=showtasklist&amp;tlid={{*tasklist.ID}}&amp;id={{tasklist.project}}"
-                                                                                                   title="{{tasklist.name}}">{{tasklist.name}}</a>
-																							</span>
+                                                                <span class="name">
+                                                                    <a href="managetasklist.php?action=showtasklist&amp;tlid={{*tasklist.ID}}&amp;id={{*tasklist.project}}"
+                                                                       title="{{*tasklist.name}}">
+                                                                        {{*tasklist.name}}
+                                                                    </a>
+                                                                </span>
                                                             </td>
                                                         <tr/>
                                                     </table>
@@ -202,18 +206,6 @@
                             {/if}
                         </td>
                     </tr>
-                        <tr class="acc">
-                            <td colspan="5">
-                                <div class="accordion_toggle"></div>
-                                <div class="accordion_content">
-                                    <div class="acc-in">
-                                        <div class="message-in">
-                                            {$donemilestones[stone].desc}
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
                         </tbody>
                     {/section}
                 </table>

@@ -23,29 +23,6 @@
 
 
         <!--block End-->
-
-        {literal}
-            <script type="text/javascript">
-                try {
-                    var accord_miles_late = new accordion('accordion_miles_late');
-                }
-                catch (e) {
-                }
-
-                try {
-                    var accord_miles_new = new accordion('accordion_miles_new');
-                }
-                catch (e) {
-                }
-
-                try {
-                    var accord_miles_done = new accordion('accordion_miles_done');
-                }
-                catch (e) {
-                }
-            </script>
-        {/literal}
-
     </div>
     <!--Miles END-->
     <div class="content-spacer"></div>
@@ -54,6 +31,7 @@
 </div> <!--content-left END-->
 
 {literal}
+    <script type="text/javascript" src="include/js/accordion.min.js"></script>
     <script type="text/javascript" src="include/js/views/projectMilestones.min.js"></script>
 <script type="text/javascript">
     projectMilestones.url = projectMilestones.url + "&id=" + {/literal}{$project.ID}{literal};
@@ -62,6 +40,12 @@
     var lateProjectMilestonesView = createView(lateProjectMilestones);
     upcomingProjectMilestones.url = upcomingProjectMilestones.url + "&id=" + {/literal}{$project.ID}{literal};
     var upcomingProjectMilestonesView = createView(upcomingProjectMilestones);
+
+
+    var accord_miles_late = new accordion2('lateMilestones');
+    var accord_miles_new = new accordion2('currentMilestones');
+    var accord_miles_upcoming = new accordion2('upcomingMilestones');
+
 </script>
 {/literal}
 {include file="sidebar-a.tpl"}
