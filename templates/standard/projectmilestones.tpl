@@ -4,39 +4,16 @@
 <div id="content-left">
     <div id="content-left-in">
         <div class="miles">
-            <div class="infowin_left" style="display:none;" id="systemmsg">
-                {if $mode == "added"}
-                    <span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png"
-                                                     alt=""/>{#milestonewasadded#}</span>
-                {elseif $mode == "edited"}
-                    <span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png"
-                                                      alt=""/>{#milestonewasedited#}</span>
-                {elseif $mode == "deleted"}
-                    <span class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png"
-                                                   alt=""/>{#milestonewasdeleted#}</span>
-                {elseif $mode == "opened"}
-                    <span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png"
-                                                     alt=""/>{#milestonewasopened#}</span>
-                {elseif $mode == "closed"}
-                    <span class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png"
-                                                   alt=""/>{#milestonewasclosed#}</span>
-                {/if}
-
-                <span id="deleted" class="info_in_red" style="display:none;"><img
-                            src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png"
-                            alt=""/>{#milestonewasdeleted#}</span>
-                <span class="info_in_green" id="closed" style="display:none;"><img
-                            src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png"
-                            alt=""/>{#milestonewasclosed#}</span>
-
+            <div class="infowin_left"
+                 id="milestoneSystemMessage"
+                 data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png"
+                 data-text-added="{#milestonewasadded#}"
+                 data-text-edited="{#milestonewasedited#}"
+                 data-text-deleted="{#milestonewasdeleted#}"
+                 data-text-closed="{#milestonewasclosed#}"
+                 data-text-opened="{#milestonewasopened#}"
+                 style="display:none">
             </div>
-
-            {literal}
-                <script type="text/javascript">
-                    systemMsg('systemmsg');
-                </script>
-            {/literal}
-
             <h1>{$projectname|truncate:45:"...":true}<span>/ {#milestones#}</span></h1>
 
             {include file="projectLateMilestones.tpl"}
