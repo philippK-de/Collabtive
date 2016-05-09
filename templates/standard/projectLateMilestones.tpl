@@ -1,8 +1,13 @@
 <div class="headline">
     <a href="javascript:void(0);" id="lateMilestones_toggle" class="win_block" onclick=""></a>
 
+    <div class="wintools">
+        <div class="progress" id="progresslateMilestones" style="float:left;display:none;">
+            <img src="templates/standard/theme/standard/images/symbols/loader-calendar.gif"/>
+        </div>
+    </div>
     <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt=""/>Late {#milestones#}</h2>
-    <loader block="lateMilestones" loader="loader-calendar.gif"></loader>
+
 </div>
 
 <div class="block blockaccordion_content" id="lateMilestonesHead" style="overlow:hidden">

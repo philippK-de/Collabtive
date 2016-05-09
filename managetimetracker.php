@@ -368,6 +368,21 @@ if ($action == "add") {
 }
 elseif($action == "projectTimetracker")
 {
+    if (!$userpermissions["timetracker"]["view"]) {
+        $errtxt = $langfile["nopermission"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
+    // Check if the user belongs to this project
+    if (!chkproject($userid, $id)) {
+        $errtxt = $langfile["notyourproject"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
     $tracker = (object) new timetracker();
     // If the user can not read tt entries from other user, set the user filter to the current user id.
     if (!$cleanGet["usr"]) {

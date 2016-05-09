@@ -186,16 +186,29 @@ if ($action == "add") {
      // Get the project name
     $project = $projectObj->getProject($id);
 
-
     $template->assign("title", $langfile["milestones"]);
     $template->assign("projectname",  $project["name"]);
 
-    $template->assign("upcomingStones", $upcomingStones);
     $template->assign("project", $project);
     $template->display("projectmilestones.tpl");
 }
 elseif($action == "projectMilestones")
 {
+    if (!$userpermissions["milestones"]["view"]) {
+        $errtxt = $langfile["nopermission"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
+    // Check if the current user belongs to the project
+    if (!chkproject($userid, $id)) {
+        $errtxt = $langfile["notyourproject"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
     // Get projects milestones, and todays project milestones
     $stones = $milestone->getProjectMilestones($id);
     $stones2 = $milestone->getTodayProjectMilestones($id);
@@ -219,11 +232,25 @@ elseif($action == "projectMilestones")
     $projectStones["items"] = $milestones;
     $projectStones["count"] = count($stones);
 
-
     echo json_encode($projectStones);
 }
 elseif($action == "lateProjectMilestones")
 {
+    if (!$userpermissions["milestones"]["view"]) {
+        $errtxt = $langfile["nopermission"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
+    // Check if the current user belongs to the project
+    if (!chkproject($userid, $id)) {
+        $errtxt = $langfile["notyourproject"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
     //get late miletones
     $latestones = $milestone->getLateProjectMilestones($id);
     // Count late milestones
@@ -238,6 +265,21 @@ elseif($action == "lateProjectMilestones")
 }
 elseif($action == "upcomingProjectMilestones")
 {
+    if (!$userpermissions["milestones"]["view"]) {
+        $errtxt = $langfile["nopermission"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
+    // Check if the current user belongs to the project
+    if (!chkproject($userid, $id)) {
+        $errtxt = $langfile["notyourproject"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
     // Get upcoming milestones, that is milestones with a start date in the future
     $upcomingStones = $milestone->getUpcomingProjectMilestones($id);
 

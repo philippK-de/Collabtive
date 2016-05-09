@@ -1,9 +1,13 @@
 <div class="headline">
     <a href="javascript:void(0);" id="upcomingMilestones_toggle" class="win_block" onclick=""></a>
 
+    <div class = "wintools">
+        <div class="progress" id="progressupcomingMilestones" style="float:left;display:none;">
+            <img src="templates/standard/theme/standard/images/symbols/loader-calendar.gif"/>
+        </div>
+    </div>
     <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt=""/>Upcoming {#milestones#}</h2>
-    <loader block="upcomingMilestones" loader="loader-calendar.gif"></loader>
-</div>
+    </div>
 
 <div class="block blockaccordion_content" id="upcomingMilestonesHead" style="overlow:hidden">
 

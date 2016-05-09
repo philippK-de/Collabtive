@@ -349,10 +349,24 @@ if ($action == "add") {
 }
 elseif($action = "projectTasks")
 {
+    if (!$userpermissions["tasks"]["view"]) {
+        $errtxt = $langfile["nopermission"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
+    if (!chkproject($userid, $id)) {
+        $errtxt = $langfile["notyourproject"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
     $tasklistObj = new tasklist();
     // Get open and closed tasks from list
-    $openTasks = $tasklistObj->getTasksFromList($id);
-    $closedTasks = $tasklistObj->getTasksFromList($id,0);
+    $openTasks = $tasklistObj->getTasksFromList($cleanGet["tlid"]);
+    $closedTasks = $tasklistObj->getTasksFromList($cleanGet["tlid"],0);
 
     //assemble array
     $tasks["open"] = $openTasks;

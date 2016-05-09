@@ -227,7 +227,7 @@
                         var projectTasks = {
                             el: "contentblock-{/literal}{$lists[list].ID}{literal}",
                             itemType: "task",
-                            url: "managetask.php?action=projectTasks&id={/literal}{$lists[list].ID}{literal}",
+                            url: "managetask.php?action=projectTasks&tlid={/literal}{$lists[list].ID}{literal}&id={/literal}{$project.ID}{literal}",
                             dependencies: []
                         };
                         var projectTasksView_{/literal}{$lists[list].ID}{literal} = createView(projectTasks);
