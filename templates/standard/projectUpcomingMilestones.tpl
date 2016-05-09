@@ -2,7 +2,7 @@
     <a href="javascript:void(0);" id="upcomingMilestones_toggle" class="win_block" onclick=""></a>
 
     <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt=""/>Upcoming {#milestones#}</h2>
-    <loader block="currentMilestones" loader="loader-calendar.gif"></loader>
+    <loader block="upcomingMilestones" loader="loader-calendar.gif"></loader>
 </div>
 
 <div class="block blockaccordion_content" id="upcomingMilestonesHead" style="overlow:hidden">

@@ -185,7 +185,7 @@
                                 {if $userpermissions.milestones.del}
                                 {literal}
                                     <a class="tool_del"
-                                    href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'miles_{{*oldmilestone.ID}\',\'managemilestone.php?action=del&amp;mid={{*oldmilestone.ID}}&amp;id={$project.ID}}\')');"
+                                    href="javascript:confirmDelete({/literal}'{#confirmdel#}'{literal},'miles_{{*oldmilestone.ID}}','managemilestone.php?action=del&amp;mid={{*oldmilestone.ID}}&amp;id={{*oldmilestone.project}}');"
                                     title="{/literal}{#delete#}"></a>
                                 {/if}
                             </td>

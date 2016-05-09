@@ -2,7 +2,7 @@
     <a href="javascript:void(0);" id="lateMilestones_toggle" class="win_block" onclick=""></a>
 
     <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt=""/>Late {#milestones#}</h2>
-    <loader block="currentMilestones" loader="loader-calendar.gif"></loader>
+    <loader block="lateMilestones" loader="loader-calendar.gif"></loader>
 </div>
 
 <div class="block blockaccordion_content" id="lateMilestonesHead" style="overlow:hidden">
