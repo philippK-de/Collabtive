@@ -402,6 +402,14 @@ if ($action == "editform") {
 }
 elseif($action == "projectLog")
 {
+    if (!chkproject($userid, $cleanGet["id"])) {
+        $errtxt = $langfile["notyourproject"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->assign("mode", "error");
+        $template->display("error.tpl");
+        die();
+    }
     $offset = 0;
     if(isset($cleanGet["offset"]))
     {
@@ -422,67 +430,7 @@ elseif($action == "projectLog")
 
     echo json_encode($projectLog);
 }
-elseif ($action == "cal") {
-    if (!chkproject($userid, $cleanGet["id"])) {
-        $errtxt = $langfile["notyourproject"];
-        $noperm = $langfile["accessdenied"];
-        $template->assign("errortext", "$errtxt<br>$noperm");
-        $template->assign("mode", "error");
-        $template->display("error.tpl");
-        die();
-    }
-
-    $thisd = date("j");
-    $thism = date("n");
-    $thisy = date("Y");
-
-    $m = getArrayVal($_GET, "m");
-    $y = getArrayVal($_GET, "y");
-    if (!$m) {
-        $m = $thism;
-    }
-    if (!$y) {
-        $y = $thisy;
-    }
-
-    $nm = $m + 1;
-    $pm = $m - 1;
-    if ($nm > 12) {
-        $nm = 1;
-        $ny = $y + 1;
-    } else {
-        $ny = $y;
-    }
-    if ($pm < 1) {
-        $pm = 12;
-        $py = $y - 1;
-    } else {
-        $py = $y;
-    }
-
-    $today = date("d");
-
-    $calobj = new calendar();
-    $cal = $calobj->getCal($m, $y, $cleanGet["id"]);
-    $weeks = $cal->calendar;
-    // print_r($weeks);
-    $mstring = strtolower(date('F', mktime(0, 0, 0, $m, 1, $y)));
-    $mstring = $langfile[$mstring];
-    $template->assign("mstring", $mstring);
-
-    $template->assign("m", $m);
-    $template->assign("y", $y);
-    $template->assign("thism", $thism);
-    $template->assign("thisd", $thisd);
-    $template->assign("thisy", $thisy);
-    $template->assign("nm", $nm);
-    $template->assign("pm", $pm);
-    $template->assign("ny", $ny);
-    $template->assign("py", $py);
-    $template->assign("weeks", $weeks);
-    $template->assign("id", $cleanGet["id"]);
-    $template->display("calbody_project.tpl");
-}elseif ($action == "tasklists") {
+elseif ($action == "tasklists") {
     $listObj = new tasklist();
     $theLists = $listObj->getProjectTasklists($cleanGet["id"]);
     echo "<option value=\"-1\" selected=\"selected\">$langfile[chooseone]</option>";

@@ -375,6 +375,7 @@ elseif($action = "projectTasks")
     //assemble data structure for view
     $openLists["items"] = $tasks;
     $openLists["count"] = count($openTasks);
+
     echo json_encode($openLists);
 }
 
