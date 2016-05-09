@@ -1,6 +1,6 @@
 {*Milestones*}
-<div class="headline">
-    <a href="javascript:void(0);" id="milehead_toggle" class="win_block" onclick=""></a>
+<div class="headline" id="currentMilestonesBlock">
+    <a href="javascript:void(0);" id="currentMilestonesHead_toggle" class="win_block" onclick=""></a>
 
     <div class="wintools">
         {if $userpermissions.milestones.add}
@@ -13,7 +13,7 @@
     <loader block="currentMilestones" loader="loader-calendar.gif"></loader>
 </div>
 
-<div class="block blockaccordion_content" id="milehead" style="overlow:hidden">
+<div class="block blockaccordion_content" id="currentMilestonesHead" style="overlow:hidden">
 
     {*Add Milestone*}
     {if $userpermissions.milestones.add}
@@ -46,8 +46,8 @@
         <!--new Miles-->
         <div id="currentMilestones" class="toggleblock" v-cloak>
 
-            <table v-for="milestone in items" id="accordion_miles_new" cellpadding="0" cellspacing="0" border="0" style="clear:both;">
-                <tbody class="alternateColors" id="miles_{{milestone.ID}}">
+            <table id="accordion_miles_new" cellpadding="0" cellspacing="0" border="0" style="clear:both;">
+                <tbody v-for="milestone in items.open" class="alternateColors" id="miles_{{milestone.ID}}">
                 <tr>
                     <td class="a">
                         {/literal}
@@ -76,10 +76,10 @@
                             <a class="tool_edit" href="managemilestone.php?action=editform&amp;mid={{milestone.ID}}&amp;id={{*milestone.project}}" title="{/literal}{#edit#}"></a>
                         {/if}
                         {if $userpermissions.milestones.del}
-                         {literal}
+                        {literal}
                             <a class="tool_del"
-                               href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','miles_{{*milestone.ID}}','managemilestone.php?action=del&amp;mid={{*milestone.ID}}&amp;id={{*milestone.project}}', projectMilestonesView);"
-                               title="{/literal}{#delete#}"></a>
+                            href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','miles_{{*milestone.ID}}','managemilestone.php?action=del&amp;mid={{*milestone.ID}}&amp;id={{*milestone.project}}', projectMilestonesView);"
+                            title="{/literal}{#delete#}"></a>
                         {/if}
                     </td>
                 </tr>
@@ -108,7 +108,7 @@
                                                                 <a href="managetasklist.php?action=showtasklist&amp;tlid={{*tasklist.ID}}&amp;id={{*tasklist.project}}"
                                                                    title="{{*tasklist.name}}">
                                                                     <img src="./templates/standard/theme/standard/images/symbols/tasklist.png"
-                                                                            style="width: 32px; height: auto;" alt=""/>
+                                                                         style="width: 32px; height: auto;" alt=""/>
                                                                 </a>
                                                             </td>
                                                             <td class="rightmen" valign="top">
@@ -141,88 +141,74 @@
                 </tbody>
 
             </table>
-        </div>
-        <!--toggleblock End  new Miles End-->
-        {/literal}
-        {*finished Miles*}
-        <div id="doneblock" class="doneblock" style="display: none;">
 
-            <table class="second-thead" cellpadding="0" cellspacing="0" border="0"
-                   onclick="blindtoggle('doneblock');toggleClass('donebutn','butn_link_active','butn_link');toggleClass('togglemilesdone','acc-toggle','acc-toggle-active');">
-                <tr>
-                    <td class="a"></td>
-                    <td class="b"><span id="togglemilesdone" class="acc-toggle">{#donemilestones#}</span></td>
-                    <td class="c"></td>
-                    <td class="days"></td>
-                    <td class="tools"></td>
-                </tr>
-            </table>
+            <!--toggleblock End  new Miles End-->
+            {/literal}
+            {*finished Miles*}
+            <div id="doneblock" class="doneblock" style="display: none;">
 
-            <div class="toggleblock">
-
-                <table id="accordion_miles_done" cellpadding="0" cellspacing="0" border="0">
-                    {section name=stone loop=$donemilestones}
-                        {if $smarty.section.stone.index % 2 == 0}
-                            <tbody class="color-a" id="miles_{$donemilestones[stone].ID}">
-                            {else}
-                            <tbody class="color-b" id="miles_{$donemilestones[stone].ID}">
-                        {/if}
-                    {if $smarty.now gt $donemilestones[stone].end}
-                        <tr class="marker-late">
-                            {else}
+                <table class="second-thead" cellpadding="0" cellspacing="0" border="0"
+                       onclick="blindtoggle('doneblock');toggleClass('donebutn','butn_link_active','butn_link');toggleClass('togglemilesdone','acc-toggle','acc-toggle-active');">
                     <tr>
-                    {/if}
-                        <td class="a">
-                            {if $userpermissions.milestones.close}
-                                <a class="butn_checked"
-                                   href="managemilestone.php?action=open&amp;mid={$donemilestones[stone].ID}&amp;id={$project.ID}"
-                                   title="{#open#}"></a>
-                            {/if}
-                        </td>
-                        <td class="b">
-                            <div class="toggle-in">
-                                            <span class="acc-toggle"
-                                                  onclick="javascript:accord_miles_done.activate($$('#accordion_miles_done .accordion_toggle')[{$smarty.section.stone.index}]);toggleAccordeon('done_{$myprojects[project].ID}',this);"></span>
-                                <a href="managemilestone.php?action=showmilestone&amp;msid={$donemilestones[stone].ID}&amp;id={$project.ID}"
-                                   title="{$donemilestones[stone].name}">{$donemilestones[stone].name|truncate:30:"...":true}</a>
-                            </div>
-                        </td>
-                        <td class="c">{$donemilestones[stone].fend}</td>
-                        {if $smarty.now gt $donemilestones[stone].end}
-                            <td class="days" style="text-align:right">-{$donemilestones[stone].dayslate}&nbsp;&nbsp;</td>
-                        {else}
-                            <td class="days" style="text-align:right">{$donemilestones[stone].dayslate}&nbsp;&nbsp;</td>
-                        {/if}
-                        <td class="tools">
-                            {if $userpermissions.milestones.edit}
-                                <a class="tool_edit"
-                                   href="managemilestone.php?action=editform&amp;mid={$donemilestones[stone].ID}&amp;id={$project.ID}"
-                                   title="{#edit#}"></a>
-                            {/if}
-                            {if $userpermissions.milestones.del}
-                                <a class="tool_del"
-                                   href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'miles_{$donemilestones[stone].ID}\',\'managemilestone.php?action=del&amp;mid={$donemilestones[stone].ID}&amp;id={$project.ID}\')');"
-                                   title="{#delete#}"></a>
-                            {/if}
-                        </td>
+                        <td class="a"></td>
+                        <td class="b"><span id="togglemilesdone" class="acc-toggle">{#donemilestones#}</span></td>
+                        <td class="c"></td>
+                        <td class="tools"></td>
                     </tr>
-                        </tbody>
-                    {/section}
                 </table>
-            </div>
-            <!-- toggleblock End finished Miles End-->
-        </div>
-        <!--done_block End-->
 
-        <div class="tablemenue">
-            <div class="tablemenue-in">
-                {if $userpermissions.milestones.add > 0}
-                    <a class="butn_link" href="javascript:blindtoggle('addstone');" id="add_butn"
-                       onclick="toggleClass('add','add-active','add');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_miles','smooth','nosmooth');">{#addmilestone#}</a>
-                {/if}
-                <a class="butn_link" href="javascript:blindtoggle('doneblock');" id="donebutn"
-                   onclick="toggleClass(this,'butn_link_active','butn_link');toggleClass('togglemilesdone','acc-toggle','acc-toggle-active');">{#donemilestones#}</a>
+                <div class="toggleblock">
+
+                    <table id="accordion_miles_done" cellpadding="0" cellspacing="0" border="0">
+                        {literal}
+                        <tbody v-for="oldmilestone in items.closed" class="alternateColors" id="miles_{{*milestone.ID}}">
+                        <tr>
+                            <td class="a">
+                                {/literal}
+                                {if $userpermissions.milestones.close}
+                                {literal}
+                                    <a class="butn_checked"
+                                    href="managemilestone.php?action=open&amp;mid={{*oldmilestone.ID}}&amp;id={{*oldmilestone.project}}"
+                                    title="{/literal}{#open#}"></a>
+                                {/if}
+                            </td>
+                            {literal}
+                            <td class="b">
+                                <div class="toggle-in">
+                                    <a href="managemilestone.php?action=showmilestone&amp;msid={{*oldmilestone.ID}}&amp;id={{*oldmilestone.project}}"
+                                       title="{{*oldmilestone.name}}">{{*oldmilestone.name | truncate '30'}}</a>
+                                </div>
+                            </td>
+                            <td class="c">{{*oldmilestone.fend}}</td>
+                            <td class="tools">
+                                {/literal}
+                                {if $userpermissions.milestones.del}
+                                {literal}
+                                    <a class="tool_del"
+                                    href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'miles_{{*oldmilestone.ID}\',\'managemilestone.php?action=del&amp;mid={{*oldmilestone.ID}}&amp;id={$project.ID}}\')');"
+                                    title="{/literal}{#delete#}"></a>
+                                {/if}
+                            </td>
+                        </tr>
+                        {literal}
+                        </tbody>
+                        {/literal}
+                    </table>
+                </div>
+                <!-- toggleblock End finished Miles End-->
+            </div>
+            <!--done_block End-->
+
+            <div class="tablemenue">
+                <div class="tablemenue-in">
+                    {if $userpermissions.milestones.add}
+                        <a class="butn_link" href="javascript:blindtoggle('addstone');" id="add_butn"
+                           onclick="toggleClass('add','add-active','add');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_miles','smooth','nosmooth');">{#addmilestone#}</a>
+                    {/if}
+                    <a class="butn_link" href="javascript:blindtoggle('doneblock');" id="donebutn"
+                       onclick="toggleClass(this,'butn_link_active','butn_link');toggleClass('togglemilesdone','acc-toggle','acc-toggle-active');">{#donemilestones#}</a>
+                </div>
             </div>
         </div>
     </div>
-    </div>
+</div>

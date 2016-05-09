@@ -183,10 +183,7 @@ if ($action == "add") {
     $projectObj = new project();
     $today = date("d");
 
-    // Get closed milestones and milestones that are late
-    $donestones = $milestone->getDoneProjectMilestones($id);
-
-    // Get the project name
+     // Get the project name
     $project = $projectObj->getProject($id);
 
 
@@ -194,7 +191,6 @@ if ($action == "add") {
     $template->assign("projectname",  $project["name"]);
 
     $template->assign("upcomingStones", $upcomingStones);
-    $template->assign("donemilestones", $donestones);
     $template->assign("project", $project);
     $template->display("projectmilestones.tpl");
 }
@@ -203,6 +199,8 @@ elseif($action == "projectMilestones")
     // Get projects milestones, and todays project milestones
     $stones = $milestone->getProjectMilestones($id);
     $stones2 = $milestone->getTodayProjectMilestones($id);
+    // Get closed milestones and milestones that are late
+    $donestones = $milestone->getDoneProjectMilestones($id);
 
     if (empty($stones2)) {
         $stones2 = array();
@@ -210,11 +208,17 @@ elseif($action == "projectMilestones")
     if (empty($stones)) {
         $stones = array();
     }
+
+
     // merge the current milestones
     $stones = array_merge($stones, $stones2);
 
-    $projectStones["items"] = $stones;
+    $milestones["open"] =   $stones;
+    $milestones["closed"] = $donestones;
+
+    $projectStones["items"] = $milestones;
     $projectStones["count"] = count($stones);
+
 
     echo json_encode($projectStones);
 }

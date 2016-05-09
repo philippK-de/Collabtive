@@ -19,9 +19,7 @@ var upcomingProjectMilestones = {
     dependencies: []
 };
 
-var accord_miles_late = new accordion2('lateMilestones');
-var accord_miles_new = new accordion2('currentMilestones');
-var accord_miles_upcoming = new accordion2('upcomingMilestones');
+
 
 //create blocks accordeon
 var accordIndex = new accordion2('projectMilestones', {

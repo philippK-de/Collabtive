@@ -29,8 +29,8 @@
     <!--late Miles-->
     <div class="toggleblock" id="lateMilestones" v-cloak >
         {literal}
-        <table class="miles" v-for="milestone in items" id="accordion_miles_late" cellpadding="0" cellspacing="0" border="0">
-            <tbody class="miles alternateColors" id="miles_late_{{*milestone.ID}}">
+        <table class="miles" id="accordion_miles_late" cellpadding="0" cellspacing="0" border="0">
+            <tbody  v-for="milestone in items" class="alternateColors" id="miles_late_{{*milestone.ID}}">
             <tr class="marker-late">
                 <td class="a">
                     {/literal}
@@ -43,7 +43,7 @@
                     <td class="b">
                         <div class="toggle-in">
                             <span class="acc-toggle"
-                                  onclick="javascript:accord_miles_late.activate(document.querySelector('#lateMilestones_content{{$index}}'));">
+                                  onclick="javascript:accord_miles_late.activate(document.querySelector('#lateMilestones_content{{*milestone.ID}}'));">
 
                             </span>
                             <a href="managemilestone.php?action=showmilestone&amp;msid={{*milestone.ID}}&amp;id={{*milestone.project}}"
@@ -71,7 +71,7 @@
             </tr>
             <tr class="acc">
                 <td colspan="5">
-                    <div class="accordion_content" data-slide="{{$index}}" id="lateMilestones_content{{$index}}">
+                    <div class="accordion_content" data-slide="{{$index}}" id="lateMilestones_content{{*milestone.ID}}">
                         <div class="acc-in">
                             <div class="message-in">
                                 {{*milestone.desc}}
