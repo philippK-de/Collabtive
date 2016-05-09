@@ -34,10 +34,12 @@
     <script type="text/javascript" src="include/js/accordion.js"></script>
     <script type="text/javascript" src="include/js/views/projectMilestones.min.js"></script>
 <script type="text/javascript">
-    projectMilestones.url = projectMilestones.url + "&id=" + {/literal}{$project.ID}{literal};
-    var projectMilestonesView = createView(projectMilestones);
     lateProjectMilestones.url = lateProjectMilestones.url + "&id=" + {/literal}{$project.ID}{literal};
     var lateProjectMilestonesView = createView(lateProjectMilestones);
+
+    projectMilestones.url = projectMilestones.url + "&id=" + {/literal}{$project.ID}{literal};
+    var projectMilestonesView = createView(projectMilestones);
+
     upcomingProjectMilestones.url = upcomingProjectMilestones.url + "&id=" + {/literal}{$project.ID}{literal};
     var upcomingProjectMilestonesView = createView(upcomingProjectMilestones);
 

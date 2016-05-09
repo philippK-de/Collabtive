@@ -53,7 +53,7 @@
                         {/literal}
                         {if $userpermissions.milestones.close}
                         {literal}
-                            <a class="butn_check" href="javascript:closeElement('miles_{{*milestone.ID}}','managemilestone.php?action=close&amp;mid={{*milestone.ID}}&amp;id={{*milestone.project}}');" title="{/literal}{#close#}"></a>
+                            <a class="butn_check" href="javascript:closeElement('miles_{{*milestone.ID}}','managemilestone.php?action=close&amp;mid={{*milestone.ID}}&amp;id={{*milestone.project}}', projectMilestonesView);" title="{/literal}{#close#}"></a>
                         {/if}
                     </td>
                     {literal}
@@ -78,7 +78,7 @@
                         {if $userpermissions.milestones.del}
                          {literal}
                             <a class="tool_del"
-                               href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','miles_{{*milestone.ID}}','managemilestone.php?action=del&amp;mid={{*milestone.ID}}&amp;id={{*milestone.project}}');"
+                               href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','miles_{{*milestone.ID}}','managemilestone.php?action=del&amp;mid={{*milestone.ID}}&amp;id={{*milestone.project}}', projectMilestonesView);"
                                title="{/literal}{#delete#}"></a>
                         {/if}
                     </td>
