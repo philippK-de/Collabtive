@@ -39,6 +39,8 @@ accordion2.prototype.initializeToggles = function () {
     //get accordion contents - these are the content areas representing the slides
     this.accordionContents = this.rootElement.querySelectorAll("." + this.classNames.content + ",." + this.classNames.contentActive);
 
+    console.log(this.accordionContents);
+    console.log(this.accordionToggles);
 }
 
 /*

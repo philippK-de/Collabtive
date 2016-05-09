@@ -1,6 +1,6 @@
 {*Milestones*}
 <div class="headline">
-    <a href="javascript:void(0);" id="milehead_toggle" class="win_block" onclick="toggleBlock('milehead');"></a>
+    <a href="javascript:void(0);" id="milehead_toggle" class="win_block" onclick=""></a>
 
     <div class="wintools">
         {if $userpermissions.milestones.add}
@@ -13,7 +13,7 @@
     <loader block="currentMilestones" loader="loader-calendar.gif"></loader>
 </div>
 
-<div class="block" id="milehead">
+<div class="block blockaccordion_content" id="milehead" style="overlow:hidden">
 
     {*Add Milestone*}
     {if $userpermissions.milestones.add}
@@ -225,4 +225,4 @@
             </div>
         </div>
     </div>
-    <div class="content-spacer"></div>
+    </div>

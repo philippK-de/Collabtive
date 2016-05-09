@@ -1,11 +1,11 @@
 <div class="headline">
-    <a href="javascript:void(0);" id="milehead_toggle" class="win_block" onclick="toggleBlock('milehead');"></a>
+    <a href="javascript:void(0);" id="lateMilestones_toggle" class="win_block" onclick=""></a>
 
     <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt=""/>Late {#milestones#}</h2>
     <loader block="currentMilestones" loader="loader-calendar.gif"></loader>
 </div>
 
-<div class="block" id="lateMilestonesHead">
+<div class="block blockaccordion_content" id="lateMilestonesHead" style="overlow:hidden">
     <div class="nosmooth" >
 
         <table cellpadding="0" cellspacing="0" border="0">
@@ -30,7 +30,7 @@
     <div class="toggleblock" id="lateMilestones" v-cloak >
         {literal}
         <table class="miles" v-for="milestone in items" id="accordion_miles_late" cellpadding="0" cellspacing="0" border="0">
-            <tbody class="miles alternateColors" id="miles_late_{{milestone.ID}}">
+            <tbody class="miles alternateColors" id="miles_late_{{*milestone.ID}}">
             <tr class="marker-late">
                 <td class="a">
                     {/literal}
@@ -62,7 +62,7 @@
                     {if $userpermissions.milestones.del}
                     {literal}
                         <a class="tool_del"
-                           href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'miles_late_{$latemilestones[latestone].ID}\',\'managemilestone.php?action=del&amp;mid={$latemilestones[latestone].ID}&amp;id={$project.ID}\')');"
+                           href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','miles_late_{$latemilestones[latestone].ID}','managemilestone.php?action=del&amp;mid={{*milestone.ID}}&amp;id={{*milestone.project}}\')');"
                            title="{#delete#}"></a>
                     {/literal}
                     {/if}
@@ -88,5 +88,3 @@
     {/literal}
     <!--toggleblock End-->
 </div><!-- block end -->
-
-<div class = "content-spacer"></div>

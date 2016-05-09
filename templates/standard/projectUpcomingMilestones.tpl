@@ -1,11 +1,11 @@
 <div class="headline">
-    <a href="javascript:void(0);" id="milehead_toggle" class="win_block" onclick="toggleBlock('milehead');"></a>
+    <a href="javascript:void(0);" id="upcomingMilestones_toggle" class="win_block" onclick=""></a>
 
     <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt=""/>Upcoming {#milestones#}</h2>
     <loader block="currentMilestones" loader="loader-calendar.gif"></loader>
 </div>
 
-<div class="block" id="upcomingMilestonesHead">
+<div class="block blockaccordion_content" id="upcomingMilestonesHead" style="overlow:hidden">
 
 
     <div class="nosmooth">
@@ -102,7 +102,7 @@
                                                             <span class="name">
                                                                 <a href="managetasklist.php?action=showtasklist&amp;tlid={{*tasklist.ID}}&amp;id={{*taklist.project}}"
                                                                    title="{{*tasklist.name}}">
-                                                                    {{tasklist.name | truncate '10' }}
+                                                                    {{*tasklist.name | truncate '10' }}
                                                                 </a>
 																							</span>
                                                             </td>
@@ -137,6 +137,5 @@
 
 </div>
 
-</div>
 <!--smooth End-->
 <div class="content-spacer"></div>
