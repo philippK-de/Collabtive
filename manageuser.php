@@ -244,7 +244,8 @@ if ($action == "loginerror") {
         $projectObj = (object)new project();
 
         $openProjects = $projectObj->getMyProjects($id, 1, $offset, $limit);
-        $openProjectsNum = count($projectObj->getMyProjects($id, 0, 0, 1000000000));
+        $openProjectsNum = $projectObj->countMyProjects($id);
+
         $i = 0;
         if (!empty($openProjects)) {
             foreach ($openProjects as &$openProject) {
@@ -258,8 +259,6 @@ if ($action == "loginerror") {
         $projects["count"] = $openProjectsNum;
 
         echo json_encode($projects);
-
-
     }
 } elseif ($action == "userTimetracker") {
     if ($userpermissions["admin"]["add"]) {
@@ -271,7 +270,6 @@ if ($action == "loginerror") {
         if (isset($cleanGet["limit"])) {
             $limit = $cleanGet["limit"];
         }
-
     }
 } elseif ($action == "showproject") {
     if (!chkproject($userid, $id)) {
