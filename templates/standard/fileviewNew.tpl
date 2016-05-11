@@ -2,15 +2,13 @@
     {literal}
         <li v-for="folder in items.folders" id="fdli_{{*folder.ID}}">
             <div class="itemwrapper" id="iw_{{*folder.ID}}">
-
                 <table cellpadding="0" cellspacing="0" border="0">
-
                     <tr>
                         <td class="leftmen" valign="top">
                         </td>
                         <td class="thumb">
-                            <a href="javascript:change('manageajax.php?action=fileview&id={$project.ID}&folder={{*folder.ID}}','filescontent');
-                            selectFolder(folder.ID);">
+                            <a href="javascript:change('manageajax.php?action=fileview&id={{*folder.project}}&folder={{*folder.ID}}','filescontent');
+                            selectFolder({{folder.ID}});">
                                 <img src="./templates/{/literal}{$settings.template}/theme/{$settings.theme}/{literal}images/symbols/folder-sub.png"
                                 alt="" />
                             </a>
@@ -20,7 +18,7 @@
                                 {/literal}
                                 {if $userpermissions.files.del}
                                 {literal}
-                                    <a class="del" href="javascript:confirmfunction('{$langfile.confirmdel}','deleteElement(\'fdli_{{*folder.ID}\',\'managefile.php?action=delfolder&amp;id={$project.ID}&amp;folder={{*folder.ID}&ajax=1\')');" title="{#delete#}" onclick=""></a>
+                                    <a class="del" href="javascript:confirmDelete('{/literal}{$langfile.confirmdel}{literal}','fdli_{{*folder.ID}}','managefile.php?action=delfolder&amp;id={{*folder.project}}&amp;folder={{*folder.ID}}&ajax=1');" title="{#delete#}" onclick=""></a>
                                 {/literal}
                                 {/if}
                                 {literal}
@@ -30,8 +28,8 @@
                     <tr>
                         <td colspan="3">
 							<span class="name">
-								<a href="javascript:change('manageajax.php?action=fileview&id={$project.ID}&folder={{*folder.ID}}','filescontent');selectFolder(folder.ID);" title="">
-                                        {{*folder.name }}
+								<a href="javascript:change('manageajax.php?action=fileview&id={{*folder.project}}&folder={{*folder.ID}}','filescontent');selectFolder(folder.ID);" title="">
+                                        {{*folder.name | truncate '10'}}
                                 </a>
 							</span>
                         </td>
@@ -53,7 +51,7 @@
                             <div class="inmenue"></div>
                         </td>
                         <td class="thumb">
-                            <a href="managefile.php?action=downloadfile&amp;id={$project.ID}&amp;file={{*file.ID}}" {if $files[file].imgfile == 1}  rel="lytebox[]" {elseif $files[file].imgfile == 2} rel = "lyteframe[text]" rev="width: 650px; height: 500px;" {/if} >
+                            <a href="managefile.php?action=downloadfile&amp;id={{*file.project}}&amp;file={{*file.ID}}" {if $files[file].imgfile == 1}  rel="lytebox[]" {elseif $files[file].imgfile == 2} rel = "lyteframe[text]" rev="width: 650px; height: 500px;" {/if} >
                                 <img src="templates/{/literal}{$settings.template}/theme/{$settings.theme}/{literal}images/files/{{*file.type}}.png" alt="{{*file.name}}" />
                             </a>
                         </td>
@@ -62,7 +60,7 @@
                                 {/literal}
                                 {if $userpermissions.files.del}
                                 {literal}
-                                    <a class="del" href="javascript:confirmfunction('{$langfile.confirmdel}','deleteElement(\'fli_{{*file.ID}\',\'managefile.php?action=delete&amp;id={$project.ID}&amp;file={{*file.ID}\')');" title="{#delete#}"></a>
+                                    <a class="del" href="javascript:confirmDelete('{/literal}{$langfile.confirmdel}{literal}','fli_{{*file.ID}}','managefile.php?action=delete&amp;id={{*file.project}}&amp;file={{*file.ID}}');" title="{#delete#}"></a>
                                 {/literal}
                                 {/if}
                                 {literal}
@@ -73,7 +71,7 @@
                     <tr>
                         <td colspan="3">
 							<span class="name">
-                                <a href="managefile.php?action=downloadfile&amp;id={$project.ID}&amp;file={{*file.ID}" {if $files[file].imgfile == 1}  rel="lytebox[]" {elseif $files[file].imgfile == 2} rel = "lyteframe[text]" rev="width: 650px; height: 500px;" {/if} >
+                                <a href="managefile.php?action=downloadfile&amp;id={{*file.project}}&amp;file={{*file.ID}}" {if $files[file].imgfile == 1}  rel="lytebox[]" {elseif $files[file].imgfile == 2} rel = "lyteframe[text]" rev="width: 650px; height: 500px;" {/if} >
                                         {{*file.name | truncate '10'}}
 
                                 </a>
