@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class datei (file) provides methods to handle files and folders
  *
@@ -9,7 +10,8 @@
  * @link http://collabtive.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
-class datei {
+class datei
+{
     // FOLDER METHODS
     /**
      * Create a new folder
@@ -25,7 +27,7 @@ class datei {
     {
         global $conn, $mylog;
 
-        $project = (int) $project;
+        $project = (int)$project;
         $thepath = $this->getAbsolutePathName($this->getFolder($parent));
         // if its the root path, don't append any slashes
         if ($thepath == "/") {
@@ -35,10 +37,10 @@ class datei {
         // This is for display in the system log
         $folderOrig = $folder;
         // Replace umlauts
-        $folder = str_replace("ä", "ae" , $folder);
-        $folder = str_replace("ö", "oe" , $folder);
-        $folder = str_replace("ü", "ue" , $folder);
-        $folder = str_replace("ß", "ss" , $folder);
+        $folder = str_replace("ä", "ae", $folder);
+        $folder = str_replace("ö", "oe", $folder);
+        $folder = str_replace("ü", "ue", $folder);
+        $folder = str_replace("ß", "ss", $folder);
         // Remove whitespace
         $folder = preg_replace("/\W/", "", $folder);
         $folder = preg_replace("/[^-_0-9a-zA-Z]/", "_", $folder);
@@ -78,21 +80,21 @@ class datei {
     {
         global $conn, $mylog;
 
-        $id = (int) $id;
-        $project = (int) $project;
+        $id = (int)$id;
+        $project = (int)$project;
         // retrieve the folder info from the database
         $folder = $this->getFolder($id);
         // get files for this folder
         $files = $this->getProjectFiles($project, 10000, $id);
         // Delete all files in the folder from database and filesystem
         if (!empty($files)) {
-            foreach($files as $file) {
+            foreach ($files as $file) {
                 $this->loeschen($file["ID"]);
             }
         }
         // Recursively delete any nested subfolders
         if (!empty($folder["subfolders"])) {
-            foreach($folder["subfolders"] as $sub) {
+            foreach ($folder["subfolders"] as $sub) {
                 $this->deleteFolder($sub["ID"], $sub["project"]);
             }
         }
@@ -120,7 +122,7 @@ class datei {
     {
         global $conn;
 
-        $id = (int) $id;
+        $id = (int)$id;
 
         $folderStmt = $conn->prepare("SELECT * FROM projectfolders WHERE ID = ? LIMIT 1");
         $folderStmt->execute(array($id));
@@ -146,7 +148,7 @@ class datei {
     {
         global $conn;
 
-        $parent = (int) $parent;
+        $parent = (int)$parent;
 
         $sel = $conn->query("SELECT * FROM projectfolders WHERE parent = $parent ORDER BY ID ASC");
 
@@ -177,7 +179,7 @@ class datei {
     {
         global $conn;
 
-        $project = (int) $project;
+        $project = (int)$project;
 
         $sel = $conn->prepare("SELECT * FROM projectfolders WHERE project = ? AND parent = ? ORDER BY ID ASC");
         $sel->execute(array($project, $parent));
@@ -208,7 +210,7 @@ class datei {
     {
         global $conn;
 
-        $project = (int) $project;
+        $project = (int)$project;
 
         $sel = $conn->prepare("SELECT * FROM projectfolders WHERE project = ? ORDER BY ID ASC");
         $sel->execute(array($project));
@@ -286,13 +288,13 @@ class datei {
 
         $randval = mt_rand(1, 99999);
         // Only allow a-z, 0-9 in filenames, substitute other chars with _
-        $subname = str_replace("ä", "ae" , $subname);
-        $subname = str_replace("Ä", "Ae" , $subname);
-        $subname = str_replace("ö", "oe" , $subname);
-        $subname = str_replace("Ö", "Oe" , $subname);
-        $subname = str_replace("ü", "ue" , $subname);
-        $subname = str_replace("Ü", "Ue" , $subname);
-        $subname = str_replace("ß", "ss" , $subname);
+        $subname = str_replace("ä", "ae", $subname);
+        $subname = str_replace("Ä", "Ae", $subname);
+        $subname = str_replace("ö", "oe", $subname);
+        $subname = str_replace("Ö", "Oe", $subname);
+        $subname = str_replace("ü", "ue", $subname);
+        $subname = str_replace("Ü", "Ue", $subname);
+        $subname = str_replace("ß", "ss", $subname);
         $subname = preg_replace("/[^-_0-9a-zA-Z]/", "_", $subname);
         // Remove whitespace
         $subname = preg_replace("/\W/", "", $subname);
@@ -353,7 +355,7 @@ class datei {
     {
         global $conn, $mylog;
 
-        $id = (int) $id;
+        $id = (int)$id;
         // Get project for logging
         $proj = $conn->query("SELECT project FROM files WHERE ID = $id")->fetch();
 
@@ -363,7 +365,7 @@ class datei {
         $upd = $sql->execute(array($title, $desc, $tags, $id));
 
         if ($sql) {
-            $mylog->add($title, 'file' , 2, $project);
+            $mylog->add($title, 'file', 2, $project);
             return true;
         } else {
             return false;
@@ -379,7 +381,7 @@ class datei {
     function loeschen($datei)
     {
         global $conn, $mylog;
-        $datei = (int) $datei;
+        $datei = (int)$datei;
 
         $thisfile = $conn->query("SELECT datei, name, project, title FROM files WHERE ID = $datei")->fetch();
 
@@ -427,7 +429,7 @@ class datei {
     {
         global $conn;
 
-        $id = (int) $id;
+        $id = (int)$id;
         // Get the file from the database
         $fileStmt = $conn->prepare("SELECT * FROM files WHERE ID= ?");
         $fileStmt->execute(array($id));
@@ -478,7 +480,7 @@ class datei {
     {
         global $conn;
 
-        $file = (int) $file;
+        $file = (int)$file;
         $target = (int)$target;
         // Get the file
         $thefile = $this->getFile($file);
@@ -502,17 +504,17 @@ class datei {
      * List all files associated to a given project
      *
      * @param string $id Project ID
-     * @param int $lim Limit
+     * @param int $limit Limit
      * @param int $folder Folder
      * @return array $files Found files
      */
-    function getProjectFiles($id, $lim = 5000, $folder = "")
+    function getProjectFiles($id, $limit = 5000, $folder = "", $offset = 0)
     {
         global $conn;
 
-        $id = (int) $id;
-        $lim = (int) $lim;
-        $folder = (int) $folder;
+        $id = (int)$id;
+        $limit = (int)$limit;
+        $folder = (int)$folder;
         // If folder is given, return files from this folder, otherwise return files from root folder
         if ($folder > 0) {
             $fold = "files/" . CL_CONFIG . "/$id/$folder/";
@@ -526,19 +528,20 @@ class datei {
         $num = $num[0];
         // Set items per page
         SmartyPaginate::connect();
-        SmartyPaginate::setLimit($lim);
+        SmartyPaginate::setLimit($limit);
         SmartyPaginate::setTotal($num);
 
         $start = SmartyPaginate::getCurrentIndex();
-        $lim = SmartyPaginate::getLimit();
+        $limit = SmartyPaginate::getLimit();
         $files = array();
 
         if ($folder > 0) {
-            $sql = "SELECT ID FROM files WHERE project = $id AND folder = $folder ORDER BY  ID DESC LIMIT $start,$lim";
+            $sql = "SELECT ID FROM files WHERE project = $id AND folder = $folder ORDER BY  ID DESC LIMIT $start,$limit";
             $sel2 = $conn->query($sql);
         } else {
-            $sel2 = $conn->query("SELECT ID FROM files WHERE project = $id AND folder = 0 ORDER BY  ID DESC LIMIT $start,$lim");
-        } while ($file = $sel2->fetch()) {
+            $sel2 = $conn->query("SELECT ID FROM files WHERE project = $id AND folder = 0 ORDER BY  ID DESC LIMIT $start,$limit");
+        }
+        while ($file = $sel2->fetch()) {
             if (!empty($file)) {
                 array_push($files, $this->getFile($file["ID"]));
             }
@@ -551,6 +554,48 @@ class datei {
         }
     }
 
+    function getJsonProjectFiles($id, $limit = 5000, $folder = 0, $offset = 0)
+    {
+        global $conn;
+
+        $id = (int)$id;
+        $limit = (int)$limit;
+        $folder = (int)$folder;
+        $files = array();
+
+        $filesStmt = $conn->query("SELECT ID FROM files WHERE project = $id AND folder = $folder ORDER BY  ID DESC LIMIT $limit OFFSET $offset");
+
+        while ($file = $filesStmt->fetch()) {
+            if (!empty($file)) {
+                array_push($files, $this->getFile($file["ID"]));
+            }
+        }
+
+        if (!empty($files)) {
+            return $files;
+        } else {
+            return false;
+        }
+    }
+
+    function countJsonProjectFiles($id, $folder = 0)
+    {
+        global $conn;
+
+        $id = (int)$id;
+        $folder = (int)$folder;
+
+        $filesStmt = $conn->query("SELECT COUNT(*) FROM files WHERE project = $id AND folder = $folder");
+
+        $fileCount = $filesStmt->fetch();
+        $fileCount = $fileCount["COUNT(*)"];
+
+        if (!empty($fileCount)) {
+            return $fileCount;
+        } else {
+            return false;
+        }
+    }
     /**
      * List all files associated to a given project regardless of folder
      *
@@ -561,7 +606,7 @@ class datei {
     {
         global $conn;
 
-        $id = (int) $id;
+        $id = (int)$id;
 
         $files = array();
 
@@ -589,7 +634,7 @@ class datei {
     private function make_seed()
     {
         list($usec, $sec) = explode(' ', microtime());
-        $value = (float) $sec + ((float) $usec * 100000);
+        $value = (float)$sec + ((float)$usec * 100000);
         return $value;
     }
 
@@ -615,9 +660,9 @@ class datei {
             $desc = " ";
         }
 
-        $project = (int) $project;
-        $milestone = (int) $milestone;
-        $folder = (int) $folder;
+        $project = (int)$project;
+        $milestone = (int)$milestone;
+        $folder = (int)$folder;
         $userid = $_SESSION["userid"];
         $now = time();
         $insStmt = $conn->prepare("INSERT INTO files (`name`, `desc`, `project`, `milestone`, `user`, `added`, `datei`, `type`, `title`, `folder`, `visible`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");

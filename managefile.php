@@ -312,19 +312,29 @@ elseif($action == "projectFiles")
         die();
     }
 
+    $offset = 0;
+    if(isset($cleanGet["offset"]))
+    {
+        $offset = $cleanGet["offset"];
+    }
+    $limit = 7;
+    if(isset($cleanGet["limit"]))
+    {
+        $limit = $cleanGet["limit"];
+    }
+
     $POST_MAX_SIZE = ini_get('post_max_size');
     $POST_MAX_SIZE = $POST_MAX_SIZE . "B";
 
     $folder = getArrayVal($_GET, "folder");
 
-    $files = $fileObj->getProjectFiles($id, 1000000, $folder);
+    $files = $fileObj->getJsonProjectFiles($id, $limit, $folder, $offset);
     $projectFiles = array("files"=>array());
-    $filenum = 0;
+    $filenum = $fileObj->countJsonProjectFiles($id);
 
     if (!empty($files)) {
         foreach($files as $file) {
             array_push($projectFiles["files"], $file);
-            $filenum = $filenum + 1;
         }
     }
 
@@ -343,16 +353,8 @@ elseif($action == "projectFiles")
     $jsonFiles["items"] = $projectFiles;
     $jsonFiles["count"] = $filenum;
 
-    $template->assign("filenum", $filenum);
-    $template->assign("foldername", $foldername);
+   echo json_encode($jsonFiles);
 
-    $template->assign("folders", $finfolders);
-    $template->assign("folderid", $thefolder["parent"]);
-    $template->assign("langfile", $langfile);
-    $template->assign("theAction", "fileview");
-    SmartyPaginate::assign($template);
-    $template->assign("files", $projectFiles);
-    $template->assign("postmax", $POST_MAX_SIZE);
 }
 elseif($action == "downloadfile")
 {
