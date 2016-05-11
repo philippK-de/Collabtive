@@ -8,7 +8,7 @@ if (!isset($_SESSION["userid"])) {
 }
 $path = "./include/phpseclib";
 set_include_path(get_include_path() . PATH_SEPARATOR . $path);
-$myfile = new datei();
+$fileObj = new datei();
 
 //read the maximum file size for file uploads from PHP
 $POST_MAX_SIZE = ini_get('post_max_size');
@@ -57,8 +57,8 @@ if ($action == "uploadAsync") {
 	//if a folder for upload is set
 	//otherwhise use the root folder
     if ($upfolder) {
-        $thefolder = $myfile->getFolder($upfolder);
-    	$absfolder = $myfile->getAbsolutePathName($thefolder);
+        $thefolder = $fileObj->getFolder($upfolder);
+    	$absfolder = $fileObj->getAbsolutePathName($thefolder);
     	if($absfolder == "/")
     	{
     		$absfolder = "";
@@ -75,11 +75,11 @@ if ($action == "uploadAsync") {
     //Loop through uploaded files
 	foreach($_FILES as $file) {
 		//encrypt files in their tmp location
-    	$myfile->encryptFile($file["tmp_name"], $settings["filePass"]);
+    	$fileObj->encryptFile($file["tmp_name"], $settings["filePass"]);
 		//upload them to the files folder and add to the database
-        $fid = $myfile->uploadAsync($file["name"], $file["tmp_name"], $file["type"], $file["size"], $upath, $id, $upfolder);
+        $fid = $fileObj->uploadAsync($file["name"], $file["tmp_name"], $file["type"], $file["size"], $upath, $id, $upfolder);
         //get the new file object
-		$fileprops = $myfile->getFile($fid);
+		$fileprops = $fileObj->getFile($fid);
 
 		//send mail notifications
         if ($settings["mailnotify"]) {
@@ -138,7 +138,7 @@ if ($action == "uploadAsync") {
         $template->display("error.tpl");
         die();
     }
-    $file = $myfile->getFile($thisfile);
+    $file = $fileObj->getFile($thisfile);
     $title = $langfile["editfile"];
 
     $myproject = new project();
@@ -158,7 +158,7 @@ if ($action == "uploadAsync") {
         $template->display("error.tpl");
         die();
     }
-    if ($myfile->edit($thisfile, $title, $desc, "")) {
+    if ($fileObj->edit($thisfile, $title, $desc, "")) {
         $loc = $url .= "managefile.php?action=showproject&id=$id&mode=edited";
         header("Location: $loc");
     }
@@ -170,7 +170,7 @@ if ($action == "uploadAsync") {
         $template->display("error.tpl");
         die();
     }
-    if ($myfile->loeschen($thisfile)) {
+    if ($fileObj->loeschen($thisfile)) {
         echo "ok";
     }
 } elseif ($action == "zipexport") {
@@ -189,7 +189,7 @@ if ($action == "uploadAsync") {
         header("Location: $loc");
     }
 } elseif ($action == "folderexport") {
-    $thefolder = $myfile->getFolder($thisfile);
+    $thefolder = $fileObj->getFolder($thisfile);
 
     $topfad = CL_ROOT . "/files/" . CL_CONFIG . "/$id" . "/folder" . $thefolder["ID"] . ".zip";
     $zip = new PclZip($topfad);
@@ -214,7 +214,7 @@ if ($action == "uploadAsync") {
         die();
     }
     
-    $files = $myfile->getProjectFiles($id);
+    $files = $fileObj->getProjectFiles($id);
     $filenum = count($files);
     
     if (empty($finfiles)) {
@@ -225,9 +225,9 @@ if ($action == "uploadAsync") {
     $rolesobj = new roles();
 
 	//get folders
-    $folders = $myfile->getProjectFolders($id);
+    $folders = $fileObj->getProjectFolders($id);
 	//get all folders
-    $allfolders = $myfile->getAllProjectFolders($id);
+    $allfolders = $fileObj->getAllProjectFolders($id);
 
 	//get the project
     $pro = $myproject->getProject($id);
@@ -263,7 +263,7 @@ if ($action == "uploadAsync") {
     $desc = getArrayVal($_POST, "folderdesc");
     $parent = getArrayVal($_POST, "folderparent");
 
-    if ($myfile->addFolder($parent, $id, $name, $desc)) {
+    if ($fileObj->addFolder($parent, $id, $name, $desc)) {
         $loc = $url .= "managefile.php?action=showproject&id=$id&mode=folderadded";
         header("Location: $loc");
     }
@@ -279,7 +279,7 @@ if ($action == "uploadAsync") {
     $ajaxreq = $_GET["ajax"];
     $folder = getArrayVal($_GET, "folder");
     
-    if ($myfile->deleteFolder($folder, $id)) {
+    if ($fileObj->deleteFolder($folder, $id)) {
         if ($ajaxreq = 1) {
             echo "ok";
         } else {
@@ -300,7 +300,59 @@ if ($action == "uploadAsync") {
     $file = substr($file, 4, strlen($file)-4);
 
     $target = $_GET["target"];
-    $myfile->moveFile($file, $target);
+    $fileObj->moveFile($file, $target);
+}
+elseif($action == "projectFiles")
+{
+    if (!chkproject($userid, $id)) {
+        $errtxt = $langfile["notyourproject"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
+
+    $POST_MAX_SIZE = ini_get('post_max_size');
+    $POST_MAX_SIZE = $POST_MAX_SIZE . "B";
+
+    $folder = getArrayVal($_GET, "folder");
+
+    $files = $fileObj->getProjectFiles($id, 1000000, $folder);
+    $projectFiles = array("files"=>array());
+    $filenum = 0;
+
+    if (!empty($files)) {
+        foreach($files as $file) {
+            array_push($projectFiles["files"], $file);
+            $filenum = $filenum + 1;
+        }
+    }
+
+    //if no folder is selected, get all the project folders
+    if ($folder == 0) {
+        $projectFolders = $fileObj->getProjectFolders($id);
+        $currentFolder = array("parent" => 0, "name" => "");
+    } else {
+        $projectFolders = $fileObj->getProjectFolders($id, $folder);
+        $currentFolder = $fileObj->getFolder($folder);
+    }
+
+    $projectFiles["folders"] = $projectFolders;
+    $projectFiles["currentFolder"] = $currentFolder;
+
+    $jsonFiles["items"] = $projectFiles;
+    $jsonFiles["count"] = $filenum;
+
+    $template->assign("filenum", $filenum);
+    $template->assign("foldername", $foldername);
+
+    $template->assign("folders", $finfolders);
+    $template->assign("folderid", $thefolder["parent"]);
+    $template->assign("langfile", $langfile);
+    $template->assign("theAction", "fileview");
+    SmartyPaginate::assign($template);
+    $template->assign("files", $projectFiles);
+    $template->assign("postmax", $POST_MAX_SIZE);
 }
 elseif($action == "downloadfile")
 {
@@ -314,7 +366,7 @@ elseif($action == "downloadfile")
 
 	//get the file ID.
 	$fileId = getArrayVal($_GET,"file");
-	$thefile = $myfile->getFile($fileId);
+	$thefile = $fileObj->getFile($fileId);
 
 	//getFile path and filesize
 	$filePath = $thefile["datei"];
@@ -329,7 +381,7 @@ elseif($action == "downloadfile")
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
 	//Try to decrypt the file
-	$plaintext = $myfile->decryptFile($filePath, $settings["filePass"]);
+	$plaintext = $fileObj->decryptFile($filePath, $settings["filePass"]);
 
 	//no plaintext means file was not encrypted or not decrypted. however deliver to unmodified file
 	if(!$plaintext)
@@ -340,5 +392,6 @@ elseif($action == "downloadfile")
 	//Render the content
 	echo $plaintext;
 }
+
 
 ?>
