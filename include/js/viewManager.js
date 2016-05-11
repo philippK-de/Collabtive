@@ -91,6 +91,7 @@ function updateView(view, updateDependencies) {
     if (view.offset > 0) {
         myUrl += "&offset=" + view.offset;
     }
+    console.log(myUrl);
     //send asyncronous request
     new Ajax.Request(myUrl, {
             method: 'get',

@@ -3,7 +3,7 @@
 <script type = "text/javascript" src = "include/js/5up.js"></script>
 <div id="content-left">
 	<div id="content-left-in">
-		<div class="files">
+		<div class="files" id="projectFiles">
 
 			<div class="infowin_left">
 				<span id = "deleted" style = "display:none;" class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/files.png" alt=""/>{#filewasdeleted#}</span>
@@ -36,7 +36,8 @@
 				<a href="javascript:void(0);" id="block_files_toggle" class="win_block" onclick = "toggleBlock('block_files');"></a>
 
 				<div class="wintools">
-					<div class="addmen">
+                    <loader block="projectFiles" loader="loader-project3.gif"></loader>
+                  <div class="addmen">
 						<div class="export-main">
 							<a class="export"><span>{#addbutton#}</span></a>
 							<div class="export-in"  style="width:54px;left: -54px;"> {*at two items*}
@@ -50,8 +51,11 @@
 
 				<h2>
 					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/folder-root.png" alt="" /><span id = "dirname">{#rootdir#}</span>
+                    <pagination view="projectFilesView" :pages="pages" :current-page="currentPage"></pagination>
+
 				</h2>
-			</div>
+
+            </div>
 
 			<div id="block_files" class="blockwrapper">
 				{*Add Folder*}
@@ -85,12 +89,12 @@
 						</div>
 
 					</div>
-					<div class="content_in_wrapper">
+					<div class="content_in_wrapper" >
 						<div class="content_in_wrapper_in">
 
 							{*change to fileview_list.tpl for list style view*}
 							<div id = "filescontent" class="inwrapper" >
-								{*include file = "fileview.tpl"*}
+								{include file = "fileviewNew.tpl"}
 							</div>
 						</div> {*content_in_wrapper_in End*}
 					</div> {*content_in_wrapper End*}
@@ -116,7 +120,12 @@
 	</div> {*content-left-in END*}
 </div> {*content-left END*}
 {literal}
+<script type="text/javascript" src="include/js/views/projectFilesView.min.js"></script>
 <script type = "text/javascript">
+    projectFiles.url = projectFiles.url + "&id=" + {/literal}{$project.ID}{literal};
+    pagination.itemsPerPage = 7;
+    var projectFilesView = createView(projectFiles);
+
 function changeFileview(viewtype)
 {
 	var folder;
@@ -132,11 +141,11 @@ function changeFileview(viewtype)
 	{
 		folder = 0;
 	}
-	change("manageajax.php?action="+viewtype+"&id={/literal}{$project.ID}{literal}&folder="+folder,"filescontent");
+	//change("manageajax.php?action="+viewtype+"&id={/literal}{$project.ID}{literal}&folder="+folder,"filescontent");
 }
 </script>
 <script type = "text/javascript">
-changeFileview($('fileviewtype').value);
+//changeFileview($('fileviewtype').value);
 </script>
 {/literal}
 {include file="sidebar-a.tpl"}

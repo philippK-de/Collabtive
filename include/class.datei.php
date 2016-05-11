@@ -563,7 +563,7 @@ class datei
         $folder = (int)$folder;
         $files = array();
 
-        $filesStmt = $conn->query("SELECT ID FROM files WHERE project = $id AND folder = $folder ORDER BY  ID DESC LIMIT $limit OFFSET $offset");
+       $filesStmt = $conn->query("SELECT ID FROM files WHERE project = $id AND folder = $folder ORDER BY ID DESC LIMIT $limit OFFSET $offset");
 
         while ($file = $filesStmt->fetch()) {
             if (!empty($file)) {
