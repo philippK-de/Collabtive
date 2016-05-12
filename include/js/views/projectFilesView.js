@@ -6,32 +6,48 @@ var projectFiles = {
 };
 
 
+/*
+* Function called when the user drops the element on a droppable
+*
+ */
 function handleDrop(evt){
+  //prevent default event handling
     evt.stopPropagation();
     evt.preventDefault();
+
+    //get the droptarget element
     var elm = evt.target;
-    var folderId = elm.getAttribute("data-folderid");
-
-    console.log("droped");
-    var fileId = evt.dataTransfer.getData("text/plain");
-
-    var dropedElm = document.getElementById("fli_"+fileId);
+    //get its id
+    var elmId = elm.getAttribute("data-folderid");
+    //get the ID of the droped file
+    var dropedElmId = evt.dataTransfer.getData("text/plain");
+    //get the droped element
+    var dropedElm = document.getElementById("fli_"+dropedElmId);
+    //hide it
     dropedElm.style.display = "none";
 
+    //persist the move of the file on the server
+    change('managefile.php?action=movefile&id=100&file='+dropedElmId+'&target='+elmId,'jslog');
 
-    change('managefile.php?action=movefile&id=100&file='+fileId+'&target='+folderId,'jslog');
-    console.log("fileid " + fileId + "folder " + folderId);
+    console.log("droped");
+    console.log("fileid " + dropedElmId + "folder " + elmId);
+
 }
 
 function handleDragStart(evt) {
     console.log("drag start");
+    //set the drag type to move
     evt.dataTransfer.effectAllowed = 'move';
 
+    //get the dragged element
     var elm = evt.target;
-    var elmData = elm.getAttribute("data-fileid");
+    //get the id of the dragged file
+    var elmId = elm.getAttribute("data-fileid");
 
-    evt.dataTransfer.setData("text/plain",elmData);
+    //set the file id to the data transfer object
+    evt.dataTransfer.setData("text/plain",elmId);
 
+    //make the dragged element
     elm.style.opacity = '0.4';  // this / e.target is the source node.
 
 }

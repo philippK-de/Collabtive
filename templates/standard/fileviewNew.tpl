@@ -98,22 +98,6 @@
 </ul>
 
 
-{section name=fold loop=$folders}
-{literal}
-    <script type="text/javascript">
-        try {
-            Droppables.add('{/literal}fdli_{$folders[fold].ID}{literal}',{
-                onDrop: function(element) {
-                    change('managefile.php?action=movefile&id={/literal}{$project.ID}{literal}&file='+element.id+'&target={/literal}{$folders[fold].ID}{literal}','jslog');
-                    element.hide();
-                }
-            });
-        }
-        catch(e){}
-    </script>
-{/literal}
-{/section}
-
 <div id="parentfolder" style="display:none;">{$folderid}</div>
 
 <script type="text/javascript">
