@@ -299,10 +299,11 @@ if ($action == "uploadAsync") {
     }
     
     $file = $_GET["file"];
-    $file = substr($file, 4, strlen($file)-4);
+   // $file = substr($file, 4, strlen($file)-4);
 
     $target = $_GET["target"];
-    $fileObj->moveFile($file, $target);
+    echo "$target $file";
+   echo  $fileObj->moveFile($file, $target);
 }
 elseif($action == "projectFiles")
 {
@@ -319,7 +320,7 @@ elseif($action == "projectFiles")
     {
         $offset = $cleanGet["offset"];
     }
-    $limit = 7;
+    $limit = 14;
     if(isset($cleanGet["limit"]))
     {
         $limit = $cleanGet["limit"];

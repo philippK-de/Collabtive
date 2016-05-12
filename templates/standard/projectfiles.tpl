@@ -123,10 +123,20 @@
 <script type="text/javascript" src="include/js/views/projectFilesView.min.js"></script>
 <script type = "text/javascript">
     projectFiles.url = projectFiles.url + "&id=" + {/literal}{$project.ID}{literal};
-    pagination.itemsPerPage = 7;
-    var projectFilesView = createView(projectFiles);
+    pagination.itemsPerPage = 14;
 
-function changeFileview(viewtype)
+    var myCallbacks = {
+        ready: function(){
+            var filesList = document.getElementsByClassName("singleFile");
+            console.log(filesList[1]);
+
+        }
+    };
+    var projectFilesView = createView(projectFiles, myCallbacks);
+
+
+
+    function changeFileview(viewtype)
 {
 	var folder;
 	try{
@@ -145,7 +155,7 @@ function changeFileview(viewtype)
 }
 </script>
 <script type = "text/javascript">
-//changeFileview($('fileviewtype').value);
+
 </script>
 {/literal}
 {include file="sidebar-a.tpl"}

@@ -82,6 +82,18 @@ td.message ul {
     display: none;
 }
 
+[draggable] {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    /* Required to make elements draggable in old WebKit */
+    -khtml-user-drag: element;
+    -webkit-user-drag: element;
+}
+.dragover {
+    border: 1px dashed #000;
+}
 /* ## Basic-XHTML-Elements ############### END ############## */
 
 
@@ -2160,7 +2172,7 @@ a.dir_up_butn:hover {
     display: none;
 }
 
-.block table tr.acc td .accordion_content, .accordion_content_active .acc-in {
+.block table tr.acc td .accordion_content,.accordion_content_active .acc-in {
 
     border-top: 1px solid #fff;
     padding: 12px 9px 18px 9px;
@@ -2340,7 +2352,7 @@ th.tools, td.tools {
     background: url(../images/tables-tasks-bg-a.png);
 }
 .tasks tbody.alternateColors:nth-child(odd) {
-background: url(../images/tables-tasks-bg-b.png);
+    background: url(../images/tables-tasks-bg-b.png);
 }
 .tasks .color-b, .tasks .datepick td.wrong, .tasks .datepick tr.weekday td {
     background: url(../images/tables-tasks-bg-b.png);
@@ -2521,14 +2533,12 @@ background: url(../images/tables-tasks-bg-b.png);
 .neutral .color-b, .neutral .content_in_wrapper {
     background: url(../images/tables-neutral-bg-b.png);
 }
-
 .neutral tbody.alternateColors:nth-child(even) {
     background: url(../images/tables-neutral-bg-a.png);
 }
 .neutral tbody.alternateColors:nth-child(odd) {
     background: url(../images/tables-neutral-bg-b.png);
 }
-
 
 .neutral .color-a ul.files table, .neutral .color-b ul.files table {
     background: url(../images/tables-neutral-bg-c.png);

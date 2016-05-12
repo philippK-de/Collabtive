@@ -108,6 +108,7 @@ for (i = 0; i < theBlocks.length; i++) {
     blockIds.push(theId);
     //get the index of the last opened block
     theCook = readCookie("activeSlideIndex");
+
     //console.log(theCook);
     if (theCook > 0) {
         openSlide = theCook;

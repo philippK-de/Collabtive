@@ -1,16 +1,20 @@
-<ul>
+<ul id="filesList">
     {literal}
-        <li v-for="folder in items.folders" id="fdli_{{*folder.ID}}">
-            <div class="itemwrapper" id="iw_{{*folder.ID}}">
-                <table cellpadding="0" cellspacing="0" border="0">
+        <li v-for="folder in items.folders" id="fdli_{{*folder.ID}}" >
+            <div class="itemwrapper" id="iw_{{*folder.ID}}"
+                 ondrop="handleDrop(event);"
+                 ondragover="handleDragOver(event);"
+                 ondragenter="handleDragEnter(event);"
+                 ondragleave="handleDragLeave(event);" data-folderid="{{*folder.ID}}">
+                <table cellpadding="0" cellspacing="0" border="0" data-folderid="{{*folder.ID}}">
                     <tr>
-                        <td class="leftmen" valign="top">
+                        <td class="leftmen" valign="top" data-folderid="{{*folder.ID}}">
                         </td>
                         <td class="thumb">
                             <a href="javascript:change('manageajax.php?action=fileview&id={{*folder.project}}&folder={{*folder.ID}}','filescontent');
                             selectFolder({{folder.ID}});">
                                 <img src="./templates/{/literal}{$settings.template}/theme/{$settings.theme}/{literal}images/symbols/folder-sub.png"
-                                alt="" />
+                                alt="" data-folderid="{{*folder.ID}}" / >
                             </a>
                         </td>
                         <td class="rightmen" valign="top">
@@ -43,16 +47,17 @@
     <div class="content-spacer"></div>
 
     {literal}
-        <li v-for="file in items.files" id="fli_{{*file.ID}}">
-            <div class="itemwrapper" id="iw_{{*file.ID}}">
+        <li v-for="file in items.files" id="fli_{{*file.ID}}" draggable="true"  ondragstart="handleDragStart(event);"  data-fileid="{{*file.ID}}">
+            <div class="itemwrapper" id="iw_{{*file.ID}}" class="singleFile" >
                 <table cellpadding="0" cellspacing="0" border="0">
                     <tr>
                         <td class="leftmen" valign="top">
                             <div class="inmenue"></div>
                         </td>
                         <td class="thumb">
-                            <a href="managefile.php?action=downloadfile&amp;id={{*file.project}}&amp;file={{*file.ID}}" {if $files[file].imgfile == 1}  rel="lytebox[]" {elseif $files[file].imgfile == 2} rel = "lyteframe[text]" rev="width: 650px; height: 500px;" {/if} >
-                                <img src="templates/{/literal}{$settings.template}/theme/{$settings.theme}/{literal}images/files/{{*file.type}}.png" alt="{{*file.name}}" />
+                            <a href="managefile.php?action=downloadfile&amp;id={{*file.project}}&amp;file={{*file.ID}}"  data-fileid="{{*file.ID}}">
+                                <img data-fileid="{{*file.ID}}"
+                                        src="templates/{/literal}{$settings.template}/theme/{$settings.theme}/{literal}images/files/{{*file.type}}.png" alt="{{*file.name}}" />
                             </a>
                         </td>
                         <td class="rightmen" valign="top">
@@ -71,7 +76,7 @@
                     <tr>
                         <td colspan="3">
 							<span class="name">
-                                <a href="managefile.php?action=downloadfile&amp;id={{*file.project}}&amp;file={{*file.ID}}" {if $files[file].imgfile == 1}  rel="lytebox[]" {elseif $files[file].imgfile == 2} rel = "lyteframe[text]" rev="width: 650px; height: 500px;" {/if} >
+                                <a href="managefile.php?action=downloadfile&amp;id={{*file.project}}&amp;file={{*file.ID}}" data-fileid="{{file.ID}}">
                                         {{*file.name | truncate '10'}}
 
                                 </a>
@@ -81,12 +86,13 @@
                 </table>
 
             </div> <!--itemwrapper End-->
-        </li>
+
 
         <script type = "text/javascript">
-            new Draggable('fli_{{*file.ID}}',{revert:true});
-        </script>
 
+
+        </script>
+    </li>
     <!-- files in fldes END-->
     {/literal}
 </ul>

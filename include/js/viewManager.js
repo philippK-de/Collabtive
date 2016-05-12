@@ -47,7 +47,7 @@ function createView(myEl) {
                 var pages = pagination.listPages(responseData.count);
                 myModel.pages = pages;
                 //emit an event that indicates the view has finished loading data
-                vueview.$emit("iloaded");
+                vueview.$dispatch("iloaded");
             },
             onLoading: function () {
                 //show loading indicator
