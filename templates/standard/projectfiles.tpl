@@ -74,7 +74,8 @@
 				<div class="nosmooth" id="sm_files">
 					<div class="contenttitle" id = "dropDirUp" >
 						<div class="contenttitle_menue" >
-							<a id = "dirUp" class="dir_up_butn" href="javascript:change('manageajax.php?action=fileview&id={$project.ID}&folder=0','filescontent');" title="{#parent#}"></a>
+							<a id = "dirUp" class="dir_up_butn" href="javascript:loadFolder(projectFilesView,0);"
+                               title="{#parent#}"></a>
 						</div>
 						<div class="contenttitle_in" style = "width:500px;">
 							<a href="manageajax.php?action=fileview&id={$project.ID}&folder={$folders[fold].ID}"></a>
@@ -134,25 +135,6 @@
     };
     var projectFilesView = createView(projectFiles, myCallbacks);
 
-
-
-    function changeFileview(viewtype)
-{
-	var folder;
-	try{
-		folder = $('folderparent').value;
-	}
-	catch(e)
-	{
-		folder = 0;
-	}
-
-	if(!folder)
-	{
-		folder = 0;
-	}
-	//change("manageajax.php?action="+viewtype+"&id={/literal}{$project.ID}{literal}&folder="+folder,"filescontent");
-}
 </script>
 <script type = "text/javascript">
 

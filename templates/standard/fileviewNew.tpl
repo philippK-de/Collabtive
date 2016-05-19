@@ -11,8 +11,7 @@
                         <td class="leftmen" valign="top" data-folderid="{{*folder.ID}}">
                         </td>
                         <td class="thumb">
-                            <a href="javascript:change('manageajax.php?action=fileview&id={{*folder.project}}&folder={{*folder.ID}}','filescontent');
-                            selectFolder({{folder.ID}});">
+                            <a href="javascript:loadFolder(projectFilesView,{{folder.ID}});selectFolder({{folder.ID}});">
                                 <img src="./templates/{/literal}{$settings.template}/theme/{$settings.theme}/{literal}images/symbols/folder-sub.png"
                                 alt="" data-folderid="{{*folder.ID}}" / >
                             </a>
@@ -32,7 +31,7 @@
                     <tr>
                         <td colspan="3">
 							<span class="name">
-								<a href="javascript:change('manageajax.php?action=fileview&id={{*folder.project}}&folder={{*folder.ID}}','filescontent');selectFolder(folder.ID);" title="">
+								<a href="javascript:loadFolder(projectFilesView,{{folder.ID}});selectFolder({{folder.ID}});" title="">
                                         {{*folder.name | truncate '10'}}
                                 </a>
 							</span>
@@ -103,13 +102,7 @@
 <script type="text/javascript">
     {literal}
     parentFolder = $("parentfolder").innerHTML;
-    Droppables.add('dropDirUp',{
-        onDrop: function(element) {
-            //alert('managefile.php?action=movefile&id={/literal}{$project.ID}{literal}&file='+element.id+'&target='+parentFolder);
-            change('managefile.php?action=movefile&id={/literal}{$project.ID}{literal}&file='+element.id+'&target='+parentFolder,'jslog');
-            element.hide();
-        }
-    });
+
     {/literal}
 
     {if $foldername}

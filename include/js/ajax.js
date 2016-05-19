@@ -123,20 +123,7 @@ function confirmfunction(text, toCall) {
 }
 
 
-function selectFolder(folderId) {
-    var theParentOptions = $('folderparent').options;
-    for (i = 0; i < theParentOptions.length; i++) {
-        if (theParentOptions[i].value == folderId) {
-            theParentOptions[i].selected = 'selected';
-        }
-    }
-    var theOptions = $('upfolder').options;
-    for (i = 0; i < theOptions.length; i++) {
-        if (theOptions[i].value == folderId) {
-            theOptions[i].selected = 'selected';
-        }
-    }
-}
+
 
 function setCookie(name, value, expires, path, domain, secure) {
     var today = new Date();
