@@ -6,13 +6,20 @@ var projectFiles = {
 };
 
 
+/*
+* Function to load a new folder to the files view
+ */
 function loadFolder(view, folder) {
     var currentUrl = view.$get("url");
 
+    //modify the data url
     Vue.set(view, "url", currentUrl + "&folder=" + folder);
-
+    //trigger update
     updateView(view);
 }
+/*
+* Select a folder in the add file, add folder dropdowns
+ */
 function selectFolder(folderId) {
     var theParentOptions = document.getElementById("folderparent").options;
     for (i = 0; i < theParentOptions.length; i++) {
@@ -20,7 +27,7 @@ function selectFolder(folderId) {
             theParentOptions[i].selected = 'selected';
         }
     }
-    var theOptions = $('upfolder').options;
+    var theOptions = document.getElementById('upfolder').options;
     for (i = 0; i < theOptions.length; i++) {
         if (theOptions[i].value == folderId) {
             theOptions[i].selected = 'selected';

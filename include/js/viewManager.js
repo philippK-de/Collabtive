@@ -38,7 +38,7 @@ function createView(myEl) {
             onSuccess: function (myData) {
                 //update the model with the retrieved data
                 console.log("url " + myModel.url);
-                var responseData = JSON.parse(myData.responseText);
+                const responseData = JSON.parse(myData.responseText);
                 //one page of data
                 myModel.items = responseData.items;
                 //total number of items available
