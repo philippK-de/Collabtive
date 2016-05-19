@@ -137,19 +137,11 @@
     projectFiles.url = projectFiles.url + "&id=" + {/literal}{$project.ID}{literal};
     pagination.itemsPerPage = 14;
 
-    var myCallbacks = {
-        ready: function () {
-            var filesList = document.getElementsByClassName("singleFile");
-            console.log(filesList[1]);
 
-        }
-    };
-    var projectFilesView = createView(projectFiles, myCallbacks);
+    var projectFilesView = createView(projectFiles);
 
 </script>
-    <script type="text/javascript">
 
-    </script>
 {/literal}
 {include file="sidebar-a.tpl"}
 {include file="footer.tpl"}

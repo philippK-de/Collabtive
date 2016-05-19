@@ -54,7 +54,7 @@
 			<div class="row" id="statusrow" style="display:none;">
 				<label>&nbsp;</label><br />
 				<div class="statusbar" id="fakeprogress" style="width:314px;margin-left:140px;">
-					<div id="completed" class="complete" style="width:0%;"></div>
+					<div id="uploadCompleted" class="complete" style="width:0%;"></div>
 				</div>
 			</div>
 			
@@ -72,7 +72,7 @@
 		<script type="text/javascript">
 			Event.observe(window, "load", function()
 			{
-				uploader = new html5up("filer", "fileInfo1", "completed", "managefile.php?action=uploadAsync&id={/literal}{$project.ID}{literal}");
+				uploader = new html5up("filer", "fileInfo1", "uploadCompleted", "managefile.php?action=uploadAsync&id={/literal}{$project.ID}{literal}");
 			});
 		</script>
 	{/literal}

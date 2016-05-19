@@ -9,8 +9,14 @@ function finisher() {
     toggleClass('addfile', 'addfile-active', 'addfile');
     toggleClass('add_file_butn', 'butn_link_active', 'butn_link');
     toggleClass('sm_files', 'smooth', 'nosmooth');
-    changeFileview($('fileviewtype').value, $('folderparent').value);
+
+    //get the folder currently selected for upload
+    var folder = document.getElementById("folderparent").value;
+    //update the view
+    loadFolder(projectFilesView,folder);
+    //hide the upload status
     $("statusrow").setAttribute("style", "display:none;");
+    //Reset the HTML files-to-be-uploaded list
     $("fileInfo1").innerHTML = "";
     systemMsg("fileadded");
 }
