@@ -2488,10 +2488,20 @@ background: <?php echo $projectsColorB;?>;
 }
 
 .projects a.butn_link:hover, .projects button:hover, .projects form .fileinput:hover button, .projects a.butn_link_active, .projects .datepick .picker {
-	background: <?php echo $projectsC;
-?>;
+	background: <?php echo $projectsC;?>;
 }
 
+.projects button.paginationActive{
+    background: <?php echo $projectsC;?>;
+    font-size:16px;
+    color:<?php echo $projectsMain;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+.projects button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 /* TASKS COLORS #####################################*/
 
 .tasks .headline, .tasks a.butn_link, .tasks button, .tasks a.butn_link_active:hover, .tasks .inmenue a span, .tasks .moreinfo {
@@ -2513,13 +2523,16 @@ background: <?php echo $projectsColorB;?>;
 	background: <?php echo $tasksColorA;
 ?>;
 }
+
 .tasks tbody.alternateColors:nth-child(even) {
 background: <?php echo $tasksColorA;
 ?>;
 }
+
 .tasks tbody.alternateColors:nth-child(odd) {
 background: <?php echo $tasksColorB; ?>;
 }
+
 .tasks .color-b, .tasks .datepick td.wrong, .tasks .datepick tr.weekday td {
 	background: <?php echo $tasksColorB;
 ?>;
@@ -2559,6 +2572,17 @@ background: <?php echo $tasksColorB; ?>;
 ?>;
 }
 
+.tasks button.paginationActive{
+    background: <?php echo $tasksC;?>;
+    font-size:16px;
+    color:<?php echo $tasksB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+.tasks button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 
 /* MESSAGES COLORS #################################*/
 
@@ -2626,6 +2650,17 @@ background: url(../images/tables-msgs-bg-b.png);
 ?>;
 }
 
+.msgs button.paginationActive{
+    background: <?php echo $msgsC;?>;
+    font-size:16px;
+    color:<?php echo $msgsB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+.msgs button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 /* USER COLORS #################################*/
 
 .user .headline, .user a.butn_link, .user button, .user a.butn_link_active:hover, .user .inmenue a span, .user .moreinfo {
@@ -2647,13 +2682,14 @@ background: url(../images/tables-msgs-bg-b.png);
 	background: <?php echo $userColorA;
 ?>;
 }
+
 .user tbody.alternateColors:nth-child(even) {
 background: <?php echo $userColorA;?>;
 }
+
 .user tbody.alternateColors:nth-child(odd) {
 background: <?php echo $userColorB;?>;
 }
-
 
 .user .color-b, .user .content_in_wrapper {
 	background: <?php echo $userColorB;
@@ -2694,6 +2730,17 @@ background: <?php echo $userColorB;?>;
 ?>;
 }
 
+.user button.paginationActive{
+    background: <?php echo $userC;?>;
+    font-size:16px;
+    color:<?php echo $userB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+.user button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 /* USER PROFILE */
 
 .user .export-main {
@@ -2780,6 +2827,17 @@ background: <?php echo $neutralColorB;?>;
 	background: <?php echo $neutralC;
 ?>;
 }
+.neutral button.paginationActive{
+    background: <?php echo $neutralC;?>;
+    font-size:16px;
+    color:<?php echo $neutralB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+.neutral button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 
 /* TIMETRACKING COLORS #################################*/
 
@@ -2853,6 +2911,18 @@ background: <?php echo $timetrackColorB;?>
 	background: <?php echo $timetrackC;
 ?>;
 }
+.timetrack button.paginationActive{
+    background: <?php echo $timetrackC;?>;
+    font-size:16px;
+    color:<?php echo $timetrackB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+
+.timetrack button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 
 /* MILESTONES COLORS #################################*/
 
@@ -2925,6 +2995,17 @@ background: <?php echo $milesColorB;?>;
 ?>;
 }
 
+.miles button.paginationActive{
+    background: <?php echo $milesC;?>;
+    font-size:16px;
+    color:<?php echo $milesB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+.miles button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 /* FILES COLORS #####################################*/
 
 .files .headline, .files a.butn_link, .files button, .files a.butn_link_active:hover, .files .inmenue a span, .files .moreinfo {
@@ -2987,6 +3068,17 @@ background: <?php echo $milesColorB;?>;
 ?>;
 }
 
+.files button.paginationActive{
+    background: <?php echo $filesC;?>;
+    font-size:16px;
+    color:<?php echo $filesB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+.files button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 /* ## ACCORDION ################ Toggle ############### */
 
 span.acc-toggle, span.acc-toggle-active, .second-thead span.acc-toggle, .second-thead span.acc-toggle-active {

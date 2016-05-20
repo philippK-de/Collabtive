@@ -2331,6 +2331,17 @@ th.tools, td.tools {
     background: #275154;
 }
 
+.projects button.paginationActive{
+    background: #275154;
+    font-size:16px;
+    color:#3f7174;
+    float:none;
+    margin:0 0 0 0;
+}
+.projects button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 /* TASKS COLORS #####################################*/
 
 .tasks .headline, .tasks a.butn_link, .tasks button, .tasks a.butn_link_active:hover, .tasks .inmenue a span, .tasks .moreinfo {
@@ -2348,12 +2359,15 @@ th.tools, td.tools {
 .tasks .color-a, .tasks .datepick table td, .tasks .datepick tr.head td, .tasks .statuswrapper li {
     background: url(../images/tables-tasks-bg-a.png);
 }
+
 .tasks tbody.alternateColors:nth-child(even) {
     background: url(../images/tables-tasks-bg-a.png);
 }
+
 .tasks tbody.alternateColors:nth-child(odd) {
     background: url(../images/tables-tasks-bg-b.png);
 }
+
 .tasks .color-b, .tasks .datepick td.wrong, .tasks .datepick tr.weekday td {
     background: url(../images/tables-tasks-bg-b.png);
 }
@@ -2384,6 +2398,17 @@ th.tools, td.tools {
     background: #203d56;
 }
 
+.tasks button.paginationActive{
+    background: #203d56;
+    font-size:16px;
+    color:#869cad;
+    float:none;
+    margin:0 0 0 0;
+}
+.tasks button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 
 /* MESSAGES COLORS #################################*/
 
@@ -2438,6 +2463,17 @@ th.tools, td.tools {
     background: #464440;
 }
 
+.msgs button.paginationActive{
+    background: #464440;
+    font-size:16px;
+    color:#a3a19e;
+    float:none;
+    margin:0 0 0 0;
+}
+.msgs button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 /* USER COLORS #################################*/
 
 .user .headline, .user a.butn_link, .user button, .user a.butn_link_active:hover, .user .inmenue a span, .user .moreinfo {
@@ -2455,13 +2491,14 @@ th.tools, td.tools {
 .user .color-a, .user .staterow {
     background: url(../images/tables-user-bg-a.png);
 }
+
 .user tbody.alternateColors:nth-child(even) {
     background: url(../images/tables-user-bg-a.png);
 }
+
 .user tbody.alternateColors:nth-child(odd) {
     background: url(../images/tables-user-bg-b.png);
 }
-
 
 .user .color-b, .user .content_in_wrapper {
     background: url(../images/tables-user-bg-b.png);
@@ -2493,6 +2530,17 @@ th.tools, td.tools {
     background: #3d573f;
 }
 
+.user button.paginationActive{
+    background: #3d573f;
+    font-size:16px;
+    color:#bbcbbb;
+    float:none;
+    margin:0 0 0 0;
+}
+.user button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 /* USER PROFILE */
 
 .user .export-main {
@@ -2565,6 +2613,17 @@ th.tools, td.tools {
 .neutral a.butn_link:hover, .neutral button:hover, .neutral form .fileinput:hover button, .neutral a.butn_link_active, .neutral .datepick .picker {
     background: #4f4e4e;
 }
+.neutral button.paginationActive{
+    background: #4f4e4e;
+    font-size:16px;
+    color:#a9a7a8;
+    float:none;
+    margin:0 0 0 0;
+}
+.neutral button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 
 /* TIMETRACKING COLORS #################################*/
 
@@ -2621,6 +2680,18 @@ th.tools, td.tools {
 
 .timetrack a.butn_link:hover, .timetrack button:hover, .timetrack form .fileinput:hover button, .timetrack a.butn_link_active, .timetrack .datepick .picker {
     background: #6f412c;
+}
+.timetrack button.paginationActive{
+    background: #6f412c;
+    font-size:16px;
+    color:#bc9f8f;
+    float:none;
+    margin:0 0 0 0;
+}
+
+.timetrack button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
 }
 
 /* MILESTONES COLORS #################################*/
@@ -2680,6 +2751,17 @@ th.tools, td.tools {
     background: #62332e;
 }
 
+.miles button.paginationActive{
+    background: #62332e;
+    font-size:16px;
+    color:#b49591;
+    float:none;
+    margin:0 0 0 0;
+}
+.miles button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 /* FILES COLORS #####################################*/
 
 .files .headline, .files a.butn_link, .files button, .files a.butn_link_active:hover, .files .inmenue a span, .files .moreinfo {
@@ -2729,6 +2811,17 @@ th.tools, td.tools {
     background: #2e3345;
 }
 
+.files button.paginationActive{
+    background: #2e3345;
+    font-size:16px;
+    color:#9195a2;
+    float:none;
+    margin:0 0 0 0;
+}
+.files button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 /* ## ACCORDION ################ Toggle ############### */
 
 span.acc-toggle, span.acc-toggle-active, .second-thead span.acc-toggle, .second-thead span.acc-toggle-active {
