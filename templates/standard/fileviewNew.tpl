@@ -87,10 +87,6 @@
             </div> <!--itemwrapper End-->
 
 
-        <script type = "text/javascript">
-
-
-        </script>
     </li>
     <!-- files in fldes END-->
     {/literal}
@@ -105,13 +101,6 @@
 
     {/literal}
 
-    {if $foldername}
-    $('dirname').innerHTML = '{$foldername}';
-    {else}
-    $('dirname').innerHTML = '{$langfile.rootdir}';
-    {/if}
 
-    $('filenum').innerHTML = '{$filenum}';
     new LyteBox();
-    $('dirUp').href = "javascript:change('manageajax.php?action=fileview&id={$project.ID}&folder={$folderid}','filescontent');selectFolder({$folderid});"
 </script>

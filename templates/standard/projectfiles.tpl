@@ -62,7 +62,7 @@
 
                 <h2>
                     <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/folder-root.png" alt=""/><span
-                            id="dirname">{#rootdir#}</span>
+                            id="dirname">{literal}{{items.currentFolder.abspath}}{/literal}</span>
                     <pagination view="projectFilesView" :pages="pages" :current-page="currentPage"></pagination>
                 </h2>
             </div>
@@ -84,11 +84,10 @@
                 <div class="nosmooth" id="sm_files">
                     <div class="contenttitle" id="dropDirUp">
                         <div class="contenttitle_menue">
-                            <a id="dirUp" class="dir_up_butn" href="javascript:loadFolder(projectFilesView,0);"
-                               title="{#parent#}"></a>
+                           {literal} <a id="dirUp" class="dir_up_butn" href="javascript:loadFolder(projectFilesView,{{items.currentFolder.parent}});"
+                               title="{/literal}{#parent#}"></a>
                         </div>
                         <div class="contenttitle_in" style="width:500px;">
-                            <a href="manageajax.php?action=fileview&id={$project.ID}&folder={$folders[fold].ID}"></a>
                         </div>
                         <div style="float:right;margin-right:3px;">
                             <form id="typechose">

@@ -344,7 +344,7 @@ elseif($action == "projectFiles")
     //if no folder is selected, get all the project folders
     if ($folder == 0) {
         $projectFolders = $fileObj->getProjectFolders($id);
-        $currentFolder = array("parent" => 0, "name" => "");
+        $currentFolder = array("parent" => 0, "name" => $langfile["rootdir"], "abspath" => $langfile["rootdir"]);
     } else {
         $projectFolders = $fileObj->getProjectFolders($id, $folder);
         $currentFolder = $fileObj->getFolder($folder);
