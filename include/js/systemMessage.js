@@ -53,7 +53,7 @@ var systemMessage = {
         notificationContainer.innerHTML = notificationHTML;
         //create the system message
         this.createMessage(notificationContainer.id);
-        console.log(notificationHTML);
+        //console.log(notificationHTML);
     },
     added: function(itemType)
     {

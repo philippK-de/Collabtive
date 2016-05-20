@@ -5,11 +5,6 @@
  **/
 
 function finisher() {
-    blindtoggle('form_file');
-    toggleClass('addfile', 'addfile-active', 'addfile');
-    toggleClass('add_file_butn', 'butn_link_active', 'butn_link');
-    toggleClass('sm_files', 'smooth', 'nosmooth');
-
     //get the folder currently selected for upload
     var folder = document.getElementById("folderparent").value;
     //update the view
@@ -18,8 +13,7 @@ function finisher() {
     $("statusrow").setAttribute("style", "display:none;");
     //Reset the HTML files-to-be-uploaded list
     $("fileInfo1").innerHTML = "";
-
-    systemMessage.added(projectFilesView.$get("itemType"));
+    systemMessage.added(projectFilesView.$get("itemType"))
 }
 
 function checkCompat() {
@@ -166,8 +160,12 @@ html5up.prototype.progress = function (evt) {
 html5up.prototype.complete = function (evt) {
     //console.log(evt.target.responseText);
 
+    blindtoggle('form_file');
+    toggleClass('addfile', 'addfile-active', 'addfile');
+    toggleClass('add_file_butn', 'butn_link_active', 'butn_link');
+    toggleClass('sm_files', 'smooth', 'nosmooth');
     indicator.setAttribute("style", "width:100%");
-    window.setTimeout("finisher()", 400);
+    window.setTimeout("finisher()", 300);
     //document.title = "100%";
 }
 

@@ -107,11 +107,7 @@
                             </div>
                         </div> {*content_in_wrapper_in End*}
                     </div> {*content_in_wrapper End*}
-                    <div class="staterow">
-                        <div class="staterowin">
-                            <span id="filenum">{$filenum}</span> {#files#}
-                        </div>
-                    </div>
+
                 </div> {*nosmooth End*}
 
                 <div class="tablemenue">
@@ -136,7 +132,6 @@
 <script type="text/javascript">
     projectFiles.url = projectFiles.url + "&id=" + {/literal}{$project.ID}{literal};
     pagination.itemsPerPage = 21;
-
 
     var projectFilesView = createView(projectFiles);
 
