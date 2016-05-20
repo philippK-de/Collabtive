@@ -292,7 +292,7 @@ if ($action == "addform") {
     $template->assign("messagenum", $mcount);
     $template->display("projectmessages.tpl");
 }
-elseif($action = "projectMessages")
+elseif($action == "projectMessages")
 {
     if (!$userpermissions["messages"]["view"]) {
         $errtxt = $langfile["nopermission"];
