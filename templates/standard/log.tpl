@@ -2,10 +2,12 @@
     <a href="javascript:void(0);" id="loghead_toggle" class="win_none" onclick=""></a>
 
     <div class="wintools">
-        <div class="progress" id="progressprojectLog" style="display:none;">
-            <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-project3.gif"/>
-        </div>
+
         <div class="export-main">
+
+            <div class="progress" id="progressprojectLog" style="display:none;">
+                <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-neutral.gif"/>
+            </div>
             <a class="export"><span>{#export#}</span></a>
 
             <div class="export-in" style="width:46px;left: -46px;"> {* at one item *}
@@ -13,10 +15,12 @@
                 <a class="excel" href="manageproject.php?action=projectlogxls&amp;id={$project.ID}"><span>{#excelexport#}</span></a>
             </div>
         </div>
+
     </div>
 
     <h2>
         <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/activity.png" alt=""/>{#activity#}
+
     </h2>
 </div>
 
