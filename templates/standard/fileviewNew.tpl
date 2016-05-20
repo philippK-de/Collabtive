@@ -21,7 +21,7 @@
                                 {/literal}
                                 {if $userpermissions.files.del}
                                 {literal}
-                                    <a class="del" href="javascript:confirmDelete('{/literal}{$langfile.confirmdel}{literal}','fdli_{{*folder.ID}}','managefile.php?action=delfolder&amp;id={{*folder.project}}&amp;folder={{*folder.ID}}&ajax=1');" title="{#delete#}" onclick=""></a>
+                                    <a class="del" href="javascript:confirmDelete('{/literal}{$langfile.confirmdel}{literal}','fdli_{{*folder.ID}}','managefile.php?action=delfolder&amp;id={{*folder.project}}&amp;folder={{*folder.ID}}&ajax=1',projectFilesView);" title="{#delete#}" onclick=""></a>
                                 {/literal}
                                 {/if}
                                 {literal}
@@ -64,7 +64,7 @@
                                 {/literal}
                                 {if $userpermissions.files.del}
                                 {literal}
-                                    <a class="del" href="javascript:confirmDelete('{/literal}{$langfile.confirmdel}{literal}','fli_{{*file.ID}}','managefile.php?action=delete&amp;id={{*file.project}}&amp;file={{*file.ID}}');" title="{#delete#}"></a>
+                                    <a class="del" href="javascript:confirmDelete('{/literal}{$langfile.confirmdel}{literal}','fli_{{*file.ID}}','managefile.php?action=delete&amp;id={{*file.project}}&amp;file={{*file.ID}}',projectFilesView);" title="{#delete#}"></a>
                                 {/literal}
                                 {/if}
                                 {literal}

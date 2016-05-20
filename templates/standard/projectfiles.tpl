@@ -1,15 +1,16 @@
 {include file="header.tpl" jsload = "ajax" jsload3 = "lightbox" }
 {include file="tabsmenue-project.tpl" filestab = "active"}
-<script type="text/javascript" src="include/js/5up.js"></script>
+
 <div id="content-left">
     <div id="content-left-in">
         <div class="files" id="projectFiles">
-
-            <div class="infowin_left">
-                <span id="deleted" style="display:none;" class="info_in_red"><img
-                            src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/files.png" alt=""/>{#filewasdeleted#}</span>
-                <span id="fileadded" style="display:none;" class="info_in_green"><img
-                            src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/files.png" alt=""/>{#filewasadded#}</span>
+            <!-- project text -->
+            <div class="infowin_left"
+                 id="fileSystemMessage"
+                 data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/files.png"
+                 data-text-added="{#filewasadded#}"
+                 data-text-deleted="{#filewasdeleted#}"
+                 style="display:none">
             </div>
 
             <div class="infowin_left" style="display:none;" id="systemmsg">
@@ -101,7 +102,6 @@
                     </div>
                     <div class="content_in_wrapper">
                         <div class="content_in_wrapper_in">
-
                             {*change to fileview_list.tpl for list style view*}
                             <div id="filescontent" class="inwrapper">
                                 {include file = "fileviewNew.tpl"}
@@ -132,10 +132,11 @@
     </div> {*content-left-in END*}
 </div> {*content-left END*}
 {literal}
+    <script type="text/javascript" src="include/js/5up.min.js"></script>
     <script type="text/javascript" src="include/js/views/projectFilesView.min.js"></script>
 <script type="text/javascript">
     projectFiles.url = projectFiles.url + "&id=" + {/literal}{$project.ID}{literal};
-    pagination.itemsPerPage = 14;
+    pagination.itemsPerPage = 21;
 
 
     var projectFilesView = createView(projectFiles);

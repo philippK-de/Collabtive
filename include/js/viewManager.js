@@ -33,7 +33,36 @@ function createView(myEl) {
      * Send asyncronous request to the url specified in the model.
      *
      */
-    new Ajax.Request(myModel.url, {
+    /*  var ajaxRequest = new XMLHttpRequest();
+
+    ajaxRequest.onload = function()
+    {
+        //update the model with the retrieved data
+        console.log("url " + myModel.url);
+        const responseData = JSON.parse(ajaxRequest.responseText);
+        //one page of data
+        myModel.items = responseData.items;
+        //total number of items available
+        myModel.itemsCount = responseData.count;
+        //get the list of pages and add it to the model
+        var pages = pagination.listPages(responseData.count);
+        myModel.pages = pages;
+        //emit an event that indicates the view has finished loading data
+        vueview.$dispatch("iloaded");
+        stopWait("progress" + myEl.el);
+
+    };
+
+    ajaxRequest.onprogress = function(evt)
+    {
+        startWait("progress" + myEl.el);
+    };
+
+    ajaxRequest.open("GET",myModel.url);
+    ajaxRequest.send();
+
+     */
+   new Ajax.Request(myModel.url, {
             method: 'get',
             onSuccess: function (myData) {
                 //update the model with the retrieved data
@@ -63,6 +92,7 @@ function createView(myEl) {
             }
         }
     );
+
     //create the Vue.js view given the element myEl and the data in myModel, and return the view
     var vueview = new Vue({
         el: "#" + myEl.el,

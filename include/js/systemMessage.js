@@ -1,5 +1,5 @@
 var systemMessage = {
-    showFor: 5000,
+    showFor: 3500,
     fadeDuration: 2.0,
     createMessage: function(elementId)
     {
@@ -17,6 +17,11 @@ var systemMessage = {
             cssClass = "info_in_green";
             text = notificationContainer.dataset.textAdded;
         }
+        else if(messageType == "assigned")
+        {
+            cssClass = "info_in_green";
+            text = notificationContainer.dataset.textAssigned;
+        }
         else if(messageType == "closed")
         {
             cssClass = "info_in_green";
@@ -32,6 +37,13 @@ var systemMessage = {
             cssClass = "info_in_red";
             text = notificationContainer.dataset.textDeleted;
         }
+        else if(messageType == "deassigned")
+        {
+            cssClass = "info_in_red";
+            text = notificationContainer.dataset.textDeassigned;
+        }
+
+
 
         //construct HTML element
         var notificationHTML = "<span class = \"" + cssClass + "\">";
@@ -58,5 +70,10 @@ var systemMessage = {
     deleted: function(itemType)
     {
         this.notify("deleted", itemType);
+    },
+    assigned: function(itemType)
+    {
+        this.notify("assigned", itemType);
     }
+
 };

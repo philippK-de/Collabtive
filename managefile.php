@@ -320,7 +320,7 @@ elseif($action == "projectFiles")
     {
         $offset = $cleanGet["offset"];
     }
-    $limit = 14;
+    $limit = 21;
     if(isset($cleanGet["limit"]))
     {
         $limit = $cleanGet["limit"];

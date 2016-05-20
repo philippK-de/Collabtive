@@ -18,7 +18,8 @@ function finisher() {
     $("statusrow").setAttribute("style", "display:none;");
     //Reset the HTML files-to-be-uploaded list
     $("fileInfo1").innerHTML = "";
-    systemMsg("fileadded");
+
+    systemMessage.added(projectFilesView.$get("itemType"));
 }
 
 function checkCompat() {
@@ -92,7 +93,9 @@ html5up.prototype.fileInfo = function () {
 html5up.prototype.upload = function () {
     var theFiles = this.theFiles.files;
     var myData = new FormData();
-    var upfolder = $('upfolder').value;
+    //get the folder to upload to
+    var upfolder = document.getElementById('upfolder').value;
+    //get selected items in the list of email notify recipients
     var sendtos = getSelectedOptions($('sendto'));
     myData.append("upfolder", upfolder);
 
@@ -164,7 +167,7 @@ html5up.prototype.complete = function (evt) {
     //console.log(evt.target.responseText);
 
     indicator.setAttribute("style", "width:100%");
-    window.setTimeout("finisher()", 600);
+    window.setTimeout("finisher()", 400);
     //document.title = "100%";
 }
 
