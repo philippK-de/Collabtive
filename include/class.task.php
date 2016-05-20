@@ -415,7 +415,34 @@ class task
             return false;
         }
     }
+    /**
+     * Return open tasks from a given project a user
+     *
+     * @param int $user User ID (0 means the user, to whom the session belongs)
+     * @param int $status Status of the tasks to be returned (1 = open, 0 = closed)
+     * @return array $lists Tasks
+     */
+    function getMyTasks($user, $status = 1)
+    {
+        global $conn;
+        $status = (int)$status;
+        $user = (int)$user;
+        $myTasks = array();
 
+        $projectTasksStmt = $conn->prepare("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task AND tasks_assigned.user = ? AND status= ?  ORDER BY `project` ASC ");
+        $projectTasksStmt->execute(array($user, $status));
+
+        while ($tasks = $projectTasksStmt->fetch()) {
+            $task = $this->getTask($tasks["ID"]);
+            array_push($myTasks, $task);
+        }
+
+        if (!empty($myTasks)) {
+            return $myTasks;
+        } else {
+            return false;
+        }
+    }
 
     /**
      * Return all tasks (from a project) due on the specified date

@@ -92,16 +92,16 @@ if (!empty($messages)) {
 }
 $messageCount = count($messages);
 
-$etasks = reduceArray($tasks);
-
+//flatten the array
+$sortedTasks = reduceArray($tasks);
 // Create sort array for multisort by adding the daysleft value to a sort array
-$sort = array();
-foreach($etasks as $etask) {
-    array_push($sort, $etask["project"]);
+$tasksort = array();
+foreach($sortedTasks as $etask) {
+    array_push($tasksort, $etask["project"]);
 }
 // Sort using array_multisort
-array_multisort($sort, SORT_NUMERIC, SORT_DESC, $etasks);
-$taskCount = count($etasks);
+array_multisort($tasksort, SORT_NUMERIC, SORT_DESC, $sortedTasks);
+$taskCount = count($sortedTasks);
 
 // On Admin Login check for updates
 $mode = getArrayVal($_GET, "mode");
@@ -152,8 +152,8 @@ elseif($action == "myprojects")
 }
 elseif($action == "mytasks")
 {
-    $myTasks["items"] = $etasks;
-    $myTasks["count"] = count($etasks);
+    $myTasks["items"] = $sortedTasks;
+    $myTasks["count"] = count($sortedTasks);
 
     echo json_encode($myTasks);
 }

@@ -421,5 +421,11 @@ Vue.component("loader", progressComponent);
  * Register a vue filter to limit the length of strings rendered
  */
 Vue.filter("truncate", function (value, maxLength) {
-    return value.substr(0, maxLength) + "...";
+    if(value.length >= maxLength) {
+        return value.substr(0, maxLength) + "...";
+    }
+    else
+    {
+        return value;
+    }
 });
