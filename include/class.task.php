@@ -608,7 +608,7 @@ class task
         $project = $projectStmt->fetch();
         $project = $project[0];
 
-        $nameproject = array($name[0], $project);
+        $nameproject = array($name[2], $project);
         if (!empty($nameproject)) {
             return $nameproject;
         } else {
