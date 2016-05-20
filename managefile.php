@@ -333,7 +333,7 @@ elseif($action == "projectFiles")
 
     $files = $fileObj->getJsonProjectFiles($id, $limit, $folder, $offset);
     $projectFiles = array("files"=>array());
-    $filenum = $fileObj->countJsonProjectFiles($id);
+    $filenum = $fileObj->countJsonProjectFiles($id, $folder);
 
     if (!empty($files)) {
         foreach($files as $file) {
