@@ -126,7 +126,6 @@ function updateView(view, updateDependencies) {
     new Ajax.Request(myUrl, {
             method: 'get',
             onSuccess: function (myData) {
-                console.log(myUrl);
                 //retrieve data and update the views model with it
                 var responseData = JSON.parse(myData.responseText);
 

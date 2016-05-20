@@ -10,9 +10,9 @@ function finisher() {
     //update the view
     loadFolder(projectFilesView,folder);
     //hide the upload status
-    $("statusrow").setAttribute("style", "display:none;");
+    document.getElementById("statusrow").setAttribute("style", "display:none;");
     //Reset the HTML files-to-be-uploaded list
-    $("fileInfo1").innerHTML = "";
+    document.getElementById("fileInfo1").innerHTML = "";
     systemMessage.added(projectFilesView.$get("itemType"))
 }
 
@@ -35,6 +35,9 @@ function checkCompat() {
     }
 }
 
+/*
+* Function to return all the selected elements from a form <select> as an array
+ */
 function getSelectedOptions(oList) {
     var sdValues = [];
     for (var i = 1; i < oList.options.length; i++) {
@@ -45,6 +48,13 @@ function getSelectedOptions(oList) {
     return sdValues;
 }
 
+/*
+* Constructor for the HTML5 Upload object
+* @param theFiles Refers to the <input type = file> element
+* @param theInfoEl Refers to the Block element listing the selected files
+* @param theIndicator Refers to the element indicating progress
+* @param theTarget The URL to submit the upload to
+ */
 function html5up(theFiles, theInfoEl, theIndicator, theTarget) {
     //File upload element
     this.theFiles = document.getElementById(theFiles);

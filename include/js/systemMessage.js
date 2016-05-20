@@ -9,6 +9,8 @@ var systemMessage = {
     notify: function(messageType, itemType){
         //get the container element
         var notificationContainer = document.querySelector("#" + itemType + "SystemMessage");
+        //make sure it is empty
+        notificationContainer.innerHTML = "";
         var icon = notificationContainer.dataset.icon;
         var cssClass = "";
         var text = "";
@@ -42,8 +44,6 @@ var systemMessage = {
             cssClass = "info_in_red";
             text = notificationContainer.dataset.textDeassigned;
         }
-
-
 
         //construct HTML element
         var notificationHTML = "<span class = \"" + cssClass + "\">";
