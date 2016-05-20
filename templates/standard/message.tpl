@@ -24,6 +24,7 @@
 				</script>
 			{/literal}
 
+
 			<div class="breadcrumb">
 				<a href="manageproject.php?action=showproject&amp;id={$project.ID}">
 					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />
@@ -196,7 +197,7 @@
 					{*Add Reply*}
 					{if $userpermissions.messages.close}
 						<div id = "form_reply_b" class="addmenue" style = "display:none;">
-							{include file="replyform.tpl" showhtml="no"}
+
 						</div>
 					{/if}
 
