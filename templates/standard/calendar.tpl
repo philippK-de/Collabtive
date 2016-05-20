@@ -134,16 +134,6 @@
                                     </div>
                                 </div>
 
-                                <script type="text/javascript">
-                                    new Control.Modal('mileslink{{day.val}}', {
-                                        opacity: 0.8,
-                                        position: 'absolute',
-                                        width: 550,
-                                        fade: true,
-                                        containerClassName: 'milesmodal',
-                                        overlayClassName: 'milesoverlay'
-                                    });
-                                </script>
                             </template>
                             <!--Milestones End -->
                             <!--Tasks -->
@@ -208,16 +198,6 @@
                                 </div>
                             </div>
 
-                            <script type="text/javascript">
-                                new Control.Modal('tasklink{{day.val}}', {
-                                    opacity: 0.8,
-                                    position: 'absolute',
-                                    width: 550,
-                                    fade: true,
-                                    containerClassName: 'tasksmodal',
-                                    overlayClassName: 'tasksoverlay'
-                                });
-                            </script>
                         </div>
                     </td>
                 </tr>
