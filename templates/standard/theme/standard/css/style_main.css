@@ -784,6 +784,14 @@ td.message ul {
     background-position: -69px -31px;
 }
 
+.export-main a.html {
+	background-position: 0 0;
+}
+
+.export-main a.html:hover {
+	background-position: 0 -31px;
+}
+
 .export-main a.vcardmale {
     width: 28px;
     background-position: -32px 0;
