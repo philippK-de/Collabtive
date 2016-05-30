@@ -14,13 +14,7 @@
             </div>
 
             <div class="infowin_left" style="display:none;" id="systemmsg">
-                {if $mode == "added"}
-                    <span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/files.png"
-                                                     alt=""/>{#filewasadded#}</span>
-                {elseif $mode == "edited"}
-                    <span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/files.png"
-                                                      alt=""/>{#filewasedited#}</span>
-                {elseif $mode == "folderadded"}
+                {if $mode == "folderadded"}
                     <span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/folder-root.png"
                                                      alt=""/>{#folderwasadded#}</span>
                 {elseif $mode == "folderedited"}
@@ -32,16 +26,11 @@
                 {/if}
             </div>
 
-            {literal}
-                <script type="text/javascript">
-                    systemMsg('systemmsg');
-                </script>
-            {/literal}
-
             <h1>{$projectname|truncate:45:"...":true}<span>/ {#files#}</span></h1>
 
             <div class="headline">
                 <a href="javascript:void(0);" id="block_files_toggle" class="win_block" onclick="toggleBlock('block_files');"></a>
+
                 <div class="wintools">
                     <div class="addmen">
                         <loader block="projectFiles" loader="loader-files.gif"></loader>
@@ -84,7 +73,9 @@
                 <div class="nosmooth" id="sm_files">
                     <div class="contenttitle" id="dropDirUp">
                         <div class="contenttitle_menue">
-                           {literal} <a id="dirUp" class="dir_up_butn" href="javascript:loadFolder(projectFilesView,{{items.currentFolder.parent}});"
+                            {literal}
+                            <a id="dirUp" class="dir_up_butn"
+                               href="javascript:loadFolder(projectFilesView,{{items.currentFolder.parent}});selectFolder({{items.currentFolder.parent}})"
                                title="{/literal}{#parent#}"></a>
                         </div>
                         <div class="contenttitle_in" style="width:500px;">
