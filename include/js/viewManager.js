@@ -34,10 +34,6 @@ function createView(myEl) {
         data: myModel
     });
 
-    /*
-     * Send asyncronous request to the url specified in the model.
-     *
-     */
     var ajaxRequest = new XMLHttpRequest();
 
     /*
@@ -87,7 +83,6 @@ function updateView(view, updateDependencies) {
         updateDependencies = true;
     }
 
-
     //get the URL from the view and modify it to add the limit and offset for the DB query
     var myUrl = view.url;
     if (view.limit > 0) {
@@ -97,46 +92,47 @@ function updateView(view, updateDependencies) {
         myUrl += "&offset=" + view.offset;
     }
 
-    //send asyncronous request
-    new Ajax.Request(myUrl, {
-            method: 'get',
-            onSuccess: function (myData) {
-                //retrieve data and update the views model with it
-                var responseData = JSON.parse(myData.responseText);
+    var ajaxRequest = new XMLHttpRequest();
+    /*
+     * Event Handlers
+     * Onloadstart handler fires once before transfer starts
+     */
+    ajaxRequest.onloadstart = function (evt) {
+        document.getElementById("progress" + view.$el.id).style.display = "block";
+    };
 
-                Vue.set(view, "items", responseData.items);
-                Vue.set(view, "pages", pagination.listPages(responseData.count));
+    //Onload handler fires when transfer is complete
+    ajaxRequest.onload = function () {
+        //retrieve data and update the views model with it
+        var responseData = JSON.parse(ajaxRequest.responseText);
+        Vue.set(view, "items", responseData.items);
+        Vue.set(view, "pages", pagination.listPages(responseData.count));
 
-                //update dependencies
-                if (updateDependencies == true) {
-                    //get the array of dependendant views
-                    var viewsToUpdate = view.$get("dependencies");
-
-                    if (viewsToUpdate.length > 0) {
-                        for (var i = 0; i < viewsToUpdate.length; i++) {
-                            //load the same sub pages for dependant views that are loaded for the root view
-                            //viewsToUpdate[i].$set("limit", view.limit);
-                            Vue.set(viewsToUpdate[i], "limit", view.limit);
-                            Vue.set(viewsToUpdate[i], "offset", view.offset);
-                            //viewsToUpdate[i].$set("offset", view.offset);
-                            //recursive call
-                            updateView(viewsToUpdate[i], viewsToUpdate[i].url);
-                        }
-                    }
+        //update dependencies
+        if (updateDependencies == true) {
+            //get the array of dependendant views
+            var viewsToUpdate = view.$get("dependencies");
+            if (viewsToUpdate.length > 0) {
+                for (var i = 0; i < viewsToUpdate.length; i++) {
+                    //load the same sub pages for dependant views that are loaded for the root view
+                    //viewsToUpdate[i].$set("limit", view.limit);
+                    Vue.set(viewsToUpdate[i], "limit", view.limit);
+                    Vue.set(viewsToUpdate[i], "offset", view.offset);
+                    //viewsToUpdate[i].$set("offset", view.offset);
+                    //recursive call
+                    updateView(viewsToUpdate[i], viewsToUpdate[i].url);
                 }
-            },
-            onLoading: function () {
-                startWait("progress" + view.$el.id);
-            },
-            onComplete: function () {
-                stopWait("progress" + view.$el.id);
-                view.$emit("updated");
-            },
-            onFailure: function () {
-
             }
         }
-    );
+    };
+
+    //Onloadend handler fires once after onload has been dispatched
+    ajaxRequest.onloadend = function (evt) {
+        document.getElementById("progress" + view.$el.id).style.display = "none";
+    };
+    //open the request and send
+    ajaxRequest.open("GET", myUrl);
+    ajaxRequest.send();
 }
 /*
  * Pagination for view JS views
@@ -250,33 +246,63 @@ function submitForm(event) {
             }
         }
 
-        //send asyncronous request
-        new Ajax.Request(url, {
-                method: "POST",
-                postBody: pbody,
-                onSuccess: function (myData) {
-                    if (myData.status == 200) {
-                        //update the view belonging to the form
-                        updateView(formView, false);
-                        //show system message for element added
-                        systemMessage.added(formView.$get("itemType"));
-                    }
-                },
-                onLoading: function () {
-                    //show loading indicator
-                    startWait("progress" + formView.$el);
-                },
-                onComplete: function () {
-                    //hide loading indicator
-                    console.log("added");
+        var ajaxRequest = new XMLHttpRequest();
 
-                    stopWait("progress" + formView.$el);
-                },
-                onFailure: function () {
-                    console.log("error");
-                }
-            }
-        );
+        /*
+         * Event Handlers
+         * Onloadstart handler fires once before transfer starts
+         */
+        ajaxRequest.onloadstart = function (evt) {
+            document.getElementById("progress" + formView.$el).style.display = "block";
+        };
+
+        //Onload handler fires when transfer is complete
+        ajaxRequest.onload = function () {
+            //update the view belonging to the form
+            updateView(formView, false);
+            //show system message for element added
+            systemMessage.added(formView.$get("itemType"));
+        };
+
+        //Onloadend handler fires once after onload has been dispatched
+        ajaxRequest.onloadend = function (evt) {
+            document.getElementById("progress" + formView.$el).style.display = "none";
+        };
+
+        //open the request POST send
+        ajaxRequest.open("POST", url);
+        //Send the proper header information along with the request
+        ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        ajaxRequest.send(pbody);
+
+
+        /*   //send asyncronous request
+         new Ajax.Request(url, {
+         method: "POST",
+         postBody: pbody,
+         onSuccess: function (myData) {
+         if (myData.status == 200) {
+         //update the view belonging to the form
+         updateView(formView, false);
+         //show system message for element added
+         systemMessage.added(formView.$get("itemType"));
+         }
+         },
+         onLoading: function () {
+         //show loading indicator
+         startWait("progress" + formView.$el);
+         },
+         onComplete: function () {
+         //hide loading indicator
+         console.log("added");
+
+         stopWait("progress" + formView.$el);
+         },
+         onFailure: function () {
+         console.log("error");
+         }
+         }
+         );  */
 
     }
 }
