@@ -312,8 +312,7 @@ function confirmDelete(message, element, url, view) {
 function deleteElement(theElement, theUrl, theView) {
     var ajaxRequest = new XMLHttpRequest();
 
-    ajaxRequest.onload = function()
-    {
+    ajaxRequest.onload = function () {
         //check if server returns OK response code
         if (ajaxRequest.responseText == "ok") {
             //remove the DOM element animated
@@ -332,8 +331,7 @@ function deleteElement(theElement, theUrl, theView) {
 function closeElement(theElement, theUrl, theView) {
     var ajaxRequest = new XMLHttpRequest();
 
-    ajaxRequest.onload = function()
-    {
+    ajaxRequest.onload = function () {
         //check if server returns OK response code
         if (ajaxRequest.responseText == "ok") {
             //remove the DOM element animated
@@ -352,11 +350,27 @@ function closeElement(theElement, theUrl, theView) {
 }
 function removeRow(row, color) {
 
-    new Effect.Highlight(row, {duration: 1.5, startcolor: '#FFFFFF', endcolor: color});
+    var rowElement = document.getElementById(row);
+
+    rowElement.style.backgroundColor = "#FFFFFF";
+
+    Velocity(rowElement, {
+        backgroundColor: color,
+        backgroundColorAlpha: 0.6
+    }, {
+        complete: function () {
+            Velocity(rowElement, "fadeOut", {
+                delay: 1000,
+                duration: 2500
+            });
+        }
+    });
+
+   /* new Effect.Highlight(row, {duration: 1.5, startcolor: '#FFFFFF', endcolor: color});
     new Effect.Fade(row, {
         duration: 1.5,
         rowid: row
-    });
+    });*/
 }
 /*
  * VUE COMPONENTS
