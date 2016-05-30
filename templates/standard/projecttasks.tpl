@@ -213,7 +213,7 @@
                             <div class="tablemenue-in">
                                 {if $userpermissions.tasks.add}
                                     <a class="butn_link" href="javascript:blindtoggle('form_{$lists[list].ID}');" id="add_butn_{$lists[list].ID}"
-                                       onclick="toggleClass('add_{$lists[list].ID}','add-active','add');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_{$lists[list].ID}','smooth','nosmooth');">{#addtask#}</a>
+                                       onclick="toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_{$lists[list].ID}','smooth','nosmooth');">{#addtask#}</a>
                                 {/if}
                                 <a class="butn_link" href="javascript:blindtoggle('doneblock_{$lists[list].ID}');" id="donebutn_{$lists[list].ID}"
                                    onclick="toggleClass(this,'butn_link_active','butn_link');toggleClass('toggle-done-{$lists[list].ID}','acc-toggle','acc-toggle-active');">{#donetasks#}</a>

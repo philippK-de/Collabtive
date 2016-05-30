@@ -164,7 +164,7 @@
                 <div class="tablemenue-in">
                     {if $userpermissions.projects.add}
                         <a class="butn_link" href="javascript:blindtoggle('form_addmyproject');" id="add_butn_myprojects"
-                           onclick="toggleClass('add_myprojects','add-active','add');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_deskprojects','smooth','nosmooth');">{#addproject#}</a>
+                           onclick="toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_deskprojects','smooth','nosmooth');">{#addproject#}</a>
                     {/if}
                     {if $closedProjectnum > 0}
                         <a class="butn_link" href="javascript:blindtoggle('projectsDoneblock');" id="donebutn"

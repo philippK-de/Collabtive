@@ -22,11 +22,30 @@ function make_inputs(num) {
 }
 
 function show_addtask(id) {
-    Effect.BlindDown(id);
+    var theElement = document.getElementById(id);
+    var slideDuration = 600;
+
+    Velocity(theElement, "slideDown", {
+        duration: slideDuration
+    });
+    theElement.dataset.slidestate = "down";
 }
 function blindtoggle(id) {
+    var theElement = document.getElementById(id);
+    var slideDuration = 600;
 
-    new Effect.toggle(id, 'blind', {duration: 0.5});
+    if (theElement.dataset.slidestate == "down") {
+        Velocity(theElement, "slideUp", {
+            duration: slideDuration
+        });
+        theElement.dataset.slidestate = "up";
+    }
+    else {
+        Velocity(theElement, "slideDown", {
+            duration: slideDuration
+        });
+        theElement.dataset.slidestate = "down";
+    }
 }
 
 function fadeToggle(id) {
@@ -51,6 +70,15 @@ function toggleBlock(id) {
     }
 }
 
+function hasClass(elm, className)
+{
+    if (elm.classList) {
+        return elm.classList.contains(className);
+    }
+    else {
+        return new RegExp('(^| )' + className + '( |$)', 'gi').test(elm.className);
+    }
+}
 function switchClass(id, class1, class2) {
     try {
         $($('selectedid').value).className = class2;
@@ -64,12 +92,21 @@ function switchClass(id, class1, class2) {
     }
 
 }
-function toggleClass(id, class1, class2) {
-    if ($(id).hasClassName(class1)) {
-        $(id).className = class2;
+function toggleClass(elm, class1, class2) {
+    var theElement;
+    if(elm.id === undefined) {
+        theElement = document.getElementById(elm);
+    }
+    else
+    {
+        theElement = elm;
+    }
+
+    if (hasClass(theElement, class1)) {
+        theElement.className = class2;
     }
     else {
-        $(id).className = class1;
+        theElement.className = class1;
     }
 
 }
