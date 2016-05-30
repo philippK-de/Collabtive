@@ -1,1 +1,749 @@
-function strtotime(_1,_2){var i,_3,s,_4="",_5="";_4=_1;_4=_4.replace(/\s{2,}|^\s|\s$/g," ");_4=_4.replace(/[\t\r\n]/g,"");if(_4=="now"){return (new Date()).getTime()/1000;}else{if(!isNaN(_5=Date.parse(_4))){return (_5/1000);}else{if(_2){_2=new Date(_2*1000);}else{_2=new Date();}}}_4=_4.toLowerCase();var _6={day:{"sun":0,"mon":1,"tue":2,"wed":3,"thu":4,"fri":5,"sat":6},mon:{"jan":0,"feb":1,"mar":2,"apr":3,"may":4,"jun":5,"jul":6,"aug":7,"sep":8,"oct":9,"nov":10,"dec":11}};var _7=function(m){var _8=(m[2]&&m[2]=="ago");var _9=(_9=m[0]=="last"?-1:1)*(_8?-1:1);switch(m[0]){case "last":case "next":switch(m[1].substring(0,3)){case "yea":_2.setFullYear(_2.getFullYear()+_9);break;case "mon":_2.setMonth(_2.getMonth()+_9);break;case "wee":_2.setDate(_2.getDate()+(_9*7));break;case "day":_2.setDate(_2.getDate()+_9);break;case "hou":_2.setHours(_2.getHours()+_9);break;case "min":_2.setMinutes(_2.getMinutes()+_9);break;case "sec":_2.setSeconds(_2.getSeconds()+_9);break;default:var _a;if(typeof (_a=_6.day[m[1].substring(0,3)])!="undefined"){var _b=_a-_2.getDay();if(_b==0){_b=7*_9;}else{if(_b>0){if(m[0]=="last"){_b-=7;}}else{if(m[0]=="next"){_b+=7;}}}_2.setDate(_2.getDate()+_b);}}break;default:if(/\d+/.test(m[0])){_9*=parseInt(m[0],10);switch(m[1].substring(0,3)){case "yea":_2.setFullYear(_2.getFullYear()+_9);break;case "mon":_2.setMonth(_2.getMonth()+_9);break;case "wee":_2.setDate(_2.getDate()+(_9*7));break;case "day":_2.setDate(_2.getDate()+_9);break;case "hou":_2.setHours(_2.getHours()+_9);break;case "min":_2.setMinutes(_2.getMinutes()+_9);break;case "sec":_2.setSeconds(_2.getSeconds()+_9);break;}}else{return false;}break;}return true;};_3=_4.match(/^(\d{2,4}-\d{2}-\d{2})(?:\s(\d{1,2}:\d{2}(:\d{2})?)?(?:\.(\d+))?)?$/);if(_3!=null){if(!_3[2]){_3[2]="00:00:00";}else{if(!_3[3]){_3[2]+=":00";}}s=_3[1].split(/-/g);for(i in _6.mon){if(_6.mon[i]==s[1]-1){s[1]=i;}}s[0]=parseInt(s[0],10);s[0]=(s[0]>=0&&s[0]<=69)?"20"+(s[0]<10?"0"+s[0]:s[0]+""):(s[0]>=70&&s[0]<=99)?"19"+s[0]:s[0]+"";return parseInt(this.strtotime(s[2]+" "+s[1]+" "+s[0]+" "+_3[2])+(_3[4]?_3[4]/1000:""),10);}var _c="([+-]?\\d+\\s"+"(years?|months?|weeks?|days?|hours?|min|minutes?|sec|seconds?"+"|sun\\.?|sunday|mon\\.?|monday|tue\\.?|tuesday|wed\\.?|wednesday"+"|thu\\.?|thursday|fri\\.?|friday|sat\\.?|saturday)"+"|(last|next)\\s"+"(years?|months?|weeks?|days?|hours?|min|minutes?|sec|seconds?"+"|sun\\.?|sunday|mon\\.?|monday|tue\\.?|tuesday|wed\\.?|wednesday"+"|thu\\.?|thursday|fri\\.?|friday|sat\\.?|saturday))"+"(\\sago)?";_3=_4.match(new RegExp(_c,"gi"));if(_3==null){return false;}for(i=0;i<_3.length;i++){if(!_7(_3[i].split(" "))){return false;}}return (_2.getTime()/1000);};function date(_d,_e){var _f=this,_10,f,_11=/\\?([a-z])/gi,_12,_13=function(n,c){if((n=n+"").length<c){return new Array((++c)-n.length).join("0")+n;}return n;},_14=["Sun","Mon","Tues","Wednes","Thurs","Fri","Satur","January","February","March","April","May","June","July","August","September","October","November","December"];_12=function(t,s){return f[t]?f[t]():s;};f={d:function(){return _13(f.j(),2);},D:function(){return f.l().slice(0,3);},j:function(){return _10.getDate();},l:function(){return _14[f.w()]+"day";},N:function(){return f.w()||7;},S:function(){var j=f.j();return j>4||j<21?"th":{1:"st",2:"nd",3:"rd"}[j%10]||"th";},w:function(){return _10.getDay();},z:function(){var a=new Date(f.Y(),f.n()-1,f.j()),b=new Date(f.Y(),0,1);return Math.round((a-b)/86400000)+1;},W:function(){var a=new Date(f.Y(),f.n()-1,f.j()-f.N()+3),b=new Date(a.getFullYear(),0,4);return _13(1+Math.round((a-b)/86400000/7),2);},F:function(){return _14[6+f.n()];},m:function(){return _13(f.n(),2);},M:function(){return f.F().slice(0,3);},n:function(){return _10.getMonth()+1;},t:function(){return (new Date(f.Y(),f.n(),0)).getDate();},L:function(){return new Date(f.Y(),1,29).getMonth()===1|0;},o:function(){var n=f.n(),W=f.W(),Y=f.Y();return Y+(n===12&&W<9?-1:n===1&&W>9);},Y:function(){return _10.getFullYear();},y:function(){return (f.Y()+"").slice(-2);},a:function(){return _10.getHours()>11?"pm":"am";},A:function(){return f.a().toUpperCase();},B:function(){var H=_10.getUTCHours()*3600,i=_10.getUTCMinutes()*60,s=_10.getUTCSeconds();return _13(Math.floor((H+i+s+3600)/86.4)%1000,3);},g:function(){return f.G()%12||12;},G:function(){return _10.getHours();},h:function(){return _13(f.g(),2);},H:function(){return _13(f.G(),2);},i:function(){return _13(_10.getMinutes(),2);},s:function(){return _13(_10.getSeconds(),2);},u:function(){return _13(_10.getMilliseconds()*1000,6);},e:function(){throw "Not supported (see source code of date() for timezone on how to add support)";},I:function(){var a=new Date(f.Y(),0),c=Date.UTC(f.Y(),0),b=new Date(f.Y(),6),d=Date.UTC(f.Y(),6);return 0+((a-c)!==(b-d));},O:function(){var a=_10.getTimezoneOffset();return (a>0?"-":"+")+_13(Math.abs(a/60*100),4);},P:function(){var O=f.O();return (O.substr(0,3)+":"+O.substr(3,2));},T:function(){return "UTC";},Z:function(){return -_10.getTimezoneOffset()*60;},c:function(){return "Y-m-d\\Th:i:sP".replace(_11,_12);},r:function(){return "D, d M Y H:i:s O".replace(_11,_12);},U:function(){return _10.getTime()/1000|0;}};this.date=function(_15,_16){_f=this;_10=((typeof _16==="undefined")?new Date():(_16 instanceof Date)?new Date(_16):new Date(_16*1000));return _15.replace(_11,_12);};return this.date(_d,_e);};function makeDatepicker(m,y,div){theCal=new calendar(m,y);theCal.getDatepicker(div);};function makeCal(m,y,div){theCal=new calendar(m,y);theCal.getCal(div);};function calendar(_17,_18,_19){this.dayNames=["Mo","Di","Mi","Do","Fr","Sa","So"];this.monthNames=["Januar","Februar","M??rz","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];this.keepEmpty=false;this.dateSeparator=".";this.relateTo="";this.dateFormat="d.m.Y";this.calendar=[];datobj=new Date();this.currmonth=datobj.getMonth();this.curryear=datobj.getFullYear();this.currday=datobj.getDate();if(_17>12){_17=1;_18=_18+1;}if(_17<1){_17=12;_18=_18-1;}this.month=_17-1;this.year=_18;this.daysInMonth=this.getDaysInMonth(this.month,this.year);this.daysLastMonth=this.getDaysInMonth(this.month-1,this.year);var _1a=new Date(this.year,this.month,1);this.startDay=_1a.getDay()-1;if(this.startDay<0)this.startDay+=7;var _1b=this.startDay+this.daysInMonth;this.weeksInMonth=Math.ceil(_1b/7);};calendar.prototype.getCal=function(_1c){var _1d="";var _1e=this.month;var _1f=this.month+2;_1d+="<table class=\"cal\" cellpadding=\"0\" cellspacing=\"1\" border = \"0\">";_1d+="<tr class=\"head\" >"+"<td class = \"back\"><a href = \"javascript:void(0);\"></a></td>"+"<td colspan=\"5\" >"+this.monthNames[this.month]+" "+this.year+"</td>"+"<td class=\"next\"><a href = \"javascript:void(0);\"></a></td></tr>";_1d+="<tr class = \"weekday\">";for(i=0;i<this.dayNames.length;i++){_1d+="<td >"+this.dayNames[i]+"</td>";}_1d+="</tr>";var _20=this.buildCal();for(j=0;j<this.weeksInMonth;j++){_1d+="<tr >";for(i=0;i<7;i++){var _21=_20[j][i];if(_21>0&&_21<=this.daysInMonth){if(this.currmonth==this.month&&this.curryear==this.year&&this.currday==_21){_1d+="<td class = \"today\">"+_21+"</td>";}else{_1d+="<td >"+_21+"</td>";}}else{if(_21<1){_1d+="<td class = \"wrong\">"+(this.daysLastMonth+_21)+"</td>";}else{if(_21>this.daysInMonth){_1d+="<td class = \"wrong\">"+(_21-this.daysInMonth)+"</td>";}}}}_1d+="</tr>";}_1d+="</table>";$(_1c).innerHTML=_1d;theMonths=this.monthNames;theDays=this.dayNames;keepEmpty=this.keepEmpty;dateSeparator=this.dateSeparator;theYear=this.year;$$("#"+_1c+" .cal  .back a").each(function(_22){_22.onclick=function(){theCal=new calendar(_1e,theYear);theCal.monthNames=theMonths;theCal.dayNames=theDays;theCal.keepEmpty=keepEmpty;theCal.dateSeparator=dateSeparator;theCal.getCal(_1c);};});$$("#"+_1c+" .cal .next a").each(function(_23){_23.onclick=function(){internalCals=new calendar(_1f,theYear);internalCals.monthNames=theMonths;internalCals.dayNames=theDays;internalCals.keepEmpty=keepEmpty;internalCals.dateSeparator=dateSeparator;internalCals.getCal(_1c);};});};calendar.prototype.getDatepicker=function(_24){if(this.dateFormat=="m/d/Y"||this.dateFormat=="m/d/y"){this.dateSeparator="/";}var _25="";var _26=this.month;var _27=this.month+2;this.theDiv=_24;if(this.relateTo){$(this.relateTo).onfocus=function(){new Effect.Appear(_24,{duration:0.8});};}_25+="<table class=\"cal\" cellpadding=\"0\" cellspacing=\"1\" border = \"0\">";_25+="<tr class=\"head\" >"+"<td class = \"back\"><a href = \"javascript:void(0);\"></a></td>"+"<td colspan=\"5\" >"+this.monthNames[this.month]+" "+this.year+"</td>"+"<td class=\"next\"><a href = \"javascript:void(0);\"></a></td></tr>";_25+="<tr class = \"weekday\">";for(i=0;i<this.dayNames.length;i++){_25+="<td >"+this.dayNames[i]+"</td>";}_25+="</tr>";var _28=this.buildCal();if(!this.keepEmpty&&!$(this.relateTo).value){if((this.month+1)<10){strMon="0"+(this.month+1);}else{strMon=this.month+1;}if(this.currday<10&&this.currday>0){strDay="0"+this.currday;}else{strDay=this.currday;}initStr2=strMon+"/"+strDay+"/"+this.curryear;var _29=strtotime(initStr2);$(this.relateTo).value=date(this.dateFormat,_29);}selectedVals=$(this.relateTo).value.split(this.dateSeparator);for(j=0;j<this.weeksInMonth;j++){_25+="<tr>";for(i=0;i<7;i++){var _2a=_28[j][i];strDay=_2a;if(_2a<10&&_2a>0){strDay="0"+_2a;}if((this.month+1)<10){strMon="0"+(this.month+1);}else{strMon=this.month+1;}dstring=strDay+this.dateSeparator+strMon+this.dateSeparator+this.year;dstring2=strMon+"/"+strDay+"/"+this.year;var _2b=strtotime(dstring2);var _2c=date(this.dateFormat,_2b);if(_2a>0&&_2a<=this.daysInMonth){if(this.currmonth==this.month&&this.curryear==this.year&&this.currday==_2a){_25+="<td class = \"today\" onclick = \"$('"+this.relateTo+"').value='"+_2c+"';new Effect.Fade('"+_24+"','{duration:0.6}');\">"+_2a+"</td>";}else{if(this.month==(selectedVals[1]-1)&&this.year==selectedVals[2]&&selectedVals[0]==_2a){_25+="<td class = \"red\" onclick = \"$('"+this.relateTo+"').value='"+_2c+"';new Effect.Fade('"+_24+"','{duration:0.6}');\">"+_2a+"</td>";}else{_25+="<td class = \"normalday\" onclick = \"$('"+this.relateTo+"').value='"+_2c+"';new Effect.Fade('"+_24+"','{duration:0.6}');\">"+_2a+"</td>";}}}else{if(_2a<1){_25+="<td class = \"wrong\">"+(this.daysLastMonth+_2a)+"</td>";}else{if(_2a>this.daysInMonth){_25+="<td class = \"wrong\">"+(_2a-this.daysInMonth)+"</td>";}}}}_25+="</tr>";}_25+="<tr><td colspan = \"7\" class = \"dpfoot\"><a href = \"javascript:void(0);\" onclick = \"javascript:new Effect.Fade('"+_24+"','{duration:0.6}');\">Close</a></td></tr></table>";$(_24).innerHTML=_25;var _2d=this.monthNames;var _2e=this.dayNames;var _2f=this.keepEmpty;var _30=this.dateSeparator;var _31=this.year;var _32=this.relateTo;var _33=this.dateFormat;$$("#"+_24+" .cal .back a").each(function(_34){_34.onclick=function(){var _35=new calendar(_26,_31);_35.monthNames=_2d;_35.dayNames=_2e;_35.keepEmpty=_2f;_35.relateTo=_32;_35.dateSeparator=_30;_35.dateFormat=_33;_35.getDatepicker(_24);};});$$("#"+_24+" .cal .next a").each(function(_36){_36.onclick=function(){var _37=new calendar(_27,_31);_37.monthNames=_2d;_37.dayNames=_2e;_37.keepEmpty=_2f;_37.relateTo=_32;_37.dateSeparator=_30;_37.dateFormat=_33;_37.getDatepicker(_24);};});};calendar.prototype.showDatepicker=function(){};calendar.prototype.buildCal=function(){var _38=0;for(j=0;j<this.weeksInMonth;j++){this.calendar[j]=[];for(i=0;i<7;i++){_38++;var _39=_38-this.startDay;this.calendar[j][i]=_39;}}return this.calendar;};calendar.prototype.getDaysInMonth=function(_3a,_3b){dteMonth=new Date(_3b,_3a);intDaysInMonth=28;blnDateFound=false;while(!blnDateFound){dteMonth.setDate(intDaysInMonth+1);intNewMonth=dteMonth.getMonth();if(intNewMonth!=_3a){blnDateFound=true;}else{intDaysInMonth++;}}return intDaysInMonth;};
+function strtotime (str, now) {
+    // http://kevin.vanzonneveld.net
+    // +   original by: Caio Ariede (http://caioariede.com)
+    // +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+    // +      input by: David
+    // +   improved by: Caio Ariede (http://caioariede.com)
+    // +   improved by: Brett Zamir (http://brett-zamir.me)
+    // +   bugfixed by: Wagner B. Soares
+    // +   bugfixed by: Artur Tchernychev
+    // %        note 1: Examples all have a fixed timestamp to prevent tests to fail because of variable time(zones)
+    // *     example 1: strtotime('+1 day', 1129633200);
+    // *     returns 1: 1129719600
+    // *     example 2: strtotime('+1 week 2 days 4 hours 2 seconds', 1129633200);
+    // *     returns 2: 1130425202
+    // *     example 3: strtotime('last month', 1129633200);
+    // *     returns 3: 1127041200
+    // *     example 4: strtotime('2009-05-04 08:30:00');
+    // *     returns 4: 1241418600
+    var i, match, s, strTmp = '',
+        parse = '';
+
+    strTmp = str;
+    strTmp = strTmp.replace(/\s{2,}|^\s|\s$/g, ' '); // unecessary spaces
+    strTmp = strTmp.replace(/[\t\r\n]/g, ''); // unecessary chars
+    if (strTmp == 'now') {
+        return (new Date()).getTime() / 1000; // Return seconds, not milli-seconds
+    } else if (!isNaN(parse = Date.parse(strTmp))) {
+        return (parse / 1000);
+    } else if (now) {
+        now = new Date(now * 1000); // Accept PHP-style seconds
+    } else {
+        now = new Date();
+    }
+
+    strTmp = strTmp.toLowerCase();
+
+    var __is = {
+        day: {
+            'sun': 0,
+            'mon': 1,
+            'tue': 2,
+            'wed': 3,
+            'thu': 4,
+            'fri': 5,
+            'sat': 6
+        },
+        mon: {
+            'jan': 0,
+            'feb': 1,
+            'mar': 2,
+            'apr': 3,
+            'may': 4,
+            'jun': 5,
+            'jul': 6,
+            'aug': 7,
+            'sep': 8,
+            'oct': 9,
+            'nov': 10,
+            'dec': 11
+        }
+    };
+
+    var process = function (m) {
+        var ago = (m[2] && m[2] == 'ago');
+        var num = (num = m[0] == 'last' ? -1 : 1) * (ago ? -1 : 1);
+
+        switch (m[0]) {
+        case 'last':
+        case 'next':
+            switch (m[1].substring(0, 3)) {
+            case 'yea':
+                now.setFullYear(now.getFullYear() + num);
+                break;
+            case 'mon':
+                now.setMonth(now.getMonth() + num);
+                break;
+            case 'wee':
+                now.setDate(now.getDate() + (num * 7));
+                break;
+            case 'day':
+                now.setDate(now.getDate() + num);
+                break;
+            case 'hou':
+                now.setHours(now.getHours() + num);
+                break;
+            case 'min':
+                now.setMinutes(now.getMinutes() + num);
+                break;
+            case 'sec':
+                now.setSeconds(now.getSeconds() + num);
+                break;
+            default:
+                var day;
+                if (typeof(day = __is.day[m[1].substring(0, 3)]) != 'undefined') {
+                    var diff = day - now.getDay();
+                    if (diff == 0) {
+                        diff = 7 * num;
+                    } else if (diff > 0) {
+                        if (m[0] == 'last') {
+                            diff -= 7;
+                        }
+                    } else {
+                        if (m[0] == 'next') {
+                            diff += 7;
+                        }
+                    }
+                    now.setDate(now.getDate() + diff);
+                }
+            }
+            break;
+
+        default:
+            if (/\d+/.test(m[0])) {
+                num *= parseInt(m[0], 10);
+
+                switch (m[1].substring(0, 3)) {
+                case 'yea':
+                    now.setFullYear(now.getFullYear() + num);
+                    break;
+                case 'mon':
+                    now.setMonth(now.getMonth() + num);
+                    break;
+                case 'wee':
+                    now.setDate(now.getDate() + (num * 7));
+                    break;
+                case 'day':
+                    now.setDate(now.getDate() + num);
+                    break;
+                case 'hou':
+                    now.setHours(now.getHours() + num);
+                    break;
+                case 'min':
+                    now.setMinutes(now.getMinutes() + num);
+                    break;
+                case 'sec':
+                    now.setSeconds(now.getSeconds() + num);
+                    break;
+                }
+            } else {
+                return false;
+            }
+            break;
+        }
+        return true;
+    };
+
+    match = strTmp.match(/^(\d{2,4}-\d{2}-\d{2})(?:\s(\d{1,2}:\d{2}(:\d{2})?)?(?:\.(\d+))?)?$/);
+    if (match != null) {
+        if (!match[2]) {
+            match[2] = '00:00:00';
+        } else if (!match[3]) {
+            match[2] += ':00';
+        }
+
+        s = match[1].split(/-/g);
+
+        for (i in __is.mon) {
+            if (__is.mon[i] == s[1] - 1) {
+                s[1] = i;
+            }
+        }
+        s[0] = parseInt(s[0], 10);
+
+        s[0] = (s[0] >= 0 && s[0] <= 69) ? '20' + (s[0] < 10 ? '0' + s[0] : s[0] + '') : (s[0] >= 70 && s[0] <= 99) ? '19' + s[0] : s[0] + '';
+        return parseInt(this.strtotime(s[2] + ' ' + s[1] + ' ' + s[0] + ' ' + match[2]) + (match[4] ? match[4] / 1000 : ''), 10);
+    }
+
+    var regex = '([+-]?\\d+\\s' + '(years?|months?|weeks?|days?|hours?|min|minutes?|sec|seconds?' + '|sun\\.?|sunday|mon\\.?|monday|tue\\.?|tuesday|wed\\.?|wednesday' + '|thu\\.?|thursday|fri\\.?|friday|sat\\.?|saturday)' + '|(last|next)\\s' + '(years?|months?|weeks?|days?|hours?|min|minutes?|sec|seconds?' + '|sun\\.?|sunday|mon\\.?|monday|tue\\.?|tuesday|wed\\.?|wednesday' + '|thu\\.?|thursday|fri\\.?|friday|sat\\.?|saturday))' + '(\\sago)?';
+
+    match = strTmp.match(new RegExp(regex, 'gi')); // Brett: seems should be case insensitive per docs, so added 'i'
+    if (match == null) {
+        return false;
+    }
+
+    for (i = 0; i < match.length; i++) {
+        if (!process(match[i].split(' '))) {
+            return false;
+        }
+    }
+
+    return (now.getTime() / 1000);
+}
+function date (format, timestamp) {
+    // +   original by: Carlos R. L. Rodrigues (http://www.jsfromhell.com)
+    var that = this,
+        jsdate, f, formatChr = /\\?([a-z])/gi,
+        formatChrCb,
+        // Keep this here (works, but for code commented-out
+        // below for file size reasons)
+        //, tal= [],
+        _pad = function (n, c) {
+            if ((n = n + '').length < c) {
+                return new Array((++c) - n.length).join('0') + n;
+            }
+            return n;
+        },
+        txt_words = ["Sun", "Mon", "Tues", "Wednes", "Thurs", "Fri", "Satur", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    formatChrCb = function (t, s) {
+        return f[t] ? f[t]() : s;
+    };
+    f = {
+        // Day
+        d: function () { // Day of month w/leading 0; 01..31
+            return _pad(f.j(), 2);
+        },
+        D: function () { // Shorthand day name; Mon...Sun
+            return f.l().slice(0, 3);
+        },
+        j: function () { // Day of month; 1..31
+            return jsdate.getDate();
+        },
+        l: function () { // Full day name; Monday...Sunday
+            return txt_words[f.w()] + 'day';
+        },
+        N: function () { // ISO-8601 day of week; 1[Mon]..7[Sun]
+            return f.w() || 7;
+        },
+        S: function () { // Ordinal suffix for day of month; st, nd, rd, th
+            var j = f.j();
+            return j > 4 || j < 21 ? 'th' : {1: 'st', 2: 'nd', 3: 'rd'}[j % 10] || 'th';
+        },
+        w: function () { // Day of week; 0[Sun]..6[Sat]
+            return jsdate.getDay();
+        },
+        z: function () { // Day of year; 0..365
+            var a = new Date(f.Y(), f.n() - 1, f.j()),
+                b = new Date(f.Y(), 0, 1);
+            return Math.round((a - b) / 864e5) + 1;
+        },
+
+        // Week
+        W: function () { // ISO-8601 week number
+            var a = new Date(f.Y(), f.n() - 1, f.j() - f.N() + 3),
+                b = new Date(a.getFullYear(), 0, 4);
+            return _pad(1 + Math.round((a - b) / 864e5 / 7), 2);
+        },
+
+        // Month
+        F: function () { // Full month name; January...December
+            return txt_words[6 + f.n()];
+        },
+        m: function () { // Month w/leading 0; 01...12
+            return _pad(f.n(), 2);
+        },
+        M: function () { // Shorthand month name; Jan...Dec
+            return f.F().slice(0, 3);
+        },
+        n: function () { // Month; 1...12
+            return jsdate.getMonth() + 1;
+        },
+        t: function () { // Days in month; 28...31
+            return (new Date(f.Y(), f.n(), 0)).getDate();
+        },
+
+        // Year
+        L: function () { // Is leap year?; 0 or 1
+            return new Date(f.Y(), 1, 29).getMonth() === 1 | 0;
+        },
+        o: function () { // ISO-8601 year
+            var n = f.n(),
+                W = f.W(),
+                Y = f.Y();
+            return Y + (n === 12 && W < 9 ? -1 : n === 1 && W > 9);
+        },
+        Y: function () { // Full year; e.g. 1980...2010
+            return jsdate.getFullYear();
+        },
+        y: function () { // Last two digits of year; 00...99
+            return (f.Y() + "").slice(-2);
+        },
+
+        // Time
+        a: function () { // am or pm
+            return jsdate.getHours() > 11 ? "pm" : "am";
+        },
+        A: function () { // AM or PM
+            return f.a().toUpperCase();
+        },
+        B: function () { // Swatch Internet time; 000..999
+            var H = jsdate.getUTCHours() * 36e2,
+                // Hours
+                i = jsdate.getUTCMinutes() * 60,
+                // Minutes
+                s = jsdate.getUTCSeconds(); // Seconds
+            return _pad(Math.floor((H + i + s + 36e2) / 86.4) % 1e3, 3);
+        },
+        g: function () { // 12-Hours; 1..12
+            return f.G() % 12 || 12;
+        },
+        G: function () { // 24-Hours; 0..23
+            return jsdate.getHours();
+        },
+        h: function () { // 12-Hours w/leading 0; 01..12
+            return _pad(f.g(), 2);
+        },
+        H: function () { // 24-Hours w/leading 0; 00..23
+            return _pad(f.G(), 2);
+        },
+        i: function () { // Minutes w/leading 0; 00..59
+            return _pad(jsdate.getMinutes(), 2);
+        },
+        s: function () { // Seconds w/leading 0; 00..59
+            return _pad(jsdate.getSeconds(), 2);
+        },
+        u: function () { // Microseconds; 000000-999000
+            return _pad(jsdate.getMilliseconds() * 1000, 6);
+        },
+
+        // Timezone
+        e: function () { // Timezone identifier; e.g. Atlantic/Azores, ...
+            // The following works, but requires inclusion of the very large
+            // timezone_abbreviations_list() function.
+/*              return this.date_default_timezone_get();
+*/
+            throw 'Not supported (see source code of date() for timezone on how to add support)';
+        },
+        I: function () { // DST observed?; 0 or 1
+            // Compares Jan 1 minus Jan 1 UTC to Jul 1 minus Jul 1 UTC.
+            // If they are not equal, then DST is observed.
+            var a = new Date(f.Y(), 0),
+                // Jan 1
+                c = Date.UTC(f.Y(), 0),
+                // Jan 1 UTC
+                b = new Date(f.Y(), 6),
+                // Jul 1
+                d = Date.UTC(f.Y(), 6); // Jul 1 UTC
+            return 0 + ((a - c) !== (b - d));
+        },
+        O: function () { // Difference to GMT in hour format; e.g. +0200
+            var a = jsdate.getTimezoneOffset();
+            return (a > 0 ? "-" : "+") + _pad(Math.abs(a / 60 * 100), 4);
+        },
+        P: function () { // Difference to GMT w/colon; e.g. +02:00
+            var O = f.O();
+            return (O.substr(0, 3) + ":" + O.substr(3, 2));
+        },
+        T: function () { // Timezone abbreviation; e.g. EST, MDT, ...
+            // The following works, but requires inclusion of the very
+            // large timezone_abbreviations_list() function.
+/*              var abbr = '', i = 0, os = 0, default = 0;
+            if (!tal.length) {
+                tal = that.timezone_abbreviations_list();
+            }
+            if (that.php_js && that.php_js.default_timezone) {
+                default = that.php_js.default_timezone;
+                for (abbr in tal) {
+                    for (i=0; i < tal[abbr].length; i++) {
+                        if (tal[abbr][i].timezone_id === default) {
+                            return abbr.toUpperCase();
+                        }
+                    }
+                }
+            }
+            for (abbr in tal) {
+                for (i = 0; i < tal[abbr].length; i++) {
+                    os = -jsdate.getTimezoneOffset() * 60;
+                    if (tal[abbr][i].offset === os) {
+                        return abbr.toUpperCase();
+                    }
+                }
+            }
+*/
+            return 'UTC';
+        },
+        Z: function () { // Timezone offset in seconds (-43200...50400)
+            return -jsdate.getTimezoneOffset() * 60;
+        },
+
+        // Full Date/Time
+        c: function () { // ISO-8601 date.
+            return 'Y-m-d\\Th:i:sP'.replace(formatChr, formatChrCb);
+        },
+        r: function () { // RFC 2822
+            return 'D, d M Y H:i:s O'.replace(formatChr, formatChrCb);
+        },
+        U: function () { // Seconds since UNIX epoch
+            return jsdate.getTime() / 1000 | 0;
+        }
+    };
+    this.date = function (format, timestamp) {
+        that = this;
+        jsdate = ((typeof timestamp === 'undefined') ? new Date() : // Not provided
+        (timestamp instanceof Date) ? new Date(timestamp) : // JS Date()
+        new Date(timestamp * 1000) // UNIX timestamp (auto-convert to int)
+        );
+        return format.replace(formatChr, formatChrCb);
+    };
+    return this.date(format, timestamp);
+}
+
+
+function makeDatepicker(m,y,div)
+{
+	var theCal = new calendar(m,y);
+	theCal.getDatepicker(div);
+}
+function makeCal(m,y,div)
+{
+	var theCal = new calendar(m,y);
+	theCal.getCal(div);
+}
+function calendar(theMonth,theYear,options)
+{
+	this.dayNames = ["Mo","Di","Mi","Do","Fr","Sa","So"];
+	this.monthNames = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+	this.keepEmpty = false;
+	this.dateSeparator = ".";
+	this.relateTo = "";
+	this.dateFormat = "d.m.Y";
+
+
+	this.calendar = [];
+	var datobj = new Date();
+	this.currmonth = datobj.getMonth();
+	this.curryear = datobj.getFullYear();
+	this.currday = datobj.getDate();
+
+
+	if(theMonth > 12)
+	{
+		theMonth = 1;
+		theYear = theYear+1;
+	}
+	if(theMonth < 1)
+	{
+		theMonth = 12;
+		theYear = theYear-1;
+	}
+
+	this.month = theMonth-1;
+	this.year = theYear;
+
+	this.daysInMonth = this.getDaysInMonth(this.month,this.year);
+	this.daysLastMonth = this.getDaysInMonth(this.month-1,this.year);
+	var firstDay = new Date(this.year, this.month, 1);
+	this.startDay = firstDay.getDay()-1;
+	if(this.startDay<0)this.startDay+=7;
+	var tempDays = this.startDay + this.daysInMonth;
+	this.weeksInMonth = Math.ceil(tempDays/7);
+
+}
+
+calendar.prototype.getCal = function(theDiv)
+{
+	var theHtml = "";
+	var pmonth = this.month;
+	var nmonth = this.month+2;
+
+	theHtml += "<table class=\"cal\" cellpadding=\"0\" cellspacing=\"1\" border = \"0\">";
+	theHtml += "<tr class=\"head\" >" +
+			"<td class = \"back\"><a href = \"javascript:void(0);\"></a></td>" +
+			"<td colspan=\"5\" >" + this.monthNames[this.month] + " " + this.year + "</td>" +
+			"<td class=\"next\"><a href = \"javascript:void(0);\"></a></td></tr>";
+
+
+	theHtml += "<tr class = \"weekday\">";
+	for(i=0;i<this.dayNames.length;i++)
+	{
+		theHtml += "<td >" + this.dayNames[i] + "</td>"
+	}
+	theHtml += "</tr>";
+
+
+	var intMinithecal = this.buildCal();
+
+	for(j=0;j<this.weeksInMonth;j++) {
+		theHtml += "<tr >";
+		for(i=0;i<7;i++) {
+				var theDay = intMinithecal[j][i];
+				//theDay = theDay - 1;
+				if(theDay > 0 && theDay <= this.daysInMonth)
+				{
+					if(this.currmonth == this.month && this.curryear == this.year && this.currday == theDay)
+					{
+						theHtml += "<td class = \"today\">"+ theDay + "</td>";
+					}
+					else
+					{
+						theHtml += "<td >"+ theDay + "</td>";
+					}
+
+
+				}
+				else if(theDay < 1)
+				{
+					theHtml += "<td class = \"wrong\">"+(this.daysLastMonth+theDay)+"</td>";
+				}
+				else if(theDay > this.daysInMonth)
+				{
+					theHtml += "<td class = \"wrong\">"+(theDay-this.daysInMonth)+"</td>";
+				}
+			}
+		theHtml += "</tr>";
+	}
+	theHtml += "</table>";
+
+	document.getElementById(theDiv).innerHTML = theHtml;
+
+
+	var theMonths = this.monthNames;
+	var theDays = this.dayNames;
+	var keepEmpty = this.keepEmpty;
+	var dateSeparator = this.dateSeparator;
+	var theYear = this.year;
+	$$("#"+theDiv+" .cal  .back a").each
+	(
+		function (item)
+		{
+			item.onclick = function()
+			{
+					theCal = new calendar(pmonth,theYear);
+					theCal.monthNames = theMonths;
+					theCal.dayNames = theDays;
+					theCal.keepEmpty = keepEmpty;
+					theCal.dateSeparator = dateSeparator;
+
+					theCal.getCal(theDiv);
+			}
+		}
+	);
+		$$("#"+theDiv+" .cal .next a").each
+	(
+		function (item)
+		{
+			item.onclick = function()
+			{
+					internalCals = new calendar(nmonth,theYear);
+					internalCals.monthNames = theMonths;
+					internalCals.dayNames = theDays;
+					internalCals.keepEmpty = keepEmpty;
+					internalCals.dateSeparator = dateSeparator;
+
+					internalCals.getCal(theDiv);
+			}
+		}
+	);
+}
+
+calendar.prototype.getDatepicker = function(theDiv)
+{
+    if(this.dateFormat == "m/d/Y" || this.dateFormat == "m/d/y")
+    {
+        this.dateSeparator = "/";
+    }
+	var theHtml = "";
+	var pmonth = this.month;
+	var nmonth = this.month+2;
+	this.theDiv = theDiv;
+
+
+	if(this.relateTo)
+	{
+		document.getElementById(this.relateTo).onfocus = function()
+		{
+
+			new Effect.Appear(theDiv,{duration:0.8});
+		}
+	}
+
+	theHtml += "<table class=\"cal\" cellpadding=\"0\" cellspacing=\"1\" border = \"0\">";
+	theHtml += "<tr class=\"head\" >" +
+			"<td class = \"back\"><a href = \"javascript:void(0);\"></a></td>" +
+			"<td colspan=\"5\" >" + this.monthNames[this.month] + " " + this.year + "</td>" +
+			"<td class=\"next\"><a href = \"javascript:void(0);\"></a></td></tr>";
+
+	theHtml += "<tr class = \"weekday\">";
+	for(i=0;i<this.dayNames.length;i++)
+	{
+		theHtml += "<td >" + this.dayNames[i] + "</td>"
+	}
+	theHtml += "</tr>";
+
+	var thecal = this.buildCal();
+
+	if(!this.keepEmpty && !$(this.relateTo).value)
+	{
+		if((this.month+1) < 10)
+		{
+			strMon = "0" + (this.month+1);
+		}
+		else
+		{
+			strMon = this.month+1;
+		}
+		if(this.currday < 10 && this.currday > 0)
+		{
+			strDay = "0" + this.currday;
+		}
+		else
+		{
+			strDay = this.currday;
+		}
+
+
+		//initStr = strMon + this.dateSeparator + strDay + this.dateSeparator + this.curryear;
+		var initStr2 = strMon + "/" + strDay + "/" + this.curryear;
+      //  var theIniStamp = Date.parse(initStr2)/1000;
+        var theIniStamp = strtotime(initStr2);
+
+		document.getElementById(this.relateTo).value =  date(this.dateFormat,theIniStamp);
+	}
+		var selectedVals = $(this.relateTo).value.split(this.dateSeparator);
+
+
+	for(j=0;j<this.weeksInMonth;j++) {
+		theHtml += "<tr>";
+		for(i=0;i<7;i++) {
+				var theDay = thecal[j][i];
+				strDay = theDay;
+				if(theDay < 10 && theDay > 0)
+				{
+					strDay = "0" + theDay;
+				}
+
+				if((this.month+1) < 10)
+				{
+					strMon = "0" + (this.month+1);
+				}
+				else
+				{
+					strMon = this.month+1;
+				}
+
+				var dstring = strDay + this.dateSeparator + strMon + this.dateSeparator + this.year;
+				var dstring2 =  strMon+ "/" + strDay + "/" + this.year;
+
+ 			//	var theStamp = Date.parse(dstring2)/1000;
+ 				var theStamp = strtotime(dstring2);
+ 				var dateString =  date(this.dateFormat,theStamp);
+				 //dstring = strMon + "/" + strDay + "/" + this.year;
+				if(theDay > 0 && theDay <= this.daysInMonth)
+				{
+					if(this.currmonth == this.month && this.curryear == this.year && this.currday == theDay)
+					{
+						theHtml += "<td class = \"today\" onclick = \"$('"+this.relateTo+"').value='"+dateString+"';new Effect.Fade('"+theDiv+"','{duration:0.6}');\">"+ theDay + "</td>";
+					}
+					else if(this.month == (selectedVals[1]-1) && this.year == selectedVals[2] && selectedVals[0] == theDay)
+					{
+						theHtml += "<td class = \"red\" onclick = \"$('"+this.relateTo+"').value='"+dateString+"';new Effect.Fade('"+theDiv+"','{duration:0.6}');\">"+ theDay + "</td>";
+					}
+					else
+					{
+						theHtml += "<td class = \"normalday\" onclick = \"$('"+this.relateTo+"').value='"+dateString+"';new Effect.Fade('"+theDiv+"','{duration:0.6}');\">"+ theDay + "</td>";
+					}
+				}
+				else if(theDay < 1)
+				{
+					theHtml += "<td class = \"wrong\">"+(this.daysLastMonth+theDay)+"</td>";
+				}
+				else if(theDay > this.daysInMonth)
+				{
+					theHtml += "<td class = \"wrong\">"+(theDay-this.daysInMonth)+"</td>";
+				}
+			}
+		theHtml += "</tr>";
+	}
+
+	theHtml += "<tr><td colspan = \"7\" class = \"dpfoot\"><a href = \"javascript:void(0);\" onclick = \"javascript:new Effect.Fade('"+theDiv+"','{duration:0.6}');\">Close</a></td></tr></table>";
+
+	document.getElementById(theDiv).innerHTML = theHtml;
+
+	var theMonths = this.monthNames
+	var theDays = this.dayNames;
+	var keepEmpty = this.keepEmpty;
+	var dateSeparator = this.dateSeparator;
+	var theYear = this.year;
+	var theRelate = this.relateTo;
+	var theDateFormat = this.dateFormat;
+	$$("#"+theDiv+" .cal .back a").each
+	(
+		function (item)
+		{
+			item.onclick = function()
+			{
+					var internalCal = new calendar(pmonth,theYear);
+					internalCal.monthNames = theMonths;
+					internalCal.dayNames = theDays;
+					internalCal.keepEmpty = keepEmpty;
+					internalCal.relateTo = theRelate;
+					internalCal.dateSeparator = dateSeparator;
+					internalCal.dateFormat = theDateFormat;
+					internalCal.getDatepicker(theDiv);
+
+			}
+		}
+	);
+	$$("#"+theDiv+" .cal .next a").each
+	(
+		function (item)
+		{
+			item.onclick = function()
+			{
+					var internalCal = new calendar(nmonth,theYear);
+					internalCal.monthNames = theMonths;
+					internalCal.dayNames = theDays;
+					internalCal.keepEmpty = keepEmpty;
+					internalCal.relateTo = theRelate;
+					internalCal.dateSeparator = dateSeparator;
+					internalCal.dateFormat = theDateFormat;
+					internalCal.getDatepicker(theDiv);
+			}
+		}
+	);
+}
+
+calendar.prototype.showDatepicker = function()
+{
+
+}
+
+calendar.prototype.buildCal = function()
+{
+	var counter = 0;
+	for(j=0;j<this.weeksInMonth;j++) {
+			this.calendar[j] = [];
+			for(i=0;i<7;i++) {
+				counter++;
+				var theday = counter-this.startDay;
+				this.calendar[j][i] = theday;
+		}
+	}
+
+	return this.calendar;
+}
+
+calendar.prototype.getDaysInMonth = function(intMonth, intYear)
+{
+	var dteMonth = new Date(intYear,intMonth);
+	var intDaysInMonth = 28;
+	var blnDateFound = false;
+
+	while (!blnDateFound)
+	{
+		dteMonth.setDate(intDaysInMonth+1);
+		var intNewMonth = dteMonth.getMonth();
+
+		if (intNewMonth != intMonth)
+		{
+		  blnDateFound = true;
+		}
+		else
+		{
+		  intDaysInMonth++;
+		}
+	}
+
+	return intDaysInMonth;
+}
+

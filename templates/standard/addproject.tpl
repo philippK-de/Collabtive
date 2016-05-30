@@ -35,21 +35,7 @@
 			</div>
 
 
-			<script type="text/javascript">
-			{literal}
-			  Event.observe(window,'load', function(event) {
 
-				theCal = new calendar({/literal}{$theM},{$theY}	);
-				theCal.dayNames = ["{#monday#}","{#tuesday#}","{#wednesday#}","{#thursday#}","{#friday#}","{#saturday#}","{#sunday#}"];
-				theCal.monthNames = ["{#january#}","{#february#}","{#march#}","{#april#}","{#may#}","{#june#}","{#july#}","{#august#}","{#september#}","{#october#}","{#november#}","{#december#}"];
-				theCal.relateTo = "endP";
-				theCal.dateFormat = "{$settings.dateformat}";
-				theCal.getDatepicker("add_project");
-			{literal}
-});
-			  	{/literal}
-
-			</script>
 
 
 			<div class="row">
@@ -98,5 +84,13 @@
 
 		</fieldset>
 	</form>
-
+    <script type="text/javascript">
+        {literal}
+        theCal = new calendar({/literal}{$theM},{$theY}	);
+        theCal.dayNames = ["{#monday#}","{#tuesday#}","{#wednesday#}","{#thursday#}","{#friday#}","{#saturday#}","{#sunday#}"];
+        theCal.monthNames = ["{#january#}","{#february#}","{#march#}","{#april#}","{#may#}","{#june#}","{#july#}","{#august#}","{#september#}","{#october#}","{#november#}","{#december#}"];
+        theCal.relateTo = "endP";
+        theCal.dateFormat = "{$settings.dateformat}";
+        theCal.getDatepicker("add_project");
+    </script>
 </div> {*block_in_wrapper end*}

@@ -30,7 +30,7 @@ var messages = {
     dependencies: []
 };
 
-var calendar = {
+var desktopCalendar = {
   el: "desktopCalendar",
   itemType: "calendar",
   url: "manageajax.php?action=indexCalendar",
@@ -44,7 +44,7 @@ var calendar = {
 var projectsView = createView(projects);
 var tasksView = createView(tasks);
 var msgsView = createView(messages);
-var calendarView = createView(calendar);
+var calendarView = createView(desktopCalendar);
 //setup dependenciens
 projectsView.$set("dependencies", [tasksView, msgsView]);
 

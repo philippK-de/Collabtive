@@ -349,11 +349,13 @@ function closeElement(theElement, theUrl, theView) {
 
 }
 function removeRow(row, color) {
-
     var rowElement = document.getElementById(row);
-
     rowElement.style.backgroundColor = "#FFFFFF";
-
+    /*
+     * Velocity animation
+     * The first call animated the background color
+     * When this animation completes, a 2nd call is made to fade out the cell after a delay
+     */
     Velocity(rowElement, {
         backgroundColor: color,
         backgroundColorAlpha: 0.6
@@ -366,11 +368,6 @@ function removeRow(row, color) {
         }
     });
 
-   /* new Effect.Highlight(row, {duration: 1.5, startcolor: '#FFFFFF', endcolor: color});
-    new Effect.Fade(row, {
-        duration: 1.5,
-        rowid: row
-    });*/
 }
 /*
  * VUE COMPONENTS
