@@ -502,7 +502,27 @@ calendar.prototype.getCal = function(theDiv)
 	var keepEmpty = this.keepEmpty;
 	var dateSeparator = this.dateSeparator;
 	var theYear = this.year;
-	$$("#"+theDiv+" .cal  .back a").each
+
+    $$("#"+theDiv+" .cal  .back a").each
+    (
+        function (item)
+        {
+            item.onclick = function()
+            {
+                theCal = new calendar(pmonth,theYear);
+                theCal.monthNames = theMonths;
+                theCal.dayNames = theDays;
+                theCal.keepEmpty = keepEmpty;
+                theCal.dateSeparator = dateSeparator;
+
+                theCal.getCal(theDiv);
+            }
+        }
+    );
+
+
+    /*
+    $$("#"+theDiv+" .cal  .back a").each
 	(
 		function (item)
 		{
@@ -518,7 +538,9 @@ calendar.prototype.getCal = function(theDiv)
 			}
 		}
 	);
-		$$("#"+theDiv+" .cal .next a").each
+
+	*/
+    $$("#"+theDiv+" .cal .next a").each
 	(
 		function (item)
 		{
@@ -572,8 +594,10 @@ calendar.prototype.getDatepicker = function(theDiv)
 
 	var thecal = this.buildCal();
 
-	if(!this.keepEmpty && !$(this.relateTo).value)
+	if(!this.keepEmpty && !document.getElementById(this.relateTo).value)
 	{
+        var strMon;
+        var strDay;
 		if((this.month+1) < 10)
 		{
 			strMon = "0" + (this.month+1);
@@ -666,41 +690,37 @@ calendar.prototype.getDatepicker = function(theDiv)
 	var theYear = this.year;
 	var theRelate = this.relateTo;
 	var theDateFormat = this.dateFormat;
-	$$("#"+theDiv+" .cal .back a").each
-	(
-		function (item)
-		{
-			item.onclick = function()
-			{
-					var internalCal = new calendar(pmonth,theYear);
-					internalCal.monthNames = theMonths;
-					internalCal.dayNames = theDays;
-					internalCal.keepEmpty = keepEmpty;
-					internalCal.relateTo = theRelate;
-					internalCal.dateSeparator = dateSeparator;
-					internalCal.dateFormat = theDateFormat;
-					internalCal.getDatepicker(theDiv);
 
-			}
-		}
-	);
-	$$("#"+theDiv+" .cal .next a").each
-	(
-		function (item)
-		{
-			item.onclick = function()
-			{
-					var internalCal = new calendar(nmonth,theYear);
-					internalCal.monthNames = theMonths;
-					internalCal.dayNames = theDays;
-					internalCal.keepEmpty = keepEmpty;
-					internalCal.relateTo = theRelate;
-					internalCal.dateSeparator = dateSeparator;
-					internalCal.dateFormat = theDateFormat;
-					internalCal.getDatepicker(theDiv);
-			}
-		}
-	);
+
+    var backToggle = document.querySelector("#" + theDiv + " .cal .back a");
+    backToggle.addEventListener("click",function()
+        {
+            var internalCal = new calendar(pmonth,theYear);
+            internalCal.monthNames = theMonths;
+            internalCal.dayNames = theDays;
+            internalCal.keepEmpty = keepEmpty;
+            internalCal.relateTo = theRelate;
+            internalCal.dateSeparator = dateSeparator;
+            internalCal.dateFormat = theDateFormat;
+            internalCal.getDatepicker(theDiv);
+
+        }
+    );
+
+    var nextToggle = document.querySelector("#" + theDiv + " .cal .next a");
+    nextToggle.addEventListener("click",  function()
+        {
+            var internalCal = new calendar(nmonth,theYear);
+            internalCal.monthNames = theMonths;
+            internalCal.dayNames = theDays;
+            internalCal.keepEmpty = keepEmpty;
+            internalCal.relateTo = theRelate;
+            internalCal.dateSeparator = dateSeparator;
+            internalCal.dateFormat = theDateFormat;
+            internalCal.getDatepicker(theDiv);
+        }
+    );
+
 }
 
 calendar.prototype.showDatepicker = function()

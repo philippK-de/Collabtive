@@ -20,7 +20,7 @@
 {literal}
 
 <script type = "text/javascript" src = "include/js/prototype.js" ></script>
-<script type = "text/javascript" src = "include/js/ajax.min.js" ></script>
+<script type = "text/javascript" src = "include/js/ajax.js" ></script>
 <script type = "text/javascript" src = "include/js/vue.js" ></script>
 <script type = "text/javascript" src = "include/js/viewManager.js" ></script>
 <script type = "text/javascript" src = "include/js/systemMessage.min.js" ></script>
@@ -35,7 +35,7 @@
         }
 </script>
 
-<script type="text/javascript" src="include/js/mycalendar.js"></script>
+<script type="text/javascript" src="include/js/mycalendar.min.js"></script>
 {/literal}
 {/if}
 
