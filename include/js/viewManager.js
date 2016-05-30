@@ -262,6 +262,7 @@ function submitForm(event) {
             updateView(formView, false);
             //show system message for element added
             systemMessage.added(formView.$get("itemType"));
+
         };
 
         //Onloadend handler fires once after onload has been dispatched

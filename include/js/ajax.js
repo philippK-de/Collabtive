@@ -30,21 +30,30 @@ function show_addtask(id) {
     });
     theElement.dataset.slidestate = "down";
 }
+
+function slideUp(elm) {
+    var slideDuration = 600;
+    Velocity(elm, "slideUp", {
+        duration: slideDuration
+    });
+    elm.dataset.slidestate = "up";
+}
+
+function slideDown(elm) {
+    var slideDuration = 600;
+    Velocity(elm, "slideDown", {
+        duration: slideDuration
+    });
+    elm.dataset.slidestate = "down";
+}
 function blindtoggle(id) {
     var theElement = document.getElementById(id);
-    var slideDuration = 600;
 
     if (theElement.dataset.slidestate == "down") {
-        Velocity(theElement, "slideUp", {
-            duration: slideDuration
-        });
-        theElement.dataset.slidestate = "up";
+        slideUp(theElement);
     }
     else {
-        Velocity(theElement, "slideDown", {
-            duration: slideDuration
-        });
-        theElement.dataset.slidestate = "down";
+        slideDown(theElement);
     }
 }
 
@@ -70,8 +79,7 @@ function toggleBlock(id) {
     }
 }
 
-function hasClass(elm, className)
-{
+function hasClass(elm, className) {
     if (elm.classList) {
         return elm.classList.contains(className);
     }
@@ -94,11 +102,10 @@ function switchClass(id, class1, class2) {
 }
 function toggleClass(elm, class1, class2) {
     var theElement;
-    if(elm.id === undefined) {
+    if (elm.id === undefined) {
         theElement = document.getElementById(elm);
     }
-    else
-    {
+    else {
         theElement = elm;
     }
 
