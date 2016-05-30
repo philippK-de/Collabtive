@@ -28,7 +28,7 @@ function createView(myEl) {
         url: myEl.url
     };
 
-    //create the Vue.js view given the element myEl and the data in myModel, and return the view
+    //create the Vue.js view given the element myEl and the data in myModel
     var vueview = new Vue({
         el: "#" + myEl.el,
         data: myModel
@@ -39,31 +39,40 @@ function createView(myEl) {
      *
      */
     var ajaxRequest = new XMLHttpRequest();
-    ajaxRequest.open("GET", myModel.url);
+
+    /*
+     * Event Handlers
+     * Onloadstart handler fires once before transfer starts
+     */
+    ajaxRequest.onloadstart = function (evt) {
+        document.getElementById("progress" + myEl.el).style.display = "block";
+    };
+
+    //Onload handler fires when transfer is complete
     ajaxRequest.onload = function () {
         //update the model with the retrieved data
-        console.log("url " + myModel.url);
         const responseData = JSON.parse(ajaxRequest.responseText);
         //one page of data
         myModel.items = responseData.items;
         //total number of items available
         myModel.itemsCount = responseData.count;
         //get the list of pages and add it to the model
-        var pages = pagination.listPages(responseData.count);
+        const pages = pagination.listPages(responseData.count);
         myModel.pages = pages;
         //emit an event that indicates the view has finished loading data
         vueview.$dispatch("iloaded");
     };
 
-    ajaxRequest.onloadstart = function (evt) {
-        document.getElementById("progress" + myEl.el).style.display = "block";
-    };
+    //Onloadend handler fires once after onload has been dispatched
     ajaxRequest.onloadend = function (evt) {
         document.getElementById("progress" + myEl.el).style.display = "none";
     };
 
+    //open the request and send
+    ajaxRequest.open("GET", myModel.url);
     ajaxRequest.send();
 
+    //return the view
     return vueview;
 }
 

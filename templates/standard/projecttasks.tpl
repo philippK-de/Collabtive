@@ -40,7 +40,7 @@
                         <a href="javascript:void(0);" id="toggle-{$lists[list].ID}" class="win_block" onclick=""></a>
 
                         <div class="wintools" style="z-index:999;">
-                            <div class="progress" id="progressacc_{$lists[list].ID}" style="display:none;width:22px;float:left">
+                            <div class="progress" id="progresscontentblock-{$lists[list].ID}" style="display:none;width:22px;float:left">
                                 <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-tasks.gif"/>
                             </div>
                             {if $userpermissions.tasks.close}
