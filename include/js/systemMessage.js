@@ -1,20 +1,19 @@
 var systemMessage = {
     showFor: 3000,
     fadeDuration: 2000,
-    createMessage: function(elementId)
-    {
+    createMessage: function (elementId) {
         var messageElement = document.getElementById(elementId);
-       Velocity(messageElement,"fadeIn", {
-           duration: this.fadeDuration,
-           complete: function(elm){
-               Velocity(messageElement,"fadeOut",{
-                   duration: systemMessage.fadeDuration,
-                   delay: systemMessage.showFor
-               });
-           }
-       });
+        Velocity(messageElement, "fadeIn", {
+            duration: this.fadeDuration,
+            complete: function (elm) {
+                Velocity(messageElement, "fadeOut", {
+                    duration: systemMessage.fadeDuration,
+                    delay: systemMessage.showFor
+                });
+            }
+        });
     },
-    notify: function(messageType, itemType){
+    notify: function (messageType, itemType) {
         //get the container element
         var notificationContainer = document.querySelector("#" + itemType + "SystemMessage");
         //make sure it is empty
@@ -22,40 +21,34 @@ var systemMessage = {
         var icon = notificationContainer.dataset.icon;
         var cssClass = "";
         var text = "";
-        if(messageType == "added")
-        {
+        if (messageType == "added") {
             cssClass = "info_in_green";
             text = notificationContainer.dataset.textAdded;
         }
-        else if(messageType == "assigned")
-        {
+        else if (messageType == "assigned") {
             cssClass = "info_in_green";
             text = notificationContainer.dataset.textAssigned;
         }
-        else if(messageType == "closed")
-        {
+        else if (messageType == "closed") {
             cssClass = "info_in_green";
             text = notificationContainer.dataset.textClosed;
         }
-        else if(messageType == "edited")
-        {
+        else if (messageType == "edited") {
             cssClass = "info_in_yellow";
             text = notificationContainer.dataset.textEdited;
         }
-        else if(messageType == "deleted")
-        {
+        else if (messageType == "deleted") {
             cssClass = "info_in_red";
             text = notificationContainer.dataset.textDeleted;
         }
-        else if(messageType == "deassigned")
-        {
+        else if (messageType == "deassigned") {
             cssClass = "info_in_red";
             text = notificationContainer.dataset.textDeassigned;
         }
 
         //construct HTML element
         var notificationHTML = "<span class = \"" + cssClass + "\">";
-        notificationHTML += "<img src = \"" + icon + "\" />"  + text + "</span>";
+        notificationHTML += "<img src = \"" + icon + "\" />" + text + "</span>";
 
         //write the notification element to the notification container
         notificationContainer.innerHTML = notificationHTML;
@@ -63,24 +56,19 @@ var systemMessage = {
         this.createMessage(notificationContainer.id);
         //console.log(notificationHTML);
     },
-    added: function(itemType)
-    {
-         this.notify("added", itemType);
+    added: function (itemType) {
+        this.notify("added", itemType);
     },
-    closed: function(itemType)
-    {
+    closed: function (itemType) {
         this.notify("closed", itemType);
     },
-    edited: function(itemType)
-    {
+    edited: function (itemType) {
         this.notify("edited", itemType);
     },
-    deleted: function(itemType)
-    {
+    deleted: function (itemType) {
         this.notify("deleted", itemType);
     },
-    assigned: function(itemType)
-    {
+    assigned: function (itemType) {
         this.notify("assigned", itemType);
     }
 

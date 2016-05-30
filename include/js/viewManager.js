@@ -310,45 +310,53 @@ function confirmDelete(message, element, url, view) {
  * Function to delete an element from the datamodel / db as well as the DOM
  */
 function deleteElement(theElement, theUrl, theView) {
-    new Ajax.Request(theUrl, {
-        method: 'get',
-        onSuccess: function (payload) {
-            //check if server returns OK response code
-            if (payload.responseText == "ok") {
-                //remove the DOM element animated
-                removeRow(theElement, deleteEndcolor);
-                //if a view is passed in, update the view and emit a system message
-                if (theView != undefined) {
-                    updateView(theView);
-                    systemMessage.deleted(theView.$get("itemType"));
-                }
-                var result = true;
+    var ajaxRequest = new XMLHttpRequest();
+
+    ajaxRequest.onload = function()
+    {
+        //check if server returns OK response code
+        if (ajaxRequest.responseText == "ok") {
+            //remove the DOM element animated
+            removeRow(theElement, deleteEndcolor);
+            //if a view is passed in, update the view and emit a system message
+            if (theView != undefined) {
+                updateView(theView);
+                systemMessage.deleted(theView.$get("itemType"));
             }
+            var result = true;
         }
-    });
+    };
+    ajaxRequest.open("GET", theUrl);
+    ajaxRequest.send();
 }
 function closeElement(theElement, theUrl, theView) {
+    var ajaxRequest = new XMLHttpRequest();
 
-    new Ajax.Request(theUrl, {
-        method: 'get',
-        onSuccess: function (payload) {
-            if (payload.responseText == "ok") {
-                //remove the DOM element animated
-                try {
-                    removeRow(theElement, closeEndcolor);
-                }
-                catch (e) {
-                }
-                //if a view is passed in, update the view and emit a system message
-                if (theView != undefined) {
-                    updateView(theView);
-                    systemMessage.closed(theView.$get("itemType"));
-                }
-
+    ajaxRequest.onload = function()
+    {
+        //check if server returns OK response code
+        if (ajaxRequest.responseText == "ok") {
+            //remove the DOM element animated
+            removeRow(theElement, closeEndcolor);
+            //if a view is passed in, update the view and emit a system message
+            if (theView != undefined) {
+                updateView(theView);
+                systemMessage.closed(theView.$get("itemType"));
             }
+            var result = true;
         }
-    });
+    };
+    ajaxRequest.open("GET", theUrl);
+    ajaxRequest.send();
 
+}
+function removeRow(row, color) {
+
+    new Effect.Highlight(row, {duration: 1.5, startcolor: '#FFFFFF', endcolor: color});
+    new Effect.Fade(row, {
+        duration: 1.5,
+        rowid: row
+    });
 }
 /*
  * VUE COMPONENTS

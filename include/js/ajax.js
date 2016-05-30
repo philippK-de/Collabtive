@@ -15,14 +15,7 @@ function changePost(script, element, pbody) {
     var ajax = new Ajax.Updater({success: element}, script, {method: 'post', postBody: pbody, evalScripts: true});
 }
 
-function removeRow(row, color) {
 
-    new Effect.Highlight(row, {duration: 1.5, startcolor: '#FFFFFF', endcolor: color});
-    new Effect.Fade(row, {
-        duration: 1.5,
-        rowid: row
-    });
-}
 function make_inputs(num) {
     var url = 'manageajax.php?action=makeinputs&num=' + num;
     change(url, 'inputs');
