@@ -25,6 +25,7 @@ function show_addtask(id) {
     Effect.BlindDown(id);
 }
 function blindtoggle(id) {
+
     new Effect.toggle(id, 'blind', {duration: 0.5});
 }
 
@@ -34,16 +35,19 @@ function fadeToggle(id) {
 
 
 function toggleBlock(id) {
-    var state = $(id).style.display;
+    var theBlock = document.getElementById(id);
+    var theBlockToggle = document.getElementById(id + '_toggle');
+    var state = theBlock.style.display;
+
     if (state == "none") {
         setCookie(id, '1', '30', '/', '', '');
-        $(id).style.display = "block";
-        $(id + '_toggle').className = 'win_block';
+        theBlock.style.display = "block";
+        theBlockToggle.className = 'win_block';
     }
     else if (state == "block" || state == "") {
         setCookie(id, '0', '30', '/', '', '');
-        $(id).style.display = "none";
-        $(id + '_toggle').className = 'win_none';
+        theBlock.style.display = "none";
+        theBlockToggle.className = 'win_none';
     }
 }
 
@@ -176,8 +180,7 @@ function sortBlock(blockId, sortmode) {
     var tbodyCollection = theBlock.getElementsByTagName("tbody");
     var tbodies = [];
 
-    for(var j= 0;j<tbodyCollection.length;j++)
-    {
+    for (var j = 0; j < tbodyCollection.length; j++) {
         tbodies.push(tbodyCollection[j]);
     }
     var bodyIds = new Array();
@@ -198,7 +201,7 @@ function sortBlock(blockId, sortmode) {
             tbodies[i].setAttribute("sortorder", "asc");
         }
 
-       theBlock.removeChild(tbodies[i]);
+        theBlock.removeChild(tbodies[i]);
     }
 
     if (sortmode == "daysleft") {
@@ -221,7 +224,7 @@ function sortBlock(blockId, sortmode) {
         theBlock.appendChild(tbodies[a]);
         var tbodyId = tbodies[a].getAttribute("theid");
         var toggle = document.getElementById(blockId + "toggle" + tbodyId);
-        toggle.setAttribute("onclick", "javascript:accord_tasks.activate(document.querySelector('#taskhead_content"+a+"'));");
+        toggle.setAttribute("onclick", "javascript:accord_tasks.activate(document.querySelector('#taskhead_content" + a + "'));");
     }
 }
 

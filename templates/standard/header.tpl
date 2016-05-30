@@ -18,7 +18,6 @@
 {/if}
 {if $jsload|default == "ajax"}
 {literal}
-
 <script type = "text/javascript" src = "include/js/prototype.js" ></script>
 <script type = "text/javascript" src = "include/js/ajax.js" ></script>
 <script type = "text/javascript" src = "include/js/vue.js" ></script>

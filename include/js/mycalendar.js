@@ -623,7 +623,7 @@ calendar.prototype.getDatepicker = function(theDiv)
 
 		document.getElementById(this.relateTo).value =  date(this.dateFormat,theIniStamp);
 	}
-		var selectedVals = $(this.relateTo).value.split(this.dateSeparator);
+		var selectedVals = document.getElementById(this.relateTo).value.split(this.dateSeparator);
 
 
 	for(j=0;j<this.weeksInMonth;j++) {
