@@ -25,7 +25,7 @@
 </div>
 
 <div class="block accordion_content" id="loghead" style="overflow:hidden;">
-    <table id="projectLog" class="log" cellpadding="0" cellspacing="0" border="0">
+    <table id="projectLog" class="log" cellpadding="0" cellspacing="0" border="0"  v-cloak>
         <thead>
         <tr>
             <th class="a"></th>

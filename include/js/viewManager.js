@@ -28,15 +28,19 @@ function createView(myEl) {
         url: myEl.url
     };
 
+    //create the Vue.js view given the element myEl and the data in myModel, and return the view
+    var vueview = new Vue({
+        el: "#" + myEl.el,
+        data: myModel
+    });
 
     /*
      * Send asyncronous request to the url specified in the model.
      *
      */
-    /*  var ajaxRequest = new XMLHttpRequest();
-
-    ajaxRequest.onload = function()
-    {
+    var ajaxRequest = new XMLHttpRequest();
+    ajaxRequest.open("GET", myModel.url);
+    ajaxRequest.onload = function () {
         //update the model with the retrieved data
         console.log("url " + myModel.url);
         const responseData = JSON.parse(ajaxRequest.responseText);
@@ -49,55 +53,17 @@ function createView(myEl) {
         myModel.pages = pages;
         //emit an event that indicates the view has finished loading data
         vueview.$dispatch("iloaded");
-        stopWait("progress" + myEl.el);
-
     };
 
-    ajaxRequest.onprogress = function(evt)
-    {
-        startWait("progress" + myEl.el);
+    ajaxRequest.onloadstart = function (evt) {
+        document.getElementById("progress" + myEl.el).style.display = "block";
+    };
+    ajaxRequest.onloadend = function (evt) {
+        document.getElementById("progress" + myEl.el).style.display = "none";
     };
 
-    ajaxRequest.open("GET",myModel.url);
     ajaxRequest.send();
 
-     */
-   new Ajax.Request(myModel.url, {
-            method: 'get',
-            onSuccess: function (myData) {
-                //update the model with the retrieved data
-                console.log("url " + myModel.url);
-                const responseData = JSON.parse(myData.responseText);
-                //one page of data
-                myModel.items = responseData.items;
-                //total number of items available
-                myModel.itemsCount = responseData.count;
-                //get the list of pages and add it to the model
-                var pages = pagination.listPages(responseData.count);
-                myModel.pages = pages;
-                //emit an event that indicates the view has finished loading data
-                vueview.$dispatch("iloaded");
-            },
-            onLoading: function () {
-                //show loading indicator
-                startWait("progress" + myEl.el);
-            },
-            onComplete: function () {
-                //hide loading indicator
-                stopWait("progress" + myEl.el);
-
-            },
-            onFailure: function () {
-
-            }
-        }
-    );
-
-    //create the Vue.js view given the element myEl and the data in myModel, and return the view
-    var vueview = new Vue({
-        el: "#" + myEl.el,
-        data: myModel
-    });
     return vueview;
 }
 
@@ -310,7 +276,7 @@ function submitForm(event) {
  Show loading indicator
  */
 function startWait(indic) {
-    document.getElementById(indic).style.display = 'block';
+    document.getElementById(indic).style.display = "block";
 }
 /*
  hide loading indicator
@@ -424,11 +390,10 @@ Vue.component("loader", progressComponent);
  * Register a vue filter to limit the length of strings rendered
  */
 Vue.filter("truncate", function (value, maxLength) {
-    if(value.length >= maxLength) {
+    if (value.length >= maxLength) {
         return value.substr(0, maxLength) + "...";
     }
-    else
-    {
+    else {
         return value;
     }
 });

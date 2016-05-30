@@ -1,4 +1,4 @@
-<ul id="filesList">
+<ul id="filesList" v-cloak>
     {literal}
         <li v-for="folder in items.folders" id="fdli_{{*folder.ID}}" >
             <div class="itemwrapper" id="iw_{{*folder.ID}}"

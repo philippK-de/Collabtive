@@ -6,6 +6,9 @@
         <div class="wintools">
           <!--  <loader block="desktopprojects" loader="loader-project3.gif"></loader>   -->
             <loader block="desktopprojects" loader="loader-project3.gif"></loader>
+            <!-- <div class="progress" id="progressdesktopprojects" style="float:left;display:none;">
+                 <img src="templates/standard/theme/standard/images/symbols/loader-project3.gif"/>
+            </div>-->
         </div>
 
         <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt=""/>{#myprojects#}

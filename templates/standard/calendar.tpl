@@ -1,4 +1,4 @@
-<div id="desktopCalendar" class="miles" style="padding-bottom:2px;">
+<div id="desktopCalendar" class="miles" style="padding-bottom:2px;" v-cloak>
     <div class="headline">
         <a href="javascript:void(0);" id="mileshead_toggle" class="win_none" onclick=""></a>
 

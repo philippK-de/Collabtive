@@ -40,11 +40,11 @@ var calendar = {
 
 
 //create views - binding the data to the dom element
+
 var projectsView = createView(projects);
 var tasksView = createView(tasks);
 var msgsView = createView(messages);
 var calendarView = createView(calendar);
-
 //setup dependenciens
 projectsView.$set("dependencies", [tasksView, msgsView]);
 
