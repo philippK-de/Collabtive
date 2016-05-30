@@ -1,10 +1,18 @@
 var systemMessage = {
-    showFor: 3500,
-    fadeDuration: 2.0,
+    showFor: 3000,
+    fadeDuration: 2000,
     createMessage: function(elementId)
     {
-        new Effect.Appear(elementId, {duration: this.fadeDuration})
-        window.setTimeout("new Effect.Fade('" + elementId + "', { duration: "+ this.fadeDuration + " })",this.showFor);
+        var messageElement = document.getElementById(elementId);
+       Velocity(messageElement,"fadeIn", {
+           duration: this.fadeDuration,
+           complete: function(elm){
+               Velocity(messageElement,"fadeOut",{
+                   duration: systemMessage.fadeDuration,
+                   delay: systemMessage.showFor
+               });
+           }
+       });
     },
     notify: function(messageType, itemType){
         //get the container element
