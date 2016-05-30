@@ -1,5 +1,5 @@
 var systemMessage = {
-    showFor: 2500,
+    showFor: 2000,
     fadeDuration: 2000,
     createMessage: function (elementId) {
         var messageElement = document.getElementById(elementId);
