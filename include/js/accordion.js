@@ -16,7 +16,7 @@ function accordion2(container, options) {
     }
 
     //slide speed
-    this.slideDuration = 0.5;
+    this.slideDuration = 500;
     //setup base elements
     this.container = container;
     this.rootElement = document.getElementById(this.container);
@@ -70,15 +70,15 @@ accordion2.prototype.toggle = function (contentSlide) {
 
 
         if (i == numSlide) {
-            Effect.BlindDown(this.accordionContents[i].id, {
+            Velocity(this.accordionContents[i],"slideDown",{
                 duration: this.slideDuration,
-                afterFinish: this.showToggle()
+                begin: this.showToggle()
             });
         }
         else {
-            Effect.BlindUp(this.accordionContents[i].id,{
+          Velocity(this.accordionContents[i],"slideUp",{
                 duration: this.slideDuration,
-                afterFinish: this.hideToggle()
+                complete: this.hideToggle()
             });
         }
     }
@@ -96,15 +96,15 @@ accordion2.prototype.activate = function (contentSlide) {
         this.currentToggle = this.accordionToggles[i];
 
         if (i == numSlide) {
-            Effect.BlindDown(this.accordionContents[i].id, {
+            Velocity(this.accordionContents[i],"slideDown",{
                 duration: this.slideDuration,
-                beforeStart: this.showSlide()
+                begin: this.showSlide()
             });
         }
         else {
-            Effect.BlindUp(this.accordionContents[i].id, {
+            Velocity(this.accordionContents[i],"slideUp",{
                 duration: this.slideDuration,
-                afterFinish: this.hideToggle()
+                complete: this.hideSlide()
             });
         }
     }
@@ -112,12 +112,16 @@ accordion2.prototype.activate = function (contentSlide) {
 
 accordion2.prototype.showSlide = function () {
     this.currentContent.className = this.classNames.contentActive;
-    this.currentToggle.className = this.classNames.toggleActive;
+    this.showToggle();
+}
+accordion2.prototype.hideSlide = function () {
+    this.currentContent.className = this.classNames.content;
+    this.hideToggle();
 }
 accordion2.prototype.showToggle = function () {
     this.currentToggle.className = this.classNames.toggleActive;
 }
 accordion2.prototype.hideToggle = function () {
-        this.currentToggle.className = this.classNames.toggle;
+    this.currentToggle.className = this.classNames.toggle;
 }
 
