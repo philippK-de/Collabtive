@@ -46,6 +46,7 @@ function slideDown(elm) {
     });
     elm.dataset.slidestate = "down";
 }
+
 function blindtoggle(id) {
     var theElement = document.getElementById(id);
 
@@ -203,11 +204,6 @@ function calctime() {
     var clocklocation = $("digitalclock");
     clocklocation.innerHTML = hours + ":" + minutes + ":" + seconds;
     setTimeout("calctime()", 1000);
-}
-
-function systemMsg(ele) {
-    new Effect.Appear(ele, {duration: 2.0});
-    window.setTimeout("new Effect.Fade('" + ele + "', { duration: 2.0 })", 5000);
 }
 
 //add search provider

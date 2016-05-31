@@ -19,8 +19,8 @@
 {if $jsload|default == "ajax"}
 {literal}
 <script type = "text/javascript" src = "include/js/velocity.min.js" ></script>
-<script type = "text/javascript" src = "include/js/ajax.js" ></script>
-<script type = "text/javascript" src = "include/js/vue.js" ></script>
+<script type = "text/javascript" src = "include/js/ajax.min.js" ></script>
+<script type = "text/javascript" src = "include/js/vue.min.js" ></script>
 <script type = "text/javascript" src = "include/js/viewManager.js" ></script>
 <script type = "text/javascript" src = "include/js/systemMessage.min.js" ></script>
 
@@ -90,8 +90,6 @@ tinyMCE.init({
 {/if}
 </head>
 <body >
-
-<!--<div id = "jslog" style = "color:red;position:absolute;top:60%;right:5%;width:300px;border:1px solid;background-color:grey;"></div>-->
 
 {if $showheader != "no"}
 	{include file="header_main.tpl"}
