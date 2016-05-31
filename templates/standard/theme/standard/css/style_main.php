@@ -192,7 +192,11 @@ td.message ul {
 	color:red;
 }
 [v-cloak] {
-display: none;
+    display: none;
+}
+
+button:focus {
+    outline:0;
 }
 
 [draggable] {

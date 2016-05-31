@@ -82,6 +82,10 @@ td.message ul {
     display: none;
 }
 
+button:focus {
+    outline:0;
+}
+
 [draggable] {
     -moz-user-select: none;
     -khtml-user-select: none;
@@ -1687,6 +1691,7 @@ ul.tabs li.system-settings a {
 }
 
 #modal_container.tasksmodal, #modal_container.milesmodal {
+
     background: #203d56;
     color: #365a76;
     min-height: 150px;
