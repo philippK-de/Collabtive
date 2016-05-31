@@ -347,7 +347,7 @@ if ($action == "add") {
 
    $template->display("projecttasks.tpl");
 }
-elseif($action = "projectTasks")
+elseif($action == "projectTasks")
 {
     if (!$userpermissions["tasks"]["view"]) {
         $errtxt = $langfile["nopermission"];
@@ -378,7 +378,6 @@ elseif($action = "projectTasks")
 
     echo json_encode($openLists);
 }
-
 elseif ($action == "showtask") {
     if (!$userpermissions["tasks"]["view"]) {
         $errtxt = $langfile["nopermission"];
