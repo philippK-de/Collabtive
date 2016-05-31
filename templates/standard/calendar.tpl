@@ -65,16 +65,16 @@
                             <div v-if="day.currmonth == 1" class="calcontent">
                                 <!--Milestones -->
                                 <template v-if="day.milesnum > 0">
-                                    <a href="javascript:toggleModal('miles_modal{{*day.val}}');" id="milesmodal_toggle{{*day.val}}"
-                                       class="milesmodal_toggle">
+                                    <a href="javascript:openModal('miles_modal{{*day.val}}');">
                                         <img src="templates/{/literal}{$settings.template}/theme/{$settings.theme}/{literal}images/symbols/miles.png"
                                              alt=""/>
                                     </a>
 
                                     <div id="miles_modal{{*day.val}}" class="milesmodal" style="display:none">
                                         <div class="modaltitle">
-                                            <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt=""/>
-                                            {/literal}{$langfile.milestones}{literal}
+                                            <img src="./templates/{/literal}{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png"
+                                                 alt=""/>
+                                            {$langfile.milestones}{literal}
                                             {{*day.val}}.{{*items.currentMonth}}.{{*items.currentYear}}
                                             <a class="winclose" href="javascript:closeModal('miles_modal{{*day.val}}');"></a>
                                         </div>
@@ -84,22 +84,14 @@
                                                 <table cellpadding="0" cellspacing="0" border="0">
                                                     {/literal}
                                                     <thead>
-                                                    <th></th>
                                                     <th>{$langfile.project}</th>
                                                     <th>{$langfile.milestone}</th>
                                                     <th class="tools">{$langfile.daysleft}</th>
                                                     </thead>
                                                     {literal}
 
-                                                    <tbody v-for="milestone in day.milestones" class="alternateColors"
-                                                           id="mile_m_{{*milestone.ID}}">
+                                                    <tbody v-for="milestone in day.milestones" class="alternateColors">
                                                     <tr>
-                                                        {/literal}
-                                                        <td class="icon">
-                                                            <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png"
-                                                                 alt=""/>
-                                                        </td>
-                                                        {literal}
                                                         <td>{{*milestone.pname}}</td>
                                                         <td>
                                                             <a href="managemilestone.php?action=showmilestone&amp;msid={{*milestone.ID}}&amp;id={{*milestone.project}}"
@@ -120,70 +112,52 @@
                                 </template>
                                 <!--Milestones End -->
                                 <!--Tasks -->
-                                <a v-if="day.tasksnum > 0" href="#tasks{{*day.val}}" id="tasklink{{*day.val}}">
-                                    <img src="templates/{/literal}{$settings.template}/theme/{$settings.theme}/{literal}images/symbols/task.png"
-                                         alt=""/>
-                                </a>
-
-                                <div id="tasks{{*day.val}}" style="display:none;">
-                                    <div class="modaltitle">
-                                        <img src="./templates/{/literal}{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png"
+                                <template v-if="day.tasksnum > 0">
+                                    <a href="javascript:openModal('tasks_modal{{*day.val}}');">
+                                        <img src="templates/{/literal}{$settings.template}/theme/{$settings.theme}/{literal}images/symbols/task.png"
                                              alt=""/>
-                                        {$langfile.tasklist}
-                                        {literal}
-                                        {{*day.val}}.{{*items.currentMonth}}.{{items.currentYear}}
-                                        <a class="winclose" href="javascript:Control.Modal.close();"></a>
-                                    </div>
-                                    <div class="inmodal">
-                                        <div class="tasks">
-                                            <div class="block">
-                                                <table class="acc_modal" id="acc_mb_{{*day.val}}" cellpadding="0" cellspacing="0" border="0">
-                                                    <colgroup>
-                                                        <col class="m_a"/>
-                                                        <col class="m_b"/>
-                                                        <col class="m_c"/>
-                                                    </colgroup>
-                                                    {/literal}
-                                                    <thead>
-                                                    <th></th>
-                                                    <th>{$langfile.project}: {$langfile.task}</th>
-                                                    <th class="tools">{$langfile.daysleft}</th>
-                                                    </thead>
-                                                    {literal}
-                                                    <tbody v-for="task in day.tasks" class="alternateColors" id="task_m_{{*task.ID}}">
-                                                    <tr>
-                                                        <td class="icon">
-                                                            <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png"
-                                                                 alt=""/>
-                                                        </td>
-                                                        <td>
-                                                            <div class="toggle-in">
+                                    </a>
 
+                                    <div id="tasks_modal{{*day.val}}" class="tasksmodal" style="display:none;">
+                                        <div class="modaltitle">
+                                            <img src="./templates/{/literal}{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png"
+                                                 alt=""/>
+                                            {$langfile.tasklist}
+                                            {literal}
+                                            {{*day.val}}.{{*items.currentMonth}}.{{items.currentYear}}
+                                            <a class="winclose" href="javascript:closeModal('tasks_modal{{*day.val}}');"></a>
+                                        </div>
+                                        <div class="inmodal">
+                                            <div class="tasks">
+                                                <div class="block">
+                                                    <table cellpadding="0" cellspacing="0" border="0">
+                                                        {/literal}
+                                                        <thead>
+                                                        <th>{$langfile.project}</th>
+                                                        <th>{$langfile.task}</th>
+                                                        <th class="tools">{$langfile.daysleft}</th>
+                                                        </thead>
+                                                        {literal}
+                                                        <tbody v-for="task in day.tasks" class="alternateColors">
+                                                        <tr>
+                                                            <td>{{*task.pname | truncate '15' }}</td>
+                                                            <td>
                                                                 <a href="managetask.php?action=showtask&amp;tid={{*task.ID}}&amp;id={{*task.project}}"
                                                                    title="{{*task.title}}">
-                                                                    {{*task.pname}}:
-                                                                    {{*task.title}}
+                                                                    {{*task.title | truncate '15'}}
                                                                 </a>
-                                                            </div>
-                                                        </td>
-                                                        <td class="tools">{{*task.daysleft}}</td>
-                                                    </tr>
-                                                    <tr class="acc">
-                                                        <td colspan="3">
-                                                            <div class="maccordion_content">
-                                                                <div class="content_in">
-                                                                    {{*task.text}}
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
+
+                                                            </td>
+                                                            <td class="tools">{{*task.daysleft}}</td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-
+                                </template>
+                                <!-- tasks end -->
                             </div>
                         </td>
                     </tr>
