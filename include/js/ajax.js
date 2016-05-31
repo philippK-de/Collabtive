@@ -26,15 +26,6 @@ function change(script, element) {
     ajaxRequest.send();
 
 }
-function changeshow(script, element, theindicator) {
-
-    var ajax = new Ajax.Updater({success: element}, script, {method: 'get', evalScripts: true, onCreate: startWait(theindicator)});
-
-}
-function changePost(script, element, pbody) {
-    var ajax = new Ajax.Updater({success: element}, script, {method: 'post', postBody: pbody, evalScripts: true});
-}
-
 
 function make_inputs(num) {
     var url = 'manageajax.php?action=makeinputs&num=' + num;
