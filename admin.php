@@ -50,6 +50,8 @@ if ($action == "users") {
     $users = $user->getAllUsers(25);
     // Get All Projects
     $projects = $project->getProjects(1, 10000);
+    $rolesObj = new roles();
+    $allRoles = $rolesObj->getAllRoles(1000);
 
     $i2 = 0;
 
@@ -80,6 +82,7 @@ if ($action == "users") {
     $title = $langfile['useradministration'];
     $template->assign("title", $title);
     $template->assign("users", $users);
+    $template->assign("roles",$allRoles);
     $template->assign("projects", $projects);
     $template->display("adminusers.tpl");
 }

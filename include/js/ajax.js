@@ -3,10 +3,16 @@ closeEndcolor = '#377814';
 //endcolor for delete element flashing
 deleteEndcolor = '#c62424';
 //various ajax functions
+
+/*
+ * Function to update the HTML of an element, with the return value from a script called with XHR
+ * @param string script The URL of the API endpoint
+ * @param element the ID of the element to be updated
+ * @return void
+ */
 function change(script, element) {
     var ajaxRequest = new XMLHttpRequest();
     ajaxRequest.onload = function () {
-
         //element to be updated
         var targetElement = document.getElementById(element);
         //response data
@@ -17,8 +23,8 @@ function change(script, element) {
 
         //get scripts in the transmitted HTML, and eval them
         var javaScripts = targetElement.getElementsByTagName("script");
-        for(var i=0;i<javaScripts.length;i++)
-        {
+        for (var i = 0; i < javaScripts.length; i++) {
+            //this is a hack but a needed one
             eval(javaScripts[i].innerHTML);
         }
     };
@@ -42,6 +48,10 @@ function show_addtask(id) {
     theElement.dataset.slidestate = "down";
 }
 
+/*
+ * Slide an element up
+ * @param obj elm DOM element representing the element to be slided open
+ */
 function slideUp(elm) {
     var slideDuration = 600;
     Velocity(elm, "slideUp", {
@@ -50,6 +60,11 @@ function slideUp(elm) {
     elm.dataset.slidestate = "up";
 }
 
+
+/*
+ * Slide an element up
+ * @param obj elm DOM element representing the element to be slided closed
+ */
 function slideDown(elm) {
     var slideDuration = 600;
     Velocity(elm, "slideDown", {
@@ -58,6 +73,12 @@ function slideDown(elm) {
     elm.dataset.slidestate = "down";
 }
 
+
+/*
+ * Toggle an element sliding up/down.
+ * This slides an element up or down depending on its former slide state
+ * @param str id ID of the element to be slided open/closed
+ */
 function blindtoggle(id) {
     var theElement = document.getElementById(id);
 
@@ -74,23 +95,38 @@ function fadeToggle(id) {
 }
 
 
+/*
+ * Open or close a DOM block
+ * @param str id ID of the block to be opened or closed.
+ */
 function toggleBlock(id) {
+    //get the block and block toggle
     var theBlock = document.getElementById(id);
+    //the toggle is the arrow visually representing the blocks state
     var theBlockToggle = document.getElementById(id + '_toggle');
-    var state = theBlock.style.display;
+    //the current state of the block
+    var blockState = theBlock.style.display;
 
-    if (state == "none") {
+    //closed
+    if (blockState == "none") {
         setCookie(id, '1', '30', '/', '', '');
         theBlock.style.display = "block";
         theBlockToggle.className = 'win_block';
     }
-    else if (state == "block" || state == "") {
+    //open
+    else if (blockState == "block" || blockState == "") {
         setCookie(id, '0', '30', '/', '', '');
         theBlock.style.display = "none";
         theBlockToggle.className = 'win_none';
     }
 }
 
+/*
+ * Function to check if an element has a CSS class attached to it
+ * @param obj elm DOM element to be checked
+ * @param str className Name of the class to be checked for
+ * @return bool
+ */
 function hasClass(elm, className) {
     if (elm.classList) {
         return elm.classList.contains(className);
@@ -99,21 +135,15 @@ function hasClass(elm, className) {
         return new RegExp('(^| )' + className + '( |$)', 'gi').test(elm.className);
     }
 }
-function switchClass(id, class1, class2) {
-    try {
-        $($('selectedid').value).className = class2;
-    } catch (e) {
-    }
-    try {
-        $('selectedid').value = id;
-        $($('selectedid').value).className = class1;
-    }
-    catch (e) {
-    }
 
-}
+/*
+ * Function to toggle an element between 2 CSS classes
+ * @param obj elm can be an id string or DOM object
+ * @return void
+ */
 function toggleClass(elm, class1, class2) {
     var theElement;
+    //if the elm has no id property, an ID string has been passed in
     if (elm.id === undefined) {
         theElement = document.getElementById(elm);
     }
@@ -128,14 +158,6 @@ function toggleClass(elm, class1, class2) {
         theElement.className = class1;
     }
 
-}
-
-
-function changeElements(element, classname) {
-    var loop = $$(element);
-    for (var i = 0; i < loop.length; i++) {
-        loop[i].className = classname;
-    }
 }
 
 function makeTimer(funct, duration) {
@@ -197,34 +219,9 @@ function getnow(field) {
     clocklocation.value = hours + ":" + minutes;
 }
 
-/* Clock */
-function calctime() {
-    var currenttime = new Date();
-    var hours = currenttime.getHours();
-    var minutes = currenttime.getMinutes();
-    var seconds = currenttime.getSeconds();
-    if (hours < 10) {
-        hours = "0" + hours;
-    }
-    if (minutes < 10) {
-        minutes = "0" + minutes;
-    }
-    if (seconds < 10) {
-        seconds = "0" + seconds;
-    }
-    var clocklocation = $("digitalclock");
-    clocklocation.innerHTML = hours + ":" + minutes + ":" + seconds;
-    setTimeout("calctime()", 1000);
-}
-
 //add search provider
 function addEngine(url) {
     window.external.AddSearchProvider(url);
-}
-
-
-function sortit() {
-
 }
 function sortBlock(blockId, sortmode) {
     var theBlock = document.getElementById(blockId);
