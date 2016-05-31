@@ -1819,6 +1819,7 @@ ul.tabs li.system-settings a {
 }
 
 #modal_container.tasksmodal, #modal_container.milesmodal {
+
 	background: <?php echo $tasksC;
 ?>;
 	color: <?php echo $tasksMain;

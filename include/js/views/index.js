@@ -39,6 +39,8 @@ var desktopCalendar = {
 
 
 
+
+
 //create views - binding the data to the dom element
 
 var projectsView = createView(projects);
@@ -48,6 +50,42 @@ var calendarView = createView(desktopCalendar);
 //setup dependenciens
 projectsView.$set("dependencies", [tasksView, msgsView]);
 
+function toggleModal(elementId)
+{
+    var modalElement = document.querySelector("#"+elementId);
+
+    modalElement.id = "modal_container";
+    modalElement.style.zIndex = 99;
+    modalElement.style.position = "fixed";
+    modalElement.style.top = "50%";
+    modalElement.style.left = "50%";
+
+    modalElement.style.display = "block";
+}
+
+function closeModal(oldId)
+{
+    var modalElement = document.querySelector("#modal_container");
+
+    modalElement.id = oldId;
+    modalElement.style.display = "none";
+}
+
+calendarView.$on("iloaded",function()
+{
+    Vue.nextTick(function () {
+        console.log("next tick");
+        var milesModals = document.getElementsByClassName("milesmodal");
+        var milesModalToggles = document.getElementsByClassName("milesmodal_toggle");
+
+        console.log(milesModalToggles);
+        for(var i=0;i<milesModalToggles.length;i++)
+        {
+           var theSelector = milesModalToggles[i].dataset.modal;
+            console.log(theSelector);
+        }
+    })
+} );
 
 //get the form to be submitted
 var addProjectForm = document.getElementById("addprojectform");
@@ -80,6 +118,8 @@ var accordIndex = new accordion2('block_index', {
         content: 'blockaccordion_content'
     }
 });
+
+
 
 /**
  *
