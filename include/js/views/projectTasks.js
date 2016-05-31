@@ -8,7 +8,7 @@ var accord_dashboard = new accordion2('blockTasks',{
 });
 
 function activateAccordeon(theAccord){
-    accord_dashboard.toggle($$('#blockTasks .blockaccordion_content')[theAccord]);
+    accord_dashboard.toggle(document.querySelectorAll('#blockTasks .blockaccordion_content')[theAccord]);
     setCookie("activeSlideProject",theAccord);
 }
 

@@ -197,6 +197,7 @@
 
 {literal}
     <script type="text/javascript" src="include/js/accordion.min.js"></script>
+    <script type="text/javascript" src="include/js/modal.min.js"></script>
     <script type = "text/javascript" src="include/js/views/project.min.js"></script>
     <script type = "text/javascript">
         //changeshow('manageproject.php?action=cal&id={/literal}{$project.ID}{literal}','thecal','progress');

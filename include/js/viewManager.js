@@ -46,6 +46,7 @@ function createView(myEl) {
 
     //Onload handler fires when transfer is complete
     ajaxRequest.onload = function () {
+        console.log(myModel.url);
         //update the model with the retrieved data
         const responseData = JSON.parse(ajaxRequest.responseText);
         //one page of data

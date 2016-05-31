@@ -106,9 +106,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <!-- modal end -->
-                                    <!-- modalcontainer end -->
                                 </template>
                                 <!--Milestones End -->
                                 <!--Tasks -->
@@ -140,11 +137,11 @@
                                                         {literal}
                                                         <tbody v-for="task in day.tasks" class="alternateColors">
                                                         <tr>
-                                                            <td>{{*task.pname | truncate '15' }}</td>
+                                                            <td>{{*task.pname }}</td>
                                                             <td>
                                                                 <a href="managetask.php?action=showtask&amp;tid={{*task.ID}}&amp;id={{*task.project}}"
                                                                    title="{{*task.title}}">
-                                                                    {{*task.title | truncate '15'}}
+                                                                    {{*task.title }}
                                                                 </a>
 
                                                             </td>
