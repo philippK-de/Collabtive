@@ -61,7 +61,7 @@
 			<div class="row-butn-bottom">
 				<label>&nbsp;</label>
 				<div id="filesubmit">
-					<button onclick="$('statusrow').show();uploader.upload();return false;" onfocus="this.blur();">{#addbutton#}</button>
+					<button onclick="uploader.upload();return false;" onfocus="this.blur();">{#addbutton#}</button>
 				</div>
 			</div>
 			
@@ -70,10 +70,11 @@
 	
 	{literal}
 		<script type="text/javascript">
-			Event.observe(window, "load", function()
-			{
-				uploader = new html5up("filer", "fileInfo1", "uploadCompleted", "managefile.php?action=uploadAsync&id={/literal}{$project.ID}{literal}");
-			});
+            window.onload = function(){
+                uploader = new html5up("filer", "fileInfo1", "uploadCompleted", "managefile.php?action=uploadAsync&id={/literal}{$project.ID}{literal}");
+
+            }
+
 		</script>
 	{/literal}
 	

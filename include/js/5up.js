@@ -95,12 +95,14 @@ html5up.prototype.fileInfo = function () {
 
 //uploads files to the script specified in theTarget
 html5up.prototype.upload = function () {
+    document.getElementById('statusrow').style.display = "block";
+
     var theFiles = this.theFiles.files;
     var myData = new FormData();
     //get the folder to upload to
     var upfolder = document.getElementById('upfolder').value;
     //get selected items in the list of email notify recipients
-    var sendtos = getSelectedOptions($('sendto'));
+    var sendtos = getSelectedOptions(document.getElementById('sendto'));
     myData.append("upfolder", upfolder);
 
     //Loop through the files and create an upload form object
