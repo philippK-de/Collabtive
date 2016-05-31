@@ -60,8 +60,8 @@
                         <h2>
                             <a href="managetasklist.php?action=showtasklist&amp;id={$project.ID}&amp;tlid={$lists[list].ID}"
                                title="{#tasklist#} {$lists[list].name}">
-                                        <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png"
-                                        alt=""/>{$lists[list].name|truncate:70:"...":true}</a>
+                                <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png"
+                                     alt=""/>{$lists[list].name|truncate:70:"...":true}</a>
                         </h2>
                     </div>
                     <div id="contentblock-{$lists[list].ID}" class="block blockaccordion_content" style="overflow:hidden;">
@@ -181,7 +181,8 @@
                                             </td>
                                             <td class="b">
                                                 <div class="toggle-in">
-                                                    <a href="managetask.php?action=showtask&amp;tid={{*oldtask.ID}}&amp;id={{*oldtask.project}}" title="{{*oldtask.title}}">
+                                                    <a href="managetask.php?action=showtask&amp;tid={{*oldtask.ID}}&amp;id={{*oldtask.project}}"
+                                                       title="{{*oldtask.title}}">
                                                         {{*oldtask.title | truncate '30' }}
                                                     </a>
                                                 </div>
@@ -194,13 +195,13 @@
                                                 {/literal}
                                                 {if $userpermissions.tasks.del}
                                                 {literal}
-                                                <a class="tool_del"
-                                                   href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'task_{{*oldtask.ID}}\',\'managetask.php?action=del&amp;tid={{*oldtask.ID}}&amp;id={{*oldtask.project}}\')');" title="{/literal}{#delete#}"></a>
+                                                    <a class="tool_del"
+                                                    href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'task_{{*oldtask.ID}}\',\'managetask.php?action=del&amp;tid={{*oldtask.ID}}&amp;id={{*oldtask.project}}\')');" title="{/literal}{#delete#}"></a>
                                                 {/if}
                                             </td>
                                         </tr>
                                         </tbody>
-                                         {*Tasks donetasks END*}
+                                        {*Tasks donetasks END*}
                                     </table>
                                 </div>
                                 {*toggleblock End*}
@@ -222,7 +223,7 @@
                     </div>
                     {*block END*}
 
-                    {literal}
+                {literal}
                     <script type="text/javascript">
                         var projectTasks = {
                             el: "contentblock-{/literal}{$lists[list].ID}{literal}",
@@ -298,20 +299,16 @@
                             </tfoot>
 
                             {section name = oldlist loop=$oldlists}
-                                {*Color-Mix*}
-                                {if $smarty.section.oldlist.index % 2 == 0}
-                                    <tbody class="color-a" id="task_{$oldlists[oldlist].ID}">
-                                    {else}
-                                    <tbody class="color-b" id="task_{$oldlists[oldlist].ID}">
-                                {/if}
-                                <tr {if $oldlists[oldlist].daysleft < 0} class="marker-late"{elseif $oldlists[oldlist].daysleft == 0} class="marker-today"{/if}>
-                                    <td>{if $userpermissions.tasks.close}<a class="butn_check"
-                                                                            href="managetasklist.php?action=open&amp;tlid={$oldlists[oldlist].ID}&amp;id={$project.ID}"
-                                                                            title="{#open#}"></a>{/if}</td>
+                            <tbody class="alternateColors" id="task_{$oldlists[oldlist].ID}">
+                                <tr>
                                     <td>
-                                        <div class="toggle-in">
-                                            <span class="acc-toggle"
-                                                  onclick="javascript:accord_donelists.activate($$('#block-donelists .accordion_toggle')[{$smarty.section.oldlist.index}]);toggleAccordeon('acc_{$lists[list].ID}',this);"></span>
+                                    {if $userpermissions.tasks.close}
+                                        <a class="butn_check"
+                                           href="managetasklist.php?action=open&amp;tlid={$oldlists[oldlist].ID}&amp;id={$project.ID}"
+                                           title="{#open#}"></a>
+                                    {/if}
+                                    </td>
+                                    <td>
                                             <a href="managetasklist.php?action=showtasklist&amp;id={$project.ID}&amp;tlid={$oldlists[oldlist].ID}">
                                                 {$oldlists[oldlist].name|truncate:30:"...":true}
                                             </a>
@@ -324,7 +321,7 @@
                                             <a class="tool_del"
                                                href="managetasklist.php?action=del&amp;tlid={$oldlists[oldlist].ID}&amp;id={$project.ID}"
                                                title="{#delete#}"></a>
-                                        {/if}
+                                            {/if}
                                     </td>
                                 </tr>
                                 <tr class="acc">
@@ -346,14 +343,7 @@
                     </div> {*dones End*}
                 </div> {*block End*}
 
-
-
-                {literal}
-                    <script type="text/javascript">
-                        var accord_donelists = new accordion('block-donelists');
-                    </script>
-                {/literal}
-
+                <div class="content-spacer"></div>
             </div> {*Tasks END*}
         </div> {*content-left-in END*}
     </div>
