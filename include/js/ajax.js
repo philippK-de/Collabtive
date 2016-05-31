@@ -4,7 +4,27 @@ closeEndcolor = '#377814';
 deleteEndcolor = '#c62424';
 //various ajax functions
 function change(script, element) {
-    var ajax = new Ajax.Updater({success: element}, script, {method: 'get', evalScripts: true});
+    var ajaxRequest = new XMLHttpRequest();
+    ajaxRequest.onload = function () {
+
+        //element to be updated
+        var targetElement = document.getElementById(element);
+        //response data
+        const responseData = ajaxRequest.responseText;
+
+        //update the target element
+        targetElement.innerHTML = responseData;
+
+        //get scripts in the transmitted HTML, and eval them
+        var javaScripts = targetElement.getElementsByTagName("script");
+        for(var i=0;i<javaScripts.length;i++)
+        {
+            eval(javaScripts[i].innerHTML);
+        }
+    };
+    ajaxRequest.open("GET", script);
+    ajaxRequest.send();
+
 }
 function changeshow(script, element, theindicator) {
 
