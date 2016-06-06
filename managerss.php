@@ -52,11 +52,11 @@ if ($action == "rss-tasks")
     $rss->syndicationURL = $loc;
 
     $project = new project();
-    $myprojects = $project->getMyProjects($user);
+    $myprojects = $project->getMyProjects($user, 1, 0, 10000);
     $tasks = array();
     foreach($myprojects as $proj)
     {
-        $task = $thetask->getAllMyProjectTasks($proj["ID"], 10000, $user);
+        $task = $thetask->getAllMyProjectTasks($proj["ID"], $user);
 
         if (!empty($task))
         {
@@ -91,7 +91,7 @@ if ($action == "rss-tasks")
 } elseif ($action == "mymsgs-rss")
 {
     $tproject = new project();
-    $myprojects = $tproject->getMyProjects($user);
+    $myprojects = $tproject->getMyProjects($user, 1, 0, 10000);
 
     $msg = new message();
     $messages = array();

@@ -2,7 +2,7 @@
 
 	<h2>{#addproject#}</h2>
 
-	<form novalidate class="main" method="post" action="admin.php?action=addpro" {literal} onsubmit="return validateCompleteForm(this);" {/literal} >
+	<form id="addprojectform" novalidate class="main" method="post" action="admin.php?action=addpro" {literal} {/literal} >
 		<fieldset>
 
 			<div class="row">
@@ -35,26 +35,12 @@
 			</div>
 
 
-			<script type="text/javascript">
-			{literal}
-			  Event.observe(window,'load', function(event) {
 
-				theCal = new calendar({/literal}{$theM},{$theY}	);
-				theCal.dayNames = ["{#monday#}","{#tuesday#}","{#wednesday#}","{#thursday#}","{#friday#}","{#saturday#}","{#sunday#}"];
-				theCal.monthNames = ["{#january#}","{#february#}","{#march#}","{#april#}","{#may#}","{#june#}","{#july#}","{#august#}","{#september#}","{#october#}","{#november#}","{#december#}"];
-				theCal.relateTo = "endP";
-				theCal.dateFormat = "{$settings.dateformat}";
-				theCal.getDatepicker("add_project");
-			{literal}
-});
-			  	{/literal}
-
-			</script>
 
 
 			<div class="row">
 				<label for="budget">{#budget#}:</label>
-				<input type="text" class="text" name="budget" id="budget" />
+				<input type="text" class="text" name="budget" id="budget" value="0" />
 			</div>
 
 			<div class = "row">
@@ -86,7 +72,7 @@
 
 			<div class="row-butn-bottom">
 				<label>&nbsp;</label>
-				<button type="submit" onfocus="this.blur();">{#addbutton#}</button>
+				<button type="submit" onfocus="this.blur();" onclick="tinyMCE.triggerSave();">{#addbutton#}</button>
 
 				{if $myprojects == "1"}
 				<button type="reset" onclick="blindtoggle('form_addmyproject');toggleClass('add_myprojects','add-active','add');toggleClass('add_butn_myprojects','butn_link_active','butn_link');toggleClass('sm_myprojects','smooth','nosmooth');return false;" onfocus="this.blur();">{#cancel#}</button>
@@ -98,5 +84,13 @@
 
 		</fieldset>
 	</form>
-
+    <script type="text/javascript">
+        {literal}
+        theCal = new calendar({/literal}{$theM},{$theY}	);
+        theCal.dayNames = ["{#monday#}","{#tuesday#}","{#wednesday#}","{#thursday#}","{#friday#}","{#saturday#}","{#sunday#}"];
+        theCal.monthNames = ["{#january#}","{#february#}","{#march#}","{#april#}","{#may#}","{#june#}","{#july#}","{#august#}","{#september#}","{#october#}","{#november#}","{#december#}"];
+        theCal.relateTo = "endP";
+        theCal.dateFormat = "{$settings.dateformat}";
+        theCal.getDatepicker("add_project");
+    </script>
 </div> {*block_in_wrapper end*}

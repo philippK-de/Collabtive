@@ -1,4 +1,27 @@
-test
+Collabtive 3.0
++ Changed constructor of SmartyPaginate.class.php to be compatible with PHP 7
++ Fixed unfiltered variables
++ Improved database checks in init.php (srichter)
++ Fixed file download link in file upload email notification
++ Performance improved in getMyProjects() SQL query by using a JOIN (srichter)
++ Fixed a bug in thumb.php where not-logged in users could load thumbnails of images they know the path to
++ Converted the filetype check int he user image upload to a whitelist to be more secure from malicious file uploads.
++ Added code for excel import
++ Code refactoring to use arrays $cleanPost, and $cleanGet
++ Converted a few remaining SQL queries to prepared statements
++ Converted loading of content on the desktop to an asyncronous method using vue.js. This speeds up the loading of the desktop page considerably.
++ Adding of projects now done asyncronously
++ Refactoring of code
++ Converted several queries into JOINs to improve performance
++ Converted loading of project tasks to asnycronous loading
++ Converted loading of timetracker to asyncronous loading
++ Converted loading of milestones to asyncronous loading
++ Converted loading of messages to asyncronous loading
++ Made adding of projects asyncronous
++ Project tasks are now arranged as a block accordion
++ Rewrote accordion code to no longer depend on prototype.js
++ Added feature to optionally adapt all lower-level deadlines upon changing a project or milestone deadline
+
 Collabtive 2.1
 + Removed accordion-related JS legacy code from desktop
 + Added default charset to all create table statements

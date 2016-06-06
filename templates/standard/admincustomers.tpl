@@ -3,7 +3,7 @@
 
 <div id="content-left">
 	<div id="content-left-in">
-		<div class="projects">
+		<div class="projects" id="adminCustomers">
 
 			<div class="infowin_left" style="display:none;" id="systemmsg">
 
@@ -39,6 +39,9 @@
 
 				{if $userpermissions.admin.add|default}
 				<div class="wintools">
+
+                    <loader block="adminCustomers" loader="loader-project3.gif"></loader>
+
 					<a class="add" href="javascript:blindtoggle('form_addcustomer');" id="add_customers" onclick="Effect.BlindUp('form_editcustomer');toggleClass(this,'add-active','add');toggleClass('add_butn_customers','butn_link_active','butn_link');toggleClass('sm_customers','smooth','nosmooth');">
 						<span>{#addcustomer#}</span>
 					</a>
@@ -48,10 +51,11 @@
 				<h2>
 					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/customers.png" alt="" />
 					{#customerlist#}
+                    <pagination view="adminCustomersView" :pages="pages" :current-page="currentPage"></pagination>
 				</h2>
 			</div>
 
-			<div class="block" id="acc-customers"> {*Add Customer*}
+			<div class="block" id="acc_customers"> {*Add Customer*}
 				<div id="form_addcustomer" class="addmenue" style="display:none;">
 					{include file="addcustomer.tpl" customers="1"}
 				</div>
@@ -79,61 +83,56 @@
 							</tr>
 						</tfoot>
 
-						{section name=cust loop=$allcust}
-
-							{*Color-Mix*}
-							{if $smarty.section.cust.index % 2 == 0}
-							<tbody class="color-a" id="proj_{$allcust[cust].ID}">
-							{else}
-							<tbody class="color-b" id="proj_{$allcust[cust].ID}">
-							{/if}
-
+						{literal}
+							<tbody v-for="customer in items" class="alternateColors" id="proj_{{*customer.ID}}">
 								<tr>
 									<td>&nbsp;</td>
 									<td>
 										<div class="toggle-in">
-											<span class="acc-toggle" onclick="javascript:accord_customers.activate($$('#acc-customers .accordion_toggle')[{$smarty.section.cust.index}]);toggleAccordeon('acc-customers',this);"></span>
-											<a href="#" onclick="javascript:accord_customers.activate($$('#acc-customers .accordion_toggle')[{$smarty.section.cust.index}]);toggleAccordeon('acc-customers',this);" title="{$allcust[cust].company}">
-												{$allcust[cust].company|truncate:30:"...":true}
+											<span id="acc_customers_toggle{{$index}}" class="acc-toggle" onclick="javascript:accord_customers.activate(document.querySelector('#acc_customers_content{{$index}}'))"></span>
+											<a href="#" title="{{*customer.company}}">
+												{{*customer.company}}
 											</a>
 										</div>
 									</td>
-									<td>{$allcust[cust].phone}</td>
-									<td>{$allcust[cust].email}</td>
+									<td>{{*customer.phone}}</td>
+									<td>{{*customer.email}}</td>
 									<td class="tools">
-
+                                        {/literal}
 										{if $userpermissions.admin.add}
-										<a id="edit_butn{$allcust[cust].ID}" class="tool_edit" href="javascript:void(0);" onclick = "change('managecompany.php?action=editform&amp;id={$allcust[cust].ID}','form_editcustomer');Effect.BlindUp('form_addcustomer');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_editcustomer');" title="{#edit#}"></a>
+										{literal}
+                                        <a id="edit_butn{{*customer.ID}}" class="tool_edit" href="javascript:void(0);" onclick = "change('managecompany.php?action=editform&amp;id={{*customer.ID}}','form_editcustomer');Effect.BlindUp('form_addcustomer');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_editcustomer');" title="{/literal}{#edit#}"></a>
 										{/if}
 
 										{if $userpermissions.admin.add}
-										<a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'proj_{$allcust[cust].ID}\',\'managecompany.php?action=del&amp;id={$allcust[cust].ID}\')');" title="{#delete#}"></a>
-										{/if}
+										{literal}
+                                        <a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'proj_{{*customer.ID}\',\'managecompany.php?action=del&amp;id={{*customer.ID}\')');" title="{#delete#}"></a>
+										{/literal}
+                                        {/if}
 									</td>
 								</tr>
-
+                                {literal}
 								<tr class="acc">
 									<td colspan="5">
-										<div class="accordion_toggle"></div>
-										<div class="accordion_content">
+										<div class="accordion_content" data-slide="{{$index}}" id="acc_customers_content{{$index}}">
 											<div class="acc-in">
 
 												<table id="admincustomers" cellpadding="0" cellspacing="0" border="0">
 													<tr>
-														<td>{#contactperson#}:</td>
-														<td>{$allcust[cust].contact}</td>
-														<td rowspan="3" style="vertical-align:top;">{#address#}:</td>
-														<td>{$allcust[cust].address}</td>
+														<td>{/literal}{#contactperson#}{literal}:</td>
+														<td>{{*customer.contact}}</td>
+														<td rowspan="3" style="vertical-align:top;">{/literal}{#address#}:{literal}</td>
+														<td>{{*customer.address}}</td>
 													</tr>
 													<tr>
-														<td>{#cellphone#}:</td>
-														<td>{$allcust[cust].mobile}</td>
-														<td>{$allcust[cust].zip} {$allcust[cust].city}</td>
+														<td>{/literal}{#cellphone#}{literal}:</td>
+														<td>{{*customer.mobile}}</td>
+														<td>{{*customer.zip}} {{*customer.city}}</td>
 													</tr>
 													<tr>
-														<td>{#url#}:</td>
-														<td><a href="{$allcust[cust].url}" target="_blank">{$allcust[cust].url}</a></td>
-														<td>{$allcust[cust].country}</td>
+														<td>{/literal}{#url#}{literal}:</td>
+														<td><a href="{{*customer.url}}" target="_blank">{{*customer.url}}</a></td>
+														<td>{{*customer.country}}</td>
 													</tr>
 												</table>
 
@@ -143,7 +142,7 @@
 								</tr>
 							</tbody>
 
-						{/section}
+						{/literal}
 
 					</table> {*Customers End*}
 
@@ -160,9 +159,8 @@
 			</div> {*block END*} {*Donecustomers End*}
 
 			{literal}
-				<script type="text/javascript">
-					var accord_customers = new accordion('acc-customers');
-				</script>
+                <script type="text/javascript" src="include/js/accordion.min.js"></script>
+                <script type="text/javascript" src="include/js/views/adminCustomersView.min.js"></script>
 			{/literal}
 
 			<div class="content-spacer"></div>

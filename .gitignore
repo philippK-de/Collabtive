@@ -11,3 +11,4 @@ templates_c/*
 files/*
 .idea/
 !files/collabtive.sdb
+*.directory

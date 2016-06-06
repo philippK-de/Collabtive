@@ -10,21 +10,12 @@ $project = (object) new project();
 $company = (object) new company();
 
 $action = getArrayVal($_GET, "action");
-$redir = getArrayVal($_GET, "redir");
-$id = getArrayVal($_GET, "id");
-$usr = getArrayVal($_GET, "user");
-$assignto = getArrayVal($_POST, "assignto");
-$name = getArrayVal($_POST, "name");
-$desc = getArrayVal($_POST, "desc");
-$end = getArrayVal($_POST, "end");
-$status = getArrayVal($_POST, "status");
-$user = getArrayVal($_POST, "user");
-$assign = getArrayVal($_POST, "assginme");
-$budget = getArrayVal($_POST, "budget");
-$customerID = getArrayVal($_POST, "customerlist");
+
+$cleanGet = cleanArray($_GET);
+$cleanPost = cleanArray($_POST);
 
 $projectid = array();
-$projectid['ID'] = $id;
+$projectid['ID'] = $cleanGet["id"];
 $template->assign("project", $projectid);
 
 $strproj = utf8_decode($langfile["project"]);
@@ -62,7 +53,7 @@ if ($action == "editform") {
         die();
     }
 
-    $thisproject = $project->getProject($id);
+    $thisproject = $project->getProject($cleanGet["id"]);
     $title = $langfile["editproject"];
 
     $template->assign("title", $title);
@@ -82,12 +73,48 @@ if ($action == "editform") {
         die();
     }
     // If no end is set, default to 0
-    if (!$end) {
-        $end = 0;
+    if (!$cleanPost["end"]) {
+        $cleanPost["end"] = 0;
     }
 
-    if ($project->edit($id, $name, $desc, $end, $budget)) {
-        header("Location: manageproject.php?action=showproject&id=$id&mode=edited");
+    $id = $cleanGet["id"];
+    $end = $cleanPost["end"];
+    $changeAllDueDates = $cleanPost["changeallduedates"];
+
+    if($changeAllDueDates == "on"){
+        $projectData = $project->getProject($id);
+        $oldEnd = $projectData["end"];
+
+        // Only update dependencies if project has an old and new due date
+        if ($end != 0 && $oldEnd) {
+            $endOffset = strtotime($end) - $oldEnd;
+
+            // Update tasks
+            $taskObj = new task();
+            $projectTasks = $taskObj->getProjectTasks($id);
+
+            $taskUpdStmt = $conn->prepare("UPDATE tasks SET `end`=? WHERE ID = ?");
+            foreach($projectTasks as $task)
+            {
+                $newEnd = $task["end"] + $endOffset;
+                $upd = $taskUpdStmt->execute(array($newEnd, $task["ID"]));
+            }
+
+            // Update milestones
+            $milestoneObj = new milestone();
+            $projectMilestones = $milestoneObj->getAllProjectMilestones($id, 10000);
+
+            $milestoneUpdStmt = $conn->prepare("UPDATE milestones SET `end`=? WHERE ID = ?");
+            foreach($projectMilestones as $milestone)
+            {
+                $newEnd = $milestone["end"] + $endOffset;
+                $upd = $milestoneUpdStmt->execute(array($newEnd, $milestone["ID"]));
+            }
+        }
+    }
+
+    if ($project->edit($id, $cleanPost["name"], $cleanPost["desc"], $end, $cleanPost["budget"])) {
+        header("Location: manageproject.php?action=showproject&id=" . $cleanGet["id"] . "&mode=edited");
     } else {
         $template->assign("editproject", 0);
     }
@@ -100,10 +127,10 @@ if ($action == "editform") {
         $template->display("error.tpl");
         die();
     }
-    if ($project->del($id)) {
-        if ($redir) {
-            $redir = $url . $redir;
-            header("Location: $redir");
+    if ($project->del($cleanGet["id"])) {
+        if (isset($cleanGet["redir"])) {
+            $cleanGet["redir"] = $url . $cleanGet["redir"];
+            header("Location: " . $cleanGet["redir"]);
         } else {
             echo "ok";
         }
@@ -119,9 +146,9 @@ if ($action == "editform") {
         $template->display("error.tpl");
         die();
     }
-    $id = $_GET['id'];
-    if ($project->open($id)) {
-        header("Location: manageproject.php?action=showproject&id=$id");
+    $cleanGet["id"] = $_GET['id'];
+    if ($project->open($cleanGet["id"])) {
+        header("Location: manageproject.php?action=showproject&id=" . $cleanGet["id"]);
     } else {
         $template->assign("openproject", 0);
     }
@@ -133,8 +160,8 @@ if ($action == "editform") {
         $template->display("error.tpl");
         die();
     }
-    $id = $_GET['id'];
-    if ($project->close($id)) {
+    $cleanGet["id"] = $_GET['id'];
+    if ($project->close($cleanGet["id"])) {
         echo "ok";
     } else {
         $template->assign("closeproject", 0);
@@ -147,28 +174,28 @@ if ($action == "editform") {
         $template->display("error.tpl");
         die();
     }
-    if ($project->assign($user, $id)) {
+    if ($project->assign($cleanPost["user"], $cleanGet["id"])) {
         if ($settings["mailnotify"]) {
-            $usr = (object) new user();
-            $user = $usr->getProfile($user);
+            $cleanGet["user"] = (object) new user();
+            $cleanPost["user"] = $cleanGet["user"]->getProfile($cleanPost["user"]);
 
-            if (!empty($user["email"])) {
-                $userlang = readLangfile($user['locale']);
+            if (!empty($cleanPost["user"]["email"])) {
+                $userlang = readLangfile($cleanPost["user"]['locale']);
 
                 $subject = $userlang["projectassignedsubject"] . ' (' . $userlang['by'] . ' ' . $username . ')';
 
                 $mailcontent = $userlang["hello"] . ",<br /><br/>" .
                 $userlang["projectassignedtext"] .
-                " <a href = \"" . $url . "manageproject.php?action=showproject&id=$id\">" . $url . "manageproject.php?action=showproject&id=$id</a>";
+                " <a href = \"" . $url . "manageproject.php?action=showproject&id=" . $cleanGet["id"]. "\">" . $url . "manageproject.php?action=showproject&id=" . $cleanGet["id"] . "</a>";
                 // send email
                 $themail = new emailer($settings);
-                $themail->send_mail($user["email"], $subject , $mailcontent);
+                $themail->send_mail($cleanPost["user"]["email"], $subject , $mailcontent);
             }
         }
-        if ($redir) {
-            $loc = $url . $redir;
+        if ($cleanGet["redir"]) {
+            $loc = $url . $cleanGet["redir"];
         } else {
-            $loc = $url . "manageuser.php?action=showproject&id=$id&mode=assigned";
+            $loc = $url . "manageuser.php?action=showproject&id=" . $cleanGet["id"] . "&mode=assigned";
         }
         header("Location: $loc");
     }
@@ -182,16 +209,16 @@ if ($action == "editform") {
     }
 
     $userobj = new user();
-    $user = $userobj->getProfile($usr);
-    $proj = $project->getProject($id);
+    $cleanPost["user"] = $userobj->getProfile($cleanGet["user"]);
+    $proj = $project->getProject($cleanGet["id"]);
     // Get members of the project
-    $members = $project->getProjectMembers($id);
+    $members = $project->getProjectMembers($cleanGet["id"]);
 
     $title = $langfile["deassignuser"];
 
     $template->assign("title", $title);
-    $template->assign("redir", $redir);
-    $template->assign("user", $user);
+    $template->assign("redir", $cleanGet["redir"]);
+    $template->assign("user", $cleanPost["user"]);
     $template->assign("project", $proj);
     $template->assign("members", $members);
     $template->display("deassignuserform.tpl");
@@ -205,13 +232,13 @@ if ($action == "editform") {
     }
 
     $task = new task();
-    $tasks = $task->getAllMyProjectTasks($id, 100, $usr);
+    $tasks = $task->getAllMyProjectTasks($cleanGet["id"], $cleanGet["user"]);
 
-    if ($id > 0 and $assignto > 0) {
+    if ($cleanGet["id"] > 0 and $cleanPost["assignto"] > 0) {
         if (!empty($tasks)) {
             foreach($tasks as $mytask) {
-                if ($task->deassign($mytask["ID"], $usr)) {
-                    $task->assign($mytask["ID"], $assignto);
+                if ($task->deassign($mytask["ID"], $cleanGet["user"])) {
+                    $task->assign($mytask["ID"], $cleanPost["assignto"]);
                 }
             }
         }
@@ -223,13 +250,13 @@ if ($action == "editform") {
         }
     }
 
-    if ($project->deassign($usr, $id)) {
-        if ($redir) {
-            $redir = $url . $redir;
-            $redir = $redir . "&mode=deassigned";
-            header("Location: $redir");
+    if ($project->deassign($cleanGet["user"], $cleanGet["id"])) {
+        if ($cleanGet["redir"]) {
+            $cleanGet["redir"] = $url . $cleanGet["redir"];
+            $cleanGet["redir"] = $cleanGet["redir"] . "&mode=deassigned";
+            header("Location: " . $cleanGet["redir"]);
         } else {
-            header("Location: manageuser.php?action=showproject&id=$id&mode=deassigned");
+            header("Location: manageuser.php?action=showproject&id=" . $cleanGet["id"] . "&mode=deassigned");
         }
     }
 } elseif ($action == "projectlogpdf") {
@@ -244,14 +271,14 @@ if ($action == "editform") {
 
     $pdf = new MYPDF("P", PDF_UNIT, "A4", true);
 
-    $tproject = $project->getProject($id);
+    $tproject = $project->getProject($cleanGet["id"]);
     $headstr = $tproject["name"] . " " . $activity;
     $pdf->setup($headstr, array(235, 234, 234));
 
     $headers = array($langfile["action"], $langfile["day"], $langfile["user"]);
 
     $datlog = array();
-    $tlog = $mylog->getProjectLog($id, 100000);
+    $tlog = $mylog->getProjectLog($cleanGet["id"], 100000);
     $tlog = $mylog->formatdate($tlog, CL_DATEFORMAT . " / H:i:s");
     if (!empty($tlog)) {
         $i = 0;
@@ -277,7 +304,7 @@ if ($action == "editform") {
         }
     }
     $pdf->table($headers, $datlog);
-    $pdf->Output("project-$id-log.pdf", "D");
+    $pdf->Output("project-" . $cleanGet["id"] . "-log.pdf", "D");
 } elseif ($action == "projectlogxls") {
     if (!$userpermissions["admin"]["add"]) {
         $template->assign("errortext", "Permission denied.");
@@ -285,12 +312,12 @@ if ($action == "editform") {
         die();
     }
 
-    $excelFile = fopen(CL_ROOT . "/files/" . CL_CONFIG . "/ics/project-$id-log.csv", "w");
+    $excelFile = fopen(CL_ROOT . "/files/" . CL_CONFIG . "/ics/project-" . $cleanGet["id"] . "-log.csv", "w");
 
     $headline = array(" ", $strtext, $straction, $strdate, $struser);
     fputcsv($excelFile, $headline);
     $datlog = array();
-    $tlog = $mylog->getProjectLog($id, 100000);
+    $tlog = $mylog->getProjectLog($cleanGet["id"], 100000);
     $tlog = $mylog->formatdate($tlog, CL_DATEFORMAT);
     if (!empty($tlog)) {
         foreach($tlog as $logged) {
@@ -326,10 +353,10 @@ if ($action == "editform") {
         }
     }
     fclose($excelFile);
-    $loc = $url . "files/" . CL_CONFIG . "/ics/project-$id-log.csv";
+    $loc = $url . "files/" . CL_CONFIG . "/ics/project-" . $cleanGet["id"] . "-log.csv";
     header("Location: $loc");
 } elseif ($action == "showproject") {
-    if (!chkproject($userid, $id)) {
+    if (!chkproject($userid, $cleanGet["id"])) {
         $errtxt = $langfile["notyourproject"];
         $noperm = $langfile["accessdenied"];
         $template->assign("errortext", "$errtxt<br>$noperm");
@@ -350,21 +377,19 @@ if ($action == "editform") {
     $template->assign("projectov", "no");
 
     $milestone = (object) new milestone();
-    $mylog = (object) new mylog();
     $task = new task();
-    $ptasks = $task->getProjectTasks($id, 1);
+    $ptasks = $task->getProjectTasks($cleanGet["id"], 1);
     $today = date("d");
 
-    $log = $mylog->getProjectLog($id);
-    $log = $mylog->formatdate($log);
 
-    $tproject = $project->getProject($id);
-    $done = $project->getProgress($id);
+
+    $tproject = $project->getProject($cleanGet["id"]);
+    $done = $project->getProgress($cleanGet["id"]);
 
     $title = $langfile['project'];
     $title = $title . " " . $tproject["name"];
     $template->assign("title", $title);
-    $template->assign("tree", $milestone->getAllProjectMilestones($id, 1000));
+    $template->assign("tree", $milestone->getAllProjectMilestones($cleanGet["id"], 1000));
 
     $template->assign("project", $tproject);
     $template->assign("done", $done);
@@ -372,11 +397,12 @@ if ($action == "editform") {
     $template->assign("ptasks", $ptasks);
     $template->assign("today", $today);
 
-    $template->assign("log", $log);
-    SmartyPaginate::assign($template);
+    $template->assign("log",array());
     $template->display("project.tpl");
-} elseif ($action == "cal") {
-    if (!chkproject($userid, $id)) {
+}
+elseif($action == "projectLog")
+{
+    if (!chkproject($userid, $cleanGet["id"])) {
         $errtxt = $langfile["notyourproject"];
         $noperm = $langfile["accessdenied"];
         $template->assign("errortext", "$errtxt<br>$noperm");
@@ -384,60 +410,29 @@ if ($action == "editform") {
         $template->display("error.tpl");
         die();
     }
-
-    $thisd = date("j");
-    $thism = date("n");
-    $thisy = date("Y");
-
-    $m = getArrayVal($_GET, "m");
-    $y = getArrayVal($_GET, "y");
-    if (!$m) {
-        $m = $thism;
+    $offset = 0;
+    if(isset($cleanGet["offset"]))
+    {
+        $offset = $cleanGet["offset"];
     }
-    if (!$y) {
-        $y = $thisy;
+    $limit = 25;
+    if(isset($cleanGet["limit"]))
+    {
+        $limit = $cleanGet["limit"];
     }
 
-    $nm = $m + 1;
-    $pm = $m - 1;
-    if ($nm > 12) {
-        $nm = 1;
-        $ny = $y + 1;
-    } else {
-        $ny = $y;
-    }
-    if ($pm < 1) {
-        $pm = 12;
-        $py = $y - 1;
-    } else {
-        $py = $y;
-    }
+    $mylog = (object) new mylog();
+    $log = $mylog->getProjectLog($cleanGet["id"], $limit, $offset);
+    $log = $mylog->formatdate($log);
 
-    $today = date("d");
+    $projectLog["items"] = $log;
+    $projectLog["count"] = count($mylog->getProjectLog($cleanGet["id"],1000000000));
 
-    $calobj = new calendar();
-    $cal = $calobj->getCal($m, $y, $id);
-    $weeks = $cal->calendar;
-    // print_r($weeks);
-    $mstring = strtolower(date('F', mktime(0, 0, 0, $m, 1, $y)));
-    $mstring = $langfile[$mstring];
-    $template->assign("mstring", $mstring);
-
-    $template->assign("m", $m);
-    $template->assign("y", $y);
-    $template->assign("thism", $thism);
-    $template->assign("thisd", $thisd);
-    $template->assign("thisy", $thisy);
-    $template->assign("nm", $nm);
-    $template->assign("pm", $pm);
-    $template->assign("ny", $ny);
-    $template->assign("py", $py);
-    $template->assign("weeks", $weeks);
-    $template->assign("id", $id);
-    $template->display("calbody_project.tpl");
-}elseif ($action == "tasklists") {
+    echo json_encode($projectLog);
+}
+elseif ($action == "tasklists") {
     $listObj = new tasklist();
-    $theLists = $listObj->getProjectTasklists($id);
+    $theLists = $listObj->getProjectTasklists($cleanGet["id"]);
     echo "<option value=\"-1\" selected=\"selected\">$langfile[chooseone]</option>";
     foreach($theLists as $list) {
         echo "<option value = \"$list[ID]\">$list[name]</option>";

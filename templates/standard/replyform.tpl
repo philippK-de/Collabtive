@@ -51,7 +51,7 @@
 			<div class="block_in_wrapper">
 				<h2>{#answer#}</h2>
 
-				<form class="main" method="post" enctype="multipart/form-data" action="managemessage.php?action=reply&amp;id={$project.ID}" {literal}onsubmit="return validateCompleteForm(this);"{/literal}>
+				<form class="main" method="post" action="managemessage.php?action=reply&amp;id={$project.ID}" {literal}onsubmit="return validateCompleteForm(this);"{/literal}>
 					<fieldset>
 
 						<div class="row">
@@ -103,7 +103,7 @@
 
 						<div class="row-butn-bottom">
 							<label>&nbsp;</label>
-							<button type="submit" onfocus="this.blur()">{$langfile.send}</button>
+							<button type="submit" onfocus="this.blur()" >{$langfile.send}</button>
 							{if $showhtml == "no"}
 								{if $reply != "a"}
 									<button type = "reset" onclick="blindtoggle('addmsg');toggleClass('add_replies','add-active','add');toggleClass('butn_reply','butn_reply_active','butn_reply');toggleClass('sm_replies','smooth','nosmooth');return false;" onfocus="this.blur()">{$langfile.cancel}</button>

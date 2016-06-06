@@ -4,39 +4,13 @@ require("./init.php");
 $action = getArrayVal($_GET, "action");
 $mode = getArrayVal($_GET, "mode");
 $id = getArrayVal($_GET, "id");
-$name = getArrayVal($_POST, "name");
-$subtitle = getArrayVal($_POST, "subtitle");
-$isadmin = getArrayVal($_POST, "isadmin");
-$email = getArrayVal($_POST, "email");
-$tel1 = getArrayVal($_POST, "tel1");
-$tel2 = getArrayVal($_POST, "tel2");
-$pass = getArrayVal($_POST, "pass");
-$company = getArrayVal($_POST, "company");
-$address1 = getArrayVal($_POST, "address1");
-$address2 = getArrayVal($_POST, "address2");
+
+//Get data from $_POST and $_GET filtered and sanitized by htmlpurifier
+$cleanGet = cleanArray($_GET);
+$cleanPost = cleanArray($_POST);
+
 $tags = "";
-$state = getArrayVal($_POST, "state");
-$country = getArrayVal($_POST, "country");
-$locale = getArrayVal($_POST, "locale");
-$desc = getArrayVal($_POST, "desc");
-$end = getArrayVal($_POST, "end");
-$assign = getArrayVal($_POST, "assignme");
-$assignto = getArrayVal($_POST, "assignto");
-$language = getArrayVal($_POST, "language");
-$timezone = getArrayVal($_POST, "timezone");
-$dateformat = getArrayVal($_POST, "dateformat");
-$templ = getArrayVal($_POST, "template");
 $redir = getArrayVal($_GET, "redir");
-$turl = getArrayVal($_POST, "web");
-$gender = getArrayVal($_POST, "gender");
-$zip = getArrayVal($_POST, "zip");
-$newpass = getArrayVal($_POST, "newpass");
-$repeatpass = getArrayVal($_POST, "repeatpass");
-$rate = getArrayVal($_POST, "rate");
-$budget = getArrayVal($_POST, "budget");
-$role = getArrayVal($_POST, "role");
-$rssuser = getArrayVal($_POST, "rssuser");
-$rsspass = getArrayVal($_POST, "rsspass");
 
 $template->assign("mode", $mode);
 // get the available languages
@@ -71,13 +45,14 @@ if ($action == "users") {
         );
     $template->assign("classes", $classes);
 
-	$roleobj = (object) new roles();
+
     // Get 25 users
     $users = $user->getAllUsers(25);
     // Get All Projects
     $projects = $project->getProjects(1, 10000);
+    $rolesObj = new roles();
+    $allRoles = $rolesObj->getAllRoles(1000);
 
-    $roles = $roleobj->getAllRoles();
     $i2 = 0;
 
     if (!empty($users)) {
@@ -106,41 +81,63 @@ if ($action == "users") {
     }
     $title = $langfile['useradministration'];
     $template->assign("title", $title);
-    SmartyPaginate::assign($template);
     $template->assign("users", $users);
+    $template->assign("roles",$allRoles);
     $template->assign("projects", $projects);
-    $template->assign("roles", $roles);
     $template->display("adminusers.tpl");
+}
+elseif($action == "adminUsers")
+{
+    $offset = 0;
+    if(isset($cleanGet["offset"]))
+    {
+        $offset = $cleanGet["offset"];
+    }
+
+    $limit = 21;
+    if(isset($cleanGet["limit"]))
+    {
+        $limit = $cleanGet["limit"];
+    }
+
+    // Get 25 users
+    $allUsers = $user->getAllUsers($limit, $offset);
+    $allUsersNum = count($user->getAllUsers(10000000));
+
+    $users["items"] = $allUsers;
+    $users["count"] = $allUsersNum;
+
+    echo json_encode($users);
 }
 //add new user
 elseif ($action == "adduser") {
     // Get the system locale and set it as the default locale for the new user
     $sysloc = $settings["locale"];
     // Add the user
-    $newid = $user->add($name, $email, $company, $pass, $sysloc, $tags, $rate);
+    $newid = $user->add($cleanPost["name"], $cleanPost["email"], $cleanPost["company"], $cleanPost["pass"], $sysloc, $tags, $cleanPost["rate"]);
     //user has been created successfully
 	if ($newid) {
 		//are there projects the userd should be assigned to
-        if (!empty($assignto)) {
+        if (!empty($cleanPost["assignto"])) {
             // Assign the user to all selected projects
-            foreach ($assignto as $proj) {
+            foreach ($cleanPost["assignto"] as $proj) {
                 $project->assign($newid, $proj);
             }
         }
         $roleobj = (object) new roles();
-        $roleobj->assign($role, $newid);
+        $roleobj->assign($cleanPost["role"], $newid);
 
         if ($settings["mailnotify"]) {
-            if (!empty($email)) {
+            if (!empty($cleanPost["email"])) {
                 $subject = $langfile["profileaddedsubject"] . ' (' . $langfile['by'] . ' ' . $username . ')';
                 $mailcontent = $langfile["hello"] . ",<br /><br/>" .
                 $langfile["profileaddedtext"] . "<br /><br />" .
-                $langfile["profileusername"] . ":&nbsp;" . "$name<br />" .
-                $langfile["profilepass"] . ":&nbsp;" . "$pass<br /><br />" .
+                $langfile["profileusername"] . ":&nbsp;" . $cleanPost["name"] . "<br />" .
+                $langfile["profilepass"] . ":&nbsp;" . $cleanPost["pass"] . "<br /><br />" .
                 "<a href = \"$url\">$url</a>";
                 // send email
                 $themail = new emailer($settings);
-                $themail->send_mail($email, $subject, $mailcontent);
+                $themail->send_mail($cleanPost["email"], $subject, $mailcontent);
             }
         }
         header("Location: admin.php?action=users&mode=added");
@@ -148,7 +145,9 @@ elseif ($action == "adduser") {
         // There has been an error, go back
         $goback = $langfile["goback"];
         $endafterstart = $langfile["endafterstart"];
-        $template->assign("errortext", "The email address $email or the username $name already exists in the user database.<br>$goback");
+        $template->assign("errortext", "The email address " . $cleanPost["email"] . " or the username " . $cleanPost["name"] . " already exists in the
+        user
+        database.<br>$goback");
         $template->display("error.tpl");
     }
 } elseif ($action == "editform") {
@@ -184,13 +183,13 @@ elseif ($action == "adduser") {
 } elseif ($action == "edituser") {
 
     $roleobj = new roles();
-    $roleobj->assign($role, $id);
+    $roleobj->assign($cleanPost["role"], $id);
     if ($id == $userid) {
-        $_SESSION['userlocale'] = $locale;
-        $_SESSION['username'] = $name;
+        $_SESSION['userlocale'] = $cleanPost["locale"];
+        $_SESSION['username'] = $cleanPost["name"];
     }
-    if (!isset($isadmin)) {
-        $isadmin = 1;
+    if (!isset($cleanPost["isadmin"])) {
+        $cleanPost["isadmin"] = 1;
     }
     // Upload of avatar
     if (!empty($_FILES['userfile']['name'])) {
@@ -201,7 +200,7 @@ elseif ($action == "adduser") {
         $error = $_FILES['userfile']['error'];
         $root = "./";
 
-        $desc = getArrayVal($_POST,"desc" );
+        $cleanPost["desc"] = getArrayVal($_POST,"desc" );
         $teilnamen = explode(".", $fname);
         $teile = count($teilnamen);
         $workteile = $teile - 1;
@@ -237,16 +236,16 @@ elseif ($action == "adduser") {
             $avatar = $fname;
         }
 
-        if ($user->edit($id, $name, "" , $email, $tel1, $tel2, $company, $zip, $gender, $turl, $address1, $address2, $state, $country, $tags, $locale, $avatar, $rate)) {
-            if (!empty($newpass) and !empty($repeatpass)) {
-                $user->admin_editpass($id, $newpass, $repeatpass);
+        if ($user->edit($id, $cleanPost["name"], "" , $cleanPost["email"], $cleanPost["tel1"], $cleanPost["tel2"], $cleanPost["company"], $cleanPost["zip"], $cleanPost["gender"], $cleanPost["web"], $cleanPost["address1"], $cleanPost["address2"], $cleanPost["state"], $cleanPost["country"], $tags, $cleanPost["locale"], $avatar, $cleanPost["rate"])) {
+            if (!empty($cleanPost["newpass"]) and !empty($cleanPost["repeatpass"])) {
+                $user->admin_editpass($id, $cleanPost["newpass"], $cleanPost["repeatpass"]);
             }
             header("Location: admin.php?action=users&mode=edited");
         }
     } else {
-        if ($user->edit($id, $name, "", $email, $tel1, $tel2, $company, $zip, $gender, $turl, $address1, $address2, $state, $country, $tags, $locale, "", $rate)) {
-            if (!empty($newpass) and !empty($repeatpass)) {
-                $user->admin_editpass($id, $newpass, $repeatpass);
+        if ($user->edit($id, $cleanPost["name"], "", $cleanPost["email"], $cleanPost["tel1"], $cleanPost["tel2"], $cleanPost["company"], $cleanPost["zip"], $cleanPost["gender"], $cleanPost["web"], $cleanPost["address1"], $cleanPost["address2"], $cleanPost["state"], $cleanPost["country"], $tags, $cleanPost["locale"], "", $cleanPost["rate"])) {
+            if (!empty($cleanPost["newpass"]) and !empty($cleanPost["repeatpass"])) {
+                $user->admin_editpass($id, $cleanPost["newpass"], $cleanPost["repeatpass"]);
             }
             header("Location: admin.php?action=users&mode=edited");
         }
@@ -255,7 +254,7 @@ elseif ($action == "adduser") {
     $usr = $user->getProfile($id);
     // Get user's projects
     $proj = new project();
-    $projects = $proj->getMyProjects($id);
+    $projects = $proj->getMyProjects($id, 1, 0, 10000);
     // Get members of each project
     if (!empty($projects)) {
         for ($i = 0; $i < count($projects); $i++) {
@@ -289,7 +288,7 @@ elseif ($action == "adduser") {
         $task = new task();
 
         foreach($proarr as $proj) {
-            $tasks = $task->getAllMyProjectTasks($proj["project"], 100, $id);
+            $tasks = $task->getAllMyProjectTasks($proj["project"], $id);
             if ($proj["project"] > 0 and $proj["user"] > 0) {
                 if (!empty($tasks)) {
                     foreach($tasks as $mytask) {
@@ -366,27 +365,52 @@ elseif ($action == "projects") {
         "users" => "users"
         );
     $title = $langfile['projectadministration'];
-    $template->assign("title", $title);
-    $template->assign("classes", $classes);
-    $opros = $project->getProjects(1, 10000);
-    $clopros = $project->getProjects(0, 10000);
+
     $i = 0;
     $users = $user->getAllUsers(1000000);
-    if (!empty($opros)) {
-        foreach($opros as $opro) {
-            $membs = $project->getProjectMembers($opro["ID"], 1000);
-            $opros[$i]['members'] = $membs;
-            $i = $i + 1;
-        }
-        $template->assign("opros", $opros);
-    }
-
     $customers = $companyObj->getAllCompanies();
 
     $template->assign("customers", $customers);
     $template->assign("users", $users);
-    $template->assign("clopros", $clopros);
+    $template->assign("title", $title);
+    $template->assign("classes", $classes);
+
     $template->display("adminprojects.tpl");
+}
+elseif($action == "adminProjects")
+{
+    $offset = 0;
+    if(isset($cleanGet["offset"]))
+    {
+        $offset = $cleanGet["offset"];
+    }
+    $limit = 20;
+    if(isset($cleanGet["limit"]))
+    {
+        $limit = $cleanGet["limit"];
+    }
+    //get one page of open projects
+    $openProjects = $project->getProjects(1, $limit, $offset);
+    if (!empty($openProjects)) {
+        foreach($openProjects as &$openProject) {
+            $projectMembers = $project->getProjectMembers($openProject["ID"], 1000);
+            $openProject["members"] = $projectMembers;
+        }
+    }
+    //get total number of open projects for pagination
+    $openProjectsNum = $project->countProjects(1);
+
+    //get all closed projects
+    $closedProjects = $project->getProjects(0, 100000000);
+
+    //assign to datastructure
+    $projects["open"] = $openProjects;
+    $projects["closed"] = $closedProjects;
+
+    $allProjects["items"] = $projects;
+    $allProjects["count"] = $openProjectsNum;
+
+    echo json_encode($allProjects);
 }
 //add new project
 elseif ($action == "addpro") {
@@ -398,15 +422,15 @@ elseif ($action == "addpro") {
         die();
     }
 
-    if (!$end) {
-        $end = 0;
+    if (!$cleanPost["end"]) {
+        $cleanPost["end"] = 0;
     }
 
 	//add the project
-    $add = $project->add($name, $desc, $end, $budget, 0);
+    $add = $project->add($cleanPost["name"], $cleanPost["desc"], $cleanPost["end"], $cleanPost["budget"], 0);
 	//project has been added
     if ($add) {
-        foreach ($assignto as $member) {
+        foreach ($cleanPost["assignto"] as $member) {
             $project->assign($member, $add);
 
             if ($settings["mailnotify"]) {
@@ -426,12 +450,14 @@ elseif ($action == "addpro") {
                 }
             }
         }
-    	if($company > 0)
+    	if($cleanPost["company"] > 0)
     	{
-    		$companyObj->assign($company, $add);
+    		$companyObj->assign($cleanPost["company"], $add);
     	}
-    	header("Location: manageproject.php?action=showproject&id=$add");
+    	//header("Location: manageproject.php?action=showproject&id=$add");
+        echo "ok";
     }
+
 } elseif ($action == "closepro") {
     if ($project->close($id)) {
         echo "ok";
@@ -470,7 +496,29 @@ elseif ($action == "addpro") {
 
     $template->assign("allcust", $allcust);
     $template->display("admincustomers.tpl");
-} elseif ($action == "addcust") {
+}
+elseif($action == "adminCustomers")
+{
+    $offset = 0;
+    if(isset($cleanGet["offset"]))
+    {
+        $offset = $cleanGet["offset"];
+    }
+    $limit = 25;
+    if(isset($cleanGet["limit"]))
+    {
+        $limit = $cleanGet["limit"];
+    }
+
+    $allCustomers = $companyObj->getAllCompanies($limit,$offset);
+    $allCustomersNum = $companyObj->countAllCompanies();
+
+    $customers["items"] = $allCustomers;
+    $customers["count"] = $allCustomersNum;
+
+    echo json_encode($customers);
+}
+elseif ($action == "addcust") {
     if (!$userpermissions["admin"]["add"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
@@ -479,8 +527,8 @@ elseif ($action == "addpro") {
         die();
     }
 
-    if (!$end) {
-        $end = 0;
+    if (!$cleanPost["end"]) {
+        $cleanPost["end"] = 0;
     }
     $data = array('company' => getArrayVal($_POST, "company"),
         'contact' => getArrayVal($_POST, "contact"),
@@ -548,18 +596,18 @@ elseif ($action == "system") {
     $template->display("editsettings.tpl");
 } elseif ($action == "editsets") {
     $theme = getArrayVal($_POST, "theme");
-    if ($theset->editSettings($name, $subtitle, $locale, $timezone, $dateformat, $templ, $theme, $rssuser, $rsspass)) {
+    if ($theset->editSettings($cleanPost["name"], $cleanPost["subtitle"], $cleanPost["locale"], $cleanPost["timezone"], $cleanPost["dateformat"], $cleanPost["template"], $theme, $cleanPost["rssuser"], $cleanPost["rsspass"])) {
         $handle = opendir($template->compile_dir);
         while (false !== ($file = readdir($handle))) {
             if ($file != "." and $file != "..") {
                 unlink(CL_ROOT . "/" . $template->compile_dir . "/" . $file);
             }
         }
-        $_SESSION["userlocale"] = $locale;
+        $_SESSION["userlocale"] = $cleanPost["locale"];
         $users = $user->getAllUsers(100000);
         foreach($users as $theuser) {
             // set the new locale for all the users
-            $user->edit($theuser["ID"], $theuser["name"], $theuser["realname"], $theuser["email"], $theuser["tel1"], $theuser["tel2"], $theuser["company"], $theuser["zip"], $theuser["gender"], $theuser["url"], $theuser["adress"], $theuser["adress2"], $theuser["state"], $theuser["country"], $theuser["tags"], $locale, "", $theuser["rate"]);
+            $user->edit($theuser["ID"], $theuser["name"], $theuser["realname"], $theuser["email"], $theuser["tel1"], $theuser["tel2"], $theuser["company"], $theuser["zip"], $theuser["gender"], $theuser["url"], $theuser["adress"], $theuser["adress2"], $theuser["state"], $theuser["country"], $theuser["tags"], $cleanPost["locale"], "", $theuser["rate"]);
         }
         header("Location: admin.php?action=system&mode=edited");
     }

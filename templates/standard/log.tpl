@@ -1,121 +1,133 @@
-<div class="headline accordion_toggle">
-	<a href="javascript:void(0);" id="loghead_toggle" class="win_none" onclick="changeElements('a.win_block','win_none');toggleBlock('loghead');"></a>
+<div class="headline">
+    <a href="javascript:void(0);" id="loghead_toggle" class="win_none" onclick=""></a>
 
-	{if $userpermissions.admin.add}
-		<div class="wintools">
-			<div class="export-main">
-				<a class="export"><span>{#export#}</span></a>
-				<div class="export-in" style="width:46px;left: -46px;"> {* at one item *}
-					<a class="pdf" href="manageproject.php?action=projectlogpdf&amp;id={$project.ID}"><span>{#pdfexport#}</span></a>
-					<a class="excel" href="manageproject.php?action=projectlogxls&amp;id={$project.ID}"><span>{#excelexport#}</span></a>
-				</div>
-			</div>
-		</div>
-	{/if}
+    <div class="wintools">
 
-	<h2>
-		<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/activity.png" alt="" />{#activity#}
-	</h2>
+        <div class="export-main">
+
+            <div class="progress" id="progressprojectLog" style="display:none;">
+                <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-neutral.gif"/>
+            </div>
+            <a class="export"><span>{#export#}</span></a>
+
+            <div class="export-in" style="width:46px;left: -46px;"> {* at one item *}
+                <a class="pdf" href="manageproject.php?action=projectlogpdf&amp;id={$project.ID}"><span>{#pdfexport#}</span></a>
+                <a class="excel" href="manageproject.php?action=projectlogxls&amp;id={$project.ID}"><span>{#excelexport#}</span></a>
+            </div>
+        </div>
+
+    </div>
+
+    <h2>
+        <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/activity.png" alt=""/>{#activity#}
+
+    </h2>
 </div>
 
 <div class="block accordion_content" id="loghead" style="overflow:hidden;">
-
-	<table class="log" cellpadding="0" cellspacing="0" border="0">
-
-		<thead>
-			<tr>
-				<th class="a"></th>
-				<th class="bc">{#action#}</th>
-				<th class="d">{#user#}</th>
-				<th class="tools"></th>
-			</tr>
-		</thead>
-
-		<tfoot>
-			<tr>
-				<td colspan="5"></td>
-			</tr>
-		</tfoot>
-
-		{section name=logitem loop=$log}
-
-			{*Color-Mix*}
-			{if $smarty.section.logitem.index % 2 == 0}
-				<tbody class="color-a" id="log_{$log[logitem].ID}">
-			{else}
-				<tbody class="color-b" id="log_{$log[logitem].ID}">
-			{/if}
-
-				<tr>
-					<td style="padding:0" class="symbols">
-						{if $log[logitem].type == "tasklist"}
-							<img style="margin:0 0 0 3px;" src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt="" />
-						{elseif $log[logitem].type == "user"}
-							<img style="margin:0 0 0 3px;" src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/userlist.png" alt="" />
-						{elseif $log[logitem].type == "task"}
-							<img style="margin:0 0 0 3px;" src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png" alt="" />
-						{elseif $log[logitem].type == "projekt"}
-
-							<img style="margin:0 0 0 3px;" src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />
-						{elseif $log[logitem].type == "milestone"}
-							<img style="margin:0 0 0 3px;" src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt="" />
-						{elseif $log[logitem].type == "message"}
-							<img style="margin:0 0 0 3px;" src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt="" />
-						{elseif $log[logitem].type == "file"}
-							<img style="margin:0 0 0 3px;" src = "./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/files.png" alt="" />
-						{elseif $log[logitem].type == "folder"}
-							<img style="margin:0 0 0 3px;" src = "./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/folder-root.png" alt="" />
-						{elseif $log[logitem].type == "track"}
-							<img style="margin:0 0 0 3px;" src = "./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/timetracker.png" alt="" />
-						{/if}
-					</td>
-					<td>
-						<div class="toggle-in">
-							<strong>{$log[logitem].name|truncate:55:"...":true}</strong><br />
-
-							<span class="info">{#was#}
-								{if $log[logitem].action == 1}
-									{#added#}
-								{elseif $log[logitem].action == 2}
-									{#edited#}
-								{elseif $log[logitem].action == 3}
-									{#deleted#}
-								{elseif $log[logitem].action == 4}
-									{#opened#}
-								{elseif $log[logitem].action == 5}
-									{#closed#}
-								{elseif $log[logitem].action == 6}
-									{#assigned#}
-								{elseif $log[logitem].action == 7}
-									{#deassigned#}
-								{/if}
-								{$log[logitem].datum}
+    <table id="projectLog" class="log" cellpadding="0" cellspacing="0" border="0"  v-cloak>
+        <thead>
+        <tr>
+            <th class="a"></th>
+            <th class="bc">{#action#}</th>
+            <th class="d">{#user#}</th>
+            <th class="tools"></th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+            <td colspan="5"></td>
+        </tr>
+        </tfoot>
+        {literal}
+        <tbody v-for="logitem in items" class="alternateColors" id="log_{{*logitem.ID}}">
+        <tr>
+            <td style="padding:0" class="symbols">
+                <img style="margin:0 0 0 3px;"
+                     src="./templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/symbols/{{logitem.type}}.png"
+                     alt="{{*logitem.type}}" title="{{*logitem.type}}"/>
+            </td>
+            <td>
+                <div class="toggle-in">
+                    <strong>{{*logitem.name | truncate '30' }}</strong><br/>
+							<span class="info">{/literal}{#was#}{literal}
+                                <span v-if="logitem.action == 1">
+                                    {/literal}
+                                    {#added#}
+                                    {literal}
+                                </span>
+								<span v-if="logitem.action == 2">
+                                    {/literal}
+                                    {#edited#}
+                                    {literal}
+                                </span>
+								<span v-if="logitem.action == 3">
+                                    {/literal}
+                                    {#deleted#}
+                                    {literal}
+                                </span>
+								<span v-if="logitem.action == 4">
+                                    {/literal}
+                                    {#opened#}
+                                    {literal}
+                                </span>
+						        <span v-if="logitem.action == 5">
+                                    {/literal}
+                                    {#closed#}
+                                    {literal}
+                                </span>
+						        <span v-if="logitem.action == 6">
+                                    {/literal}
+                                    {#assigned#}
+                                    {literal}
+                                </span>
+						        <span v-if="logitem.action == 7">
+                                    {/literal}
+                                    {#deassigned#}
+                                    {literal}
+                                </span>
+								{{*logitem.datum}}
 							</span>
-						</div>
-					</td>
-					<td>
-						<a href="manageuser.php?action=profile&amp;id={$log[logitem].user}">{$log[logitem].username|truncate:25:"...":true}</a>
-					</td>
-					<td class="tools"></td>
-				</tr>
-			</tbody>
-		{/section}
+                </div>
+            </td>
+            <td>
+                <a href="manageuser.php?action=profile&amp;id={{*logitem.user}}">{{*logitem.username | truncate '30' }}</a>
+            </td>
+            <td class="tools"></td>
+        </tr>
+        </tbody>
+        {/literal}
 
-		<tbody class="paging">
-			<tr>
-				<td></td>
-				<td colspan="2">
-					<div id="paging">
-						{paginate_prev} {paginate_middle} {paginate_next}
-					</div>
-				</td>
-				<td class="tools"></td>
-			</tr>
-		</tbody>
+        <tbody class="paging">
+        <tr>
+            <td></td>
+            <td colspan="2">
+                <div id="paging">
+                    <pagination view="projectLogView" :pages="pages" :current-page="currentPage"></pagination>
 
-	</table>
+                </div>
+            </td>
+            <td class="tools"></td>
+        </tr>
+        </tbody>
 
-	<div class="tablemenue"></div>
+    </table>
+
+    <div class="tablemenue"></div>
 </div> {*block end*}
 
 <div class="content-spacer"></div>
+{literal}
+<script type="text/javascript">
+    var projectLog = {
+        el: "projectLog",
+        itemType: "log",
+        url: "manageproject.php?action=projectLog",
+        dependencies: []
+    }
+    projectLog.url = projectLog.url + "&id=" + {/literal}{$project.ID}{literal};
+
+    pagination.itemsPerPage = 25;
+    var projectLogView = createView(projectLog);
+</script>
+{/literal}

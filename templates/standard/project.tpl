@@ -5,19 +5,15 @@
 <div id="content-left-in">
 <div class="projects">
 
-
-	<div class="infowin_left" style = "display:none;" id = "systemmsg">
-		{if $mode == "edited"}
-		<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt=""/>{#projectwasedited#}</span>
-		{elseif $mode == "timeadded"}
-		<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/timetracker.png" alt=""/>{#timetrackeradded#}</span>
-		{/if}
-	</div>
-	{literal}
-	<script type = "text/javascript">
-		systemMsg('systemmsg');
-	 </script>
-	{/literal}
+    <div class="infowin_left"
+         id="systemMessage"
+         data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png"
+         data-text-deleted = "{#projectwasdeleted#}"
+         data-text-edited = "{#projectwasedited#}"
+         data-text-added = "{#projectwasadded#}"
+         data-text-closed = "{#projectwasclosed#}"
+         style="display:none">
+    </div>
 
 <h1>{$project.name|truncate:45:"...":true}<span>/ {#overview#}</span></h1>
 
@@ -64,9 +60,9 @@
 		<div class="nosmooth" id="sm_project_customer">
 			<div id="customer" class="descript" style="display:none;">
 				<div class="content-spacer"></div>
-				
+
 				<h2>{$project.customer.company}</h2>
-				
+
 				<b>{#contactperson#}:</b> {$project.customer.contact}
 				<br />
 				<b>{#email#}:</b> <a href = "mailto:{$project.customer.email}">{$project.customer.email}</a>
@@ -99,7 +95,7 @@
 {if $tree[0][0] > 0}
 <div class="projects dtree" style="padding-bottom:2px;" >
 	<div class="headline accordion_toggle">
-		<a href="javascript:void(0);" id="treehead_toggle" class="win_block" onclick="changeElements('a.win_block','win_none');toggleBlock('treehead');"></a>
+		<a href="javascript:void(0);" id="treehead_toggle" class="win_block" onclick=""></a>
 		<h2>
 			<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{#projecttree#}
 		</h2>
@@ -107,45 +103,45 @@
 
 	<div class="block accordion_content" id="treehead" style="overflow:hidden;">
 		<div class="block_in_wrapper" style="padding-top:0px;">
-	
+
 			<script type="text/javascript">
-		
+
 				d{$project.ID} = new dTree('d{$project.ID}');
 				d{$project.ID}.config.useCookies = true;
 				d{$project.ID}.config.useSelection = false;
 				d{$project.ID}.add(0,-1,'');
-		
+
 				// Milestones
 				{section name=titem loop=$tree}
 					d{$project.ID}.add("m"+{$tree[titem].ID}, 0, "{$tree[titem].name}", "managemilestone.php?action=showmilestone&msid={$tree[titem].ID}&id={$project.ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png", "", {$tree[titem].daysleft});
-		
+
 					// Task lists
 					{section name=tlist loop=$tree[titem].tasklists}
 						d{$project.ID}.add("tl"+{$tree[titem].tasklists[tlist].ID}, "m"+{$tree[titem].tasklists[tlist].milestone}, "{$tree[titem].tasklists[tlist].name}", "managetasklist.php?action=showtasklist&id={$project.ID}&tlid={$tree[titem].tasklists[tlist].ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png");
-		
+
 						// Tasks from lists
 						{section name=ttask loop=$tree[titem].tasklists[tlist].tasks}
 							d{$project.ID}.add("ta"+{$tree[titem].tasklists[tlist].tasks[ttask].ID}, "tl"+{$tree[titem].tasklists[tlist].tasks[ttask].liste}, "{$tree[titem].tasklists[tlist].tasks[ttask].title}", "managetask.php?action=showtask&tid={$tree[titem].tasklists[tlist].tasks[ttask].ID}&id={$project.ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png", "",{$tree[titem].tasklists[tlist].tasks[ttask].daysleft});
 						{/section}
-		
+
 					// End task lists
 					{/section}
-		
+
 					// Messages
 					{section name=tmsg loop=$tree[titem].messages}
 						{if $tree[titem].messages[tmsg].milestone > 0}
 							d{$project.ID}.add("msg"+{$tree[titem].messages[tmsg].ID}, "m"+{$tree[titem].messages[tmsg].milestone}, "{$tree[titem].messages[tmsg].title}", "managemessage.php?action=showmessage&id={$project.ID}&mid={$tree[titem].messages[tmsg].ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png");
 						{/if}
-		
+
 					{/section}
 					// End Messages
 				{/section}
 				// End milestones
-		
+
 				document.write(d{$project.ID});
-		
+
 			</script>
-		
+
 			<br />
 			<form id="treecontrol" action="#">
 				<fieldset>
@@ -155,51 +151,20 @@
 					</div>
 				</fieldset>
 			</form>
-			
+
 		</div> {*block end*}
 	</div> {*block in wrapper end*}
 </div>
 {/if}
 {*Tree end*}
-
-{*Milestones*}
-<div class="miles" style="padding-bottom:2px;">
-			<div class="headline accordion_toggle" >
-				<a href="javascript:void(0);" id="milehead_toggle" class="win_none" onclick="changeElements('a.win_block','win_none');toggleBlock('milehead');"></a>
-
-				<div class="wintools">
-					<!-- <div class="export-main">
-						<a class="export"><span>{#export#}</span></a>
-						<div class="export-in"  style="width:23px;left: -23px;"> {*at one item*}
-							<a class="ical" href="managetask.php?action=ical"><span>{#icalexport#}</span></a>
-						</div>
-					</div>-->
-					<div class="progress" id="progress" style="display:none;">
-						<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-cal.gif" />
-					</div>
-				</div>
-
-
-				<h2>
-					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt="" />{#calendar#}
-				</h2>
-
-			</div>
-
-
-			<div class="block accordion_content" id="milehead" style = "overflow:hidden;">
-				<div id = "thecal" class="bigcal" style = "min-height:270px;"><p style="position:relative;left:50%;">Loading ...</div>
-			</div> {*block End*}
-</div>	{*miles End*}
-<!--<div class="content-spacer"></div>-->
-{*Milestons END*}
-
+{*Calendar*}
+{include file="calendar.tpl" context="project"}
 
 {*Timetracker*}
 {if $userpermissions.timetracker.add}
 <div class="timetrack" style = "padding-bottom:2px;">
 	<div class="headline accordion_toggle">
-		<a href="javascript:void(0);" id="trackerhead_toggle" class="win_none" onclick = "changeElements('a.win_block','win_none');toggleBlock('trackerhead');"></a>
+		<a href="javascript:void(0);" id="trackerhead_toggle" class="win_none" onclick=""></a>
 
 		<h2>
 			<a href="managetimetracker.php?action=showproject&amp;id={$project.ID}" title="{#timetracker#}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/timetracker.png" alt="" />{#timetracker#}</a>
@@ -218,7 +183,6 @@
 {/if}
 {*Timetracker End*}
 
-
 {*Activity Log*}
 <div class="neutral" style = "padding-bottom:2px;">
 	{include file="log.tpl" }
@@ -232,57 +196,28 @@
 </div>
 
 {literal}
-	<script type = "text/javascript">
-	changeshow('manageproject.php?action=cal&id={/literal}{$project.ID}{literal}','thecal','progress');
-	</script>
+    <script type="text/javascript" src="include/js/accordion.min.js"></script>
+    <script type="text/javascript" src="include/js/modal.min.js"></script>
+    <script type = "text/javascript" src="include/js/views/project.min.js"></script>
+    <script type = "text/javascript">
+        //changeshow('manageproject.php?action=cal&id={/literal}{$project.ID}{literal}','thecal','progress');
+        projectCalendar.url = projectCalendar.url + "&id=" + {/literal}{$project.ID}{literal};
+
+        var calendarView = createView(projectCalendar);
+        calendarView.$on("iloaded", function () {
+
+            console.log("calendar loaded")
+        });
+
+    </script>
 {/literal}
+
 
 </div> {*content-left-in END*}
 </div> {*content-left END*}
 
 {include file="sidebar-a.tpl" showcloud="1"}
 
-{literal}
-	<script type = "text/javascript">
-		Event.observe(window,"load",function()
-		{
-			new Effect.Morph('completed', {
-				style: 'width:{/literal}{$done}{literal}%',
-				duration: 4.0
-			});
-		});
-		var accord_dashboard = new accordion('block_dashboard');
 
-				function activateAccordeon(theAccord){
-
-					accord_dashboard.activate($$('#block_dashboard .accordion_toggle')[theAccord]);
-					setCookie("activeSlideProject",theAccord);
-				}
-				var theBlocks = $$("#block_dashboard > div .headline > a");
-				console.log(theBlocks);
-
-				//loop through the blocks and add the accordion toggle link
-				openSlide = 0;
-				for(i=0;i<theBlocks.length;i++)
-				{
-					theCook = readCookie("activeSlideProject");
-					console.log(theCook);
-					if(theCook > 0)
-					{
-						openSlide = theCook;
-					}
-
-					var theAction = theBlocks[i].getAttribute("onclick");
-					theAction += "activateAccordeon("+i+");";
-					theBlocks[i].setAttribute("onclick",theAction);
-					//console.log(theBlocks[i].getAttribute("onclick"));
-				}
-
-
-				//accordIndex.activate($$('#block_index .acc_toggle')[0]);
-				activateAccordeon(0);
-
-	</script>
-{/literal}
 
 {include file="footer.tpl"}

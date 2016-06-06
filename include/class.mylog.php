@@ -6,7 +6,7 @@
  * @name mylog
  * @version 1.0
  * @package Collabtive
- * @link http://www.o-dyn.de
+ * @link http://collabtive.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
 class mylog {
@@ -77,11 +77,12 @@ class mylog {
      * @param int $limit Number of entries to return
      * @return array $mylog Log entries
      */
-    function getProjectLog($project, $lim = 25)
+    function getProjectLog($project, $limit = 25, $offset = 0)
     {
         global $conn;
         $project = (int) $project;
-        $lim = (int) $lim;
+        $limit = (int) $limit;
+        $offset = (int) $offset;
 
         $sel = $conn->prepare("SELECT COUNT(*) FROM log WHERE project = ? ");
     	$sel->execute(array($project));
@@ -90,15 +91,8 @@ class mylog {
         if ($num > 200) {
             $num = 200;
         }
-        SmartyPaginate::connect();
-        // set items per page
-        SmartyPaginate::setLimit($lim);
-        SmartyPaginate::setTotal($num);
 
-        $start = SmartyPaginate::getCurrentIndex();
-        $lim = SmartyPaginate::getLimit();
-        $sql = "SELECT * FROM log WHERE project = ? ORDER BY ID DESC LIMIT $start,$lim";
-        $sel2 = $conn->prepare($sql);
+        $sel2 = $conn->prepare("SELECT * FROM log WHERE project = ? ORDER BY ID DESC LIMIT $limit OFFSET $offset");
     	$sel2->execute(array($project));
 
         $mylog = array();

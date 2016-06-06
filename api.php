@@ -88,7 +88,7 @@ elseif ($action == "user.profile.get") {
     $obj = (object) new task();
     $project = new project();
 
-    $myprojects = $project->getMyProjects($user);
+    $myprojects = $project->getMyProjects($user, 1, 0, 10000);
     $theData = array();
 
     foreach($myprojects as $proj) {

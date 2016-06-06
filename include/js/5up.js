@@ -3,15 +3,17 @@
  * @access public
  * @return void
  **/
+
 function finisher() {
-    blindtoggle('form_file');
-    toggleClass('addfile', 'addfile-active', 'addfile');
-    toggleClass('add_file_butn', 'butn_link_active', 'butn_link');
-    toggleClass('sm_files', 'smooth', 'nosmooth');
-    changeFileview($('fileviewtype').value, $('folderparent').value);
-    $("statusrow").setAttribute("style", "display:none;");
-    $("fileInfo1").innerHTML = "";
-    systemMsg("fileadded");
+    //get the folder currently selected for upload
+    var folder = document.getElementById("folderparent").value;
+    //update the view
+    loadFolder(projectFilesView,folder);
+    //hide the upload status
+    document.getElementById("statusrow").setAttribute("style", "display:none;");
+    //Reset the HTML files-to-be-uploaded list
+    document.getElementById("fileInfo1").innerHTML = "";
+    systemMessage.added(projectFilesView.$get("itemType"))
 }
 
 function checkCompat() {
@@ -33,6 +35,9 @@ function checkCompat() {
     }
 }
 
+/*
+* Function to return all the selected elements from a form <select> as an array
+ */
 function getSelectedOptions(oList) {
     var sdValues = [];
     for (var i = 1; i < oList.options.length; i++) {
@@ -43,6 +48,13 @@ function getSelectedOptions(oList) {
     return sdValues;
 }
 
+/*
+* Constructor for the HTML5 Upload object
+* @param theFiles Refers to the <input type = file> element
+* @param theInfoEl Refers to the Block element listing the selected files
+* @param theIndicator Refers to the element indicating progress
+* @param theTarget The URL to submit the upload to
+ */
 function html5up(theFiles, theInfoEl, theIndicator, theTarget) {
     //File upload element
     this.theFiles = document.getElementById(theFiles);
@@ -83,10 +95,14 @@ html5up.prototype.fileInfo = function () {
 
 //uploads files to the script specified in theTarget
 html5up.prototype.upload = function () {
+    document.getElementById('statusrow').style.display = "block";
+
     var theFiles = this.theFiles.files;
     var myData = new FormData();
-    var upfolder = $('upfolder').value;
-    var sendtos = getSelectedOptions($('sendto'));
+    //get the folder to upload to
+    var upfolder = document.getElementById('upfolder').value;
+    //get selected items in the list of email notify recipients
+    var sendtos = getSelectedOptions(document.getElementById('sendto'));
     myData.append("upfolder", upfolder);
 
     //Loop through the files and create an upload form object
@@ -156,8 +172,12 @@ html5up.prototype.progress = function (evt) {
 html5up.prototype.complete = function (evt) {
     //console.log(evt.target.responseText);
 
+    blindtoggle('form_file');
+    toggleClass('addfile', 'addfile-active', 'addfile');
+    toggleClass('add_file_butn', 'butn_link_active', 'butn_link');
+    toggleClass('sm_files', 'smooth', 'nosmooth');
     indicator.setAttribute("style", "width:100%");
-    window.setTimeout("finisher()", 600);
+    window.setTimeout("finisher()", 300);
     //document.title = "100%";
 }
 

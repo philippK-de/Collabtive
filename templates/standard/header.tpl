@@ -10,7 +10,7 @@
 {elseif $stage == "project" and $loggedin}
 <link rel="search" type="application/opensearchdescription+xml" title="{$project.name} {#search#}" href="manageajax.php?action=addfx-project&amp;project={$project.ID}" />
 <link rel="stylesheet" href="templates/{$settings.template}/theme/{$settings.theme}/css/dtree.css" type="text/css"  />
-<script type="text/javascript" src="include/js/dtree.js"></script>
+<script type="text/javascript" src="include/js/dtree.min.js"></script>
 {/if}
 {if $loggedin}
 <link rel="alternate" type="application/rss+xml" title="{#mymessages#}" href="managerss.php?action=mymsgs-rss&amp;user={$userid}" />
@@ -18,10 +18,13 @@
 {/if}
 {if $jsload|default == "ajax"}
 {literal}
+<script type = "text/javascript" src = "include/js/velocity.min.js" ></script>
+<script type = "text/javascript" src = "include/js/ajax.min.js" ></script>
+<script type = "text/javascript" src = "include/js/vue.min.js" ></script>
+<script type = "text/javascript" src = "include/js/viewManager.js" ></script>
+<script type = "text/javascript" src = "include/js/systemMessage.min.js" ></script>
 
-<script type = "text/javascript" src = "include/js/prototype.php" ></script>
-<script type = "text/javascript" src = "include/js/ajax.php" ></script>
-<script type = "text/javascript" src="include/js/jsval.js"></script>
+<script type = "text/javascript" src="include/js/jsval.min.js"></script>
      <script type = "text/javascript">
         function _jsVal_Language() {
             this.err_enter = "{/literal}{#wrongfield#}{literal}";
@@ -30,15 +33,7 @@
         }
 </script>
 
-<script type="text/javascript" src="include/js/mycalendar.js"></script>
-{/literal}
-{/if}
-{if $jsload2 == "chat"}
-{literal}
-<script type="text/javascript">
-window.onunload = quitchat;
-
-</script>
+<script type="text/javascript" src="include/js/mycalendar.min.js"></script>
 {/literal}
 {/if}
 
@@ -46,7 +41,7 @@ window.onunload = quitchat;
 <link rel="stylesheet" href="templates/{$settings.template}/theme/{$settings.theme}/css/lytebox.css" type="text/css"  />
 <script type="text/javascript" src="include/js/lytebox.php"></script>
 {/if}
-<link rel="stylesheet" type="text/css" href="templates/{$settings.template}/theme/{$settings.theme}/css/style_main.css"/>
+<link rel="stylesheet" type="text/css" href="templates/{$settings.template}/theme/{$settings.theme}/css/style_main.php"/>
 
 
 {if $jsload1 == "tinymce"}
@@ -81,7 +76,12 @@ tinyMCE.init({
 	force_p_newlines : false,
 	convert_newlines_to_brs : false,
 	forced_root_block : false,
-	external_image_list_url: 'manageajax.php?action=jsonfiles&id={/literal}{$project.ID}{literal}'
+	external_image_list_url: 'manageajax.php?action=jsonfiles&id={/literal}{$project.ID}{literal}' ,
+    setup: function (editor) {
+    editor.onChange.add(function () {
+        tinyMCE.triggerSave();
+    });
+}
 
 });
 
@@ -90,8 +90,6 @@ tinyMCE.init({
 {/if}
 </head>
 <body >
-
-<!--<div id = "jslog" style = "color:red;position:absolute;top:60%;right:5%;width:300px;border:1px solid;background-color:grey;"></div>-->
 
 {if $showheader != "no"}
 	{include file="header_main.tpl"}

@@ -191,8 +191,26 @@ td.message ul {
 .error_message {
 	color:red;
 }
+[v-cloak] {
+    display: none;
+}
 
+button:focus {
+    outline:0;
+}
 
+[draggable] {
+-moz-user-select: none;
+-khtml-user-select: none;
+-webkit-user-select: none;
+user-select: none;
+/* Required to make elements draggable in old WebKit */
+-khtml-user-drag: element;
+-webkit-user-drag: element;
+}
+.dragover {
+border: 1px dashed #000;
+}
 /* ## Basic-XHTML-Elements ############### END ############## */
 
 
@@ -1564,11 +1582,11 @@ body a.butn_link, body a.butn_link_active {
 }
 .message-in ul
 {
-padding-left;
+padding-left: inherit;
 
 }
 
-message-in li
+.message-in li
 {
 list-style-type: disc;
 padding: 0;
@@ -1805,6 +1823,7 @@ ul.tabs li.system-settings a {
 }
 
 #modal_container.tasksmodal, #modal_container.milesmodal {
+
 	background: <?php echo $tasksC;
 ?>;
 	color: <?php echo $tasksMain;
@@ -2305,7 +2324,7 @@ a.dir_up_butn:hover {
 	display: none;
 }
 
-.block table tr.acc td .accordion_content .acc-in {
+.block table tr.acc td .accordion_content,.accordion_content_active .acc-in {
 
 	border-top: 1px solid <?php echo $leftBlockBg;
 ?>;
@@ -2425,13 +2444,16 @@ th.tools, td.tools {
 }
 
 .projects .color-a, .projects .statuswrapper li, .projects .datepick table td, .projects .datepick tr.head td {
-	background: <?php echo $projectsColorA;
-?>;
+	background: <?php echo $projectsColorA;?>;
 }
-
+.projects tbody.alternateColors:nth-child(even) {
+background: <?php echo $projectsColorA;?>;
+}
+.projects tbody.alternateColors:nth-child(odd) {
+background: <?php echo $projectsColorB;?>;
+}
 .projects .color-b, .projects .datepick td.wrong, .projects .datepick tr.weekday td {
-	background: <?php echo $projectsColorB;
-?>;
+	background: <?php echo $projectsColorB;?>;
 }
 
 .projects .block, .projects a, .projects h1, .projects .block .tablemenue, .projects .block .addmenue, .projects p.tags-miles {
@@ -2471,10 +2493,20 @@ th.tools, td.tools {
 }
 
 .projects a.butn_link:hover, .projects button:hover, .projects form .fileinput:hover button, .projects a.butn_link_active, .projects .datepick .picker {
-	background: <?php echo $projectsC;
-?>;
+	background: <?php echo $projectsC;?>;
 }
 
+.projects button.paginationActive{
+    background: <?php echo $projectsC;?>;
+    font-size:16px;
+    color:<?php echo $projectsMain;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+.projects button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 /* TASKS COLORS #####################################*/
 
 .tasks .headline, .tasks a.butn_link, .tasks button, .tasks a.butn_link_active:hover, .tasks .inmenue a span, .tasks .moreinfo {
@@ -2495,6 +2527,15 @@ th.tools, td.tools {
 .tasks .color-a, .tasks .datepick table td, .tasks .datepick tr.head td, .tasks .statuswrapper li {
 	background: <?php echo $tasksColorA;
 ?>;
+}
+
+.tasks tbody.alternateColors:nth-child(even) {
+background: <?php echo $tasksColorA;
+?>;
+}
+
+.tasks tbody.alternateColors:nth-child(odd) {
+background: <?php echo $tasksColorB; ?>;
 }
 
 .tasks .color-b, .tasks .datepick td.wrong, .tasks .datepick tr.weekday td {
@@ -2536,6 +2577,17 @@ th.tools, td.tools {
 ?>;
 }
 
+.tasks button.paginationActive{
+    background: <?php echo $tasksC;?>;
+    font-size:16px;
+    color:<?php echo $tasksB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+.tasks button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 
 /* MESSAGES COLORS #################################*/
 
@@ -2558,7 +2610,12 @@ th.tools, td.tools {
 	background: <?php echo $msgsColorA;
 ?>;
 }
-
+.msgs tbody.alternateColors:nth-child(even) {
+background: url(../images/tables-msgs-bg-a.png);
+}
+.msgs tbody.alternateColors:nth-child(odd) {
+background: url(../images/tables-msgs-bg-b.png);
+}
 .msgs .color-b {
 	background: <?php echo $msgsColorB;
 ?>;
@@ -2598,6 +2655,17 @@ th.tools, td.tools {
 ?>;
 }
 
+.msgs button.paginationActive{
+    background: <?php echo $msgsC;?>;
+    font-size:16px;
+    color:<?php echo $msgsB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+.msgs button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 /* USER COLORS #################################*/
 
 .user .headline, .user a.butn_link, .user button, .user a.butn_link_active:hover, .user .inmenue a span, .user .moreinfo {
@@ -2618,6 +2686,14 @@ th.tools, td.tools {
 .user .color-a, .user .staterow {
 	background: <?php echo $userColorA;
 ?>;
+}
+
+.user tbody.alternateColors:nth-child(even) {
+background: <?php echo $userColorA;?>;
+}
+
+.user tbody.alternateColors:nth-child(odd) {
+background: <?php echo $userColorB;?>;
 }
 
 .user .color-b, .user .content_in_wrapper {
@@ -2659,6 +2735,17 @@ th.tools, td.tools {
 ?>;
 }
 
+.user button.paginationActive{
+    background: <?php echo $userC;?>;
+    font-size:16px;
+    color:<?php echo $userB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+.user button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 /* USER PROFILE */
 
 .user .export-main {
@@ -2705,6 +2792,12 @@ th.tools, td.tools {
 	background: <?php echo $neutralColorB;
 ?>;
 }
+.neutral tbody.alternateColors:nth-child(even) {
+background: <?php echo $neutralColorA;?>;
+}
+.neutral tbody.alternateColors:nth-child(odd) {
+background: <?php echo $neutralColorB;?>;
+}
 
 .neutral .color-a ul.files table, .neutral .color-b ul.files table {
 	background: <?php echo $neutralColorC;
@@ -2739,6 +2832,17 @@ th.tools, td.tools {
 	background: <?php echo $neutralC;
 ?>;
 }
+.neutral button.paginationActive{
+    background: <?php echo $neutralC;?>;
+    font-size:16px;
+    color:<?php echo $neutralB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+.neutral button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 
 /* TIMETRACKING COLORS #################################*/
 
@@ -2765,6 +2869,13 @@ th.tools, td.tools {
 .timetrack .color-b, .timetrack .datepick td.wrong, .timetrack .datepick tr.weekday td {
 	background: <?php echo $timetrackColorB;
 ?>;
+}
+.timetrack tbody.alternateColors:nth-child(even) {
+background: <?php echo $timetrackColorA;
+?>;
+}
+.timetrack tbody.alternateColors:nth-child(odd) {
+background: <?php echo $timetrackColorB;?>
 }
 
 .timetrack .color-a ul.files table, .timetrack .color-b ul.files table {
@@ -2805,6 +2916,18 @@ th.tools, td.tools {
 	background: <?php echo $timetrackC;
 ?>;
 }
+.timetrack button.paginationActive{
+    background: <?php echo $timetrackC;?>;
+    font-size:16px;
+    color:<?php echo $timetrackB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+
+.timetrack button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 
 /* MILESTONES COLORS #################################*/
 
@@ -2837,7 +2960,12 @@ th.tools, td.tools {
 	background: <?php echo $milesColorC;
 ?>;
 }
-
+.miles tbody.alternateColors:nth-child(even) {
+background: <?php echo $milesColorA;?>;
+}
+.miles tbody.alternateColors:nth-child(odd) {
+background: <?php echo $milesColorB;?>;
+}
 .miles, .miles a, .miles h1, .miles .block .tablemenue, .miles .block .addmenue, .miles p.tags-miles, .bigcal tbody.content td {
 	border-color: <?php echo $milesMain;
 ?>;
@@ -2872,6 +3000,17 @@ th.tools, td.tools {
 ?>;
 }
 
+.miles button.paginationActive{
+    background: <?php echo $milesC;?>;
+    font-size:16px;
+    color:<?php echo $milesB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+.miles button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 /* FILES COLORS #####################################*/
 
 .files .headline, .files a.butn_link, .files button, .files a.butn_link_active:hover, .files .inmenue a span, .files .moreinfo {
@@ -2934,6 +3073,17 @@ th.tools, td.tools {
 ?>;
 }
 
+.files button.paginationActive{
+    background: <?php echo $filesC;?>;
+    font-size:16px;
+    color:<?php echo $filesB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+.files button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 /* ## ACCORDION ################ Toggle ############### */
 
 span.acc-toggle, span.acc-toggle-active, .second-thead span.acc-toggle, .second-thead span.acc-toggle-active {
