@@ -5,24 +5,17 @@
 <div id="content-left-in">
 <div class="user">
 
-	<div class="infowin_left" style = "display:none;" id = "systemmsg">
-		{if $mode == "added"}
-		<span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-male.png" alt=""/>{#userwasadded#}</span>
-		{elseif $mode == "edited"}
-		<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-male.png" alt=""/>{#userwasedited#}</span>
-		{elseif $mode == "deleted"}
-		<span class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-male.png" alt=""/>{#userwasdeleted#}</span>
-		{elseif $mode == "assigned"}
-		<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-male.png" alt=""/>{#userwasassigned#}</span>
-		{elseif $mode == "deassigned"}
-		<span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user-icon-male.png" alt=""/>{#userwasdeassigned#}</span>
-		{/if}
-	</div>
-	{literal}
-	<script type = "text/javascript">
-	systemMsg('systemmsg');
-	 </script>
-	{/literal}
+    <!-- System messages -->
+    <div class="infowin_left"
+         id="userSystemMessage"
+         data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png"
+         data-text-added="{#userwasadded#}"
+         data-text-edited="{#userwasedited#}"
+         data-text-deleted="{#userwasdeleted#}"
+         data-text-assigned="{#userwasassigned#}"
+         data-text-deassigned="{#userwasdeassigned#}"
+         style="display:none">
+    </div>
 
 <h1>{$projectname|truncate:45:"...":true}<span>/ {#members#}</span></h1>
 
@@ -40,7 +33,6 @@
 				</h2>
 
 			</div>
-
 
 			<div id="block_members" class="blockwrapper">
 				{*Add User*}
@@ -61,8 +53,6 @@
 					</div>
 					<div class="content_in_wrapper">
 					<div class="content_in_wrapper_in">
-
-
 						<div class="inwrapper">
 							<ul>
 							{section name=member loop=$members}

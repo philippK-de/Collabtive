@@ -106,22 +106,22 @@
 
 			<script type="text/javascript">
 
-				d{$project.ID} = new dTree('d{$project.ID}');
-				d{$project.ID}.config.useCookies = true;
-				d{$project.ID}.config.useSelection = false;
-				d{$project.ID}.add(0,-1,'');
+				var projectTree = new dTree('projectTree');
+				projectTree.config.useCookies = true;
+				projectTree.config.useSelection = false;
+				projectTree.add(0,-1,'');
 
 				// Milestones
 				{section name=titem loop=$tree}
-					d{$project.ID}.add("m"+{$tree[titem].ID}, 0, "{$tree[titem].name}", "managemilestone.php?action=showmilestone&msid={$tree[titem].ID}&id={$project.ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png", "", {$tree[titem].daysleft});
+					projectTree.add("m"+{$tree[titem].ID}, 0, "{$tree[titem].name}", "managemilestone.php?action=showmilestone&msid={$tree[titem].ID}&id={$project.ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png", "", {$tree[titem].daysleft});
 
 					// Task lists
 					{section name=tlist loop=$tree[titem].tasklists}
-						d{$project.ID}.add("tl"+{$tree[titem].tasklists[tlist].ID}, "m"+{$tree[titem].tasklists[tlist].milestone}, "{$tree[titem].tasklists[tlist].name}", "managetasklist.php?action=showtasklist&id={$project.ID}&tlid={$tree[titem].tasklists[tlist].ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png");
+						projectTree.add("tl"+{$tree[titem].tasklists[tlist].ID}, "m"+{$tree[titem].tasklists[tlist].milestone}, "{$tree[titem].tasklists[tlist].name}", "managetasklist.php?action=showtasklist&id={$project.ID}&tlid={$tree[titem].tasklists[tlist].ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png");
 
 						// Tasks from lists
 						{section name=ttask loop=$tree[titem].tasklists[tlist].tasks}
-							d{$project.ID}.add("ta"+{$tree[titem].tasklists[tlist].tasks[ttask].ID}, "tl"+{$tree[titem].tasklists[tlist].tasks[ttask].liste}, "{$tree[titem].tasklists[tlist].tasks[ttask].title}", "managetask.php?action=showtask&tid={$tree[titem].tasklists[tlist].tasks[ttask].ID}&id={$project.ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png", "",{$tree[titem].tasklists[tlist].tasks[ttask].daysleft});
+							projectTree.add("ta"+{$tree[titem].tasklists[tlist].tasks[ttask].ID}, "tl"+{$tree[titem].tasklists[tlist].tasks[ttask].liste}, "{$tree[titem].tasklists[tlist].tasks[ttask].title}", "managetask.php?action=showtask&tid={$tree[titem].tasklists[tlist].tasks[ttask].ID}&id={$project.ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png", "",{$tree[titem].tasklists[tlist].tasks[ttask].daysleft});
 						{/section}
 
 					// End task lists
@@ -130,7 +130,7 @@
 					// Messages
 					{section name=tmsg loop=$tree[titem].messages}
 						{if $tree[titem].messages[tmsg].milestone > 0}
-							d{$project.ID}.add("msg"+{$tree[titem].messages[tmsg].ID}, "m"+{$tree[titem].messages[tmsg].milestone}, "{$tree[titem].messages[tmsg].title}", "managemessage.php?action=showmessage&id={$project.ID}&mid={$tree[titem].messages[tmsg].ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png");
+							projectTree.add("msg"+{$tree[titem].messages[tmsg].ID}, "m"+{$tree[titem].messages[tmsg].milestone}, "{$tree[titem].messages[tmsg].title}", "managemessage.php?action=showmessage&id={$project.ID}&mid={$tree[titem].messages[tmsg].ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png");
 						{/if}
 
 					{/section}
@@ -138,16 +138,15 @@
 				{/section}
 				// End milestones
 
-				document.write(d{$project.ID});
-
-			</script>
+				document.write(projectTree);
+            </script>
 
 			<br />
 			<form id="treecontrol" action="#">
 				<fieldset>
 					<div class="row-butn-bottom">
-						<button type="reset" id="openall" onclick="d{$project.ID}.openAll();">{#openall#}</button>
-						<button type="reset" id="closeall" onclick="d{$project.ID}.closeAll();">{#closeall#}</button>
+						<button type="reset" id="openall" onclick="projectTree.openAll();">{#openall#}</button>
+						<button type="reset" id="closeall" onclick="projectTree.closeAll();">{#closeall#}</button>
 					</div>
 				</fieldset>
 			</form>
@@ -205,8 +204,23 @@
 
         var calendarView = createView(projectCalendar);
         calendarView.$on("iloaded", function () {
+            Vue.nextTick(function () {
+                var theBlocks = document.querySelectorAll("#block_dashboard > div .headline > a");
 
-            console.log("calendar loaded")
+                //loop through the blocks and add the accordion toggle link
+                var openSlide = 0;
+                for (i = 0; i < theBlocks.length; i++) {
+                    var theCook = readCookie("activeSlideProject");
+                    if (theCook > 0) {
+                        openSlide = theCook;
+                    }
+
+                    var theAction = theBlocks[i].getAttribute("onclick");
+                    theAction += "activateAccordeon(" + i + ");";
+                    theBlocks[i].setAttribute("onclick", theAction);
+                }
+                activateAccordeon(0);
+            });
         });
 
     </script>

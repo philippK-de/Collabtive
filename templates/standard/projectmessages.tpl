@@ -15,7 +15,6 @@
                  style="display:none">
             </div>
 
-
             <h1>{$projectname|truncate:45:"...":true}<span>/ {#messages#}</span></h1>
 
             <div class="headline">
@@ -48,9 +47,7 @@
                 <div id="addmsg" class="addmenue" style="display:none;">
                     {include file="addmessageform.tpl" }
                 </div>
-
                 <div class="nosmooth" id="sm_msgs">
-
                     <table id="acc_msgs" cellpadding="0" cellspacing="0" border="0">
                         <thead>
                         <tr>

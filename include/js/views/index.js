@@ -46,13 +46,6 @@ var calendarView = createView(desktopCalendar);
 //setup dependenciens
 projectsView.$set("dependencies", [tasksView, msgsView]);
 
-
-calendarView.$on("iloaded", function () {
-    Vue.nextTick(function () {
-        console.log("next tick");
-    })
-});
-
 //get the form to be submitted
 var addProjectForm = document.getElementById("addprojectform");
 //assign the view to be updated after submitting to the formView variable
@@ -60,10 +53,6 @@ var formView = projectsView;
 //add an event listener capaturing the submit event of the form
 //add submitForm() as the handler for the event, and bind the form view to it
 addProjectForm.addEventListener("submit", submitForm.bind(formView));
-
-
-//load calendar
-//changeshow('manageajax.php?action=newcal', 'thecal', 'progress');
 
 //initialize accordeons
 try {
@@ -75,23 +64,11 @@ try {
 catch (e) {
 }
 
-
-//create blocks accordeon
-var accordIndex = new accordion2('block_index', {
-    classNames: {
-        toggle: 'win_none',
-        toggleActive: 'win_block',
-        content: 'blockaccordion_content'
-    }
-});
-
-
 /**
  *
  * This will activate the accordion with the supplied index
  *
  */
-// /loop through the blocks and add the accordion toggle link
 openSlide = 0;
 blockIds = [];
 function activateAccordeon(theAccord) {
@@ -100,35 +77,58 @@ function activateAccordeon(theAccord) {
     //set a cookie to save the accordeon last clicked
     setCookie("activeSlideIndex", theAccord);
 }
-//get the blocks
-//var theBlocks = $$("#block_index > div .headline > a");
-var theBlocks = document.querySelectorAll("#block_index > div .headline > a");
-//console.log(theBlocks);
 
 
-for (i = 0; i < theBlocks.length; i++) {
-    //get the id of the current html element
-    var theId = theBlocks[i].getAttribute("id");
-
-    blockIds.push(theId);
-    //get the index of the last opened block
-    theCook = readCookie("activeSlideIndex");
-
-    //console.log(theCook);
-    if (theCook > 0) {
-        openSlide = theCook;
+//initialize blocks accordeon
+//this creates the object on which methods are called later
+var accordIndex = new accordion2('block_index', {
+    classNames: {
+        toggle: 'win_none',
+        toggleActive: 'win_block',
+        content: 'blockaccordion_content'
     }
+});
+/*
+ * Pattern for running stuff after a viee had loaded
+ *
+ projectsView.$on("iloaded", function () {
+ Vue.nextTick(function () {});
+ });
 
-    //get the onclick action of the current block
-    var theAction = theBlocks[i].getAttribute("onclick");
-    //add a call to activate accordeon
-    theAction += "activateAccordeon(" + i + ");";
-    theBlocks[i].setAttribute("onclick", theAction);
-    //console.log(theBlocks[i].getAttribute("onclick"));
-}
+ */
+
+projectsView.$on("iloaded", function () {
+    Vue.nextTick(function () {
+        console.log("next tick");
+        //get the blocks
+        var theBlocks = document.querySelectorAll("#block_index > div .headline > a");
+
+        //loop through the blocks and add the accordion toggle link to the onclick handler of toggles
+        for (i = 0; i < theBlocks.length; i++) {
+            //get the id of the current html element
+            var theId = theBlocks[i].getAttribute("id");
+            blockIds.push(theId);
+
+            //get the index of the last opened block
+            theCook = readCookie("activeSlideIndex");
+
+            //console.log(theCook);
+            if (theCook > 0) {
+                openSlide = theCook;
+            }
+
+            //get the onclick action of the current block
+            var theAction = theBlocks[i].getAttribute("onclick");
+            //add a call to activate accordeon
+            theAction += "activateAccordeon(" + i + ");";
+            theBlocks[i].setAttribute("onclick", theAction);
+            //console.log(theBlocks[i].getAttribute("onclick"));
+        }
+        //activateAccordeon(openSlide);
+        activateAccordeon(0);
+
+    });
+});
 
 
-//accordIndex.activate($$('#block_index .acc_toggle')[0]);
-//activateAccordeon(openSlide);
-activateAccordeon(0);
 
