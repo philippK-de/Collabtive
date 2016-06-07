@@ -45,7 +45,7 @@
     upcomingProjectMilestones.url = upcomingProjectMilestones.url + "&id=" + {/literal}{$project.ID}{literal};
     var upcomingProjectMilestonesView = createView(upcomingProjectMilestones);
 
-    projectMilestonesView.$on("iloaded",function(){
+    projectMilestonesView.$once("iloaded",function(){
         Vue.nextTick(function(){
             // /loop through the blocks and add the accordion toggle link
             var theBlocks = document.querySelectorAll("#projectMilestones > div[class~='headline'] > a");
@@ -53,18 +53,11 @@
             //loop through the blocks and add the accordion toggle link
             for(i=0;i<theBlocks.length;i++)
             {
-                theCook = readCookie("activeSlideProject");
-                if(theCook > 0)
-                {
-                    openSlide = theCook;
-                }
-
                 var theAction = theBlocks[i].getAttribute("onclick");
                 theAction += "activateAccordeon("+i+");";
                 theBlocks[i].setAttribute("onclick",theAction);
                 //console.log(theBlocks[i].getAttribute("onclick"));
             }
-
             activateAccordeon(1);
         });
     });

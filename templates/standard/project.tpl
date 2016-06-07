@@ -103,14 +103,11 @@
 
 	<div class="block accordion_content" id="treehead" style="overflow:hidden;">
 		<div class="block_in_wrapper" style="padding-top:0px;">
-
 			<script type="text/javascript">
-
 				var projectTree = new dTree('projectTree');
 				projectTree.config.useCookies = true;
 				projectTree.config.useSelection = false;
 				projectTree.add(0,-1,'');
-
 				// Milestones
 				{section name=titem loop=$tree}
 					projectTree.add("m"+{$tree[titem].ID}, 0, "{$tree[titem].name}", "managemilestone.php?action=showmilestone&msid={$tree[titem].ID}&id={$project.ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png", "", {$tree[titem].daysleft});
@@ -126,18 +123,15 @@
 
 					// End task lists
 					{/section}
-
 					// Messages
 					{section name=tmsg loop=$tree[titem].messages}
 						{if $tree[titem].messages[tmsg].milestone > 0}
 							projectTree.add("msg"+{$tree[titem].messages[tmsg].ID}, "m"+{$tree[titem].messages[tmsg].milestone}, "{$tree[titem].messages[tmsg].title}", "managemessage.php?action=showmessage&id={$project.ID}&mid={$tree[titem].messages[tmsg].ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png");
 						{/if}
-
 					{/section}
 					// End Messages
 				{/section}
 				// End milestones
-
 				document.write(projectTree);
             </script>
 
@@ -203,7 +197,7 @@
         projectCalendar.url = projectCalendar.url + "&id=" + {/literal}{$project.ID}{literal};
 
         var calendarView = createView(projectCalendar);
-        calendarView.$on("iloaded", function () {
+        calendarView.$once("iloaded", function () {
             Vue.nextTick(function () {
                 var theBlocks = document.querySelectorAll("#block_dashboard > div .headline > a");
 

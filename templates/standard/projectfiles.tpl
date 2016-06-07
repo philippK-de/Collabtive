@@ -126,6 +126,11 @@
 
     var projectFilesView = createView(projectFiles);
 
+    projectFilesView.$on("iloaded", function(){
+        Vue.nextTick(function(){
+            new LyteBox();
+        });
+    });
 </script>
 
 {/literal}

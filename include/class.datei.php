@@ -449,11 +449,11 @@ class datei
             }
             // Determine if it is an image or text file or some other kind of file (required for lightbox)
             if (stristr($file['type'], "image")) {
-                $file['imgfile'] = 1;
+                $file['imgfile'] = true;
             } elseif (stristr($file['type'], "text")) {
-                $file['imgfile'] = 0;
+                $file['imgfile'] = false;
             } else {
-                $file['imgfile'] = 0;
+                $file['imgfile'] = false;
             }
 
             $file["size"] = filesize(realpath($file["datei"])) / 1024;

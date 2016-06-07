@@ -97,7 +97,7 @@ var accordIndex = new accordion2('block_index', {
 
  */
 
-projectsView.$on("iloaded", function () {
+projectsView.$once("iloaded", function () {
     Vue.nextTick(function () {
         console.log("next tick");
         //get the blocks

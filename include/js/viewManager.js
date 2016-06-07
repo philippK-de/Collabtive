@@ -59,7 +59,7 @@ function createView(myEl) {
         const pages = pagination.listPages(responseData.count);
         myModel.pages = pages;
         //emit an event that indicates the view has finished loading data
-        vueview.$dispatch("iloaded");
+        vueview.$emit("iloaded");
     };
 
     //Onloadend handler fires once after onload has been dispatched
@@ -117,6 +117,7 @@ function updateView(view, updateDependencies) {
         Vue.set(view, "items", responseData.items);
         Vue.set(view, "pages", pagination.listPages(responseData.count));
 
+        view.$emit("iloaded");
         //update dependencies
         if (updateDependencies == true) {
             //get the array of dependendant views

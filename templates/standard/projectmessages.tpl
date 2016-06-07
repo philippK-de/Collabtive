@@ -207,7 +207,12 @@
     pagination.itemsPerPage = 15;
     projectMessages.url = projectMessages.url + "&id=" + {/literal}{$project.ID}{literal};
     projectMessagesView = createView(projectMessages);
-    var accord_messages = new accordion2('block_msgs');
+    projectMessagesView.$once("iloaded",function(){
+        Vue.nextTick(function(){
+            accord_messages = new accordion2('block_msgs');
+        });
+    });
+
 </script>
 {/literal}
 

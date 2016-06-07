@@ -39,7 +39,7 @@
 
 {if $jsload3 == "lightbox"}
 <link rel="stylesheet" href="templates/{$settings.template}/theme/{$settings.theme}/css/lytebox.css" type="text/css"  />
-<script type="text/javascript" src="include/js/lytebox.php"></script>
+<script type="text/javascript" src="include/js/lytebox.js"></script>
 {/if}
 <link rel="stylesheet" type="text/css" href="templates/{$settings.template}/theme/{$settings.theme}/css/style_main.php"/>
 
