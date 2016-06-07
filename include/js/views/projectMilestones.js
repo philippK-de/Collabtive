@@ -30,32 +30,17 @@ var accordIndex = new accordion2('projectMilestones', {
     }
 });
 
-// /loop through the blocks and add the accordion toggle link
+var accord_miles_late = new accordion2('lateMilestones');
+var accord_miles_new = new accordion2('currentMilestones');
+var accord_miles_upcoming = new accordion2('upcomingMilestones');
+
+
 openSlide = 0;
-blockIds = [];
+var blockIds = [];
 function activateAccordeon(theAccord) {
     //activate the block in the block accordion
     accordIndex.toggle(document.querySelectorAll('#projectMilestones .blockaccordion_content')[theAccord]);
     //set a cookie to save the accordeon last clicked
     setCookie("activeSlideIndex", theAccord);
 }
-//var theBlocks = $$("#block_dashboard > div .headline > a");
-var theBlocks = document.querySelectorAll("#projectMilestones > div[class~='headline'] > a");
 
-//loop through the blocks and add the accordion toggle link
-openSlide = 0;
-for(i=0;i<theBlocks.length;i++)
-{
-    theCook = readCookie("activeSlideProject");
-    if(theCook > 0)
-    {
-        openSlide = theCook;
-    }
-
-    var theAction = theBlocks[i].getAttribute("onclick");
-    theAction += "activateAccordeon("+i+");";
-    theBlocks[i].setAttribute("onclick",theAction);
-    //console.log(theBlocks[i].getAttribute("onclick"));
-}
-
-activateAccordeon(1);

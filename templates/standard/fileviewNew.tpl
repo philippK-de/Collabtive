@@ -96,11 +96,6 @@
 <div id="parentfolder" style="display:none;">{$folderid}</div>
 
 <script type="text/javascript">
-    {literal}
-    parentFolder = $("parentfolder").innerHTML;
-
-    {/literal}
-
 
     new LyteBox();
 </script>

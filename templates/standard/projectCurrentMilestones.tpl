@@ -1,5 +1,5 @@
 {*Milestones*}
-<div class="headline" id="currentMilestonesBlock">
+<div class="headline" id="currentMilestonesBlock" >
     <a href="javascript:void(0);" id="currentMilestonesHead_toggle" class="win_block" onclick=""></a>
 
     <div class="wintools">

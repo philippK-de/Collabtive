@@ -3,7 +3,7 @@
 
 <div id="content-left">
     <div id="content-left-in">
-        <div class="files" id="projectFiles">
+        <div class="files" id="projectFiles" v-cloak>
             <!-- project text -->
             <div class="infowin_left"
                  id="fileSystemMessage"

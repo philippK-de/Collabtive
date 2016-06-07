@@ -17,11 +17,11 @@
             <h1>{$projectname|truncate:45:"...":true}<span>/ {#milestones#}</span></h1>
 
             <div id="projectMilestones">
-            {include file="projectLateMilestones.tpl"}
-            <br />
-            {include file="projectCurrentMilestones.tpl"}
-            <br />
-            {include file = "projectUpcomingMilestones.tpl"}
+                {include file="projectLateMilestones.tpl"}
+                <br />
+                {include file="projectCurrentMilestones.tpl"}
+                <br />
+                {include file = "projectUpcomingMilestones.tpl"}
             </div>
 
         <!--block End-->
@@ -45,9 +45,29 @@
     upcomingProjectMilestones.url = upcomingProjectMilestones.url + "&id=" + {/literal}{$project.ID}{literal};
     var upcomingProjectMilestonesView = createView(upcomingProjectMilestones);
 
-    var accord_miles_late = new accordion2('lateMilestones');
-    var accord_miles_new = new accordion2('currentMilestones');
-    var accord_miles_upcoming = new accordion2('upcomingMilestones');
+    projectMilestonesView.$on("iloaded",function(){
+        Vue.nextTick(function(){
+            // /loop through the blocks and add the accordion toggle link
+            var theBlocks = document.querySelectorAll("#projectMilestones > div[class~='headline'] > a");
+
+            //loop through the blocks and add the accordion toggle link
+            for(i=0;i<theBlocks.length;i++)
+            {
+                theCook = readCookie("activeSlideProject");
+                if(theCook > 0)
+                {
+                    openSlide = theCook;
+                }
+
+                var theAction = theBlocks[i].getAttribute("onclick");
+                theAction += "activateAccordeon("+i+");";
+                theBlocks[i].setAttribute("onclick",theAction);
+                //console.log(theBlocks[i].getAttribute("onclick"));
+            }
+
+            activateAccordeon(1);
+        });
+    });
 </script>
 {/literal}
 {include file="sidebar-a.tpl"}
