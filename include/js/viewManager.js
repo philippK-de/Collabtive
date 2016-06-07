@@ -270,11 +270,9 @@ function confirmDelete(message, element, url, view) {
  * Function to delete an element from the datamodel / db as well as the DOM
  */
 function deleteElement(theElement, theUrl, theView) {
-    var ajaxRequest = new XMLHttpRequest();
-
-    ajaxRequest.onload = function () {
+    var ajax = new ajaxRequest(theUrl, "", function () {
         //check if server returns OK response code
-        if (ajaxRequest.responseText == "ok") {
+        if (ajax.request.responseText == "ok") {
             //remove the DOM element animated
             removeRow(theElement, deleteEndcolor);
             //if a view is passed in, update the view and emit a system message
@@ -284,16 +282,14 @@ function deleteElement(theElement, theUrl, theView) {
             }
             var result = true;
         }
-    };
-    ajaxRequest.open("GET", theUrl);
-    ajaxRequest.send();
+    });
+
+    ajax.sendRequest();
 }
 function closeElement(theElement, theUrl, theView) {
-    var ajaxRequest = new XMLHttpRequest();
-
-    ajaxRequest.onload = function () {
+    var ajax = new ajaxRequest(theUrl, "", function () {
         //check if server returns OK response code
-        if (ajaxRequest.responseText == "ok") {
+        if (ajax.request.responseText == "ok") {
             //remove the DOM element animated
             removeRow(theElement, closeEndcolor);
             //if a view is passed in, update the view and emit a system message
@@ -303,14 +299,13 @@ function closeElement(theElement, theUrl, theView) {
             }
             var result = true;
         }
-    };
-    ajaxRequest.open("GET", theUrl);
-    ajaxRequest.send();
+    });
 
+    ajax.sendRequest();
 }
 function removeRow(row, color) {
     var rowElement = document.getElementById(row);
-    if(rowElement != null) {
+    if (rowElement != null) {
         rowElement.style.backgroundColor = "#FFFFFF";
         /*
          * Velocity animation

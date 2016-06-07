@@ -5,6 +5,57 @@ deleteEndcolor = '#c62424';
 //various ajax functions
 
 /*
+ * Object to send and receive/handle ajax requests
+ * @param string url url the to be requested
+ * @param string indicator DOM ID of the progress indicator element
+ * @param function loadHandler Function to handle the onload() event of the xmlhttprequest
+ */
+function ajaxRequest(url, indicator, loadHandler) {
+    //Default update dependencies to true
+    if (indicator === undefined) {
+        indicator = "";
+    }
+
+    this.request = new XMLHttpRequest();
+    this.url = url;
+    this.indicator = indicator;
+    this.loadHandler = loadHandler;
+
+}
+
+//actually send the request
+ajaxRequest.prototype.sendRequest = function () {
+    //add the load handler
+    this.request.onload = this.loadHandler;
+    if (this.indicator != "") {
+        /*
+         * Event Handlers
+         * Onloadstart handler fires once before transfer starts
+         */
+        //dirty hack to make the indicator visible inside the closures
+        const theIndicator = this.indicator;
+
+        this.request.onloadstart = function (evt) {
+            var progressIndicator = document.getElementById("progress" + theIndicator);
+            if (progressIndicator !== null && progressIndicator !== undefined) {
+                progressIndicator.style.display = "block";
+            }
+        };
+
+        //Onloadend handler fires once after onload has been dispatched
+        this.request.onloadend = function (evt) {
+            var progressIndicator = document.getElementById("progress" + theIndicator);
+            if (progressIndicator !== null && progressIndicator !== undefined) {
+                progressIndicator.style.display = "none";
+            }
+        }
+    }
+    //open the request and send
+    this.request.open("GET", this.url);
+    this.request.send();
+}
+
+/*
  * Function to update the HTML of an element, with the return value from a script called with XHR
  * @param string script The URL of the API endpoint
  * @param element the ID of the element to be updated
@@ -194,6 +245,7 @@ function setCookie(name, value, expires, path, domain, secure) {
     ( ( domain ) ? ";domain=" + domain : "" ) +
     ( ( secure ) ? ";secure" : "" );
 }
+
 function readCookie(name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
@@ -223,6 +275,7 @@ function getnow(field) {
 function addEngine(url) {
     window.external.AddSearchProvider(url);
 }
+
 function sortBlock(blockId, sortmode) {
     var theBlock = document.getElementById(blockId);
     var tbodyCollection = theBlock.getElementsByTagName("tbody");
