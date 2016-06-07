@@ -288,36 +288,6 @@ function submitForm(event) {
         //Send the proper header information along with the request
         ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         ajaxRequest.send(pbody);
-
-
-        /*   //send asyncronous request
-         new Ajax.Request(url, {
-         method: "POST",
-         postBody: pbody,
-         onSuccess: function (myData) {
-         if (myData.status == 200) {
-         //update the view belonging to the form
-         updateView(formView, false);
-         //show system message for element added
-         systemMessage.added(formView.$get("itemType"));
-         }
-         },
-         onLoading: function () {
-         //show loading indicator
-         startWait("progress" + formView.$el);
-         },
-         onComplete: function () {
-         //hide loading indicator
-         console.log("added");
-
-         stopWait("progress" + formView.$el);
-         },
-         onFailure: function () {
-         console.log("error");
-         }
-         }
-         );  */
-
     }
 }
 
