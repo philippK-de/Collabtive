@@ -3,31 +3,17 @@
 
 <div id="content-left">
     <div id="content-left-in">
-        <div class="msgs" id="projectMessages">
+        <div class="msgs" id="projectMessages" v-cloak>
 
-            <div class="infowin_left">
-                <span id="deleted" style="display:none;" class="info_in_red"><img
-                            src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#messagewasdeleted#}</span>
+            <div class="infowin_left"
+                 id="messageSystemMessage"
+                 data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png"
+                 data-text-added="{#messagewasadded#}"
+                 data-text-edited="{#messagewasedited#}"
+                 data-text-deleted="{#messagewasdeleted#}"
+                 data-text-replied="{#replywasadded#}"
+                 style="display:none">
             </div>
-
-            <div class="infowin_left" style="display:none;" id="systemmsg">
-                {if $mode == "added"}
-                    <span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png"
-                                                     alt=""/>{#messagewasadded#}</span>
-                {elseif $mode == "edited"}
-                    <span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png"
-                                                      alt=""/>{#messagewasedited#}</span>
-                {elseif $mode == "replied"}
-                    <span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png"
-                                                     alt=""/>{#replywasadded#}</span>
-                {/if}
-            </div>
-
-            {literal}
-                <script type="text/javascript">
-                    systemMsg('systemmsg');
-                </script>
-            {/literal}
 
 
             <h1>{$projectname|truncate:45:"...":true}<span>/ {#messages#}</span></h1>
@@ -130,7 +116,7 @@
                                 {/if}
                                 {if $userpermissions.messages.del}
                                 {literal}
-                                    <a class="tool_del" href="javascript:confirmfunction('{/literal}{#confirmdel#}{literal}','deleteElement(\'msgs_{{message].ID}}\',\'managemessage.php?action=del&amp;mid={{*message.ID}}&amp;id={{*message.project}}\')');"  title="{/literal}{#delete#}"></a>
+                                    <a class="tool_del" href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','msgs_{{*message.ID}}','managemessage.php?action=del&amp;mid={{*message.ID}}&amp;id={{*message.project}}',projectMessagesView);"  title="{/literal}{#delete#}"></a>
                                 {/if}
                                 {literal}
                             </td>
