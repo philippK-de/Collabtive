@@ -33,27 +33,12 @@
                             <a class="rss" href="managerss.php?action=mymsgs-rss&amp;user={$userid}"><span>{#rssfeed#}</span></a>
                         </div>
                     </div>
-
-                    {if $userpermissions.messages.add}
-                        <a class="add" href="javascript:blindtoggle('addmsg{$myprojects[project].ID}');" id="add"
-                           onclick="toggleClass(this,'add-active','add');toggleClass('add_butn','butn_link_active','butn_link');toggleClass('sm_msgs','smooth','nosmooth');"><span>{#addmessage#}</span></a>
-                    {/if}
                 </div>
 
                 <h2>
                     <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#messages#}
-                    {literal}
-                   <!--     <span id="paging" style="margin-left:10px;">
-                            <a style="color:#38bf42;font-size:8pt;" href="javascript:pagination.loadPrevPage(projectMessagesView)">[prev]</a>
-                            <span id="page{{page.index}}" v-for="page in pages" style="margin-left:2px;">
-                                 <a v-bind:style="currentPage == page.index ? 'font-size:18px;color:red' : 'color:#38bf42;font-size:8pt;' " href="javascript:pagination.loadPage(projectMessagesView,{{page.index}});
-">[{{page.index}}]</a>
-                            </span>
-                            <a style="color:#38bf42;font-size:8pt;" href="javascript:pagination.loadNextPage(projectMessagesView)">[next]</a>  -->
-                    </span>
 
-                        <pagination view="projectMessagesView" :pages="pages" :current-page="currentPage"></pagination>
-                    {/literal}
+                    <pagination view="projectMessagesView" :pages="pages" :current-page="currentPage"></pagination>
                 </h2>
             </div>
 
