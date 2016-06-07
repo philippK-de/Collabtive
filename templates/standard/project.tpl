@@ -204,11 +204,6 @@
                 //loop through the blocks and add the accordion toggle link
                 var openSlide = 0;
                 for (i = 0; i < theBlocks.length; i++) {
-                    var theCook = readCookie("activeSlideProject");
-                    if (theCook > 0) {
-                        openSlide = theCook;
-                    }
-
                     var theAction = theBlocks[i].getAttribute("onclick");
                     theAction += "activateAccordeon(" + i + ");";
                     theBlocks[i].setAttribute("onclick", theAction);
@@ -216,7 +211,6 @@
                 activateAccordeon(0);
             });
         });
-
     </script>
 {/literal}
 

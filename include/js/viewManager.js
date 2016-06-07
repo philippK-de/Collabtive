@@ -113,7 +113,7 @@ function updateView(view, updateDependencies) {
     //Onload handler fires when transfer is complete
     ajaxRequest.onload = function () {
         //retrieve data and update the views model with it
-        var responseData = JSON.parse(ajaxRequest.responseText);
+        const responseData = JSON.parse(ajaxRequest.responseText);
         Vue.set(view, "items", responseData.items);
         Vue.set(view, "pages", pagination.listPages(responseData.count));
 
@@ -121,7 +121,7 @@ function updateView(view, updateDependencies) {
         //update dependencies
         if (updateDependencies == true) {
             //get the array of dependendant views
-            var viewsToUpdate = view.$get("dependencies");
+            const viewsToUpdate = view.$get("dependencies");
             if (viewsToUpdate.length > 0) {
                 for (var i = 0; i < viewsToUpdate.length; i++) {
                     //load the same sub pages for dependant views that are loaded for the root view
