@@ -41,7 +41,10 @@ function createView(myEl) {
      * Onloadstart handler fires once before transfer starts
      */
     ajaxRequest.onloadstart = function (evt) {
-        document.getElementById("progress" + myEl.el).style.display = "block";
+        var progressIndicator = document.getElementById("progress" + myEl.el);
+        if (progressIndicator !== null && progressIndicator !== undefined) {
+            progressIndicator.style.display = "block";
+        }
     };
 
     //Onload handler fires when transfer is complete
@@ -61,7 +64,10 @@ function createView(myEl) {
 
     //Onloadend handler fires once after onload has been dispatched
     ajaxRequest.onloadend = function (evt) {
-        document.getElementById("progress" + myEl.el).style.display = "none";
+        var progressIndicator = document.getElementById("progress" + myEl.el);
+        if (progressIndicator !== null && progressIndicator !== undefined) {
+            progressIndicator.style.display = "none";
+        }
     };
 
     //open the request and send
@@ -98,7 +104,10 @@ function updateView(view, updateDependencies) {
      * Onloadstart handler fires once before transfer starts
      */
     ajaxRequest.onloadstart = function (evt) {
-        document.getElementById("progress" + view.$el.id).style.display = "block";
+        var progressIndicator = document.getElementById("progress" + view.$el.id);
+        if(progressIndicator !== null) {
+            progressIndicator.style.display = "block";
+        }
     };
 
     //Onload handler fires when transfer is complete
@@ -128,7 +137,10 @@ function updateView(view, updateDependencies) {
 
     //Onloadend handler fires once after onload has been dispatched
     ajaxRequest.onloadend = function (evt) {
-        document.getElementById("progress" + view.$el.id).style.display = "none";
+        var progressIndicator = document.getElementById("progress" + view.$el.id);
+        if(progressIndicator !== null) {
+            progressIndicator.style.display = "none";
+        }
     };
     //open the request and send
     ajaxRequest.open("GET", myUrl);
@@ -377,24 +389,25 @@ function closeElement(theElement, theUrl, theView) {
 }
 function removeRow(row, color) {
     var rowElement = document.getElementById(row);
-    rowElement.style.backgroundColor = "#FFFFFF";
-    /*
-     * Velocity animation
-     * The first call animated the background color
-     * When this animation completes, a 2nd call is made to fade out the cell after a delay
-     */
-    Velocity(rowElement, {
-        backgroundColor: color,
-        backgroundColorAlpha: 0.6
-    }, {
-        complete: function () {
-            Velocity(rowElement, "fadeOut", {
-                delay: 1000,
-                duration: 2500
-            });
-        }
-    });
-
+    if(rowElement != null) {
+        rowElement.style.backgroundColor = "#FFFFFF";
+        /*
+         * Velocity animation
+         * The first call animated the background color
+         * When this animation completes, a 2nd call is made to fade out the cell after a delay
+         */
+        Velocity(rowElement, {
+            backgroundColor: color,
+            backgroundColorAlpha: 0.6
+        }, {
+            complete: function () {
+                Velocity(rowElement, "fadeOut", {
+                    delay: 1000,
+                    duration: 2500
+                });
+            }
+        });
+    }
 }
 /*
  * VUE COMPONENTS
