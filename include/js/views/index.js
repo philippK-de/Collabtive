@@ -89,7 +89,7 @@ var accordIndex = new accordion2('block_index', {
     }
 });
 /*
- * Pattern for running stuff after a viee had loaded
+ * Pattern for running stuff after a view had loaded
  *
  projectsView.$on("iloaded", function () {
  Vue.nextTick(function () {});
@@ -97,9 +97,9 @@ var accordIndex = new accordion2('block_index', {
 
  */
 
+//run after view has loaded and DOM was updated
 projectsView.$once("iloaded", function () {
     Vue.nextTick(function () {
-        console.log("next tick");
         //get the blocks
         var theBlocks = document.querySelectorAll("#block_index > div .headline > a");
 

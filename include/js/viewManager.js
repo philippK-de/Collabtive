@@ -34,23 +34,9 @@ function createView(myEl) {
         data: myModel
     });
 
-    var ajaxRequest = new XMLHttpRequest();
-
-    /*
-     * Event Handlers
-     * Onloadstart handler fires once before transfer starts
-     */
-    ajaxRequest.onloadstart = function (evt) {
-        var progressIndicator = document.getElementById("progress" + myEl.el);
-        if (progressIndicator !== null && progressIndicator !== undefined) {
-            progressIndicator.style.display = "block";
-        }
-    };
-
-    //Onload handler fires when transfer is complete
-    ajaxRequest.onload = function () {
+    var ajax = new ajaxRequest(myModel.url, myEl.el, function () {
         //update the model with the retrieved data
-        const responseData = JSON.parse(ajaxRequest.responseText);
+        const responseData = JSON.parse(ajax.request.responseText);
         //one page of data
         myModel.items = responseData.items;
         //total number of items available
@@ -60,19 +46,9 @@ function createView(myEl) {
         myModel.pages = pages;
         //emit an event that indicates the view has finished loading data
         vueview.$emit("iloaded");
-    };
+    });
 
-    //Onloadend handler fires once after onload has been dispatched
-    ajaxRequest.onloadend = function (evt) {
-        var progressIndicator = document.getElementById("progress" + myEl.el);
-        if (progressIndicator !== null && progressIndicator !== undefined) {
-            progressIndicator.style.display = "none";
-        }
-    };
-
-    //open the request and send
-    ajaxRequest.open("GET", myModel.url);
-    ajaxRequest.send();
+    ajax.sendRequest();
 
     //return the view
     return vueview;
@@ -98,22 +74,9 @@ function updateView(view, updateDependencies) {
         myUrl += "&offset=" + view.offset;
     }
 
-    var ajaxRequest = new XMLHttpRequest();
-    /*
-     * Event Handlers
-     * Onloadstart handler fires once before transfer starts
-     */
-    ajaxRequest.onloadstart = function (evt) {
-        var progressIndicator = document.getElementById("progress" + view.$el.id);
-        if(progressIndicator !== null) {
-            progressIndicator.style.display = "block";
-        }
-    };
-
-    //Onload handler fires when transfer is complete
-    ajaxRequest.onload = function () {
+    var ajax = new ajaxRequest(myUrl, view.$el.id, function () {
         //retrieve data and update the views model with it
-        const responseData = JSON.parse(ajaxRequest.responseText);
+        const responseData = JSON.parse(ajax.request.responseText);
         Vue.set(view, "items", responseData.items);
         Vue.set(view, "pages", pagination.listPages(responseData.count));
 
@@ -125,27 +88,15 @@ function updateView(view, updateDependencies) {
             if (viewsToUpdate.length > 0) {
                 for (var i = 0; i < viewsToUpdate.length; i++) {
                     //load the same sub pages for dependant views that are loaded for the root view
-                    //viewsToUpdate[i].$set("limit", view.limit);
                     Vue.set(viewsToUpdate[i], "limit", view.limit);
                     Vue.set(viewsToUpdate[i], "offset", view.offset);
-                    //viewsToUpdate[i].$set("offset", view.offset);
                     //recursive call
                     updateView(viewsToUpdate[i], viewsToUpdate[i].url);
                 }
             }
         }
-    };
-
-    //Onloadend handler fires once after onload has been dispatched
-    ajaxRequest.onloadend = function (evt) {
-        var progressIndicator = document.getElementById("progress" + view.$el.id);
-        if(progressIndicator !== null) {
-            progressIndicator.style.display = "none";
-        }
-    };
-    //open the request and send
-    ajaxRequest.open("GET", myUrl);
-    ajaxRequest.send();
+    });
+    ajax.sendRequest();
 }
 /*
  * Pagination for view JS views
@@ -260,7 +211,6 @@ function submitForm(event) {
         }
 
         var ajaxRequest = new XMLHttpRequest();
-
         /*
          * Event Handlers
          * Onloadstart handler fires once before transfer starts
