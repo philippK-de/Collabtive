@@ -256,7 +256,7 @@ class timetracker {
         }
     }
 
-    function getProjectTrack($project, $user = 0, $task = 0, $start = 0, $end = 0, $lim = 50)
+    function getProjectTrack($project, $user = 0, $task = 0, $start = 0, $end = 0, $lim = 25, $offset=0)
     {
         global $conn;
         $project = (int) $project;
@@ -306,14 +306,8 @@ class timetracker {
         $sql = $sql . $order;
         // needs to be refactored
         if ($lim > 0) {
-            SmartyPaginate::connect();
-            SmartyPaginate::setLimit($lim);
-            SmartyPaginate::setTotal($num);
 
-            $start = SmartyPaginate::getCurrentIndex();
-            $lim = SmartyPaginate::getLimit();
-
-            $limi = " LIMIT $start,$lim ";
+            $limi = "  LIMIT $lim OFFSET $offset";
             $sql = $sql . $limi;
         }
         $sel = $conn->query($sql);

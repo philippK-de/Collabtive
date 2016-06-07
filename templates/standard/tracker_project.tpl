@@ -28,9 +28,7 @@
 			<a href="javascript:void(0);" id="acc-tracker_toggle" class="win_block" onclick = "toggleBlock('acc-tracker');"></a>
 
 			<div class="wintools">
-                <div class="progress" id="progressprojectTimetracker" style="display:none;width:20px;float:left">
-                    <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-messages.gif"/>
-                </div>
+                <loader block="projectTimetracker" loader="loader-timetracker.gif"></loader>
 				<div class="export-main">
 					<a class="export"><span>{#export#}</span></a>
 					<div class="export-in"  style="width:46px;left: -46px;"> {*at one item*}
@@ -46,6 +44,7 @@
 
 			<h2>
 				<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/timetracker.png" alt="" />{#report#}
+                <pagination view="projectTimetrackerView" :pages="pages" :current-page="currentPage"></pagination>
 			</h2>
 		</div>
 
@@ -147,6 +146,8 @@
     <script type="text/javascript" src="include/js/views/timetrackerProject.min.js"></script>
 	<script type = "text/javascript">
         projectTimetracker.url = projectTimetracker.url + "&id=" + {/literal}{$project.ID}{literal};
+
+        pagination.itemsPerPage = 25;
         projectTimetrackerView = createView(projectTimetracker);
 		var accord_tracker = new accordion2('acc_tracker');
 	</script>

@@ -40,7 +40,7 @@ ajaxRequest.prototype.sendRequest = function () {
             if (progressIndicator !== null && progressIndicator !== undefined) {
                 progressIndicator.style.display = "block";
             }
-        };
+        }
 
         //Onloadend handler fires once after onload has been dispatched
         this.request.onloadend = function (evt) {

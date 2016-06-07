@@ -6,7 +6,6 @@ Vue.config.silent = true;
  * @param Object myEl An object representing the HTML element to be bound
  */
 function createView(myEl) {
-
     /*
      * Object representing the data model for the view
      * @param Array items An array representing the data to be rendered in the view
@@ -306,6 +305,7 @@ function closeElement(theElement, theUrl, theView) {
 function removeRow(row, color) {
     var rowElement = document.getElementById(row);
     if (rowElement != null) {
+        //set bg color to white
         rowElement.style.backgroundColor = "#FFFFFF";
         /*
          * Velocity animation
