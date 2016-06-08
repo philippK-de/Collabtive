@@ -4,7 +4,7 @@ function filterTimetrackerView(event)
     event.preventDefault();
 
     var filterForm = event.currentTarget;
-    var baseUrl = projectTimetrackerView.$get("url");
+    var baseUrl = filterForm.action;
     console.log(baseUrl);
 
     var startDate = document.getElementById("start").value;

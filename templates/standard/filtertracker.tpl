@@ -2,7 +2,7 @@
 	
 	<h2>{#filterreport#}</h2>
 	
-	<form id="filterTimetrackerForm" class="main" method="post" action="managetimetracker.php?action=showproject&id={$project.ID}"  >
+	<form id="filterTimetrackerForm" class="main" method="post" action="managetimetracker.php?action=projectTimetracker&id={$project.ID}"  >
 		<fieldset>
 			
 			<div class="row">

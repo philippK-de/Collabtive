@@ -211,10 +211,6 @@ function toggleClass(elm, class1, class2) {
 
 }
 
-function makeTimer(funct, duration) {
-    window.setTimeout(funct, duration);
-}
-
 function confirmit(text, url) {
     check = confirm(text);
     url = decodeURI(url);
@@ -222,13 +218,6 @@ function confirmit(text, url) {
         window.location = url;
     }
 
-}
-
-function confirmfunction(text, toCall) {
-    var check = confirm(text);
-    if (check == true) {
-        eval(toCall);
-    }
 }
 
 function setCookie(name, value, expires, path, domain, secure) {

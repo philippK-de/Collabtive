@@ -130,7 +130,7 @@
                     <div class="tablemenue">
                         <div class="tablemenue-in">
                             <a class="butn_link" href="javascript:blindtoggle('filter');" id="filter_butn"
-                               onclick="toggleClass('filter_report','filter-active','filter');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_report','smooth','nosmooth');">{#filterreport#}</a>
+                               onclick="toggleClass('filter_report','filter-active','filter');toggleClass(this,'butn_link_active','butn_link');">{#filterreport#}</a>
                         </div>
                     </div>
                 </div> {*block END*}
