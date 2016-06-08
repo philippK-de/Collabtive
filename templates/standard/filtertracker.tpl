@@ -2,12 +2,13 @@
 	
 	<h2>{#filterreport#}</h2>
 	
-	<form class="main" method="post" action="managetimetracker.php?action=showproject&id={$project.ID}" {literal} onsubmit="return validateCompleteForm(this);" {/literal} >
+	<form id="filterTimetrackerForm" class="main" method="post" action="managetimetracker.php?action=showproject&id={$project.ID}"  >
 		<fieldset>
 			
 			<div class="row">
 				<label for="start">{#start#}:</label>
-				<input type="text" class="text" name="start" id="start" realname="{#start#}" onfocus="dpck.close();" value="{$start}" />
+				<input type="text" class="text" name="start" id="start" realname="{#start#}" onfocus="dpck.close();" value="{$start}"
+                       />
 			</div>
 			
 			<div class="datepick">
@@ -16,7 +17,8 @@
 			
 			<div class="row">
 				<label for="end">{#end#}:</label>
-				<input type="text" class="text" name="end" id="end" realname="{#end#}" onfocus="dpck2.close();" value="{$end}" />
+				<input type="text" class="text" name="end" id="end" realname="{#end#}" onfocus="dpck2.close();" value="{$end}"
+                       />
 			</div>
 			
 			<div class="datepick">
@@ -26,7 +28,7 @@
 			{if $userpermissions.admin.add}
 				<div class="row">
 					<label for="usr">{#user#}:</label>
-					<select name="usr" id="usr" realname="{#user#}">
+					<select name="usr" id="usr" realname="{#user#}" >
 						<option value="">{#chooseone#}</option>
 						{section name=usi loop=$users}
 							<option value="{$users[usi].ID}" {if $users[usi].ID == $usr} selected="selected" {/if} >
@@ -41,7 +43,7 @@
 			
 			<div class="row">
 				<label for="ttask">{#task#}:</label>
-				<select name="task[]" id="ttask" multiple>
+				<select name="task[]" id="ttask">
 			  		<option value="">{#chooseone#}</option>
 				  	{section name=task loop=$ptasks}
 				  		{if $ptasks[task].title != ""}
@@ -56,8 +58,7 @@
 					{/section}
 			  	</select>
 			</div>
-			
-			<input type="hidden" name="action" value="showproject" />
+
 			
 			<input type="hidden" name="id" value="{$project.ID}" />
 			

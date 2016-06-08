@@ -196,16 +196,15 @@ function submitForm(event) {
     event.preventDefault();
 
     if (validates == true) {
-
         //string holding the final post body
-        var pbody = "";
+        var postBody = "";
         //loop over form elements
         for (i = 0; i < theForm.elements.length; i++) {
             //one element
             var element = theForm.elements[i];
             //construct post body
             if (element.value != undefined) {
-                pbody += "&" + element.name + "=" + element.value;
+                postBody += "&" + element.name + "=" + element.value;
             }
         }
 
@@ -236,7 +235,7 @@ function submitForm(event) {
         ajaxRequest.open("POST", url);
         //Send the proper header information along with the request
         ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        ajaxRequest.send(pbody);
+        ajaxRequest.send(postBody);
     }
 }
 

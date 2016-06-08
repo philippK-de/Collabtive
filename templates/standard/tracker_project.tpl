@@ -33,7 +33,7 @@
 
                         <div class="toolwrapper">
                             <a class="filter" href="javascript:blindtoggle('filter');" id="filter_report"
-                               onclick="toggleClass(this,'filter-active','filter');toggleClass('filter_butn','butn_link_active','butn_link');toggleClass('sm_report','smooth','nosmooth');"><span>{#filterreport#}</span></a>
+                               onclick="toggleClass(this,'filter-active','filter');toggleClass('filter_butn','butn_link_active','butn_link');"><span>{#filterreport#}</span></a>
                         </div>
                     </div>
 
@@ -106,9 +106,9 @@
                                         <div class="acc-in">
                                             <strong v-if="track.comment">{/literal}{#comment#}:{literal}</strong><br/>{{{*track.comment}}}
 
-                                            <p v-if="track.tasks" class="tags-miles">
-                                                <strong>{#task#}:</strong><br/>
-                                                <a href="managetask.php?action=showtask&amp;tid={{*track.task}}&amp;id={{*track.project}}">{{*track.tname}</a>
+                                            <p v-if="track.hasTask" class="tags-miles">
+                                                <strong>{/literal}{#task#}{literal}:</strong><br/>
+                                                <a href="managetask.php?action=showtask&amp;tid={{*track.task.ID}}&amp;id={{*track.project}}">{{*track.tname}}</a>
                                             </p>
                                         </div>
                                     </div>
@@ -147,6 +147,11 @@
 
                 pagination.itemsPerPage = 25;
                 projectTimetrackerView = createView(projectTimetracker);
+                //get the form to be submitted
+                var filterTimetrackerForm = document.getElementById("filterTimetrackerForm");
+                filterTimetrackerForm.addEventListener("submit",filterTimetrackerView.bind(projectTimetrackerView));
+
+
                 var accord_tracker = new accordion2('acc_tracker');
             </script>
             {/literal}

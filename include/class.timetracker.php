@@ -320,11 +320,16 @@ class timetracker {
                 $endstring = date("H:i", $data["ended"]);
                 $startstring = date("H:i", $data["started"]);
                 $daystring = date(CL_DATEFORMAT, $data["ended"]);
-                $tasks = $ttask->getTask($data["task"]);
+                $task = $ttask->getTask($data["task"]);
 
-                if (!empty($tasks)) {
-                    $tasks = $tasks["title"];
-                    $data["tname"] = $tasks;
+                if (!empty($task)) {
+                    $data["task"] = $task;
+                    $data["hasTask"] = true;
+                    $data["tname"] = $task["title"];
+                }
+                else
+                {
+                    $data["hasTask"] = false;
                 }
 
                 $pname = $conn->query("SELECT name FROM projekte WHERE ID = $data[project]")->fetch();

@@ -410,6 +410,10 @@ if ($action == "add") {
         $projectTrack["count"] = $trackCount;
         echo json_encode($projectTrack);
     }
+    else
+    {
+        echo json_encode(array());
+    }
 
 }
 
