@@ -20,7 +20,6 @@
 
     <h2>
         <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/activity.png" alt=""/>{#activity#}
-
     </h2>
 </div>
 
@@ -104,7 +103,6 @@
             <td colspan="2">
                 <div id="paging">
                     <pagination view="projectLogView" :pages="pages" :current-page="currentPage"></pagination>
-
                 </div>
             </td>
             <td class="tools"></td>
