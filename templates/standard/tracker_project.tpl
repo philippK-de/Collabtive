@@ -14,7 +14,6 @@
             </div>
 
             <h1>{$projectname|truncate:45:"...":true}<span>/ {#timetracker#}</span></h1>
-
             <div class="timetrack">
                 <div class="headline">
                     <a href="javascript:void(0);" id="acc-tracker_toggle" class="win_block" onclick="toggleBlock('acc-tracker');"></a>
@@ -90,12 +89,12 @@
                                     {/literal}
                                     {if $userpermissions.timetracker.edit}
                                     {literal}
-                                        <a class="tool_edit" href="managetimetracker.php?action=editform&amp;tid={track.ID}}&amp;id={{track.project}}"
+                                        <a class="tool_edit" href="managetimetracker.php?action=editform&amp;tid={{*track.ID}}&amp;id={{*track.project}}"
                                         title="{/literal}{#edit#}"></a>
                                     {/if}
                                     {if $userpermissions.timetracker.del}
                                         <a class="tool_del"
-                                           href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'track_{$tracker[track].ID}\',\'managetimetracker.php?action=del&amp;tid={$tracker[track].ID}&amp;id={$project.ID}\')');"
+                                           href="javascript:confirmDelete('{#confirmdel#}','{literal}track_{{*track.ID}}','managetimetracker.php?action=del&amp;tid={{*track.ID}}&amp;id={{*track.project}}{/literal}',projectTimetrackerView);"
                                            title="{#delete#}"></a>
                                     {/if}
                                 </td>
