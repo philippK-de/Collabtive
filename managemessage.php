@@ -102,7 +102,8 @@ if ($action == "addform") {
             }
         }
         $loc = $url . "managemessage.php?action=showproject&id=$id&mode=added";
-        header("Location: $loc");
+        //header("Location: $loc");
+        echo "ok";
     }
 } elseif ($action == "editform") {
     // check if the user is allowed to edit messages

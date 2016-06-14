@@ -55,7 +55,8 @@ if ($action == "add") {
         } else {
             $loc = $url . "managemilestone.php?action=showproject&id=$id&mode=added";
         }
-        header("Location: $loc");
+       // header("Location: $loc");
+        echo "ok";
     }
 } elseif ($action == "editform") {
     if (!$userpermissions["milestones"]["edit"]) {

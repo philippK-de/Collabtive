@@ -59,6 +59,10 @@
                 //console.log(theBlocks[i].getAttribute("onclick"));
             }
             activateAccordeon(1);
+
+            addMilestoneForm = document.getElementById("addmilestoneform");
+            formView = projectMilestonesView;
+            addMilestoneForm.addEventListener("submit",submitForm.bind(formView));
         });
     });
 </script>

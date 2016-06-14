@@ -22,7 +22,7 @@
 
 				<h2>{#addmilestone#}</h2>
 
-				<form novalidate class="main" method="post" action="managemilestone.php?action=add&amp;id={$project.ID}" {literal}onsubmit="return validateCompleteForm(this);"{/literal}>
+				<form id="addmilestoneform" novalidate class="main" method="post" action="managemilestone.php?action=add&amp;id={$project.ID}">
 					<fieldset>
 
 						<div class="row">

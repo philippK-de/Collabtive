@@ -34,6 +34,13 @@ var accord_miles_late = new accordion2('lateMilestones');
 var accord_miles_new = new accordion2('currentMilestones');
 var accord_miles_upcoming = new accordion2('upcomingMilestones');
 
+function formSubmited()
+{
+    console.log("formsubmitted");
+    blindtoggle('addstone');
+    toggleClass('add_butn_current','butn_link_active','butn_link');
+    toggleClass('sm_miles','smooth','nosmooth');
+}
 
 openSlide = 0;
 var blockIds = [];
