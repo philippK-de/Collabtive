@@ -26,7 +26,8 @@
 
 			<div class="row">
 				<label for="neverdue"></label>
-				<input type="checkbox" class="checkbox" value="neverdue" name="neverdue" id="neverdue" onclick="$('endP').value='';$('endP').disabled=!$('endP').disabled;">
+				<input type="checkbox" class="checkbox" value="neverdue" name="neverdue" id="neverdue" onclick="document.getElementById('endP').value='';
+				document.getElementById('endP').disabled=!document.getElementById('endP').disabled;">
 				<label>{#neverdue#}</label>
 			</div>
 

@@ -6,10 +6,6 @@
         <div class="progress" id="progresscurrentMilestones" style="float:left;display:none;">
             <img src="templates/standard/theme/standard/images/symbols/loader-calendar.gif"/>
         </div>
-        {if $userpermissions.milestones.add}
-            <a class="add" href="javascript:blindtoggle('addstone');" id="add"
-               onclick="toggleClass(this,'add-active','add');toggleClass('add_butn','butn_link_active','butn_link');toggleClass('sm_miles','smooth','nosmooth');"><span>{#addmilestone#}</span></a>
-        {/if}
     </div>
 
     <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt=""/>Current {#milestones#}</h2>
