@@ -228,7 +228,12 @@ function submitForm(event) {
 
         //Onloadend handler fires once after onload has been dispatched
         ajaxRequest.onloadend = function (evt) {
+            try{
+                formSubmited();
+            }
+            catch(e){}
             document.getElementById("progress" + formView.$el).style.display = "none";
+
         };
 
         //open the request POST send

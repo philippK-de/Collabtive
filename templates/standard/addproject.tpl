@@ -34,10 +34,6 @@
 				<div id="add_project" class="picker" style="display:none;"></div>
 			</div>
 
-
-
-
-
 			<div class="row">
 				<label for="budget">{#budget#}:</label>
 				<input type="text" class="text" name="budget" id="budget" value="0" />

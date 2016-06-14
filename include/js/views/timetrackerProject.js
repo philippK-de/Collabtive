@@ -1,44 +1,45 @@
-function filterTimetrackerView(event)
-{
+
+
+
+
+function filterTimetrackerView(event) {
+    //stop the normal form submission
     event.stopPropagation();
     event.preventDefault();
 
+    //get the form object and the baseUrl
     var filterForm = event.currentTarget;
     var baseUrl = filterForm.action;
-    console.log(baseUrl);
 
+    //get the form fields for filtering
     var startDate = document.getElementById("start").value;
     var endDate = document.getElementById("end").value;
     var user = document.getElementById("usr").value;
     var task = document.getElementById("ttask").value;
 
+    //construct the GET parameters for the url
     var queryUrl = "";
-    if(startDate != "")
-    {
+    if (startDate != "") {
         queryUrl += "&start=" + startDate;
     }
-    if(endDate != "")
-    {
+    if (endDate != "") {
         queryUrl += "&end=" + endDate;
     }
-    if(user > 0)
-    {
+    if (user > 0) {
         queryUrl += "&usr=" + user;
     }
-    if(task > 0)
-    {
+    if (task > 0) {
         queryUrl += "&task=" + task;
     }
 
-    if(queryUrl != "")
-    {
+    if (queryUrl != "") {
+        //if a query was created, append it to the base url
         baseUrl += queryUrl;
-        Vue.set(projectTimetrackerView,"url",baseUrl);
+
+        //update the view
+        Vue.set(projectTimetrackerView, "url", baseUrl);
         updateView(projectTimetrackerView);
     }
-
-    console.log("query: " + queryUrl);
-    console.log("final: " + baseUrl);
 }
 
 var projectTimetracker = {
