@@ -186,7 +186,7 @@
                         {/literal}
                         {if $userpermissions.messages.add}
                             <a class="butn_link" href="javascript:blindtoggle('addmsg');" id="add_butn"
-                               onclick="toggleClass('add','add-active','add');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_msgs','smooth','nosmooth');">{#addmessage#}</a>
+                               onclick="toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_msgs','smooth','nosmooth');">{#addmessage#}</a>
                         {/if}
                         {literal}
                     </div>
@@ -207,9 +207,14 @@
     pagination.itemsPerPage = 15;
     projectMessages.url = projectMessages.url + "&id=" + {/literal}{$project.ID}{literal};
     projectMessagesView = createView(projectMessages);
+
     projectMessagesView.$once("iloaded",function(){
+
         Vue.nextTick(function(){
             accord_messages = new accordion2('block_msgs');
+            addMessageForm = document.getElementById("addmessageform");
+            formView = projectMessagesView;
+            addMessageForm.addEventListener("submit",submitForm.bind(formView));
         });
     });
 

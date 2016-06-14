@@ -1,7 +1,3 @@
-
-
-
-
 function filterTimetrackerView(event) {
     //stop the normal form submission
     event.stopPropagation();

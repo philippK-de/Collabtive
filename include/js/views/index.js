@@ -46,17 +46,20 @@ var calendarView = createView(desktopCalendar);
 //setup dependenciens
 projectsView.$set("dependencies", [tasksView, msgsView]);
 
+/*
+ * Handler function to be called when form was successfully submited
+ */
+function formSubmited() {
+    blindtoggle('form_addmyproject');
+    toggleClass('sm_deskprojects', 'smooth', 'nosmooth');
+    toggleClass("add_butn_myprojects", 'butn_link_active', 'butn_link');
+}
+
+
 //get the form to be submitted
 var addProjectForm = document.getElementById("addprojectform");
 //assign the view to be updated after submitting to the formView variable
 var formView = projectsView;
-
-function formSubmited(){
-    blindtoggle('form_addmyproject');
-    toggleClass('sm_deskprojects','smooth','nosmooth');
-    toggleClass("add_butn_myprojects",'butn_link_active','butn_link');
-}
-
 //add an event listener capaturing the submit event of the form
 //add submitForm() as the handler for the event, and bind the form view to it
 addProjectForm.addEventListener("submit", submitForm.bind(formView));
