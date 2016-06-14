@@ -214,7 +214,7 @@ function submitForm(event) {
          * Onloadstart handler fires once before transfer starts
          */
         ajaxRequest.onloadstart = function (evt) {
-            document.getElementById("progress" + formView.$el).style.display = "block";
+           // document.getElementById("progress" + formView.$el).style.display = "block";
         };
 
         //Onload handler fires when transfer is complete
@@ -232,7 +232,7 @@ function submitForm(event) {
                 formSubmited();
             }
             catch(e){}
-            document.getElementById("progress" + formView.$el).style.display = "none";
+            //document.getElementById("progress" + formView.$el).style.display = "none";
 
         };
 
