@@ -7,6 +7,18 @@ function updateCalendar(myCalendar, newMonth, newYear) {
 
 }
 
+/**
+ * This will activate the accordion with the supplied index
+ */
+openSlide = 0;
+blockIds = [];
+function activateAccordeon(theAccord) {
+    //activate the block in the block accordion
+    accordIndex.toggle(document.querySelectorAll('#block_index .blockaccordion_content')[theAccord]);
+    //set a cookie to save the accordeon last clicked
+    setCookie("activeSlideIndex", theAccord);
+}
+
 //create the objects representing the Widgets with their DOM element, DataURL, Dependencies and view managing them
 var projects = {
     el: "desktopprojects",
@@ -61,20 +73,6 @@ var formView = projectsView;
 //add submitForm() as the handler for the event, and bind the form view to it
 addProjectForm.addEventListener("submit", submitForm.bind(formView));
 
-
-/**
- *
- * This will activate the accordion with the supplied index
- *
- */
-openSlide = 0;
-blockIds = [];
-function activateAccordeon(theAccord) {
-    //activate the block in the block accordion
-    accordIndex.toggle(document.querySelectorAll('#block_index .blockaccordion_content')[theAccord]);
-    //set a cookie to save the accordeon last clicked
-    setCookie("activeSlideIndex", theAccord);
-}
 
 //initialize blocks accordeon
 //this creates the object on which methods are called later
