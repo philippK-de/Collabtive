@@ -3,7 +3,7 @@
 
 <div id="content-left">
     <div id="content-left-in">
-        <div class="miles" >
+        <div class="miles">
             <div class="infowin_left"
                  id="milestoneSystemMessage"
                  data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png"
@@ -18,18 +18,18 @@
 
             <div id="projectMilestones">
                 {include file="projectLateMilestones.tpl"}
-                <br />
+                <br/>
                 {include file="projectCurrentMilestones.tpl"}
-                <br />
+                <br/>
                 {include file = "projectUpcomingMilestones.tpl"}
             </div>
 
-        <!--block End-->
+            <!--block End-->
+        </div>
+        <!--Miles END-->
+        <div class="content-spacer"></div>
     </div>
-    <!--Miles END-->
-    <div class="content-spacer"></div>
-</div>
-<!--content-left-in END-->
+    <!--content-left-in END-->
 </div> <!--content-left END-->
 
 {literal}
@@ -45,26 +45,24 @@
     upcomingProjectMilestones.url = upcomingProjectMilestones.url + "&id=" + {/literal}{$project.ID}{literal};
     var upcomingProjectMilestonesView = createView(upcomingProjectMilestones);
 
-    projectMilestonesView.$once("iloaded",function(){
-        Vue.nextTick(function(){
-            // /loop through the blocks and add the accordion toggle link
-            var theBlocks = document.querySelectorAll("#projectMilestones > div[class~='headline'] > a");
+    projectMilestonesView.afterUpdate(function () {
+        // /loop through the blocks and add the accordion toggle link
+        var theBlocks = document.querySelectorAll("#projectMilestones > div[class~='headline'] > a");
 
-            //loop through the blocks and add the accordion toggle link
-            for(i=0;i<theBlocks.length;i++)
-            {
-                var theAction = theBlocks[i].getAttribute("onclick");
-                theAction += "activateAccordeon("+i+");";
-                theBlocks[i].setAttribute("onclick",theAction);
-                //console.log(theBlocks[i].getAttribute("onclick"));
-            }
-            activateAccordeon(1);
+        //loop through the blocks and add the accordion toggle link
+        for (i = 0; i < theBlocks.length; i++) {
+            var theAction = theBlocks[i].getAttribute("onclick");
+            theAction += "activateAccordeon(" + i + ");";
+            theBlocks[i].setAttribute("onclick", theAction);
+            //console.log(theBlocks[i].getAttribute("onclick"));
+        }
+        activateAccordeon(1);
 
-            addMilestoneForm = document.getElementById("addmilestoneform");
-            formView = projectMilestonesView;
-            addMilestoneForm.addEventListener("submit",submitForm.bind(formView));
-        });
+        addMilestoneForm = document.getElementById("addmilestoneform");
+        formView = projectMilestonesView;
+        addMilestoneForm.addEventListener("submit", submitForm.bind(formView));
     });
+
 </script>
 {/literal}
 {include file="sidebar-a.tpl"}

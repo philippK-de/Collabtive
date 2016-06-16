@@ -108,7 +108,8 @@
                             <td colspan="6">
                                 <div class="accordion_content" data-slide="{{$index}}" id="block_msgs_content{{$index}}">
                                     <div class="acc-in">
-                                        <img src="thumb.php?width=80&amp;height=80&amp;pic=templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/no-avatar-male.jpg" />
+                                        <img src="thumb.php?width=80&amp;height=80&amp;pic=templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/no-avatar-male.jpg"/>
+
                                         <div class="message">
                                             <div class="message-in">
                                                 {{{*message.text}}}
@@ -138,7 +139,8 @@
                                                                     </td>
                                                                     <td class="thumb">
                                                                         {/literal}
-                                                                        <img src="templates/{$settings.template}/theme/{$settings.theme}/images/files/{literal}{{*file.type}}.png" alt=""/>
+                                                                        <img src="templates/{$settings.template}/theme/{$settings.theme}/images/files/{literal}{{*file.type}}.png"
+                                                                             alt=""/>
                                                                         </a>
                                                                     </td>
                                                                     {/literal}
@@ -208,14 +210,11 @@
     projectMessages.url = projectMessages.url + "&id=" + {/literal}{$project.ID}{literal};
     projectMessagesView = createView(projectMessages);
 
-    projectMessagesView.$once("iloaded",function(){
-
-        Vue.nextTick(function(){
-            accord_messages = new accordion2('block_msgs');
-            addMessageForm = document.getElementById("addmessageform");
-            formView = projectMessagesView;
-            addMessageForm.addEventListener("submit",submitForm.bind(formView));
-        });
+    projectMessagesView.afterUpdate(function () {
+        accord_messages = new accordion2('block_msgs');
+        addMessageForm = document.getElementById("addmessageform");
+        formView = projectMessagesView;
+        addMessageForm.addEventListener("submit", submitForm.bind(formView));
     });
 
 </script>

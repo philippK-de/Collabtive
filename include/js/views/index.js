@@ -99,14 +99,6 @@ var accordIndex = new accordion2('block_index', {
         content: 'blockaccordion_content'
     }
 });
-/*
- * Pattern for running stuff after a view had loaded
- *
- projectsView.$on("iloaded", function () {
- Vue.nextTick(function () {});
- });
-
- */
 
 projectsView.afterUpdate(function () {
     //get the blocks
@@ -135,7 +127,6 @@ projectsView.afterUpdate(function () {
     }
     //activateAccordeon(openSlide);
     activateAccordeon(0);
-
 });
 
 

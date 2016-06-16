@@ -36,7 +36,6 @@ function createView(myEl) {
                 this.$once("iloaded",function(){
                     Vue.nextTick(updateHandler);
                 });
-
             }
         }
     });
