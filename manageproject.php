@@ -31,11 +31,11 @@ $stropen = utf8_decode($langfile["openprogress"]);
 $strdone = utf8_decode($langfile["done"]);
 $strdesc = utf8_decode($langfile["description"]);
 
-$l = Array();
-$l['a_meta_charset'] = 'UTF-8';
-$l['a_meta_dir'] = 'ltr';
-$l['a_meta_language'] = 'en';
-$l['w_page'] = 'page';
+$pdfLanguage = Array();
+$pdfLanguage['a_meta_charset'] = 'UTF-8';
+$pdfLanguage['a_meta_dir'] = 'ltr';
+$pdfLanguage['a_meta_language'] = 'en';
+$pdfLanguage['w_page'] = 'page';
 
 $mode = getArrayVal($_GET, "mode");
 $template->assign("mode", $mode);

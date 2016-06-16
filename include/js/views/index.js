@@ -7,7 +7,6 @@ function updateCalendar(myCalendar, newMonth, newYear) {
 
 }
 
-
 //create the objects representing the Widgets with their DOM element, DataURL, Dependencies and view managing them
 var projects = {
     el: "desktopprojects",
@@ -37,9 +36,7 @@ var desktopCalendar = {
     dependencies: []
 };
 
-
 //create views - binding the data to the dom element
-
 var projectsView = createView(projects);
 var tasksView = createView(tasks);
 var msgsView = createView(messages);
@@ -56,7 +53,6 @@ function formSubmited() {
     toggleClass("add_butn_myprojects", 'butn_link_active', 'butn_link');
 }
 
-
 //get the form to be submitted
 var addProjectForm = document.getElementById("addprojectform");
 //assign the view to be updated after submitting to the formView variable
@@ -65,15 +61,6 @@ var formView = projectsView;
 //add submitForm() as the handler for the event, and bind the form view to it
 addProjectForm.addEventListener("submit", submitForm.bind(formView));
 
-//initialize accordeons
-try {
-    //var accord_projects = new accordion('projecthead');
-    var accord_projects = new accordion2('desktopprojects');
-    var accord_tasks = new accordion2('taskhead');
-    var accord_msgs = new accordion2('activityhead');
-}
-catch (e) {
-}
 
 /**
  *
@@ -89,7 +76,6 @@ function activateAccordeon(theAccord) {
     setCookie("activeSlideIndex", theAccord);
 }
 
-
 //initialize blocks accordeon
 //this creates the object on which methods are called later
 var accordIndex = new accordion2('block_index', {
@@ -100,6 +86,15 @@ var accordIndex = new accordion2('block_index', {
     }
 });
 
+
+//initialize accordeons
+try {
+    var accord_projects = new accordion2('desktopprojects');
+    var accord_tasks = new accordion2('taskhead');
+    var accord_msgs = new accordion2('activityhead');
+}
+catch (e) {
+}
 projectsView.afterUpdate(function () {
     //get the blocks
     var theBlocks = document.querySelectorAll("#block_index > div .headline > a");

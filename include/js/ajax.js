@@ -11,7 +11,7 @@ deleteEndcolor = '#c62424';
  * @param function loadHandler Function to handle the onload() event of the xmlhttprequest
  */
 function ajaxRequest(url, indicator, loadHandler) {
-    //Default update dependencies to true
+    //Default indicator to nothing
     if (indicator === undefined) {
         indicator = "";
     }
@@ -22,13 +22,13 @@ function ajaxRequest(url, indicator, loadHandler) {
     this.url = url;
     this.indicator = indicator;
     this.loadHandler = loadHandler;
-
 }
 
 //actually send the request
 ajaxRequest.prototype.sendRequest = function () {
-    //add the load handler
+    //add the custom load handler function to the onload event
     this.request.onload = this.loadHandler;
+    //if an indicator has been passed in, implement the onloadstart and onloadend callbacks to show/hide it
     if (this.indicator != "") {
         /*
          * Event Handlers
@@ -36,14 +36,12 @@ ajaxRequest.prototype.sendRequest = function () {
          */
         //dirty hack to make the indicator visible inside the closures
         const theIndicator = this.indicator;
-
         this.request.onloadstart = function (evt) {
             var progressIndicator = document.getElementById("progress" + theIndicator);
             if (progressIndicator !== null && progressIndicator !== undefined) {
                 progressIndicator.style.display = "block";
             }
         }
-
         //Onloadend handler fires once after onload has been dispatched
         this.request.onloadend = function (evt) {
             var progressIndicator = document.getElementById("progress" + theIndicator);
@@ -54,6 +52,8 @@ ajaxRequest.prototype.sendRequest = function () {
     }
     //open the request and send
     this.request.open(this.requestType, this.url);
+
+    //if its a post request, send with special header and postbody
     if (this.requestType == "POST") {
         //Send the proper header information along with the request
         this.request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -62,7 +62,6 @@ ajaxRequest.prototype.sendRequest = function () {
     else {
         this.request.send();
     }
-
 }
 
 /*
@@ -94,21 +93,6 @@ function change(script, element) {
 
 }
 
-function make_inputs(num) {
-    var url = 'manageajax.php?action=makeinputs&num=' + num;
-    change(url, 'inputs');
-}
-
-function show_addtask(id) {
-    var theElement = document.getElementById(id);
-    var slideDuration = 600;
-
-    Velocity(theElement, "slideDown", {
-        duration: slideDuration
-    });
-    theElement.dataset.slidestate = "down";
-}
-
 /*
  * Slide an element up
  * @param obj elm DOM element representing the element to be slided open
@@ -121,7 +105,6 @@ function slideUp(elm) {
     elm.dataset.slidestate = "up";
 }
 
-
 /*
  * Slide an element up
  * @param obj elm DOM element representing the element to be slided closed
@@ -133,7 +116,6 @@ function slideDown(elm) {
     });
     elm.dataset.slidestate = "down";
 }
-
 
 /*
  * Toggle an element sliding up/down.
@@ -150,11 +132,6 @@ function blindtoggle(id) {
         slideDown(theElement);
     }
 }
-
-function fadeToggle(id) {
-    new Effect.toggle(id, 'appear');
-}
-
 
 /*
  * Open or close a DOM block

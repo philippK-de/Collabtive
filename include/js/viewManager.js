@@ -197,7 +197,7 @@ var pagination = {
 function submitForm(event) {
     //get the form
     var theForm = event.currentTarget;
-    //get the submit url
+    //get the server url for the ajax call from the action = attribute of the <form>
     var url = theForm.action;
     //validate the form
     var validates = validateCompleteForm(theForm);
@@ -227,6 +227,7 @@ function submitForm(event) {
                 updateView(formView, false);
                 //show system message for element added
                 systemMessage.added(formView.$get("itemType"));
+                //try calling the formSubmited() handler that can be defined
                 try {
                     formSubmited();
                 }
