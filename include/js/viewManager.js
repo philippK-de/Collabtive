@@ -27,13 +27,19 @@ function createView(myEl) {
         url: myEl.url
     };
 
-    //create the Vue.js view given the element myEl and the data in myModel
+    /* Create the Vue.js view given the element myEl and the data in myModel
+     * @param string el The DOM ID of the element to bind the view to
+     * @param obj data The JSON object representing the data
+     * @param obj methods Method the view exposed
+     * @method function afterUpdate(updateHandler) Function to be called on the view. The closure passed in is executed
+     * after the data model has been updated and the DOM rendering has finished
+     */
     var vueview = new Vue({
         el: "#" + myEl.el,
         data: myModel,
-        methods:{
-            afterUpdate: function(updateHandler){
-                this.$once("iloaded",function(){
+        methods: {
+            afterUpdate: function (updateHandler) {
+                this.$once("iloaded", function () {
                     Vue.nextTick(updateHandler);
                 });
             }
@@ -53,7 +59,7 @@ function createView(myEl) {
         //emit an event that indicates the view has finished loading data
         vueview.$emit("iloaded");
     });
-
+    //actually send the request
     ajax.sendRequest();
 
     //return the view
@@ -196,8 +202,6 @@ function submitForm(event) {
     //validate the form
     var validates = validateCompleteForm(theForm);
 
-    console.log("validates:" + validates);
-
     //stop the form event from bubbling up. stops form submit
     event.stopPropagation();
     event.preventDefault();
@@ -218,30 +222,27 @@ function submitForm(event) {
         var ajaxRequest = new XMLHttpRequest();
         /*
          * Event Handlers
-         * Onloadstart handler fires once before transfer starts
-         */
-        ajaxRequest.onloadstart = function (evt) {
-           // document.getElementById("progress" + formView.$el).style.display = "block";
-        };
+        */
 
         //Onload handler fires when transfer is complete
         ajaxRequest.onload = function () {
-            //update the view belonging to the form
-            updateView(formView, false);
-            //show system message for element added
-            systemMessage.added(formView.$get("itemType"));
-
+            var response = ajaxRequest.responseText;
+            if(response == "ok") {
+                //update the view belonging to the form
+                updateView(formView, false);
+                //show system message for element added
+                systemMessage.added(formView.$get("itemType"));
+            }
         };
 
         //Onloadend handler fires once after onload has been dispatched
         ajaxRequest.onloadend = function (evt) {
-            try{
+            try {
                 formSubmited();
             }
-            catch(e){}
-            //document.getElementById("progress" + formView.$el).style.display = "none";
-
-        };
+            catch (e) {
+            }
+       };
 
         //open the request POST send
         ajaxRequest.open("POST", url);
