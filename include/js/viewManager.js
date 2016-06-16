@@ -30,7 +30,15 @@ function createView(myEl) {
     //create the Vue.js view given the element myEl and the data in myModel
     var vueview = new Vue({
         el: "#" + myEl.el,
-        data: myModel
+        data: myModel,
+        methods:{
+            afterUpdate: function(updateHandler){
+                this.$once("iloaded",function(){
+                    Vue.nextTick(updateHandler);
+                });
+
+            }
+        }
     });
 
     var ajax = new ajaxRequest(myModel.url, myEl.el, function () {

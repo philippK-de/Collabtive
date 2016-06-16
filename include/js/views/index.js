@@ -7,6 +7,7 @@ function updateCalendar(myCalendar, newMonth, newYear) {
 
 }
 
+
 //create the objects representing the Widgets with their DOM element, DataURL, Dependencies and view managing them
 var projects = {
     el: "desktopprojects",
@@ -107,37 +108,34 @@ var accordIndex = new accordion2('block_index', {
 
  */
 
-//run after view has loaded and DOM was updated
-projectsView.$once("iloaded", function () {
-    Vue.nextTick(function () {
-        //get the blocks
-        var theBlocks = document.querySelectorAll("#block_index > div .headline > a");
+projectsView.afterUpdate(function () {
+    //get the blocks
+    var theBlocks = document.querySelectorAll("#block_index > div .headline > a");
 
-        //loop through the blocks and add the accordion toggle link to the onclick handler of toggles
-        for (i = 0; i < theBlocks.length; i++) {
-            //get the id of the current html element
-            var theId = theBlocks[i].getAttribute("id");
-            blockIds.push(theId);
+    //loop through the blocks and add the accordion toggle link to the onclick handler of toggles
+    for (i = 0; i < theBlocks.length; i++) {
+        //get the id of the current html element
+        var theId = theBlocks[i].getAttribute("id");
+        blockIds.push(theId);
 
-            //get the index of the last opened block
-            theCook = readCookie("activeSlideIndex");
+        //get the index of the last opened block
+        theCook = readCookie("activeSlideIndex");
 
-            //console.log(theCook);
-            if (theCook > 0) {
-                openSlide = theCook;
-            }
-
-            //get the onclick action of the current block
-            var theAction = theBlocks[i].getAttribute("onclick");
-            //add a call to activate accordeon
-            theAction += "activateAccordeon(" + i + ");";
-            theBlocks[i].setAttribute("onclick", theAction);
-            //console.log(theBlocks[i].getAttribute("onclick"));
+        //console.log(theCook);
+        if (theCook > 0) {
+            openSlide = theCook;
         }
-        //activateAccordeon(openSlide);
-        activateAccordeon(0);
 
-    });
+        //get the onclick action of the current block
+        var theAction = theBlocks[i].getAttribute("onclick");
+        //add a call to activate accordeon
+        theAction += "activateAccordeon(" + i + ");";
+        theBlocks[i].setAttribute("onclick", theAction);
+        //console.log(theBlocks[i].getAttribute("onclick"));
+    }
+    //activateAccordeon(openSlide);
+    activateAccordeon(0);
+
 });
 
 
