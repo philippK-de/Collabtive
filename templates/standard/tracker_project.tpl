@@ -153,7 +153,9 @@
                 filterTimetrackerForm.addEventListener("submit",filterTimetrackerView.bind(projectTimetrackerView));
 
 
-                var accord_tracker = new accordion2('acc_tracker');
+                projectTimetrackerView.afterUpdate(function(){
+                    accord_tracker = new accordion2('acc_tracker');
+                });
             </script>
             {/literal}
 
