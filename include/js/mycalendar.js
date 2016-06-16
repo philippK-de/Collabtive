@@ -394,11 +394,6 @@ function makeDatepicker(m,y,div)
 	var theCal = new calendar(m,y);
 	theCal.getDatepicker(div);
 }
-function makeCal(m,y,div)
-{
-	var theCal = new calendar(m,y);
-	theCal.getCal(div);
-}
 function calendar(theMonth,theYear,options)
 {
 	this.dayNames = ["Mo","Di","Mi","Do","Fr","Sa","So"];
@@ -438,124 +433,6 @@ function calendar(theMonth,theYear,options)
 	var tempDays = this.startDay + this.daysInMonth;
 	this.weeksInMonth = Math.ceil(tempDays/7);
 
-}
-
-calendar.prototype.getCal = function(theDiv)
-{
-	var theHtml = "";
-	var pmonth = this.month;
-	var nmonth = this.month+2;
-
-	theHtml += "<table class=\"cal\" cellpadding=\"0\" cellspacing=\"1\" border = \"0\">";
-	theHtml += "<tr class=\"head\" >" +
-			"<td class = \"back\"><a href = \"javascript:void(0);\"></a></td>" +
-			"<td colspan=\"5\" >" + this.monthNames[this.month] + " " + this.year + "</td>" +
-			"<td class=\"next\"><a href = \"javascript:void(0);\"></a></td></tr>";
-
-
-	theHtml += "<tr class = \"weekday\">";
-	for(i=0;i<this.dayNames.length;i++)
-	{
-		theHtml += "<td >" + this.dayNames[i] + "</td>"
-	}
-	theHtml += "</tr>";
-
-
-	var intMinithecal = this.buildCal();
-
-	for(j=0;j<this.weeksInMonth;j++) {
-		theHtml += "<tr >";
-		for(i=0;i<7;i++) {
-				var theDay = intMinithecal[j][i];
-				//theDay = theDay - 1;
-				if(theDay > 0 && theDay <= this.daysInMonth)
-				{
-					if(this.currmonth == this.month && this.curryear == this.year && this.currday == theDay)
-					{
-						theHtml += "<td class = \"today\">"+ theDay + "</td>";
-					}
-					else
-					{
-						theHtml += "<td >"+ theDay + "</td>";
-					}
-
-
-				}
-				else if(theDay < 1)
-				{
-					theHtml += "<td class = \"wrong\">"+(this.daysLastMonth+theDay)+"</td>";
-				}
-				else if(theDay > this.daysInMonth)
-				{
-					theHtml += "<td class = \"wrong\">"+(theDay-this.daysInMonth)+"</td>";
-				}
-			}
-		theHtml += "</tr>";
-	}
-	theHtml += "</table>";
-
-	document.getElementById(theDiv).innerHTML = theHtml;
-
-
-	var theMonths = this.monthNames;
-	var theDays = this.dayNames;
-	var keepEmpty = this.keepEmpty;
-	var dateSeparator = this.dateSeparator;
-	var theYear = this.year;
-
-    $$("#"+theDiv+" .cal  .back a").each
-    (
-        function (item)
-        {
-            item.onclick = function()
-            {
-                theCal = new calendar(pmonth,theYear);
-                theCal.monthNames = theMonths;
-                theCal.dayNames = theDays;
-                theCal.keepEmpty = keepEmpty;
-                theCal.dateSeparator = dateSeparator;
-
-                theCal.getCal(theDiv);
-            }
-        }
-    );
-
-
-    /*
-    $$("#"+theDiv+" .cal  .back a").each
-	(
-		function (item)
-		{
-			item.onclick = function()
-			{
-					theCal = new calendar(pmonth,theYear);
-					theCal.monthNames = theMonths;
-					theCal.dayNames = theDays;
-					theCal.keepEmpty = keepEmpty;
-					theCal.dateSeparator = dateSeparator;
-
-					theCal.getCal(theDiv);
-			}
-		}
-	);
-
-	*/
-    $$("#"+theDiv+" .cal .next a").each
-	(
-		function (item)
-		{
-			item.onclick = function()
-			{
-					internalCals = new calendar(nmonth,theYear);
-					internalCals.monthNames = theMonths;
-					internalCals.dayNames = theDays;
-					internalCals.keepEmpty = keepEmpty;
-					internalCals.dateSeparator = dateSeparator;
-
-					internalCals.getCal(theDiv);
-			}
-		}
-	);
 }
 
 calendar.prototype.getDatepicker = function(theDiv)
@@ -655,15 +532,15 @@ calendar.prototype.getDatepicker = function(theDiv)
 				{
 					if(this.currmonth == this.month && this.curryear == this.year && this.currday == theDay)
 					{
-						theHtml += "<td class = \"today\" onclick = \"document.getElementById('"+this.relateTo+"').value='"+dateString+"';Velocity(document.getElementById('"+theDiv+"'), 'fadeOut', {duration: 600});\">"+ theDay + "</td>";
+						theHtml += "<td class = \"today\" onclick = \"document.getElementById('"+this.relateTo+"').value='"+dateString+"';Velocity(document.getElementById('"+theDiv+"'), 'fadeOut', {duration: 500});\">"+ theDay + "</td>";
 					}
 					else if(this.month == (selectedVals[1]-1) && this.year == selectedVals[2] && selectedVals[0] == theDay)
 					{
-						theHtml += "<td class = \"red\" onclick = \"document.getElementById('"+this.relateTo+"').value='"+dateString+"';Velocity(document.getElementById('"+theDiv+"'), 'fadeOut', {duration: 600});\">"+ theDay + "</td>";
+						theHtml += "<td class = \"red\" onclick = \"document.getElementById('"+this.relateTo+"').value='"+dateString+"';Velocity(document.getElementById('"+theDiv+"'), 'fadeOut', {duration: 500});\">"+ theDay + "</td>";
 					}
 					else
 					{
-						theHtml += "<td class = \"normalday\" onclick = \"document.getElementById('"+this.relateTo+"').value='"+dateString+"';Velocity(document.getElementById('"+theDiv+"'), 'fadeOut', {duration: 600});\">"+ theDay + "</td>";
+						theHtml += "<td class = \"normalday\" onclick = \"document.getElementById('"+this.relateTo+"').value='"+dateString+"';Velocity(document.getElementById('"+theDiv+"'), 'fadeOut', {duration: 500});\">"+ theDay + "</td>";
 					}
 				}
 				else if(theDay < 1)
