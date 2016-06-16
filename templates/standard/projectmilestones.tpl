@@ -45,7 +45,14 @@
     upcomingProjectMilestones.url = upcomingProjectMilestones.url + "&id=" + {/literal}{$project.ID}{literal};
     var upcomingProjectMilestonesView = createView(upcomingProjectMilestones);
 
+    var accord_miles_late;
+    var accord_miles_new;
+    var accord_miles_upcoming;
     projectMilestonesView.afterUpdate(function () {
+
+        accord_miles_late = new accordion2('lateMilestones');
+        accord_miles_new = new accordion2('currentMilestones');
+        accord_miles_upcoming = new accordion2('upcomingMilestones');
         // /loop through the blocks and add the accordion toggle link
         var theBlocks = document.querySelectorAll("#projectMilestones > div[class~='headline'] > a");
 
