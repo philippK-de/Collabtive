@@ -17,6 +17,8 @@ function ajaxRequest(url, indicator, loadHandler) {
     }
 
     this.request = new XMLHttpRequest();
+    this.requestType = "GET";
+    this.postBody = "";
     this.url = url;
     this.indicator = indicator;
     this.loadHandler = loadHandler;
@@ -51,8 +53,16 @@ ajaxRequest.prototype.sendRequest = function () {
         }
     }
     //open the request and send
-    this.request.open("GET", this.url);
-    this.request.send();
+    this.request.open(this.requestType, this.url);
+    if (this.requestType == "POST") {
+        //Send the proper header information along with the request
+        this.request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        this.request.send(this.postBody);
+    }
+    else {
+        this.request.send();
+    }
+
 }
 
 /*

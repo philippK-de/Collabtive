@@ -219,36 +219,24 @@ function submitForm(event) {
             }
         }
 
-        var ajaxRequest = new XMLHttpRequest();
-        /*
-         * Event Handlers
-        */
-
-        //Onload handler fires when transfer is complete
-        ajaxRequest.onload = function () {
-            var response = ajaxRequest.responseText;
-            if(response == "ok") {
+        //send the ajax request
+        var ajax = new ajaxRequest(url, "", function () {
+            var response = ajax.request.responseText;
+            if (response == "ok") {
                 //update the view belonging to the form
                 updateView(formView, false);
                 //show system message for element added
                 systemMessage.added(formView.$get("itemType"));
+                try {
+                    formSubmited();
+                }
+                catch (e) {
+                }
             }
-        };
-
-        //Onloadend handler fires once after onload has been dispatched
-        ajaxRequest.onloadend = function (evt) {
-            try {
-                formSubmited();
-            }
-            catch (e) {
-            }
-       };
-
-        //open the request POST send
-        ajaxRequest.open("POST", url);
-        //Send the proper header information along with the request
-        ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        ajaxRequest.send(postBody);
+        });
+        ajax.requestType = "POST";
+        ajax.postBody = postBody;
+        ajax.sendRequest();
     }
 }
 
