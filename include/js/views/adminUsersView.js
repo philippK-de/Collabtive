@@ -22,7 +22,6 @@ pagination.itemsPerPage = 10;
 var adminRolesView = createView(adminRoles);
 
 var accord_roles;
-adminRolesView.$on("iloaded",function(){
-        console.log("roles loaded");
+adminRolesView.afterUpdate(function(){
     accord_roles = new accordion2('acc_roles');
 });

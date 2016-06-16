@@ -11,7 +11,6 @@ var adminCustomers = {
 var accord_customers;
 var adminCustomersView = createView(adminCustomers);
 
-adminCustomersView.$on("iloaded")
-{
+adminCustomersView.afterUpdate(function(){
     accord_customers = new accordion2('acc_customers');
-}
+});
