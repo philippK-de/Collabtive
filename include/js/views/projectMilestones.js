@@ -30,10 +30,9 @@ var accordIndex = new accordion2('projectMilestones', {
     }
 });
 
-
+//will be called after form has been submitted
 function formSubmited()
 {
-    console.log("formsubmitted");
     blindtoggle('addstone');
     toggleClass('add_butn_current','butn_link_active','butn_link');
     toggleClass('sm_miles','smooth','nosmooth');

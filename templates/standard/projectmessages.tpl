@@ -210,6 +210,7 @@
     projectMessages.url = projectMessages.url + "&id=" + {/literal}{$project.ID}{literal};
     projectMessagesView = createView(projectMessages);
 
+    var accord_messages;
     projectMessagesView.afterUpdate(function () {
         accord_messages = new accordion2('block_msgs');
         addMessageForm = document.getElementById("addmessageform");

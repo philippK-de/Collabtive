@@ -89,7 +89,6 @@ accordion2.prototype.activate = function (contentSlide) {
     this.initializeToggles();
     var numSlide = contentSlide.dataset.slide;
 
-    console.log("slide " + numSlide + " toggled");
     for (var i = 0; i < this.accordionContents.length; i++) {
         //save the current content and toggle in an instance var so it can be used in other method scopes
         this.currentContent = this.accordionContents[i];

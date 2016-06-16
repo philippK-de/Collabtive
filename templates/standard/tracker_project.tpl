@@ -152,7 +152,7 @@
                 var filterTimetrackerForm = document.getElementById("filterTimetrackerForm");
                 filterTimetrackerForm.addEventListener("submit",filterTimetrackerView.bind(projectTimetrackerView));
 
-
+                var accord_tracker;
                 projectTimetrackerView.afterUpdate(function(){
                     accord_tracker = new accordion2('acc_tracker');
                 });
