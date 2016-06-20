@@ -2,7 +2,7 @@
 
 	<h2>{#addtask#}</h2>
 
-	<form novalidate name="addtaskform{$lists[list].ID}" id="addtaskform{$lists[list].ID}" class="main" method="post" action="managetask.php?action=add&amp;id={$project.ID}" {literal} onsubmit="return validateCompleteForm(this,'input_error'); {/literal} ">
+	<form novalidate name="addtaskform{$lists[list].ID}" id="addtaskform{$lists[list].ID}" class="main" method="post" action="managetask.php?action=add&amp;id={$project.ID}">
 		<fieldset>
 
 			<div class="row">

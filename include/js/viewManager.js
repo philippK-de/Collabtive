@@ -38,6 +38,9 @@ function createView(myEl) {
         el: "#" + myEl.el,
         data: myModel,
         methods: {
+            update: function(updateDependencies){
+                updateView(this,updateDependencies);
+            },
             afterUpdate: function (updateHandler) {
                 this.$once("iloaded", function () {
                     Vue.nextTick(updateHandler);
@@ -103,7 +106,7 @@ function updateView(view, updateDependencies) {
                     Vue.set(viewsToUpdate[i], "limit", view.limit);
                     Vue.set(viewsToUpdate[i], "offset", view.offset);
                     //recursive call
-                    updateView(viewsToUpdate[i], viewsToUpdate[i].url);
+                    updateView(viewsToUpdate[i], true);
                 }
             }
         }
@@ -154,7 +157,7 @@ var pagination = {
         //view.$set("currentPage", page);
 
         //triger the view to be updated
-        updateView(view, true);
+        view.update(true);
 
     },
     loadNextPage: function (view) {
@@ -186,6 +189,18 @@ var pagination = {
     }
 };
 
+function formHandler(form, theView, submitHandler) {
+    this.form  = form;
+    this.view = theView;
+    this.submitHandler = submitHandler;
+
+    formView = this.view;
+    form.addEventListener("submit",this.submit.bind(formView));
+
+}
+formHandler.prototype.submit = function(event) {
+    submitForm(event);
+};
 /*
  * Function to asyncronously submit a form
  * This is to be used with form.addEventListener()
@@ -277,7 +292,7 @@ function deleteElement(theElement, theUrl, theView) {
             removeRow(theElement, deleteEndcolor);
             //if a view is passed in, update the view and emit a system message
             if (theView != undefined) {
-                updateView(theView);
+                theView.update();
                 systemMessage.deleted(theView.$get("itemType"));
             }
             var result = true;
@@ -294,7 +309,7 @@ function closeElement(theElement, theUrl, theView) {
             removeRow(theElement, closeEndcolor);
             //if a view is passed in, update the view and emit a system message
             if (theView != undefined) {
-                updateView(theView);
+                theView.update();
                 systemMessage.closed(theView.$get("itemType"));
             }
             var result = true;

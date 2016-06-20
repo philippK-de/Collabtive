@@ -231,9 +231,17 @@
                             url: "managetask.php?action=projectTasks&tlid={/literal}{$lists[list].ID}{literal}&id={/literal}{$project.ID}{literal}",
                             dependencies: []
                         };
+                        var addTaskForm{/literal}{$lists[list].ID}{literal} = document.getElementById("addtaskform{/literal}{$lists[list].ID}{literal}");
                         var projectTasksView_{/literal}{$lists[list].ID}{literal} = createView(projectTasks);
-                        var accord_{/literal}{$lists[list].ID}{literal} = new accordion2('contentblock-{/literal}{$lists[list].ID}{literal}');
+                        var formHandler_{/literal}{$lists[list].ID}{literal} = new formHandler(addTaskForm{/literal}{$lists[list].ID}{literal}, projectTasksView_{/literal}{$lists[list].ID}{literal}, function () {
+                            blindtoggle('form_{/literal}{$lists[list].ID}{literal}');
+                            toggleClass('toggle-done-{/literal}{$lists[list].ID}{literal}', 'acc-toggle', 'acc-toggle-active');
+                            toggleClass("donebutn_{/literal}{$lists[list].ID}{literal}", 'butn_link_active', 'butn_link');
+                        });
 
+                        //addTaskForm{/literal}{$lists[list].ID}{literal}.addEventListener("submit",submitForm.bind(formView));
+
+                        var accord_{/literal}{$lists[list].ID}{literal} = new accordion2('contentblock-{/literal}{$lists[list].ID}{literal}');
 
                     </script>
                 {/literal}
@@ -303,10 +311,10 @@
                                 <tr>
                                     <td>
                                     {if $userpermissions.tasks.close}
-                                        <a class="butn_check"
-                                           href="managetasklist.php?action=open&amp;tlid={$oldlists[oldlist].ID}&amp;id={$project.ID}"
-                                           title="{#open#}"></a>
-                                    {/if}
+    <a class="butn_check"
+       href="managetasklist.php?action=open&amp;tlid={$oldlists[oldlist].ID}&amp;id={$project.ID}"
+       title="{#open#}"></a>
+{/if}
                                     </td>
                                     <td>
                                             <a href="managetasklist.php?action=showtasklist&amp;id={$project.ID}&amp;tlid={$oldlists[oldlist].ID}">
@@ -318,10 +326,10 @@
                                     <td>{$oldlists[oldlist].daysleft}</td>
                                     <td class="tools">
                                         {if $userpermissions.tasks.del}
-                                            <a class="tool_del"
-                                               href="managetasklist.php?action=del&amp;tlid={$oldlists[oldlist].ID}&amp;id={$project.ID}"
-                                               title="{#delete#}"></a>
-                                            {/if}
+    <a class="tool_del"
+       href="managetasklist.php?action=del&amp;tlid={$oldlists[oldlist].ID}&amp;id={$project.ID}"
+       title="{#delete#}"></a>
+{/if}
                                     </td>
                                 </tr>
                                 <tr class="acc">

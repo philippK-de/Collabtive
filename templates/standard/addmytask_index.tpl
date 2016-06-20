@@ -2,7 +2,7 @@
 
 	<h2>{#addtask#}</h2>
 
-	<form novalidate id="addtaskform" class="main" method="post" action="managetask.php?action=add&amp;id=" {literal} onsubmit="return validateCompleteForm(this,'input_error'); {/literal} ">
+	<form novalidate id="addtaskform" class="main" method="post" action="managetask.php?action=add&amp;id=">
 		<fieldset>
 
 			<div class="row">

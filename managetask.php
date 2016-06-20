@@ -86,7 +86,8 @@ if ($action == "add") {
                 }
             }
             $loc = $url . "managetask.php?action=showproject&id=$id&mode=added";
-            header("Location: $loc");
+            //header("Location: $loc");
+            echo "ok";
         } else {
             $template->assign("addtask", 0);
         }
