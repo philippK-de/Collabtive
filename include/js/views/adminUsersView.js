@@ -21,7 +21,45 @@ var adminUsersView = createView(adminUsers);
 pagination.itemsPerPage = 10;
 var adminRolesView = createView(adminRoles);
 
+
+function setCheckbox()
+{
+    if(this.checked)
+    {
+        this.value = 1;
+    }
+    else
+    {
+        this.value = 0;
+    }
+}
+
+window.addEventListener("load",function()
+{
+    var allCheckboxes = document.getElementsByTagName("input");
+    for(var i = 0; i < allCheckboxes.length; i++) {
+        if(allCheckboxes[i].type == "checkbox") {
+            allCheckboxes[i].addEventListener("click",setCheckbox);
+        }
+    }
+});
+
+function formSubmited()
+{
+    console.log("formsubmitted");
+    blindtoggle('form_addmyroles');
+    toggleClass('add_myprojects','add-active','add');
+    toggleClass('add_butn_myprojects','butn_link_active','butn_link');
+    toggleClass('sm_myprojects','smooth','nosmooth');
+}
+
 var accord_roles;
+var addRoleForm;
+var formView;
+
 adminRolesView.afterUpdate(function(){
     accord_roles = new accordion2('acc_roles');
+    addRoleForm = document.getElementById("addRoleForm");
+    formView = adminRolesView;
+    addRoleForm.addEventListener("submit", submitForm.bind(formView));
 });

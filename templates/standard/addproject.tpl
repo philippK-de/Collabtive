@@ -2,7 +2,7 @@
 
 	<h2>{#addproject#}</h2>
 
-	<form id="addprojectform" novalidate class="main" method="post" action="admin.php?action=addpro" {literal} {/literal} >
+	<form id="addprojectform" novalidate class="main" method="post" action="admin.php?action=addpro">
 		<fieldset>
 
 			<div class="row">

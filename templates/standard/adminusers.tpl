@@ -9,9 +9,9 @@
             <div class="infowin_left"
                  id="userSystemMessage"
                  data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/userlist.png"
-                 data-text-deleted="{#userwasdeleted#}"
-                 data-text-edited="{#userwasedited#}"
                  data-text-added="{#userwasadded#}"
+                 data-text-edited="{#userwasedited#}"
+                 data-text-deleted="{#userwasdeleted#}"
                  data-text-assigned="{#userwasassigned#}"
                  data-text-deassigned="{#permissionswereedited#}"
                  style="display:none">
@@ -21,8 +21,9 @@
             <div class="infowin_left"
                  id="roleSystemMessage"
                  data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/userlist.png"
-                 data-text-edited="{#rolewasedited#}"
-                 data-text-added="{#rolewasadded#}"
+                 data-text-edited="{#roleedited#}"
+                 data-text-added="{#roleadded#}"
+                 data-text-deleted="{#roleadded#}"
                  style="display:none">
             </div>
 

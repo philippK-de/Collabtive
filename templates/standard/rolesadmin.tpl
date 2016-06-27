@@ -1,12 +1,7 @@
 <div class="user" id="adminRoles">
     <div class="headline">
-
         <a href="javascript:void(0);" id="acc-roles_toggle" class="win_block" onclick="toggleBlock('acc-roles');"></a>
-
-
-        <div class="wintools">
-        </div>
-
+        <div class="wintools"></div>
         <h2>
             <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/userlist.png"
                  alt=""/>{#roles#}

@@ -45,8 +45,9 @@ if ($action == "addrole")
 
     if ($roleobj->add($rolename, $projectperms, $taskperms, $mileperms, $messageperms, $fileperms, $trackerperms, $chatperms, $adminperms))
     {
-        $loc = $url . "admin.php?action=users&mode=roleadded";
-        header("Location: $loc");
+      //  $loc = $url . "admin.php?action=users&mode=roleadded";
+      //  header("Location: $loc");
+        echo "ok";
     }
 }
 // delete a role
