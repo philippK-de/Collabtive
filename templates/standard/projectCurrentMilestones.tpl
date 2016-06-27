@@ -203,7 +203,7 @@
                 <div class="tablemenue-in">
                     {if $userpermissions.milestones.add}
                         <a class="butn_link" href="javascript:blindtoggle('addstone');" id="add_butn_current"
-                           onclick="toggleClass('add','add-active','add');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_miles','smooth','nosmooth');">{#addmilestone#}</a>
+                           onclick="toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_miles','smooth','nosmooth');">{#addmilestone#}</a>
                     {/if}
                     <a class="butn_link" href="javascript:blindtoggle('doneblock');" id="donebutn"
                        onclick="toggleClass(this,'butn_link_active','butn_link');toggleClass('togglemilesdone','acc-toggle','acc-toggle-active');">{#donemilestones#}</a>

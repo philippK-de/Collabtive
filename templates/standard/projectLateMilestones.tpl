@@ -11,7 +11,7 @@
 </div>
 
 <div class="block blockaccordion_content" id="lateMilestonesHead" style="overlow:hidden">
-    <div class="nosmooth" >
+    <div id="sm_miles_late" class="nosmooth" >
 
         <table cellpadding="0" cellspacing="0" border="0">
             <thead>
