@@ -22,7 +22,10 @@ pagination.itemsPerPage = 10;
 var adminRolesView = createView(adminRoles);
 
 
-function setCheckbox()
+/*
+* Function to toggle a checkbox between 1 / 0 values
+ */
+function toggleCheckbox()
 {
     if(this.checked)
     {
@@ -34,16 +37,22 @@ function setCheckbox()
     }
 }
 
+/*
+* Bind the toggleCheckbox function to all the inputs in the document
+ */
 window.addEventListener("load",function()
 {
     var allCheckboxes = document.getElementsByTagName("input");
     for(var i = 0; i < allCheckboxes.length; i++) {
         if(allCheckboxes[i].type == "checkbox") {
-            allCheckboxes[i].addEventListener("click",setCheckbox);
+            allCheckboxes[i].addEventListener("click",toggleCheckbox);
         }
     }
 });
 
+/*
+* Handler function to be called when addRoles form was submitted
+ */
 function formSubmited()
 {
     console.log("formsubmitted");

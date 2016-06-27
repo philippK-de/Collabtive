@@ -4,33 +4,14 @@
 <div id="content-left">
 	<div id="content-left-in">
 		<div class="projects" id="adminCustomers">
-
-			<div class="infowin_left" style="display:none;" id="systemmsg">
-
-				{if $mode == "edited"}
-				<span class="info_in_yellow">
-					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/customers.png" alt="" />
-					{#customerwasedited#}
-				</span>
-				{elseif $mode == "deleted"}
-				<span class="info_in_red">
-					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/customers.png" alt="" />
-					{#customerwasdeleted#}
-				</span>
-				{elseif $mode == "added"}
-				<span class="info_in_green">
-					<img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/customers.png" alt="" />
-					{#customerwasadded#}
-				</span>
-				{/if}
-
-			</div>
-
-			{literal}
-				<script type="text/javascript">
-					systemMsg('systemmsg');
-				</script>
-			{/literal}
+            <div class="infowin_left"
+                 id="customerSystemMessage"
+                 data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/customers.png"
+                 data-text-added="{#customerwasadded#}"
+                 data-text-edited="{#customerwasedited#}"
+                 data-text-deleted="{#customerwasdeleted#}"
+                 style="display:none">
+            </div>
 
 			<h1>{#administration#}<span>/ {#customeradministration#}</span></h1>
 
@@ -106,7 +87,7 @@
 
 										{if $userpermissions.admin.add}
 										{literal}
-                                        <a class="tool_del" href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'proj_{{*customer.ID}\',\'managecompany.php?action=del&amp;id={{*customer.ID}\')');" title="{#delete#}"></a>
+                                        <a class="tool_del" href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','proj_{{*customer.ID}}','managecompany.php?action=del&amp;id={{*customer.ID}}', adminCustomersView);" title="{#delete#}"></a>
 										{/literal}
                                         {/if}
 									</td>
