@@ -39,7 +39,7 @@
             </div>
             <div class="block" id="acc_projects"> {*Add Project*}
                 <div id="form_addmyproject" class="addmenue" style="display:none;">
-                    {include file="addproject.tpl" myprojects="1"}
+                    {include file="addproject.tpl"}
                 </div>
                 <div class="nosmooth" id="sm_myprojects">
                     <table id="adminprojects" cellpadding="0" cellspacing="0" border="0">
