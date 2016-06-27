@@ -92,8 +92,6 @@ if ($action == "editform") {
         die();
     }
 
-    echo $tlid;
-    print_r($cleanPost);
     if ($liste->edit_liste($tlid, $cleanPost["name"], $cleanPost["desc"], $cleanPost["milestone"])) {
         $loc = $url . "managetasklist.php?action=showtasklist&id=$id&tlid=$tlid&mode=edited";
         header("Location: $loc");

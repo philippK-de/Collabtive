@@ -58,10 +58,7 @@
                         </div>
 
                         <h2>
-                            <a href="managetasklist.php?action=showtasklist&amp;id={$project.ID}&amp;tlid={$lists[list].ID}"
-                               title="{#tasklist#} {$lists[list].name}">
-                                <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png"
-                                     alt=""/>{$lists[list].name|truncate:70:"...":true}</a>
+                            <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt=""/>{$lists[list].name|truncate:70:"...":true}
                         </h2>
                     </div>
                     <div id="contentblock-{$lists[list].ID}" class="block blockaccordion_content" style="overflow:hidden;">
