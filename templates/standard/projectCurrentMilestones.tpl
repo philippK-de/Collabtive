@@ -175,8 +175,7 @@
                             {literal}
                             <td class="b">
                                 <div class="toggle-in">
-                                    <a href="managemilestone.php?action=showmilestone&amp;msid={{*oldmilestone.ID}}&amp;id={{*oldmilestone.project}}"
-                                       title="{{*oldmilestone.name}}">{{*oldmilestone.name | truncate '30'}}</a>
+                                    {{*oldmilestone.name | truncate '30'}}
                                 </div>
                             </td>
                             <td class="c">{{*oldmilestone.fend}}</td>
