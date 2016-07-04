@@ -108,7 +108,7 @@
                                                                title="{#edit#}"></a>
                                                             <a v-if="user.ID != {/literal}{$userid}{literal}"
                                                                class="del"
-                                                               href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','admin.php?action=deleteuserform&amp;id={{*user.ID}}');"
+                                                               href="javascript:confirmit('{/literal}{#confirmdel#}{literal}','admin.php?action=deleteuserform&amp;id={{*user.ID}}');"
                                                                title="{/literal}{#delete#}{literal}"></a>
                                                         </div>
                                                     </td>
