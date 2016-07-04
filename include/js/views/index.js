@@ -84,16 +84,13 @@ var accordIndex = new accordion2('block_index', {
     }
 });
 
-
+var accord_tasks  = new accordion2('desktoptasks');
+var accord_msgs = new accordion2('desktopmessages');
+var accord_projects = new accordion2('desktopprojects');
 //initialize accordeons
-try {
-    var accord_projects = new accordion2('desktopprojects');
-    var accord_tasks = new accordion2('taskhead');
-    var accord_msgs = new accordion2('activityhead');
-}
-catch (e) {
-}
+
 projectsView.afterUpdate(function () {
+
     //get the blocks
     var theBlocks = document.querySelectorAll("#block_index > div .headline > a");
 
