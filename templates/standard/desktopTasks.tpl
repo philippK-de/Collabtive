@@ -1,6 +1,4 @@
-
 {if $tasknum > 0}
-
     <div class="tasks" style = "padding-bottom:2px;" id="desktoptasks">
         <div class="headline">
             <a href="javascript:void(0);" id="taskhead_toggle" class="win_none" onclick=""></a>
@@ -65,7 +63,10 @@
                             </td>
                             <td>
                                 <div class="toggle-in">
-                                    <span id="desktoptaskstoggle{{item.ID}}" class="acc-toggle" onclick="javascript:accord_tasks.activate(document.querySelector('#taskhead_content{{$index}}'));"></span>
+                                    <span id="desktoptasks_toggle{{*item.ID}}"
+                                          class="acc-toggle"
+                                          onclick="javascript:accord_tasks.activate(document.querySelector('#desktoptasks_content{{$index}}'));
+                                          "></span>
                                     <a href="managetask.php?action=showtask&amp;id={{*item.project}}&amp;tid={{*item.ID}}" title="{{*item.title}}">
                                         {{*item.title | truncate '30' }}
                                     </a>
@@ -91,9 +92,9 @@
 
                         <tr class="acc">
                             <td colspan="5">
-                                <div class="accordion_content" data-slide="{{$index}}" id="taskhead_content{{$index}}">
+                                <div class="accordion_content" data-slide="{{$index}}" id="desktoptasks_content{{$index}}">
                                     <div class="acc-in">
-                                        <div class="message-in">
+                                        <div class="message-in" >
                                             {{{*item.text}}}
                                         </div>
                                     </div>
