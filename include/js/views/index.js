@@ -83,14 +83,6 @@ var accordIndex = new accordion2('block_index', {
         content: 'blockaccordion_content'
     }
 });
-
-var accord_tasks;
-var accord_msgs;
-var accord_projects;
-
-
-//initialize accordeons
-
 projectsView.afterLoad(function(){
     //get the blocks
     var theBlocks = document.querySelectorAll("#block_index > div .headline > a");
@@ -119,6 +111,10 @@ projectsView.afterLoad(function(){
     //activateAccordeon(openSlide);
     activateAccordeon(0);
 });
+//initialize accordeons
+var accord_tasks;
+var accord_msgs;
+var accord_projects;
 projectsView.afterUpdate(function () {
     accord_tasks  = new accordion2('desktoptasks');
     accord_msgs = new accordion2('desktopmessages');

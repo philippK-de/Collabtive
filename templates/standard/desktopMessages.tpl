@@ -51,7 +51,7 @@
                     </td>
                     <td>
                         <div class="toggle-in">
-                            <span class="acc-toggle" onclick="javascript:accord_msgs.activate(document.querySelector('#activityhead_content{{$index}}'));"></span>
+                            <span class="acc-toggle" onclick="javascript:accord_msgs.activate(document.querySelector('#desktopmessages_content{{$index}}'));"></span>
                             <a href="managemessage.php?action=showmessage&amp;mid={{*item.ID}}&amp;id={{*item.project}}" title="{{*item.title}}">{{*item.title | truncate '30' }}</a>
                         </div>
                     </td>
@@ -75,7 +75,7 @@
 
                 <tr class="acc">
                     <td colspan="6">
-                        <div class="accordion_content" data-slide="{{$index}}" id="activityhead_content{{$index}}">
+                        <div class="accordion_content" data-slide="{{$index}}" id="desktopmessages_content{{$index}}">
                             <div class="acc-in">
                                 <div class="avatar">
                                     <img src="thumb.php?width=80&amp;height=80&amp;pic=templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/no-avatar-male.jpg" />
