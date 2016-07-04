@@ -12,3 +12,6 @@ files/*
 .idea/
 !files/collabtive.sdb
 *.directory
+*.lock
+composer.phar
+composer.json
