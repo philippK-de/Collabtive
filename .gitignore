@@ -15,3 +15,5 @@ files/*
 *.lock
 composer.phar
 composer.json
+vendor/composer/installed.json
+vendor/composer/installed.json
