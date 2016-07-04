@@ -233,13 +233,7 @@
 														<td class="right"></td>
 													</tr>
 												</tbody>
-												
-												<tbody class="color-b">
-													<tr>
-														<td><label for="tags">{#tags#}:</label></td>
-														<td class="right"><input type="text" name="tags" id="tags" realname="{#tags#}" value="{$user.tags}" /></td>
-													</tr>
-												</tbody>
+
 												
 												<tbody class="color-a">
 													<tr>
