@@ -527,19 +527,12 @@ class datei
         $num = $sel->fetch();
         $num = $num[0];
         // Set items per page
-        SmartyPaginate::connect();
-        SmartyPaginate::setLimit($limit);
-        SmartyPaginate::setTotal($num);
-
-        $start = SmartyPaginate::getCurrentIndex();
-        $limit = SmartyPaginate::getLimit();
         $files = array();
 
         if ($folder > 0) {
-            $sql = "SELECT ID FROM files WHERE project = $id AND folder = $folder ORDER BY  ID DESC LIMIT $start,$limit";
-            $sel2 = $conn->query($sql);
+            $sel2 = $conn->query("SELECT ID FROM files WHERE project = $id AND folder = $folder ORDER BY  ID DESC LIMIT $limit OFFSET $offset");
         } else {
-            $sel2 = $conn->query("SELECT ID FROM files WHERE project = $id AND folder = 0 ORDER BY  ID DESC LIMIT $start,$limit");
+            $sel2 = $conn->query("SELECT ID FROM files WHERE project = $id AND folder = 0 ORDER BY  ID DESC LIMIT $limit OFFSET $offset");
         }
         while ($file = $sel2->fetch()) {
             if (!empty($file)) {

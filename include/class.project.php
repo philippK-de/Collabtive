@@ -611,13 +611,8 @@ class project
             $num = $conn->query("SELECT COUNT(*) FROM projekte_assigned WHERE projekt = $project")->fetch();
             $num = $num[0];
             $lim = (int)$lim;
-            SmartyPaginate::connect();
-            // set items per page
-            SmartyPaginate::setLimit($lim);
-            SmartyPaginate::setTotal($num);
 
-            $start = SmartyPaginate::getCurrentIndex();
-            $lim = SmartyPaginate::getLimit();
+            $start = 0;
         } else {
             $start = 0;
         }

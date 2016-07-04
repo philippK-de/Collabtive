@@ -243,7 +243,6 @@ if ($action == "uploadAsync") {
 
     $template->assign("title", $title);
     $template->assign("projectname", $projectname);
-    SmartyPaginate::assign($template);
     $template->assign("files", $files);
     $template->assign("filenum", $filenum);
     $template->assign("folders", $folders);

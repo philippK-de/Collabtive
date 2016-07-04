@@ -362,7 +362,7 @@ if ($action == "add") {
     $template->assign("usr", $cleanGet["usr"]);
     $template->assign("task", $cleanGet["task"]);
     $template->assign("tracker", $track);
-    SmartyPaginate::assign($template);
+
     $template->display("tracker_project.tpl");
 } elseif ($action == "projectTimetracker") {
     if (!$userpermissions["timetracker"]["view"]) {

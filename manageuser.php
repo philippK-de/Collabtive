@@ -222,7 +222,6 @@ if ($action == "loginerror") {
         $template->assign("end", $end);
     }
     $template->assign("tracker", $track);
-    SmartyPaginate::assign($template);
     $profile = $user->getProfile($id);
 
     $title = $langfile['userprofile'];
@@ -294,7 +293,7 @@ if ($action == "loginerror") {
             array_push($users, $all);
         }
     }
-    SmartyPaginate::disconnect();
+
 
     $members = $projectObj->getProjectMembers($id, 14);
     $pro = $projectObj->getProject($id);
@@ -304,7 +303,6 @@ if ($action == "loginerror") {
 
     $template->assign("title", $title);
     $template->assign("projectname", $projectname);
-    SmartyPaginate::assign($template);
     $template->assign("members", $members);
     $template->assign("users", $users);
     $template->display("projectmembers.tpl");
