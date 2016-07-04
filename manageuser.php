@@ -294,7 +294,6 @@ if ($action == "loginerror") {
         }
     }
 
-
     $members = $projectObj->getProjectMembers($id, 14);
     $pro = $projectObj->getProject($id);
 
