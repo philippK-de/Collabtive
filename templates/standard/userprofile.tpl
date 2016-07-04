@@ -246,8 +246,7 @@
 					<tr>
 						<td colspan="7">
 							<div id="paging" style = "float:right;" >
-								{paginate_prev} {paginate_middle} {paginate_next}
-							</div>
+										</div>
 						</td>
 
 					</tr>

@@ -205,14 +205,9 @@ class timetracker {
 		//needs to be refactroed
         if ($lim > 0) {
             $sql = $sql . $order;
-            SmartyPaginate::connect();
-            SmartyPaginate::setLimit($lim);
-            SmartyPaginate::setTotal($num);
 
-            $start = SmartyPaginate::getCurrentIndex();
-            $lim = SmartyPaginate::getLimit();
-
-            $limi = " LIMIT $start,$lim";
+            $start = 0;
+            $limi = " LIMIT $lim OFFSET $start ";
             $sql = $sql . $limi;
         }
 
