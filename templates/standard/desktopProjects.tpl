@@ -53,8 +53,8 @@
                     </td>
                     <td>
                         <div class="toggle-in">
-                                <span id="desktopprojects_toggle{{ item.ID }}" class="acc-toggle"
-                                      onclick="javascript:accord_projects.activate(document.querySelector('#projecthead_content{{$index}}'));"></span>
+                                <span id="desktopprojects_toggle{{*item.ID}}" class="acc-toggle"
+                                      onclick="javascript:accord_projects.toggle(document.querySelector('#desktopprojects_content{{$index}}'));"></span>
                             <a href="manageproject.php?action=showproject&amp;id={{*item.ID}}" title="{{*item.name}}">
                                 {{*item.name | truncate '30' }}
                             </a>
@@ -89,7 +89,7 @@
 
                 <tr class="acc">
                     <td colspan="5">
-                        <div class="accordion_content" data-slide="{{$index}}" id="projecthead_content{{$index}}">
+                        <div class="accordion_content">
                             <div class="acc-in">
                                 <div class="message-in">
                                     {{{*item.desc}}}

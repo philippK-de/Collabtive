@@ -84,13 +84,14 @@ var accordIndex = new accordion2('block_index', {
     }
 });
 
-var accord_tasks  = new accordion2('desktoptasks');
-var accord_msgs = new accordion2('desktopmessages');
-var accord_projects = new accordion2('desktopprojects');
+var accord_tasks;
+var accord_msgs;
+var accord_projects;
+
+
 //initialize accordeons
 
-projectsView.afterUpdate(function () {
-
+projectsView.afterLoad(function(){
     //get the blocks
     var theBlocks = document.querySelectorAll("#block_index > div .headline > a");
 
@@ -117,6 +118,11 @@ projectsView.afterUpdate(function () {
     }
     //activateAccordeon(openSlide);
     activateAccordeon(0);
+});
+projectsView.afterUpdate(function () {
+    accord_tasks  = new accordion2('desktoptasks');
+    accord_msgs = new accordion2('desktopmessages');
+    accord_projects = new accordion2('desktopprojects');
 });
 
 

@@ -59,7 +59,7 @@
     </div> {* content-left-in END *}
 </div> {* content-left END *}
 
-<script type="text/javascript" src="include/js/accordion.min.js"></script>
+<script type="text/javascript" src="include/js/accordion.js"></script>
 <script type="text/javascript" src="include/js/modal.min.js"></script>
 <script type="text/javascript" src="include/js/views/index.min.js"></script>
 {include file="sidebar-a.tpl"}

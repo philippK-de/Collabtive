@@ -197,19 +197,17 @@
         projectCalendar.url = projectCalendar.url + "&id=" + {/literal}{$project.ID}{literal};
 
         var calendarView = createView(projectCalendar);
-        calendarView.$once("iloaded", function () {
-            Vue.nextTick(function () {
-                var theBlocks = document.querySelectorAll("#block_dashboard > div .headline > a");
+        calendarView.afterLoad(function(){
+            var theBlocks = document.querySelectorAll("#block_dashboard > div .headline > a");
 
-                //loop through the blocks and add the accordion toggle link
-                var openSlide = 0;
-                for (i = 0; i < theBlocks.length; i++) {
-                    var theAction = theBlocks[i].getAttribute("onclick");
-                    theAction += "activateAccordeon(" + i + ");";
-                    theBlocks[i].setAttribute("onclick", theAction);
-                }
-                activateAccordeon(0);
-            });
+            //loop through the blocks and add the accordion toggle link
+            var openSlide = 0;
+            for (i = 0; i < theBlocks.length; i++) {
+                var theAction = theBlocks[i].getAttribute("onclick");
+                theAction += "activateAccordeon(" + i + ");";
+                theBlocks[i].setAttribute("onclick", theAction);
+            }
+            activateAccordeon(0);
         });
     </script>
 {/literal}

@@ -25,7 +25,6 @@ function accordion2(container, options) {
     this.currentContent = {};
     this.currentToggle = {};
 
-    this.initializeToggles();
     this.initializeAccordion();
 
 }
@@ -44,6 +43,7 @@ accordion2.prototype.initializeToggles = function () {
 * Called in the constructor to enumerate the content slides and set their attributes
  */
 accordion2.prototype.initializeAccordion = function () {
+    this.initializeToggles();
     //loop through the accordion content slides
     if (this.accordionContents.length > 0) {
         for (var i = 0; i < this.accordionContents.length; i++) {

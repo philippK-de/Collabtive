@@ -38,10 +38,15 @@ function createView(myEl) {
         el: "#" + myEl.el,
         data: myModel,
         methods: {
-            update: function(updateDependencies){
-                updateView(this,updateDependencies);
+            update: function (updateDependencies) {
+                updateView(this, updateDependencies);
             },
             afterUpdate: function (updateHandler) {
+                this.$on("iloaded", function () {
+                    Vue.nextTick(updateHandler);
+                });
+            },
+            afterLoad: function (updateHandler) {
                 this.$once("iloaded", function () {
                     Vue.nextTick(updateHandler);
                 });
@@ -190,15 +195,15 @@ var pagination = {
 };
 
 function formHandler(form, theView, submitHandler) {
-    this.form  = form;
+    this.form = form;
     this.view = theView;
     this.submitHandler = submitHandler;
 
     formView = this.view;
-    form.addEventListener("submit",this.submit.bind(formView));
+    form.addEventListener("submit", this.submit.bind(formView));
 
 }
-formHandler.prototype.submit = function(event) {
+formHandler.prototype.submit = function (event) {
     submitForm(event);
 };
 /*
