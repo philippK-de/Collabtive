@@ -17,9 +17,8 @@ define("CL_PUBDATE", "1426201200");
  error_reporting(E_ALL || E_STRICT);
 // include config file , pagination and global functions
 require(CL_ROOT . "/config/" . CL_CONFIG . "/config.php");
-require(CL_ROOT . "/include/SmartyPaginate.class.php");
-// require html purifier
-require(CL_ROOT . "/include/HTMLPurifier.standalone.php");
+//include composer dependencies
+require(CL_ROOT . "/vendor/autoload.php");
 // load init functions
 require(CL_ROOT . "/include/initfunctions.php");
 //assume mysql as the default db
@@ -162,7 +161,4 @@ if (isset($userid)) {
    // $myOpenProjects = $project->getMyProjects($userid);
 
 }
-// clear session data for pagination
-SmartyPaginate::disconnect();
 
-?>
