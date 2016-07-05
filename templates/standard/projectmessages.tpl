@@ -79,7 +79,7 @@
                             <td>
                                 <div class="toggle-in">
                                     <span class="acc-toggle"
-                                          onclick="javascript:accord_messages.activate(document.querySelector('#block_msgs_content{{$index}}'));"></span>
+                                          onclick="javascript:accord_messages.toggle(document.querySelector('#block_msgs_content{{$index}}'));"></span>
                                     <a href="managemessage.php?action=showmessage&amp;mid={{*message.ID}}&amp;id={{*message.project}}"
                                        title="{{*message.title}}">{{message.title | truncate '30' }}</a>
                                 </div>
@@ -106,7 +106,7 @@
 
                         <tr class="acc">
                             <td colspan="6">
-                                <div class="accordion_content" data-slide="{{$index}}" id="block_msgs_content{{$index}}">
+                                <div class="accordion_content">
                                     <div class="acc-in">
                                         <img src="thumb.php?width=80&amp;height=80&amp;pic=templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/no-avatar-male.jpg"/>
 
@@ -211,11 +211,13 @@
     projectMessagesView = createView(projectMessages);
 
     var accord_messages;
-    projectMessagesView.afterUpdate(function () {
-        accord_messages = new accordion2('block_msgs');
+    projectMessagesView.afterLoad(function () {
         addMessageForm = document.getElementById("addmessageform");
         formView = projectMessagesView;
         addMessageForm.addEventListener("submit", submitForm.bind(formView));
+    });
+    projectMessagesView.afterUpdate(function(){
+        accord_messages = new accordion2('block_msgs');
     });
 
 </script>

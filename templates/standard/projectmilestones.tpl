@@ -48,11 +48,8 @@
     var accord_miles_late;
     var accord_miles_new;
     var accord_miles_upcoming;
-    projectMilestonesView.afterUpdate(function () {
+    projectMilestonesView.afterLoad(function () {
 
-        accord_miles_late = new accordion2('lateMilestones');
-        accord_miles_new = new accordion2('currentMilestones');
-        accord_miles_upcoming = new accordion2('upcomingMilestones');
         // /loop through the blocks and add the accordion toggle link
         var theBlocks = document.querySelectorAll("#projectMilestones > div[class~='headline'] > a");
 
@@ -68,6 +65,12 @@
         addMilestoneForm = document.getElementById("addmilestoneform");
         formView = projectMilestonesView;
         addMilestoneForm.addEventListener("submit", submitForm.bind(formView));
+    });
+
+    projectMilestonesView.afterUpdate(function(){
+        accord_miles_late = new accordion2('lateMilestones');
+        accord_miles_new = new accordion2('currentMilestones');
+        accord_miles_upcoming = new accordion2('upcomingMilestones');
     });
 
 </script>

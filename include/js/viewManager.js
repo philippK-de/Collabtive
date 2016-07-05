@@ -194,18 +194,7 @@ var pagination = {
     }
 };
 
-function formHandler(form, theView, submitHandler) {
-    this.form = form;
-    this.view = theView;
-    this.submitHandler = submitHandler;
 
-    formView = this.view;
-    form.addEventListener("submit", this.submit.bind(formView));
-
-}
-formHandler.prototype.submit = function (event) {
-    submitForm(event);
-};
 /*
  * Function to asyncronously submit a form
  * This is to be used with form.addEventListener()
@@ -244,7 +233,7 @@ function submitForm(event) {
             var response = ajax.request.responseText;
             if (response == "ok") {
                 //update the view belonging to the form
-                updateView(formView, false);
+                formView.update();
                 //show system message for element added
                 systemMessage.added(formView.$get("itemType"));
                 //try calling the formSubmited() handler that can be defined

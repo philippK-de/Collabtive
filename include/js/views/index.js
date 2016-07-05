@@ -94,9 +94,10 @@ projectsView.afterLoad(function(){
         blockIds.push(theId);
 
         //get the index of the last opened block
-        theCook = readCookie("activeSlideIndex");
+        var theCook = readCookie("activeSlideIndex");
 
         //console.log(theCook);
+        var openSlide;
         if (theCook > 0) {
             openSlide = theCook;
         }
@@ -106,19 +107,23 @@ projectsView.afterLoad(function(){
         //add a call to activate accordeon
         theAction += "activateAccordeon(" + i + ");";
         theBlocks[i].setAttribute("onclick", theAction);
-        //console.log(theBlocks[i].getAttribute("onclick"));
     }
     //activateAccordeon(openSlide);
     activateAccordeon(0);
 });
 //initialize accordeons
-var accord_tasks;
-var accord_msgs;
+
 var accord_projects;
 projectsView.afterUpdate(function () {
-    accord_tasks  = new accordion2('desktoptasks');
-    accord_msgs = new accordion2('desktopmessages');
     accord_projects = new accordion2('desktopprojects');
+});
+var accord_tasks;
+tasksView.afterUpdate(function(){
+    accord_tasks  = new accordion2('desktoptasks');
+});
+var accord_msgs;
+msgsView.afterUpdate(function(){
+    accord_msgs = new accordion2('desktopmessages');
 });
 
 

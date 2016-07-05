@@ -65,8 +65,7 @@
                                 <div class="toggle-in">
                                     <span id="desktoptasks_toggle{{*item.ID}}"
                                           class="acc-toggle"
-                                          onclick="javascript:accord_tasks.activate(document.querySelector('#desktoptasks_content{{$index}}'));
-                                          "></span>
+                                          onclick="javascript:accord_tasks.toggle(document.querySelector('#desktoptasks_content{{$index}}'));"></span>
                                     <a href="managetask.php?action=showtask&amp;id={{*item.project}}&amp;tid={{*item.ID}}" title="{{*item.title}}">
                                         {{*item.title | truncate '30' }}
                                     </a>
@@ -92,7 +91,7 @@
 
                         <tr class="acc">
                             <td colspan="5">
-                                <div class="accordion_content" data-slide="{{$index}}" id="desktoptasks_content{{$index}}">
+                                <div class="accordion_content" >
                                     <div class="acc-in">
                                         <div class="message-in" >
                                             {{{*item.text}}}

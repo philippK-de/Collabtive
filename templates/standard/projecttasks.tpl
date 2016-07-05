@@ -1,6 +1,6 @@
 {include file="header.tpl" jsload = "ajax"  jsload1 = "tinymce" }
 {include file="tabsmenue-project.tpl" taskstab = "active"}
-<script type="text/javascript" src="include/js/accordion.min.js"></script>
+
 <div id="content-left">
     <div id="content-left-in">
         <div class="tasks">
@@ -61,7 +61,11 @@
                             <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt=""/>{$lists[list].name|truncate:70:"...":true}
                         </h2>
                     </div>
-                    <div id="contentblock-{$lists[list].ID}" class="block blockaccordion_content" style="overflow:hidden;">
+                    <div id="taskListBlock_{$lists[list].ID}"
+                         data-list="{$lists[list].ID}"
+                         data-project="{$project.ID}"
+                         class="block blockaccordion_content"
+                         style="overflow:hidden;">
 
                         {*Add Task*}
                         {if $userpermissions.tasks.add}
@@ -71,7 +75,7 @@
                         {/if}
 
                         <div class="nosmooth" id="sm_{$lists[list].ID}">
-                            <table id="acc_{$lists[list].ID}" cellpadding="0" cellspacing="0" border="0">
+                            <table id="taskList_{$lists[list].ID}" cellpadding="0" cellspacing="0" border="0">
 
                                 <thead>
                                 <tr>
@@ -222,8 +226,8 @@
 
                 {literal}
                     <script type="text/javascript">
-                        var projectTasks = {
-                            el: "contentblock-{/literal}{$lists[list].ID}{literal}",
+                   /*   var projectTasks = {
+                            el: "taskListBlock_{/literal}{$lists[list].ID}{literal}",
                             itemType: "task",
                             url: "managetask.php?action=projectTasks&tlid={/literal}{$lists[list].ID}{literal}&id={/literal}{$project.ID}{literal}",
                             dependencies: []
@@ -238,8 +242,8 @@
 
                         //addTaskForm{/literal}{$lists[list].ID}{literal}.addEventListener("submit",submitForm.bind(formView));
 
-                        var accord_{/literal}{$lists[list].ID}{literal} = new accordion2('contentblock-{/literal}{$lists[list].ID}{literal}');
-
+                        var accord_{/literal}{$lists[list].ID}{literal} = new accordion2('taskListBlock_{/literal}{$lists[list].ID}{literal}');
+                             */
                     </script>
                 {/literal}
                 {/section}
@@ -356,7 +360,7 @@
 
 {/if} {*Done Tasklists End*}
 
-
-<script type="text/javascript" src="include/js/views/projectTasks.min.js"></script>
+<script type="text/javascript" src="include/js/accordion.min.js"></script>
+<script type="text/javascript" src="include/js/views/projectTasks.js"></script>
 
 {include file="footer.tpl"}
