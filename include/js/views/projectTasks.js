@@ -29,7 +29,7 @@ function initTasklistViews() {
     var taskLists = document.getElementsByClassName("blockaccordion_content");
 
     for (var a = 0; a < taskLists.length; a++) {
-        var taskListID = taskLists[a].dataset.list;
+        var taskListID = taskLists[a].dataset.tasklist;
         var projectID = taskLists[a].dataset.project;
         var taskListElement = taskLists[a].id;
 
@@ -42,15 +42,16 @@ function initTasklistViews() {
 
         var projectTasksView = createView(projectTasks);
 
+
         var addTaskForm = document.getElementById("addtaskform" + taskListID);
-        formView = projectTasksView;
-        addTaskForm.addEventListener("submit", submitForm.bind(formView));
+        var formManager = new formHandler(addTaskForm, projectTasksView);
 
 
         projectTasksView.afterLoad(function(){
             console.log("formview after update");
 
         });
+
         var accord = new accordion2(taskListElement);
 
 

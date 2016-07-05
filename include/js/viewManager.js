@@ -101,6 +101,8 @@ function updateView(view, updateDependencies) {
         Vue.set(view, "pages", pagination.listPages(responseData.count));
 
         view.$emit("iloaded");
+        console.log("loaded" + myUrl);
+        console.log(responseData.items);
         //update dependencies
         if (updateDependencies == true) {
             //get the array of dependendant views
@@ -194,6 +196,19 @@ var pagination = {
     }
 };
 
+function formHandler(form, view) {
+
+    this.form = form;
+    this.view = view;
+
+    formView = this.view;
+    this.form.addEventListener("submit", this.submitForm.bind(formView));
+
+}
+
+formHandler.prototype.submitForm = function (event) {
+    submitForm(event);
+}
 
 /*
  * Function to asyncronously submit a form

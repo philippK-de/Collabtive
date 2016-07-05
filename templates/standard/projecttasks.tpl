@@ -40,7 +40,7 @@
                         <a href="javascript:void(0);" id="toggle-{$lists[list].ID}" class="win_block" onclick=""></a>
 
                         <div class="wintools" style="z-index:999;">
-                            <div class="progress" id="progresscontentblock-{$lists[list].ID}" style="display:none;width:22px;float:left">
+                            <div class="progress" id="progressblockTasks_content{$smarty.section.list.index}" style="display:none;width:22px;float:left">
                                 <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-tasks.gif"/>
                             </div>
                             {if $userpermissions.tasks.close}
@@ -61,8 +61,8 @@
                             <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt=""/>{$lists[list].name|truncate:70:"...":true}
                         </h2>
                     </div>
-                    <div id="taskListBlock_{$lists[list].ID}"
-                         data-list="{$lists[list].ID}"
+                    <div id="blockTasks_content{$smarty.section.list.index}"
+                         data-tasklist="{$lists[list].ID}"
                          data-project="{$project.ID}"
                          class="block blockaccordion_content"
                          style="overflow:hidden;">
@@ -95,7 +95,7 @@
 
                                 {*Color-Mix*}
                                 {literal}
-                                <tbody v-for="task in items.open" class="alternateColors" id="task_{{task.ID}}" v-cloak>
+                                <tbody v-for="task in items.open" class="alternateColors" id="task_{{*task.ID}}" v-cloak>
 
                                 <tr v-bind:class="{ 'marker-late': item.islate, 'marker-today': item.istoday }">
                                     <td>
