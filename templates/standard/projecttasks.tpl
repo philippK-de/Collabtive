@@ -223,29 +223,6 @@
                         </div>
                     </div>
                     {*block END*}
-
-                {literal}
-                    <script type="text/javascript">
-                   /*   var projectTasks = {
-                            el: "taskListBlock_{/literal}{$lists[list].ID}{literal}",
-                            itemType: "task",
-                            url: "managetask.php?action=projectTasks&tlid={/literal}{$lists[list].ID}{literal}&id={/literal}{$project.ID}{literal}",
-                            dependencies: []
-                        };
-                        var addTaskForm{/literal}{$lists[list].ID}{literal} = document.getElementById("addtaskform{/literal}{$lists[list].ID}{literal}");
-                        var projectTasksView_{/literal}{$lists[list].ID}{literal} = createView(projectTasks);
-                        var formHandler_{/literal}{$lists[list].ID}{literal} = new formHandler(addTaskForm{/literal}{$lists[list].ID}{literal}, projectTasksView_{/literal}{$lists[list].ID}{literal}, function () {
-                            blindtoggle('form_{/literal}{$lists[list].ID}{literal}');
-                            toggleClass('toggle-done-{/literal}{$lists[list].ID}{literal}', 'acc-toggle', 'acc-toggle-active');
-                            toggleClass("donebutn_{/literal}{$lists[list].ID}{literal}", 'butn_link_active', 'butn_link');
-                        });
-
-                        //addTaskForm{/literal}{$lists[list].ID}{literal}.addEventListener("submit",submitForm.bind(formView));
-
-                        var accord_{/literal}{$lists[list].ID}{literal} = new accordion2('taskListBlock_{/literal}{$lists[list].ID}{literal}');
-                             */
-                    </script>
-                {/literal}
                 {/section}
             </div>
             {/if} {*if $lists[0][0]*}
