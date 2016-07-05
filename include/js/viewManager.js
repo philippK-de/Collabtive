@@ -101,8 +101,6 @@ function updateView(view, updateDependencies) {
         Vue.set(view, "pages", pagination.listPages(responseData.count));
 
         view.$emit("iloaded");
-        console.log("loaded" + myUrl);
-        console.log(responseData.items);
         //update dependencies
         if (updateDependencies == true) {
             //get the array of dependendant views
