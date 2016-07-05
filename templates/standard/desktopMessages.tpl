@@ -3,10 +3,12 @@
     <div class="msgs" style="padding-bottom:2px;" id="desktopmessages">
         <div class="headline">
             <a href="javascript:void(0);" id="activityhead_toggle" class="win_none" onclick=""></a>
+
             <div class="wintools">
                 <loader block="desktopmessages" loader="loader-messages.gif"></loader>
                 <div class="export-main">
                     <a class="export"><span>{#export#}</span></a>
+
                     <div class="export-in" style="width:46px;left: -46px;"> {* at one item *}
                         <a class="rss" href="managerss.php?action=mymsgs-rss&amp;user={$userid}"><span>{#rssfeed#}</span></a>
                         <a class="pdf" href="managemessage.php?action=mymsgs-pdf&amp;id={$userid}"><span>{#pdfexport#}</span></a>
@@ -20,7 +22,7 @@
         <div class="block blockaccordion_content" id="activityhead" style="overflow:hidden;">
             <div id="addmsg" class="addmenue" style="display:none;">
             </div>
-            <table  cellpadding="0" cellspacing="0" border="0" v-cloak>
+            <table cellpadding="0" cellspacing="0" border="0" v-cloak>
 
                 <thead>
                 <tr>
@@ -54,7 +56,8 @@
                             <span id="desktopmessages_toggle{{*item.ID}}"
                                   class="acc-toggle"
                                   onclick="javascript:accord_msgs.toggle(document.querySelector('#desktopmessages_content{{$index}}'));"></span>
-                            <a href="managemessage.php?action=showmessage&amp;mid={{*item.ID}}&amp;id={{*item.project}}" title="{{*item.title}}">{{*item.title | truncate '30' }}</a>
+                            <a href="managemessage.php?action=showmessage&amp;mid={{*item.ID}}&amp;id={{*item.project}}" title="{{*item.title}}">{{*item.title
+                                | truncate '30' }}</a>
                         </div>
                     </td>
                     <td>
@@ -80,25 +83,28 @@
                         <div class="accordion_content">
                             <div class="acc-in">
                                 <div class="avatar">
-                                    <img src="thumb.php?width=80&amp;height=80&amp;pic=templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/no-avatar-male.jpg" />
+                                    <img src="thumb.php?width=80&amp;height=80&amp;pic=templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/no-avatar-male.jpg"/>
                                 </div>
                                 <div class="message">
                                     <div class="message-in">
                                         {{{*item.text}}}
                                     </div>
                                     <!-- message milestones -->
-                                    <p v-if="item.hasMilestones">
-                                    <div v-if="item.hasMilestones" class="content-spacer-b"></div>
-                                    <strong v-if="item.hasMilestones">{/literal}{#milestone#}{literal}:</strong>
-                                        <a v-if="item.hasMilestones" href="managemilestone.php?action=showmilestone&amp;msid={{*item.milestones.ID}}&amp;id={{*item.milestones.project}}">{{*item.milestones.name}}</a>
-                                    </p>
+                                    <template v-if="item.hasMilestones">
+                                        <p>
+
+                                        <div class="content-spacer-b"></div>
+                                        <strong>{/literal}{#milestone#}{literal}:</strong>
+                                        <a href="managemilestone.php?action=showmilestone&amp;msid={{*item.milestones.ID}}&amp;id={{*item.milestones.project}}">{{*item.milestones.name}}</a>
+                                        </p>
+                                    </template>
 
                                     <!-- message files -->
                                     <p v-if="item.hasFiles" class="tags-miles">
                                         <strong>{/literal}{#files#}:{literal}</strong>
                                     </p>
 
-                                    <div v-if="item.hasFiles" class="inwrapper" >
+                                    <div v-if="item.hasFiles" class="inwrapper">
                                         <ul>
                                             <li v-for="file in item.files">
                                                 <div class="itemwrapper" id="iw_{{*file.ID}}">
@@ -110,20 +116,25 @@
                                                             </td>
                                                             <td class="thumb">
 
-                                                                <a href="managefile.php?action=downloadfile&amp;id={{*file.project}}&amp;file={{*file.ID}}" title="{{*file.name}}">
-                                                                    <img v-bind:src="templates/standard/theme/standard/images/files/{{file.type}}.png" alt="{{*file.name}}"/>
+                                                                <a href="managefile.php?action=downloadfile&amp;id={{*file.project}}&amp;file={{*file.ID}}"
+                                                                   title="{{*file.name}}">
+                                                                    <img v-bind:src="templates/standard/theme/standard/images/files/{{file.type}}.png"
+                                                                         alt="{{*file.name}}"/>
                                                                 </a>
                                                             </td>
                                                             <td class="rightmen" valign="top">
                                                                 <div class="inmenue">
-                                                                    <a class="del" href="managefile.php?action=delete&amp;id={{file.project}}&amp;file={{file].ID}}" title="{#delete#}" onclick="fadeToggle('iw_{{file].ID}}');"></a>
+                                                                    <a class="del"
+                                                                       href="managefile.php?action=delete&amp;id={{file.project}}&amp;file={{file].ID}}"
+                                                                       title="{#delete#}" onclick="fadeToggle('iw_{{file].ID}}');"></a>
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td colspan="3">
                                                                 <span class="name">
-                                                                    <a href="managefile.php?action=downloadfile&amp;id={{*file.project}}&amp;file={{*file.ID}}" title="{{*file.name}}">{{*file.shortName}}</a>
+                                                                    <a href="managefile.php?action=downloadfile&amp;id={{*file.project}}&amp;file={{*file.ID}}"
+                                                                       title="{{*file.name}}">{{*file.shortName}}</a>
                                                                 </span>
                                                             </td>
                                                         <tr/>
