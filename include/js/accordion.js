@@ -26,7 +26,6 @@ function accordion2(container, options) {
     this.currentToggle = {};
 
     this.initializeAccordion();
-
 }
 
 /*
@@ -37,7 +36,7 @@ accordion2.prototype.initializeToggles = function () {
     this.accordionToggles = this.rootElement.querySelectorAll("." + this.classNames.toggle + ",." + this.classNames.toggleActive);
     //get accordion contents - these are the content areas representing the slides
     this.accordionContents = this.rootElement.querySelectorAll("." + this.classNames.content + ",." + this.classNames.contentActive);
-}
+};
 
 /*
 * Called in the constructor to enumerate the content slides and set their attributes
@@ -57,7 +56,7 @@ accordion2.prototype.initializeAccordion = function () {
             this.accordionContents[i].id = this.container + "_content" + i;
         }
     }
-}
+};
 
 // this method is used for block accordions and new accordions
 accordion2.prototype.toggle = function (contentSlide) {
@@ -83,7 +82,7 @@ accordion2.prototype.toggle = function (contentSlide) {
         }
     }
 
-}
+};
 //this method is a legacy drop in for the old accordion / inner accordions
 accordion2.prototype.activate = function (contentSlide) {
     this.initializeToggles();
@@ -107,20 +106,20 @@ accordion2.prototype.activate = function (contentSlide) {
             });
         }
     }
-}
+};
 
 accordion2.prototype.showSlide = function () {
     this.currentContent.className = this.classNames.contentActive;
     this.showToggle();
-}
+};
 accordion2.prototype.hideSlide = function () {
     this.currentContent.className = this.classNames.content;
     this.hideToggle();
-}
+};
 accordion2.prototype.showToggle = function () {
     this.currentToggle.className = this.classNames.toggleActive;
-}
+};
 accordion2.prototype.hideToggle = function () {
     this.currentToggle.className = this.classNames.toggle;
-}
+};
 
