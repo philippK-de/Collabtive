@@ -16,7 +16,7 @@ function accordion2(container, options) {
     }
 
     //slide speed
-    this.slideDuration = 500;
+    this.slideDuration = 400;
     //setup base elements
     this.container = container;
     this.rootElement = document.getElementById(this.container);
