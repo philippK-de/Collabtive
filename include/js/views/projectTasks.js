@@ -27,7 +27,6 @@ window.addEventListener("load", function () {
 function formHandler() {
     this.forms = [];
     this.views = [];
-    this.callbacks = [];
 }
 
 formHandler.prototype.bindViews = function () {

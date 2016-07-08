@@ -231,7 +231,7 @@ function submitForm(event) {
             var response = ajax.request.responseText;
             if (response == "ok") {
                 //update the view belonging to the form
-                formView.update();
+                formView.update(false);
                 //show system message for element added
                 systemMessage.added(formView.$get("itemType"));
                 //try calling the formSubmited() handler that can be defined
