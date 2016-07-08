@@ -109,7 +109,7 @@
                                     <td>
                                         <div class="toggle-in">
                                             <span class="acc-toggle"
-                                                  onclick="javascript:accord_{{task.liste}}.activate(document.querySelector('#contentblock-{/literal}{$lists[list].ID}{literal}_content{{$index}}'));"></span>
+                                                  onclick="javascript:accord_{{*task.liste}}.activate(document.querySelector('#contentblock-{/literal}{$lists[list].ID}{literal}_content{{$index}}'));"></span>
                                             <a href="managetask.php?action=showtask&amp;tid={{*task.ID}}&amp;id={{*task.project}}"
                                                title="{{*task.title}}">
                                                 {{*task.title | truncate '30' }}
@@ -338,6 +338,6 @@
 {/if} {*Done Tasklists End*}
 
 <script type="text/javascript" src="include/js/accordion.min.js"></script>
-<script type="text/javascript" src="include/js/views/projectTasks.js"></script>
+<script type="text/javascript" src="include/js/views/projectTasks.min.js"></script>
 
 {include file="footer.tpl"}

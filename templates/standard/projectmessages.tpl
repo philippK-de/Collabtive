@@ -4,7 +4,6 @@
 <div id="content-left">
     <div id="content-left-in">
         <div class="msgs" id="projectMessages" v-cloak>
-
             <div class="infowin_left"
                  id="messageSystemMessage"
                  data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png"
@@ -16,10 +15,8 @@
             </div>
 
             <h1>{$projectname|truncate:45:"...":true}<span>/ {#messages#}</span></h1>
-
             <div class="headline">
                 <a href="javascript:void(0);" id="acc-toggle" class="win_block" onclick="toggleBlock('block_msgs');"></a>
-
                 <div class="wintools">
                     <div class="progress" id="progressprojectMessages" style="display:none;width:20px;float:left">
                         <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-messages.gif"/>
@@ -36,13 +33,11 @@
 
                 <h2>
                     <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#messages#}
-
                     <pagination view="projectMessagesView" :pages="pages" :current-page="currentPage"></pagination>
                 </h2>
             </div>
 
             <div id="block_msgs" class="block">
-
                 {*Add Message*}
                 <div id="addmsg" class="addmenue" style="display:none;">
                     {include file="addmessageform.tpl" }
@@ -127,7 +122,6 @@
                                             <p v-if="message.hasFiles" class="tags-miles">
                                                 <strong>{/literal}{#files#}:{literal}</strong>
                                             </p>
-
                                             <div v-if="message.hasFiles" class="inwrapper">
                                                 <ul>
                                                     <li v-for="file in message.files" id="fli_{{*file.ID}}">
@@ -164,7 +158,6 @@
                                                                     </td>
                                                                 <tr/>
                                                             </table>
-
                                                         </div>
                                                         <!-- itemwrapper End -->
                                                     </li>
@@ -196,13 +189,11 @@
             </div>
             <!-- block END  -->
             <div class="content-spacer"></div>
-
         </div>
         <!-- Msgs END-->
     </div>
     <!-- content-left-in END-->
 </div> <!-- content-left END -->
-
     <script type="text/javascript" src="include/js/accordion.min.js"></script>
     <script type="text/javascript" src="include/js/views/projectMessages.min.js"></script>
 <script type="text/javascript">

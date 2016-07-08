@@ -2,7 +2,13 @@
 
 	<h2>{#addtask#}</h2>
 
-	<form novalidate name="addtaskform{$lists[list].ID}" id="addtaskform{$lists[list].ID}" class="main" method="post" action="managetask.php?action=add&amp;id={$project.ID}">
+	<form novalidate
+          data-index="{$smarty.section.list.index}"
+          data-tasklist="{$lists[list].ID}"
+          data-project="{$project.ID}"
+          name="addtaskform{$lists[list].ID}"
+          id="addtaskform{$lists[list].ID}"
+          class="main taskSubmitForm" method="post" action="managetask.php?action=add&amp;id={$project.ID}">
 		<fieldset>
 
 			<div class="row">

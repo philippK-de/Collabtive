@@ -194,20 +194,6 @@ var pagination = {
     }
 };
 
-function formHandler(form, view) {
-
-    this.form = form;
-    this.view = view;
-
-    formView = this.view;
-    this.form.addEventListener("submit", this.submitForm.bind(formView));
-
-}
-
-formHandler.prototype.submitForm = function (event) {
-    submitForm(event);
-}
-
 /*
  * Function to asyncronously submit a form
  * This is to be used with form.addEventListener()
@@ -240,7 +226,6 @@ function submitForm(event) {
                 postBody += "&" + element.name + "=" + element.value;
             }
         }
-
         //send the ajax request
         var ajax = new ajaxRequest(url, "", function () {
             var response = ajax.request.responseText;
