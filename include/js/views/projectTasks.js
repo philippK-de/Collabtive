@@ -24,19 +24,20 @@ window.addEventListener("load", function () {
     activateAccordeon(0);
 
 });
-function formHandler() {
+function taskFormHandler() {
     this.forms = [];
     this.views = [];
 }
 
-formHandler.prototype.bindViews = function () {
+taskFormHandler.prototype.bindViews = function () {
     var forms = this.forms;
     var views = this.views;
     for (var i = 0; i < forms.length; i++) {
         forms[i].onsubmit = function (event) {
+            var viewIndex = event.currentTarget.dataset.index;
             event.preventDefault();
             event.stopPropagation();
-            handleForm(event, views[event.currentTarget.dataset.index]);
+            handleForm(event, views[viewIndex]);
         }
     }
 };
@@ -88,16 +89,24 @@ var handleForm = function (event, view) {
     }
 };
 
+function handleClose(event){
+    var closeToggle = event.target;
+    var viewIndex = closeToggle.dataset.viewindex;
+    var taskID = closeToggle.dataset.task;
+    var projectID = closeToggle.dataset.project;
+
+    closeElement(closeToggle,"managetask.php?action=close&tid="+taskID+"id="+projectID, projectTaskViews[viewIndex]);
+}
 
 function initTasklistViews() {
-    var formManager = new formHandler();
+    var formManager = new taskFormHandler();
     var taskLists = document.getElementsByClassName("blockaccordion_content");
 
-    var projectTaskViews = [];
-    for (var a = 0; a < taskLists.length; a++) {
-        var taskListID = taskLists[a].dataset.tasklist;
-        var projectID = taskLists[a].dataset.project;
-        var taskListElement = taskLists[a].id;
+    projectTaskViews = [];
+    for (var i = 0; i < taskLists.length; i++) {
+        var taskListID = taskLists[i].dataset.tasklist;
+        var projectID = taskLists[i].dataset.project;
+        var taskListElement = taskLists[i].id;
 
         var projectTasksView = createView({
             el: taskListElement,
@@ -105,18 +114,25 @@ function initTasklistViews() {
             url: "managetask.php?action=projectTasks&tlid=" + taskListID + "&id=" + projectID,
             dependencies: []
         });
-
-        projectTasksView.afterUpdate(function () {
-            var accord = new accordion2(taskListElement);
-        });
-
         projectTaskViews.push(projectTasksView);
+
+        projectTasksView.afterUpdate(function(){
+            var closeToggles = document.getElementsByClassName("closeElement");
+            for(var j=0;j<closeToggles.length;j++)
+            {
+                closeToggles[j].onclick = function(event)
+                {
+                    handleClose(event);
+                }
+
+            }
+
+        });
     }
 
     formManager.forms = document.getElementsByClassName("taskSubmitForm");
     formManager.views = projectTaskViews;
 
     formManager.bindViews();
-
 }
 initTasklistViews();
