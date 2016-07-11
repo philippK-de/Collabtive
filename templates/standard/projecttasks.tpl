@@ -104,9 +104,7 @@
                                         {literal}
                                             <a class="butn_check closeElement" href="javascript:void(0);"
                                             data-task="{{*task.ID}}"
-                                            data-index="{{$index}}"
                                             data-viewindex="{/literal}{$smarty.section.list.index}"
-                                            data-tasklist="{$lists[list].ID}"
                                             data-project="{$project.ID}{literal}"
                                             title="{/literal}{#close#}"></a>
                                         {/if}
@@ -130,11 +128,16 @@
                                         {/literal}
                                         {if $userpermissions.tasks.edit}
                                         {literal}
-                                            <a class="tool_edit" href="javascript:void(0);" onclick="change('managetask.php?action=editform&amp;tid={{task.ID}}&amp;id={{*task.project}}','form_{{*task.liste}}');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_{{*task.liste}}');" title="{/literal}{#edit#}"></a>
+                                            <a class="tool_edit" href="javascript:void(0);" onclick="change('managetask.php?action=editform&amp;tid={{*task.ID}}&amp;id={{*task.project}}','form_{{*task.liste}}');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_{{*task.liste}}');" title="{/literal}{#edit#}"></a>
                                         {/if}
                                         {if $userpermissions.tasks.del}
                                         {literal}
-                                            <a class="tool_del" href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','task_{{*task.ID}}','managetask.php?action=del&amp;tid={{*task.ID}}&amp;id={{*task.project}}', projectTasksView_{/literal}{$lists[list].ID}{literal});"  title="{/literal}{#delete#}"></a>
+                                            <a class="tool_del deleteElement"
+                                            data-task="{{*task.ID}}"
+                                            data-viewindex="{/literal}{$smarty.section.list.index}"
+                                            data-confirmtext="{#confirmdel#}"
+                                            data-project="{$project.ID}{literal}"
+                                            href="javascript:void(0);"  title="{/literal}{#delete#}"></a>
                                         {/if}
                                     </td>
                                 </tr>

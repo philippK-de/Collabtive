@@ -95,7 +95,18 @@ function handleClose(event){
     var taskID = closeToggle.dataset.task;
     var projectID = closeToggle.dataset.project;
 
-    closeElement(closeToggle,"managetask.php?action=close&tid="+taskID+"id="+projectID, projectTaskViews[viewIndex]);
+    closeElement(closeToggle.id,"managetask.php?action=close&tid="+taskID+"id="+projectID, projectTaskViews[viewIndex]);
+}
+function handleDelete(event){
+    var closeToggle = event.target;
+    var viewIndex = closeToggle.dataset.viewindex;
+    var taskID = closeToggle.dataset.task;
+    var projectID = closeToggle.dataset.project;
+    var confirmText = closeToggle.dataset.confirmtext;
+
+    console.log(confirmText);
+    confirmDelete(confirmText,"task_"+taskID,"managetask.php?action=del&tid="+taskID+"id="+projectID, projectTaskViews[viewIndex]);
+   // deleteElement(closeToggle,"managetask.php?action=del&tid="+taskID+"id="+projectID, projectTaskViews[viewIndex]);
 }
 
 function initTasklistViews() {
@@ -126,7 +137,17 @@ function initTasklistViews() {
                 }
 
             }
+            var deleteToggles = document.getElementsByClassName("deleteElement");
+            for(var z=0;z<deleteToggles.length;z++)
+            {
+                deleteToggles[z].onclick = function(event)
+                {
+                    console.log("clicked delete");
+                    console.log(event);
+                    handleDelete(event);
+                }
 
+            }
         });
     }
 
