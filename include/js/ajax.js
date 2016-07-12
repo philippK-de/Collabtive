@@ -64,7 +64,22 @@ ajaxRequest.prototype.sendRequest = function () {
     }
 }
 
-/*
+function css(selector)
+{
+    return document.querySelector(selector);
+}
+
+function cssAll(selector)
+{
+    return document.querySelectorAll(selector);
+}
+
+function cssId(id)
+{
+    return document.getElementById(id);
+}
+
+ /*
  * Function to update the HTML of an element, with the return value from a script called with XHR
  * @param string script The URL of the API endpoint
  * @param element the ID of the element to be updated

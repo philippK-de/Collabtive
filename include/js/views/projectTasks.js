@@ -104,9 +104,7 @@ function handleDelete(event){
     var projectID = closeToggle.dataset.project;
     var confirmText = closeToggle.dataset.confirmtext;
 
-    console.log(confirmText);
-    confirmDelete(confirmText,"task_"+taskID,"managetask.php?action=del&tid="+taskID+"id="+projectID, projectTaskViews[viewIndex]);
-   // deleteElement(closeToggle,"managetask.php?action=del&tid="+taskID+"id="+projectID, projectTaskViews[viewIndex]);
+   confirmDelete(confirmText,"task_"+taskID,"managetask.php?action=del&tid="+taskID+"id="+projectID, projectTaskViews[viewIndex]);
 }
 
 function initTasklistViews() {
@@ -125,32 +123,33 @@ function initTasklistViews() {
             url: "managetask.php?action=projectTasks&tlid=" + taskListID + "&id=" + projectID,
             dependencies: []
         });
+
         projectTaskViews.push(projectTasksView);
-
-        projectTasksView.afterUpdate(function(){
-            var closeToggles = document.getElementsByClassName("closeElement");
-            for(var j=0;j<closeToggles.length;j++)
-            {
-                closeToggles[j].onclick = function(event)
-                {
-                    handleClose(event);
-                }
-
-            }
-            var deleteToggles = document.getElementsByClassName("deleteElement");
-            for(var z=0;z<deleteToggles.length;z++)
-            {
-                deleteToggles[z].onclick = function(event)
-                {
-                    console.log("clicked delete");
-                    console.log(event);
-                    handleDelete(event);
-                }
-
-            }
-        });
     }
 
+
+    projectTaskViews[projectTaskViews.length-1].afterUpdate(function(){
+        var closeToggles = document.getElementsByClassName("closeElement");
+        for(var j=0;j<closeToggles.length;j++)
+        {
+            closeToggles[j].onclick = function(event)
+            {
+                handleClose(event);
+            }
+
+        }
+
+
+        var deleteToggles = document.getElementsByClassName("deleteElement");
+        for(var z=0;z<deleteToggles.length;z++)
+        {
+            deleteToggles[z].onclick = function(event)
+            {
+                handleDelete(event);
+            }
+
+        }
+    });
     formManager.forms = document.getElementsByClassName("taskSubmitForm");
     formManager.views = projectTaskViews;
 

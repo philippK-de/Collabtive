@@ -27,6 +27,16 @@ function createView(myEl) {
         url: myEl.url
     };
 
+    if(myEl.readyHandler != undefined)
+    {
+        myModel.readyHandler = myEl.readyHandler;
+    }
+    else
+    {
+        myModel.readyHandler = function(){};
+
+    }
+
     /* Create the Vue.js view given the element myEl and the data in myModel
      * @param string el The DOM ID of the element to bind the view to
      * @param obj data The JSON object representing the data
@@ -51,7 +61,8 @@ function createView(myEl) {
                     Vue.nextTick(updateHandler);
                 });
             }
-        }
+        },
+        ready: myModel.readyHandler
     });
 
     var ajax = new ajaxRequest(myModel.url, myEl.el, function () {
