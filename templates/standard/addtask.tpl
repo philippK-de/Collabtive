@@ -80,7 +80,7 @@
 
 			<div class="row-butn-bottom">
 				<label>&nbsp;</label>
-				<button type="submit" onfocus="this.blur();">{#addbutton#}</button>
+				<button type="submit" onfocus="tinyMCE.triggerSave();this.blur();">{#addbutton#}</button>
 				<button type="reset" onclick="blindtoggle('form_{$lists[list].ID}');toggleClass('add_{$lists[list].ID}','add-active','add');toggleClass('add_butn_{$lists[list].ID}','butn_link_active','butn_link');toggleClass('sm_{$lists[list].ID}','smooth','nosmooth');return false;" onfocus="this.blur();">{#cancel#}</button>
 			</div>
 
