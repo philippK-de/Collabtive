@@ -6,13 +6,13 @@ var accord_dashboard = new accordion2('blockTasks', {
     }
 });
 function activateAccordeon(theAccord) {
-    accord_dashboard.toggle(document.querySelectorAll('#blockTasks .blockaccordion_content')[theAccord]);
+    accord_dashboard.toggle(cssAll('#blockTasks .blockaccordion_content')[theAccord]);
     setCookie("activeSlideProjectTasks", theAccord);
 }
 
 
 window.addEventListener("load", function () {
-    var theBlocks = document.querySelectorAll("#blockTasks > div[class~='headline'] > a");
+    var theBlocks = cssAll("#blockTasks > div[class~='headline'] > a");
 
     //loop through the blocks and add the accordion toggle link
     var openSlide = 0;
@@ -109,7 +109,7 @@ function handleDelete(event){
 
 function initTasklistViews() {
     var formManager = new taskFormHandler();
-    var taskLists = document.getElementsByClassName("blockaccordion_content");
+    var taskLists = cssAll(".blockaccordion_content");
 
     projectTaskViews = [];
     for (var i = 0; i < taskLists.length; i++) {
@@ -129,7 +129,7 @@ function initTasklistViews() {
 
     accordeons = [];
     projectTaskViews[projectTaskViews.length-1].afterUpdate(function(){
-        var closeToggles = document.getElementsByClassName("closeElement");
+        var closeToggles = cssAll(".closeElement");
         for(var j=0;j<closeToggles.length;j++)
         {
             closeToggles[j].onclick = function(event)
@@ -139,7 +139,7 @@ function initTasklistViews() {
 
         }
 
-        var deleteToggles = document.getElementsByClassName("deleteElement");
+        var deleteToggles = cssAll(".deleteElement");
         for(var z=0;z<deleteToggles.length;z++)
         {
             deleteToggles[z].onclick = function(event)
