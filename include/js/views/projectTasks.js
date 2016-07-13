@@ -172,4 +172,4 @@ function initTasklistViews() {
 
     formManager.bindViews();
 }
-initTasklistViews();
+window.addEventListener("load",initTasklistViews());
