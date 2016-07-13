@@ -10,23 +10,23 @@ function zeroFill( number, width )
 
 function populateEndtime()
 {
-	var startVal = parseInt($('started').value,10);
-	var hrsVal = parseInt($('workhours').value,10);
+	var startVal = parseInt(cssId('started').value,10);
+	var hrsVal = parseInt(cssId('workhours').value,10);
 
 	var finVal = startVal + hrsVal;
 
 	finVal = zeroFill(finVal,2);
-	$('ended').value = finVal + ":00";
+	cssId('ended').value = finVal + ":00";
 }
 function populateHours()
 {
-	var startVal = parseInt($('started').value,10);
-	var endVal = parseInt($('ended').value,10);
-	var hrsVal = parseInt($('workhours').value,10);
+	var startVal = parseInt(cssId('started').value,10);
+	var endVal = parseInt(cssId('ended').value,10);
+	var hrsVal = parseInt(cssId('workhours').value,10);
 
 	var finVal = endVal - startVal;
 	if(hrsVal != finVal && finVal >= 0)
 	{
-		$('workhours').value = finVal;
+		cssId('workhours').value = finVal;
 	}
 }
