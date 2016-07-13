@@ -322,11 +322,12 @@ function removeRow(row, color) {
          */
         Velocity(rowElement, {
             backgroundColor: color,
-            backgroundColorAlpha: 0.6
+            backgroundColorAlpha: 0.6,
+            colorAlpha:0.6
         }, {
             complete: function () {
                 Velocity(rowElement, "fadeOut", {
-                    delay: 1000,
+                    delay: 1500,
                     duration: 2500
                 });
             }

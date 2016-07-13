@@ -98,13 +98,22 @@ var handleForm = function (event, view) {
 /*
  * Handler function that will be bound to the onclick even of the close buttons
  */
-function handleClose(event) {
+function handleStatus(event, status) {
     var closeToggle = event.target;
     var viewIndex = closeToggle.dataset.viewindex;
     var taskID = closeToggle.dataset.task;
     var projectID = closeToggle.dataset.project;
 
-    closeElement(closeToggle.id, "managetask.php?action=close&tid=" + taskID + "id=" + projectID, projectTaskViews[viewIndex]);
+    var url;
+    if(status == "open")
+    {
+        url = "managetask.php?action=open&tid=" + taskID + "id=" + projectID;
+    }
+    else if(status == "close")
+    {
+        url = "managetask.php?action=close&tid=" + taskID + "id=" + projectID;
+    }
+    closeElement("task_"+taskID, url, projectTaskViews[viewIndex]);
 }
 /*
  * Handler function that will be bound to the onclick even of the delete buttons
@@ -143,26 +152,37 @@ function initTasklistViews() {
             //get all tasklists and create an accordion for each one
             var taskLists = cssAll(".taskList");
             for (var a = 0; a < taskLists.length; a++) {
-                console.log(taskLists[a]);
                 accordeons.push(new accordion2(taskLists[a].id))
             }
 
             //get the close toggles and bind the close handler
             var closeToggles = cssAll(".closeElement");
-            for (var j = 0; j < closeToggles.length; j++) {
-                closeToggles[j].onclick = function (event) {
-                    handleClose(event);
+            for (var b = 0; b < closeToggles.length; b++) {
+                closeToggles[b].onclick = function (event) {
+                    handleStatus(event, "close");
                 }
             }
 
             //get the delete toggles and bind the delete handler
+            var reopenToggles = cssAll(".openElement");
+            for (var d = 0; d < reopenToggles.length; d++) {
+                reopenToggles[d].onclick = function (event) {
+                    handleStatus(event, "open");
+                }
+
+            }
+
+            //get the delete toggles and bind the delete handler
             var deleteToggles = cssAll(".deleteElement");
-            for (var z = 0; z < deleteToggles.length; z++) {
-                deleteToggles[z].onclick = function (event) {
+            for (var c = 0; c < deleteToggles.length; c++) {
+                deleteToggles[c].onclick = function (event) {
                     handleDelete(event);
                 }
 
             }
+
+
+
         });
         projectTaskViews.push(projectTasksView);
     }
@@ -172,4 +192,4 @@ function initTasklistViews() {
 
     formManager.bindViews();
 }
-window.addEventListener("load",initTasklistViews());
+window.addEventListener("load", initTasklistViews());

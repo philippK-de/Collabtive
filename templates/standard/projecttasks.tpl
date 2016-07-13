@@ -179,14 +179,18 @@
                                 <div class="toggleblock">
                                     <table cellpadding="0" cellspacing="0" border="0" id="done_{$lists[list].ID}">
                                         {literal}
-                                        <tbody v-for="oldtask in items.closed" class="alternateColors" id="oldtask_{{*oldtask.ID}">
+                                        <tbody v-for="oldtask in items.closed" class="alternateColors" id="task_{{*oldtask.ID}}">
 
                                         <tr>
                                             <td class="a">
                                                 {/literal}
                                                 {if $userpermissions.tasks.close}
                                                 {literal}
-                                                    <a class="butn_checked" href="javascript:closeElement('oldtask_{{*oldtask.ID}}','managetask.php?action=open&amp;tid={{*oldtask.ID}}&amp;id={{*oldtask.project}}',projectTasksView_{/literal}{$lists[list].ID}{literal});" title="{/literal}{#open#}"></a>
+                                                    <a class="butn_checked openElement"
+                                                    data-task="{{*oldtask.ID}}"
+                                                    data-viewindex="{/literal}{$smarty.section.list.index}"
+                                                    data-project="{$project.ID}{literal}"
+                                                    title="{/literal}{#open#}"></a>
                                                 {/if}
                                                 {literal}
                                             </td>
@@ -201,7 +205,7 @@
                                             <td class="c">
                                                 <a href="manageuser.php?action=profile&amp;id={{*oldtask.user_id}}">{{*oldtask.user}}</a>
                                             </td>
-                                            <td class="days" style="text-align:right">{{*oldtask.daysleft}}&nbsp;&nbsp;</td>
+                                            <td class="days" style="text-align:right"></td>
                                             <td class="tools">
                                                 {/literal}
                                                 {if $userpermissions.tasks.del}
