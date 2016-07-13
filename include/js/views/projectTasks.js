@@ -89,22 +89,22 @@ var handleForm = function (event, view) {
     }
 };
 
-function handleClose(event){
+function handleClose(event) {
     var closeToggle = event.target;
     var viewIndex = closeToggle.dataset.viewindex;
     var taskID = closeToggle.dataset.task;
     var projectID = closeToggle.dataset.project;
 
-    closeElement(closeToggle.id,"managetask.php?action=close&tid="+taskID+"id="+projectID, projectTaskViews[viewIndex]);
+    closeElement(closeToggle.id, "managetask.php?action=close&tid=" + taskID + "id=" + projectID, projectTaskViews[viewIndex]);
 }
-function handleDelete(event){
+function handleDelete(event) {
     var closeToggle = event.target;
     var viewIndex = closeToggle.dataset.viewindex;
     var taskID = closeToggle.dataset.task;
     var projectID = closeToggle.dataset.project;
     var confirmText = closeToggle.dataset.confirmtext;
 
-   confirmDelete(confirmText,"task_"+taskID,"managetask.php?action=del&tid="+taskID+"id="+projectID, projectTaskViews[viewIndex]);
+    confirmDelete(confirmText, "task_" + taskID, "managetask.php?action=del&tid=" + taskID + "id=" + projectID, projectTaskViews[viewIndex]);
 }
 
 function initTasklistViews() {
@@ -112,53 +112,52 @@ function initTasklistViews() {
     var taskLists = cssAll(".blockaccordion_content");
 
     projectTaskViews = [];
+    accordeons = [];
     for (var i = 0; i < taskLists.length; i++) {
         var taskListID = taskLists[i].dataset.tasklist;
         var projectID = taskLists[i].dataset.project;
         var taskListElement = taskLists[i].id;
 
+        //create view
         var projectTasksView = createView({
             el: taskListElement,
             itemType: "task",
             url: "managetask.php?action=projectTasks&tlid=" + taskListID + "&id=" + projectID,
             dependencies: []
         });
+
+        //run after each data update
+        projectTasksView.afterUpdate(function () {
+            //get all tasklists and create an accordion for each one
+            var taskLists = cssAll(".taskList");
+            for (var a = 0; a < taskLists.length; a++) {
+                console.log(taskLists[a]);
+                accordeons.push(new accordion2(taskLists[a].id))
+            }
+
+            //get the close toggles and bind the close handler
+            var closeToggles = cssAll(".closeElement");
+            for (var j = 0; j < closeToggles.length; j++) {
+                closeToggles[j].onclick = function (event) {
+                    handleClose(event);
+                }
+            }
+
+            //get the delete toggles and bind the delete handler
+            var deleteToggles = cssAll(".deleteElement");
+            for (var z = 0; z < deleteToggles.length; z++) {
+                deleteToggles[z].onclick = function (event) {
+                    handleDelete(event);
+                }
+
+            }
+        });
         projectTaskViews.push(projectTasksView);
     }
 
-
-    accordeons = [];
-    projectTaskViews[projectTaskViews.length-1].afterUpdate(function(){
-        var closeToggles = cssAll(".closeElement");
-        for(var j=0;j<closeToggles.length;j++)
-        {
-            closeToggles[j].onclick = function(event)
-            {
-                handleClose(event);
-            }
-
-        }
-
-        var deleteToggles = cssAll(".deleteElement");
-        for(var z=0;z<deleteToggles.length;z++)
-        {
-            deleteToggles[z].onclick = function(event)
-            {
-                handleDelete(event);
-            }
-
-        }
-
-        var taskLists = cssAll(".taskList");
-        for(var a=0;a<taskLists.length;a++)
-        {
-            accordeons.push(new accordion2(taskLists[a].id))
-        }
-    });
     formManager.forms = document.getElementsByClassName("taskSubmitForm");
     formManager.views = projectTaskViews;
 
     formManager.bindViews();
-
 }
 initTasklistViews();
