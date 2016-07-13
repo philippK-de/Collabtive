@@ -8,10 +8,10 @@ function filterTimetrackerView(event) {
     var baseUrl = filterForm.action;
 
     //get the form fields for filtering
-    var startDate = document.getElementById("start").value;
-    var endDate = document.getElementById("end").value;
-    var user = document.getElementById("usr").value;
-    var task = document.getElementById("ttask").value;
+    var startDate = cssId("start").value;
+    var endDate = cssId("end").value;
+    var user = cssId("usr").value;
+    var task = cssId("ttask").value;
 
     //construct the GET parameters for the url
     var queryUrl = "";

@@ -32,7 +32,7 @@ var accord_dashboard    = new accordion2('block_dashboard', {
 
 function activateAccordeon(theAccord) {
 
-    accord_dashboard.toggle(document.querySelectorAll('#block_dashboard .accordion_content')[theAccord]);
+    accord_dashboard.toggle(cssAll('#block_dashboard .accordion_content')[theAccord]);
     setCookie("activeSlideProject", theAccord);
 }
 

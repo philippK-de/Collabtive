@@ -42,7 +42,7 @@ openSlide = 0;
 var blockIds = [];
 function activateAccordeon(theAccord) {
     //activate the block in the block accordion
-    accordIndex.toggle(document.querySelectorAll('#projectMilestones .blockaccordion_content')[theAccord]);
+    accordIndex.toggle(cssAll('#projectMilestones .blockaccordion_content')[theAccord]);
     //set a cookie to save the accordeon last clicked
     setCookie("activeSlideIndex", theAccord);
 }

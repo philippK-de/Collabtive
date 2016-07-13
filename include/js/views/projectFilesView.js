@@ -21,13 +21,13 @@ function loadFolder(view, folder) {
 * Select a folder in the add file, add folder dropdowns
  */
 function selectFolder(folderId) {
-    var theParentOptions = document.getElementById("folderparent").options;
+    var theParentOptions = cssId("folderparent").options;
     for (i = 0; i < theParentOptions.length; i++) {
         if (theParentOptions[i].value == folderId) {
             theParentOptions[i].selected = 'selected';
         }
     }
-    var theOptions = document.getElementById('upfolder').options;
+    var theOptions = cssId('upfolder').options;
     for (i = 0; i < theOptions.length; i++) {
         if (theOptions[i].value == folderId) {
             theOptions[i].selected = 'selected';
