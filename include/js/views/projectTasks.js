@@ -11,6 +11,9 @@ function activateAccordeon(theAccord) {
 }
 
 
+/*
+ * Initialize block accordeon
+ */
 window.addEventListener("load", function () {
     var theBlocks = cssAll("#blockTasks > div[class~='headline'] > a");
 
@@ -29,6 +32,9 @@ function taskFormHandler() {
     this.views = [];
 }
 
+/*
+ * Bind submit forms onsubmit event to the submit Handler
+ */
 taskFormHandler.prototype.bindViews = function () {
     var forms = this.forms;
     var views = this.views;
@@ -89,6 +95,9 @@ var handleForm = function (event, view) {
     }
 };
 
+/*
+ * Handler function that will be bound to the onclick even of the close buttons
+ */
 function handleClose(event) {
     var closeToggle = event.target;
     var viewIndex = closeToggle.dataset.viewindex;
@@ -97,6 +106,9 @@ function handleClose(event) {
 
     closeElement(closeToggle.id, "managetask.php?action=close&tid=" + taskID + "id=" + projectID, projectTaskViews[viewIndex]);
 }
+/*
+ * Handler function that will be bound to the onclick even of the delete buttons
+ */
 function handleDelete(event) {
     var closeToggle = event.target;
     var viewIndex = closeToggle.dataset.viewindex;
