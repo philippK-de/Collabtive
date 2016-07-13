@@ -75,7 +75,7 @@
                         {/if}
 
                         <div class="nosmooth" id="sm_{$lists[list].ID}">
-                            <table id="taskList_{$lists[list].ID}" cellpadding="0" cellspacing="0" border="0">
+                            <table id="taskList_{$lists[list].ID}" class="taskList" cellpadding="0" cellspacing="0" border="0">
 
                                 <thead>
                                 <tr>
@@ -112,7 +112,8 @@
                                     {literal}
                                     <td>
                                         <div class="toggle-in">
-                                            <span class="acc-toggle"></span>
+                                            <span class="acc-toggle"
+                                                  onclick="accordeons[{/literal}{$smarty.section.list.index}{literal}].activate(css('#taskList_{/literal}{$lists[list].ID}{literal}_content{{$index}}'));"></span>
                                             <a href="managetask.php?action=showtask&amp;tid={{*task.ID}}&amp;id={{*task.project}}"
                                                title="{{*task.title}}">
                                                 {{*task.title | truncate '30' }}
@@ -144,8 +145,9 @@
                                 {literal}
                                 <tr class="acc">
                                     <td colspan="5">
-                                        <div class="accordion_content" data-slide="{{$index}}"
-                                             id="blockTasks_content{/literal}{$lists[list].ID}{literal}_content{{$index}}">
+                                        <div class="accordion_content"
+                                             id="taskList_{/literal}{$lists[list].ID}{literal}_content{{$index}}"
+                                             data-slide="{{$index}}">
                                             <div class="acc-in">
                                                 <div class="message-in">
                                                     {{{task.text}}}
@@ -345,7 +347,7 @@
 
 {/if} {*Done Tasklists End*}
 
-<script type="text/javascript" src="include/js/accordion.min.js"></script>
+<script type="text/javascript" src="include/js/accordion.js"></script>
 <script type="text/javascript" src="include/js/views/projectTasks.js"></script>
 
 {include file="footer.tpl"}

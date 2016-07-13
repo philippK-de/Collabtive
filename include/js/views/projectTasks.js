@@ -123,11 +123,11 @@ function initTasklistViews() {
             url: "managetask.php?action=projectTasks&tlid=" + taskListID + "&id=" + projectID,
             dependencies: []
         });
-
         projectTaskViews.push(projectTasksView);
     }
 
 
+    accordeons = [];
     projectTaskViews[projectTaskViews.length-1].afterUpdate(function(){
         var closeToggles = document.getElementsByClassName("closeElement");
         for(var j=0;j<closeToggles.length;j++)
@@ -139,7 +139,6 @@ function initTasklistViews() {
 
         }
 
-
         var deleteToggles = document.getElementsByClassName("deleteElement");
         for(var z=0;z<deleteToggles.length;z++)
         {
@@ -149,10 +148,17 @@ function initTasklistViews() {
             }
 
         }
+
+        var taskLists = cssAll(".taskList");
+        for(var a=0;a<taskLists.length;a++)
+        {
+            accordeons.push(new accordion2(taskLists[a].id))
+        }
     });
     formManager.forms = document.getElementsByClassName("taskSubmitForm");
     formManager.views = projectTaskViews;
 
     formManager.bindViews();
+
 }
 initTasklistViews();
