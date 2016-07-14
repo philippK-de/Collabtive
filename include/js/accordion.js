@@ -67,7 +67,6 @@ accordion2.prototype.toggle = function (contentSlide) {
         this.currentContent = this.accordionContents[i];
         this.currentToggle = this.accordionToggles[i];
 
-
         if (i == numSlide) {
             Velocity(this.accordionContents[i],"slideDown",{
                 duration: this.slideDuration,
@@ -87,15 +86,6 @@ accordion2.prototype.toggle = function (contentSlide) {
 accordion2.prototype.activate = function (contentSlide) {
     this.initializeElements();
     this.toggle(contentSlide);
-};
-
-accordion2.prototype.showSlide = function () {
-    this.currentContent.className = this.classNames.contentActive;
-    this.showToggle();
-};
-accordion2.prototype.hideSlide = function () {
-    this.currentContent.className = this.classNames.content;
-    this.hideToggle();
 };
 accordion2.prototype.showToggle = function () {
     this.currentToggle.className = this.classNames.toggleActive;
