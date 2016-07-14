@@ -74,7 +74,7 @@
                             <td>
                                 <div class="toggle-in">
                                     <span class="acc-toggle"
-                                          onclick="javascript:accord_messages.toggle(document.querySelector('#block_msgs_content{{$index}}'));"></span>
+                                          onclick="javascript:accord_messages.toggle(css('#block_msgs_content{{$index}}'));"></span>
                                     <a href="managemessage.php?action=showmessage&amp;mid={{*message.ID}}&amp;id={{*message.project}}"
                                        title="{{*message.title}}">{{message.title | truncate '30' }}</a>
                                 </div>

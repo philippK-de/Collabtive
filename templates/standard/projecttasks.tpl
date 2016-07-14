@@ -275,8 +275,6 @@
                         <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist-done.png" alt=""/>
                     </h2>
                 </div>
-
-
                 {* Closed tasklists *}
                 <div id="block-donelists" class="block">
                     <div class="dones">
@@ -351,7 +349,7 @@
 
 {/if} {*Done Tasklists End*}
 
-<script type="text/javascript" src="include/js/accordion.min.js"></script>
-<script type="text/javascript" src="include/js/views/projectTasks.min.js"></script>
+<script type="text/javascript" src="include/js/accordion.js"></script>
+<script type="text/javascript" src="include/js/views/projectTasks.js"></script>
 
 {include file="footer.tpl"}

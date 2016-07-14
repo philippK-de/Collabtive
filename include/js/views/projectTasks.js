@@ -1,32 +1,4 @@
-var accord_dashboard = new accordion2('blockTasks', {
-    classNames: {
-        toggle: 'win_none',
-        toggleActive: 'win_block',
-        content: 'blockaccordion_content'
-    }
-});
-function activateAccordeon(theAccord) {
-    accord_dashboard.toggle(cssAll('#blockTasks .blockaccordion_content')[theAccord]);
-    setCookie("activeSlideProjectTasks", theAccord);
-}
 
-
-/*
- * Initialize block accordeon
- */
-window.addEventListener("load", function () {
-    var theBlocks = cssAll("#blockTasks > div[class~='headline'] > a");
-
-    //loop through the blocks and add the accordion toggle link
-    var openSlide = 0;
-    for (var i = 0; i < theBlocks.length; i++) {
-        var theAction = theBlocks[i].getAttribute("onclick");
-        theAction += "activateAccordeon(" + i + ");";
-        theBlocks[i].setAttribute("onclick", theAction);
-    }
-    activateAccordeon(0);
-
-});
 function taskFormHandler() {
     this.forms = [];
     this.views = [];
@@ -105,15 +77,13 @@ function handleStatus(event, status) {
     var projectID = closeToggle.dataset.project;
 
     var url;
-    if(status == "open")
-    {
+    if (status == "open") {
         url = "managetask.php?action=open&tid=" + taskID + "id=" + projectID;
     }
-    else if(status == "close")
-    {
+    else if (status == "close") {
         url = "managetask.php?action=close&tid=" + taskID + "id=" + projectID;
     }
-    closeElement("task_"+taskID, url, projectTaskViews[viewIndex]);
+    closeElement("task_" + taskID, url, projectTaskViews[viewIndex]);
 }
 /*
  * Handler function that will be bound to the onclick even of the delete buttons
@@ -137,11 +107,11 @@ function initTasklistViews() {
     for (var i = 0; i < taskLists.length; i++) {
         var taskListID = taskLists[i].dataset.tasklist;
         var projectID = taskLists[i].dataset.project;
-        var taskListElement = taskLists[i].id;
+        var taskListElementID = taskLists[i].id;
 
         //create view
         var projectTasksView = createView({
-            el: taskListElement,
+            el: taskListElementID,
             itemType: "task",
             url: "managetask.php?action=projectTasks&tlid=" + taskListID + "&id=" + projectID,
             dependencies: []
@@ -180,9 +150,6 @@ function initTasklistViews() {
                 }
 
             }
-
-
-
         });
         projectTaskViews.push(projectTasksView);
     }
@@ -192,4 +159,36 @@ function initTasklistViews() {
 
     formManager.bindViews();
 }
+//create blockaccordion
+var accord_dashboard = new accordion2('blockTasks', {
+    classNames: {
+        toggle: 'win_none',
+        toggleActive: 'win_block',
+        content: 'blockaccordion_content'
+    }
+});
+
+/*
+ * Function to be bound to the onclick handlers of the block accordoen
+ */
+function activateAccordeon(theAccord) {
+    accord_dashboard.toggle(cssAll('#blockTasks .blockaccordion_content')[theAccord]);
+    setCookie("activeSlideProjectTasks", theAccord);
+}
+/*
+ * Initialize block accordeon
+ */
+window.addEventListener("load", function () {
+    var theBlocks = cssAll("#blockTasks > div[class~='headline'] > a");
+
+    //loop through the blocks and add the accordion toggle link
+    var openSlide = 0;
+    for (var i = 0; i < theBlocks.length; i++) {
+        var theAction = theBlocks[i].getAttribute("onclick");
+        theAction += "activateAccordeon(" + i + ");";
+        theBlocks[i].setAttribute("onclick", theAction);
+    }
+    activateAccordeon(0);
+
+});
 window.addEventListener("load", initTasklistViews());
