@@ -258,8 +258,10 @@
 </div> {*content-left-in END*}
 </div> {*content-left END*}
 {* current tasklists end*}
+
 {*right sidebar*}
 {include file="sidebar-a.tpl"}
+
 {if $oldlists[0][0]} {*only show the block if there are closed tasklists*} {*Done Tasklists*}
     <div class="content-spacer"></div>
     {*closed tasklists*}
@@ -275,64 +277,64 @@
                         <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist-done.png" alt=""/>
                     </h2>
                 </div>
+
                 {* Closed tasklists *}
                 <div id="block-donelists" class="block">
                     <div class="dones">
                         <table id="acc_donelists" cellpadding="0" cellspacing="0" border="0">
 
                             <thead>
-                            <tr>
-                                <th class="a"></th>
-                                <th class="b">{#tasklist#}</th>
-                                <th class="c"></th>
-                                <th class="days"></th>
-                                <th class="tools"></th>
-                            </tr>
+                                <tr>
+                                    <th class="a"></th>
+                                    <th class="b">{#tasklist#}</th>
+                                    <th class="c"></th>
+                                    <th class="days"></th>
+                                    <th class="tools"></th>
+                                </tr>
                             </thead>
 
                             <tfoot>
-                            <tr>
-                                <td colspan="5"></td>
-                            </tr>
+                                <tr>
+                                    <td colspan="5"></td>
+                                </tr>
                             </tfoot>
 
-                            {section name = oldlist loop=$oldlists}
-                            <tbody class="alternateColors" id="task_{$oldlists[oldlist].ID}">
-                                <tr>
-                                    <td>
-                                    {if $userpermissions.tasks.close}
-    <a class="butn_check"
-       href="managetasklist.php?action=open&amp;tlid={$oldlists[oldlist].ID}&amp;id={$project.ID}"
-       title="{#open#}"></a>
-{/if}
-                                    </td>
-                                    <td>
+                            {section name=oldlist loop=$oldlists}
+                                <tbody class="alternateColors" id="task_{$oldlists[oldlist].ID}">
+                                    <tr>
+                                        <td>
+                                            {if $userpermissions.tasks.close}
+                                                <a class="butn_check"
+                                                   href="managetasklist.php?action=open&amp;tlid={$oldlists[oldlist].ID}&amp;id={$project.ID}"
+                                                   title="{#open#}">
+                                                </a>
+                                            {/if}
+                                        </td>
+                                        <td colspan="3">
                                             <a href="managetasklist.php?action=showtasklist&amp;id={$project.ID}&amp;tlid={$oldlists[oldlist].ID}">
-                                                {$oldlists[oldlist].name|truncate:30:"...":true}
+                                                {$oldlists[oldlist].name|truncate:100:"...":true}
                                             </a>
-                                        </div>
-                                    </td>
-                                    <td></td>
-                                    <td>{$oldlists[oldlist].daysleft}</td>
-                                    <td class="tools">
-                                        {if $userpermissions.tasks.del}
-    <a class="tool_del"
-       href="managetasklist.php?action=del&amp;tlid={$oldlists[oldlist].ID}&amp;id={$project.ID}"
-       title="{#delete#}"></a>
-{/if}
-                                    </td>
-                                </tr>
-                                <tr class="acc">
-                                    <td colspan="5">
-                                        <div class="accordion_content">
-                                            <div class="acc-in">
-                                                <div class="message-in">
-                                                    {$oldlists[oldlist].desc|nl2br}
+                                        </td>
+                                        <td class="tools">
+                                            {if $userpermissions.tasks.del}
+                                                <a class="tool_del"
+                                                   href="managetasklist.php?action=del&amp;tlid={$oldlists[oldlist].ID}&amp;id={$project.ID}"
+                                                   title="{#delete#}">
+                                                </a>
+                                            {/if}
+                                        </td>
+                                    </tr>
+                                    <tr class="acc">
+                                        <td colspan="5">
+                                            <div class="accordion_content">
+                                                <div class="acc-in">
+                                                    <div class="message-in">
+                                                        {$oldlists[oldlist].desc|nl2br}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             {/section}
                         </table>
