@@ -76,7 +76,7 @@
                                 <td>
                                     <div class="toggle-in">
                                         <span class="acc-toggle"
-                                              onclick="javascript:accord_tracker.activate(document.querySelector('#acc_tracker_content{{$index}}'));"></span>
+                                              onclick="javascript:accord_tracker.toggle(css('#acc_tracker_content{{$index}}'));"></span>
                                         <a href="manageuser.php?action=profile&amp;id={{*track.user}}" title="{{*track.pname}}">
                                             {{*track.uname | truncate '30' }}
                                         </a>
@@ -103,7 +103,7 @@
                             {literal}
                             <tr class="acc">
                                 <td colspan="7">
-                                    <div class="accordion_content" data-slide="{{$index}}" id="acc_tracker_content{{$index}}">
+                                    <div class="accordion_content">
                                         <div class="acc-in">
                                             <strong v-if="track.comment">{/literal}{#comment#}:{literal}</strong><br/>{{{*track.comment}}}
 
