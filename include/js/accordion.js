@@ -31,7 +31,7 @@ function accordion2(container, options) {
 /*
 * This method finds the visual toggles and content slides in the root element
  */
-accordion2.prototype.initializeToggles = function () {
+accordion2.prototype.initializeElements = function () {
     //get accordion toggle - these are the visual arrows representing the toggle state
     this.accordionToggles = this.rootElement.querySelectorAll("." + this.classNames.toggle + ",." + this.classNames.toggleActive);
     //get accordion contents - these are the content areas representing the slides
@@ -42,7 +42,7 @@ accordion2.prototype.initializeToggles = function () {
 * Called in the constructor to enumerate the content slides and set their attributes
  */
 accordion2.prototype.initializeAccordion = function () {
-    this.initializeToggles();
+    this.initializeElements();
     //loop through the accordion content slides
     if (this.accordionContents.length > 0) {
         for (var i = 0; i < this.accordionContents.length; i++) {
@@ -62,7 +62,6 @@ accordion2.prototype.initializeAccordion = function () {
 accordion2.prototype.toggle = function (contentSlide) {
     //get number of the slide to be opened
     var numSlide = contentSlide.dataset.slide;
-    console.log("toggle called");
     for (var i = 0; i < this.accordionContents.length; i++) {
         //save the current content and toggle in an instance var so it can be used in other method scopes
         this.currentContent = this.accordionContents[i];
@@ -86,9 +85,9 @@ accordion2.prototype.toggle = function (contentSlide) {
 };
 //this method is a legacy drop in for the old accordion / inner accordions
 accordion2.prototype.activate = function (contentSlide) {
-    this.initializeToggles();
+    this.initializeElements();
     var numSlide = contentSlide.dataset.slide;
-    console.log("activate called");
+
     for (var i = 0; i < this.accordionContents.length; i++) {
         //save the current content and toggle in an instance var so it can be used in other method scopes
         this.currentContent = this.accordionContents[i];

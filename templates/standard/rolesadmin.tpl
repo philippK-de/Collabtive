@@ -39,7 +39,7 @@
                 <td>
                     <div class="toggle-in">
                         <span class="acc-toggle"
-                              onclick="accord_roles.activate(document.querySelector('#acc_roles_content{{$index}}'));"></span>
+                              onclick="accord_roles.toggle(css('#acc_roles_content{{$index}}'));"></span>
                         <a href="#">
                             {{*role.name}}
                         </a>
@@ -56,7 +56,7 @@
             <tr class="acc">
                 <td></td>
                 <td colspan="4">
-                    <div class="accordion_content" data-slide="{{$index}}" id="acc_roles_content{{$index}}">
+                    <div class="accordion_content">
                         <form class="main" method="post" action="manageroles.php?action=editrole&id={{*role.ID}}"
                               onsubmit="return validateCompleteForm(this);">
                             <fieldset>

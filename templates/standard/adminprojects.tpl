@@ -77,7 +77,7 @@
                             <td>
                                 <div class="toggle-in">
                                     <span id="acc_projects_toggle{{project.ID}}" class="acc-toggle"
-                                          onclick="javascript:accord_projects.activate(document.querySelector('#acc_projects_content{{$index}}'));"></span>
+                                          onclick="javascript:accord_projects.toggle(css('#acc_projects_content{{$index}}'));"></span>
                                     <a href="manageproject.php?action=showproject&amp;id={{*project.ID}}" title="{{*project.name}}">
                                         {{*project.name}}
                                     </a>
@@ -108,7 +108,7 @@
                         {literal}
                         <tr class="acc">
                             <td colspan="5">
-                                <div class="accordion_content" data-slide="{{$index}}" id="acc_projects_content{{$index}}">
+                                <div class="accordion_content">
                                     <div class="acc-in">
                                         {{*project.desc}}
                                         <p class="tags-miles">
