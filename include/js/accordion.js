@@ -86,26 +86,7 @@ accordion2.prototype.toggle = function (contentSlide) {
 //this method is a legacy drop in for the old accordion / inner accordions
 accordion2.prototype.activate = function (contentSlide) {
     this.initializeElements();
-    var numSlide = contentSlide.dataset.slide;
-
-    for (var i = 0; i < this.accordionContents.length; i++) {
-        //save the current content and toggle in an instance var so it can be used in other method scopes
-        this.currentContent = this.accordionContents[i];
-        this.currentToggle = this.accordionToggles[i];
-
-        if (i == numSlide) {
-            Velocity(this.accordionContents[i],"slideDown",{
-                duration: this.slideDuration,
-                begin: this.showToggle()
-            });
-        }
-        else {
-            Velocity(this.accordionContents[i],"slideUp",{
-                duration: this.slideDuration,
-                complete: this.hideToggle()
-            });
-        }
-    }
+    this.toggle(contentSlide);
 };
 
 accordion2.prototype.showSlide = function () {
