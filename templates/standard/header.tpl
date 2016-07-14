@@ -21,7 +21,7 @@
     {literal}
         <script type="text/javascript" src="include/js/velocity.min.js"></script>
         <script type="text/javascript" src="include/js/ajax.min.js"></script>
-        <script type="text/javascript" src="include/js/vue.js"></script>
+        <script type="text/javascript" src="include/js/vue.min.js"></script>
         <script type="text/javascript" src="include/js/viewManager.js"></script>
         <script type="text/javascript" src="include/js/systemMessage.min.js"></script>
         <script type="text/javascript" src="include/js/jsval.min.js"></script>

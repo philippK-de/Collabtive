@@ -5,6 +5,7 @@ Vue.config.silent = true;
  * It binds together an HTML element with a datasource reactively
  * @param Object myEl An object representing the HTML element to be bound
  */
+
 function createView(myEl) {
     /*
      * Object representing the data model for the view

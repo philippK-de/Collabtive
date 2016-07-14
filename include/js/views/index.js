@@ -54,7 +54,7 @@ var tasksView = createView(tasks);
 var msgsView = createView(messages);
 var calendarView = createView(desktopCalendar);
 //setup dependenciens
-projectsView.$set("dependencies", [tasksView, msgsView]);
+Vue.set(projectsView,"dependencies", [tasksView, msgsView]);
 
 /*
  * Handler function to be called when form was successfully submited

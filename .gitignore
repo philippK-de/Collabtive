@@ -10,6 +10,7 @@ Thumbs.db
 templates_c/*
 files/*
 .idea/
+.include/js/vue/*
 !files/collabtive.sdb
 *.directory
 *.lock
