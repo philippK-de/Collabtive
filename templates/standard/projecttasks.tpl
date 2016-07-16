@@ -242,7 +242,7 @@
                     </div>
                     {*block END*}
                 {/section}
-                {/if}
+                {/if}{*if $lists[0][0]*}
             </div>
 
             {if !$lists[0][0] and !$oldlists[0][0]}
