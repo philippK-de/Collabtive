@@ -242,24 +242,23 @@
                     </div>
                     {*block END*}
                 {/section}
+                {/if}
             </div>
-            {/if} {*if $lists[0][0]*}
 
             {if !$lists[0][0] and !$oldlists[0][0]}
+                <tbody class="color-a">
+                <tr>
+                    <td></td>
+                    <td colspan="3" class="info">{#notasklists#}</td>
+                    <td class="tools"></td>
+                </tr>
+                </tbody>
+            {/if}
 
-            <tbody class="color-a">
-            <tr>
-                <td></td>
-                <td colspan="3" class="info">{#notasklists#}</td>
-                <td class="tools"></td>
-            </tr>
-            </tbody>
-        </div>
-        <!-- content left end -->
-        {/if}
-        <div class="content-spacer"></div>
-    </div> {*Tasks END*}
-</div> {*content-left-in END*}
+            <!-- content left end -->
+            <div class="content-spacer"></div>
+        </div> {*Tasks END*}
+    </div> {*content-left-in END*}
 </div> {*content-left END*}
 {* current tasklists end*}
 
@@ -268,6 +267,7 @@
 
 {if $oldlists[0][0]} {*only show the block if there are closed tasklists*} {*Done Tasklists*}
     <div class="content-spacer"></div>
+
     {*closed tasklists*}
     <div id="content-left">
         <div id="content-left-in">
@@ -324,17 +324,6 @@
                                                 <a class="tool_del"
                                                    href="javascript:confirmit('{#confirmdel#}','managetasklist.php?action=del&amp;tlid={$oldlists[oldlist].ID}&amp;id={$project.ID}');" title="{#delete#}"</a>
                                             {/if}
-                                        </td>
-                                    </tr>
-                                    <tr class="acc">
-                                        <td colspan="5">
-                                            <div class="accordion_content">
-                                                <div class="acc-in">
-                                                    <div class="message-in">
-                                                        {$oldlists[oldlist].desc|nl2br}
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
