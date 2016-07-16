@@ -322,9 +322,7 @@
                                         <td class="tools">
                                             {if $userpermissions.tasks.del}
                                                 <a class="tool_del"
-                                                   href="managetasklist.php?action=del&amp;tlid={$oldlists[oldlist].ID}&amp;id={$project.ID}"
-                                                   title="{#delete#}">
-                                                </a>
+                                                   href="javascript:confirmit('{#confirmdel#}','managetasklist.php?action=del&amp;tlid={$oldlists[oldlist].ID}&amp;id={$project.ID}');" title="{#delete#}"</a>
                                             {/if}
                                         </td>
                                     </tr>
