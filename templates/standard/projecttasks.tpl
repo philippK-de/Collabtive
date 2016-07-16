@@ -210,8 +210,12 @@
                                                 {/literal}
                                                 {if $userpermissions.tasks.del}
                                                 {literal}
-                                                    <a class="tool_del"
-                                                    href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'task_{{*oldtask.ID}}\',\'managetask.php?action=del&amp;tid={{*oldtask.ID}}&amp;id={{*oldtask.project}}\')');" title="{/literal}{#delete#}"></a>
+                                                    <a class="tool_del deleteElement"
+                                                    data-task="{{*oldtask.ID}}"
+                                                    data-viewindex="{/literal}{$smarty.section.list.index}"
+                                                    data-confirmtext="{#confirmdel#}"
+                                                    data-project="{$project.ID}{literal}"
+                                                    href="javascript:void(0);" title="{/literal}{#delete#}"></a>
                                                 {/if}
                                             </td>
                                         </tr>
