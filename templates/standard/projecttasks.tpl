@@ -304,7 +304,7 @@
                                     <tr>
                                         <td>
                                             {if $userpermissions.tasks.close}
-                                                <a class="butn_check"
+                                                <a class="butn_checked"
                                                    href="managetasklist.php?action=open&amp;tlid={$oldlists[oldlist].ID}&amp;id={$project.ID}"
                                                    title="{#open#}">
                                                 </a>
