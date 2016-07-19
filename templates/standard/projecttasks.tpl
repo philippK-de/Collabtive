@@ -47,10 +47,10 @@
                                 <a class="close"
                                    href="managetasklist.php?action=close&amp;tlid={$lists[list].ID}&amp;id={$project.ID}"><span>{#close#}</span></a>
                             {/if}
-                            {if $userpermissions.tasks.edit}
+                            {*if $userpermissions.tasks.edit}
                                 <a class="edit"
                                    href="managetasklist.php?action=editform&amp;tlid={$lists[list].ID}&amp;id={$project.ID}"><span>{#edit#}</span></a>
-                            {/if}
+                            {/if*}
                             {if $userpermissions.tasks.del}
                                 <a class="del"
                                    href="javascript:confirmit('{#confirmdel#}','managetasklist.php?action=del&amp;tlid={$lists[list].ID}&amp;id={$project.ID}');"><span>{#delete#}</span></a>
