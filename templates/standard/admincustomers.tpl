@@ -82,7 +82,7 @@
                                         {/literal}
 										{if $userpermissions.admin.add}
 										{literal}
-                                        <a id="edit_butn{{*customer.ID}}" class="tool_edit" href="javascript:void(0);" onclick = "change('managecompany.php?action=editform&amp;id={{*customer.ID}}','form_editcustomer');Effect.BlindUp('form_addcustomer');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_editcustomer');" title="{/literal}{#edit#}"></a>
+                                        <a id="edit_butn{{*customer.ID}}" class="tool_edit" href="javascript:void(0);" onclick = "change('managecompany.php?action=editform&amp;id={{*customer.ID}}','form_editcustomer');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_editcustomer');" title="{/literal}{#edit#}"></a>
 										{/if}
 
 										{if $userpermissions.admin.add}
