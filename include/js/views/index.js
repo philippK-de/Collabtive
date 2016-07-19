@@ -16,7 +16,7 @@ var accordIndex = new accordion2('block_index', {
     }
 });
 
-function initializeBlockaccordeon(){
+function initializeBlockaccordeon() {
     //get the blocks
     var theBlocks = document.querySelectorAll("#block_index > div .headline > a");
 
@@ -91,7 +91,7 @@ var tasksView = createView(tasks);
 var msgsView = createView(messages);
 var calendarView = createView(desktopCalendar);
 //setup dependenciens
-Vue.set(projectsView,"dependencies", [tasksView, msgsView]);
+Vue.set(projectsView, "dependencies", [tasksView, msgsView]);
 
 /*
  * Handler function to be called when form was successfully submited
@@ -118,11 +118,11 @@ projectsView.afterUpdate(function () {
     accord_projects = new accordion2('desktopprojects');
 });
 var accord_tasks;
-tasksView.afterUpdate(function(){
-    accord_tasks  = new accordion2('desktoptasks');
+tasksView.afterUpdate(function () {
+    accord_tasks = new accordion2('desktoptasks');
 });
 var accord_msgs;
-msgsView.afterUpdate(function(){
+msgsView.afterUpdate(function () {
     accord_msgs = new accordion2('desktopmessages');
 });
 

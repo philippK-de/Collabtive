@@ -50,10 +50,10 @@
                 {literal}
                     <td class="b">
                         <div class="toggle-in">
-                            <span class="acc-toggle"
-                                  onclick="javascript:accord_miles_upcoming.activate(document.querySelector('#upcomingMilestones_content{{$index}}'));"></span>
-                            <a href="managemilestone.php?action=showmilestone&amp;msid={{*milestone.ID}}&amp;id={{*milestone.project}}"
-                               title="{{*milestone.name}}">{{*milestone.name | truncate '30' }}</a>
+                            <span class="acc-toggle" onclick="javascript:accord_miles_upcoming.activate(css('#upcomingMilestones_content{{$index}}'));">
+                                <a href="javascript:void(0);" title="{{*milestone.name}}">{{*milestone.name | truncate '30' }}</a>
+                            </span>
+
                         </div>
                     </td>
                     <td class="c">{{*milestone.startstring}} - {{*milestone.endstring}}</td>

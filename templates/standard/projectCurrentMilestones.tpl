@@ -1,5 +1,5 @@
 {*Milestones*}
-<div class="headline" id="currentMilestonesBlock" >
+<div class="headline" id="currentMilestonesBlock">
     <a href="javascript:void(0);" id="currentMilestonesHead_toggle" class="win_block" onclick=""></a>
 
     <div class="wintools">
@@ -59,12 +59,9 @@
                     {literal}
                         <td class="b">
                             <div class="toggle-in">
-                                            <span class="acc-toggle"
-                                                  onclick="javascript:accord_miles_new.activate(document.querySelector('#currentMilestones_content{{$index}}'));">
-
-                                            </span>
-                                <a href="managemilestone.php?action=showmilestone&amp;msid={{milestone.ID}}&amp;id={{*milestone.project}}"
-                                   title="{{*milestone.name}}">{{*milestone.name | truncate '30'}}</a>
+                                <span class="acc-toggle" onclick="javascript:accord_miles_new.activate(css('#currentMilestones_content{{$index}}'));">
+                                    <a href="javascript:void(0);" title="{{*milestone.name}}">{{*milestone.name | truncate '30'}}</a>
+                                </span>
                             </div>
                         </td>
                         <td class="c">{{*milestone.fend}}</td>

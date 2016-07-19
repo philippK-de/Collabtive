@@ -47,12 +47,10 @@
                 {literal}
                     <td class="b">
                         <div class="toggle-in">
-                            <span class="acc-toggle"
-                                  onclick="javascript:accord_miles_late.activate(document.querySelector('#lateMilestones_content{{*milestone.ID}}'));">
-
+                            <span class="acc-toggle" onclick="javascript:accord_miles_late.activate(css('#lateMilestones_content{{*milestone.ID}}'));">
+                                 <a href="javascript:void(0);" title="{{*milestone.name}}">{{*milestone.name | truncate '30' }}</a>
                             </span>
-                            <a href="managemilestone.php?action=showmilestone&amp;msid={{*milestone.ID}}&amp;id={{*milestone.project}}"
-                               title="{{*milestone.name}}">{{*milestone.name | truncate '30' }}</a>
+
                         </div>
                     </td>
                     <td class="c">{{milestone.fend}}</td>

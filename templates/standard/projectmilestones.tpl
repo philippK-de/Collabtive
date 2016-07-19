@@ -39,11 +39,15 @@
     lateProjectMilestones.url = lateProjectMilestones.url + "&id=" + {/literal}{$project.ID}{literal};
     var lateProjectMilestonesView = createView(lateProjectMilestones);
 
-    projectMilestones.url = projectMilestones.url + "&id=" + {/literal}{$project.ID}{literal};
-    var projectMilestonesView = createView(projectMilestones);
-
     upcomingProjectMilestones.url = upcomingProjectMilestones.url + "&id=" + {/literal}{$project.ID}{literal};
     var upcomingProjectMilestonesView = createView(upcomingProjectMilestones);
+
+
+    projectMilestones.url = projectMilestones.url + "&id=" + {/literal}{$project.ID}{literal};
+    var projectMilestonesView = createView(projectMilestones);
+    //make late and upcoming milestones update with current milestones
+    Vue.set(projectMilestonesView, "dependencies", [lateProjectMilestonesView, upcomingProjectMilestonesView]);
+
 
     var accord_miles_late;
     var accord_miles_new;
@@ -67,7 +71,7 @@
         addMilestoneForm.addEventListener("submit", submitForm.bind(formView));
     });
 
-    projectMilestonesView.afterUpdate(function(){
+    projectMilestonesView.afterUpdate(function () {
         accord_miles_late = new accordion2('lateMilestones');
         accord_miles_new = new accordion2('currentMilestones');
         accord_miles_upcoming = new accordion2('upcomingMilestones');
