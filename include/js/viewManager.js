@@ -3,9 +3,9 @@ Vue.config.silent = true;
 /*
  * Function to create Vue.js view.
  * It binds together an HTML element with a datasource reactively
- * @param Object myEl An object representing the HTML element to be bound
+ * @param Object myView An object representing the HTML element to be bound
  */
-function createView(myEl) {
+function createView(myView) {
     /*
      * Object representing the data model for the view
      * @param Array items An array representing the data to be rendered in the view
@@ -15,6 +15,15 @@ function createView(myEl) {
      * @param Array dependencies A list of Vue.js views that depend on the data in  this view, and should be updated if this view is updated
      * @param String url The data URL that delivers the models items
      */
+    if(myView.loadHandler !== undefined) {
+        console.log(myView.loadHandler);
+    }
+    else
+    {
+        myView.loadHandler = function(){
+            console.log("dummy handler");
+        }
+    }
     var myModel = {
         items: [],
         pages: [],
@@ -22,10 +31,12 @@ function createView(myEl) {
         offset: 0,
         currentPage: 1,
         itemsCount: 0,
-        itemType: myEl.itemType,
-        dependencies: myEl.dependencies,
-        url: myEl.url
+        itemType: myView.itemType,
+        url: myView.url,
+        dependencies: myView.dependencies
     };
+
+
 
     /* Create the Vue.js view given the element myEl and the data in myModel
      * @param string el The DOM ID of the element to bind the view to
@@ -35,7 +46,7 @@ function createView(myEl) {
      * after the data model has been updated and the DOM rendering has finished
      */
     var vueview = new Vue({
-        el: "#" + myEl.el,
+        el: "#" + myView.el,
         data: myModel,
         methods: {
             update: function (updateDependencies) {
@@ -51,10 +62,11 @@ function createView(myEl) {
                     Vue.nextTick(updateHandler);
                 });
             }
-        }
+        },
+        ready: myView.loadHandler
     });
 
-    var ajax = new ajaxRequest(myModel.url, myEl.el, function () {
+    var ajax = new ajaxRequest(myModel.url, myView.el, function () {
         //update the model with the retrieved data
         const responseData = JSON.parse(ajax.request.responseText);
         //one page of data

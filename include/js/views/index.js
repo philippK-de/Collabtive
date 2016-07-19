@@ -6,7 +6,44 @@ function updateCalendar(myCalendar, newMonth, newYear) {
     updateView(myCalendar);
 
 }
+//initialize blocks accordeon
+//this creates the object on which methods are called later
+var accordIndex = new accordion2('block_index', {
+    classNames: {
+        toggle: 'win_none',
+        toggleActive: 'win_block',
+        content: 'blockaccordion_content'
+    }
+});
 
+function initializeBlockaccordeon(){
+    //get the blocks
+    var theBlocks = document.querySelectorAll("#block_index > div .headline > a");
+
+    //loop through the blocks and add the accordion toggle link to the onclick handler of toggles
+    for (i = 0; i < theBlocks.length; i++) {
+        //get the id of the current html element
+        var theId = theBlocks[i].getAttribute("id");
+        blockIds.push(theId);
+
+        //get the index of the last opened block
+        var theCook = readCookie("activeSlideIndex");
+
+        //console.log(theCook);
+        var openSlide;
+        if (theCook > 0) {
+            openSlide = theCook;
+        }
+
+        //get the onclick action of the current block
+        var theAction = theBlocks[i].getAttribute("onclick");
+        //add a call to activate accordeon
+        theAction += "activateAccordeon(" + i + ");";
+        theBlocks[i].setAttribute("onclick", theAction);
+    }
+    //activateAccordeon(openSlide);
+    activateAccordeon(0);
+}
 /**
  * This will activate the accordion with the supplied index
  */
@@ -73,44 +110,7 @@ var formView = projectsView;
 //add submitForm() as the handler for the event, and bind the form view to it
 addProjectForm.addEventListener("submit", submitForm.bind(formView));
 
-
-//initialize blocks accordeon
-//this creates the object on which methods are called later
-var accordIndex = new accordion2('block_index', {
-    classNames: {
-        toggle: 'win_none',
-        toggleActive: 'win_block',
-        content: 'blockaccordion_content'
-    }
-});
-projectsView.afterLoad(function(){
-    //get the blocks
-    var theBlocks = document.querySelectorAll("#block_index > div .headline > a");
-
-    //loop through the blocks and add the accordion toggle link to the onclick handler of toggles
-    for (i = 0; i < theBlocks.length; i++) {
-        //get the id of the current html element
-        var theId = theBlocks[i].getAttribute("id");
-        blockIds.push(theId);
-
-        //get the index of the last opened block
-        var theCook = readCookie("activeSlideIndex");
-
-        //console.log(theCook);
-        var openSlide;
-        if (theCook > 0) {
-            openSlide = theCook;
-        }
-
-        //get the onclick action of the current block
-        var theAction = theBlocks[i].getAttribute("onclick");
-        //add a call to activate accordeon
-        theAction += "activateAccordeon(" + i + ");";
-        theBlocks[i].setAttribute("onclick", theAction);
-    }
-    //activateAccordeon(openSlide);
-    activateAccordeon(0);
-});
+projectsView.afterLoad(initializeBlockaccordeon);
 //initialize accordeons
 
 var accord_projects;
