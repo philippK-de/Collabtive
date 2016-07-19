@@ -35,8 +35,12 @@ function openModal(elementId) {
     modalElement.id = "modal_container";
     modalElement.style.zIndex = 99;
     modalElement.style.position = "fixed";
+    modalElement.style.maxHeight = "500px";
+    modalElement.style.maxWidth = "600px";
     modalElement.style.top = "50%";
     modalElement.style.left = "50%";
+    modalElement.style.marginTop = "-250px"; //negative half of height
+    modalElement.style.marginLeft = "-300px"; //negative half of width
 
     modalElement.style.display = "block";
 }

@@ -56,8 +56,8 @@
                             <span id="desktopmessages_toggle{{*item.ID}}"
                                   class="acc-toggle"
                                   onclick="javascript:accord_msgs.toggle(document.querySelector('#desktopmessages_content{{$index}}'));"></span>
-                            <a href="managemessage.php?action=showmessage&amp;mid={{*item.ID}}&amp;id={{*item.project}}" title="{{*item.title}}">{{*item.title
-                                | truncate '30' }}</a>
+                            <a href="managemessage.php?action=showmessage&amp;mid={{*item.ID}}&amp;id={{*item.project}}" title="{{*item
+                            .title}}">{{*item.title | truncate '30' }}</a>
                         </div>
                     </td>
                     <td>
