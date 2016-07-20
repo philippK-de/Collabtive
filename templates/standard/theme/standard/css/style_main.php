@@ -1580,6 +1580,14 @@ body a.butn_link, body a.butn_link_active {
 	margin: 0;
 	padding: 0;
 }
+.msgs .message-fluid {
+    width: 80%;
+    margin: 0;
+    padding: 0;
+}
+.message-in-fluid {
+    overflow-x: auto;
+}
 
 .user .message {
 	width: 567px;

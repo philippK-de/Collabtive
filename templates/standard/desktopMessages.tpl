@@ -26,11 +26,11 @@
 
                 <thead>
                 <tr>
-                    <th class="a"></th>
+                    <th class="tools"></th>
                     <th class="b">{#message#}</th>
-                    <th class="ce">{#project#}</th>
-                    <th class="de">{#by#}</th>
-                    <th class="e">{#on#}</th>
+                    <th class="c">{#project#}</th>
+                    <th class="d">{#by#}</th>
+                    <th class="d">{#on#}</th>
                     <th class="tools"></th>
                 </tr>
                 </thead>
@@ -85,8 +85,8 @@
                                 <div class="avatar">
                                     <img src="thumb.php?width=80&amp;height=80&amp;pic=templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/no-avatar-male.jpg"/>
                                 </div>
-                                <div class="message">
-                                    <div class="message-in">
+                                <div class="message-fluid">
+                                    <div class="message-in-fluid">
                                         {{{*item.text}}}
                                     </div>
                                     <!-- message milestones -->

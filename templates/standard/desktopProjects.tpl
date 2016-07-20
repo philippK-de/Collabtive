@@ -92,7 +92,7 @@
                     <td colspan="5">
                         <div class="accordion_content">
                             <div class="acc-in">
-                                <div class="message-in">
+                                <div class="message-in-fluid">
                                     {{{*item.desc}}}
                                 </div>
                             </div>

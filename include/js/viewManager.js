@@ -36,9 +36,6 @@ function createView(myView) {
         url: myView.url,
         dependencies: myView.dependencies
     };
-
-
-
     /* Create the Vue.js view given the element myEl and the data in myModel
      * @param string el The DOM ID of the element to bind the view to
      * @param obj data The JSON object representing the data
