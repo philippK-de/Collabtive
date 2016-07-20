@@ -217,6 +217,9 @@ button:focus {
 .center-margin{
     margin: 0 auto;
 }
+.overflow-hidden{
+    overflow:hidden;
+}
 /* ## Basic-XHTML-Elements ############### END ############## */
 
 

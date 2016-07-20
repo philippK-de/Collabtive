@@ -24,6 +24,7 @@ function createView(myView) {
             console.log("dummy handler");
         }
     }
+
     var myModel = {
         items: [],
         pages: [],
@@ -62,8 +63,7 @@ function createView(myView) {
                     Vue.nextTick(updateHandler);
                 });
             }
-        },
-        ready: myView.loadHandler
+        }
     });
 
     var ajax = new ajaxRequest(myModel.url, myView.el, function () {
