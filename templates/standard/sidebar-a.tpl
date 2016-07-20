@@ -1,11 +1,11 @@
-<div id="content-right">
-    <div id="sidebar-overlay" class="display-none" style="text-align:center">
-       <img src="templates/standard/theme/standard/images/logo-b.png" onclick="openSidebar()" alt="" />
+<div id="content-right" class="overflow-hidden">
+    <div id="sidebar-overlay" class="display-none" style="text-align:center;margin-top:5px;">
+       <img src="templates/standard/theme/standard/images/logo-b.png" onclick="showSidebar()" alt="" />
     </div>
-    <div id="sidebar-content">
+    <div id="sidebar-content" class="overflow-hidden">
         {*Search*}
-        <div class="content-right-in">
-            <a href="javascript:closeSidebar();">close</a>
+        <div class="content-right-in overflow-hidden">
+            <a href="javascript:hideSidebar();">close</a>
             <h2><a id="searchtoggle" class="win-up"
                    href="javascript:blindtoggle('search');toggleClass('searchtoggle','win-up','win-down');">{#search#}</a></h2>
 
@@ -29,7 +29,7 @@
 
         {*Quickfinder*}
         {if $openProjects[0].ID > 0}
-            <div class="content-right-in">
+            <div class="content-right-in overflow-hidden">
                 <h2><a id="quickfindertoggle" class="win-up"
                        href="javascript:blindtoggle('quickfinder');toggleClass('quickfindertoggle','win-up','win-down');">{#myprojects#}</a></h2>
 
@@ -48,7 +48,7 @@
         {/if}
 
         {*Onlinelist*}
-        <div class="content-right-in">
+        <div class="content-right-in overflow-hidden">
             <h2><a id="onlinelisttoggle" class="win-up"
                    href="javascript:blindtoggle('onlinelist');toggleClass('onlinelisttoggle','win-up','win-down');">{#usersonline#}</a></h2>
 
@@ -56,4 +56,4 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="include/js/views/sidebar.js"></script>
+<script type="text/javascript" src="include/js/views/sidebar.min.js"></script>
