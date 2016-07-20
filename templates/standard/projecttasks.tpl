@@ -302,7 +302,6 @@
                                     <td colspan="5"></td>
                                 </tr>
                             </tfoot>
-
                             {section name=oldlist loop=$oldlists}
                                 <tbody class="alternateColors" id="task_{$oldlists[oldlist].ID}">
                                     <tr>
