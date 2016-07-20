@@ -200,16 +200,22 @@ button:focus {
 }
 
 [draggable] {
--moz-user-select: none;
--khtml-user-select: none;
--webkit-user-select: none;
-user-select: none;
-/* Required to make elements draggable in old WebKit */
--khtml-user-drag: element;
--webkit-user-drag: element;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    /* Required to make elements draggable in old WebKit */
+    -khtml-user-drag: element;
+    -webkit-user-drag: element;
 }
 .dragover {
-border: 1px dashed #000;
+    border: 1px dashed #000;
+}
+.display-none{
+    display: none;
+}
+.center-margin{
+    margin: 0 auto;
 }
 /* ## Basic-XHTML-Elements ############### END ############## */
 
