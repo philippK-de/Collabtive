@@ -103,7 +103,6 @@
                 {/literal}
             </table>
 
-
             {*Doneprojects*}
             <div id="projectsDoneblock" class="projects" style="display: none;">
                 <table class="second-thead" cellpadding="0" cellspacing="0" border="0"
