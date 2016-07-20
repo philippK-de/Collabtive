@@ -59,7 +59,7 @@ function openModal(elementId) {
  */
 function closeModal() {
     //get the element to be closed
-    var modalContainer = css("#modal_overlay");
+    var modalContainer = css("#modal_container");
 
     //reset the the to the original ID
     //modalElement.style.display = "none";
