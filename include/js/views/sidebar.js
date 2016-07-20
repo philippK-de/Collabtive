@@ -12,7 +12,6 @@ function showSidebar() {
         });
 
     var contentIns = cssAll(".content-right-in");
-
     for(var j=0;j<contentIns.length;j++)
     {
         Velocity(contentIns[j], {
@@ -33,11 +32,6 @@ function showSidebar() {
             backgroundPositionX: 678
         }, {queue: false});
     }
-    //cssId("content-right").style.width = "220px";
-    //cssId("sidebar-content").style.display = "block";
-    //cssId("sidebar-overlay").style.display = "none";
-
-    //cssId("content-left").style.width = "742px";
 }
 
 function hideSidebar() {
@@ -54,8 +48,8 @@ function hideSidebar() {
             }
         }
     );
-    var contentIns = cssAll(".content-right-in");
 
+    var contentIns = cssAll(".content-right-in");
     for(var j=0;j<contentIns.length;j++)
     {
         Velocity(contentIns[j], {
@@ -73,17 +67,9 @@ function hideSidebar() {
 
     //animate position of blocktoggles too
     var blockToggles = cssAll(".win_block,.win_none");
-
     for (var i = 0; i < blockToggles.length; i++) {
         Velocity(blockToggles[i], {
             backgroundPositionX: 795
         }, {queue: false});
     }
-
-
-    //cssId("content-right").style.width = "100px";
-    //cssId("sidebar-overlay").style.display = "block";
-
-    //cssId("content-left").style.width = "862px";
-
 }
