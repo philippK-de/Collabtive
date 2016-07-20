@@ -79,30 +79,32 @@
                                             <a class="winclose" href="javascript:closeModal('miles_modal{{*day.val}}');"></a>
                                         </div>
 
-                                        <div class="miles">
-                                            <div class="block">
-                                                <table cellpadding="0" cellspacing="0" border="0">
-                                                    {/literal}
-                                                    <thead>
-                                                    <th>{$langfile.project}</th>
-                                                    <th>{$langfile.milestone}</th>
-                                                    <th class="tools">{$langfile.daysleft}</th>
-                                                    </thead>
-                                                    {literal}
+                                        <div class="inmodal">
+                                            <div class="miles">
+                                                <div class="block">
+                                                    <table cellpadding="0" cellspacing="0" border="0">
+                                                        {/literal}
+                                                        <thead>
+                                                        <th>{$langfile.project}</th>
+                                                        <th>{$langfile.milestone}</th>
+                                                        <th class="tools">{$langfile.daysleft}</th>
+                                                        </thead>
+                                                        {literal}
 
-                                                    <tbody v-for="milestone in day.milestones" class="alternateColors">
-                                                    <tr>
-                                                        <td>{{*milestone.pname}}</td>
-                                                        <td>
-                                                            <a href="managemilestone.php?action=showmilestone&amp;msid={{*milestone.ID}}&amp;id={{*milestone.project}}"
-                                                               title="{{*milestone.title}}">{{*milestone.name}}</a>
-                                                        </td>
-                                                        <td class="tools">
-                                                            {{*milestone.daysleft}}
-                                                        </td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
+                                                        <tbody v-for="milestone in day.milestones" class="alternateColors">
+                                                        <tr>
+                                                            <td>{{*milestone.pname}}</td>
+                                                            <td>
+                                                                <a href="managemilestone.php?action=showmilestone&amp;msid={{*milestone.ID}}&amp;id={{*milestone.project}}"
+                                                                   title="{{*milestone.title}}">{{*milestone.name}}</a>
+                                                            </td>
+                                                            <td class="tools">
+                                                                {{*milestone.daysleft}}
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
