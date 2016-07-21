@@ -199,6 +199,7 @@ button:focus {
     outline:0;
 }
 
+/* Drag and Drop */
 [draggable] {
     -moz-user-select: none;
     -khtml-user-select: none;
@@ -211,6 +212,8 @@ button:focus {
 .dragover {
     border: 1px dashed #000;
 }
+
+/* Helpers */
 .display-none{
     display: none;
 }
@@ -219,6 +222,15 @@ button:focus {
 }
 .overflow-hidden{
     overflow:hidden;
+}
+.text-align-right{
+    text-align:right;
+}
+.text-align-center{
+    text-align:center;
+}
+.cursor-pointer{
+    cursor: pointer;
 }
 /* ## Basic-XHTML-Elements ############### END ############## */
 

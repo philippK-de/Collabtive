@@ -1,5 +1,4 @@
 <div id="desktopprojects" class="projects" style="padding-bottom:2px;">
-
     <div class="headline">
         <a href="javascript:void(0);" id="projecthead_toggle" class="win_block" onclick=""></a>
 
@@ -10,11 +9,11 @@
         <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt=""/>{#myprojects#}
             {* Pagination *}
             <pagination view="projectsView" :pages="pages" :current-page="currentPage"></pagination>
-          </h2>
+        </h2>
 
     </div>
-    <div class="block blockaccordion_content" id="projecthead" style="overflow:hidden;">
-        <div id="form_addmyproject" class="addmenue" style="display:none;">
+    <div class="block blockaccordion_content" id="projecthead overflow-hidden">
+        <div id="form_addmyproject" class="addmenue display-none">
             {include file="addproject.tpl" myprojects="1"}
         </div>
         <div class="nosmooth" id="sm_deskprojects">
@@ -24,13 +23,12 @@
                 <thead>
                 <tr>
                     <th class="a"></th>
-                    <th class="b" style="cursor:pointer;">{#project#}</th>
-                    <th class="c" style="cursor:pointer">{#done#}</th>
-                    <th class="d" style="text-align:right">{#daysleft#}&nbsp;&nbsp;</th>
+                    <th class="b" class="cursor-pointer">{#project#}</th>
+                    <th class="c" class="cursor-pointer">{#done#}</th>
+                    <th class="d" class="text-align-right">{#daysleft#}&nbsp;&nbsp;</th>
                     <th class="tools"></th>
                 </tr>
                 </thead>
-
                 <tfoot>
                 <tr>
                     <td colspan="5"></td>
@@ -38,8 +36,7 @@
                 </tfoot>
 
                 {literal}
-                <tbody v-for="item in items.open" id="proj_{{item.ID}}" class="alternateColors"
-                       rel="{{item.ID}},{{item.name}},{{item.daysleft}},0,0,{{item.done}}">
+                <tbody v-for="item in items.open" id="proj_{{item.ID}}" class="alternateColors">
 
                 <tr v-bind:class="{ 'marker-late': item.islate, 'marker-today': item.istoday }">
                     <td>
@@ -55,7 +52,7 @@
                         <div class="toggle-in">
                                 <span id="desktopprojects_toggle{{*item.ID}}"
                                       class="acc-toggle"
-                                      onclick="javascript:accord_projects.toggle(document.querySelector('#desktopprojects_content{{$index}}'));"></span>
+                                      onclick="javascript:accord_projects.toggle(css('#desktopprojects_content{{$index}}'));"></span>
                             <a href="manageproject.php?action=showproject&amp;id={{*item.ID}}" title="{{*item.name}}">
                                 {{*item.name | truncate '30' }}
                             </a>
@@ -67,7 +64,7 @@
                         </div>
                         <span>{{*item.done}}%</span>
                     </td>
-                    <td style="text-align:right">{{*item.daysleft}}&nbsp;&nbsp;</td>
+                    <td class="text-align-right">{{*item.daysleft}}&nbsp;&nbsp;</td>
                     <td class="tools">
                         {/literal}
                         {if $userpermissions.projects.edit}
@@ -103,19 +100,16 @@
                 {/literal}
             </table>
 
-
             {*Doneprojects*}
-            <div id="projectsDoneblock" class="projects" style="display: none;">
+            <div id="projectsDoneblock" class="projects display-none">
                 <table class="second-thead" cellpadding="0" cellspacing="0" border="0"
                        onclick="blindtoggle('projectsDoneblock');toggleClass('donebutn','butn_link_active','butn_link');toggleClass('toggle-done','acc-toggle','acc-toggle-active');">
-
                     <tr>
                         <td class="a"><span id="toggle-done">{#closedprojects#}</span></td>
                         <td class="b"></td>
 
                         <td class="tools"></td>
                     </tr>
-
                 </table>
 
                 {literal}
@@ -127,16 +121,16 @@
                             <td class="a">
                                 {/literal}
                                 {if $userpermissions.projects.add}
-                                <a class="butn_checked"
-                                   href="manageproject.php?action=open&amp;id={literal}{{*item.ID}}{/literal}"
-                                   title="{#open#}"></a>
+                                    <a class="butn_checked"
+                                       href="manageproject.php?action=open&amp;id={literal}{{*item.ID}}{/literal}"
+                                       title="{#open#}"></a>
                                 {/if}
                                 {literal}
                             </td>
                             <td class="b">
                                 {{*item.name | truncate '30' }}
                             </td>
-                           <td class="tools">
+                            <td class="tools">
                                 {/literal}
                                 {if $userpermissions.projects.del}
                                 {literal}
@@ -149,8 +143,6 @@
                         </tr>
                         </tbody>
                         {/literal}
-
-
                     </table>
                 </div> {*toggleblock End*}
             </div>
