@@ -1,4 +1,4 @@
-<div id="desktopprojects" class="projects" style="padding-bottom:2px;">
+<div id="desktopprojects" class="projects padding-bottom-two-px" >
     <div class="headline">
         <a href="javascript:void(0);" id="projecthead_toggle" class="win_block" onclick=""></a>
 
