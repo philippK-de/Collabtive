@@ -11,14 +11,14 @@
                  data-text-edited="{#messagewasedited#}"
                  data-text-deleted="{#messagewasdeleted#}"
                  data-text-replied="{#replywasadded#}"
-                 style="display:none">
+                 class="display-none">
             </div>
 
             <h1>{$projectname|truncate:45:"...":true}<span>/ {#messages#}</span></h1>
             <div class="headline">
                 <a href="javascript:void(0);" id="acc-toggle" class="win_block" onclick="toggleBlock('block_msgs');"></a>
                 <div class="wintools">
-                    <div class="progress" id="progressprojectMessages" style="display:none;width:20px;float:left">
+                    <div class="progress display-none" id="progressprojectMessages" style="width:20px;float:left">
                         <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-messages.gif"/>
                     </div>
                     <div class="export-main">
@@ -39,7 +39,7 @@
 
             <div id="block_msgs" class="block">
                 {*Add Message*}
-                <div id="addmsg" class="addmenue" style="display:none;">
+                <div id="addmsg" class="addmenue display-none">
                     {include file="addmessageform.tpl" }
                 </div>
                 <div class="nosmooth" id="sm_msgs">
@@ -48,7 +48,7 @@
                         <tr>
                             <th class="a"></th>
                             <th class="b">{#message#}</th>
-                            <th class="ce" style="text-align:right">{#replies#}&nbsp;&nbsp;</th>
+                            <th class="ce" class="text-align-right">{#replies#}&nbsp;&nbsp;</th>
                             <th class="de">{#by#}</th>
                             <th class="e">{#on#}</th>
                             <th class="tools"></th>
@@ -79,7 +79,7 @@
                                        title="{{*message.title}}">{{message.title | truncate '30' }}</a>
                                 </div>
                             </td>
-                            <td style="text-align:right">
+                            <td class="text-align-right">
                                 <a href="managemessage.php?action=showmessage&amp;mid={{message.ID}}&amp;id={{message.project}}#replies">{{*message.replies}}</a>
                                 &nbsp;
                             </td>
@@ -164,7 +164,7 @@
                                                 </ul>
                                             </div>
                                             <!-- inwrapper End -->
-                                            <div style="clear:both"></div>
+                                            <div class="clear_both"></div>
                                         </div>
                                         <!-- div messages end -->
                                     </div>

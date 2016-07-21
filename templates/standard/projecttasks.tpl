@@ -14,7 +14,7 @@
                  data-text-opened="{#taskwasopened#}"
                  data-text-assigned="{#taskwasassigned#}"
                  data-text-deassigned="{#taskwasdeassigned#}"
-                 style="display:none">
+                 class="display-none">
             </div>
 
             <h1>{$projectname|truncate:45:"...":true}<span>/ {#tasklists#}</span></h1>
@@ -27,7 +27,7 @@
             {/if}
 
             {if $userpermissions.tasks.add} {*Add Tasklist*}
-                <div id="addlist" class="addmenue" style="display:none;">
+                <div id="addlist" class="addmenue display-none">
                     {include file="addtasklist.tpl" }
                 </div>
             {/if} {*Add Tasklist END*}
@@ -40,7 +40,7 @@
                         <a href="javascript:void(0);" id="toggle-{$lists[list].ID}" class="win_block" onclick=""></a>
 
                         <div class="wintools" style="z-index:999;">
-                            <div class="progress" id="progressblockTasks_content{$smarty.section.list.index}" style="display:none;width:22px;float:left">
+                            <div class="progress display-none" id="progressblockTasks_content{$smarty.section.list.index}" style="width:22px;float:left">
                                 <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-tasks.gif"/>
                             </div>
                             {if $userpermissions.tasks.close}
@@ -64,12 +64,12 @@
                     <div id="blockTasks_content{$smarty.section.list.index}"
                          data-tasklist="{$lists[list].ID}"
                          data-project="{$project.ID}"
-                         class="block blockaccordion_content"
-                         style="overflow:hidden;">
+                         class="block blockaccordion_content overflow-hidden"
+                         >
 
                         {*Add Task*}
                         {if $userpermissions.tasks.add}
-                            <div id="form_{$lists[list].ID}" class="addmenue" style="display:none;">
+                            <div id="form_{$lists[list].ID}" class="addmenue display-none">
                                 {include file="addtask.tpl" }
                             </div>
                         {/if}
@@ -82,7 +82,7 @@
                                     <th class="a"></th>
                                     <th class="b">{#tasks#}</th>
                                     <th class="c">{#user#}</th>
-                                    <th class="days" style="text-align:right">{#daysleft#}&nbsp;&nbsp;</th>
+                                    <th class="days" class="text-align-right">{#daysleft#}&nbsp;&nbsp;</th>
                                     <th class="tools"></th>
                                 </tr>
                                 </thead>
@@ -123,7 +123,7 @@
                                     <td>
                                         <a v-for="user in task.users" href="manageuser.php?action=profile&amp;id={{*user.ID}}">{{*user.name}}</a>
                                     </td>
-                                    <td style="text-align:right">{{*task.daysleft}}&nbsp;&nbsp;</td>
+                                    <td class="text-align-right">{{*task.daysleft}}&nbsp;&nbsp;</td>
                                     <td class="tools">
                                         {/literal}
                                         {if $userpermissions.tasks.edit}
@@ -162,7 +162,7 @@
                             </table>
 
                             {*Tasks donetasks*}
-                            <div id="doneblock_{$lists[list].ID}" class="doneblock" style="display: none;">
+                            <div id="doneblock_{$lists[list].ID}" class="doneblock display-none" >
                                 <table id="acc_donetasks_{$lists[list].ID}" class="second-thead" cellpadding="0" cellspacing="0" border="0"
                                        onclick="blindtoggle('doneblock_{$lists[list].ID}');toggleClass('donebutn_{$lists[list].ID}','butn_link_active','butn_link');toggleClass('toggle-done-{$lists[list].ID}','acc-toggle','acc-toggle-active');">
 
@@ -205,7 +205,7 @@
                                             <td class="c">
                                                 <a href="manageuser.php?action=profile&amp;id={{*oldtask.user_id}}">{{*oldtask.user}}</a>
                                             </td>
-                                            <td class="days" style="text-align:right"></td>
+                                            <td class="days text-align-right"></td>
                                             <td class="tools">
                                                 {/literal}
                                                 {if $userpermissions.tasks.del}

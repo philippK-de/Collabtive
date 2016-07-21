@@ -2,14 +2,14 @@
     <a href="javascript:void(0);" id="upcomingMilestones_toggle" class="win_block" onclick=""></a>
 
     <div class = "wintools">
-        <div class="progress" id="progressupcomingMilestones" style="float:left;display:none;">
+        <div class="progress float-left display-none" id="progressupcomingMilestones">
             <img src="templates/standard/theme/standard/images/symbols/loader-calendar.gif"/>
         </div>
     </div>
     <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt=""/>Upcoming {#milestones#}</h2>
     </div>
 
-<div class="block blockaccordion_content" id="upcomingMilestonesHead" style="overlow:hidden">
+<div class="block blockaccordion_content overflow-hidden" id="upcomingMilestonesHead">
 
 
     <div id="sm_miles_upcoming" class="nosmooth">
@@ -20,7 +20,7 @@
                 <th class="a"></th>
                 <th class="b">{#milestone#}</th>
                 <th class="c">{#due#}</th>
-                <th class="days" style="text-align:right">{#daysleft#}&nbsp;&nbsp;</th>
+                <th class="days text-align-right">{#daysleft#}&nbsp;&nbsp;</th>
                 <th class="tools"></th>
             </tr>
             </thead>
@@ -37,7 +37,7 @@
 
     <div id="upcomingMilestones" class="toggleblock" v-cloak>
 
-        <table id="accordion_miles_upcoming" cellpadding="0" cellspacing="0" border="0" style="clear:both;">
+        <table id="accordion_miles_upcoming" cellpadding="0" cellspacing="0" border="0" class="clear_both">
             <tbody v-for="milestone in items" class="alternateColors" id="miles_upcoming_{{milestone.ID}}">
             <tr>
                 <td class="a">
@@ -57,7 +57,7 @@
                         </div>
                     </td>
                     <td class="c">{{*milestone.startstring}} - {{*milestone.endstring}}</td>
-                    <td class="days" style="text-align:right">{{*milestone.dayslate}}&nbsp;&nbsp;</td>
+                    <td class="days text-align-right">{{*milestone.dayslate}}&nbsp;&nbsp;</td>
                 {/literal}
                 <td class="tools">
                     {if $userpermissions.milestones.edit}

@@ -1,5 +1,5 @@
 {if $tasknum > 0}
-    <div class="tasks" style = "padding-bottom:2px;" id="desktoptasks">
+    <div class="tasks padding-bottom-two-px" id="desktoptasks">
         <div class="headline">
             <a href="javascript:void(0);" id="taskhead_toggle" class="win_none" onclick=""></a>
 
@@ -16,8 +16,8 @@
             </div>
             <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt="" />{#mytasks#}</h2>
         </div>
-        <div class="block blockaccordion_content" id="taskhead" style = "overflow:hidden;" >
-            <div id="form_addmytask" class="addmenue" style="display:none;">
+        <div class="block blockaccordion_content overflow-hidden" id="taskhead">
+            <div id="form_addmytask" class="addmenue display-none">
                 {include file="addmytask_index.tpl" }
             </div>
 
@@ -27,9 +27,9 @@
                     <thead>
                     <tr>
                         <th class="a"></th>
-                        <th class="b" style="cursor:pointer;" onclick="sortBlock('desktoptasks','');">{#task#}</th>
-                        <th class="c" style="cursor:pointer;" onclick="sortBlock('desktoptasks','project');">{#project#}</th>
-                        <th class="d" style="cursor:pointer;text-align:right" onclick="sortBlock('desktoptasks','daysleft');">{#daysleft#}&nbsp;&nbsp;</th>
+                        <th class="b" class="cursor-pointer">{#task#}</th>
+                        <th class="c" class="cursor-pointer">{#project#}</th>
+                        <th class="d" class="cursor-pointer">{#daysleft#}&nbsp;&nbsp;</th>
                         <th class="tools"></th>
                     </tr>
                     </thead>
@@ -64,7 +64,7 @@
                             <td>
                                 <a href="managetask.php?action=showproject&amp;id={{*item.project}}">{{*item.pname}}</a>
                             </td>
-                            <td style="text-align:right">{{*item.daysleft}}&nbsp;&nbsp;</td>
+                            <td class="text-align-right">{{*item.daysleft}}&nbsp;&nbsp;</td>
                             <td class="tools">
 
                                 {/literal}{if $userpermissions.tasks.edit} {literal}

@@ -232,6 +232,13 @@ button:focus {
 .cursor-pointer{
     cursor: pointer;
 }
+.float-left{
+    float:left;
+}
+.float-right{
+    float:right;
+}
+
 .padding-bottom-two-px{
    padding-bottom:2px;
 }

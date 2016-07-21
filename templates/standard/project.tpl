@@ -71,7 +71,7 @@
             {/if}
 
             <div class="nosmooth" id="sm_project_customer">
-                <div id="customer" class="descript" class="display-none" >
+                <div id="customer" class="descript display-none" >
                     <div class="content-spacer"></div>
 
                     <h2>{$project.customer.company}</h2>
@@ -182,7 +182,7 @@
                             </h2>
                         </div>
 
-                        <div class="block accordion_content" id="trackerhead overflow-hidden">
+                        <div class="block accordion_content overflow-hidden" id="trackerhead">
                             <div id="trackerform" class="addmenue">
                                 {include file="addtimetracker.tpl" }
                             </div>

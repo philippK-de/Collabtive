@@ -1,6 +1,6 @@
 {* Messages *}
 {if $msgnum > 0}
-    <div class="msgs" style="padding-bottom:2px;" id="desktopmessages">
+    <div class="msgs padding-bottom-two-px" id="desktopmessages">
         <div class="headline">
             <a href="javascript:void(0);" id="activityhead_toggle" class="win_none" onclick=""></a>
 
@@ -19,8 +19,8 @@
                 <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#mymessages#}
             </h2>
         </div>
-        <div class="block blockaccordion_content" id="activityhead" style="overflow:hidden;">
-            <div id="addmsg" class="addmenue" style="display:none;">
+        <div class="block blockaccordion_content overflow-hidden" id="activityhead">
+            <div id="addmsg" class="addmenue display-none">
             </div>
             <table cellpadding="0" cellspacing="0" border="0" v-cloak>
 
@@ -55,7 +55,7 @@
                         <div class="toggle-in">
                             <span id="desktopmessages_toggle{{*item.ID}}"
                                   class="acc-toggle"
-                                  onclick="javascript:accord_msgs.toggle(document.querySelector('#desktopmessages_content{{$index}}'));"></span>
+                                  onclick="javascript:accord_msgs.toggle(css('#desktopmessages_content{{$index}}'));"></span>
                             <a href="managemessage.php?action=showmessage&amp;mid={{*item.ID}}&amp;id={{*item.project}}" title="{{*item
                             .title}}">{{*item.title | truncate '30' }}</a>
                         </div>
@@ -145,7 +145,7 @@
 
                                         </ul>
                                     </div>
-                                    <div style="clear:both"></div>
+                                    <div class="clear_both"></div>
                                 </div>
                                 <!-- div messages end -->
                             </div>

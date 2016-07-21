@@ -3,7 +3,7 @@
     <a href="javascript:void(0);" id="currentMilestonesHead_toggle" class="win_block" onclick=""></a>
 
     <div class="wintools">
-        <div class="progress" id="progresscurrentMilestones" style="float:left;display:none;">
+        <div class="progress float-left display-none" id="progresscurrentMilestones">
             <img src="templates/standard/theme/standard/images/symbols/loader-calendar.gif"/>
         </div>
     </div>
@@ -13,11 +13,11 @@
 
 </div>
 
-<div class="block blockaccordion_content" id="currentMilestonesHead" style="overlow:hidden">
+<div class="block blockaccordion_content overflow-hidden" id="currentMilestonesHead">
 
     {*Add Milestone*}
     {if $userpermissions.milestones.add}
-        <div id="addstone" class="addmenue" style="display:none;">
+        <div id="addstone" class="addmenue display-none">
             {include file="addmilestone.tpl" }
         </div>
     {/if}
@@ -30,7 +30,7 @@
                 <th class="a"></th>
                 <th class="b">{#milestone#}</th>
                 <th class="c">{#due#}</th>
-                <th class="days" style="text-align:right">{#daysleft#}&nbsp;&nbsp;</th>
+                <th class="days" class="text-align-right">{#daysleft#}&nbsp;&nbsp;</th>
                 <th class="tools"></th>
             </tr>
             </thead>
@@ -46,7 +46,7 @@
         <!--new Miles-->
         <div id="currentMilestones" class="toggleblock" v-cloak>
 
-            <table id="accordion_miles_new" cellpadding="0" cellspacing="0" border="0" style="clear:both;">
+            <table id="accordion_miles_new" cellpadding="0" cellspacing="0" border="0" class="clear_both">
                 <tbody v-for="milestone in items.open" class="alternateColors" id="miles_{{milestone.ID}}">
                 <tr>
                     <td class="a">
@@ -65,7 +65,7 @@
                             </div>
                         </td>
                         <td class="c">{{*milestone.fend}}</td>
-                        <td class="days" style="text-align:right">{{*milestone.dayslate}}&nbsp;&nbsp;</td>
+                        <td class="days text-align-right">{{*milestone.dayslate}}&nbsp;&nbsp;</td>
                     {/literal}
                     <td class="tools">
                         {if $userpermissions.milestones.edit}
@@ -142,7 +142,7 @@
             <!--toggleblock End  new Miles End-->
             {/literal}
             {*finished Miles*}
-            <div id="doneblock" class="doneblock" style="display: none;">
+            <div id="doneblock" class="doneblock display-none">
 
                 <table class="second-thead" cellpadding="0" cellspacing="0" border="0"
                        onclick="blindtoggle('doneblock');toggleClass('donebutn','butn_link_active','butn_link');toggleClass('togglemilesdone','acc-toggle','acc-toggle-active');">

@@ -2,7 +2,7 @@
     <a href="javascript:void(0);" id="lateMilestones_toggle" class="win_block" onclick=""></a>
 
     <div class="wintools">
-        <div class="progress" id="progresslateMilestones" style="float:left;display:none;">
+        <div class="progress display-none float-left" id="progresslateMilestones">
             <img src="templates/standard/theme/standard/images/symbols/loader-calendar.gif"/>
         </div>
     </div>
@@ -10,7 +10,7 @@
 
 </div>
 
-<div class="block blockaccordion_content" id="lateMilestonesHead" style="overlow:hidden">
+<div class="block blockaccordion_content overflow-hidden" id="lateMilestonesHead">
     <div id="sm_miles_late" class="nosmooth" >
 
         <table cellpadding="0" cellspacing="0" border="0">
@@ -19,7 +19,7 @@
                 <th class="a"></th>
                 <th class="b">{#milestone#}</th>
                 <th class="c">{#due#}</th>
-                <th class="days" style="text-align:right">{#daysleft#}&nbsp;&nbsp;</th>
+                <th class="days" class="text-align-right">{#daysleft#}&nbsp;&nbsp;</th>
                 <th class="tools"></th>
             </tr>
             </thead>
@@ -54,7 +54,7 @@
                         </div>
                     </td>
                     <td class="c">{{milestone.fend}}</td>
-                    <td class="days" style="text-align:right">-{{*milestone.dayslate}}&nbsp;&nbsp;</td>
+                    <td class="days text-align-right">-{{*milestone.dayslate}}&nbsp;&nbsp;</td>
                 {/literal}
                 <td class="tools">
                     {if $userpermissions.milestones.edit}

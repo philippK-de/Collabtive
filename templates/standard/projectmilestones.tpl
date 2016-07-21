@@ -12,7 +12,7 @@
                  data-text-deleted="{#milestonewasdeleted#}"
                  data-text-closed="{#milestonewasclosed#}"
                  data-text-opened="{#milestonewasopened#}"
-                 style="display:none">
+                 class="display-none">
             </div>
             <h1>{$projectname|truncate:45:"...":true}<span>/ {#milestones#}</span></h1>
 
