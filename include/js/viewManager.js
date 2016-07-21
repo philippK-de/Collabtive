@@ -343,50 +343,6 @@ function removeRow(row, color) {
         });
     }
 }
-/*
- * VUE COMPONENTS
- * Vue components are JS objects that represent dynamic HTML fragments.
- * These can be bound to custom HTML elements - i.e. <element></element>
- */
-
-/*
- * Pagination Component
- * @param obj view a Vue JS view to be paginated
- * @param obj pages a pagination array, representing the available pages for this view
- * @param obj current page Object representing the currently opened page for this view
- */
-var paginationComponent = Vue.extend({
-    props: ["view", "pages", "currentPage"],
-    template: "<template v-if='pages.length > 1'>" +
-    "<span id=\"paging\" style=\"margin-left:10px;\"> " +
-    "<button style=\"float:none;font-size:9pt;margin:0 1px 0 1px;\" onclick=\"pagination.loadPrevPage({{view}})\"><<</button>" +
-    "<span id=\"page{{page.index}}\" v-for=\"page in pages\" style=\"margin-left:2px;\"> " +
-    "<button v-bind:class=\"currentPage == page.index ? 'paginationActive' : 'paginationInactive' \" " +
-    "onclick=\"pagination.loadPage({{view}},{{page.index}});\">" +
-    "{{page.index}}" +
-    "</button> " +
-    "</span> " +
-    "<button style=\"float:none;font-size:9pt;margin:0 1px 0 1px;\" onclick=\"pagination.loadNextPage({{view}})\">>></button> " +
-    "</span>" +
-    "</template>"
-});
-//bind to <pagination> element
-Vue.component("pagination", paginationComponent);
-
-/*
- * Progress element
- * This component renders a visual loading indictaor
- * @param str block The block the loader corresponds to - needed for startWait() / stopWait()
- * @param str loader the image to be shown
- */
-var progressComponent = Vue.extend({
-    props: ["block", "loader"],
-    template: "<div class=\"progress\" id=\"progress{{block}}\" style=\"float:left;display:none;\"> " +
-    "   <img src=\"templates/standard/theme/standard/images/symbols/{{loader}}\"/> " +
-    "</div>"
-});
-//bind to <loader> elemet
-Vue.component("loader", progressComponent);
 
 /*
  * Register a vue filter to limit the length of strings rendered
