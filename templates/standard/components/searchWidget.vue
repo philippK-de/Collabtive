@@ -1,7 +1,7 @@
 searchwidget
 ["searchtitle"]
 <h2>
-    <a id="searchtoggle" class="win-up" href="javascript:blindtoggle('search');toggleClass('searchtoggle','win-up','win-down');">{{searchtitle}}</a>
+    <a id="searchtoggle" class="win-up">{{searchtitle}}</a>
 </h2>
 <form id="search" method="get" action="managesearch.php"  onsubmit="return validateStandard(this,'input_error');">
     <fieldset>
@@ -11,7 +11,7 @@ searchwidget
         <div id="choices"></div>
         <input type="hidden" name="action" value="search"/>
 
-        <div id="indicator1" style="display:none;">
+        <div id="indicator1" class="display-none">
             <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/indicator_arrows.gif" alt=""/>
         </div>
             <button type="submit"></button>
