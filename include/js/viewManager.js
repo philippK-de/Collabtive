@@ -261,13 +261,13 @@ function submitForm(event) {
  Show loading indicator
  */
 function startWait(indic) {
-    document.getElementById(indic).style.display = "block";
+    cssId(indic).style.display = "block";
 }
 /*
  hide loading indicator
  */
 function stopWait(indic) {
-    document.getElementById(indic).style.display = 'none';
+    cssId(indic).style.display = 'none';
 }
 //endcolor for close element flashing
 closeEndcolor = '#377814';
@@ -320,7 +320,7 @@ function closeElement(theElement, theUrl, theView) {
     ajax.sendRequest();
 }
 function removeRow(row, color) {
-    var rowElement = document.getElementById(row);
+    var rowElement = cssId(row);
     if (rowElement != null) {
         //set bg color to white
         rowElement.style.backgroundColor = "#FFFFFF";
