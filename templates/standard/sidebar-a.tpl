@@ -3,28 +3,9 @@
        <img src="templates/standard/theme/standard/images/logo-b.png" onclick="showSidebar()" alt="" />
     </div>
     <div id="sidebar-content" class="overflow-hidden">
-        {*Search*}
         <div class="content-right-in overflow-hidden">
             <a href="javascript:hideSidebar();">close</a>
-            <h2><a id="searchtoggle" class="win-up"
-                   href="javascript:blindtoggle('search');toggleClass('searchtoggle','win-up','win-down');">{#search#}</a></h2>
-
-            <form id="search" method="get" action="managesearch.php" {literal} onsubmit="return validateStandard(this,'input_error');"{/literal}>
-                <fieldset>
-                    <div class="row">
-                        <input type="text" class="text" id="query" name="query"/>
-                    </div>
-
-                    <div id="choices"></div>
-                    <input type="hidden" name="action" value="search"/>
-
-                    <div id="indicator1" style="display:none;">
-                        <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/indicator_arrows.gif" alt="{#searching#}"/>
-                    </div>
-
-                    <button type="submit" title="{#gosearch#}"></button>
-                </fieldset>
-            </form>
+            <searchwidget searchtitle="{#search#}"></searchwidget>
         </div>
 
         {*Quickfinder*}
@@ -56,4 +37,5 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="include/js/views/sidebar.min.js"></script>
+<script type="text/javascript" src="include/js/components/searchWidgetComponent.js"></script>
+<script type="text/javascript" src="include/js/views/sidebar.js"></script>

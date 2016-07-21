@@ -73,3 +73,7 @@ function hideSidebar() {
         }, {queue: false});
     }
 }
+
+var sidebarView = new Vue({
+    el: "#sidebar-content"
+});
