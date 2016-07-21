@@ -46,7 +46,7 @@
 
                 <div class="block" id="acc_tracker" v-cloak>
 
-                    <div id="filter" class="addmenue" style="display:none;"> {*Filter Report*}
+                    <div id="filter" class="addmenue display-none"> {*Filter Report*}
                         {include file="filtertracker.tpl" }
                     </div> {*Filter End*}
 
@@ -59,7 +59,7 @@
                                 <th class="cf">{#day#}</th>
                                 <th class="cf">{#started#}</th>
                                 <th class="cf">{#ended#}</th>
-                                <th class="e" style="text-align:right">{#hours#}&nbsp;&nbsp;</th>
+                                <th class="e text-align-right">{#hours#}&nbsp;&nbsp;</th>
                                 <th class="tools"></th>
                             </tr>
                             </thead>
@@ -85,7 +85,7 @@
                                 <td>{{*track.daystring}}</td>
                                 <td>{{*track.startstring}}</td>
                                 <td>{{*track.endstring}}</td>
-                                <td style="text-align:right">{{*track.hours}}&nbsp;&nbsp;</td>
+                                <td class="text-align-right">{{*track.hours}}&nbsp;&nbsp;</td>
                                 <td class="tools">
                                     {/literal}
                                     {if $userpermissions.timetracker.edit}
@@ -121,7 +121,7 @@
                             <tr>
                                 <td></td>
                                 <td colspan="4"><strong>{#totalhours#}:</strong></td>
-                                <td style="text-align:right"><strong>{$totaltime|default}</strong>&nbsp;&nbsp;</td>
+                                <td class="text-align-right"><strong>{$totaltime|default}</strong>&nbsp;&nbsp;</td>
                                 <td class="tools"></td>
                             </tr>
                             </tbody>

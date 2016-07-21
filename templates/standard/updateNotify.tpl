@@ -12,7 +12,7 @@
 						<button type="reset" onfocus="this.blur();" onclick = "blindtoggle('changelog');">Show changelog</button><br />
 					</div>
 
-					<div class = "row" id = "changelog" style = "display:none;">
+					<div class = "row display-none" id = "changelog">
 						<br />
 						<h2>Changelog</h2>
 						{$updateNotify->changelog}

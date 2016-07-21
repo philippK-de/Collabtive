@@ -9,11 +9,11 @@
             <div class="infowin_left display-none"
                  id="projectSystemMessage"
                  data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png"
-                 data-text-deleted = "{#projectwasdeleted#}"
-                 data-text-edited = "{#projectwasedited#}"
-                 data-text-added = "{#projectwasadded#}"
-                 data-text-closed = "{#projectwasclosed#}"
-                 >
+                 data-text-deleted="{#projectwasdeleted#}"
+                 data-text-edited="{#projectwasedited#}"
+                 data-text-added="{#projectwasadded#}"
+                 data-text-closed="{#projectwasclosed#}"
+                    >
             </div>
             <h1>{#administration#}<span>/ {#projectadministration#}</span></h1>
 
@@ -22,7 +22,7 @@
 
                 {if $userpermissions.projects.add}
                     <div class="wintools">
-                        <loader block="adminProjects" loader="loader-project3.gif" ></loader>
+                        <loader block="adminProjects" loader="loader-project3.gif"></loader>
                         <a class="add" href="javascript:blindtoggle('form_addmyproject');" id="add_myprojects"
                            onclick="toggleClass(this,'add-active','add');toggleClass('add_butn_myprojects','butn_link_active','butn_link');toggleClass('sm_myprojects','smooth','nosmooth');">
                             <span>{#addproject#}</span>
@@ -94,14 +94,14 @@
 
                                 {/literal}
                                 {if $userpermissions.projects.edit}
-                                 {literal}
+                                {literal}
                                     <a class="tool_edit" href="javascript:void(0);" onclick="change('manageproject.php?action=editform&amp;id={{*project.ID}}','form_addmyproject');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_addmyproject');" title="{/literal}{#edit#}"></a>
                                 {/if}
 
                                 {if $userpermissions.projects.del}
                                 {literal}
                                     <a class="tool_del"
-                                       href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','proj_{{*project.ID}}','manageproject.php?action=del&amp;id={{*project.ID}}',adminProjectsView);" title="{/literal}{#delete#}"></a>
+                                    href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','proj_{{*project.ID}}','manageproject.php?action=del&amp;id={{*project.ID}}',adminProjectsView);" title="{/literal}{#delete#}"></a>
                                 {/if}
                             </td>
                         </tr>
@@ -132,9 +132,11 @@
                                                                     <a href="manageuser.php?action=profile&amp;id={{project.members[member].ID}"
                                                                        title="{{project.members[member].name}">
                                                                         <img v-if="member.gender == 'f'"
-                                                                             src="./templates/{$settings.template}/theme/{/literal}{$setting.theme}/{literal}images/symbols/user-icon-female.png" alt=""/>
+                                                                             src="./templates/{$settings.template}/theme/{/literal}{$setting.theme}/{literal}images/symbols/user-icon-female.png"
+                                                                             alt=""/>
                                                                         <img v-if="member.gender == 'm'"
-                                                                             src="./templates/{/literal}{$settings.template}/theme/{$settings.theme}/{literal}images/symbols/user-icon-male.png" alt=""/>
+                                                                             src="./templates/{/literal}{$settings.template}/theme/{$settings.theme}/{literal}images/symbols/user-icon-male.png"
+                                                                             alt=""/>
                                                                     </a>
                                                                 </td>
                                                                 <td class="rightmen" valign="top">
@@ -152,7 +154,8 @@
                                                             <tr>
                                                                 <td colspan="3">
                                                                     <span class="name">
-                                                                        <a href="manageuser.php?action=profile&amp;id={{*member.ID}}" title="{{*member.name}}">
+                                                                        <a href="manageuser.php?action=profile&amp;id={{*member.ID}}"
+                                                                           title="{{*member.name}}">
                                                                             {{*member.name}}
                                                                         </a>
                                                                     </span>
@@ -161,7 +164,8 @@
 
                                                         </table>
 
-                                                        <div v-show="member.avatar != ''" class="moreinfo display-none" id="info_{{*project.ID}_{{*member.ID}">
+                                                        <div v-show="member.avatar != ''" class="moreinfo display-none"
+                                                             id="info_{{*project.ID}_{{*member.ID}">
                                                             <img src="thumb.php?pic=files/{$cl_config}/avatar/{{project.members[member].avatar}&amp;width=82"
                                                                  alt="" onclick="fadeToggle('info_{{project.ID}_{{project.members[member].ID}');"/>
 																		<span class="name">
@@ -176,7 +180,7 @@
                                             </ul>
                                         </div>
                                         <!--inwrapper End-->
-                                         {/literal}
+                                        {/literal}
                                         <p class="tags-miles"> <!--assign users-->
                                             <strong>{#adduser#}:</strong>
                                         </p>
@@ -184,7 +188,8 @@
                                         <div class="inwrapper">
 
                                             <form class="main" method="post"
-                                                  action="manageproject.php?action=assign&amp;id={{*project.ID}}&redir=admin.php?action=projects&mode=useradded" onsubmit="return validateCompleteForm(this);">
+                                                  action="manageproject.php?action=assign&amp;id={{*project.ID}}&redir=admin.php?action=projects&mode=useradded"
+                                                  onsubmit="return validateCompleteForm(this);">
                                                 <fieldset>
 
                                                     {/literal}
@@ -205,14 +210,16 @@
 
                                                 </fieldset>
                                             </form>
-                                        </div><!--assign users end-->
+                                        </div>
+                                        <!--assign users end-->
                                     </div>
                                 </div>
                             </td>
                         </tr>
                         </tbody>
-                    </table> <!--Projects End-->
-                     {literal}
+                    </table>
+                    <!--Projects End-->
+                    {literal}
                     <!--Doneprojects-->
                     <div id="doneblock" class="doneblock display-none">
 
@@ -236,7 +243,7 @@
                                     <td class="a">
                                         {/literal}
                                         {if $userpermissions.projects.add}
-                                         {literal}
+                                        {literal}
                                             <a class="butn_checked" href="manageproject.php?action=open&amp;id={{*closedProject.ID}}"
                                             title="{/literal}{#open#}"></a>
                                         {/if}
@@ -265,9 +272,12 @@
                                     </td>
                                 </tr>
                             </table>
-                        </div> <!--toggleblock End-->
-                    </div> <!--doneblock end-->
-                </div> <!--smooth end-->
+                        </div>
+                        <!--toggleblock End-->
+                    </div>
+                    <!--doneblock end-->
+                </div>
+                <!--smooth end-->
                 {literal}
                 <div class="tablemenue">
                     <div class="tablemenue-in">
@@ -275,23 +285,26 @@
                         {if $userpermissions.projects.add}
                         {literal}
                             <a class="butn_link" href="javascript:blindtoggle('form_addmyproject');" id="add_butn_myprojects"
-                               onclick="toggleClass('add_myprojects','add-active','add');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_myprojects','smooth','nosmooth');">
-                             {/literal}{#addproject#}
+                            onclick="toggleClass('add_myprojects','add-active','add');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_myprojects','smooth','nosmooth');">
+                        {/literal}{#addproject#}
                             </a>
                         {/if}
-                         {literal}
+                        {literal}
                         <a class="butn_link" href="javascript:blindtoggle('doneblock');" id="donebutn"
                            onclick="toggleClass(this,'butn_link_active','butn_link');toggleClass('toggle-done','acc-toggle','acc-toggle-active');">
                             {/literal}{#closedprojects#}{literal}
                         </a>
                     </div>
                 </div>
-            </div> <!-- block END Doneprojects End-->
+            </div>
+            <!-- block END Doneprojects End-->
 
             <div class="content-spacer"></div>
 
-        </div> <!--Projects END-->
-    </div> <!--content-left-in END-->
+        </div>
+        <!--Projects END-->
+    </div>
+    <!--content-left-in END-->
 </div> <!--content-left END-->
 
     <script type="text/javascript" src="include/js/accordion.min.js"></script>

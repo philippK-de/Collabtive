@@ -37,7 +37,7 @@
 			<div id="block_members" class="blockwrapper">
 				{*Add User*}
 				{if $userpermissions.projects.edit}
-					<div id = "form_member" class="addmenue" style = "display:none;">
+					<div id = "form_member" class="addmenue display-none">
 						{include file="adduserproject.tpl" }
 					</div>
 				{/if}
@@ -103,7 +103,7 @@
 
 											{if $members[member].avatar != ""}
 											<div class="moreinfo-wrapper">
-												<div class="moreinfo" id="info_{$members[member].ID}" style="display:none">
+												<div class="moreinfo display-none" id="info_{$members[member].ID}">
 													<img src = "thumb.php?pic=files/{$cl_config}/avatar/{$members[member].avatar}&amp;width=82" alt="" onclick="fadeToggle('info_{$members[member].ID}');" />
 													<span class="name"><a href="manageuser.php?action=profile&amp;id={$members[member].ID}">{$members[member].name|truncate:15:"...":true}</a></span>
 												</div>
