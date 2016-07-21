@@ -7,9 +7,7 @@
                 <label for="name">{#name#}:</label>
                 <input type="text" class="text" name="name" id="name" required="1" realname="{#name#}"/>
             </div>
-
             <div class="clear_both_b"></div>
-
             <div class="row">
                 <label>{#permissions#}:</label>
 

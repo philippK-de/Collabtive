@@ -2,7 +2,6 @@
 
 {include file="header.tpl" jsload = "ajax" jsload1 = "tinymce" }
 {include file="tabsmenue-project.tpl" taskstab = "active"}
-
 <div id="content-left">
 	<div id="content-left-in">
 		<div class="tasks">
@@ -13,7 +12,6 @@
 			</div>
 
 {/if}
-			
 			<div class="block_in_wrapper">
 				
 				<h2>{#addtask#}</h2>

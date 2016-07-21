@@ -1,7 +1,5 @@
 <div class="block_in_wrapper">
-
 	<h2>{#addtask#}</h2>
-
 	<form novalidate
           data-index="{$smarty.section.list.index}"
           data-tasklist="{$lists[list].ID}"
@@ -30,7 +28,7 @@
 			</div>
 
 			<div class="datepick">
-				<div id="datepicker_start_task{$lists[list].ID}" class="picker" style="display:none;"></div>
+				<div id="datepicker_start_task{$lists[list].ID}" class="picker display-none"></div>
 			</div>
 
 			<script type="text/javascript">
@@ -49,7 +47,7 @@
 			</div>
 
 			<div class="datepick">
-				<div id="datepicker_end_task{$lists[list].ID}" class="picker" style="display:none;"></div>
+				<div id="datepicker_end_task{$lists[list].ID}" class="picker display-none"></div>
 			</div>
 
 			<script type="text/javascript">

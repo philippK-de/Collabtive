@@ -6,7 +6,7 @@
         <div class="user" id="adminUsers">
 
             <!-- user text -->
-            <div class="infowin_left"
+            <div class="infowin_left display-none"
                  id="userSystemMessage"
                  data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/userlist.png"
                  data-text-added="{#userwasadded#}"
@@ -14,17 +14,17 @@
                  data-text-deleted="{#userwasdeleted#}"
                  data-text-assigned="{#userwasassigned#}"
                  data-text-deassigned="{#permissionswereedited#}"
-                 style="display:none">
+                 >
             </div>
 
             <!-- role text -->
-            <div class="infowin_left"
+            <div class="infowin_left display-none"
                  id="roleSystemMessage"
                  data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/userlist.png"
                  data-text-edited="{#roleedited#}"
                  data-text-added="{#roleadded#}"
                  data-text-deleted="{#roleadded#}"
-                 style="display:none">
+                 >
             </div>
 
             <h1>{#administration#}<span>/ {#useradministration#}</span></h1>
@@ -58,7 +58,7 @@
 
                 <!--Add User-->
                 {if $userpermissions.admin.add}
-                    <div id="form_member" class="addmenue" style="display:none;">
+                    <div id="form_member" class="addmenue display-none">
                         {include file="adduserform.tpl"}
                     </div>
                 {/if}
@@ -128,7 +128,7 @@
 
                                             <template v-if="{{user.avatar != ''}}">
                                                 <div class="moreinfo-wrapper">
-                                                    <div class="moreinfo" id="info_{{*user.ID}}" style="display:none">
+                                                    <div class="moreinfo display-none" id="info_{{*user.ID}}">
                                                         <img src="thumb.php?pic=files/{/literal}{$cl_config}{literal}/avatar/{{*user.avatar}}&amp;width=82"
                                                              alt="" onclick="fadeToggle('info_{{*user.ID}');"/>
                                                             <span class="name">

@@ -3,7 +3,7 @@
         <div class="headline">
             <a href="javascript:void(0);" id="projecthead_toggle" class="win_block" onclick="toggleBlock('projecthead');"></a>
             <div class="wintools">
-                <div class="progress" id="progressuserProjects" style="display:none;">
+                <div class="progress display-none float-left" id="progressuserProjects" >
                     <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-project3.gif"/>
                 </div>
             </div>
@@ -14,7 +14,7 @@
             </h2>
         </div>
 
-        <div class="block" id="projecthead" style="{$projectstyle|default}">
+        <div class="block" id="projecthead">
 
             <table cellpadding="0" cellspacing="0" border="0">
                 <thead>
@@ -22,7 +22,7 @@
                     <th class="a"></th>
                     <th class="b">{#project#}</th>
                     <th class="c"></th>
-                    <th class="d" style="text-align:right">{#daysleft#}&nbsp;&nbsp;</th>
+                    <th class="d text-align-right">{#daysleft#}&nbsp;&nbsp;</th>
                     <th class="tools"></th>
                 </tr>
                 </thead>
@@ -54,7 +54,7 @@
                         </div>
                     </td>
                     <td></td>
-                    <td style="text-align:right">{{*project.daysleft}}&nbsp;&nbsp;</td>
+                    <td class="text-align-right">{{*project.daysleft}}&nbsp;&nbsp;</td>
                     <td class="tools">
 
                     </td>
@@ -108,7 +108,7 @@
 
                                                 <template v-if="member.avatar != ''">
                                                 <div class="moreinfo-wrapper">
-                                                    <div class="moreinfo" id="info_{{*project.ID}_{{*member.ID}}" style="display:none">
+                                                    <div class="moreinfo display-none" id="info_{{*project.ID}_{{*member.ID}}">
                                                         <img src="thumb.php?pic=files/{$cl_config}/avatar/{{*member.avatar}}&amp;width=82" alt="" onclick="fadeToggle('info_{{*project.ID}_{{*project.members[member].ID}');"/>
                                                         <span class="name">
                                                             <a href="manageuser.php?action=profile&amp;id={{*member.ID}}">{{*member.name}}</a></span>

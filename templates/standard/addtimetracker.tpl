@@ -12,7 +12,7 @@
 			</div>
 
 			<div class="datepick">
-				<div id="datepicker_addtt" class="picker" style="display:none;"></div>
+				<div id="datepicker_addtt" class="picker display-none"></div>
 			</div>
 
 			<script type="text/javascript">

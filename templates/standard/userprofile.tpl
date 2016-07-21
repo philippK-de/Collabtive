@@ -36,9 +36,6 @@
 									</div>
 								{/if}
 							{/if}
-							<div id="avatarbig" style="display:none;">
-								<a href="javascript:Control.Modal.close();"><img src = "thumb.php?pic=files/{$cl_config}/avatar/{$user.avatar}&amp;width=480&amp;height=480;" alt="" /></a>
-							</div>
 						</td>
 						<td>
 							<div class="message">
@@ -155,7 +152,7 @@
 				</div>
 
 				<div class="block" id="acc-tracker"> {*Filter Report*}
-					<div id = "form_filter" class="addmenue" style = "display:none;">
+					<div id = "form_filter" class="addmenue display-none">
 						{include file="filterreport.tpl" }
 					</div>
 
@@ -169,7 +166,7 @@
 									<th class="cf">{#day#}</th>
 									<th class="cf">{#started#}</th>
 									<th class="cf">{#ended#}</th>
-									<th class="e" style="text-align:right">{#hours#}&nbsp;&nbsp;</th>
+									<th class="e text-align-right">{#hours#}&nbsp;&nbsp;</th>
 									<th class="tools"></th>
 								</tr>
 							</thead>
@@ -201,7 +198,7 @@
 										<td>{$tracker[track].daystring|truncate:12:"...":true}</td>
 										<td>{$tracker[track].startstring|truncate:12:"...":true}</td>
 										<td>{$tracker[track].endstring|truncate:12:"...":true}</td>
-										<td style="text-align:right">{$tracker[track].hours|truncate:12:"...":true}&nbsp;&nbsp;</td>
+										<td class="text-align-right">{$tracker[track].hours|truncate:12:"...":true}&nbsp;&nbsp;</td>
 										<td class="tools">
 											{if $userpermissions.timetracker.edit}
 												<a class="tool_edit" href="managetimetracker.php?action=editform&amp;tid={$tracker[track].ID}&amp;id={$tracker[track].project}" title="{#edit#}"></a>
@@ -237,7 +234,7 @@
 								<tr>
 									<td></td>
 									<td colspan="4"><strong>{#totalhours#}:</strong></td>
-									<td style="text-align:right"><strong>{$totaltime}</strong>&nbsp;&nbsp;</td>
+									<td class="text-align-right"><strong>{$totaltime}</strong>&nbsp;&nbsp;</td>
 									<td class="tools"></td>
 								</tr>
 							</tbody>
@@ -245,7 +242,7 @@
 						<tbody class="color-a">
 					<tr>
 						<td colspan="7">
-							<div id="paging" style = "float:right;" >
+							<div id="paging float-right">
 										</div>
 						</td>
 

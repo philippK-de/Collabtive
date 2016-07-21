@@ -5,7 +5,7 @@
 
         <div class="export-main">
 
-            <div class="progress" id="progressprojectLog" style="display:none;">
+            <div class="progress display-none" id="progressprojectLog">
                 <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-neutral.gif"/>
             </div>
             <a class="export"><span>{#export#}</span></a>
@@ -23,7 +23,7 @@
     </h2>
 </div>
 
-<div class="block accordion_content" id="loghead" style="overflow:hidden;">
+<div class="block accordion_content overflow-hidden" id="loghead">
     <table id="projectLog" class="log" cellpadding="0" cellspacing="0" border="0"  v-cloak>
         <thead>
         <tr>

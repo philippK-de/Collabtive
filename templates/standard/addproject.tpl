@@ -1,7 +1,5 @@
 <div class="block_in_wrapper">
-
 	<h2>{#addproject#}</h2>
-
 	<form id="addprojectform" novalidate class="main" method="post" action="admin.php?action=addpro">
 		<fieldset>
 
@@ -32,7 +30,7 @@
 			</div>
 
 			<div class="datepick">
-				<div id="add_project" class="picker" style="display:none;"></div>
+				<div id="add_project" class="picker display-none"></div>
 			</div>
 
 			<div class="row">
@@ -52,7 +50,7 @@
 
 			<div class="row">
 				<label>{#members#}:</label>
-				<div style="float:left;">
+				<div class="float-left">
 			        {section name=user loop=$users}
 				        <div class="row">
 					        <input type="checkbox" class="checkbox" value="{$users[user].ID}" name="assignto[]" id="{$users[user].ID}" {if $users[user].ID == $userid} checked="checked"{/if} />

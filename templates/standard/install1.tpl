@@ -1,10 +1,7 @@
 {include file="header.tpl" title="$title" showheader="no" jsload="ajax"}
-
-			<div class="install" style="text-align:center;padding:5% 0;">
+ 			<div class="install" style="text-align:center;padding:5% 0;">
 				<div style="text-align:left;width:500px;margin:0 auto;padding:25px 25px 15px 25px;background:white;border:1px solid;">
-
 				<h1>{#installcollabtive#}</h1>
-
 				<div style="border-bottom:1px dashed;padding:16px 0 16px 0;">
 
 					<form class="main" method="get" action="install.php">

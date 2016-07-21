@@ -1,5 +1,4 @@
 <div class="block_in_wrapper">
-
 	<form novalidate class="main" method="post" action="admin.php?action=adduser" {literal} onsubmit="return validateCompleteForm(this);" {/literal} >
 		<fieldset>
 
@@ -32,7 +31,7 @@
 
 			<div class="row">
 				<label>{#projects#}:</label>
-				<div style="float:left;">
+				<div class="float-left">
 					{section name=project loop=$projects}
 						<div class="row">
 							<input type="checkbox" class="checkbox" value="{$projects[project].ID}" name="assignto[]" id="{$projects[project].ID}" />

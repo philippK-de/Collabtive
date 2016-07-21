@@ -11,7 +11,7 @@
     <div class="block" id="acc_roles">
 
         <!-- Add Roles-->
-        <div id="form_addmyroles" class="addmenue" style="display:none;">
+        <div id="form_addmyroles" class="addmenue display-none">
             {include file="addroles.tpl" myroles="1"}
         </div>
 

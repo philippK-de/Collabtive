@@ -4,13 +4,13 @@
 <div id="content-left">
 	<div id="content-left-in">
 		<div class="projects" id="adminCustomers">
-            <div class="infowin_left"
+            <div class="infowin_left display-none"
                  id="customerSystemMessage"
                  data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/customers.png"
                  data-text-added="{#customerwasadded#}"
                  data-text-edited="{#customerwasedited#}"
                  data-text-deleted="{#customerwasdeleted#}"
-                 style="display:none">
+                 >
             </div>
 
 			<h1>{#administration#}<span>/ {#customeradministration#}</span></h1>
@@ -37,16 +37,15 @@
 			</div>
 
 			<div class="block" id="acc_customers"> {*Add Customer*}
-				<div id="form_addcustomer" class="addmenue" style="display:none;">
+				<div id="form_addcustomer" class="addmenue display-none">
 					{include file="addcustomer.tpl" customers="1"}
 				</div>
 
-				<div id="form_editcustomer" class="addmenue" style="display:none;">
+				<div id="form_editcustomer" class="addmenue display-none">
 				{include file = "editcustomer.tpl" async="yes"}
 				</div>
 
 				<div class="nosmooth" id="sm_customers">
-
 					<table id="admincustomers" cellpadding="0" cellspacing="0" border="0">
 						<thead>
 							<tr>
@@ -70,7 +69,7 @@
 									<td>&nbsp;</td>
 									<td>
 										<div class="toggle-in">
-											<span id="acc_customers_toggle{{$index}}" class="acc-toggle" onclick="javascript:accord_customers.activate(document.querySelector('#acc_customers_content{{$index}}'))"></span>
+											<span id="acc_customers_toggle{{$index}}" class="acc-toggle" onclick="javascript:accord_customers.activate(css('#acc_customers_content{{$index}}'))"></span>
 											<a href="#" title="{{*customer.company}}">
 												{{*customer.company}}
 											</a>

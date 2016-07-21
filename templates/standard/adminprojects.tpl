@@ -6,14 +6,14 @@
         <div class="projects" id="adminProjects">
 
             <!-- project text -->
-            <div class="infowin_left"
+            <div class="infowin_left display-none"
                  id="projectSystemMessage"
                  data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png"
                  data-text-deleted = "{#projectwasdeleted#}"
                  data-text-edited = "{#projectwasedited#}"
                  data-text-added = "{#projectwasadded#}"
                  data-text-closed = "{#projectwasclosed#}"
-                 style="display:none">
+                 >
             </div>
             <h1>{#administration#}<span>/ {#projectadministration#}</span></h1>
 
@@ -38,7 +38,7 @@
 
             </div>
             <div class="block" id="acc_projects"> {*Add Project*}
-                <div id="form_addmyproject" class="addmenue" style="display:none;">
+                <div id="form_addmyproject" class="addmenue display-none">
                     {include file="addproject.tpl"}
                 </div>
                 <div class="nosmooth" id="sm_myprojects">
@@ -49,7 +49,7 @@
                             <th class="a"></th>
                             <th class="b">{#project#}</th>
                             <th class="c">{#done#}</th>
-                            <th class="days" style="text-align:right">{#daysleft#}&nbsp;&nbsp;</th>
+                            <th class="days text-align-right">{#daysleft#}&nbsp;&nbsp;</th>
                             <th class="tools"></th>
                         </tr>
                         </thead>
@@ -89,7 +89,7 @@
                                 </div>
                                 <span>{{*project.done}}%</span>
                             </td>
-                            <td style="text-align:right">{{*project.daysleft}}&nbsp;&nbsp;</td>
+                            <td class="text-align-right">{{*project.daysleft}}&nbsp;&nbsp;</td>
                             <td class="tools">
 
                                 {/literal}
@@ -161,7 +161,7 @@
 
                                                         </table>
 
-                                                        <div v-show="member.avatar != ''" class="moreinfo" id="info_{{*project.ID}_{{*member.ID}" style="display:none">
+                                                        <div v-show="member.avatar != ''" class="moreinfo display-none" id="info_{{*project.ID}_{{*member.ID}">
                                                             <img src="thumb.php?pic=files/{$cl_config}/avatar/{{project.members[member].avatar}&amp;width=82"
                                                                  alt="" onclick="fadeToggle('info_{{project.ID}_{{project.members[member].ID}');"/>
 																		<span class="name">
@@ -214,7 +214,7 @@
                     </table> <!--Projects End-->
                      {literal}
                     <!--Doneprojects-->
-                    <div id="doneblock" class="doneblock" style="display: none;">
+                    <div id="doneblock" class="doneblock display-none">
 
                         <table class="second-thead" cellpadding="0" cellspacing="0" border="0"
                                onclick="blindtoggle('doneblock');toggleClass('donebutn','butn_link_active','butn_link');toggleClass('toggle-done','acc-toggle','acc-toggle-active');">
@@ -253,7 +253,7 @@
                                     <td class="c">
 
                                     </td>
-                                    <td class="days" style="text-align:right">{{*closedProject.daysleft}}&nbsp;&nbsp;</td>
+                                    <td class="days text-align-right">{{*closedProject.daysleft}}&nbsp;&nbsp;</td>
                                     <td class="tools">
                                         {/literal}
                                         {if $userpermissions.projects.del}
