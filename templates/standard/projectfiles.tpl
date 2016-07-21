@@ -5,25 +5,12 @@
     <div id="content-left-in">
         <div class="files" id="projectFiles" v-cloak>
             <!-- project text -->
-            <div class="infowin_left"
+            <div class="infowin_left display-none"
                  id="fileSystemMessage"
                  data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/files.png"
                  data-text-added="{#filewasadded#}"
                  data-text-deleted="{#filewasdeleted#}"
-                 style="display:none">
-            </div>
-
-            <div class="infowin_left" style="display:none;" id="systemmsg">
-                {if $mode == "folderadded"}
-                    <span class="info_in_green"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/folder-root.png"
-                                                     alt=""/>{#folderwasadded#}</span>
-                {elseif $mode == "folderedited"}
-                    <span class="info_in_yellow"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/folder-root.png"
-                                                      alt=""/>{#folderwasedited#}</span>
-                {elseif $mode == "folderdel"}
-                    <span class="info_in_red"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/folder-root.png"
-                                                   alt=""/>{#folderwasdeleted#}</span>
-                {/if}
+                 >
             </div>
 
             <h1>{$projectname|truncate:45:"...":true}<span>/ {#files#}</span></h1>
@@ -59,14 +46,14 @@
             <div id="block_files" class="blockwrapper">
                 {*Add Folder*}
                 {if $userpermissions.files.add}
-                    <div id="form_folder" class="addmenue" style="display:none;">
+                    <div id="form_folder" class="addmenue display-none">
                         {include file="addfolder.tpl" }
                     </div>
                 {/if}
 
                 {*Add File*}
                 {if $userpermissions.files.add}
-                    <div id="form_file" class="addmenue" style="display:none;">
+                    <div id="form_file" class="addmenue display-none">
                         <div id="newupload" style="display:block">{include file="addfileform_new.tpl"}</div>
                     </div>
                 {/if}
@@ -80,7 +67,7 @@
                         </div>
                         <div class="contenttitle_in" style="width:500px;">
                         </div>
-                        <div style="float:right;margin-right:3px;">
+                        <div class="float-right" style="margin-right:3px;">
                             <form id="typechose">
                                 <select id="fileviewtype" onchange="changeFileview(this.value);">
                                     <option value="fileview" selected>{#gridview#}</option>

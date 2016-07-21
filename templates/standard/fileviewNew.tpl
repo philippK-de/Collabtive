@@ -108,4 +108,4 @@
 </ul>
 
 
-<div id="parentfolder" style="display:none;">{$folderid}</div>
+<div id="parentfolder" class="display-none">{$folderid}</div>

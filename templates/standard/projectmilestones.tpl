@@ -4,7 +4,7 @@
 <div id="content-left">
     <div id="content-left-in">
         <div class="miles">
-            <div class="infowin_left"
+            <div class="infowin_left display-none"
                  id="milestoneSystemMessage"
                  data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png"
                  data-text-added="{#milestonewasadded#}"
@@ -12,7 +12,7 @@
                  data-text-deleted="{#milestonewasdeleted#}"
                  data-text-closed="{#milestonewasclosed#}"
                  data-text-opened="{#milestonewasopened#}"
-                 class="display-none">
+                 >
             </div>
             <h1>{$projectname|truncate:45:"...":true}<span>/ {#milestones#}</span></h1>
 

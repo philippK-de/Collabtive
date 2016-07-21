@@ -4,14 +4,14 @@
 <div id="content-left">
     <div id="content-left-in">
         <div class="msgs" id="projectMessages" v-cloak>
-            <div class="infowin_left"
+            <div class="infowin_left display-none"
                  id="messageSystemMessage"
                  data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png"
                  data-text-added="{#messagewasadded#}"
                  data-text-edited="{#messagewasedited#}"
                  data-text-deleted="{#messagewasdeleted#}"
                  data-text-replied="{#replywasadded#}"
-                 class="display-none">
+                >
             </div>
 
             <h1>{$projectname|truncate:45:"...":true}<span>/ {#messages#}</span></h1>

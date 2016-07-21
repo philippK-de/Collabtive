@@ -4,33 +4,33 @@
 <div id="content-left">
     <div id="content-left-in">
         <!-- project text -->
-        <div class="infowin_left"
+        <div class="infowin_left display-none"
              id="projectSystemMessage"
              data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png"
              data-text-deleted="{#projectwasdeleted#}"
              data-text-edited="{#projectwasedited#}"
              data-text-added="{#projectwasadded#}"
              data-text-closed="{#projectwasclosed#}"
-             style="display:none">
+             >
         </div>
         <!-- task text -->
-        <div class="infowin_left"
+        <div class="infowin_left display-none"
              id="taskSystemMessage"
              data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png"
              data-text-deleted="{#taskwasdeleted#}"
              data-text-edited="{#taskwasedited#}"
              data-text-added="{#taskwasadded#}"
              data-text-closed="{#taskwasclosed#}"
-             style="display:none">
+             >
         </div>
         <!-- messages text -->
-        <div class="infowin_left"
+        <div class="infowin_left display-none"
              id="messageSystemMessage"
              data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png"
              data-text-deleted="{#messagewasdeleted#}"
              data-text-edited="{#messagewasedited#}"
              data-text-added="{#messagewasadded#}"
-             style="display:none">
+             >
         </div>
 
         {if $isUpdated}

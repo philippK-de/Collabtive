@@ -5,7 +5,7 @@
     <div id="content-left-in">
         <div class="timetrack" id="projectTimetracker">
 
-            <div class="infowin_left"
+            <div class="infowin_left display-none"
                  id="timetrackerSystemMessage"
                  data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/timetracker.png"
                  data-text-added="{#timetracker#} {#was#} {#added#}"

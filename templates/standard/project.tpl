@@ -5,14 +5,14 @@
     <div id="content-left-in">
         <div class="projects">
 
-            <div class="infowin_left"
+            <div class="infowin_left display-none"
                  id="systemMessage"
                  data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png"
                  data-text-deleted="{#projectwasdeleted#}"
                  data-text-edited="{#projectwasedited#}"
                  data-text-added="{#projectwasadded#}"
                  data-text-closed="{#projectwasclosed#}"
-                class="display-none">
+                >
             </div>
 
             <h1>{$project.name|truncate:45:"...":true}<span>/ {#overview#}</span></h1>
@@ -106,7 +106,7 @@
 
                 {*Miles tree*}
                 {if $tree[0][0] > 0}
-                    <div class="projects dtree" class="padding-bottom-two-px">
+                    <div class="projects dtree padding-bottom-two-px">
                         <div class="headline accordion_toggle">
                             <a href="javascript:void(0);" id="treehead_toggle" class="win_block" onclick=""></a>
 

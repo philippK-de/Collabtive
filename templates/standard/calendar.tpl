@@ -1,4 +1,4 @@
-<div id="desktopCalendar" class="miles" style="padding-bottom:2px;" v-cloak>
+<div id="desktopCalendar" class="miles padding-bottom-two-px"  v-cloak>
     <div class="headline">
         <a href="javascript:void(0);" id="mileshead_toggle" class="win_none" onclick=""></a>
 
@@ -13,9 +13,9 @@
     </div>
 
     {if $context == "project"}
-    <div class="block accordion_content" id="mileshead" style="overflow:hidden;">
+    <div class="block accordion_content overflow-hidden" id="mileshead" >
         {else}
-        <div class="block blockaccordion_content" id="mileshead" style="overflow:hidden;">
+        <div class="block blockaccordion_content overflow-hidden" id="mileshead">
             {/if}
             <div class="bigcal">
                 <table cellpadding="0" cellspacing="1" border="0" class="thecal">
@@ -70,7 +70,7 @@
                                              alt=""/>
                                     </a>
 
-                                    <div id="miles_modal{{*day.val}}" class="milesmodal" style="display:none">
+                                    <div id="miles_modal{{*day.val}}" class="milesmodal display-none" >
                                         <div class="modaltitle">
                                             <img src="./templates/{/literal}{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png"
                                                  alt=""/>
@@ -117,7 +117,7 @@
                                              alt=""/>
                                     </a>
 
-                                    <div id="tasks_modal{{*day.val}}" class="tasksmodal" style="display:none;">
+                                    <div id="tasks_modal{{*day.val}}" class="tasksmodal display-none">
                                         <div class="modaltitle">
                                             <img src="./templates/{/literal}{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png"
                                                  alt=""/>

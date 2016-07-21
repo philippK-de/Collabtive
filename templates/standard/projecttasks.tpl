@@ -4,7 +4,7 @@
 <div id="content-left">
     <div id="content-left-in">
         <div class="tasks">
-            <div class="infowin_left"
+            <div class="infowin_left display-none"
                  id="taskSystemMessage"
                  data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png"
                  data-text-deleted="{#taskwasdeleted#}"
@@ -14,7 +14,7 @@
                  data-text-opened="{#taskwasopened#}"
                  data-text-assigned="{#taskwasassigned#}"
                  data-text-deassigned="{#taskwasdeassigned#}"
-                 class="display-none">
+                 >
             </div>
 
             <h1>{$projectname|truncate:45:"...":true}<span>/ {#tasklists#}</span></h1>

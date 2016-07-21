@@ -6,7 +6,7 @@
 <div class="user">
 
     <!-- System messages -->
-    <div class="infowin_left"
+    <div class="infowin_left display-none"
          id="userSystemMessage"
          data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png"
          data-text-added="{#userwasadded#}"
@@ -14,7 +14,7 @@
          data-text-deleted="{#userwasdeleted#}"
          data-text-assigned="{#userwasassigned#}"
          data-text-deassigned="{#userwasdeassigned#}"
-         style="display:none">
+         >
     </div>
 
 <h1>{$projectname|truncate:45:"...":true}<span>/ {#members#}</span></h1>
