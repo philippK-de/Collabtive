@@ -149,7 +149,7 @@
                                              id="taskList_{/literal}{$lists[list].ID}{literal}_content{{$index}}"
                                              data-slide="{{$index}}">
                                             <div class="acc-in">
-                                                <div class="message-in">
+                                                <div class="message-in-fluid">
                                                     {{{task.text}}}
                                                 </div>
                                             </div>

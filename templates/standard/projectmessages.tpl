@@ -105,8 +105,8 @@
                                     <div class="acc-in">
                                         <img src="thumb.php?width=80&amp;height=80&amp;pic=templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/no-avatar-male.jpg"/>
 
-                                        <div class="message">
-                                            <div class="message-in">
+                                        <div class="message-fluid">
+                                            <div class="message-in-fluid">
                                                 {{{*message.text}}}
                                             </div>
 
@@ -150,11 +150,12 @@
                                                                 </tr>
                                                                 {literal}
                                                                 <tr>
-                                                                    <td colspan="3"><span class="name">
+                                                                    <td colspan="3">
+                                                                        <span class="name">
 																			<a href="managefile.php?action=downloadfile&amp;id={{*file.project}}&amp;file={{*file.ID}}">
                                                                                 {{*file.shortName}}
                                                                             </a>
-                                                                                </span>
+                                                                        </span>
                                                                     </td>
                                                                 <tr/>
                                                             </table>
