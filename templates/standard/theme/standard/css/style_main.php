@@ -223,6 +223,7 @@ button:focus {
 .overflow-hidden{
     overflow:hidden;
 }
+/* Text align */
 .text-align-right{
     text-align:right;
 }
@@ -232,18 +233,36 @@ button:focus {
 .cursor-pointer{
     cursor: pointer;
 }
+/* Float */
 .float-left{
     float:left;
 }
 .float-right{
     float:right;
 }
+.float-none{
+    float:none;
+}
 
+/* Padding and Margin */
 .padding-bottom-two-px{
    padding-bottom:2px;
 }
+.margin-left-two-px{
+    margin-left:2px;
+}
 /* ## Basic-XHTML-Elements ############### END ############## */
 
+/* Pagination */
+.pagination
+{
+    margin-left: 10px;
+}
+.pagination button
+{
+    font-size:9pt;
+    margin:0 1px 0 1px;
+}
 
 /* ## LOGIN-Elements ################################ */
 
