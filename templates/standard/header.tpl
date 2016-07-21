@@ -20,9 +20,18 @@
     {if $jsload|default == "ajax"}
     {literal}
         <script type="text/javascript" src="include/js/velocity.min.js"></script>
-        <script type="text/javascript" src="include/js/ajax.min.js"></script>
         <script type="text/javascript" src="include/js/vue.min.js"></script>
+        <script type="text/javascript" src="include/js/ajax.min.js"></script>
+
+
         <script type="text/javascript" src="include/js/viewManager.min.js"></script>
+        {/literal}
+            {* Loop through components set in init.php and add JS script tags for them *}
+            {section name=component loop=$vueComponents}
+                <script type="text/javascript" src="include/js/components/{$vueComponents[component]}Component.min.js"></script>
+            {/section}
+        {literal}
+
         <script type="text/javascript" src="include/js/systemMessage.min.js"></script>
         <script type="text/javascript" src="include/js/jsval.min.js"></script>
         <script type="text/javascript">

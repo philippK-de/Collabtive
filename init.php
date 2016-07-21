@@ -157,6 +157,8 @@ $template->assign("theY", $they);
 // Get the user's projects for the quickfinder in the sidebar
 if (isset($userid)) {
     $project = new project();
+    $vueComponentList = ["pagination","progress"];
+    $template->assign("vueComponents",$vueComponentList);
    // $myOpenProjects = $project->getMyProjects($userid);
 
 }
