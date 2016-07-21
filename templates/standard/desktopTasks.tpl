@@ -6,22 +6,16 @@
             <div class="wintools">
                 <loader block="desktoptasks" loader="loader-tasks.gif"></loader>
                 <div class="export-main">
-
-
                     <a class="export"><span>{#export#}</span></a>
                     <div class="export-in" style="width:69px;left: -69px;"> {* at two items *}
                         <a class="rss" href="managerss.php?action=rss-tasks&user={$userid}"><span>{#rssfeed#}</span></a>
                         <!--<a class="ical" href="managetask.php?action=ical"><span>{#icalexport#}</span></a>-->
                         <a class="pdf" href="mytasks.php?action=pdf"><span>{#pdfexport#}</span></a>
                     </div>
-
                 </div>
-
             </div>
-
             <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt="" />{#mytasks#}</h2>
         </div>
-
         <div class="block blockaccordion_content" id="taskhead" style = "overflow:hidden;" >
             <div id="form_addmytask" class="addmenue" style="display:none;">
                 {include file="addmytask_index.tpl" }
@@ -30,7 +24,6 @@
             <div class="nosmooth" id="sm_desktoptasks">
 
                 <table  cellpadding="0" cellspacing="0" border="0" v-cloak>
-
                     <thead>
                     <tr>
                         <th class="a"></th>
@@ -46,10 +39,7 @@
                         <td colspan="5"></td>
                     </tr>
                     </tfoot>
-
-
-
-                    {*Color-Mix*}
+                 {*Color-Mix*}
                     {literal}
                     <tbody v-for="item in items" class="alternateColors" id="task_{{*item.ID}}" rel="{{*item.ID}},{{*item.title}},{{*item.daysleft}},
                     {{*item.pname}}">

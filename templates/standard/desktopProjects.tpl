@@ -1,5 +1,5 @@
 <div id="desktopprojects" class="projects" style="padding-bottom:2px;">
-    <test></test>
+
     <div class="headline">
         <a href="javascript:void(0);" id="projecthead_toggle" class="win_block" onclick=""></a>
 
@@ -10,7 +10,7 @@
         <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt=""/>{#myprojects#}
             {* Pagination *}
             <pagination view="projectsView" :pages="pages" :current-page="currentPage"></pagination>
-        </h2>
+          </h2>
 
     </div>
     <div class="block blockaccordion_content" id="projecthead" style="overflow:hidden;">
