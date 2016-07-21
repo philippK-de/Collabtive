@@ -37,14 +37,14 @@ ajaxRequest.prototype.sendRequest = function () {
         //dirty hack to make the indicator visible inside the closures
         const theIndicator = this.indicator;
         this.request.onloadstart = function (evt) {
-            var progressIndicator = document.getElementById("progress" + theIndicator);
+            var progressIndicator = cssId("progress" + theIndicator);
             if (progressIndicator !== null && progressIndicator !== undefined) {
                 progressIndicator.style.display = "block";
             }
         }
         //Onloadend handler fires once after onload has been dispatched
         this.request.onloadend = function (evt) {
-            var progressIndicator = document.getElementById("progress" + theIndicator);
+            var progressIndicator = cssId("progress" + theIndicator);
             if (progressIndicator !== null && progressIndicator !== undefined) {
                 progressIndicator.style.display = "none";
             }
