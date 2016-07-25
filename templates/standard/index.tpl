@@ -44,6 +44,7 @@
             {* Projects *}
             {include file="desktopProjects.tpl"}
             {* Tasks *}
+
             {include file="desktopTasks.tpl"}
 
             {* Calendar *}

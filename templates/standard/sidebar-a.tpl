@@ -3,6 +3,7 @@
        <img src="templates/standard/theme/standard/images/logo-b.png" onclick="showSidebar()" alt="" />
     </div>
     <div id="sidebar-content" class="overflow-hidden">
+        <!--testplugin-->
         <div class="content-right-in overflow-hidden">
             <a href="javascript:hideSidebar();">close</a>
             <searchwidget searchtitle="{#search#}"></searchwidget>
