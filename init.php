@@ -13,28 +13,29 @@ define("CL_CONFIG", "standard");
 // collabtive release date
 define("CL_PUBDATE", "1426201200");
 // uncomment next line for debugging
- error_reporting(E_ALL || E_STRICT);
+error_reporting(E_ALL || E_STRICT);
 // include config file , pagination and global functions
 require(CL_ROOT . "/config/" . CL_CONFIG . "/config.php");
 //include composer dependencies
 require(CL_ROOT . "/vendor/autoload.php");
 // load init functions
 require(CL_ROOT . "/include/initfunctions.php");
+require(CL_ROOT . "/include/pluginFunctions.php");
+
 //assume mysql as the default db
-if(!isset($db_driver))
-{
-	$db_driver = "mysql";
+if (!isset($db_driver)) {
+    $db_driver = "mysql";
 }
 // Start database connection
 // Depending on the DB driver, instantiate a PDO object with the necessary credentials.
 $db_drivers = PDO::getAvailableDrivers();
-if (!in_array($db_driver,$db_drivers)){
-	die('Requested to use '.$db_driver.', which is not enabled!');
+if (!in_array($db_driver, $db_drivers)) {
+    die('Requested to use ' . $db_driver . ', which is not enabled!');
 }
 switch ($db_driver) {
     case "mysql":
-        if (empty($db_name) or empty($db_user)){
-            die("You must set db_name and db_user in /config/". CL_CONFIG . "/config.php to use mysql, or set db_driver to \"sqlite\" to use an SQLite database!");
+        if (empty($db_name) or empty($db_user)) {
+            die("You must set db_name and db_user in /config/" . CL_CONFIG . "/config.php to use mysql, or set db_driver to \"sqlite\" to use an SQLite database!");
         }
         $conn = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8", $db_user, $db_pass);
         break;
@@ -45,11 +46,15 @@ switch ($db_driver) {
 // Start template engine
 $template = new Smarty();
 // STOP smarty from spewing notices all over the html code
-$template->error_reporting = E_ALL &~E_NOTICE;
+$template->error_reporting = E_ALL & ~E_NOTICE;
 // get the available languages
 $languages = getAvailableLanguages();
 // get URL to collabtive
 $url = getMyUrl();
+
+$template->force_compile = true;
+$plugins = new plugins();
+$plugins->loadPlugins();
 
 $template->assign("url", $url);
 $template->assign("languages", $languages);
@@ -72,7 +77,7 @@ if (isset($_SESSION["userid"])) {
     $userpermissions = $_SESSION["userpermissions"];
     // update user lastlogin for the onlinelist
     $mynow = time();
-    if(isset($conn)) {
+    if (isset($conn)) {
         $conn->exec("UPDATE user SET lastlogin='$mynow' WHERE ID = $userid");
     }
     // assign it all to the templates
@@ -82,7 +87,7 @@ if (isset($_SESSION["userid"])) {
     $template->assign("usergender", $gender);
     $template->assign("userpermissions", $userpermissions);
     $template->assign("loggedin", 1);
-}else {
+} else {
     $template->assign("loggedin", 0);
     $userpermissions = array();
     $settings = array();
@@ -92,20 +97,18 @@ if (isset($_SESSION["userid"])) {
 if (isset($conn)) {
     // Set PDO options
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-   // $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+    // $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     // create a global mylog object for loging system events
     $mylog = new mylog();
     // get a settings object, and fetch an array containing the system settings
-    $settingsObj = (object) new settings();
+    $settingsObj = (object)new settings();
     $settings = $settingsObj->getSettings();
     // define a constant that holds the default dateformat
     define("CL_DATEFORMAT", $settings["dateformat"]);
     // set the default TZ for date etc
     date_default_timezone_set($settings["timezone"]);
     $template->assign("settings", $settings);
-}
-else
-{
+} else {
     $settings = array();
 }
 // Set template directory
@@ -113,7 +116,7 @@ else
 if (isset($settings['template'])) {
     $template->setTemplateDir(CL_ROOT . "/templates/$settings[template]/");
     // $template->tname = $settings["template"];
-}else {
+} else {
     $template->setTemplateDir(CL_ROOT . "/templates/standard/");
     // $template->tname = "standard";
 }
@@ -121,7 +124,7 @@ if (isset($settings['template'])) {
 if (!isset($locale)) {
     if (isset($settings["locale"])) {
         $locale = $settings['locale'];
-    }else {
+    } else {
         $locale = "en";
     }
     $_SESSION['userlocale'] = $locale;
@@ -147,7 +150,7 @@ $template->assign("locale", $locale);
 $mainclasses = array("desktop" => "desktop",
     "profil" => "profil",
     "admin" => "admin"
-    );
+);
 $template->assign("mainclasses", $mainclasses);
 // get current year and month
 $they = date("Y");
@@ -157,9 +160,9 @@ $template->assign("theY", $they);
 // Get the user's projects for the quickfinder in the sidebar
 if (isset($userid)) {
     $project = new project();
-    $vueComponentList = ["pagination","progress"];
-    $template->assign("vueComponents",$vueComponentList);
-   // $myOpenProjects = $project->getMyProjects($userid);
+    $vueComponentList = ["pagination", "progress"];
+    $template->assign("vueComponents", $vueComponentList);
+    // $myOpenProjects = $project->getMyProjects($userid);
 
 }
 
