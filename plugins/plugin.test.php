@@ -7,8 +7,8 @@ class test
 
     function __construct()
     {
-        $pluginsManager = new plugins();
-        $pluginsManager->registerPlugin($this::templateTag, "test::getIrgendwelcheListen", "test::filter");
+        global $plugins;
+        $plugins->registerPlugin($this::templateTag, "test::getIrgendwelcheListen", "test::filter");
     }
 
     static function filter($source, Smarty_Internal_Template $localTemplateObj)
