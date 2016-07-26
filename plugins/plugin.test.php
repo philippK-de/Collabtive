@@ -13,7 +13,7 @@ class test
 
     static function filter($source, Smarty_Internal_Template $localTemplateObj)
     {
-        return preg_replace("/<!--" . test::templateTag . "-->/i", "{{" . test::templateTag . "}}", $source);
+        return preg_replace("/<!--" . test::templateTag . "-->/i", "{" . test::templateTag . "}", $source);
     }
 
     static function getIrgendwelcheListen($params, Smarty_Internal_Template $templateObj)
