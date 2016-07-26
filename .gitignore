@@ -20,3 +20,6 @@ composer.json
 vendor/composer/installed.json
 vendor/composer/installed.json
 VueCompiler.jar
+*.zip
+plugins/plugin.ganttChart.php
+plugins/templates/ganttChart.tpl
