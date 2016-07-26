@@ -39,18 +39,16 @@
         {/if}
 
         <h1>{#desktop#}</h1>
-
         <div id="block_index" class="block">
             {* Projects *}
             {include file="desktopProjects.tpl"}
             {* Tasks *}
-
             {include file="desktopTasks.tpl"}
-
             {* Calendar *}
             {if $tasknum}
                 {include file="calendar.tpl"}
             {/if}
+            <!--ganttChart-->
 
             {* Messages *}
             {include file="desktopMessages.tpl"}
