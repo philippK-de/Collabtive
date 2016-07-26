@@ -8,6 +8,7 @@ Thumbs.db
 *.swo
 
 templates_c/*
+plugins/gantt/*
 files/*
 .idea/
 .include/js/vue/*
