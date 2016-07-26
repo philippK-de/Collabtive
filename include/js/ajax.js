@@ -3,7 +3,6 @@ closeEndcolor = '#377814';
 //endcolor for delete element flashing
 deleteEndcolor = '#c62424';
 //various ajax functions
-
 /*
  * Object to send and receive/handle ajax requests
  * @param string url url the to be requested
@@ -15,6 +14,7 @@ function ajaxRequest(url, indicator, loadHandler) {
     if (indicator === undefined) {
         indicator = "";
     }
+
 
     this.request = new XMLHttpRequest();
     this.requestType = "GET";

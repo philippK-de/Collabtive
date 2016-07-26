@@ -16,6 +16,7 @@ function finisher() {
     systemMessage.added(projectFilesView.$get("itemType"))
 }
 
+
 function checkCompat() {
     try {
         formDataChk = new FormData();

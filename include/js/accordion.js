@@ -27,7 +27,6 @@ function accordion2(container, options) {
 
     this.initializeAccordion();
 }
-
 /*
 * This method finds the visual toggles and content slides in the root element
  */

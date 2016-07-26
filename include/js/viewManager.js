@@ -83,6 +83,8 @@ function createView(myView) {
     return vueview;
 }
 
+
+
 /*
  * Function to recursively update a view and its dependencies
  * @param Object view A vue.js view to be updated
