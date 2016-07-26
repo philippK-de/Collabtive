@@ -52,6 +52,7 @@ $languages = getAvailableLanguages();
 // get URL to collabtive
 $url = getMyUrl();
 
+//create plugins manager
 $plugins = new plugins();
 $plugins->loadPlugins();
 
