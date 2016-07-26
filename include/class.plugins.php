@@ -5,28 +5,6 @@ class plugins {
     private $installedPlugins;
 
     function __construct(){
-      /*  $this->installedPlugins = [];
-        //get the contents of the plugins folder
-        $pluginFiles = scandir(CL_ROOT . "/plugins/");
-        //loop through the contents
-        foreach ($pluginFiles as $pluginFile) {
-            if (strstr($pluginFile, ".php")) {
-                //magic number
-                //files are named plugin.name.php
-                //plugin. = 7 chars
-                //remove first 7 chars
-                $pluginName = substr($pluginFile, 7);
-                //magic number
-                //files are named plugin.name.php
-                //.php = 4 chars
-                //remove last 4 chars
-                $pluginName = substr($pluginName, 0, strlen($pluginName) - 4);
-
-                //push the plugin name to the list of installed plugins
-                array_push($this->installedPlugins, $pluginName);
-            }
-        }*/
-
         $installedPluginsFile = file_get_contents(CL_ROOT . "/config/standard/installedPlugins.json");
         $this->installedPlugins = json_decode($installedPluginsFile);
     }
