@@ -52,7 +52,6 @@ $languages = getAvailableLanguages();
 // get URL to collabtive
 $url = getMyUrl();
 
-$template->force_compile = true;
 $plugins = new plugins();
 $plugins->loadPlugins();
 
