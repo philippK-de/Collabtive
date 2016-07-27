@@ -8,4 +8,17 @@ function cl_plugins_autoload($class_name)
     }
     return false;
 }
+
 spl_autoload_register('cl_plugins_autoload');
+
+interface collabtivePlugin
+{
+    public function __construct();
+
+    public function bindPlugin();
+
+    public static function filter($source, Smarty_Internal_Template $localTemplateObj);
+
+    public static function getTemplate($params, Smarty_Internal_Template $localTemplateObj);
+
+}

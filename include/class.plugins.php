@@ -17,18 +17,20 @@ class plugins {
     }
     function loadPlugin($thePlugin)
     {
-        return new $thePlugin();
+        $plugin = new $thePlugin();
+        $plugin->bindPlugin();
+        return true;
     }
 
-    function registerPlugin($templateTag, $templateCallable, $templateFilter)
+    function registerPlugin($templateTag, $pluginClassName)
     {
         global $template;
 
-        $template->registerPlugin("function", $templateTag, $templateCallable);
+        $template->registerPlugin("function", $templateTag, $pluginClassName . "::getTemplate");
 
       /*  $template->registerFilter("pre", function ($source, Smarty_Internal_Template $templateObj) use ($templateTag) {
             return preg_replace("/<!--" . $templateTag . "-->/i", "{{" . $templateTag . "}}", $source);
         }); */
-      $template->registerFilter("pre", $templateFilter);
+      $template->registerFilter("pre", $pluginClassName . "::filter");
     }
 }

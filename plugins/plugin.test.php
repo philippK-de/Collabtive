@@ -1,14 +1,19 @@
 <?php
 
-class test
+class test implements collabtivePlugin
 {
     const templateFile = "test.tpl";
     const templateTag = "testplugin";
 
     function __construct()
     {
+
+    }
+
+    function bindPlugin()
+    {
         global $plugins;
-        $plugins->registerPlugin($this::templateTag, "test::getIrgendwelcheListen", "test::filter");
+        $plugins->registerPlugin($this::templateTag, "test");
     }
 
     static function filter($source, Smarty_Internal_Template $localTemplateObj)
@@ -16,7 +21,7 @@ class test
         return preg_replace("/<!--" . test::templateTag . "-->/i", "{" . test::templateTag . "}", $source);
     }
 
-    static function getIrgendwelcheListen($params, Smarty_Internal_Template $templateObj)
+    static function getTemplate($params, Smarty_Internal_Template $templateObj)
     {
 
         global $template;
