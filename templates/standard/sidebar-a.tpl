@@ -4,6 +4,7 @@
     </div>
     <div id="sidebar-content" class="overflow-hidden">
         <!--testplugin-->
+
         <div class="content-right-in overflow-hidden">
             <a href="javascript:hideSidebar();">close</a>
             <searchwidget searchtitle="{#search#}"></searchwidget>

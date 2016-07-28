@@ -53,8 +53,9 @@ $languages = getAvailableLanguages();
 $url = getMyUrl();
 
 //create plugins manager
-$plugins = new plugins();
-$plugins->loadPlugins();
+$pluginManager = new pluginManager();
+$pluginManager->loadPlugins();
+$template->force_compile = true;
 
 $template->assign("url", $url);
 $template->assign("languages", $languages);

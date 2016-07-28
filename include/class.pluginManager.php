@@ -1,5 +1,5 @@
 <?php
-class plugins {
+class pluginManager {
 
 
     private $installedPlugins;
@@ -22,15 +22,23 @@ class plugins {
         return true;
     }
 
-    function registerPlugin($templateTag, $pluginClassName)
+    function registerPlugin(array $templateTags, $pluginClassName)
     {
         global $template;
 
-        $template->registerPlugin("function", $templateTag, $pluginClassName . "::getTemplate");
+        foreach($templateTags as $templateTag) {
+            $template->registerPlugin("function", $templateTag, $pluginClassName . "::getTemplate");
+        }
+        return true;
+    }
+    function registerHook(array $filterFunctionNames)
+    {
+        global $template;
+        foreach($filterFunctionNames as $filterFunctionName)
+        {
+            $template->registerFilter("pre", $filterFunctionName);
+        }
 
-      /*  $template->registerFilter("pre", function ($source, Smarty_Internal_Template $templateObj) use ($templateTag) {
-            return preg_replace("/<!--" . $templateTag . "-->/i", "{{" . $templateTag . "}}", $source);
-        }); */
-      $template->registerFilter("pre", $pluginClassName . "::filter");
+        return true;
     }
 }

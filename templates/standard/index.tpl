@@ -40,6 +40,7 @@
 
         <h1>{#desktop#}</h1>
         <div id="block_index" class="block">
+            <!--testpluginTwo-->
             {* Projects *}
             {include file="desktopProjects.tpl"}
             {* Tasks *}

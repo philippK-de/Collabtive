@@ -4,6 +4,7 @@ class test implements collabtivePlugin
 {
     const templateFile = "test.tpl";
     const templateTag = "testplugin";
+    const templateTagTwo = "testpluginTwo";
 
     function __construct()
     {
@@ -12,13 +13,22 @@ class test implements collabtivePlugin
 
     function bindPlugin()
     {
-        global $plugins;
-        $plugins->registerPlugin($this::templateTag, "test");
+        global $pluginManager;
+        $templateTags = [$this::templateTag, $this::templateTagTwo];
+        $pluginManager->registerPlugin($templateTags, "test");
+
+        $filterFunctions = ["test::filter", "test::filterTwo"];
+        $pluginManager->registerHook($filterFunctions);
     }
 
     static function filter($source, Smarty_Internal_Template $localTemplateObj)
     {
         return preg_replace("/<!--" . test::templateTag . "-->/i", "{" . test::templateTag . "}", $source);
+    }
+
+    static function filterTwo($source, Smarty_Internal_Template $localTemplateObj)
+    {
+        return preg_replace("/<!--" . test::templateTagTwo . "-->/i", "{" . test::templateTagTwo . "}", $source);
     }
 
     static function getTemplate($params, Smarty_Internal_Template $templateObj)
