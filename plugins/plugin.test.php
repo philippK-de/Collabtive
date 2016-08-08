@@ -16,6 +16,8 @@ class test implements collabtivePlugin
     {
         global $pluginManager;
         $templateTags = [
+            ["tag" => $this::templateTag],
+            ["tag" => $this::templateTagTwo]
         ];
         $pluginManager->registerPlugin($templateTags, "test");
         $pluginManager->registerHook($this->filterFunctions);
