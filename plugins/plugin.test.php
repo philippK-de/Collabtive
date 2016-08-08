@@ -5,6 +5,7 @@ class test implements collabtivePlugin
     const templateFile = "test.tpl";
     const templateTag = "testplugin";
     const templateTagTwo = "testpluginTwo";
+    private $filterFunctions = ["test::filter", "test::filterTwo"];
 
     function __construct()
     {
@@ -14,11 +15,10 @@ class test implements collabtivePlugin
     function bindPlugin()
     {
         global $pluginManager;
-        $templateTags = [$this::templateTag, $this::templateTagTwo];
+        $templateTags = [
+        ];
         $pluginManager->registerPlugin($templateTags, "test");
-
-        $filterFunctions = ["test::filter", "test::filterTwo"];
-        $pluginManager->registerHook($filterFunctions);
+        $pluginManager->registerHook($this->filterFunctions);
     }
 
     static function filter($source, Smarty_Internal_Template $localTemplateObj)
