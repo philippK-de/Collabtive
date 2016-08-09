@@ -22,7 +22,7 @@ class pluginManager
 
     function loadPlugin($thePlugin)
     {
-        $plugin = new $thePlugin();
+        $plugin =  new $thePlugin();
         $plugin->bindPlugin();
         return true;
     }

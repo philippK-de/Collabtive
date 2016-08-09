@@ -23,3 +23,13 @@ VueCompiler.jar
 *.zip
 plugins/plugin.ganttChart.php
 plugins/templates/ganttChart.tpl
+managetasksoverview.php
+plugins/plugin.taskComments.php
+plugins/templates/taskComments/addTaskComment.tpl
+plugins/templates/taskComments/taskComments.tpl
+templates/standard/filtertasks.tpl
+templates/standard/tasksOverviewView.tpl
+plugins/taskComments/taskComments.js
+plugins/taskComments/taskComments.min.js
+plugins/globalTaskOverview/templates/tasksOverviewNavigation.tpl
+plugins/plugin.globalTaskOverview.php

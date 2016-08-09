@@ -7,9 +7,9 @@ class test implements collabtivePlugin
     const templateTagTwo = "testpluginTwo";
     private $filterFunctions = ["test::filter", "test::filterTwo"];
 
-    function __construct()
+    public function install()
     {
-
+        // TODO: Implement install() method.
     }
 
     function bindPlugin()

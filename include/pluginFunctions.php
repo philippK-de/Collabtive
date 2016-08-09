@@ -13,8 +13,7 @@ spl_autoload_register('cl_plugins_autoload');
 
 interface collabtivePlugin
 {
-    public function __construct();
-
+    public function install();
     public function bindPlugin();
 
     public static function filter($source, Smarty_Internal_Template $localTemplateObj);
