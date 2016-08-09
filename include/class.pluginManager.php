@@ -57,6 +57,19 @@ class pluginManager
     }
 
     /*
+     * Install a plugin
+     * @param String $pluginName Unique Name of the plugin to be installed
+     */
+    function installPlugin($pluginName)
+    {
+        //add a new entry to the installed Plugins array, with an activation state of true
+        array_push($this->installedPlugins, [$pluginName, true]);
+        //refresh the config file
+        $this->writePluginConfig($this->installedPlugins);
+
+        return true;
+    }
+    /*
      * Enable a plugin
      * @param string $pluginName UniqueName of the plugin to be enabled
      */
@@ -109,7 +122,7 @@ class pluginManager
      */
     private function writePluginConfig(array $pluginConfig)
     {
-        //clear the template cache
+        //clear the template cache so templates get re-rerendered on next page load
         clearTemplateCache();
         //open file for reading and truncate to 0 length
         $fileHandle = fopen($this->installedPluginsPath, "w");
