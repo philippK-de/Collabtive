@@ -266,4 +266,13 @@ function full_url()
     return $_SERVER['REQUEST_URI'];
 }
 
+function clearTemplateCache()
+{
+    $handle = opendir(CL_ROOT . "/templates_c");
+    while (false !== ($file = readdir($handle))) {
+        if ($file != "." and $file != "..") {
+            unlink(CL_ROOT . "/templates_c/" . $file);
+        }
+    }
+}
 ?>

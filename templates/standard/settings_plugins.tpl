@@ -8,14 +8,15 @@
 </div>
 <div id="block_plugins" class="block">
     <div class="block_in_wrapper">
-        <form class="main" method="post" action="admin.php?action=editsets" enctype="multipart/form-data"
-              {literal}onsubmit="return validateCompleteForm(this);"{/literal}>
+        <form class="main" method="post" action="admin.php?action=editPluginSettings" {literal}onsubmit="return validateCompleteForm(this);"{/literal}>
             <fieldset>
                 {section name=plugin loop=$plugins}
                     <div class="row">
-                        <label for="{$plugins[plugin]}">{$plugins[plugin]}</label>
-                        <input type="checkbox" class="checkbox" value="{$plugins[plugin]}" name="name" id="name" required="1" realname="{#name#}"
-                               checked/>
+                        <label for="{$plugins[plugin][0]}">{$plugins[plugin][0]}</label>
+                        <input type="checkbox" class="checkbox" value="1" name="plugins[{$plugins[plugin][0]}]"
+                               id="{$plugins[plugin][0]}"
+                               realname="{#name#}"
+                               {if $plugins[plugin][1] == true }checked{/if} />
                     </div>
                 {/section}
                 <div class="row-butn-bottom">

@@ -55,7 +55,7 @@ $url = getMyUrl();
 //create plugins manager
 $pluginManager = new pluginManager();
 $pluginManager->loadPlugins();
-$template->force_compile = true;
+//$template->force_compile = true;
 
 $template->assign("url", $url);
 $template->assign("languages", $languages);

@@ -4,6 +4,7 @@ class pluginManager
 {
 
     private $installedPluginsPath;
+    //array describing the installed plugins and their status
     private $installedPlugins;
 
     /*
@@ -12,12 +13,21 @@ class pluginManager
      */
     function __construct()
     {
+        //set path to installedPlugins.json containing a JSON representation of the plugin configuration
         $this->installedPluginsPath = CL_ROOT . "/config/standard/installedPlugins.json";
+
+        //read configuration file
         $installedPluginsFile = file_get_contents($this->installedPluginsPath);
+        //decode json
+        //each entry in this array is an array containing 2 fields: the plugin name and its activation state
         $this->installedPlugins = json_decode($installedPluginsFile);
     }
 
-    function getPlugins(){
+    /*
+     * List all available plugins
+     */
+    function getPlugins()
+    {
         return $this->installedPlugins;
     }
 
@@ -27,7 +37,9 @@ class pluginManager
     function loadPlugins()
     {
         foreach ($this->installedPlugins as $plugin) {
-            $this->loadPlugin($plugin);
+            if ($plugin[1]) {
+                $this->loadPlugin($plugin[0]);
+            }
         }
         return;
     }
@@ -44,31 +56,66 @@ class pluginManager
         return true;
     }
 
-    function activatePlugin($pluginName)
+    /*
+     * Enable a plugin
+     * @param string $pluginName UniqueName of the plugin to be enabled
+     */
+    function enablePlugin($pluginName)
     {
-        if (!in_array($pluginName, $this->installedPlugins)) {
-            array_push($this->installedPlugins, $pluginName);
-            $this->writePluginConfig($this->installedPlugins);
+        /*
+         * Installed plugins is an array where each entry contains an array with 2 fields
+         * 0 = name of the plugin
+         * 1 = activation state (true / false)
+         */
+        foreach ($this->installedPlugins as &$installedPlugin) {
+            //if the first field matches the name of the plugin to be enabled
+            if ($installedPlugin[0] == $pluginName) {
+                //set its activation state to true
+                $installedPlugin[1] = true;
+                //refresh config file
+                $this->writePluginConfig($this->installedPlugins);
+            }
         }
         return true;
     }
 
-    function deactivatePlugin($pluginName)
+    /*
+     * Enable a plugin
+     * @param string $pluginName UniqueName of the plugin to be disabled
+     */
+    function disablePlugin($pluginName)
     {
-        $existingIndex = array_search($pluginName, $this->installedPlugins);
-
-        if($existingIndex)
-        {
-            array_splice($this->installedPlugins,$existingIndex,1);
-            $this->writePluginConfig($this->installedPlugins);
+        global $template;
+        /*
+         * Installed plugins is an array where each entry contains an array with 2 fields
+         * 0 = name of the plugin
+         * 1 = activation state (true / false)
+         */
+        foreach ($this->installedPlugins as &$installedPlugin) {
+            //if the first field matches the name of the plugin to be disabled
+            if ($installedPlugin[0] == $pluginName) {
+                //set its activation state to false
+                $installedPlugin[1] = false;
+                //refresh config file
+                $this->writePluginConfig($this->installedPlugins);
+            }
         }
         return true;
     }
 
-    private function writePluginConfig(array $fileConfig)
+    /*
+     * Helper function to manipulate the installedPlugins.json file
+     * @param array $pluginConfig Array representing the configuration file to be written
+     */
+    private function writePluginConfig(array $pluginConfig)
     {
+        //clear the template cache
+        clearTemplateCache();
+        //open file for reading and truncate to 0 length
         $fileHandle = fopen($this->installedPluginsPath, "w");
-        fwrite($fileHandle, json_encode($fileConfig));
+        //write JSON representation of the configuration array
+        fwrite($fileHandle, json_encode($pluginConfig));
+        //close file
         fclose($fileHandle);
         return true;
     }

@@ -628,5 +628,27 @@ elseif ($action == "system") {
         header("Location: admin.php?action=system&mode=edited");
     }
 }
+elseif($action == "editPluginSettings")
+{
+    $pluginManager = new pluginManager();
+    $plugins = $pluginManager->getPlugins();
+    $pluginsPost = $cleanPost["plugins"];
+
+    //loop through installed plugins
+    foreach($plugins as $plugin)
+    {
+        //if the current plugin is in the plugins list from POST, turn it on
+        //else turn it off
+        if(array_key_exists($plugin[0],$pluginsPost))
+        {
+            $pluginManager->enablePlugin($plugin[0]);
+        }
+        else
+        {
+            $pluginManager->disablePlugin($plugin[0]);
+        }
+    }
+    header("Location: admin.php?action=system");
+}
 
 ?>

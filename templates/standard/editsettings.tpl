@@ -61,6 +61,5 @@
 		</div> {* neutral END *}
 	</div> {* content-left-in END *}
 </div> {* content-left END *}
-
 {include file="sidebar-a.tpl"}
 {include file="footer.tpl"}
