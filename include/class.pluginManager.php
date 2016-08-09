@@ -3,7 +3,7 @@
 class pluginManager
 {
 
-
+    private $installedPluginsPath;
     private $installedPlugins;
 
     /*
@@ -12,8 +12,13 @@ class pluginManager
      */
     function __construct()
     {
-        $installedPluginsFile = file_get_contents(CL_ROOT . "/config/standard/installedPlugins.json");
+        $this->installedPluginsPath = CL_ROOT . "/config/standard/installedPlugins.json";
+        $installedPluginsFile = file_get_contents($this->installedPluginsPath);
         $this->installedPlugins = json_decode($installedPluginsFile);
+    }
+
+    function getPlugins(){
+        return $this->installedPlugins;
     }
 
     /*
@@ -36,6 +41,35 @@ class pluginManager
         $plugin = new $thePlugin();
         //call bindPlugin()
         $plugin->bindPlugin();
+        return true;
+    }
+
+    function activatePlugin($pluginName)
+    {
+        if (!in_array($pluginName, $this->installedPlugins)) {
+            array_push($this->installedPlugins, $pluginName);
+            $this->writePluginConfig($this->installedPlugins);
+        }
+        return true;
+    }
+
+    function deactivatePlugin($pluginName)
+    {
+        $existingIndex = array_search($pluginName, $this->installedPlugins);
+
+        if($existingIndex)
+        {
+            array_splice($this->installedPlugins,$existingIndex,1);
+            $this->writePluginConfig($this->installedPlugins);
+        }
+        return true;
+    }
+
+    private function writePluginConfig(array $fileConfig)
+    {
+        $fileHandle = fopen($this->installedPluginsPath, "w");
+        fwrite($fileHandle, json_encode($fileConfig));
+        fclose($fileHandle);
         return true;
     }
 
