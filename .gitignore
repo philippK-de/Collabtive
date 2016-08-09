@@ -33,3 +33,4 @@ plugins/taskComments/taskComments.js
 plugins/taskComments/taskComments.min.js
 plugins/globalTaskOverview/templates/tasksOverviewNavigation.tpl
 plugins/plugin.globalTaskOverview.php
+plugins/plugin.projectTemplates.php
