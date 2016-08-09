@@ -41,7 +41,9 @@
 			</div> {* block_system END *}
 			
 			<div class="content-spacer"></div>
-			
+            {include file="settings_plugins.tpl"}
+			<div class="content-spacer"></div>
+
 			<div class="headline">
 				<a href="javascript:void(0);" id="block_email_toggle" class="win_block" onclick="toggleBlock('block_email');"></a>
 				<h2>

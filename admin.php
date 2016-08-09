@@ -576,6 +576,9 @@ elseif ($action == "system") {
     $procount = getArrayVal($_GET, "pro");
     $taskcount = getArrayVal($_GET, "tsk");
 
+    $pluginManager = new pluginManager();
+    $plugins = $pluginManager->getPlugins();
+
     $template->assign("msgcount", $msgcount);
     $template->assign("peoplecount", $peoplecount);
     $template->assign("procount", $procount);
@@ -592,6 +595,7 @@ elseif ($action == "system") {
     $template->assign("settings", $sets);
     $timezones = DateTimeZone::listIdentifiers();
     $template->assign("timezones", $timezones);
+    $template->assign("plugins", $plugins);
     $template->assign("templates", $templates);
     $template->display("editsettings.tpl");
 } elseif ($action == "editsets") {
