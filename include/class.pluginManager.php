@@ -102,7 +102,6 @@ class pluginManager
      */
     function disablePlugin($pluginName)
     {
-        global $template;
         /*
          * Installed plugins is an array where each entry contains an array with 2 fields
          * 0 = name of the plugin
