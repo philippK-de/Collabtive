@@ -1,10 +1,14 @@
 <?php
 
+/*
+ * Class to list, install, enable, disable, etc plugins
+ * @private string $installedPluginsPath path to the JSON file holding the installed plugins
+ * @private array $installedPlugins arrays representing the installed plugins and their activation state
+ */
 class pluginManager
 {
 
     private $installedPluginsPath;
-    //array describing the installed plugins and their status
     private $installedPlugins;
 
     /*
@@ -93,7 +97,7 @@ class pluginManager
     }
 
     /*
-     * Enable a plugin
+     * Disable a plugin
      * @param string $pluginName UniqueName of the plugin to be disabled
      */
     function disablePlugin($pluginName)
