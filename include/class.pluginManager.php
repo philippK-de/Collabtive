@@ -5,6 +5,7 @@
  * @private string $installedPluginsPath path to the JSON file holding the installed plugins
  * @private array $installedPlugins arrays representing the installed plugins and their activation state
  */
+
 class pluginManager
 {
 
@@ -73,45 +74,24 @@ class pluginManager
 
         return true;
     }
+
     /*
-     * Enable a plugin
-     * @param string $pluginName UniqueName of the plugin to be enabled
-     */
-    function enablePlugin($pluginName)
+    * Set the state of a plugin
+    * @param string $pluginName UniqueName of the plugin to be enabled
+    * @param bool $pluginState true = enable, false = disable
+    */
+    function setPluginState($pluginName, $pluginState)
     {
         /*
-         * Installed plugins is an array where each entry contains an array with 2 fields
-         * 0 = name of the plugin
-         * 1 = activation state (true / false)
-         */
+        * Installed plugins is an array where each entry contains an array with 2 fields
+        * 0 = name of the plugin
+        * 1 = activation state (true / false)
+        */
         foreach ($this->installedPlugins as &$installedPlugin) {
             //if the first field matches the name of the plugin to be enabled
             if ($installedPlugin[0] == $pluginName) {
                 //set its activation state to true
-                $installedPlugin[1] = true;
-                //refresh config file
-                $this->writePluginConfig($this->installedPlugins);
-            }
-        }
-        return true;
-    }
-
-    /*
-     * Disable a plugin
-     * @param string $pluginName UniqueName of the plugin to be disabled
-     */
-    function disablePlugin($pluginName)
-    {
-        /*
-         * Installed plugins is an array where each entry contains an array with 2 fields
-         * 0 = name of the plugin
-         * 1 = activation state (true / false)
-         */
-        foreach ($this->installedPlugins as &$installedPlugin) {
-            //if the first field matches the name of the plugin to be disabled
-            if ($installedPlugin[0] == $pluginName) {
-                //set its activation state to false
-                $installedPlugin[1] = false;
+                $installedPlugin[1] = $pluginState;
                 //refresh config file
                 $this->writePluginConfig($this->installedPlugins);
             }

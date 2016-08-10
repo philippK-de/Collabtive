@@ -631,22 +631,17 @@ elseif ($action == "system") {
 elseif($action == "editPluginSettings")
 {
     $pluginManager = new pluginManager();
+
+    //list of installed plugins
     $plugins = $pluginManager->getPlugins();
+    //plugins to be turned on. plugins not in this list are to be turned off.
     $pluginsPost = $cleanPost["plugins"];
 
     //loop through installed plugins
     foreach($plugins as $plugin)
     {
-        //if the current plugin is in the plugins list from POST, turn it on
-        //else turn it off
-        if(array_key_exists($plugin[0],$pluginsPost))
-        {
-            $pluginManager->enablePlugin($plugin[0]);
-        }
-        else
-        {
-            $pluginManager->disablePlugin($plugin[0]);
-        }
+        //set the plugin state based on the current plugin being found in the list of plugins to be turned on (otherwhise turn off)
+        $pluginManager->setPluginState($plugin[0], (bool) array_key_exists($plugin[0],$pluginsPost));
     }
     header("Location: admin.php?action=system");
 }
