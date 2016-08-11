@@ -2,7 +2,7 @@
 	<h2>{#addproject#}</h2>
 	<form id="addprojectform" novalidate class="main" method="post" action="admin.php?action=addpro">
 		<fieldset>
-
+            <!--projectTemplatesSelect-->
 			<div class="row">
 				<label for="name">{#name#}:</label>
 				<input type="text" class="text" name="name" id="name" required="1" realname="{#name#}" />
