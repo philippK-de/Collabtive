@@ -42,7 +42,9 @@ class pluginManager
     function loadPlugins()
     {
         foreach ($this->installedPlugins as $plugin) {
+            //plugin[1] is a bool indicating the activation state of the plugin
             if ($plugin[1]) {
+                //plugin[0] is the name of the plugin
                 $this->loadPlugin($plugin[0]);
             }
         }
