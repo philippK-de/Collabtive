@@ -11,13 +11,18 @@ function cl_plugins_autoload($class_name)
 
 spl_autoload_register('cl_plugins_autoload');
 
+/*
+ * Interface describing methods each plugin must implement
+ */
 interface collabtivePlugin
 {
+    //method that installs the plugin into the plugin system. only installed plugins can be activated.
     public function install();
+    //bind the plugin to  smarty
     public function bindPlugin();
-
+    //replace the <!--hook--> by a {smarty tag}, associated with a function
     public static function filter($source, Smarty_Internal_Template $localTemplateObj);
-
+    //default function to call for the {smarty tag} registered for the plugin
     public static function getTemplate($params, Smarty_Internal_Template $localTemplateObj);
 
 }

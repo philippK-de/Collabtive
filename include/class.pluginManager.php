@@ -120,7 +120,7 @@ class pluginManager
 
     /*
      * Register a plugin with smarty
-     * This registers a smarty template tag and connect it to a static method in the plugin class
+     * This registers a smarty {template tag} and connect it to a static method in the plugin class
      */
     function registerPlugin(array $templateTags, $pluginClassName)
     {
@@ -139,11 +139,12 @@ class pluginManager
     }
 
     /*
-     * Register smarty filters to replace <!--comments--> with full smarty tags
+     * Register smarty filters to replace <!--hooks--> with full {smarty tags}, associated to functions
      */
     function registerHook(array $filterFunctionNames)
     {
         global $template;
+        //loop over filter functions and register a prefilter for each hook
         foreach ($filterFunctionNames as $filterFunctionName) {
             $template->registerFilter("pre", $filterFunctionName);
         }

@@ -296,19 +296,22 @@
                         </a>
                     </div>
                 </div>
-            </div>
+            </div> {/literal}
             <!-- block END Doneprojects End-->
 
             <div class="content-spacer"></div>
-
+            <!--projectTemplates-->
         </div>
         <!--Projects END-->
+
+
+
     </div>
     <!--content-left-in END-->
 </div> <!--content-left END-->
 
     <script type="text/javascript" src="include/js/accordion.min.js"></script>
     <script type="text/javascript" src="include/js/views/adminProjectsView.min.js"></script>
-{/literal}
+
 {include file="sidebar-a.tpl"}
 {include file="footer.tpl"}
