@@ -7,8 +7,7 @@
 			
 			<div class="row">
 				<label for="start">{#start#}:</label>
-				<input type="text" class="text" name="start" id="start" realname="{#start#}" onfocus="dpck.close();" value="{$start}"
-                       />
+				<input type="text" class="text" name="start" id="start" realname="{#start#}" onfocus="dpck.close();" value="{$start}"/>
 			</div>
 			
 			<div class="datepick">
@@ -84,7 +83,7 @@
 			<div class="row-butn-bottom">
 				<label>&nbsp;</label>
 				<button type="submit" onfocus="this.blur();">{#filter#}</button>
-				<button onclick="javascript:blindtoggle('filter');toggleClass('filter_report','filter-active','filter');toggleClass('filter_butn','butn_link_active','butn_link');toggleClass('sm_report','smooth','nosmooth');return false;" onfocus="this.blur();">{#cancel#}</button>
+				<button onclick="blindtoggle('filter');toggleClass('filter_report','filter-active','filter');toggleClass('filter_butn','butn_link_active','butn_link');toggleClass('sm_report','smooth','nosmooth');return false;" onfocus="this.blur();">{#cancel#}</button>
 			</div>
 			
 		</fieldset>

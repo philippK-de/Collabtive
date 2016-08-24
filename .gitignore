@@ -1,6 +1,6 @@
 Thumbs.db
 
-//Eclipse
+
 .settings
 .project
 .buildpath
@@ -8,7 +8,6 @@ Thumbs.db
 *.swo
 
 templates_c/*
-plugins/gantt/*
 files/*
 .idea/
 .include/js/vue/*
@@ -18,7 +17,7 @@ files/*
 composer.phar
 composer.json
 vendor/composer/installed.json
-vendor/composer/installed.json
+
 VueCompiler.jar
 *.zip
 
@@ -26,6 +25,7 @@ managetasksoverview.php
 plugins/templates/*
 plugins/plugin.ganttChart.php
 plugins/gantt/*
+plugins/conference/*
 plugins/plugin.taskComments.php
 plugins/taskComments/*
 plugins/plugin.globalTaskOverview.php
@@ -33,3 +33,5 @@ plugins/globalTaskOverview/*
 plugins/plugin.projectTemplates.php
 plugins/projectTemplates/*
 projectTemplates.php
+conference.php
+plugins/plugin.conference.php

@@ -11,7 +11,7 @@
              data-text-edited="{#projectwasedited#}"
              data-text-added="{#projectwasadded#}"
              data-text-closed="{#projectwasclosed#}"
-             >
+                >
         </div>
         <!-- task text -->
         <div class="infowin_left display-none"
@@ -21,7 +21,7 @@
              data-text-edited="{#taskwasedited#}"
              data-text-added="{#taskwasadded#}"
              data-text-closed="{#taskwasclosed#}"
-             >
+                >
         </div>
         <!-- messages text -->
         <div class="infowin_left display-none"
@@ -30,7 +30,7 @@
              data-text-deleted="{#messagewasdeleted#}"
              data-text-edited="{#messagewasedited#}"
              data-text-added="{#messagewasadded#}"
-             >
+                >
         </div>
 
         {if $isUpdated}
@@ -39,8 +39,11 @@
         {/if}
 
         <h1>{#desktop#}</h1>
+
         <div id="block_index" class="block">
+
             <!--testpluginTwo-->
+
             {* Projects *}
             {include file="desktopProjects.tpl"}
             {* Tasks *}

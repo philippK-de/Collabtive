@@ -5,6 +5,9 @@
     <div id="sidebar-content" class="overflow-hidden">
         <!--testplugin-->
 
+        {if $showConferenceSidebarControls == 1}
+            <!--conferenceSidebarControls-->
+        {/if}
         <div class="content-right-in overflow-hidden">
             <a href="javascript:hideSidebar();">close</a>
             <searchwidget searchtitle="{#search#}"></searchwidget>
