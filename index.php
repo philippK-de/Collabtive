@@ -129,6 +129,7 @@ if(!$action) {
     $template->assign("today", $today);
 
     $template->assign("closedProjectnum", $project->countMyProjects($userid, 0));
+    $template->assign("openProjectnum", $projectnum);
     $template->assign("projectov", "yes");
 
     $template->assign("mode", $mode);
