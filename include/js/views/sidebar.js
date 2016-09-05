@@ -1,4 +1,6 @@
-
+/*
+ * Function to slide the sidebar open or closed
+ */
 function toggleSidebar() {
     var contentRight = cssId("content-right");
     var contentLeft = cssId("content-left");
@@ -53,7 +55,7 @@ function toggleSidebar() {
             }
         });
 
-   //animate main content area
+    //animate main content area
     Velocity(contentLeft, {
         width: leftWidth
     }, {queue: false});

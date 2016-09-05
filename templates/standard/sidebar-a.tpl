@@ -43,4 +43,4 @@
     </div>
 </div>
 <script type="text/javascript" src="include/js/components/searchWidgetComponent.js"></script>
-<script type="text/javascript" src="include/js/views/sidebar.js"></script>
+<script type="text/javascript" src="include/js/views/sidebar.min.js"></script>
