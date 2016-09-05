@@ -61,6 +61,7 @@
                            }"
                             id="{{*day.val}}">
                             {{*day.val}}
+
                             <!--Only output tasks/milestones if the day belongs to the current month -->
                             <div v-if="day.currmonth == 1" class="calcontent">
                                 <!--Milestones -->
@@ -85,7 +86,7 @@
                                                     <table cellpadding="0" cellspacing="0" border="0">
                                                         {/literal}
                                                         <thead>
-                                                        <th>{$langfile.project}</th>
+                                                        {if $context != "project"}<th>{$langfile.project}</th>{/if}
                                                         <th>{$langfile.milestone}</th>
                                                         <th class="tools">{$langfile.daysleft}</th>
                                                         </thead>
@@ -93,7 +94,10 @@
 
                                                         <tbody v-for="milestone in day.milestones" class="alternateColors">
                                                         <tr>
-                                                            <td>{{*milestone.pname}}</td>
+                                                            {/literal}
+                                                            {if $context != "project"}
+                                                            {literal}<td>{{*milestone.pname}}</td>{/literal}
+                                                            {/if}{literal}
                                                             <td>
                                                                 <a href="managemilestone.php?action=showmilestone&amp;msid={{*milestone.ID}}&amp;id={{*milestone.project}}"
                                                                    title="{{*milestone.title}}">{{*milestone.name}}</a>
@@ -110,6 +114,8 @@
                                     </div>
                                 </template>
                                 <!--Milestones End -->
+
+
                                 <!--Tasks -->
                                 <template v-if="day.tasksnum > 0">
                                     <a href="javascript:openModal('tasks_modal{{*day.val}}');">
@@ -132,14 +138,17 @@
                                                     <table cellpadding="0" cellspacing="0" border="0">
                                                         {/literal}
                                                         <thead>
-                                                        <th>{$langfile.project}</th>
+                                                        {if $context != "project"}<th>{$langfile.project}</th>{/if}
                                                         <th>{$langfile.task}</th>
                                                         <th class="tools">{$langfile.daysleft}</th>
                                                         </thead>
                                                         {literal}
                                                         <tbody v-for="task in day.tasks" class="alternateColors">
                                                         <tr>
-                                                            <td>{{*task.pname }}</td>
+                                                            {/literal}
+                                                            {if $context != "project"}
+                                                            {literal}<td>{{*task.pname}}</td>{/literal}
+                                                            {/if}{literal}
                                                             <td>
                                                                 <a href="managetask.php?action=showtask&amp;tid={{*task.ID}}&amp;id={{*task.project}}"
                                                                    title="{{*task.title}}">
