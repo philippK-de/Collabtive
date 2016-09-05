@@ -1623,11 +1623,11 @@ body a.butn_link, body a.butn_link_active {
 	padding: 0;
 }
 .msgs .message-fluid {
-    width: 80%;
     margin: 0;
     padding: 0;
 }
 .message-in-fluid {
+    width: 95%;
     overflow-x: auto;
 }
 

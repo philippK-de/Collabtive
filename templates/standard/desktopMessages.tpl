@@ -82,11 +82,8 @@
                     <td colspan="6">
                         <div class="accordion_content">
                             <div class="acc-in">
-                                <div class="avatar">
-                                    <img src="thumb.php?width=80&amp;height=80&amp;pic=templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/no-avatar-male.jpg"/>
-                                </div>
                                 <div class="message-fluid">
-                                    <div class="message-in-fluid">
+                                  <div class="message-in-fluid">
                                         {{{*item.text}}}
                                     </div>
                                     <!-- message milestones -->
