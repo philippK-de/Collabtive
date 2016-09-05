@@ -305,6 +305,36 @@ if ($action == "loginerror") {
     $template->assign("members", $members);
     $template->assign("users", $users);
     $template->display("projectmembers.tpl");
+} elseif ($action == "projectMembers") {
+    if (!chkproject($userid, $id)) {
+        $errtxt = $langfile["notyourproject"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("mode", "error");
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
+
+    $offset = 0;
+    if(isset($cleanGet["offset"]))
+    {
+        $offset = $cleanGet["offset"];
+    }
+    $limit = 21;
+    if(isset($cleanGet["limit"]))
+    {
+        $limit = $cleanGet["limit"];
+    }
+
+    $projectObj = new project();
+
+    $members = $projectObj->listProjectMembers($id, $limit, $offset);
+
+    $projectMembers["count"] = $projectObj->countMembers($id);
+    $projectMembers["items"] = $members;
+
+    echo json_encode($projectMembers);
+
 } elseif ($action == "onlinelist") {
     $onlinelist = $user->getOnlinelist();
     if (!empty($onlinelist)) {

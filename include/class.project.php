@@ -631,7 +631,37 @@ class project
             return false;
         }
     }
+    /**
+     * Lists all the users in a project
+     *
+     * @param int $project ProjectId
+     * @param int $limit Max number of members to return
+     * @param bool $paginate Should pagination take place
+     * @return array $members Projektmitglieder
+     */
+    function listProjectMembers($project, $limit = 10, $offset = 0)
+    {
+        global $conn;
+        $project = (int)$project;
+        $limit = (int)$limit;
+        $offset = (int)$offset;
 
+        $members = array();
+
+        $userAssignedQuery = $conn->query("SELECT user FROM projekte_assigned WHERE projekt = $project LIMIT $limit OFFSET $offset");
+
+        $userObject = new user();
+        while ($user = $userAssignedQuery->fetch()) {
+            $theUser = $userObject->getProfile($user[0]);
+            array_push($members, $theUser);
+        }
+
+        if (!empty($members)) {
+            return $members;
+        } else {
+            return false;
+        }
+    }
     /**
      * Counts all members in a project.
      *
