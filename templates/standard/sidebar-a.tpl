@@ -1,16 +1,15 @@
-<div id="content-right" class="overflow-hidden" style="width:100px; height:30px;">
+<div id="content-right" class="overflow-hidden" style="width:100px; height:30px;"  data-opened="false">
     <!-- the overlay to be displayed when the sidebar is hidden -->
     <div id="sidebar-overlay" style="text-align:center;margin-top:5px;">
-       <img src="templates/standard/theme/standard/images/logo-b.png" onclick="showSidebar()" alt="" />
+       <img src="templates/standard/theme/standard/images/logo-b.png" onclick="toggleSidebar()" alt="" style="cursor: ew-resize" />
     </div>
-    <div id="sidebar-content" class="overflow-hidden display-none">
+    <div id="sidebar-content" class="overflow-hidden">
         <!--testplugin-->
 
         {if $showConferenceSidebarControls == 1}
             <!--conferenceSidebarControls-->
         {/if}
         <div class="content-right-in overflow-hidden">
-            <a href="javascript:hideSidebar();">close</a>
             <searchwidget searchtitle="{#search#}"></searchwidget>
         </div>
 

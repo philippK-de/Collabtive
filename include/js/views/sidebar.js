@@ -1,82 +1,68 @@
-var contentRight = cssId("content-right");
-var contentLeft = cssId("content-left");
 
-function showSidebar() {
-    //animate right sidebar  - increase size
+function toggleSidebar() {
+    var contentRight = cssId("content-right");
+    var contentLeft = cssId("content-left");
+    //read the state of the sidebar from data attribute data-opened
+    var isOpen = contentRight.dataset.opened;
+
+    var rightWidth;
+    var rightHeight;
+    var rightSubWidth;
+    var leftWidth;
+    var togglesBgPosition;
+
+    //if the sidebar is open, set dimensions for a closed sidebar
+    if (isOpen == "true") {
+        rightWidth = 100;
+        rightHeight = 35;
+        rightSubWidth = 80;
+        leftWidth = 862;
+        //this is for the win_none/block toggles
+        togglesBgPosition = 795;
+
+        //set the data attribute indicating the state of the sidebar
+        contentRight.dataset.opened = false;
+    }
+    //if its not open, its closed - set dimensions for opened sidebar
+    else {
+        rightWidth = 220;
+        rightHeight = 200;
+        rightSubWidth = 184;
+        leftWidth = 742;
+        togglesBgPosition = 678;
+
+        //set the data attribute indicating the state of the sidebar
+        contentRight.dataset.opened = true;
+    }
+
+    //animate right sidebar
+    //animate inner content first
+    var contentIns = cssAll(".content-right-in");
+    for (var j = 0; j < contentIns.length; j++) {
+        Velocity(contentIns[j], {
+            width: rightSubWidth
+        });
+    }
     Velocity(contentRight, {
-            width: 220,
-            height: 200
+            width: rightWidth,
+            height: rightHeight
         },
         {
             complete: function () {
                 cssId("sidebar-content").style.display = "block";
-                //cssId("sidebar-overlay").style.display = "none";
             }
         });
 
-    var contentIns = cssAll(".content-right-in");
-    for(var j=0;j<contentIns.length;j++)
-    {
-        Velocity(contentIns[j], {
-            width: 184
-        }, {
-            queue: false
-        });
-    }
-    //decrease size of main content area
+   //animate main content area
     Velocity(contentLeft, {
-        width: 742
+        width: leftWidth
     }, {queue: false});
 
-    //animate position of blocktoggles back to original state
+    //animate position of blocktoggles
     var blockToggles = cssAll(".win_block,.win_none");
     for (var i = 0; i < blockToggles.length; i++) {
         Velocity(blockToggles[i], {
-            backgroundPositionX: 678
+            backgroundPositionX: togglesBgPosition
         }, {queue: false});
     }
 }
-
-function hideSidebar() {
-    //animate content right - decrease size
-    Velocity(contentRight, {
-            width: 100,
-            height: 35
-        },
-        {
-            complete: function () {
-                //hide the sidebar contents and show the overlay toggle
-                cssId("sidebar-content").style.display = "none";
-                cssId("sidebar-overlay").style.display = "block";
-            }
-        }
-    );
-
-    var contentIns = cssAll(".content-right-in");
-    for(var j=0;j<contentIns.length;j++)
-    {
-        Velocity(contentIns[j], {
-            width: 80
-        }, {
-            queue: false
-        });
-    }
-
-
-    //increase size of main content
-    Velocity(contentLeft, {
-        width: 862
-    }, {queue: false});
-
-    //animate position of blocktoggles too
-    var blockToggles = cssAll(".win_block,.win_none");
-    for (var i = 0; i < blockToggles.length; i++) {
-        Velocity(blockToggles[i], {
-            backgroundPositionX: 795
-        }, {queue: false});
-    }
-}
-
-var sidebarView = new Vue({
-    el: "#sidebar-content"
-});
