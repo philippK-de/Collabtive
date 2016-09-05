@@ -561,15 +561,13 @@ button:focus {
 	margin: 13px 0 0 0;
 	border-top: 1px dotted #000;
 }
-
+/*width: 220px; */
 #content-right {
-	//width: 220px;
 	width: 100px;
-    height:35px;
 	min-height: 20px;
 	background: url(../images/color-a.png) repeat 0 0;
 	margin: 0 0 0 0;
-	padding: 0 0 23px 0;
+	padding: 5px 0 5px 0;
 	float: left;
 	color: #6d7f93;
 }

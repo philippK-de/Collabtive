@@ -4,11 +4,11 @@
 function toggleSidebar() {
     var contentRight = cssId("content-right");
     var contentLeft = cssId("content-left");
+    var sideBarContent = cssId("sidebar-content");
     //read the state of the sidebar from data attribute data-opened
     var isOpen = contentRight.dataset.opened;
 
     var rightWidth;
-    var rightHeight;
     var rightSubWidth;
     var leftWidth;
     var togglesBgPosition;
@@ -16,7 +16,6 @@ function toggleSidebar() {
     //if the sidebar is open, set dimensions for a closed sidebar
     if (isOpen == "true") {
         rightWidth = 100;
-        rightHeight = 30;
         rightSubWidth = 80;
         leftWidth = 862;
         //this is for the win_none/block toggles
@@ -28,7 +27,6 @@ function toggleSidebar() {
     //if its not open, its closed - set dimensions for opened sidebar
     else {
         rightWidth = 220;
-        rightHeight = 200;
         rightSubWidth = 184;
         leftWidth = 742;
         togglesBgPosition = 678;
@@ -46,12 +44,16 @@ function toggleSidebar() {
         });
     }
     Velocity(contentRight, {
-            width: rightWidth,
-            height: rightHeight
+            width: rightWidth
         },
         {
-            complete: function () {
-                cssId("sidebar-content").style.display = "block";
+            begin: function () {
+                if (isOpen == "true") {
+                    sideBarContent.style.display = "none";
+                }
+                else {
+                    sideBarContent.style.display = "block";
+                }
             }
         });
 
