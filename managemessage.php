@@ -330,9 +330,23 @@ elseif($action == "projectMessages")
     echo json_encode($jsonMessages);
 }
 elseif ($action == "showmessage") {
+    if (!$userpermissions["messages"]["view"]) {
+        $errtxt = $langfile["nopermission"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
+    if (!chkproject($userid, $id)) {
+        $errtxt = $langfile["notyourproject"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
+
     // get the message and its replies
     $message = $msg->getMessage($cleanGet["mid"]);
-    $replies = $msg->getReplies($cleanGet["mid"]);
 
     $myproject = new project();
     $pro = $myproject->getProject($id);
@@ -349,12 +363,37 @@ elseif ($action == "showmessage") {
     $template->assign("title", $cleanPost["title"]);
     $template->assign("mode", $cleanGet["mode"]);
     $template->assign("message", $message);
+    $template->assign("replies", $message["listReplies"]);
     $template->assign("ordner", $ordner);
-    $template->assign("replies", $replies);
     $template->assign("files", $ordner);
     $template->assign("members", $members);
     $template->display("message.tpl");
-} elseif ($action == "export-project") {
+}
+elseif ($action == "message") {
+    if (!$userpermissions["messages"]["view"]) {
+        $errtxt = $langfile["nopermission"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
+    if (!chkproject($userid, $id)) {
+        $errtxt = $langfile["notyourproject"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
+
+    // get the message and its replies
+    $message = $msg->getMessage($cleanGet["mid"]);
+    $myMessage["count"] = 1;
+    $myMessage["items"] = $message;
+
+    echo "<pre>";
+    echo json_encode($myMessage, JSON_PRETTY_PRINT);
+}
+elseif ($action == "export-project") {
     $l = Array();
     $l['a_meta_charset'] = 'UTF-8';
     $l['a_meta_dir'] = 'ltr';
