@@ -131,9 +131,18 @@ class message {
             $posted = date(CL_DATEFORMAT . " - H:i", $message["posted"]);
             $message["postdate"] = $posted;
             $message["endstring"] = $posted;
-            $message["replies"] = $this->getReplies($id);
             $message["avatar"] = $avatar;
+                #
 
+            $replies = $this->getReplies($id);
+            if (!$replies) {
+                $message["replies"] = 0;
+            } else {
+                $message["replies"] = count($replies);
+            }
+            $message["listReplies"] = $replies;
+
+            //assume no files
             $message["hasFiles"] = false;
 
             //get files attached to this message

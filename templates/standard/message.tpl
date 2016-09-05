@@ -54,7 +54,7 @@
 			<div class="content-spacer"></div>
 
 			<div id="sm_replies_a" class="nosmooth">
-				<div id="message" class="descript">
+				<div id="message" class="descript" style="border:1px dashed">
 					{if $message.avatar != ""}
 						<div class="avatar">
 							<img src="thumb.php?width=80&amp;height=80&amp;pic=files/{$cl_config}/avatar/{$message.avatar}" alt="" />
@@ -71,13 +71,13 @@
 						{/if}
 					{/if}
 
-					<div class="message">
-						<div class="message-in">
+					<div class="message" >
+						<div class="message-in-fluid">
 							<h2>{$message.endstring}&nbsp;/&nbsp;{$message.username|truncate:20:"...":true}</h2>
 							{$message.text}
 						</div>
 
-						{if $message.tagsarr[0] != "" or $message.milestones[0] != ""}
+						{if $message.milestones[0] != ""}
 							<div class="content-spacer-b"></div>
 
 							{* Milestones *}
@@ -88,56 +88,34 @@
 								</p>
 							{/if}
 
-							{*Tags*}
-							{if $message.tagsarr[0] != ""}
-								<p>
-									<strong>{#tags#}: </strong>
-									{section name = tag loop=$message.tagsarr}
-										<a href = "managetags.php?action=gettag&tag={$message.tagsarr[tag]}&amp;id={$project.ID}">{$message.tagsarr[tag]}</a>
-									{/section}
-								</p>
-							{/if}
 						{/if}
 
 						{*Files*}
 						{if $message.files[0][0] > 0}
-							<div class="content-spacer-b"></div>
 							<strong>{#files#}:</strong>
 
 							<div class="inwrapper">
-								<ul>
+								<ul style="list-style-type: none">
 									{section name = file loop=$message.files}
-										<li id="fli_{$message.files[file].ID}">
+										<li id="fli_{$message.files[file].ID}" style="list-style-type: none" >
 											<div class="itemwrapper" id="iw_{$message.files[file].ID}">
-
 												<table cellpadding="0" cellspacing="0" border="0">
 													<tr>
 														<td class="leftmen" valign="top">
 															<div class="inmenue"></div>
 														</td>
 														<td class="thumb">
-	<!--														<a href = "{$message.files[file].datei}"{if $message.files[file].imgfile == 1} rel="lytebox[img{$message.files[file].ID}]" {elseif $message.files[file].imgfile == 2} rel = "lyteframe[text{$message.files[file].ID}]"{/if} title="{$message.files[file].name}">-->
 															<a href = "managefile.php?action=downloadfile&amp;id={$message.files[file].project}&amp;file={$message.files[file].ID}"{if $message.files[file].imgfile == 1} rel="lytebox[img{$message.ID}]"{/if} title="{$message.files[file].name}">
-																{if $message.files[file].imgfile == 1}
-																	<img src = "thumb.php?pic={$message.files[file].datei}&amp;width=32" alt="{$message.files[file].name}" />
-																{else}
-																	<img src = "templates/{$settings.template}/theme/{$settings.theme}/images/files/{$message.files[file].type}.png" alt="{$message.files[file].name}" />
-																{/if}
+															<img src = "templates/{$settings.template}/theme/{$settings.theme}/images/files/{$message.files[file].type}.png" alt="{$message.files[file].name}" />
 															</a>
 														</td>
 														<td class="rightmen" valign="top">
-															<div class="inmenue">
-																{if $userpermissions.files.del}
-																	<a class="del" href="javascript:void(0);" onclick = "javascript:confirmfunction('{$langfile.confirmdel}','deleteElement(\'fli_{$message.files[file].ID}\',\'managefile.php?action=delete&id={$message.project}&file={$message.files[file].ID}\')');" title="{#delete#}"></a>
-																{/if}
-															</div>
 														</td>
 													</tr>
 													<tr>
-														<td colspan="3">
+														<td colspan="4">
 															<span class="name">
-															<!--	<a href = "{$message.files[file].datei}"{if $message.files[file].imgfile == 1} rel="lytebox[img{$message.files[file].ID}]" {elseif $message.files[file].imgfile == 2} rel = "lyteframe[text{$message.files[file].ID}]"{/if} title="{$message.files[file].name}">-->
-														<a href = "managefile.php?action=downloadfile&amp;id={$message.files[file].project}&amp;file={$message.files[file].ID}"{if $message.files[file].imgfile == 1} rel="lytebox[img{$message.ID}]"{/if} title="{$message.files[file].name}">
+														    <a href = "managefile.php?action=downloadfile&amp;id={$message.files[file].project}&amp;file={$message.files[file].ID}"{if $message.files[file].imgfile == 1} rel="lytebox[img{$message.ID}]"{/if} title="{$message.files[file].name}">
 
 																	{if $message.files[file].title != ""}
 																	{$message.files[file].title|truncate:13:"...":true}

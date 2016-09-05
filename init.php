@@ -102,6 +102,7 @@ if (isset($_SESSION["userid"])) {
 if (isset($conn)) {
     // Set PDO options
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+    $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_BOTH);
     // $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     // create a global mylog object for loging system events
     $mylog = new mylog();

@@ -83,7 +83,7 @@
                         <div class="accordion_content">
                             <div class="acc-in">
                                 <div class="message-fluid">
-                                  <div class="message-in-fluid">
+                                    <div class="message-in-fluid">
                                         {{{*item.text}}}
                                     </div>
                                     <!-- message milestones -->
