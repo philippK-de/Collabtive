@@ -145,10 +145,16 @@
                         {/literal}
                     </table>
                 </div> {*toggleblock End*}
-            </div>
-            {*doneblock end*}
-
+            </div> {*doneblock end*}
             {*Doneprojects End*}
+
+            {* If no projects exist, open form to add a project *}
+            {if $openProjectnum < 1}
+                <script type="text/javascript">
+                    blindtoggle('form_addmyproject');
+                </script>
+            {/if}
+
             <div class="tablemenue">
                 <div class="tablemenue-in">
                     {if $userpermissions.projects.add}
