@@ -3,7 +3,7 @@
 
 <div id="content-left">
     <div id="content-left-in">
-        <div class="user">
+        <div class="user" id="projectMembers" v-cloak>
 
             <!-- System messages -->
             <div class="infowin_left display-none"
@@ -23,6 +23,7 @@
                 <a href="javascript:void(0);" id="block_members_toggle" class="win_block" onclick="toggleBlock('block_members');"></a>
 
                 <div class="wintools">
+                    <loader block="projectMembers" loader="loader-users.gif"></loader>
                     {if $userpermissions.projects.edit}
                         <a class="add" href="javascript:blindtoggle('form_member');" id="addmember"
                            onclick="toggleClass(this,'add-active','add');toggleClass('add_butn_member','butn_link_active','butn_link');toggleClass('sm_member','smooth','nosmooth');"><span>{#adduser#}</span></a>
@@ -51,7 +52,7 @@
                         </div>
                     </div>
 
-                    <div class="content_in_wrapper" id="projectMembers" v-cloak>
+                    <div class="content_in_wrapper">
                         <div class="content_in_wrapper_in">
                             <div class="inwrapper">
                                 <ul>
