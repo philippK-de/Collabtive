@@ -515,7 +515,7 @@ button:focus {
 #content-left {
     //742 is the old block size with the sidebar open
 	//width: 742px;
-	width: 862px;
+	width: 882px;
 	min-height: 100px;
 	background: <?php echo $leftBlockBg;
 ?>;
@@ -563,7 +563,7 @@ button:focus {
 }
 /*width: 220px; */
 #content-right {
-	width: 100px;
+	width: 80px;
 	min-height: 20px;
 	background: url(../images/color-a.png) repeat 0 0;
 	margin: 0 0 0 0;
@@ -574,7 +574,7 @@ button:focus {
 
 .content-right-in {
 	//width: 184px;
-	width: 80px;
+	width: 60px;
 	margin: 23px 0 0 18px;
 }
 
@@ -1538,12 +1538,12 @@ a.win_block {
 	display: block;
 	width: 100%;
 	height: 100%;
-	background: url(../images/win-up.png) no-repeat 795px 8px;
+	background: url(../images/win-up.png) no-repeat 815px 8px;
 	//background: url(../images/win-up.png) no-repeat 678px 8px;
 }
 
 a.win_block:hover {
-	background-position: 795px -23px;
+	background-position: 815px -23px;
 	//background-position: 678px -23px;
 }
 
@@ -1551,12 +1551,12 @@ a.win_none {
 	display:block;
 	width:100%;
 	height: 100%;
-	background: url(../images/win-up.png) no-repeat 795px -54px;
+	background: url(../images/win-up.png) no-repeat 815px -54px;
 	//background: url(../images/win-up.png) no-repeat 678px -54px;
 }
 
 a.win_none:hover {
-	background-position: 795px -85px;
+	background-position: 815px -85px;
 	//background-position: 678px -85px;
 }
 

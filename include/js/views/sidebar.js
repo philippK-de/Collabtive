@@ -15,11 +15,11 @@ function toggleSidebar() {
 
     //if the sidebar is open, set dimensions for a closed sidebar
     if (isOpen == "true") {
-        rightWidth = 100;
-        rightSubWidth = 80;
-        leftWidth = 862;
+        rightWidth = 80;
+        rightSubWidth = 60;
+        leftWidth = 882;
         //this is for the win_none/block toggles
-        togglesBgPosition = 795;
+        togglesBgPosition = 815;
 
         //set the data attribute indicating the state of the sidebar
         contentRight.dataset.opened = false;
