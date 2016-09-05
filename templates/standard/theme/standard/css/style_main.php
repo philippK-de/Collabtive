@@ -111,9 +111,8 @@ $filesColorC = "url(../images/tables-files-bg-c.png)"; // Files in Messages
 ?>
 
 /*
-##  Visional Arts CSS Framework 1.1 static
-##  Author & Copyright: Marcus Froehner
-##  URL: http://www.visional-arts.de
+##  Visional CSS Framework 3.0 static
+##  Author & Copyright: Marcus Froehner, Philipp Kiszka
 */
 
 @import url("style_form.css");
@@ -251,6 +250,7 @@ button:focus {
 .margin-left-two-px{
     margin-left:2px;
 }
+
 /* ## Basic-XHTML-Elements ############### END ############## */
 
 /* Pagination */
@@ -513,7 +513,9 @@ button:focus {
 }
 
 #content-left {
-	width: 742px;
+    //742 is the old block size with the sidebar open
+	//width: 742px;
+	width: 862px;
 	min-height: 100px;
 	background: <?php echo $leftBlockBg;
 ?>;
@@ -561,7 +563,9 @@ button:focus {
 }
 
 #content-right {
-	width: 220px;
+	//width: 220px;
+	width: 100px;
+    height:35px;
 	min-height: 20px;
 	background: url(../images/color-a.png) repeat 0 0;
 	margin: 0 0 0 0;
@@ -571,15 +575,10 @@ button:focus {
 }
 
 .content-right-in {
-	width: 184px;
+	//width: 184px;
+	width: 80px;
 	margin: 23px 0 0 18px;
 }
-
-.content-right-in .cloud { /* Tag Cloud */
-	width: 184px;
-	overflow: hidden;
-}
-
 
 .content-right-in a {
 	color: #6d7f93;
@@ -1541,22 +1540,26 @@ a.win_block {
 	display: block;
 	width: 100%;
 	height: 100%;
-	background: url(../images/win-up.png) no-repeat 678px 8px;
+	background: url(../images/win-up.png) no-repeat 795px 8px;
+	//background: url(../images/win-up.png) no-repeat 678px 8px;
 }
 
 a.win_block:hover {
-	background-position: 678px -23px;
+	background-position: 795px -23px;
+	//background-position: 678px -23px;
 }
 
 a.win_none {
 	display:block;
 	width:100%;
 	height: 100%;
-	background: url(../images/win-up.png) no-repeat 678px -54px;
+	background: url(../images/win-up.png) no-repeat 795px -54px;
+	//background: url(../images/win-up.png) no-repeat 678px -54px;
 }
 
 a.win_none:hover {
-	background-position: 678px -85px;
+	background-position: 795px -85px;
+	//background-position: 678px -85px;
 }
 
 /* ## BUTTON ####################################### */

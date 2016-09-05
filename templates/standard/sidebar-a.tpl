@@ -1,8 +1,9 @@
-<div id="content-right" class="overflow-hidden">
-    <div id="sidebar-overlay" class="display-none" style="text-align:center;margin-top:5px;">
+<div id="content-right" class="overflow-hidden" style="width:100px; height:30px;">
+    <!-- the overlay to be displayed when the sidebar is hidden -->
+    <div id="sidebar-overlay" style="text-align:center;margin-top:5px;">
        <img src="templates/standard/theme/standard/images/logo-b.png" onclick="showSidebar()" alt="" />
     </div>
-    <div id="sidebar-content" class="overflow-hidden">
+    <div id="sidebar-content" class="overflow-hidden display-none">
         <!--testplugin-->
 
         {if $showConferenceSidebarControls == 1}

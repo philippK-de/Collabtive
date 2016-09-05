@@ -1,13 +1,16 @@
+var contentRight = cssId("content-right");
+var contentLeft = cssId("content-left");
+
 function showSidebar() {
     //animate right sidebar  - increase size
-    Velocity(cssId("content-right"), {
+    Velocity(contentRight, {
             width: 220,
             height: 200
         },
         {
             complete: function () {
                 cssId("sidebar-content").style.display = "block";
-                cssId("sidebar-overlay").style.display = "none";
+                //cssId("sidebar-overlay").style.display = "none";
             }
         });
 
@@ -21,7 +24,7 @@ function showSidebar() {
         });
     }
     //decrease size of main content area
-    Velocity(cssId("content-left"), {
+    Velocity(contentLeft, {
         width: 742
     }, {queue: false});
 
@@ -36,7 +39,7 @@ function showSidebar() {
 
 function hideSidebar() {
     //animate content right - decrease size
-    Velocity(cssId("content-right"), {
+    Velocity(contentRight, {
             width: 100,
             height: 35
         },
@@ -61,7 +64,7 @@ function hideSidebar() {
 
 
     //increase size of main content
-    Velocity(cssId("content-left"), {
+    Velocity(contentLeft, {
         width: 862
     }, {queue: false});
 
