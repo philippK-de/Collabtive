@@ -109,7 +109,7 @@
     <script type="text/javascript" src="include/js/views/projectFilesView.min.js"></script>
 <script type="text/javascript">
     projectFiles.url = projectFiles.url + "&id=" + {/literal}{$project.ID}{literal};
-    pagination.itemsPerPage = 21;
+    pagination.itemsPerPage = 24;
 
     var projectFilesView = createView(projectFiles);
 

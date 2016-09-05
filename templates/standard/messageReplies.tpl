@@ -47,7 +47,7 @@
                             <div class="toggle-in">
                                 <span class="acc-toggle"
                                       onclick="javascript:accord_answer.toggle(css('#acc_replies_content{$smarty.section.reply.index}'));"></span>
-                                <a href="managemessage.php?action=showmessage&amp;mid={$replies[reply].ID}&amp;id={$project.ID}">{$replies[reply].title|truncate:20:"...":true}</a>
+                                <a href="managemessage.php?action=showmessage&amp;mid={$replies[reply].ID}&amp;id={$project.ID}">{$replies[reply].title|truncate:30:"...":true}</a>
                             </div>
                         </td>
                         <td>{$replies[reply].replies}</td>

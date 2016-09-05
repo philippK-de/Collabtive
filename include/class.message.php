@@ -134,6 +134,7 @@ class message {
             $message["avatar"] = $avatar;
                 #
 
+            //get children
             $replies = $this->getReplies($id);
             if (!$replies) {
                 $message["replies"] = 0;
@@ -188,7 +189,7 @@ class message {
 
        while ($reply = $sel->fetch()) {
             if (!empty($reply)) {
-                array_push($replies, $this->getMessage($reply["ID"]));
+                array_push($replies,  $this->getMessage($reply["ID"]));
                 //recursive call to get all replies to this reply
                 $this->getReplies($reply["ID"]);
             }
