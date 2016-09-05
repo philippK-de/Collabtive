@@ -18,9 +18,7 @@
 
             <div id="projectMilestones">
                 {include file="projectLateMilestones.tpl"}
-                <br/>
                 {include file="projectCurrentMilestones.tpl"}
-                <br/>
                 {include file = "projectUpcomingMilestones.tpl"}
             </div>
 
