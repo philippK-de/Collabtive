@@ -119,12 +119,6 @@ class message {
 
         $milesobj = new milestone();
         if (!empty($message)) {
-            $repliesStmt = $conn->prepare("SELECT COUNT(*) FROM messages WHERE replyto = ?");
-            $repliesStmt->execute(array($id));
-            $replies = $repliesStmt->fetch();
-
-            $replies = $replies[0];
-
             $user = new user();
             $avatar = $user->getAvatar($message["user"]);
 
@@ -137,7 +131,7 @@ class message {
             $posted = date(CL_DATEFORMAT . " - H:i", $message["posted"]);
             $message["postdate"] = $posted;
             $message["endstring"] = $posted;
-            $message["replies"] = $replies;
+            $message["replies"] = $this->getReplies($id);
             $message["avatar"] = $avatar;
 
             $message["hasFiles"] = false;
@@ -185,8 +179,9 @@ class message {
 
        while ($reply = $sel->fetch()) {
             if (!empty($reply)) {
-                $thereply = $this->getMessage($reply["ID"]);
-                array_push($replies, $thereply);
+                array_push($replies, $this->getMessage($reply["ID"]));
+                //recursive call to get all replies to this reply
+                $this->getReplies($reply["ID"]);
             }
         }
         if (!empty($replies)) {
