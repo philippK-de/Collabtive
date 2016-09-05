@@ -14,7 +14,7 @@ function toggleSidebar() {
     //if the sidebar is open, set dimensions for a closed sidebar
     if (isOpen == "true") {
         rightWidth = 100;
-        rightHeight = 35;
+        rightHeight = 30;
         rightSubWidth = 80;
         leftWidth = 862;
         //this is for the win_none/block toggles
