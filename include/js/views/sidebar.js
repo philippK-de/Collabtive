@@ -18,8 +18,6 @@ function toggleSidebar() {
         rightWidth = 80;
         rightSubWidth = 60;
         leftWidth = 882;
-        //this is for the win_none/block toggles
-        togglesBgPosition = 815;
 
         //set the data attribute indicating the state of the sidebar
         contentRight.dataset.opened = false;
@@ -29,7 +27,6 @@ function toggleSidebar() {
         rightWidth = 220;
         rightSubWidth = 184;
         leftWidth = 742;
-        togglesBgPosition = 678;
 
         //set the data attribute indicating the state of the sidebar
         contentRight.dataset.opened = true;
@@ -61,12 +58,4 @@ function toggleSidebar() {
     Velocity(contentLeft, {
         width: leftWidth
     }, {queue: false});
-
-    //animate position of blocktoggles
-    var blockToggles = cssAll(".win_block,.win_none");
-    for (var i = 0; i < blockToggles.length; i++) {
-        Velocity(blockToggles[i], {
-            backgroundPositionX: togglesBgPosition
-        }, {queue: false});
-    }
 }

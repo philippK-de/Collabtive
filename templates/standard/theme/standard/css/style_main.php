@@ -1538,12 +1538,14 @@ a.win_block {
 	display: block;
 	width: 100%;
 	height: 100%;
-	background: url(../images/win-up.png) no-repeat 815px 8px;
+	background: url(../images/win-up.png) no-repeat 98.5% 8px;
+	//background: url(../images/win-up.png) no-repeat 815px 8px;
 	//background: url(../images/win-up.png) no-repeat 678px 8px;
 }
 
 a.win_block:hover {
-	background-position: 815px -23px;
+	background-position: 98.5% -23px;
+	//background-position: 815px -23px;
 	//background-position: 678px -23px;
 }
 
@@ -1551,12 +1553,14 @@ a.win_none {
 	display:block;
 	width:100%;
 	height: 100%;
-	background: url(../images/win-up.png) no-repeat 815px -54px;
+	background: url(../images/win-up.png) no-repeat 98.5% -54px;
+	//background: url(../images/win-up.png) no-repeat 815px -54px;
 	//background: url(../images/win-up.png) no-repeat 678px -54px;
 }
 
 a.win_none:hover {
-	background-position: 815px -85px;
+	background-position: 98.5% -85px;
+	//background-position: 815px -85px;
 	//background-position: 678px -85px;
 }
 
