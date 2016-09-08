@@ -250,9 +250,36 @@ button:focus {
 .padding-bottom-two-px{
    padding-bottom:2px;
 }
+.padding-left-two-px{
+    padding-left:2px;
+}
+.padding-right-two-px{
+    padding-right:2px;
+}
+
 .margin-left-two-px{
     margin-left:2px;
 }
+.margin-right-two-px{
+    margin-right:2px;
+}
+/* BORDERS */
+.border-none
+{
+    border:0px;
+}
+.border-left-none
+{
+    border-left:0px;
+}
+.border-right-none
+{
+    border-right:0px;
+}
+.border-collapse{
+    border-collapse:collapse;
+}
+
 
 /* ## Basic-XHTML-Elements ############### END ############## */
 

@@ -1,10 +1,10 @@
-<table id="desktopprojects" cellpadding="3px" cellspacing="0" border="1" style="border-left:0px solid;border-collapse:collapse;width:100%">
+<table id="filesviewList" class="border-left-none border-collapse" cellpadding="3px" cellspacing="0" style="width:100%;">
     <thead>
-    <tr>
-        <th class="a text-align-center" style="width:5%;border-right:0px;"></th>
-        <th class="b text-align-left" style="width:50%;border-left:0px;">{#name#}</th>
-        <th class="c text-align-left" style="width:20%">{#uploaded#}</th>
-        <th class="d" style="text-align:left;width:10%;">{#filesize#}</th>
+    <tr class="">
+        <th class="a text-align-center border-right-none"></th>
+        <th class="b text-align-lef border-left-none">{#name#}</th>
+        <th class="c text-align-left">{#uploaded#}</th>
+        <th class="d" class="text-align-right">{#filesize#}</th>
         <th class="tools" style="width:3%;"></th>
     </tr>
     </thead>
@@ -41,7 +41,7 @@
     {literal}
         <tbody v-for="file in items.files" id="fli_{{*file.ID}}" class="color-a">
         <tr>
-            <td style="border-right:0px;">
+            <td class="border-right-none">
                 <template v-if="file.imgfile">
                     <a rel="lytebox[]" rev="width: 650px; height: 500px;"
                        href="managefile.php?action=downloadfile&amp;id={{*file.project}}&amp;file={{*file.ID}}"
@@ -59,10 +59,10 @@
                     </a>
                 </template>
             </td>
-            <td style="border-left:0px;">
+            <td class="border-left-none">
                 <template v-if="file.imgfile">
                     <a rel="lytebox[]" rev="width: 650px; height: 500px;"
-                       href="managefile.php?action=downloadfile&amp;id={{*file].project}}&amp;file={{*file.ID}}"
+                       href="managefile.php?action=downloadfile&amp;id={{*file.project}}&amp;file={{*file.ID}}"
                        data-fileid="{{*file.ID}}">
                         {{*file.name | truncate '75'}}
                     </a>
@@ -78,7 +78,7 @@
                 {{*file.addedstr}} /
                 <a href="manageuser.php?action=profile&id={{*file.userdata.ID}}">{{*file.userdata.name}}</a>
             </td>
-            <td>{{*file.size}} kB</td>
+            <td class="text-align-right">{{*file.size}} kB</td>
             <td class="tools">
                 {/literal}
                 {if $userpermissions.files.del}
