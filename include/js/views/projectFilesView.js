@@ -34,6 +34,19 @@ function selectFolder(folderId) {
         }
     }
 }
+
+function changeFileview(fileviewType, project)
+{
+    //grid view
+    if(fileviewType == "grid")
+    {
+        window.location = "managefile.php?action=showproject&id=" + project;
+    }
+    else if(fileviewType == "list")
+    {
+        window.location = "managefile.php?action=showproject&viewmode=list&id=" + project;
+    }
+}
 /*
  * DRAG AND DROP
  */

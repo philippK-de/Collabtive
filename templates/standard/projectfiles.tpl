@@ -66,9 +66,9 @@
                         </div>
                         <div class="float-right" style="margin-right:3px;">
                             <form id="typechose">
-                                <select id="fileviewtype" onchange="changeFileview(this.value);">
-                                    <option value="fileview" selected>{#gridview#}</option>
-                                    <option value="fileview_list">{#listview#}</option>
+                                <select id="fileviewtype" onchange="changeFileview(this.value, {$project.ID});">
+                                    <option value="grid" {if $viewmode == "grid"}selected{/if}>{#gridview#}</option>
+                                    <option value="list" {if $viewmode == "list"}selected{/if}>{#listview#}</option>
                                 </select>
                             </form>
                         </div>
@@ -78,7 +78,11 @@
                         <div class="content_in_wrapper_in">
                             {*change to fileview_list.tpl for list style view*}
                             <div id="filescontent" class="inwrapper">
-                                {include file = "projectFilesListView.tpl"}
+                                {if $viewmode == "grid"}
+                                    {include file = "projectFilesView.tpl"}
+                                {elseif $viewmode == "list"}
+                                    {include file = "projectFilesListView.tpl"}
+                                {/if}
                             </div>
                         </div> {*content_in_wrapper_in End*}
                     </div> {*content_in_wrapper End*}
