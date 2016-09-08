@@ -143,8 +143,8 @@ if ($action == "uploadAsync") {
     $file = $fileObj->getFile($thisfile);
     $title = $langfile["editfile"];
 
-    $myproject = new project();
-    $pro = $myproject->getProject($id);
+    $projectObj = new project();
+    $pro = $projectObj->getProject($id);
     $projectname = $pro["name"];
 
     $template->assign("title", $title);
@@ -215,40 +215,38 @@ if ($action == "uploadAsync") {
         $template->display("error.tpl");
         die();
     }
-    
-    $files = $fileObj->getProjectFiles($id);
-    $filenum = count($files);
-    
-    if (empty($finfiles)) {
-        $filenum = 0;
-    }
-    
-    $myproject = new project();
-    $rolesobj = new roles();
 
-	//get folders
+    $projectObj = new project();
+    $rolesobj = new roles();
+    //get folders
     $folders = $fileObj->getProjectFolders($id);
-	//get all folders
-    $allfolders = $fileObj->getAllProjectFolders($id);
 
 	//get the project
-    $pro = $myproject->getProject($id);
+    $pro = $projectObj->getProject($id);
 	//get the project members
-    $members = $myproject->getProjectMembers($id, 10000);
+    $members = $projectObj->getProjectMembers($id, 10000);
    	//get all roles
     $allroles = $rolesobj->getAllRoles(10000);
 
-    $projectname = $pro["name"];
-    $title = $langfile['files'];
+    //get the viewmode
+    $viewMode = $cleanGet["viewmode"];
+    //default to gridview
+    if(!$viewMode)
+    {
+        $viewMode = "grid";
+    }
 
-    $template->assign("title", $title);
-    $template->assign("projectname", $projectname);
-    $template->assign("files", $files);
-    $template->assign("filenum", $filenum);
+    //html page title
+    $template->assign("title", $langfile['files']);
+    $template->assign("projectname", $pro["name"]);
+
+    $template->assign("viewmode", $viewMode);
+
     $template->assign("folders", $folders);
     $template->assign("members", $members);
+
     $template->assign("roles", $allroles);
-    $template->assign("allfolders", $allfolders);
+
     $template->assign("postmax", $POST_MAX_SIZE);
     $template->display("projectfiles.tpl");
 } elseif ($action == "addfolder") {
