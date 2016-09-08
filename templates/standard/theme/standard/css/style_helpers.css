@@ -1,4 +1,6 @@
-/* HELPERS */
+/* HELPERS
+ * This contains a number of CSS helper classes that accomplish things where inline styles would often be used
+ */
 /* Drag and Drop */
 [draggable] {
     -moz-user-select: none;
@@ -21,6 +23,7 @@
     visibility: visible;
 }
 
+/* Clear float:right/left */
 .clear_both {
     clear: both;
 }
@@ -30,6 +33,7 @@
     height: 15px;
 }
 
+/* remove annoying borders from images */
 img {
     border: none;
 }
@@ -38,6 +42,7 @@ img {
     color: red;
 }
 
+/* Vue.js needs this to hide unrendered template code */
 [v-cloak] {
     display: none;
 }
@@ -112,15 +117,15 @@ button:focus {
 
 /* BORDERS */
 .border-none {
-    border: 0px;
+    border: 0;
 }
 
 .border-left-none {
-    border-left: 0px;
+    border-left: 0;
 }
 
 .border-right-none {
-    border-right: 0px;
+    border-right: 0;
 }
 
 .border-collapse {

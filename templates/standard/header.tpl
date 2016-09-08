@@ -24,10 +24,8 @@
         <script type="text/javascript" src="include/js/ajax.min.js"></script>
 
         <script type="text/javascript" src="include/js/viewManager.min.js"></script>
-
-
-
         {/literal}
+        <!--conferenceScripts-->
             {* Loop through components set in init.php and add JS script tags for them *}
             {section name=component loop=$vueComponents}
                 <script type="text/javascript" src="include/js/components/{$vueComponents[component]}Component.min.js"></script>
