@@ -12,9 +12,11 @@
     {literal}
         <tbody v-for="folder in items.folders" class="color-a" id="thefold_{{*folder.ID}}">
         <tr>
-            <td style="border-right:0px;"><img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/folder-sub.png"/></td>
-            <td style="border-left:0px;">
-                <a href="javascript:change('manageajax.php?action=fileview_list&id={$project.ID}&folder={$folders[folder].ID}','filescontent');">
+            <td style="border-right:0;">
+                <img src="templates/{/literal}{$settings.template}/theme/{$settings.theme}/{literal}images/symbols/folder-sub.png"/>
+            </td>
+            <td style="border-left:0;">
+                <a href="javascript:loadFolder(projectFilesView,{{folder.ID}});selectFolder({{folder.ID}});">
                     {{*folder.name | truncate '25'}}
                 </a>
             </td>
@@ -24,7 +26,9 @@
                 {/literal}
                 {if $userpermissions.files.del}
                 {literal}
-                    <a class="del" href="javascript:confirmDelete('{/literal}{$langfile.confirmdel}{literal}','fdli_{{*folder.ID}}','managefile.php?action=delfolder&amp;id={{*folder.project}}&amp;folder={{*folder.ID}}&ajax=1',projectFilesView);" title="{#delete#}" onclick=""></a>
+                    <a  class="del"
+                        href="javascript:confirmDelete('{/literal}{$langfile.confirmdel}{literal}','fdli_{{*folder.ID}}','managefile.php?action=delfolder&amp;id={{*folder.project}}&amp;folder={{*folder.ID}}&ajax=1',projectFilesView);"
+                        title="{/literal}{#delete#}{literal}" onclick=""></a>
                 {/literal}
                 {/if}
                 {literal}
@@ -36,7 +40,6 @@
 
     {literal}
         <tbody v-for="file in items.files" id="fli_{{*file.ID}}" class="color-a">
-
         <tr>
             <td style="border-right:0px;">
                 <template v-if="file.imgfile">
