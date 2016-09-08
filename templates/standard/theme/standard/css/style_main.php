@@ -141,28 +141,6 @@ body a, body a:visited {
 body a:hover {
 	text-decoration: none;
 }
-
-.hidden {
-	visibility:hidden;
-}
-
-.visible {
-	visibility:visible;
-}
-
-.clear_both {
-	clear:both;
-}
-
-.clear_both_b {
-	clear:both;
-	height:15px;
-}
-
-img {
-	border: none;
-}
-
 ::selection {
 	background: <?php echo $colorMain;
 ?> ;
@@ -187,112 +165,9 @@ td.message ul {
 	list-style-type: disc;
 }
 
-.error_message {
-	color:red;
-}
-[v-cloak] {
-    display: none;
-}
-
-button:focus {
-    outline:0;
-}
-
-/* Drag and Drop */
-[draggable] {
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
-    /* Required to make elements draggable in old WebKit */
-    -khtml-user-drag: element;
-    -webkit-user-drag: element;
-}
-.dragover {
-    border: 1px dashed #000;
-}
-
-/* HELPERS */
-.display-none{
-    display: none;
-}
-.center-margin{
-    margin: 0 auto;
-}
-.overflow-hidden{
-    overflow:hidden;
-}
-/* Text align */
-.text-align-right{
-    text-align:right;
-}
-.text-align-center{
-    text-align:center;
-}
-.text-align-left{
-    text-align:left;
-}
-.cursor-pointer{
-    cursor: pointer;
-}
-/* Float */
-.float-left{
-    float:left;
-}
-.float-right{
-    float:right;
-}
-.float-none{
-    float:none;
-}
-
-/* Padding and Margin */
-.padding-bottom-two-px{
-   padding-bottom:2px;
-}
-.padding-left-two-px{
-    padding-left:2px;
-}
-.padding-right-two-px{
-    padding-right:2px;
-}
-
-.margin-left-two-px{
-    margin-left:2px;
-}
-.margin-right-two-px{
-    margin-right:2px;
-}
-/* BORDERS */
-.border-none
-{
-    border:0px;
-}
-.border-left-none
-{
-    border-left:0px;
-}
-.border-right-none
-{
-    border-right:0px;
-}
-.border-collapse{
-    border-collapse:collapse;
-}
-
-
 /* ## Basic-XHTML-Elements ############### END ############## */
 
-/* Pagination */
-.pagination
-{
-    margin-left: 10px;
-}
-.pagination button
-{
-    font-size:9pt;
-    margin:0 1px 0 1px;
-}
+
 
 /* ## LOGIN-Elements ################################ */
 
