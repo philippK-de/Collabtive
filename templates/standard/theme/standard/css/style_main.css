@@ -1,6 +1,6 @@
 
 /*
-##  Visional CSS Framework 1.1 static
+##  Visional CSS Framework 3.0 static
 ##  Author & Copyright: Marcus Froehner, Philipp Kiszka
 */
 
@@ -99,7 +99,7 @@ button:focus {
     border: 1px dashed #000;
 }
 
-/* Helpers */
+/* HELPERS */
 .display-none{
     display: none;
 }
@@ -115,6 +115,9 @@ button:focus {
 }
 .text-align-center{
     text-align:center;
+}
+.text-align-left{
+    text-align:left;
 }
 .cursor-pointer{
     cursor: pointer;
@@ -134,9 +137,36 @@ button:focus {
 .padding-bottom-two-px{
     padding-bottom:2px;
 }
+.padding-left-two-px{
+    padding-left:2px;
+}
+.padding-right-two-px{
+    padding-right:2px;
+}
+
 .margin-left-two-px{
     margin-left:2px;
 }
+.margin-right-two-px{
+    margin-right:2px;
+}
+/* BORDERS */
+.border-none
+{
+    border:0px;
+}
+.border-left-none
+{
+    border-left:0px;
+}
+.border-right-none
+{
+    border-right:0px;
+}
+.border-collapse{
+    border-collapse:collapse;
+}
+
 
 /* ## Basic-XHTML-Elements ############### END ############## */
 
@@ -397,7 +427,7 @@ button:focus {
 #content-left {
 //742 is the old block size with the sidebar open
 //width: 742px;
-    width: 862px;
+    width: 882px;
     min-height: 100px;
     background: #fff;
     margin: 0 18px 10px 0;
@@ -442,22 +472,20 @@ button:focus {
     margin: 13px 0 0 0;
     border-top: 1px dotted #000;
 }
-
+/*width: 220px; */
 #content-right {
-//width: 220px;
-    width: 100px;
-    height:35px;
+    width: 80px;
     min-height: 20px;
     background: url(../images/color-a.png) repeat 0 0;
     margin: 0 0 0 0;
-    padding: 0 0 23px 0;
+    padding: 5px 0 5px 0;
     float: left;
     color: #6d7f93;
 }
 
 .content-right-in {
 //width: 184px;
-    width: 80px;
+    width: 60px;
     margin: 23px 0 0 18px;
 }
 
@@ -1413,12 +1441,14 @@ a.win_block {
     display: block;
     width: 100%;
     height: 100%;
-    background: url(../images/win-up.png) no-repeat 795px 8px;
+    background: url(../images/win-up.png) no-repeat 98.5% 8px;
+//background: url(../images/win-up.png) no-repeat 815px 8px;
 //background: url(../images/win-up.png) no-repeat 678px 8px;
 }
 
 a.win_block:hover {
-    background-position: 795px -23px;
+    background-position: 98.5% -23px;
+//background-position: 815px -23px;
 //background-position: 678px -23px;
 }
 
@@ -1426,12 +1456,14 @@ a.win_none {
     display:block;
     width:100%;
     height: 100%;
-    background: url(../images/win-up.png) no-repeat 795px -54px;
+    background: url(../images/win-up.png) no-repeat 98.5% -54px;
+//background: url(../images/win-up.png) no-repeat 815px -54px;
 //background: url(../images/win-up.png) no-repeat 678px -54px;
 }
 
 a.win_none:hover {
-    background-position: 795px -85px;
+    background-position: 98.5% -85px;
+//background-position: 815px -85px;
 //background-position: 678px -85px;
 }
 
@@ -1497,11 +1529,11 @@ body a.butn_link, body a.butn_link_active {
     padding: 0;
 }
 .msgs .message-fluid {
-    width: 80%;
     margin: 0;
     padding: 0;
 }
 .message-in-fluid {
+    width: 95%;
     overflow-x: auto;
 }
 

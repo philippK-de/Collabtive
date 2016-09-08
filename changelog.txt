@@ -1,4 +1,17 @@
 Collabtive 3.0
+
++ Fully PHP7 compatible
++ Most inline styles have been refactored to classes. One of the next releases will disable inline style in CSP
++ The sidebar is collapsed by default, giving more room for the main content area
+  It can be expanded by clicking
++ All animations now use velocity.js
++ Implemented new modal dialog for the calendar, that is not based on prototype
++ Added example plugin
++ Plugin system that is completely modular and cacheable.
+  Plugins are defined as their own classes, and implement the collabtivePlugin interface
+  Arbitrary Plugin Hooks can be placed in templates to allow dependency injection
++ All forms are now submitted asyncronously
++ Rewrite of UI rendering with vue.js
 + Changed constructor of SmartyPaginate.class.php to be compatible with PHP 7
 + Fixed unfiltered variables
 + Improved database checks in init.php (srichter)
@@ -7,7 +20,7 @@ Collabtive 3.0
 + Fixed a bug in thumb.php where not-logged in users could load thumbnails of images they know the path to
 + Converted the filetype check int he user image upload to a whitelist to be more secure from malicious file uploads.
 + Added code for excel import
-+ Code refactoring to use arrays $cleanPost, and $cleanGet
++ Code refactoring to use arrays $cleanPost, and $cleanGet - these supply the value of $_POST and $_GET sanitized from XSS vectors
 + Converted a few remaining SQL queries to prepared statements
 + Converted loading of content on the desktop to an asyncronous method using vue.js. This speeds up the loading of the desktop page considerably.
 + Adding of projects now done asyncronously
