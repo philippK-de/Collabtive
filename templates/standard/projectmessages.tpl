@@ -198,7 +198,7 @@
     <script type="text/javascript" src="include/js/accordion.min.js"></script>
     <script type="text/javascript" src="include/js/views/projectMessages.min.js"></script>
 <script type="text/javascript">
-    pagination.itemsPerPage = 15;
+    pagination.itemsPerPage = 20;
     projectMessages.url = projectMessages.url + "&id=" + {/literal}{$project.ID}{literal};
     projectMessagesView = createView(projectMessages);
 

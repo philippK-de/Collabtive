@@ -316,7 +316,7 @@ elseif($action == "projectMessages")
     {
         $offset = $cleanGet["offset"];
     }
-    $limit = 15;
+    $limit = 20;
     if(isset($cleanGet["limit"]))
     {
         $limit = $cleanGet["limit"];
