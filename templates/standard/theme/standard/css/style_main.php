@@ -212,7 +212,7 @@ button:focus {
     border: 1px dashed #000;
 }
 
-/* Helpers */
+/* HELPERS */
 .display-none{
     display: none;
 }
@@ -228,6 +228,9 @@ button:focus {
 }
 .text-align-center{
     text-align:center;
+}
+.text-align-left{
+    text-align:left;
 }
 .cursor-pointer{
     cursor: pointer;

@@ -17,13 +17,11 @@
 
             <div class="headline">
                 <a href="javascript:void(0);" id="block_files_toggle" class="win_block" onclick="toggleBlock('block_files');"></a>
-
                 <div class="wintools">
                     <div class="addmen">
                         <loader block="projectFiles" loader="loader-files.gif"></loader>
                         <div class="export-main">
                             <a class="export"><span>{#addbutton#}</span></a>
-
                             <div class="export-in" style="width:54px;left: -54px;"> {*at two items*}
                                 {if $userpermissions.files.add}
                                     <a class="addfile" href="javascript:blindtoggle('form_file');" id="addfile"
@@ -35,7 +33,6 @@
                         </div>
                     </div>
                 </div>
-
                 <h2>
                     <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/folder-root.png" alt=""/><span
                             id="dirname">{literal}{{items.currentFolder.abspath}}{/literal}</span>
@@ -81,7 +78,7 @@
                         <div class="content_in_wrapper_in">
                             {*change to fileview_list.tpl for list style view*}
                             <div id="filescontent" class="inwrapper">
-                                {include file = "fileviewNew.tpl"}
+                                {include file = "projectFilesListView.tpl"}
                             </div>
                         </div> {*content_in_wrapper_in End*}
                     </div> {*content_in_wrapper End*}
@@ -106,7 +103,7 @@
 </div> {*content-left END*}
 {literal}
     <script type="text/javascript" src="include/js/5up.min.js"></script>
-    <script type="text/javascript" src="include/js/views/projectFilesView.min.js"></script>
+    <script type="text/javascript" src="include/js/views/projectFilesView.js"></script>
 <script type="text/javascript">
     projectFiles.url = projectFiles.url + "&id=" + {/literal}{$project.ID}{literal};
     pagination.itemsPerPage = 24;

@@ -1,4 +1,5 @@
 <ul id="filesList" v-cloak>
+    {* Folders *}
     {literal}
     <li v-for="folder in items.folders" id="fdli_{{*folder.ID}}">
         <div class="itemwrapper" id="iw_{{*folder.ID}}"
@@ -6,6 +7,7 @@
              ondragover="handleDragOver(event);"
              ondragenter="handleDragEnter(event);"
              ondragleave="handleDragLeave(event);" data-folderid="{{*folder.ID}}">
+
             <table cellpadding="0" cellspacing="0" border="0" data-folderid="{{*folder.ID}}">
                 <tr>
                     <td class="leftmen" valign="top" data-folderid="{{*folder.ID}}">
@@ -37,15 +39,14 @@
 							</span>
                     </td>
                 <tr/>
-
             </table>
-
         </div>
         <!--itemwrapper END -->
     </li>
     {/literal} {* loop folder END *}
     <div class="content-spacer"></div>
 
+    {* Files *}
     {literal}
     <li v-for="file in items.files" id="fli_{{*file.ID}}" draggable="true" ondragstart="handleDragStart(event);" data-fileid="{{*file.ID}}">
         <div class="itemwrapper" id="iw_{{*file.ID}}" class="singleFile">
@@ -56,10 +57,9 @@
                     </td>
                     <td class="thumb">
                         <template v-if="file.imgfile">
-                            <a rel="lytebox[]" rev="width: 650px; height: 500px;" href="managefile.php?action=downloadfile&amp;id={{*file
-                            .project}}&amp;file={{*file.ID}}"
-                               data-fileid="{{*file
-                            .ID}}">
+                            <a rel="lytebox[]" rev="width: 650px; height: 500px;"
+                               href="managefile.php?action=downloadfile&amp;id={{*file.project}}&amp;file={{*file.ID}}"
+                               data-fileid="{{*file.ID}}">
                                 <img data-fileid="{{*file.ID}}"
                                      src="templates/{/literal}{$settings.template}/theme/{$settings.theme}/{literal}images/files/{{*file.type}}.png"
                                      alt="{{*file.name}}"/>
@@ -82,26 +82,21 @@
                             {/literal}
                             {/if}
                             {literal}
-
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="3">
-							<span class="name">
-                                <a href="managefile.php?action=downloadfile&amp;id={{*file.project}}&amp;file={{*file.ID}}" data-fileid="{{file.ID}}">
-                                    {{*file.name | truncate '10'}}
-
-                                </a>
-							</span>
+						<span class="name">
+                               <a href="managefile.php?action=downloadfile&amp;id={{*file.project}}&amp;file={{*file.ID}}" data-fileid="{{file.ID}}">
+                                   {{*file.name | truncate '10'}}
+                               </a>
+						</span>
                     </td>
                 <tr/>
             </table>
-
         </div>
         <!--itemwrapper End-->
-
-
     </li>
     <!-- files in fldes END-->
     {/literal}
