@@ -189,6 +189,11 @@ function hasClass(elm, className) {
     }
 }
 
+function getSelectedValue(selectElement)
+{
+    var element = cssId(selectElement);
+    return element.options[element.selectedIndex].value;
+}
 /*
  * Function to toggle an element between 2 CSS classes
  * @param obj elm can be an id string or DOM object
