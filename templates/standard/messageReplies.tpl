@@ -61,11 +61,6 @@
                                    onclick="change('managemessage.php?action=editform&amp;mid={$replies[reply].ID}&amp;id={$message.project}','form_reply_b');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_reply_b');"
                                    title="{#edit#}"></a>
                             {/if}
-                            {if $userpermissions.messages.del}
-                                <a class="tool_del"
-                                   href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'reply_{$replies[reply].ID}\',\'managemessage.php?action=del&amp;mid={$replies[reply].ID}&amp;id={$message.project}\')');"
-                                   title="{#delete#}"></a>
-                            {/if}
                         </td>
                     </tr>
                     <tr class="acc">
