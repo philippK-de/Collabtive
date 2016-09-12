@@ -59,10 +59,7 @@
 				    {/section}
 			    </div>
 			</div>
-
-
 			<input type="hidden" name="assignme" value="1" />
-
 		    <div class="clear_both_b"></div>
 
 			<div class="row-butn-bottom">
