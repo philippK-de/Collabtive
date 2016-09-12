@@ -149,7 +149,7 @@
             {*Doneprojects End*}
 
             {* If no projects exist, open form to add a project *}
-            {if $openProjectnum < 1}
+            {if $openProjectnum < 1 && $userpermissions.projects.add}
                 <script type="text/javascript">
                     blindtoggle('form_addmyproject');
                 </script>
