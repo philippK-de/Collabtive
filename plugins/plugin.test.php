@@ -5,7 +5,7 @@ class test implements collabtivePlugin
     const templateFile = "test.tpl";
     const templateTag = "testplugin";
     const templateTagTwo = "testpluginTwo";
-    private $filterFunctions = ["test::filter", "test::filterTwo"];
+    private $filterFunctions = ["test::activateMainHook", "test::activateSecondHook"];
 
     public function install()
     {
@@ -23,12 +23,12 @@ class test implements collabtivePlugin
         $pluginManager->registerHook($this->filterFunctions);
     }
 
-    static function filter($source, Smarty_Internal_Template $localTemplateObj)
+    static function activateMainHook($source, Smarty_Internal_Template $localTemplateObj)
     {
         return preg_replace("/<!--" . test::templateTag . "-->/i", "{" . test::templateTag . "}", $source);
     }
 
-    static function filterTwo($source, Smarty_Internal_Template $localTemplateObj)
+    static function activateSecondHook($source, Smarty_Internal_Template $localTemplateObj)
     {
         return preg_replace("/<!--" . test::templateTagTwo . "-->/i", "{" . test::templateTagTwo . "}", $source);
     }

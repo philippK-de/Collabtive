@@ -21,7 +21,7 @@ interface collabtivePlugin
     //bind the plugin to  smarty
     public function bindPlugin();
     //replace the <!--hook--> by a {smarty tag}, associated with a function
-    public static function filter($source, Smarty_Internal_Template $localTemplateObj);
+    public static function activateMainHook($source, Smarty_Internal_Template $localTemplateObj);
     //default function to call for the {smarty tag} registered for the plugin
     public static function getTemplate($params, Smarty_Internal_Template $localTemplateObj);
 
