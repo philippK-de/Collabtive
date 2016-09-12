@@ -130,7 +130,7 @@ class pluginManager
         foreach ($templateTags as $templateTag) {
             //if a tag has no method field, assume ::getTemplate method
             if (!isset($templateTag["method"]) || empty($templateTag["method"])) {
-                $templateTag["method"] = "::getTemplate";
+                $templateTag["method"] = "::getMainTemplate";
             }
             //register with smarty
             $template->registerPlugin("function", $templateTag["tag"], $pluginClassName . $templateTag["method"]);

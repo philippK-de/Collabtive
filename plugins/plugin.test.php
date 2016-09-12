@@ -33,7 +33,7 @@ class test implements collabtivePlugin
         return preg_replace("/<!--" . test::templateTagTwo . "-->/i", "{" . test::templateTagTwo . "}", $source);
     }
 
-    static function getTemplate($params, Smarty_Internal_Template $templateObj)
+    static function getMainTemplate($params, Smarty_Internal_Template $templateObj)
     {
 
         global $template;
