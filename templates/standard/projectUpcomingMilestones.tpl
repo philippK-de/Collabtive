@@ -6,7 +6,7 @@
             <img src="templates/standard/theme/standard/images/symbols/loader-calendar.gif"/>
         </div>
     </div>
-    <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt=""/>Upcoming {#milestones#}</h2>
+    <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt=""/>{#upcomingmilestones#}</h2>
 </div>
 <div class="block blockaccordion_content overflow-hidden" id="upcomingMilestonesHead">
     <div id="sm_miles_upcoming" class="nosmooth">
