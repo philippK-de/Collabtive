@@ -6,7 +6,7 @@
             <img src="templates/standard/theme/standard/images/symbols/loader-calendar.gif"/>
         </div>
     </div>
-    <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt=""/>Late {#milestones#}</h2>
+    <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt=""/>{#latestones#}</h2>
 </div>
 
 <div class="block blockaccordion_content overflow-hidden" id="lateMilestonesHead">
