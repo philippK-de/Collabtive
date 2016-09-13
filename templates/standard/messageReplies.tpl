@@ -23,7 +23,6 @@
                     <th class="ce" class="text-align-right">{#replies#}</th>
                     <th class="c">{#on#}</th>
                     <th class="d">{#by#}</th>
-                    <th class="tools"></th>
                 </tr>
                 </thead>
 
@@ -34,7 +33,6 @@
                 </tfoot>
 
                 {section name=reply loop=$replies}
-
                     {*Color-Mix*}
                     {if $smarty.section.reply.index % 2 == 0}
                         <tbody class="color-a" id="reply_{$replies[reply].ID}">
@@ -54,13 +52,6 @@
                         <td>{$replies[reply].postdate}</td>
                         <td>
                             <a href="manageuser.php?action=profile&amp;id={$replies[reply].user}">{$replies[reply].username|truncate:20:"...":true}</a>
-                        </td>
-                        <td class="tools">
-                            {if $userpermissions.messages.edit}
-                                <a class="tool_edit"
-                                   onclick="change('managemessage.php?action=editform&amp;mid={$replies[reply].ID}&amp;id={$message.project}','form_reply_b');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_reply_b');"
-                                   title="{#edit#}"></a>
-                            {/if}
                         </td>
                     </tr>
                     <tr class="acc">
@@ -121,11 +112,9 @@
                                                                                        title="{$replies[reply].files[file].name}">
                                                                                         {$replies[reply].files[file].name|truncate:15:"...":true}
                                                                                     </a>
-
                                                                         </td>
                                                                     <tr/>
                                                                 </table>
-
                                                             </div> {*itemwrapper End*}
                                                         </li>
                                                     {/section}
@@ -149,10 +138,8 @@
                    onclick="toggleClass('add_replies','add-active','add');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_replies','smooth','nosmooth');">{#answer#}</a>
             </div>
         </div>
-
     </div>
     {*block End*}
-
 {literal}
     <script type="text/javascript">
         var accord_answer = new accordion2('acc_replies');

@@ -1,5 +1,7 @@
 <?php
-// Autoload requires classes on new class()
+interface collabtiveBase{
+}
+/* Autoload requires classes on new class() */
 function cl_autoload($class_name)
 {
     $pfad = CL_ROOT . "/include/class." . $class_name . ".php";
@@ -17,7 +19,7 @@ spl_autoload_register('cl_autoload');
 * @param int $user ID of the user
 * @param int $project ID of the project
 *
-* return bool
+* @return bool
 */
 function chkproject($user, $project)
 {
@@ -39,7 +41,7 @@ function chkproject($user, $project)
 *
 * @param string $locale the name of the locale (en, de, etc)
 *
-* return array $languages List of available languages
+* @return array $languages List of available languages
 */
 function getAvailableLanguages()
 {
@@ -64,7 +66,7 @@ function getAvailableLanguages()
 *
 * @param string $locale the name of the locale (en, de, etc)
 *
-* return int $proz Percentage of completeness
+* @return int $proz Percentage of completeness
 */
 function countLanguageStrings($locale)
 {
@@ -99,7 +101,7 @@ function countLanguageStrings($locale)
 *
 * @param string $locale the name of the locale (en, de, etc)
 *
-* return array $langfile An associative array with the language file strings
+* @return array $langfile An associative array with the language file strings
 */
 function readLangfile($locale)
 {
@@ -182,7 +184,7 @@ function getMyUrl()
 * @param array $array The array
 * @param string $name The key we want
 *
-* return string a sanitized version of the array key
+* @return string a sanitized version of the array key
 */
 function getArrayVal(array $array, $name)
 {
@@ -234,7 +236,7 @@ function delete_directory($dirname)
  * Reduce an array by one dimension
  * @param array $arr array to be flattened
  *
- * return array $earr Flat array
+ * @return array $earr Flat array
  */
 function reduceArray(array $arr)
 {
@@ -275,4 +277,4 @@ function clearTemplateCache()
         }
     }
 }
-?>
+
