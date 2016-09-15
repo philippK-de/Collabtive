@@ -239,12 +239,12 @@ class message
     }
 
     /**
-     * Returns all messages belonging to a project (without answers)
+     * Returns all messages belonging to a project (excluding replies and personal messages).
      *
-     * @param int $project Eindeutige Nummer des Projekts
-     * @param int $offset Offset for the DB query
+     * @param int $project Unique project number
      * @param int $limit Limit for the DB query
-     * @return array $messages Nachrichten zum Projekt
+     * @param int $offset Offset for the DB query
+     * @return array $messages Project messages
      */
     function getProjectMessages($project, $limit = 0, $offset = 0)
     {
@@ -255,24 +255,32 @@ class message
 
         $messages = array();
         if ($limit > 0) {
-            $projectMessagesStmt = $conn->prepare("SELECT ID FROM messages WHERE project = ? AND replyto = 0 ORDER BY posted DESC LIMIT $limit
-            OFFSET $offset");
+            $projectMessagesStmt = $conn->prepare("
+                  SELECT messages.ID FROM messages
+                  LEFT JOIN messages_assigned ON messages.ID = messages_assigned.message
+                  WHERE messages_assigned.message IS NULL
+                  AND project = ?
+                  AND replyto = 0
+                  ORDER BY posted DESC
+                  LIMIT $limit
+                  OFFSET $offset");
+
         } else {
-            $projectMessagesStmt = $conn->prepare("SELECT ID FROM messages WHERE project = ? AND replyto = 0 ORDER BY posted DESC");
+            $projectMessagesStmt = $conn->prepare("
+                  SELECT messages.ID FROM messages
+                  LEFT JOIN messages_assigned ON messages.ID = messages_assigned.message
+                  WHERE messages_assigned.message IS NULL
+                  AND project = ?
+                  AND replyto = 0
+                  ORDER BY posted DESC");
+
         }
+
         $projectMessagesStmt->execute(array($project));
 
         while ($messageId = $projectMessagesStmt->fetch()) {
-            //check if the message is assigned to any user
-            $isAssignedStmt = $conn->query("SELECT COUNT(*) FROM messages_assigned WHERE message = $messageId[ID]")->fetch();
-            //coerce to a bool
-            $isAssigned = $isAssignedStmt["COUNT(*)"] ? true : false;
-
-            //only if the message has no users assigned - its a project message
-            if(!$isAssigned) {
-                $message = $this->getMessage($messageId["ID"]);
-                array_push($messages, $message);
-            }
+            $message = $this->getMessage($messageId["ID"]);
+            array_push($messages, $message);
         }
 
         if (!empty($messages)) {
@@ -308,22 +316,27 @@ class message
     }
 
     /**
-     * Returns all messages belonging to a project (without answers)
+     * Counts all messages belonging to a project (excluding replies and personal messages).
      *
-     * @param int $project Eindeutige Nummer des Projekts
-     * @return array $messages Nachrichten zum Projekt
+     * @param int $project Unique project number
+     * @return array $number Number of project messages
      */
     function countProjectMessages($project)
     {
         global $conn;
-        $project = (int)$project;
+        $project = (int) $project;
 
         $messages = array();
-        $sel1 = $conn->prepare("SELECT COUNT(*) FROM messages WHERE project = ? AND replyto = 0");
+        $sel1 = $conn->prepare("
+                  SELECT COUNT(*) FROM messages
+                  LEFT JOIN messages_assigned ON messages.ID = messages_assigned.message
+                  WHERE messages_assigned.message IS NULL
+                  AND project = ?
+                  AND replyto = 0");
+
         $sel1->execute(array($project));
 
         $number = $sel1->fetch();
-
         $number = $number["COUNT(*)"];
 
         return $number;
