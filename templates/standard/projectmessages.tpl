@@ -30,7 +30,6 @@
 
     userMessages.url = userMessages.url + "&id=" + {/literal}{$project.ID}{literal};
     userMessagesView = createView(userMessages);
-    Vue.set(projectMessagesView, "dependencies", [userMessagesView]);
 
     var accord_messages;
     var accord_user_messages;
@@ -42,6 +41,7 @@
     });
     projectMessagesView.afterUpdate(function(){
         accord_messages = new accordion2('block_msgs');
+        updateView(userMessagesView);
     });
 
     userMessagesView.afterUpdate(function(){

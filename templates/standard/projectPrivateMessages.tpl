@@ -156,17 +156,7 @@
             </table>
         </div>
         <!--smooth End-->
-
-        <div class="tablemenue">
-            <div class="tablemenue-in">
-                {/literal}
-                {if $userpermissions.messages.add}
-                    <a class="butn_link" href="javascript:blindtoggle('addmsg');" id="add_butn"
-                       onclick="toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_msgs','smooth','nosmooth');">{#addmessage#}</a>
-                {/if}
-
-            </div>
-        </div>
+        {/literal}
     </div>
     <!-- block END  -->
     <div class="content-spacer"></div>
