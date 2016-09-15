@@ -10,8 +10,8 @@
  * @link http://collabtive.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
-
-class message {
+class message
+{
     /**
      * Creates a new message or a reply to a message
      *
@@ -30,7 +30,7 @@ class message {
         global $conn, $mylog;
 
         $insStmt = $conn->prepare("INSERT INTO messages (`project`,`title`,`text`,`tags`,`posted`,`user`,`username`,`replyto`,`milestone`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ? )");
-        $ins = $insStmt->execute(array((int) $project, $title, $text, "", time(), (int) $user, $username, (int) $replyto, (int) $milestone));
+        $ins = $insStmt->execute(array((int)$project, $title, $text, "", time(), (int)$user, $username, (int)$replyto, (int)$milestone));
 
         $insid = $conn->lastInsertId();
         if ($ins) {
@@ -55,7 +55,7 @@ class message {
         global $conn, $mylog;
 
         $updStmt = $conn->prepare("UPDATE `messages` SET `title`=?, `text`=? WHERE ID = ?");
-        $upd = $updStmt->execute(array($title, $text, (int) $id));
+        $upd = $updStmt->execute(array($title, $text, (int)$id));
 
         if ($upd) {
             $projStmt = $conn->prepare("SELECT project FROM messages WHERE ID = ?");
@@ -79,7 +79,7 @@ class message {
     function del($id)
     {
         global $conn, $mylog;
-        $id = (int) $id;
+        $id = (int)$id;
 
         $msgStmt = $conn->prepare("SELECT title,project FROM messages WHERE ID = ?");
         $msgStmt->execute(array($id));
@@ -111,7 +111,7 @@ class message {
     function getMessage($id, $recurseReplies = true)
     {
         global $conn;
-        $id = (int) $id;
+        $id = (int)$id;
 
         $messageStmt = $conn->prepare("SELECT * FROM messages WHERE ID = ? LIMIT 1");
         $messageStmt->execute(array($id));
@@ -122,9 +122,7 @@ class message {
             $user = new user();
             $avatar = $user->getAvatar($message["user"]);
 
-            $userGender = $conn->query("SELECT gender FROM user WHERE ID = $message[user]")->fetch();
-            $gender = $userGender[0];
-            $message["gender"] = $gender;
+            $message["gender"] = "m";
 
             $project = $conn->query("SELECT name FROM projekte WHERE ID = $message[project]")->fetch();
             $message["pname"] = $project[0];
@@ -133,7 +131,7 @@ class message {
             $message["endstring"] = $posted;
             $message["avatar"] = $avatar;
 
-            if($recurseReplies) {
+            if ($recurseReplies) {
                 //get children
                 $replies = $this->getReplies($id);
                 if (!$replies) {
@@ -151,8 +149,7 @@ class message {
             $message["files"] = $attached;
 
             //if there is files set hasFiles to true, else false
-            if(!empty($attached))
-            {
+            if (!empty($attached)) {
                 $message["hasFiles"] = true;
             }
 
@@ -180,17 +177,17 @@ class message {
     function getReplies($id)
     {
         global $conn;
-        $id = (int) $id;
+        $id = (int)$id;
 
         $sel = $conn->prepare("SELECT ID FROM messages WHERE replyto = ? ORDER BY posted DESC");
         $sel->execute(array($id));
 
         $replies = array();
 
-       while ($reply = $sel->fetch()) {
+        while ($reply = $sel->fetch()) {
             if (!empty($reply)) {
                 $replyMessage = $this->getMessage($reply["ID"]);
-                array_push($replies,  $replyMessage);
+                array_push($replies, $replyMessage);
                 //recursive call to get all replies to this reply
                 $this->getReplies($reply["ID"]);
             }
@@ -211,7 +208,7 @@ class message {
     function getLatestMessages($limit = 25)
     {
         global $conn;
-        $limit = (int) $limit;
+        $limit = (int)$limit;
         // Get the id of the logged in user and get his projects
         $userid = $_SESSION["userid"];
         $userid = (int)$userid;
@@ -224,12 +221,12 @@ class message {
             $prstring .= $projekt . ",";
         }
 
-        $prstring = substr($prstring, 0, strlen($prstring)-1);
+        $prstring = substr($prstring, 0, strlen($prstring) - 1);
         if ($prstring) {
             $sel1 = $conn->query("SELECT ID FROM messages WHERE project IN($prstring) ORDER BY posted DESC LIMIT $limit ");
             $messages = array();
 
-           while ($message = $sel1->fetch()) {
+            while ($message = $sel1->fetch()) {
                 $themessage = $this->getMessage($message["ID"]);
                 array_push($messages, $themessage);
             }
@@ -252,20 +249,53 @@ class message {
     function getProjectMessages($project, $limit = 0, $offset = 0)
     {
         global $conn;
-        $project = (int) $project;
+        $project = (int)$project;
+        $limit = (int) $limit;
+        $offset = (int) $offset;
 
         $messages = array();
-        if($limit > 0)
-        {
-            $projectMessagesStmt = $conn->prepare("SELECT ID FROM messages WHERE project = ? AND replyto = 0 ORDER BY posted DESC LIMIT $limit OFFSET $offset");
-        }
-        else {
+        if ($limit > 0) {
+            $projectMessagesStmt = $conn->prepare("SELECT ID FROM messages WHERE project = ? AND replyto = 0 ORDER BY posted DESC LIMIT $limit
+            OFFSET $offset");
+        } else {
             $projectMessagesStmt = $conn->prepare("SELECT ID FROM messages WHERE project = ? AND replyto = 0 ORDER BY posted DESC");
         }
         $projectMessagesStmt->execute(array($project));
 
         while ($messageId = $projectMessagesStmt->fetch()) {
-            $message = $this->getMessage($messageId["ID"]);
+            //check if the message is assigned to any user
+            $isAssignedStmt = $conn->query("SELECT COUNT(*) FROM messages_assigned WHERE message = $messageId[ID]")->fetch();
+            //coerce to a bool
+            $isAssigned = $isAssignedStmt["COUNT(*)"] ? true : false;
+
+            //only if the message has no users assigned - its a project message
+            if(!$isAssigned) {
+                $message = $this->getMessage($messageId["ID"]);
+                array_push($messages, $message);
+            }
+        }
+
+        if (!empty($messages)) {
+            return $messages;
+        } else {
+            return false;
+        }
+    }
+
+    function getUserMessages($user, $limit = 10, $offset = 0){
+        global $conn;
+        $user = (int)$user;
+        $limit = (int) $limit;
+        $offset = (int) $offset;
+
+        $messages = array();
+        $userMessagesStmt =
+            $conn->prepare("SELECT message FROM messages_assigned WHERE user = ? ORDER BY ID DESC LIMIT $limit OFFSET $offset");
+
+        $userMessagesStmt->execute(array($user));
+
+        while ($messageId = $userMessagesStmt->fetch()) {
+            $message = $this->getMessage($messageId["message"]);
 
             array_push($messages, $message);
         }
@@ -276,6 +306,7 @@ class message {
             return false;
         }
     }
+
     /**
      * Returns all messages belonging to a project (without answers)
      *
@@ -285,7 +316,7 @@ class message {
     function countProjectMessages($project)
     {
         global $conn;
-        $project = (int) $project;
+        $project = (int)$project;
 
         $messages = array();
         $sel1 = $conn->prepare("SELECT COUNT(*) FROM messages WHERE project = ? AND replyto = 0");
@@ -297,6 +328,42 @@ class message {
 
         return $number;
     }
+
+    /**
+     * Returns all messages belonging to a project (without answers)
+     *
+     * @param int $project Eindeutige Nummer des Projekts
+     * @return array $messages Nachrichten zum Projekt
+     */
+    function countUserMessages($user)
+    {
+        global $conn;
+        $user = (int)$user;
+
+        $sel1 = $conn->prepare("SELECT COUNT(*) FROM messages_assigned WHERE user = ?");
+        $sel1->execute(array($user));
+
+        $number = $sel1->fetch();
+        $number = $number["COUNT(*)"];
+
+        return $number;
+    }
+    function assignToUser($user, $message)
+    {
+        global $conn;
+        $message = (int)$message;
+        $user = (int)$user;
+
+        $updStmt = $conn->prepare("INSERT INTO messages_assigned (user,message) VALUES (?,?)");
+        $upd = $updStmt->execute(array($user, $message));
+
+        if ($upd) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Attach a file to a message
      *
@@ -308,14 +375,14 @@ class message {
     function attachFile($fileId, $messageId, $project = 0)
     {
         global $conn;
-        $fileId = (int) $fileId;
-        $messageId = (int) $messageId;
+        $fileId = (int)$fileId;
+        $messageId = (int)$messageId;
 
         // If a file ID is given, the given file will be attached
         // If no file ID is given, the file will be uploaded to the project defined by $id and then attached
         if ($fileId > 0) {
             $insStmt = $conn->prepare("INSERT INTO files_attached (file,message) VALUES (?,?)");
-           $ins = $insStmt->execute(array($fileId,$messageId));
+            $ins = $insStmt->execute(array($fileId, $messageId));
         }
         if ($ins) {
             return true;
@@ -333,7 +400,7 @@ class message {
     private function getAttachedFiles($msg)
     {
         global $conn;
-        $msg = (int) $msg;
+        $msg = (int)$msg;
 
         $files = array();
         $sel = $conn->prepare("SELECT file FROM files_attached WHERE message = ?");
@@ -361,7 +428,7 @@ class message {
                 $thisfile['imgfile'] = 0;
             }
 
-            $thisfile["shortName"] = substr($thisfile["name"],0,12);
+            $thisfile["shortName"] = substr($thisfile["name"], 0, 12);
 
             array_push($files, $thisfile);
         }

@@ -5,6 +5,14 @@ var projectMessages = {
     dependencies: []
 };
 
+var userMessages = {
+    el: "userMessages",
+    itemType: "message",
+    url: "managemessage.php?action=userMessages",
+    dependencies: []
+};
+
+
 function formSubmited()
 {
     console.log("formsubmitted");

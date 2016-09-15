@@ -4,7 +4,17 @@
 
 	<form novalidate name="addmessageform" id="addmessageform" class="main" method="post" enctype="multipart/form-data" action="managemessage.php?action=add&amp;id={$project.ID}" >
 		<fieldset>
-
+            <div class="row">
+                <label>Recipient:</label>
+                <select name="privateRecipient">
+                    <option value="" disabled style="color:black;font-weight:bold;">{#general#}</option>
+                    <option value="0" selected>{#all#}</option>
+                    <option value="" disabled style="color:black;font-weight:bold;">{#members#}</option>
+                    {section name=member loop=$members}
+                        <option value="{$members[member].ID}">{$members[member].name}</option>
+                    {/section}
+                </select>
+            </div>
 			<div class="row">
 				<label for="title">{#title#}:</label>
 				<input type="text" class="text" name="title" id="title" required="1" realname="{#title#}" />
