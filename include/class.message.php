@@ -108,7 +108,7 @@ class message {
      * @param int $id Eindeutige Nummer der Nachricht
      * @return array $message Eigenschaften der Nachricht
      */
-    function getMessage($id)
+    function getMessage($id, $recurseReplies = true)
     {
         global $conn;
         $id = (int) $id;
@@ -132,17 +132,17 @@ class message {
             $message["postdate"] = $posted;
             $message["endstring"] = $posted;
             $message["avatar"] = $avatar;
-                #
 
-            //get children
-            $replies = $this->getReplies($id);
-            if (!$replies) {
-                $message["replies"] = 0;
-            } else {
-                $message["replies"] = count($replies);
+            if($recurseReplies) {
+                //get children
+                $replies = $this->getReplies($id);
+                if (!$replies) {
+                    $message["replies"] = 0;
+                } else {
+                    $message["replies"] = count($replies);
+                }
+                $message["listReplies"] = $replies;
             }
-            $message["listReplies"] = $replies;
-
             //assume no files
             $message["hasFiles"] = false;
 
@@ -189,7 +189,8 @@ class message {
 
        while ($reply = $sel->fetch()) {
             if (!empty($reply)) {
-                array_push($replies,  $this->getMessage($reply["ID"]));
+                $replyMessage = $this->getMessage($reply["ID"]);
+                array_push($replies,  $replyMessage);
                 //recursive call to get all replies to this reply
                 $this->getReplies($reply["ID"]);
             }

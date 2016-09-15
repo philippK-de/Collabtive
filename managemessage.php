@@ -347,6 +347,10 @@ elseif ($action == "showmessage") {
 
     // get the message and its replies
     $message = $msg->getMessage($cleanGet["mid"]);
+     //if this message is a reply to another message, get its parent message
+     if($message["replyto"] > 0) {
+         $message["parentMessage"] = $msg->getMessage($message["replyto"], false);
+     }
 
     $myproject = new project();
     $pro = $myproject->getProject($id);
@@ -390,7 +394,6 @@ elseif ($action == "message") {
     $myMessage["count"] = 1;
     $myMessage["items"] = $message;
 
-    echo "<pre>";
     echo json_encode($myMessage, JSON_PRETTY_PRINT);
 }
 elseif ($action == "export-project") {

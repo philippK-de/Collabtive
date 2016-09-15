@@ -14,7 +14,12 @@
                     <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>
                     {#messages#}
                 </a>
-
+                {if $message.replyto > 0}
+                    <a href="managemessage.php?action=showmessage&amp;id={$project.ID}&mid={$message.parentMessage.ID}">
+                        <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>
+                        {$message.parentMessage.title}
+                    </a>
+                {/if}
             </div>
 
             <h1 class="second">
