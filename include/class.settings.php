@@ -132,7 +132,6 @@ class settings {
     function getThemes($template)
     {
         $handle = opendir(CL_ROOT . "/templates/$template/theme");
-        echo $handle;
 
         $themes = array();
         if($handle) {
