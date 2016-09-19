@@ -132,17 +132,20 @@ class settings {
     function getThemes($template)
     {
         $handle = opendir(CL_ROOT . "/templates/$template/theme");
-        $themes = array();
-        // Iterate through the templates directory and count each subdirectory within it as a template
-        while (false !== ($file = readdir($handle))) {
-            $type = filetype(CL_ROOT . "/templates/$template/theme/" . $file);
+        echo $handle;
 
-            if ($type == "dir" and $file != "." and $file != "..") {
-                $theme = $file;
-                array_push($themes, $theme);
+        $themes = array();
+        if($handle) {
+            // Iterate through the templates directory and count each subdirectory within it as a template
+            while (false !== ($file = readdir($handle))) {
+                $type = filetype(CL_ROOT . "/templates/$template/theme/" . $file);
+
+                if ($type == "dir" and $file != "." and $file != "..") {
+                    $theme = $file;
+                    array_push($themes, $theme);
+                }
             }
         }
-
         if (!empty($themes)) {
             return $themes;
         } else {

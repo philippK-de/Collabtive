@@ -9,6 +9,7 @@ Thumbs.db
 
 templates_c/*
 files/*
+templates/mobile/*
 .idea/
 .include/js/vue/*
 !files/collabtive.sdb
@@ -21,6 +22,7 @@ vendor/composer/installed.json
 VueCompiler.jar
 *.zip
 
+include/js/views/mobile/*
 managetasksoverview.php
 plugins/templates/*
 plugins/plugin.ganttChart.php
@@ -35,3 +37,4 @@ plugins/projectTemplates/*
 projectTemplates.php
 conference.php
 plugins/plugin.conference.php
+include/class.detectmobile.php
