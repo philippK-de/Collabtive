@@ -2415,10 +2415,10 @@ th.tools, td.tools {
 	background: <?php echo $projectsColorA;?>;
 }
 .projects tbody.alternateColors:nth-child(even) {
-background: <?php echo $projectsColorA;?>;
+    background: <?php echo $projectsColorA;?>;
 }
 .projects tbody.alternateColors:nth-child(odd) {
-background: <?php echo $projectsColorB;?>;
+    background: <?php echo $projectsColorB;?>;
 }
 .projects .color-b, .projects .datepick td.wrong, .projects .datepick tr.weekday td {
 	background: <?php echo $projectsColorB;?>;
