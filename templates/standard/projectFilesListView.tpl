@@ -94,41 +94,14 @@
     {/literal}
 
 </table>
-
-{section name=fold loop=$folders}
-{literal}
-    <script type="text/javascript">
-        Droppables.add('{/literal}thefold_{$folders[fold].ID}{literal}', {
-            onDrop: function (element) {
-                change('managefile.php?action=movefile&id={/literal}{$project.ID}{literal}&file=' + element.id + '&target={/literal}{$folders[fold].ID}{literal}', 'jslog');
-                element.hide();
-            }
-        });
-    </script>
-{/literal}
-{/section}
-
 <div id="parentfolder" style="display:none;">{$folderid}</div>
 
 <script type="text/javascript">
-    {literal}
-    parentFolder = $("parentfolder").innerHTML;
-    Droppables.add('dropDirUp', {
-        onDrop: function (element) {
-            //alert('managefile.php?action=movefile&id={/literal}{$project.ID}{literal}&file='+element.id+'&target='+parentFolder);
-            change('managefile.php?action=movefile&id={/literal}{$project.ID}{literal}&file=' + element.id + '&target=' + parentFolder, 'jslog');
-            element.hide();
-        }
-    });
-    {/literal}
-
     {if $foldername}
-    $('dirname').innerHTML = '{$foldername}';
+    cssId('dirname').innerHTML = '{$foldername}';
     {else}
-    $('dirname').innerHTML = '{$langfile.rootdir}';
+    cssId('dirname').innerHTML = '{$langfile.rootdir}';
     {/if}
 
-    $('filenum').innerHTML = '{$filenum}';
     new LyteBox();
-    $('dirUp').href = "javascript:change('manageajax.php?action=fileview_list&id={$project.ID}&folder={$folderid}','filescontent');"
 </script>
