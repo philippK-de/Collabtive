@@ -1,5 +1,5 @@
 {* Messages *}
-{if $msgnum > 0}
+{*if $msgnum > 0*}
     <div class="msgs padding-bottom-two-px" id="desktopmessages">
         <div class="headline">
             <a href="javascript:void(0);" id="activityhead_toggle" class="win_none" onclick=""></a>
@@ -157,4 +157,4 @@
         </div> {* block END *}
     </div>
     {* messages END *}
-{/if}
+{*/if*}
