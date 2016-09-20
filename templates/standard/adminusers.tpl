@@ -53,27 +53,14 @@
                     <pagination view="adminUsersView" :pages="pages" :current-page="currentPage"></pagination>
                 </h2>
             </div>
-
             <div id="block_files" class="blockwrapper">
-
                 <!--Add User-->
                 {if $userpermissions.admin.add}
                     <div id="form_member" class="addmenue display-none">
                         {include file="adduserform.tpl"}
                     </div>
                 {/if}
-
                 <div class="nosmooth" id="sm_member">
-
-                    <div class="contenttitle">
-                        <div class="contenttitle_menue">
-                            <!--place for tool under ne title-icon-->
-                        </div>
-                        <div class="contenttitle_in">
-                            <!--place for header-informations-->
-                        </div>
-                    </div>
-
                     <div class="content_in_wrapper">
                         <div class="content_in_wrapper_in">
                             <div class="inwrapper">
@@ -123,7 +110,6 @@
 															</span>
                                                     </td>
                                                 </tr>
-
                                             </table>
 
                                             <template v-if="{{user.avatar != ''}}">
@@ -144,9 +130,7 @@
                                         <!--itemwrapper End-->
                                     </li>
                                     {/literal} <!--loop folder End-->
-
                                 </ul>
-
                             </div>
                             <!--inwrapper End-->
                         </div>
@@ -167,7 +151,6 @@
 
                 </div>
                 <!--nosmooth End-->
-
                 <div class="tablemenue">
                     <div class="tablemenue-in">
 
@@ -187,13 +170,9 @@
         <!-- Roles -->
         {include file = "rolesadmin.tpl"}
         <!-- Roles End -->
-
         <div class="content-spacer"></div>
-
     </div>
     <!--userAdmin END-->
-
-
 </div> <!--content-left-in END-->
 </div> <!--Content_left end-->
 
