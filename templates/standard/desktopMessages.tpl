@@ -1,5 +1,5 @@
 {* Messages *}
-{*if $msgnum > 0*}
+{if $msgnum > 0}
     <div class="msgs padding-bottom-two-px" id="desktopmessages">
         <div class="headline">
             <a href="javascript:void(0);" id="activityhead_toggle" class="win_none" onclick=""></a>
@@ -23,7 +23,6 @@
             <div id="addmsg" class="addmenue display-none">
             </div>
             <table cellpadding="0" cellspacing="0" border="0" v-cloak>
-
                 <thead>
                 <tr>
                     <th class="tools"></th>
@@ -77,7 +76,6 @@
                         {/if}{literal}
                     </td>
                 </tr>
-
                 <tr class="acc">
                     <td colspan="6">
                         <div class="accordion_content">
@@ -152,9 +150,8 @@
                 </tbody>
                 {/literal}
             </table>
-
             <div class="tablemenue"></div>
         </div> {* block END *}
     </div>
     {* messages END *}
-{*/if*}
+{/if}

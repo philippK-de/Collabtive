@@ -34,7 +34,7 @@
                    onclick="toggleBlock('block_files');"></a>
 
                 <div class="wintools">
-                    <loader block="adminUsers" loader="loader-project3.gif"></loader>
+                    <loader block="adminUsers" loader="loader-users.gif"></loader>
 
                     {if $userpermissions.admin.add}
                         <a class="add" href="javascript:blindtoggle('form_member');" id="addmember"
