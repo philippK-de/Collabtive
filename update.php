@@ -7,6 +7,14 @@ if (!file_exists("./templates_c") or !is_writable("./templates_c")) {
 require("./init.php");
 // VERSION-DEPENDENT
 
+//3.0
+$conn->query(" CREATE TABLE `messages_assigned` (
+      `ID` int(10) NOT NULL auto_increment,
+      `user` int(10) NOT NULL,
+      `message` int(10) NOT NULL,
+      PRIMARY KEY (`ID`),
+      KEY `user` (`user`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 // VERSION-INDEPENDENT
 // Clear templates cache
 $handle = opendir($template->compile_dir);

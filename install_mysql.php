@@ -90,6 +90,15 @@
   KEY `tags` (`tags`)
 )  DEFAULT CHARSET=utf8");
 
+$table21 = $conn->query("
+    CREATE TABLE `messages_assigned` (
+      `ID` int(10) NOT NULL auto_increment,
+      `user` int(10) NOT NULL,
+      `message` int(10) NOT NULL,
+      PRIMARY KEY (`ID`),
+      KEY `user` (`user`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+
         $table6 = $conn->query("CREATE TABLE `milestones` (
   `ID` int(10) NOT NULL auto_increment,
   `project` int(10) NOT NULL default '0',
