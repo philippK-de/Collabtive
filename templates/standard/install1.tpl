@@ -46,8 +46,8 @@
 							<td><strong>{#status#}:</strong></td>
 						</tr>
 						<tr valign="top">
-							<td>PHP 5.3</td>
-							{if $phpver >= 5.3}
+							<td>PHP 5.5</td>
+							{if $phpver >= 5.5}
 								<td><span style="color:green;font-weight:bold;"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/butn-ok.png" alt="OK" /></span></td>
 							{else}
 								<td><span style="color:red;font-weight:bold;"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/butn-notok.png" alt="Not OK" /><br />(PHP {$phpver} - {#phpversion#})</span></td>
@@ -88,7 +88,7 @@
 					</table>
 				</div>
 
-				{if $configfile == 1 and $phpver >= 5.3 and $templatesdir == 1 and $filesdir == 1 and $is_mbstring_enabled}
+				{if $configfile == 1 and $phpver >= 5.5 and $templatesdir == 1 and $filesdir == 1 and $is_mbstring_enabled}
 					<div style="padding:16px 0 12px 0;">
 
 						<h2>2. {#db#}</h2>
