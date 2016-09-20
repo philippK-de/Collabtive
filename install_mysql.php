@@ -1,14 +1,20 @@
 <?php
-		if($installer_include != "yes")
-		{
-		die("this file can only be included");
+		if($installer_include != "yes") {
+		    die("this file can only be included");
 		}
-        $conn = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
-        if (!($conn)) {
-            $template->assign("errortext", "Database connection could not be established. <br>Please check if database exists and check if login credentials are correct.");
+
+        $conn = NULL;
+
+        try {
+            $conn = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
+        } catch (PDOException $e) {
+            $template->assign("errortext", "Database connection could not be established. <br>
+                                Please check if database exists and check if login credentials are correct. <br>\"" . ($e->getMessage()) . "\"");
+
             $template->display("error.tpl");
             die();
         }
+
         // Create MySQL Tables
         $table1 = $conn->query("CREATE TABLE IF NOT EXISTS `company` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -97,7 +103,7 @@ $table21 = $conn->query("
       `message` int(10) NOT NULL,
       PRIMARY KEY (`ID`),
       KEY `user` (`user`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+    ) DEFAULT CHARSET=utf8;");
 
         $table6 = $conn->query("CREATE TABLE `milestones` (
   `ID` int(10) NOT NULL auto_increment,
