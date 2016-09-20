@@ -1,22 +1,25 @@
 <?php
-		if($installer_include != "yes") {
-		    die("this file can only be included");
-		}
+if ($installer_include != "yes") {
+    die("this file can only be included");
+}
 
-        $conn = NULL;
+$conn = NULL;
 
-        try {
-            $conn = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
-        } catch (PDOException $e) {
-            $template->assign("errortext", "Database connection could not be established. <br>
+try {
+    $conn = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
+} catch (PDOException $e) {
+    $template->assign("errortext", "Database connection could not be established. <br>
                                 Please check if database exists and check if login credentials are correct. <br>\"" . ($e->getMessage()) . "\"");
 
-            $template->display("error.tpl");
-            die();
-        }
+    $template->display("error.tpl");
+    die();
+}
 
-        // Create MySQL Tables
-        $table1 = $conn->query("CREATE TABLE IF NOT EXISTS `company` (
+// Create MySQL Tables
+$createQueries = [];
+
+// Create queries
+$companyTable = "CREATE TABLE IF NOT EXISTS `company` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `company` varchar(255) NOT NULL,
   `contact` varchar(255) NOT NULL,
@@ -31,17 +34,19 @@
   `state` varchar(255) NOT NULL,
   `desc` text NOT NULL,
   PRIMARY KEY (`ID`)
-)  DEFAULT CHARSET=utf8");
+)  DEFAULT CHARSET=utf8";
+array_push($createQueries, $companyTable);
 
-	$table2 = $conn->query("CREATE TABLE IF NOT EXISTS `customers_assigned` (
+$customersAssignedTable = "CREATE TABLE IF NOT EXISTS `customers_assigned` (
   `ID` int(10) NOT NULL AUTO_INCREMENT,
   `customer` int(10) NOT NULL,
   `project` int(10) NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `ID` (`ID`)
-)  DEFAULT CHARSET=utf8");
+)  DEFAULT CHARSET=utf8";
+array_push($createQueries, $customersAssignedTable);
 
-        $table3 = $conn->query("CREATE TABLE `files` (
+$filesTable = "CREATE TABLE IF NOT EXISTS `files` (
   `ID` int(10) NOT NULL auto_increment,
   `name` varchar(255) NOT NULL default '',
   `desc` varchar(255) NOT NULL default '',
@@ -59,9 +64,10 @@
   KEY `datei` (`datei`),
   KEY `added` (`added`),
   KEY `project` (`project`)
-)  DEFAULT CHARSET=utf8");
+)  DEFAULT CHARSET=utf8";
+array_push($createQueries, $filesTable);
 
-        $table4 = $conn->query("CREATE TABLE `log` (
+$logTable = "CREATE TABLE IF NOT EXISTS `log` (
   `ID` int(10) NOT NULL auto_increment,
   `user` int(10) NOT NULL default '0',
   `username` varchar(255) NOT NULL default '',
@@ -73,12 +79,11 @@
   PRIMARY KEY  (`ID`),
   KEY `datum` (`datum`),
   KEY `type` (`type`),
-  KEY `action` (`action`),
-  FULLTEXT KEY `username` (`username`),
-  FULLTEXT KEY `name` (`name`)
-)  DEFAULT CHARSET=utf8");
+  KEY `action` (`action`)
+)  DEFAULT CHARSET=utf8";
+array_push($createQueries, $logTable);
 
-        $table5 = $conn->query("CREATE TABLE `messages` (
+$messagesTable = "CREATE TABLE IF NOT EXISTS `messages` (
   `ID` int(10) NOT NULL auto_increment,
   `project` int(10) NOT NULL default '0',
   `title` varchar(255) NOT NULL default '',
@@ -94,18 +99,19 @@
   KEY `user` (`user`),
   KEY `replyto` (`replyto`),
   KEY `tags` (`tags`)
-)  DEFAULT CHARSET=utf8");
+)  DEFAULT CHARSET=utf8";
+array_push($createQueries, $messagesTable);
 
-$table21 = $conn->query("
-    CREATE TABLE `messages_assigned` (
+$messagesAssignedTable = "CREATE TABLE IF NOT EXISTS `messages_assigned` (
       `ID` int(10) NOT NULL auto_increment,
       `user` int(10) NOT NULL,
       `message` int(10) NOT NULL,
       PRIMARY KEY (`ID`),
       KEY `user` (`user`)
-    ) DEFAULT CHARSET=utf8;");
+    ) DEFAULT CHARSET=utf8;";
+array_push($createQueries, $messagesAssignedTable);
 
-        $table6 = $conn->query("CREATE TABLE `milestones` (
+$milestonesTable = "CREATE TABLE IF NOT EXISTS `milestones` (
   `ID` int(10) NOT NULL auto_increment,
   `project` int(10) NOT NULL default '0',
   `name` varchar(255) NOT NULL default '',
@@ -117,18 +123,20 @@ $table21 = $conn->query("
   KEY `name` (`name`),
   KEY `end` (`end`),
   KEY `project` (`project`)
-)  DEFAULT CHARSET=utf8");
+)  DEFAULT CHARSET=utf8";
+array_push($createQueries, $milestonesTable);
 
-        $table7 = $conn->query("CREATE TABLE `milestones_assigned` (
+$milestonesAssignedTable = "CREATE TABLE IF NOT EXISTS `milestones_assigned` (
   `ID` int(10) NOT NULL auto_increment,
   `user` int(10) NOT NULL default '0',
   `milestone` int(10) NOT NULL default '0',
   PRIMARY KEY  (`ID`),
   KEY `user` (`user`),
   KEY `milestone` (`milestone`)
-)  DEFAULT CHARSET=utf8");
+)  DEFAULT CHARSET=utf8";
+array_push($createQueries, $milestonesAssignedTable);
 
-        $table8 = $conn->query("CREATE TABLE `projekte` (
+$projekteTable = "CREATE TABLE IF NOT EXISTS `projekte` (
   `ID` int(10) NOT NULL auto_increment,
   `name` varchar(255) NOT NULL default '',
   `desc` text NOT NULL,
@@ -138,25 +146,28 @@ $table21 = $conn->query("
   `budget` float NOT NULL default '0',
   PRIMARY KEY  (`ID`),
   KEY `status` (`status`)
-)  DEFAULT CHARSET=utf8");
+)  DEFAULT CHARSET=utf8";
+array_push($createQueries, $projekteTable);
 
-        $table9 = $conn->query("CREATE TABLE `projekte_assigned` (
+$projekteAssignedTable = "CREATE TABLE IF NOT EXISTS `projekte_assigned` (
   `ID` int(10) NOT NULL auto_increment,
   `user` int(10) NOT NULL default '0',
   `projekt` int(10) NOT NULL default '0',
   PRIMARY KEY  (`ID`),
   KEY `user` (`user`),
   KEY `projekt` (`projekt`)
-)  DEFAULT CHARSET=utf8");
+)  DEFAULT CHARSET=utf8";
+array_push($createQueries, $projekteAssignedTable);
 
-        $table10 = $conn->query("CREATE TABLE `settings` (
+$settingsTable = "CREATE TABLE IF NOT EXISTS `settings` (
   `ID` int(10) NOT NULL auto_increment,
   `settingsKey` varchar(50) NOT NULL,
   `settingsValue` varchar(50) NOT NULL,
   PRIMARY KEY (`ID`)
-)  DEFAULT CHARSET=utf8");
+)  DEFAULT CHARSET=utf8";
+array_push($createQueries, $settingsTable);
 
-        $table11 = $conn->query("CREATE TABLE `tasklist` (
+$tasklistTable = "CREATE TABLE IF NOT EXISTS `tasklist` (
   `ID` int(10) NOT NULL auto_increment,
   `project` int(10) NOT NULL default '0',
   `name` varchar(255) NOT NULL default '',
@@ -168,9 +179,10 @@ $table21 = $conn->query("
   PRIMARY KEY  (`ID`),
   KEY `status` (`status`),
   KEY `milestone` (`milestone`)
-)  DEFAULT CHARSET=utf8 DEFAULT CHARSET=utf8");
+)  DEFAULT CHARSET=utf8";
+array_push($createQueries, $tasklistTable);
 
-        $table12 = $conn->query("CREATE TABLE `tasks` (
+$tasksTable = "CREATE TABLE IF NOT EXISTS `tasks` (
   `ID` int(10) NOT NULL auto_increment,
   `start` varchar(255) NOT NULL default '',
   `end` varchar(255) NOT NULL default '',
@@ -183,19 +195,21 @@ $table21 = $conn->query("
   KEY `liste` (`liste`),
   KEY `status` (`status`),
   KEY `end` (`end`)
-)  DEFAULT CHARSET=utf8");
+)  DEFAULT CHARSET=utf8";
+array_push($createQueries, $tasksTable);
 
-        $table13 = $conn->query("CREATE TABLE `tasks_assigned` (
+$tasksAssignedTable = "CREATE TABLE IF NOT EXISTS `tasks_assigned` (
   `ID` int(10) NOT NULL auto_increment,
   `user` int(10) NOT NULL default '0',
   `task` int(10) NOT NULL default '0',
   PRIMARY KEY  (`ID`),
   KEY `user` (`user`),
   KEY `task` (`task`)
-)  DEFAULT CHARSET=utf8");
+)  DEFAULT CHARSET=utf8";
+array_push($createQueries, $tasksAssignedTable);
 
-        $table14 = $conn->query("
-CREATE TABLE `user` (
+$userTable = "
+CREATE TABLE IF NOT EXISTS `user` (
   `ID` int(10)  auto_increment,
   `name` varchar(255) default '',
   `email` varchar(255) default '',
@@ -219,17 +233,19 @@ CREATE TABLE `user` (
   UNIQUE KEY `name` (`name`),
   KEY `pass` (`pass`),
   KEY `locale` (`locale`)
-)  DEFAULT CHARSET=utf8");
+)  DEFAULT CHARSET=utf8";
+array_push($createQueries, $userTable);
 
-        $table16 = $conn->query("CREATE TABLE `files_attached` (
+$filesAttachedTable = "CREATE TABLE IF NOT EXISTS `files_attached` (
   `ID` int(10) unsigned NOT NULL auto_increment,
   `file` int(10) unsigned NOT NULL default '0',
   `message` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`ID`),
   KEY `file` (`file`,`message`)
-)  DEFAULT CHARSET=utf8");
+)  DEFAULT CHARSET=utf8";
+array_push($createQueries, $filesAttachedTable);
 
-        $table17 = $conn->query("CREATE TABLE `timetracker` (
+$timetrackerTable = "CREATE TABLE IF NOT EXISTS `timetracker` (
   `ID` int(10) NOT NULL auto_increment,
   `user` int(10) NOT NULL default '0',
   `project` int(10) NOT NULL default '0',
@@ -243,9 +259,10 @@ CREATE TABLE `user` (
   KEY `user` (`user`,`project`,`task`),
   KEY `started` (`started`),
   KEY `ended` (`ended`)
-)  DEFAULT CHARSET=utf8");
+)  DEFAULT CHARSET=utf8";
+array_push($createQueries, $timetrackerTable);
 
-        $table18 = $conn->query("CREATE TABLE `projectfolders` (
+$projectfoldersTable = "CREATE TABLE IF NOT EXISTS `projectfolders` (
   `ID` int(10) unsigned NOT NULL auto_increment,
   `parent` int(10) unsigned NOT NULL default '0',
   `project` int(11) NOT NULL default '0',
@@ -254,10 +271,11 @@ CREATE TABLE `user` (
   `visible` text NOT NULL,
   PRIMARY KEY  (`ID`),
   KEY `project` (`project`)
-)  DEFAULT CHARSET=utf8");
+)  DEFAULT CHARSET=utf8";
+array_push($createQueries, $projectfoldersTable);
 
-        $table19 = $conn->query("
-CREATE TABLE `roles` (
+$rolesTable = "
+CREATE TABLE IF NOT EXISTS `roles` (
   `ID` int(10) NOT NULL auto_increment,
   `name` varchar(255) NOT NULL,
   `projects` text NOT NULL,
@@ -269,21 +287,24 @@ CREATE TABLE `roles` (
   `timetracker` text NOT NULL,
   `admin` text NOT NULL,
   PRIMARY KEY  (`ID`)
-)  DEFAULT CHARSET=utf8");
+)  DEFAULT CHARSET=utf8";
+array_push($createQueries, $rolesTable);
 
-        $table20 = $conn->query("
-CREATE TABLE `roles_assigned` (
+$rolesAssignedTable = "
+CREATE TABLE IF NOT EXISTS `roles_assigned` (
   `ID` int(10) NOT NULL auto_increment,
   `user` int(10) NOT NULL,
   `role` int(10) NOT NULL,
   PRIMARY KEY  (`ID`)
-)  DEFAULT CHARSET=utf8");
+)  DEFAULT CHARSET=utf8";
+array_push($createQueries, $rolesAssignedTable);
 
-        // Checks if tables could be created
-        if (!$table1 or !$table2 or !$table3 or !$table4 or !$table5 or !$table6 or !$table7 or !$table8 or !$table9 or !$table10 or !$table11 or !$table12 or !$table13 or !$table14 or !$table16 or !$table17 or !$table18 or !$table19 or !$table20) {
-            $template->assign("errortext", "Error: Tables could not be created.");
-            $template->display("error.tpl");
-            die();
-        }
-
+// Perform queries on database
+foreach ($createQueries as $createQuery) {
+    if (!$conn->query($createQuery)) {
+        $template->assign("errortext", "Error: Tables could not be created.");
+        $template->display("error.tpl");
+        die();
+    }
+}
 ?>
