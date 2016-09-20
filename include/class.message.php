@@ -85,14 +85,22 @@ class message
         $msgStmt->execute(array($id));
         $msg = $msgStmt->fetch();
 
+        //delete the message
         $delStmt = $conn->prepare("DELETE FROM messages WHERE ID = ?");
         $del = $delStmt->execute(array($id));
 
-        $del2 = $conn->prepare("DELETE FROM messages WHERE replyto = ?");
-        $del2->execute(array($id));
+        //delete replies to this message
+        $deleteRepliesStmt = $conn->prepare("DELETE FROM messages WHERE replyto = ?");
+        $deleteRepliesStmt->execute(array($id));
 
-        $del3 = $conn->prepare("DELETE FROM files_attached WHERE message = ?");
-        $del3->execute(array($id));
+        //delete user<->message connections
+        $deleteUsersAssingedStmt = $conn->prepare("DELETE FROM messages_assigned WHERE message = ?");
+        $deleteUsersAssingedStmt->execute(array($id));
+
+        //delete file attachments
+        $deleteFileAttachmentsStmt = $conn->prepare("DELETE FROM files_attached WHERE message = ?");
+        $deleteFileAttachmentsStmt->execute(array($id));
+
 
         if ($del) {
             $mylog->add($msg[0], 'message', 3, $msg[1]);
