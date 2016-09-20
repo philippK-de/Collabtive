@@ -64,6 +64,30 @@
 
 <script type="text/javascript" src="include/js/accordion.js"></script>
 <script type="text/javascript" src="include/js/modal.min.js"></script>
-<script type="text/javascript" src="include/js/views/index.min.js"></script>
+<script type="text/javascript" src="include/js/views/index.js"></script>
+<script type="text/javascript">
+    {if $tasknum > 0}
+        var tasksView = createView(tasks);
+        //add this view to the dependencies of projectsView
+        projectsViewDependencies.push(tasksView);
+
+        var accord_tasks;
+        tasksView.afterUpdate(function () {
+            accord_tasks = new accordion2('desktoptasks');
+        });
+    {/if}
+    {if $msgnum > 0}
+        var msgsView = createView(messages);
+        //add this view to the dependencies of projectsView
+        projectsViewDependencies.push(msgsView);
+
+        var accord_msgs;
+        msgsView.afterUpdate(function () {
+            accord_msgs = new accordion2('desktopmessages');
+        });
+    {/if}
+    //setup dependenciens
+    Vue.set(projectsView, "dependencies", projectsViewDependencies);
+</script>
 {include file="sidebar-a.tpl"}
 {include file="footer.tpl"}

@@ -1,5 +1,5 @@
 Collabtive 3.0
-
++ Updated the database schema of new installations to use innoDB instead of myISAM storage engine
 + Fully PHP7 compatible
 + Most inline styles have been refactored to classes. One of the next releases will disable inline style in CSP
 + The sidebar is collapsed by default, giving more room for the main content area

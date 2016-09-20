@@ -6,15 +6,15 @@ function updateCalendar(myCalendar, newMonth, newYear) {
     updateView(myCalendar);
 
 }
-//initialize blocks accordeon
-//this creates the object on which methods are called later
-var accordIndex = new accordion2('block_index', {
-    classNames: {
-        toggle: 'win_none',
-        toggleActive: 'win_block',
-        content: 'blockaccordion_content'
-    }
-});
+
+/*
+ * Handler function to be called when form was successfully submited
+ */
+function formSubmited() {
+    blindtoggle('form_addmyproject');
+    toggleClass('sm_deskprojects', 'smooth', 'nosmooth');
+    toggleClass("add_butn_myprojects", 'butn_link_active', 'butn_link');
+}
 
 function initializeBlockaccordeon() {
     //get the blocks
@@ -56,6 +56,19 @@ function activateAccordeon(theAccord) {
     setCookie("activeSlideIndex", theAccord);
 }
 
+
+//initialize blocks accordeon
+//this creates the object on which methods are called later
+var accordIndex = new accordion2('block_index', {
+    classNames: {
+        toggle: 'win_none',
+        toggleActive: 'win_block',
+        content: 'blockaccordion_content'
+    }
+});
+
+
+var projectsViewDependencies = [];
 //create the objects representing the Widgets with their DOM element, DataURL, Dependencies and view managing them
 var projects = {
     el: "desktopprojects",
@@ -87,21 +100,7 @@ var desktopCalendar = {
 
 //create views - binding the data to the dom element
 var projectsView = createView(projects);
-var tasksView = createView(tasks);
-var msgsView = createView(messages);
 var calendarView = createView(desktopCalendar);
-//setup dependenciens
-Vue.set(projectsView, "dependencies", [tasksView, msgsView]);
-
-/*
- * Handler function to be called when form was successfully submited
- */
-function formSubmited() {
-    blindtoggle('form_addmyproject');
-    toggleClass('sm_deskprojects', 'smooth', 'nosmooth');
-    toggleClass("add_butn_myprojects", 'butn_link_active', 'butn_link');
-}
-
 //get the form to be submitted
 var addProjectForm = document.getElementById("addprojectform");
 //assign the view to be updated after submitting to the formView variable
@@ -117,14 +116,8 @@ var accord_projects;
 projectsView.afterUpdate(function () {
     accord_projects = new accordion2('desktopprojects');
 });
-var accord_tasks;
-tasksView.afterUpdate(function () {
-    accord_tasks = new accordion2('desktoptasks');
-});
-var accord_msgs;
-msgsView.afterUpdate(function () {
-    accord_msgs = new accordion2('desktopmessages');
-});
+
+
 
 
 
