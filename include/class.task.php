@@ -390,7 +390,7 @@ class task
      * @param int $user User ID (0 means the user, to whom the session belongs)
      * @return array $lists Tasks
      */
-    function getAllMyProjectTasks($project, $user = 0)
+    function getAllMyProjectTasks($project, $user = 0, $status = 1)
     {
         global $conn;
         $project = (int)$project;
@@ -401,8 +401,8 @@ class task
         $user = (int)$user;
         $projectTasks = array();
 
-        $projectTasksStmt = $conn->prepare("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task AND tasks_assigned.user = ? AND tasks.project = ? AND status=1 ORDER BY `end` ASC ");
-        $projectTasksStmt->execute(array($user, $project));
+        $projectTasksStmt = $conn->prepare("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task AND tasks_assigned.user = ? AND tasks.project = ? AND status=? ORDER BY `end` ASC ");
+        $projectTasksStmt->execute(array($user, $project, $status));
 
         while ($tasks = $projectTasksStmt->fetch()) {
             $task = $this->getTask($tasks["ID"]);
