@@ -1,21 +1,31 @@
 <?php
 error_reporting(0);
+
 // Check if directory templates_c exists and is writable
 if (!file_exists("./templates_c") or !is_writable("./templates_c")) {
     die("Required folder templates_c does not exist or is not writable. <br>Please create the folder or make it writable in order to proceed.");
 }
 require("./init.php");
+
 // VERSION-DEPENDENT
 
 //3.0
-$conn->query(" CREATE TABLE `messages_assigned` (
-      `ID` int(10) NOT NULL auto_increment,
-      `user` int(10) NOT NULL,
-      `message` int(10) NOT NULL,
-      PRIMARY KEY (`ID`),
-      KEY `user` (`user`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+// Create table for assignment of personal messages
+$conn->query("
+        CREATE TABLE IF NOT EXISTS `messages_assigned`
+          (
+             `id`      INT(10) NOT NULL auto_increment,
+             `user`    INT(10) NOT NULL,
+             `message` INT(10) NOT NULL,
+             PRIMARY KEY (`id`),
+             KEY `user` (`user`)
+          )
+        DEFAULT charset=utf8;
+");
+
+
 // VERSION-INDEPENDENT
+
 // Clear templates cache
 $handle = opendir($template->compile_dir);
 while (false !== ($file = readdir($handle))) {
@@ -23,24 +33,28 @@ while (false !== ($file = readdir($handle))) {
         unlink(CL_ROOT . "/" . $template->compile_dir . "/" . $file);
     }
 }
+
 // Optimize tables
-$opt1 = $conn->query("OPTIMIZE TABLE `files`");
-$opt2 = $conn->query("OPTIMIZE TABLE `files_attached`");
-$opt3 = $conn->query("OPTIMIZE TABLE `log`");
-$opt4 = $conn->query("OPTIMIZE TABLE `messages`");
-$opt5 = $conn->query("OPTIMIZE TABLE `milestones`");
-$opt6 = $conn->query("OPTIMIZE TABLE `milestones_assigned`");
-$opt7 = $conn->query("OPTIMIZE TABLE `projectfolders`");
-$opt8 = $conn->query("OPTIMIZE TABLE `projekte`");
-$opt9 = $conn->query("OPTIMIZE TABLE `projekte_assigned`");
-$opt10 = $conn->query("OPTIMIZE TABLE `roles`");
-$opt11 = $conn->query("OPTIMIZE TABLE `roles_assigned`");
-$opt12 = $conn->query("OPTIMIZE TABLE `settings`");
-$opt13 = $conn->query("OPTIMIZE TABLE `tasklist`");
-$opt14 = $conn->query("OPTIMIZE TABLE `tasks`");
-$opt15 = $conn->query("OPTIMIZE TABLE `tasks_assigned`");
-$opt16 = $conn->query("OPTIMIZE TABLE `timetracker`");
-$opt17 = $conn->query("OPTIMIZE TABLE `user`");
+$conn->query("OPTIMIZE TABLE `company`");
+$conn->query("OPTIMIZE TABLE `customers_assigned`");
+$conn->query("OPTIMIZE TABLE `files`");
+$conn->query("OPTIMIZE TABLE `files_attached`");
+$conn->query("OPTIMIZE TABLE `log`");
+$conn->query("OPTIMIZE TABLE `messages`");
+$conn->query("OPTIMIZE TABLE `messages_assigned`");
+$conn->query("OPTIMIZE TABLE `milestones`");
+$conn->query("OPTIMIZE TABLE `milestones_assigned`");
+$conn->query("OPTIMIZE TABLE `projectfolders`");
+$conn->query("OPTIMIZE TABLE `projekte`");
+$conn->query("OPTIMIZE TABLE `projekte_assigned`");
+$conn->query("OPTIMIZE TABLE `roles`");
+$conn->query("OPTIMIZE TABLE `roles_assigned`");
+$conn->query("OPTIMIZE TABLE `settings`");
+$conn->query("OPTIMIZE TABLE `tasklist`");
+$conn->query("OPTIMIZE TABLE `tasks`");
+$conn->query("OPTIMIZE TABLE `tasks_assigned`");
+$conn->query("OPTIMIZE TABLE `timetracker`");
+$conn->query("OPTIMIZE TABLE `user`");
 
 $template->display("update.tpl");
 
