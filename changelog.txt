@@ -1,4 +1,5 @@
 Collabtive 3.0
++ Private messages can now be added to any project. They can only be viewed by their designated recipient.
 + Don't show mobile template in the template selector. these should not be activated directly but set by class mobileDetect()
 + Updated the database schema of new installations to use innoDB instead of myISAM storage engine
 + Fully PHP7 compatible

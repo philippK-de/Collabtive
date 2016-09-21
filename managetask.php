@@ -33,6 +33,10 @@ $template->assign("classes", $classes);
 
 $template->assign("mode", $mode);
 
+/*
+ * VIEW ROUTES
+ * These are routes that render HTML views to the browser
+ */
 if ($action == "add") {
     // check if user has appropriate permissions
     if (!$userpermissions["tasks"]["add"]) {
@@ -348,37 +352,6 @@ if ($action == "add") {
 
    $template->display("projecttasks.tpl");
 }
-elseif($action == "projectTasks")
-{
-    if (!$userpermissions["tasks"]["view"]) {
-        $errtxt = $langfile["nopermission"];
-        $noperm = $langfile["accessdenied"];
-        $template->assign("errortext", "$errtxt<br>$noperm");
-        $template->display("error.tpl");
-        die();
-    }
-    if (!chkproject($userid, $id)) {
-        $errtxt = $langfile["notyourproject"];
-        $noperm = $langfile["accessdenied"];
-        $template->assign("errortext", "$errtxt<br>$noperm");
-        $template->display("error.tpl");
-        die();
-    }
-    $tasklistObj = new tasklist();
-    // Get open and closed tasks from list
-    $openTasks = $tasklistObj->getTasksFromList($cleanGet["tlid"]);
-    $closedTasks = $tasklistObj->getTasksFromList($cleanGet["tlid"],0);
-
-    //assemble array
-    $tasks["open"] = $openTasks;
-    $tasks["closed"] = $closedTasks;
-
-    //assemble data structure for view
-    $openLists["items"] = $tasks;
-    $openLists["count"] = count($openTasks);
-
-    echo json_encode($openLists);
-}
 elseif ($action == "showtask") {
     if (!$userpermissions["tasks"]["view"]) {
         $errtxt = $langfile["nopermission"];
@@ -433,4 +406,40 @@ elseif ($action == "showtask") {
     $template->assign("title", $langfile["task"]);
     $template->assign("task", $task);
     $template->display("task.tpl");
+}
+
+/*
+ * DATA ROUTES
+ * These are routes that render JSON data structures
+ */
+elseif($action == "projectTasks")
+{
+    if (!$userpermissions["tasks"]["view"]) {
+        $errtxt = $langfile["nopermission"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
+    if (!chkproject($userid, $id)) {
+        $errtxt = $langfile["notyourproject"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
+    $tasklistObj = new tasklist();
+    // Get open and closed tasks from list
+    $openTasks = $tasklistObj->getTasksFromList($cleanGet["tlid"]);
+    $closedTasks = $tasklistObj->getTasksFromList($cleanGet["tlid"],0);
+
+    //assemble array
+    $tasks["open"] = $openTasks;
+    $tasks["closed"] = $closedTasks;
+
+    //assemble data structure for view
+    $openLists["items"] = $tasks;
+    $openLists["count"] = count($openTasks);
+
+    echo json_encode($openLists);
 }

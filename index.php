@@ -18,8 +18,7 @@ if (!isset($_SESSION["userid"])) {
             $template->assign("loginerror", 1);
             $template->display("login.tpl");
         }
-    }
-    //no user or pass have been passe din
+    } //no user or pass have been passe din
     else {
         $template->display("login.tpl");
         die();
@@ -134,7 +133,10 @@ if ($mode == "login") {
         }
     }
 }
-
+/*
+ * VIEW ROUTES
+ * These are routes that render HTML views to the browser
+ */
 if (!$action) {
 // Assign everything to the template engine
     $template->assign("title", $langfile["desktop"]);
@@ -149,7 +151,13 @@ if (!$action) {
     $template->assign("tasknum", $taskCount);
     $template->assign("msgnum", $messageCount);
     $template->display("index.tpl");
-} elseif ($action == "myprojects") {
+}
+
+ /*
+  * DATA ROUTES
+  * These are routes that render JSON data structures
+  */
+elseif ($action == "myprojects") {
     //create datastructure for projects
     $projects["open"] = $myOpenProjects;
     $projects["closed"] = $project->getMyProjects($userid, 0);

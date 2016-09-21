@@ -35,6 +35,11 @@ if (!chkproject($userid, $id)) {
     $template->display("error.tpl");
     die();
 }
+
+/*
+ * VIEW ROUTES
+ * These are routes that render HTML views to the browser
+ */
 if ($action == "add") {
     if (!$userpermissions["milestones"]["add"]) {
         $errtxt = $langfile["nopermission"];
@@ -48,14 +53,14 @@ if ($action == "add") {
 
     $milestone_id = $milestone->add($id, $cleanPost["name"], $cleanPost["desc"], $start, $cleanPost["end"], 1);
     if ($milestone_id) {
-        $liste = (object) new tasklist();
+        $liste = (object)new tasklist();
         if ($liste->add_liste($id, $cleanPost["name"], $cleanPost["desc"], 0, $milestone_id)) {
             //$loc = $url . "managetask.php?action=showproject&id=$id&mode=listadded";
-        	$loc = $url . "managemilestone.php?action=showproject&id=$id&mode=added";
+            $loc = $url . "managemilestone.php?action=showproject&id=$id&mode=added";
         } else {
             $loc = $url . "managemilestone.php?action=showproject&id=$id&mode=added";
         }
-       // header("Location: $loc");
+        // header("Location: $loc");
         echo "ok";
     }
 } elseif ($action == "editform") {
@@ -102,8 +107,8 @@ if ($action == "add") {
         $milestoneTasklist = $milestone->getMilestoneTasklists($mid);
 
         $updStmt = $conn->prepare("UPDATE tasks SET `end`=? WHERE ID = ?");
-        foreach($milestoneTasklist as $tasklist) {
-            foreach($tasklist["tasks"] as $task) {
+        foreach ($milestoneTasklist as $tasklist) {
+            foreach ($tasklist["tasks"] as $task) {
                 $newEnd = $task["end"] + $endOffset;
                 $upd = $updStmt->execute(array($newEnd, $task["ID"]));
             }
@@ -129,8 +134,6 @@ if ($action == "add") {
     // Delete the milestone
     if ($milestone->del($mid)) {
         echo "ok";
-        // $loc = $url . "managemilestone.php?action=showproject&id=$id&mode=deleted";
-        // header("Location: $loc");
     } else {
         $template->assign("delmilestone", 0);
     }
@@ -184,17 +187,46 @@ if ($action == "add") {
     $projectObj = new project();
     $today = date("d");
 
-     // Get the project name
+    // Get the project name
     $project = $projectObj->getProject($id);
 
     $template->assign("title", $langfile["milestones"]);
-    $template->assign("projectname",  $project["name"]);
+    $template->assign("projectname", $project["name"]);
 
     $template->assign("project", $project);
     $template->display("projectmilestones.tpl");
+} elseif ($action == "mileslist") {
+    $stones = $milestone->getProjectMilestones($id);
+    if (!empty($stones)) {
+        $stones2 = $milestone->getTodayProjectMilestones($id);
+    }
+    if (!empty($stones2)) {
+        $stones = array_merge($stones, $stones2);
+    }
+    $template->assign("milestones", $stones);
+    $template->display("mileslist.tpl");
+} elseif ($action == "showmilestone") {
+    $msid = $_GET['msid'];
+
+    $myproject = new project();
+    $pro = $myproject->getProject($id);
+    $projectname = $pro["name"];
+    $template->assign("projectname", $projectname);
+
+    $milestone = $milestone->getMilestone($msid);
+    $title = $langfile['milestone'];
+    $template->assign("title", $title);
+    $template->assign("project", $project);
+    $template->assign("milestone", $milestone);
+    $template->display("milestone.tpl");
 }
-elseif($action == "projectMilestones")
-{
+
+
+/*
+ * DATA ROUTES
+ * These are routes that render JSON data structures
+ */
+elseif ($action == "projectMilestones") {
     if (!$userpermissions["milestones"]["view"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
@@ -227,16 +259,14 @@ elseif($action == "projectMilestones")
     // merge the current milestones
     $stones = array_merge($stones, $stones2);
 
-    $milestones["open"] =   $stones;
+    $milestones["open"] = $stones;
     $milestones["closed"] = $donestones;
 
     $projectStones["items"] = $milestones;
     $projectStones["count"] = count($stones);
 
     echo json_encode($projectStones);
-}
-elseif($action == "lateProjectMilestones")
-{
+} elseif ($action == "lateProjectMilestones") {
     if (!$userpermissions["milestones"]["view"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
@@ -263,9 +293,7 @@ elseif($action == "lateProjectMilestones")
     $lateProjectStones["count"] = count($latestones);
 
     echo json_encode($lateProjectStones);
-}
-elseif($action == "upcomingProjectMilestones")
-{
+} elseif ($action == "upcomingProjectMilestones") {
     if (!$userpermissions["milestones"]["view"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];
@@ -288,29 +316,4 @@ elseif($action == "upcomingProjectMilestones")
     $upcomingProjectStones["count"] = count($upcomingStones);
 
     echo json_encode($upcomingProjectStones);
-}
-elseif ($action == "mileslist") {
-    $stones = $milestone->getProjectMilestones($id);
-    if (!empty($stones)) {
-        $stones2 = $milestone->getTodayProjectMilestones($id);
-    }
-    if (!empty($stones2)) {
-        $stones = array_merge($stones, $stones2);
-    }
-    $template->assign("milestones", $stones);
-    $template->display("mileslist.tpl");
-} elseif ($action == "showmilestone") {
-    $msid = $_GET['msid'];
-
-    $myproject = new project();
-    $pro = $myproject->getProject($id);
-    $projectname = $pro["name"];
-    $template->assign("projectname", $projectname);
-
-    $milestone = $milestone->getMilestone($msid);
-    $title = $langfile['milestone'];
-    $template->assign("title", $title);
-    $template->assign("project", $project);
-    $template->assign("milestone", $milestone);
-    $template->display("milestone.tpl");
 }
