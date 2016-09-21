@@ -15,7 +15,7 @@
         </div>
 
         <h2>
-            <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>Private {#messages#}
+            <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#personalmessages#}
             <pagination view="userMessagesView" :pages="pages" :current-page="currentPage"></pagination>
         </h2>
     </div>
