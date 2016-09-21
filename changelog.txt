@@ -1,4 +1,5 @@
 Collabtive 3.0
++ Don't show mobile template in the template selector. these should not be activated directly but set by class mobileDetect()
 + Updated the database schema of new installations to use innoDB instead of myISAM storage engine
 + Fully PHP7 compatible
 + Most inline styles have been refactored to classes. One of the next releases will disable inline style in CSP

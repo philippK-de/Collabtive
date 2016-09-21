@@ -55,7 +55,9 @@
 				<label for = "template">{#template#}:</label>
 				<select name="template" id="template" required = "1" realname = "{#template#}" >
 					{section name=tem loop=$templates}
-						<option value="{$templates[tem]}" {if $settings.template == $templates[tem]}selected="selected"{/if}>{$templates[tem]}</option>
+                        {if $templates[tem] != "mobile"}
+						    <option value="{$templates[tem]}" {if $settings.template == $templates[tem]}selected="selected"{/if}>{$templates[tem]}</option>
+                        {/if}
 					{/section}
 				</select>
 			</div>
