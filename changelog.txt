@@ -1,21 +1,31 @@
 Collabtive 3.0
++ Improved the look of the file list view
++ Fix a bug where getThemes() wouldnt finish if a template has no /theme/ folder
++ Properly minify all JS assets using closure compiler
++ Display the parent message in the breadcrumbs on top when viewing a message
++ Messages now can have recursive replies. That is, each reply can have a reply, which can have a reply and so on.
 + Private messages can now be added to any project. They can only be viewed by their designated recipient.
 + Don't show mobile template in the template selector. these should not be activated directly but set by class mobileDetect()
-+ Updated the database schema of new installations to use innoDB instead of myISAM storage engine
-+ Fully PHP7 compatible
++ Updated the database schema of new installations to use innoDB instead of myISAM storage engine. myISAM is outdated, and innoDB now the default on
+  mysql.
 + Most inline styles have been refactored to classes. One of the next releases will disable inline style in CSP
 + The sidebar is collapsed by default, giving more room for the main content area
   It can be expanded by clicking
-+ All animations now use velocity.js
++ Added viewManager functions that make it easy to create, and update reactive vue.js views
++ Added helper methods css(), cssAll, cssId() to ajax.js
++ All animations now use velocity.js. This removes the dependency on scriptculous and enables HW acceleration on mobile.
 + Implemented new modal dialog for the calendar, that is not based on prototype
++ Implemented accordeon that does not depend on prototype
 + Added example plugin
 + Plugin system that is completely modular and cacheable.
   Plugins are defined as their own classes, and implement the collabtivePlugin interface
   Arbitrary Plugin Hooks can be placed in templates to allow dependency injection
 + All forms are now submitted asyncronously
-+ Rewrite of UI rendering with vue.js
++ Rewrite of UI rendering with vue.js to enable more reactive UI
 + Changed constructor of SmartyPaginate.class.php to be compatible with PHP 7
 + Fixed unfiltered variables
++ Refactored helper methods to use the new ajaxRequest object.
++ Implemented ajaxRequest() object in ajax.js that wraps native xmlhttprequest to create POST and GET ajax requests.
 + Improved database checks in init.php (srichter)
 + Fixed file download link in file upload email notification
 + Performance improved in getMyProjects() SQL query by using a JOIN (srichter)
@@ -33,6 +43,7 @@ Collabtive 3.0
 + Converted loading of milestones to asyncronous loading
 + Converted loading of messages to asyncronous loading
 + Made adding of projects asyncronous
++ Late, Current and upcoming milestones are now displayed in a block accordeon
 + Project tasks are now arranged as a block accordion
 + Rewrote accordion code to no longer depend on prototype.js
 + Added feature to optionally adapt all lower-level deadlines upon changing a project or milestone deadline

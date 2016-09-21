@@ -64,34 +64,30 @@ ajaxRequest.prototype.sendRequest = function () {
     }
 }
 
-function css(selector)
-{
+function css(selector) {
     return document.querySelector(selector);
 }
 
-function cssAll(selector)
-{
+function cssAll(selector) {
     return document.querySelectorAll(selector);
 }
 
-function cssId(id)
-{
+function cssId(id) {
     return document.getElementById(id);
 }
 
- /*
+/*
  * Function to update the HTML of an element, with the return value from a script called with XHR
  * @param string script The URL of the API endpoint
  * @param element the ID of the element to be updated
  * @return void
  */
 function change(script, element) {
-    var ajaxRequest = new XMLHttpRequest();
-    ajaxRequest.onload = function () {
+    var ajax = new ajaxRequest(script, "", function () {
         //element to be updated
         var targetElement = document.getElementById(element);
         //response data
-        const responseData = ajaxRequest.responseText;
+        const responseData = ajax.request.responseText;
 
         //update the target element
         targetElement.innerHTML = responseData;
@@ -102,10 +98,8 @@ function change(script, element) {
             //this is a hack but a needed one
             eval(javaScripts[i].innerHTML);
         }
-    };
-    ajaxRequest.open("GET", script);
-    ajaxRequest.send();
-
+    });
+    ajax.sendRequest();
 }
 
 /*
@@ -189,8 +183,7 @@ function hasClass(elm, className) {
     }
 }
 
-function getSelectedValue(selectElement)
-{
+function getSelectedValue(selectElement) {
     var element = cssId(selectElement);
     return element.options[element.selectedIndex].value;
 }
