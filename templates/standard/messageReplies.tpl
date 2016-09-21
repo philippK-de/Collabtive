@@ -60,9 +60,9 @@
                                 <div class="acc-in">
 
                                     {if $replies[reply].avatar != ""}
-                                        <div class="avatar"><img
-                                                    src="thumb.php?width=80&amp;height=80&amp;pic=files/{$cl_config}/avatar/{$replies[reply].avatar}"
-                                                    alt=""/></div>
+                                        <div class="avatar">
+                                            <img src="thumb.php?width=80&amp;height=80&amp;pic=files/{$cl_config}/avatar/{$replies[reply].avatar}" alt=""/>
+                                        </div>
                                     {else}
                                         {if $replies[reply].gender == "f"}
                                             <div class="avatar"><img

@@ -1,4 +1,4 @@
-<div class="msgs" id="userMessages" >
+<div class="msgs" id="userMessages">
     <div class="headline">
         <a href="javascript:void(0);" id="acc-toggle" class="win_block" onclick="toggleBlock('block_msgs');"></a>
 
@@ -81,83 +81,88 @@
                 <tr class="acc">
                     <td colspan="6">
                         <div class="accordion_content">
-                            <div class="acc-in">
-                                <img src="thumb.php?width=80&amp;height=80&amp;pic=templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/no-avatar-male.jpg"/>
-
-                                <div class="message-fluid">
-                                    <div class="message-in-fluid">
-                                        {{{*message.text}}}
+                            <div class="message-fluid">
+                                <div class="message-in-fluid">
+                                    <div class="avatar">
+                                        <template v-if="message.avatar != ''">
+                                            <img src="thumb.php?width=80&amp;height=80&amp;pic=files/standard/avatar/{{*message.avatar}}" alt=""/>
+                                        </template>
+                                        <template v-else>
+                                            <img src="thumb.php?width=80&amp;height=80&amp;pic=templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/no-avatar-male.jpg"/>
+                                        </template>
                                     </div>
+                                    {{{*message.text}}}
+                                </div>
 
-                                    <!-- message milestones -->
-                                    <p v-if="message.hasMilestones">
+                                <!-- message milestones -->
+                                <p v-if="message.hasMilestones">
 
-                                    <div v-if="message.hasMilestones" class="content-spacer-b"></div>
-                                    <strong v-if="message.hasMilestones">{/literal}{#milestone#}{literal}:</strong>
-                                    <a v-if="message.hasMilestones"
-                                       href="managemilestone.php?action=showmilestone&amp;msid={{*message.milestones.ID}}&amp;id={{*message.milestones.project}}">{{*message.milestones.name}}</a>
-                                    </p>
-                                    <!-- message files -->
-                                    <p v-if="message.hasFiles" class="tags-miles">
-                                        <strong>{/literal}{#files#}:{literal}</strong>
-                                    </p>
+                                <div v-if="message.hasMilestones" class="content-spacer-b"></div>
+                                <strong v-if="message.hasMilestones">{/literal}{#milestone#}{literal}:</strong>
+                                <a v-if="message.hasMilestones"
+                                   href="managemilestone.php?action=showmilestone&amp;msid={{*message.milestones.ID}}&amp;id={{*message.milestones.project}}">{{*message.milestones.name}}</a>
+                                </p>
+                                <!-- message files -->
+                                <p v-if="message.hasFiles" class="tags-miles">
+                                    <strong>{/literal}{#files#}:{literal}</strong>
+                                </p>
 
-                                    <div v-if="message.hasFiles" class="inwrapper">
-                                        <ul>
-                                            <li v-for="file in message.files" id="fli_{{*file.ID}}">
-                                                <div class="itemwrapper">
-                                                    <table cellpadding="0" cellspacing="0" border="0">
-                                                        <tr>
-                                                            <td class="leftmen" valign="top">
-                                                                <div class="inmenue"></div>
-                                                            </td>
-                                                            <td class="thumb">
-                                                                {/literal}
-                                                                <img src="templates/{$settings.template}/theme/{$settings.theme}/images/files/{literal}{{*file.type}}.png"
-                                                                     alt=""/>
-                                                                </a>
-                                                            </td>
+                                <div v-if="message.hasFiles" class="inwrapper">
+                                    <ul>
+                                        <li v-for="file in message.files" id="fli_{{*file.ID}}">
+                                            <div class="itemwrapper">
+                                                <table cellpadding="0" cellspacing="0" border="0">
+                                                    <tr>
+                                                        <td class="leftmen" valign="top">
+                                                            <div class="inmenue"></div>
+                                                        </td>
+                                                        <td class="thumb">
                                                             {/literal}
-                                                            <td class="rightmen" valign="top">
-                                                                <div class="inmenue">
-                                                                    {if $userpermissions.files.del}
-                                                                    {literal}
-                                                                        <a class="del" href="javascript:confirmfunction
+                                                            <img src="templates/{$settings.template}/theme/{$settings.theme}/images/files/{literal}{{*file.type}}.png"
+                                                                 alt=""/>
+                                                            </a>
+                                                        </td>
+                                                        {/literal}
+                                                        <td class="rightmen" valign="top">
+                                                            <div class="inmenue">
+                                                                {if $userpermissions.files.del}
+                                                                {literal}
+                                                                    <a class="del" href="javascript:confirmfunction
 																					('{/literal}{$langfile.confirmdel}{literal}','deleteElement(\'fli_{{file.ID}}\',\'managefile.php?action=delete&id={{*message.project}}&file={{file.ID}}\')');" title="{/literal}{#delete#}"></a>
-                                                                    {/if}
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        {literal}
-                                                        <tr>
-                                                            <td colspan="3">
+                                                                {/if}
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    {literal}
+                                                    <tr>
+                                                        <td colspan="3">
                                                                         <span class="name">
 																			<a href="managefile.php?action=downloadfile&amp;id={{*file.project}}&amp;file={{*file.ID}}">
                                                                                 {{*file.shortName}}
                                                                             </a>
                                                                         </span>
-                                                            </td>
-                                                        <tr/>
-                                                    </table>
-                                                </div>
-                                                <!-- itemwrapper End -->
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <!-- inwrapper End -->
-                                    <div class="clear_both"></div>
+                                                        </td>
+                                                    <tr/>
+                                                </table>
+                                            </div>
+                                            <!-- itemwrapper End -->
+                                        </li>
+                                    </ul>
                                 </div>
-                                <!-- div messages end -->
+                                <!-- inwrapper End -->
+                                <div class="clear_both"></div>
                             </div>
+                            <!-- div messages end -->
                         </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
         </div>
-        <!--smooth End-->
-        {/literal}
+        </td>
+        </tr>
+        </tbody>
+        </table>
     </div>
-    <!-- block END  -->
-    <div class="content-spacer"></div>
+    <!--smooth End-->
+    {/literal}
+</div>
+<!-- block END  -->
+<div class="content-spacer"></div>
 </div><!--msgs end-->
