@@ -82,6 +82,14 @@
                             <div class="acc-in">
                                 <div class="message-fluid">
                                     <div class="message-in-fluid">
+                                        <div class="avatar">
+                                            <template v-if="item.avatar != ''">
+                                                <img src="thumb.php?width=80&amp;height=80&amp;pic=files/standard/avatar/{{*item.avatar}}" alt=""/>
+                                            </template>
+                                            <template v-else>
+                                                <img src="thumb.php?width=80&amp;height=80&amp;pic=templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/no-avatar-male.jpg"/>
+                                            </template>
+                                        </div>
                                         {{{*item.text}}}
                                     </div>
                                     <!-- message milestones -->
