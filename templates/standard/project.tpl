@@ -101,7 +101,6 @@
 
         <div class="content-spacer"></div>
         <div class="nosmooth" id="sm_project">
-
             <div id="block_dashboard" class="block">
 
                 {*Miles tree*}
@@ -116,7 +115,7 @@
                             </h2>
                         </div>
 
-                        <div class="block accordion_content" id="treehead overflow-hidden">
+                        <div class="block accordion_content overflow-hidden display-none" id="treehead">
                             <div class="block_in_wrapper" style="padding-top:0px;">
                                 <script type="text/javascript">
                                     var projectTree = new dTree('projectTree');
@@ -182,7 +181,7 @@
                             </h2>
                         </div>
 
-                        <div class="block accordion_content overflow-hidden" id="trackerhead">
+                        <div class="block accordion_content overflow-hidden display-none" id="trackerhead">
                             <div id="trackerform" class="addmenue">
                                 {include file="addtimetracker.tpl" }
                             </div>

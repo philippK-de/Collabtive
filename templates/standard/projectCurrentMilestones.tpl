@@ -10,7 +10,7 @@
     <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt=""/>{#currentmiles#}</h2>
 </div>
 
-<div class="block blockaccordion_content overflow-hidden " id="currentMilestonesHead">
+<div class="block blockaccordion_content overflow-hidden display-none" id="currentMilestonesHead">
 
     {*Add Milestone*}
     {if $userpermissions.milestones.add}

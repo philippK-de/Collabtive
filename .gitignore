@@ -38,3 +38,4 @@ projectTemplates.php
 conference.php
 plugins/plugin.conference.php
 include/class.detectmobile.php
+plugins/plugin.mobileWebApp.php

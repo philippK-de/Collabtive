@@ -16,7 +16,7 @@
             </div>
             <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt="" />{#mytasks#}</h2>
         </div>
-        <div class="block blockaccordion_content overflow-hidden" id="taskhead">
+        <div class="block blockaccordion_content overflow-hidden display-none" id="taskhead">
             <div id="form_addmytask" class="addmenue display-none">
                 {include file="addmytask_index.tpl" }
             </div>

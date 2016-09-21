@@ -19,7 +19,7 @@
                 <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#mymessages#}
             </h2>
         </div>
-        <div class="block blockaccordion_content overflow-hidden" id="activityhead">
+        <div class="block blockaccordion_content overflow-hidden display-none" id="activityhead">
             <div id="addmsg" class="addmenue display-none">
             </div>
             <table cellpadding="0" cellspacing="0" border="0" v-cloak>

@@ -23,7 +23,7 @@
     </h2>
 </div>
 
-<div class="block accordion_content overflow-hidden" id="loghead">
+<div class="block accordion_content overflow-hidden display-none" id="loghead">
     <table id="projectLog" class="log" cellpadding="0" cellspacing="0" border="0"  v-cloak>
         <thead>
         <tr>

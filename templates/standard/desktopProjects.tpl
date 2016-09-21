@@ -12,7 +12,7 @@
         </h2>
 
     </div>
-    <div class="block blockaccordion_content" id="projecthead overflow-hidden">
+    <div class="block blockaccordion_content overflow-hidden display-none" id="projecthead">
         <div id="form_addmyproject" class="addmenue display-none">
             {include file="addproject.tpl" myprojects="1"}
         </div>

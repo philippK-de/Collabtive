@@ -8,7 +8,7 @@
     </div>
     <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt=""/>{#upcomingmilestones#}</h2>
 </div>
-<div class="block blockaccordion_content overflow-hidden" id="upcomingMilestonesHead">
+<div class="block blockaccordion_content overflow-hidden display-none" id="upcomingMilestonesHead">
     <div id="sm_miles_upcoming" class="nosmooth">
 
         <table cellpadding="0" cellspacing="0" border="0">

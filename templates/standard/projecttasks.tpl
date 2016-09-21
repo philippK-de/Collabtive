@@ -64,8 +64,7 @@
                     <div id="blockTasks_content{$smarty.section.list.index}"
                          data-tasklist="{$lists[list].ID}"
                          data-project="{$project.ID}"
-                         class="block blockaccordion_content overflow-hidden"
-                         >
+                         class="block blockaccordion_content overflow-hidden display-none">
 
                         {*Add Task*}
                         {if $userpermissions.tasks.add}
@@ -73,10 +72,8 @@
                                 {include file="addtask.tpl" }
                             </div>
                         {/if}
-
                         <div class="nosmooth" id="sm_{$lists[list].ID}">
                             <table id="taskList_{$lists[list].ID}" class="taskList" cellpadding="0" cellspacing="0" border="0">
-
                                 <thead>
                                 <tr>
                                     <th class="a"></th>
@@ -86,7 +83,6 @@
                                     <th class="tools"></th>
                                 </tr>
                                 </thead>
-
                                 <tfoot>
                                 <tr>
                                     <td colspan="5"></td>
