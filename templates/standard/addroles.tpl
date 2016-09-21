@@ -88,7 +88,7 @@
                     <label>{#files#}</label>
                 </div>
                 <div class="row"><label></label>
-                    <input type="checkbox" class="checkbox" value="0" name="permissions_files[del]"/>{#view#}
+                    <input type="checkbox" class="checkbox" value="0" name="permissions_files[view]"/>{#view#}
                 </div>
                 <div class="row"><label></label>
                     <input type="checkbox" class="checkbox" value="0" name="permissions_files[add]"/>{#add#}
