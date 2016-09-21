@@ -87,8 +87,14 @@
                     <td colspan="6">
                         <div class="accordion_content">
                             <div class="acc-in">
-                                <img src="thumb.php?width=80&amp;height=80&amp;pic=templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/no-avatar-male.jpg"/>
-
+                                    <div class="avatar">
+                                <template v-if="message.avatar != ''">
+                                        <img src="thumb.php?width=80&amp;height=80&amp;pic=files/standard/avatar/{{*message.avatar}}" alt=""/>
+                                </template>
+                                <template v-else>
+                                    <img src="thumb.php?width=80&amp;height=80&amp;pic=templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/no-avatar-male.jpg"/>
+                                </template>
+                                    </div>
                                 <div class="message-fluid">
                                     <div class="message-in-fluid">
                                         {{{*message.text}}}
