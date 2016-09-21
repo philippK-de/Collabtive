@@ -1,14 +1,14 @@
 ### Voraussetzungen ###
 
     Server:
-	- PHP 5.3 oder neuer
+	- PHP 5.5, PHP 7 oder neuer
 	- MySQL 5 oder neuer, SQLite 3
 
 	Wir empfehlen die Verwendung eines LAMP-Servers (Linux, Apache, MySQL, PHP).
 	Windows-Server (IIS) können ebenfalls funktionieren, werden aber nicht im gleichen Ausmaß unterstützt.
 
     Client:
-    - Firefox, Internet Explorer 9/10/11, Safari, Chrome
+    - Firefox, Internet Explorer 10/11, MS Edge, Safari, Chrome
 	- JavaScript aktiviert
 	- Cookies aktiviert
 
