@@ -283,7 +283,7 @@
                                 <div class="row-butn-bottom">
                                     <label>&nbsp;</label>
                                     <button type="submit" onfocus="this.blur();">{/literal}{#save#}{literal}</button>
-                                    <button onclick="javascript:accord_roles.activate(document.querySelector('#acc-roles .accordion_toggle')[{$smarty.section.role.index}]);">{#cancel#}
+                                    <button onclick="javascript:accord_roles.activate(document.querySelector('#acc-roles .accordion_toggle')[{$smarty.section.role.index}]);">{/literal}{#cancel#}{literal}
                                     </button>
                                 </div>
 
