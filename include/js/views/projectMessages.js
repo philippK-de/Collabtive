@@ -13,8 +13,10 @@ var userMessages = {
 };
 
 var accordMessages;
+openSlide = 0;
+blockIds = [];
 function activateAccordeon(theAccord) {
-    accordMessages.toggle(cssAll('#projectMessagesContainer .accordion_content')[theAccord]);
+    accordMessages.toggle(cssAll('#projectMessagesContainer .blockaccordion_content')[theAccord]);
 }
 function initializeBlockaccordeon() {
     //get the blocks
@@ -22,6 +24,8 @@ function initializeBlockaccordeon() {
 
     //loop through the blocks and add the accordion toggle link to the onclick handler of toggles
     for (i = 0; i < theBlocks.length; i++) {
+        var theId = theBlocks[i].getAttribute("id");
+        blockIds.push(theId);
         //get the onclick action of the current block
         var theAction = theBlocks[i].getAttribute("onclick");
         //add a call to activate accordeon
