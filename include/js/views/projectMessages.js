@@ -1,12 +1,12 @@
 var projectMessages = {
-    el: "projectMessages",
+    el: "publicMessages",
     itemType: "message",
     url: "managemessage.php?action=projectMessages",
     dependencies: []
 };
 
 var userMessages = {
-    el: "userMessages",
+    el: "privateMessages",
     itemType: "message",
     url: "managemessage.php?action=userMessages",
     dependencies: []

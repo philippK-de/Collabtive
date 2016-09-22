@@ -15,6 +15,7 @@
             </div>
             <h1>{$projectname|truncate:45:"...":true}<span>/ {#messages#}</span></h1>
         </div>
+        <!-- container for the blockAccordeon-->
         <div id="projectMessagesContainer">
         {include file="projectPublicMessages.tpl"}
         {include file="projectPrivateMessages.tpl"}
@@ -56,13 +57,13 @@
     var accord_user_messages;
     //after each update create the inner accordeon
     projectMessagesView.afterUpdate(function(){
-        accord_messages = new accordion2('acc_publicMessages');
+        accord_messages = new accordion2('publicMessages');
         //update user messages when a message was added
         updateView(userMessagesView);
     });
 
     userMessagesView.afterUpdate(function(){
-        accord_user_messages = new accordion2('acc_privateMessages');
+        accord_user_messages = new accordion2('privateMessages');
     });
 </script>
 {/literal}

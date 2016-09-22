@@ -1,5 +1,7 @@
-<div class="msgs" id="projectMessages"  v-cloak  >
+<!-- container for the messagesContent accordeon -->
+<div class="msgs" id="publicMessages"  v-cloak  >
     <div class="headline" >
+        <!-- toggle for the blockaccordeon-->
         <a href="javascript:void(0);" id="publicMessages_toggle" class="win_none" onclick=""></a>
         <div class="wintools">
             <div class="progress display-none" id="progressprojectMessages" style="width:20px;float:left">
@@ -21,13 +23,14 @@
         </h2>
     </div>
 
-    <div id="publicMessages" class="block blockaccordion_content overflow-hidden display-none">
+    <!-- contentSlide for the blockAccordeon -->
+    <div id="block_publicMessages" class="block blockaccordion_content overflow-hidden display-none">
         {*Add Message*}
         <div id="addmsg" class="addmenue display-none">
             {include file="addmessageform.tpl" }
         </div>
         <div class="nosmooth" id="sm_msgs">
-            <table id="acc_publicMessages" cellpadding="0" cellspacing="0" border="0">
+            <table id="tablePublicMessages" cellpadding="0" cellspacing="0" border="0">
                 <thead>
                 <tr>
                     <th class="a"></th>
@@ -57,8 +60,9 @@
                     {literal}
                     <td>
                         <div class="toggle-in">
+                                    <!--toggle for the messagesContent accordeon-->
                                     <span class="acc-toggle"
-                                          onclick="javascript:accord_messages.toggle(css('#block_msgs_content{{$index}}'));"></span>
+                                          onclick="javascript:accord_messages.toggle(css('#publicMessages_content{{$index}}'));"></span>
                             <a href="managemessage.php?action=showmessage&amp;mid={{*message.ID}}&amp;id={{*message.project}}"
                                title="{{*message.title}}">{{*message.title | truncate '30' }}</a>
                         </div>
@@ -85,6 +89,7 @@
 
                 <tr class="acc">
                     <td colspan="6">
+                        <!--contentSlide for the messagesContent accordeon-->
                         <div class="accordion_content">
                             <div class="acc-in">
                                 <div class="message-fluid">

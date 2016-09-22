@@ -1,5 +1,7 @@
-<div class="msgs" id="userMessages">
+<!-- container for the messagesContent accordeon -->
+<div class="msgs" id="privateMessages">
     <div class="headline">
+        <!-- toggle for the blockaccordeon-->
         <a href="javascript:void(0);" id="privateMessages_toggle" class="win_none" onclick=""></a>
 
         <div class="wintools">
@@ -20,9 +22,10 @@
         </h2>
     </div>
 
-    <div id="privateMessages" class="block blockaccordion_content overflow-hidden display-none">
+    <!-- contentSlide for the blockAccordeon -->
+    <div id="block_privateMessages" class="block blockaccordion_content overflow-hidden display-none">
         <div class="nosmooth" id="sm_msgs">
-            <table id="acc_privateMessages" cellpadding="0" cellspacing="0" border="0">
+            <table id="tablePrivateMessages" cellpadding="0" cellspacing="0" border="0">
                 <thead>
                 <tr>
                     <th class="a"></th>
@@ -52,8 +55,9 @@
                     {literal}
                     <td>
                         <div class="toggle-in">
+                                    <!--toggle for the messagesContent accordeon-->
                                     <span class="acc-toggle"
-                                          onclick="javascript:accord_user_messages.toggle(css('#block_user_msgs_content{{$index}}'));"></span>
+                                          onclick="javascript:accord_user_messages.toggle(css('#privateMessages_content{{$index}}'));"></span>
                             <a href="managemessage.php?action=showmessage&amp;mid={{*message.ID}}&amp;id={{*message.project}}"
                                title="{{*message.title}}">{{message.title | truncate '30' }}</a>
                         </div>
@@ -80,6 +84,7 @@
 
                 <tr class="acc">
                     <td colspan="6">
+                        <!--contentSlide for the messagesContent accordeon-->
                         <div class="accordion_content">
                             <div class="message-fluid">
                                 <div class="message-in-fluid">
