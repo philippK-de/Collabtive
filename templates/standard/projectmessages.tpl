@@ -15,12 +15,14 @@
             </div>
             <h1>{$projectname|truncate:45:"...":true}<span>/ {#messages#}</span></h1>
         </div>
-        {include file="projectPrivateMessages.tpl"}
+        <div id="projectMessagesContainer">
         {include file="projectPublicMessages.tpl"}
+        {include file="projectPrivateMessages.tpl"}
+        </div>
     </div>
     <!-- content-left-in END-->
 </div> <!-- content-left END -->
-    <script type="text/javascript" src="include/js/accordion.min.js"></script>
+    <script type="text/javascript" src="include/js/accordion.js"></script>
     <script type="text/javascript" src="include/js/views/projectMessages.min.js"></script>
 {literal}
 <script type="text/javascript">
@@ -31,23 +33,37 @@
     userMessages.url = userMessages.url + "&id=" + {/literal}{$project.ID}{literal};
     userMessagesView = createView(userMessages);
 
-    var accord_messages;
-    var accord_user_messages;
+    //bind submit handler for the create message form and create the blockaccordeon
     projectMessagesView.afterLoad(function () {
         addMessageForm = document.getElementById("addmessageform");
         formView = projectMessagesView;
         formView.doUpdate = true;
         addMessageForm.addEventListener("submit", submitForm.bind(formView));
+
     });
+    //initialize blocks accordeon
+    //this creates the object on which methods are called later
+    accordMessages = new accordion2("projectMessagesContainer", {
+        classNames: {
+            toggle: 'win_none',
+            toggleActive: 'win_block',
+            content: 'blockaccordion_content'
+        }
+    });
+    window.addEventListener("load",initializeBlockaccordeon);
+
+    var accord_messages;
+    var accord_user_messages;
+    //after each update create the inner accordeon
     projectMessagesView.afterUpdate(function(){
-        accord_messages = new accordion2('block_msgs');
+        accord_messages = new accordion2('acc_publicMessages');
+        //update user messages when a message was added
         updateView(userMessagesView);
     });
 
     userMessagesView.afterUpdate(function(){
-        accord_user_messages = new accordion2('block_user_msgs');
+        accord_user_messages = new accordion2('acc_privateMessages');
     });
-
 </script>
 {/literal}
 

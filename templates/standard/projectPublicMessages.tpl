@@ -1,6 +1,6 @@
-<div class="msgs" id="projectMessages"  v-cloak >
+<div class="msgs" id="projectMessages"  v-cloak  >
     <div class="headline" >
-        <a href="javascript:void(0);" id="acc-toggle" class="win_block" onclick="toggleBlock('block_msgs');"></a>
+        <a href="javascript:void(0);" id="publicMessages_toggle" class="win_none" onclick=""></a>
         <div class="wintools">
             <div class="progress display-none" id="progressprojectMessages" style="width:20px;float:left">
                 <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-messages.gif"/>
@@ -21,13 +21,13 @@
         </h2>
     </div>
 
-    <div id="block_msgs" class="block">
+    <div id="publicMessages" class="block blockaccordion_content">
         {*Add Message*}
         <div id="addmsg" class="addmenue display-none">
             {include file="addmessageform.tpl" }
         </div>
         <div class="nosmooth" id="sm_msgs">
-            <table id="acc_msgs" cellpadding="0" cellspacing="0" border="0">
+            <table id="acc_publicMessages" cellpadding="0" cellspacing="0" border="0">
                 <thead>
                 <tr>
                     <th class="a"></th>
@@ -179,7 +179,7 @@
         </div>
     </div>
     <!-- block END  -->
-    <div class="content-spacer"></div>
+    <div class="padding-bottom-two-px"></div>
 
 </div>
 <!-- Msgs END-->

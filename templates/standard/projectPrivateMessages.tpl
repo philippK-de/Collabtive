@@ -1,6 +1,6 @@
 <div class="msgs" id="userMessages">
     <div class="headline">
-        <a href="javascript:void(0);" id="acc-toggle" class="win_block" onclick="toggleBlock('block_msgs');"></a>
+        <a href="javascript:void(0);" id="privateMessages_toggle" class="win_none" onclick=""></a>
 
         <div class="wintools">
             <loader block="userMessages" loader="loader-messages.gif"></loader>
@@ -20,9 +20,9 @@
         </h2>
     </div>
 
-    <div id="block_user_msgs" class="block">
+    <div id="privateMessages" class="block blockaccordion_content">
         <div class="nosmooth" id="sm_msgs">
-            <table id="acc_msgs" cellpadding="0" cellspacing="0" border="0">
+            <table id="acc_privateMessages" cellpadding="0" cellspacing="0" border="0">
                 <thead>
                 <tr>
                     <th class="a"></th>
