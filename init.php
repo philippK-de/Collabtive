@@ -5,8 +5,8 @@ ini_set("arg_separator.output", "&amp;");
 ini_set("default_charset", "utf-8");
 //allow larger and more file uploads than default
 ini_set("post_max_size", "128M");
-ini_set("upload_max_filesize","128M");
-ini_set("max_file_uploads","50");
+ini_set("upload_max_filesize", "128M");
+ini_set("max_file_uploads", "50");
 
 // Set content security policy header. This instructs the browser to block various unsafe behaviours.
 header("Content-Security-Policy:style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval';frame-src 'self'");
@@ -166,13 +166,9 @@ $template->assign("theY", $they);
 // if user is logged in
 if (isset($userid)) {
     $project = new project();
-
-    //list of vue components to load in the <head> section
-    $vueComponentList = ["pagination", "progress"];
-    $template->assign("vueComponents", $vueComponentList);
     //create plugins manager
     $pluginManager = new pluginManager();
     $pluginManager->loadPlugins();
-
 }
+
 
