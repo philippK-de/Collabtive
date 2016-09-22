@@ -101,7 +101,7 @@
                                     <!-- Permissions for milestones -->
                                     <div class="row">
                                         <label></label>
-                                        <label>{#milestones#}</label>
+                                        <label>{/literal}{#milestones#}{literal}</label>
                                     </div>
                                     <div class="row">
                                         <label></label>
@@ -137,7 +137,7 @@
                                     <!-- Permissions for tasks -->
                                     <div class="row">
                                         <label></label>
-                                        <label>{#tasks#}</label>
+                                        <label>{/literal}{#tasks#}{literal}</label>
                                     </div>
                                     <div class="row">
                                         <label></label>

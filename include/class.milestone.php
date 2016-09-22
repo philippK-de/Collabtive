@@ -87,8 +87,19 @@ class milestone
         $id = (int)$id;
 
         $del = $conn->query("DELETE FROM milestones WHERE ID = $id");
+
         if ($del) {
-            //delet assignments as well
+            // delete message assignments
+            $messageObj = new message();
+
+            $milestoneMessages = $this->getMilestoneMessages($id);
+            if (!empty($milestoneMessages)) {
+                foreach ($milestoneMessages as $milestoneMessage) {
+                    $messageObj->del($milestoneMessage["ID"]);
+                }
+            }
+
+            // delete user assignments
             $conn->query("DELETE FROM milestones_assigned WHERE milestone = $id");
 
             //get project and title of the milestone
@@ -100,6 +111,7 @@ class milestone
             $name = $nam[1];
 
             $mylog->add($name, 'milestone', 3, $project);
+
             return true;
         } else {
             return false;
