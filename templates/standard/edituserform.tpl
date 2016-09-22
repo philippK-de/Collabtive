@@ -4,16 +4,11 @@
 <div id="content-left">
 	<div id="content-left-in">
 		<div class="user">
-			
 			<h1>{#edituser#}<span>/ {$user.name}</span></h1>
-			
 			<div class="userwrapper">
-				
 				<form novalidate class="main" method="post" action="manageuser.php?action=edit" enctype="multipart/form-data" {literal} onsubmit="return validateCompleteForm(this,'input_error');" {/literal} >
 					<fieldset>
-					
 						<table cellpadding="0" cellspacing="0" border="0">
-							
 							<tr>
 								<td class="avatarcell" valign="top">
 							
