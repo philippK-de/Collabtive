@@ -20,7 +20,7 @@
         </h2>
     </div>
 
-    <div id="privateMessages" class="block blockaccordion_content">
+    <div id="privateMessages" class="block blockaccordion_content overflow-hidden display-none">
         <div class="nosmooth" id="sm_msgs">
             <table id="acc_privateMessages" cellpadding="0" cellspacing="0" border="0">
                 <thead>

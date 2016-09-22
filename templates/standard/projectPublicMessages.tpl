@@ -21,7 +21,7 @@
         </h2>
     </div>
 
-    <div id="publicMessages" class="block blockaccordion_content">
+    <div id="publicMessages" class="block blockaccordion_content overflow-hidden display-none">
         {*Add Message*}
         <div id="addmsg" class="addmenue display-none">
             {include file="addmessageform.tpl" }
