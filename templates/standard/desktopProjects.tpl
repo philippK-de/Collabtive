@@ -149,6 +149,7 @@
             {* If no projects exist, open form to add a project *}
             {if $openProjectnum < 1 && $userpermissions.projects.add}
                 <script type="text/javascript">
+                    toggleClass('sm_deskprojects','smooth','nosmooth');
                     blindtoggle('form_addmyproject');
                 </script>
             {/if}
