@@ -47,7 +47,7 @@
                     <td>
                         <div class="toggle-in">
                             <span class="acc-toggle"
-                                  onclick="javascript:accord_projects.activate(document.querySelectorAll('#projecthead .accordion_toggle')[{{$index}}]);toggleAccordeon('projecthead',this);"></span>
+                                  onclick="javascript:accord_projects.toggle(css('#projecthead_content{{$index}}'));"></span>
                             <a href="manageproject.php?action=showproject&amp;id={{*project.ID}}" title="{{*project.name}}">
                                 {{*project.name | truncate '30' }}
                             </a>
@@ -62,7 +62,6 @@
 
                 <tr class="acc">
                     <td colspan="5">
-                        <div class="accordion_toggle"></div>
                         <div class="accordion_content">
                             <div class="acc-in">
                                 {{*project.desc}}
@@ -136,21 +135,17 @@
     <div class="content-spacer"></div>
     {*Projects End*}
 {literal}
+    <script type="text/javascript" src="include/js/accordion.min.js"></script>
     <script type="text/javascript" src="include/js/views/userProfileView.min.js"></script>
     <script type="text/javascript">
         userProfileProjects.url = userProfileProjects.url + "&id=" + {/literal}{$user.ID}{literal};
         var userProfileProjectsView = createView(userProfileProjects);
 
-        var accord_projects = new accordion('projecthead');
-        new Control.Modal('ausloeser', {
-            opacity: 0.8,
-            position: 'absolute',
-            width: 480,
-            height: 480,
-            fade: true,
-            containerClassName: 'pics',
-            overlayClassName: 'useroverlay'
+        var accord_projects;
+
+        userProfileProjectsView.afterUpdate(function(){
+            accord_projects = new accordion2('projecthead');
         });
-    </script>
+     </script>
 {/literal}
 {/if} {*if admin end*}

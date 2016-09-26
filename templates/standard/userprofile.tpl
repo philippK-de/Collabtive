@@ -129,7 +129,7 @@
 
 
 		{if $userpermissions.admin.add or $userid == $user.ID}{if $tracker} {*timetracker start*}
-			<div class="timetrack">
+			<div class="timetrack" id="userTimetracker">
 				<div class="headline">
 					<a href="javascript:void(0);" id="acc-tracker_toggle" class="win_block" onclick = "toggleBlock('acc-tracker');"></a>
 					<div class="wintools">
