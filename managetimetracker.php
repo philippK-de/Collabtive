@@ -56,6 +56,12 @@ if (isset($id)) {
 $classes = array("overview" => "overview", "msgs" => "msgs", "tasks" => "tasks", "miles" => "miles", "files" => "files", "users" => "users", "tracker" => "tracking_active");
 $template->assign("classes", $classes);
 
+/*
+ * VIEW ROUTES
+ * These are routes that render HTML views to the browser or create side effects
+ */
+
+
 if ($action == "add") {
     if (!$userpermissions["timetracker"]["add"]) {
         $template->assign("errortext", "Permission denied.");
@@ -364,7 +370,13 @@ if ($action == "add") {
     $template->assign("tracker", $track);
 
     $template->display("tracker_project.tpl");
-} elseif ($action == "projectTimetracker") {
+}
+
+/*
+ * DATA ROUTES
+ * These are routes that render JSON data structures
+ */
+elseif ($action == "projectTimetracker") {
     if (!$userpermissions["timetracker"]["view"]) {
         $errtxt = $langfile["nopermission"];
         $noperm = $langfile["accessdenied"];

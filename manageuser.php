@@ -37,6 +37,10 @@ $mainclasses = array("desktop" => "",
 $template->assign("mainclasses", $mainclasses);
 $template->assign("classes", $classes);
 
+/*
+ * VIEW ROUTES
+ * These are routes that render HTML views to the browser or create side effects
+ */
 if ($action == "loginerror") {
     $template->display("resetpassword.tpl");
 } elseif ($action == "resetpassword") {
@@ -197,30 +201,8 @@ if ($action == "loginerror") {
 } elseif ($action == "profile") {
     $start = getArrayVal($_GET, "start");
     $end = getArrayVal($_GET, "end");
-    $tracker = (object)new timetracker();
 
-    $track = array();
-    if (!empty($start) and !empty($end)) {
-        $track = $tracker->getUserTrack($id, $cleanGet["project"], $cleanGet["task"], $start, $end);
-    } elseif (is_array($cleanGet["project"])) {
-        foreach ($cleanGet["project"] as $fpro) {
-            $ptrack = $tracker->getUserTrack($id, $fpro, $cleanGet["task"], $start, $end);
-            if (!empty($ptrack)) {
-                foreach ($ptrack as $mytrack) {
-                    array_push($track, $mytrack);
-                }
-            }
-        }
-    } else {
-        $track = $tracker->getUserTrack($id, $cleanGet["project"], $cleanGet["task"]);
-    }
-    if (!empty($track)) {
-        $totaltime = $tracker->getTotalTrackTime($track);
-        $template->assign("totaltime", $totaltime);
-        $template->assign("fproject", $cleanGet["project"]);
-        $template->assign("start", $start);
-        $template->assign("end", $end);
-    }
+
     $template->assign("tracker", $track);
     $profile = $user->getProfile($id);
 
@@ -229,47 +211,6 @@ if ($action == "loginerror") {
     $template->assign("user", $profile);
 
     $template->display("userprofile.tpl");
-} elseif ($action == "userProjects") {
-    if ($userpermissions["admin"]["add"]) {
-        $offset = 0;
-        if (isset($cleanGet["offset"])) {
-            $offset = $cleanGet["offset"];
-        }
-        $limit = 10;
-        if (isset($cleanGet["limit"])) {
-            $limit = $cleanGet["limit"];
-        }
-
-        $projectObj = (object)new project();
-
-        $openProjects = $projectObj->getMyProjects($id, 1, $offset, $limit);
-        $openProjectsNum = $projectObj->countMyProjects($id);
-
-        $i = 0;
-        if (!empty($openProjects)) {
-            foreach ($openProjects as &$openProject) {
-                $projectMembers = $projectObj->getProjectMembers($openProject["ID"], 1000);
-                $openProject["members"] = $projectMembers;
-                $i = $i + 1;
-            }
-        }
-
-        $projects["items"] = $openProjects;
-        $projects["count"] = $openProjectsNum;
-
-        echo json_encode($projects);
-    }
-} elseif ($action == "userTimetracker") {
-    if ($userpermissions["admin"]["add"]) {
-        $offset = 0;
-        if (isset($cleanGet["offset"])) {
-            $offset = $cleanGet["offset"];
-        }
-        $limit = 10;
-        if (isset($cleanGet["limit"])) {
-            $limit = $cleanGet["limit"];
-        }
-    }
 } elseif ($action == "showproject") {
     if (!chkproject($userid, $id)) {
         $errtxt = $langfile["notyourproject"];
@@ -305,37 +246,7 @@ if ($action == "loginerror") {
     $template->assign("members", $members);
     $template->assign("users", $users);
     $template->display("projectmembers.tpl");
-} elseif ($action == "projectMembers") {
-    if (!chkproject($userid, $id)) {
-        $errtxt = $langfile["notyourproject"];
-        $noperm = $langfile["accessdenied"];
-        $template->assign("mode", "error");
-        $template->assign("errortext", "$errtxt<br>$noperm");
-        $template->display("error.tpl");
-        die();
-    }
-
-    $offset = 0;
-    if(isset($cleanGet["offset"]))
-    {
-        $offset = $cleanGet["offset"];
-    }
-    $limit = 21;
-    if(isset($cleanGet["limit"]))
-    {
-        $limit = $cleanGet["limit"];
-    }
-
-    $projectObj = new project();
-
-    $members = $projectObj->listProjectMembers($id, $limit, $offset);
-
-    $projectMembers["count"] = $projectObj->countMembers($id);
-    $projectMembers["items"] = $members;
-
-    echo json_encode($projectMembers);
-
-} elseif ($action == "onlinelist") {
+}  elseif ($action == "onlinelist") {
     $onlinelist = $user->getOnlinelist();
     if (!empty($onlinelist)) {
         echo "<ul>";
@@ -373,5 +284,96 @@ if ($action == "loginerror") {
 
     echo $vCard->getCardOutput();
 }
+/*
+ * DATA ROUTES
+ * These are routes that render JSON data structures
+ */
+elseif ($action == "projectMembers") {
+    if (!chkproject($userid, $id)) {
+        $errtxt = $langfile["notyourproject"];
+        $noperm = $langfile["accessdenied"];
+        $template->assign("mode", "error");
+        $template->assign("errortext", "$errtxt<br>$noperm");
+        $template->display("error.tpl");
+        die();
+    }
 
-?>
+    $offset = 0;
+    if(isset($cleanGet["offset"]))
+    {
+        $offset = $cleanGet["offset"];
+    }
+    $limit = 21;
+    if(isset($cleanGet["limit"]))
+    {
+        $limit = $cleanGet["limit"];
+    }
+
+    $projectObj = new project();
+
+    $members = $projectObj->listProjectMembers($id, $limit, $offset);
+
+    $projectMembers["count"] = $projectObj->countMembers($id);
+    $projectMembers["items"] = $members;
+
+    echo json_encode($projectMembers);
+
+}
+elseif ($action == "userProjects") {
+    if ($userpermissions["admin"]["add"]) {
+        $offset = 0;
+        if (isset($cleanGet["offset"])) {
+            $offset = $cleanGet["offset"];
+        }
+        $limit = 10;
+        if (isset($cleanGet["limit"])) {
+            $limit = $cleanGet["limit"];
+        }
+
+        $projectObj = (object)new project();
+
+        $openProjects = $projectObj->getMyProjects($id, 1, $offset, $limit);
+        $openProjectsNum = $projectObj->countMyProjects($id);
+
+        $i = 0;
+        if (!empty($openProjects)) {
+            foreach ($openProjects as &$openProject) {
+                $projectMembers = $projectObj->getProjectMembers($openProject["ID"], 1000);
+                $openProject["members"] = $projectMembers;
+                $i = $i + 1;
+            }
+        }
+
+        $projects["items"] = $openProjects;
+        $projects["count"] = $openProjectsNum;
+
+        echo json_encode($projects);
+    }
+}
+elseif ($action == "userTimetracker") {
+    if ($userpermissions["admin"]["add"]) {
+        $tracker = (object)new timetracker();
+
+        $track = array();
+        $offset = 0;
+        if (isset($cleanGet["offset"])) {
+            $offset = $cleanGet["offset"];
+        }
+        $limit = 10;
+        if (isset($cleanGet["limit"])) {
+            $limit = $cleanGet["limit"];
+        }
+
+        $track = $tracker->getUserTrack($id, 0, 0, 0, 0, $limit, $offset);
+        $userTrack["items"] = $track;
+        $trackCount = count($tracker->getUserTrack($id, 0, 0, 0, 0, 10000000));
+        $userTrack["count"] = $trackCount;
+        if(!empty($track))
+        {
+            echo json_encode($userTrack);
+        }
+        else{
+            echo json_encode(array());
+        }
+    }
+}

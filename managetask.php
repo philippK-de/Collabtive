@@ -35,7 +35,7 @@ $template->assign("mode", $mode);
 
 /*
  * VIEW ROUTES
- * These are routes that render HTML views to the browser
+ * These are routes that render HTML views to the browser or create side effects
  */
 if ($action == "add") {
     // check if user has appropriate permissions
