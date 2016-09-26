@@ -52,7 +52,7 @@
                         <td></td>
                         <td>
                             <div class="toggle-in">
-                                <span class="acc-toggle" onclick="javascript:accord_tracker.toggle(css('#acc-tracker_content{{$index}}"></span>
+                                <span class="acc-toggle" onclick="javascript:accord_tracker.toggle(css('#acc-tracker_content{{$index}}'))"></span>
                                 <a href = "managetimetracker.php?action=showproject&amp;id={{*tracker.project}}" title="{{*tracker.pname}}">
                                     {{{*tracker.pname | truncate '30'}}}
                                 </a>
@@ -83,10 +83,12 @@
                         <td colspan="7">
                             <div class="accordion_content">
                                 <div class="acc-in">
-                                    <strong>{#comment#}:</strong><br />{{*tracker.comment}}
+                                    <template v-if="tracker.comment != ''">
+                                        <strong>{/literal}{#comment#}{literal}:</strong><br />{{*tracker.comment}}
+                                    </template>
                                     <template v-if="tracker.task > 0">
                                         <p class="tags-miles">
-                                            <strong>{#task#}:</strong><br />
+                                            <strong>{/literal}{#task#}:{literal}</strong><br />
                                             <a href = "managetask.php?action=showtask&amp;tid={$tracker[track].task}&amp;id={$tracker[track].project}">{$tracker[track].tname}</a>
                                         </p>
                                     </template>
