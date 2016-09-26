@@ -97,7 +97,7 @@
                         </div>
 
 						<div class="datepick">
-							<div id="datepicker_project" class="picker" style="display:none;"></div>
+							<div id="datepicker_project" class="picker display-none"></div>
 						</div>
 
 						<script type="text/javascript">

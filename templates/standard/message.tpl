@@ -47,7 +47,7 @@
 
             {* Add Reply *}
             {if $userpermissions.messages.close}
-                <div id="form_reply_a" class="addmenue" style="display:none;">
+                <div id="form_reply_a" class="addmenue display-none">
                     <div class="content-spacer"></div>
                     {include file="replyform.tpl" showhtml="no" reply="a"}
                 </div>
@@ -55,7 +55,7 @@
 
             {* Edit Message *}
             {if $userpermissions.messages.edit}
-                <div id="form_edit" class="addmenue" style="display:none;">
+                <div id="form_edit" class="addmenue display-none">
                     <div class="content-spacer"></div>
                     {include file="editmessageform.tpl" showhtml="no"}
                 </div>

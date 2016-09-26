@@ -1,7 +1,7 @@
 			</div> {* contentwrapper END *}
 		</div> {* sitebody END *}
 
-		<div id="msgchk" style="display:none;"></div>
+		<div id="msgchk" class="display-none"></div>
 
 
 

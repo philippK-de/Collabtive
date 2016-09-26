@@ -47,7 +47,7 @@
 						</div>
 						
 						<div class="datepick">
-							<div id="datepicker_mile_start" class="picker" style="display:none;"></div>
+							<div id="datepicker_mile_start" class="picker display-none"></div>
 						</div>
 						
 						<script type="text/javascript">
@@ -70,7 +70,7 @@
                         </div>
 						
 						<div class="datepick">
-							<div id="datepicker_mile" class="picker" style="display:none;"></div>
+							<div id="datepicker_mile" class="picker display-none"></div>
 						</div>
 						
 						<script type="text/javascript">
