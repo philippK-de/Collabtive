@@ -6,8 +6,9 @@
         <div class="user">
 
             <div class="headline">
-                <a href="javascript:void(0);" id="acc-tracker_toggle" class="win_block" onclick = ""></a>
-                <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user.png" alt="" />{$user.name}</h2>
+                <a href="javascript:void(0);" id="acc-tracker_toggle" class="win_block" onclick=""></a>
+
+                <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/user.png" alt=""/>{$user.name}</h2>
 
                 <div class="wintools">
                     <div class="export-main">
@@ -20,27 +21,21 @@
                 </div>
             </div>
 
-            <div class="userwrapper" style="width:100%">
-
-                <table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+            <div class="userwrapper width-100">
+                <table class="width-100" cellpadding="0" cellspacing="0" border="0">
                     <tr>
-                        <td class="avatarcell" valign="top" style="width:20%">
+                        <td class="avatarcell width-20" valign="top">
                             {if $user.avatar != ""}
                                 <a href="#avatarbig" id="ausloeser">
-                                    <div class="avatar-profile"><img src="thumb.php?pic=files/{$cl_config}/avatar/{$user.avatar}&amp;width=122;"
-                                                                     alt=""/></div>
+                                    <div class="avatar-profile text-align-center">
+                                        <img src="thumb.php?pic=files/{$cl_config}/avatar/{$user.avatar}&amp;width=150;" alt=""/>
+                                    </div>
                                 </a>
                             {else}
-                                {if $user.gender == "f"}
-                                    <div class="avatar-profile"><img
-                                                src="thumb.php?pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-female.jpg&amp;width=122;"
-                                                alt=""/></div>
-                                {else}
-                                    <div class="avatar-profile">
-                                        <img src="thumb.php?pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-male.jpg&amp;width=122;"
-                                             alt=""/>
-                                    </div>
-                                {/if}
+                                <div class="avatar-profile">
+                                    <img src="thumb.php?pic=templates/{$settings.template}/theme/{$settings.theme}/images/no-avatar-male.jpg&amp;width=122;"
+                                         alt=""/>
+                                </div>
                             {/if}
                         </td>
                         <td>
