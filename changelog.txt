@@ -1,4 +1,5 @@
 Collabtive 3.0
++ Added blockaccordeon for the blocks in the userprofile
 + Improved the look of the file list view
 + Fix a bug where getThemes() wouldnt finish if a template has no /theme/ folder
 + Properly minify all JS assets using closure compiler
