@@ -164,7 +164,7 @@ class timetracker {
         }
     }
 
-    function getUserTrack($user, $project = 0, $task = 0, $start = 0, $end = 0 , $lim = 50)
+    function getUserTrack($user, $project = 0, $task = 0, $start = 0, $end = 0 , $lim = 25, $offset = 0)
     {
         global $conn;
         $user = (int) $user;
@@ -207,7 +207,7 @@ class timetracker {
             $sql = $sql . $order;
 
             $start = 0;
-            $limi = " LIMIT $lim OFFSET $start ";
+            $limi = " LIMIT $lim OFFSET $offset ";
             $sql = $sql . $limi;
         }
 
@@ -266,8 +266,7 @@ class timetracker {
             $task[$index] = (int) $task[$index];
         }
         $task = join(',', $task);
-        // $start = (int) $start; // those are strings, not numbers
-        // $end = (int) $end; // those are strings, not numbers
+
         if ($user > 0) {
             $sql = "SELECT * FROM timetracker WHERE project = $project AND user = $user";
             $num = "SELECT COUNT(*) FROM timetracker WHERE project = $project AND user = $user";

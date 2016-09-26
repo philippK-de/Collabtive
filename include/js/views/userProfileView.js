@@ -10,9 +10,10 @@ var userProfileProjects = {
 
 
 var userProfileTimetracker = {
-    el: "",
+    el: "userTimetracker",
     itemType: "timetracker",
-    url: "",
+    url: "manageuser.php?action=userTimetracker",
     dependencies: []
-}
-var accord_tracker = new accordion('acc-tracker');
+};
+
+
