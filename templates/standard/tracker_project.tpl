@@ -44,7 +44,7 @@
                     </h2>
                 </div>
 
-                <div class="block" id="acc_tracker" v-cloak>
+                <div class="block" id="accordeonUserTimetracker" v-cloak>
 
                     <div id="filter" class="addmenue display-none"> {*Filter Report*}
                         {include file="filtertracker.tpl" }
@@ -154,7 +154,7 @@
 
                 var accord_tracker;
                 projectTimetrackerView.afterUpdate(function(){
-                    accord_tracker = new accordion2('acc_tracker');
+                    accord_tracker = new accordion2('accordeonUserTimetracker');
                 });
             </script>
             {/literal}
