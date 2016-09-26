@@ -117,7 +117,9 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <a v-for="user in task.users" href="manageuser.php?action=profile&amp;id={{*user.ID}}">{{*user.name}}</a>
+                                        <span v-for="user in task.users">
+                                            <a href="manageuser.php?action=profile&amp;id={{*user.ID}}">{{*user.name}}</a>&nbsp;
+                                        </span>
                                     </td>
                                     <td class="text-align-right">{{*task.daysleft}}&nbsp;&nbsp;</td>
                                     <td class="tools">
