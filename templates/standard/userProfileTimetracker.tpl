@@ -1,6 +1,8 @@
+<!-- container for the userTimetrackerAccordeon accordeon -->
 <div class="timetrack" id="userTimetracker">
     <div class="headline">
-        <a href="javascript:void(0);" id="acc-tracker_toggle" class="win_block" onclick = "toggleBlock('acc-tracker');"></a>
+        <!-- toggle for the blockaccordeon-->
+        <a href="javascript:void(0);" id="userTimetracker_toggle" class="win_none" onclick = ""></a>
         <div class="wintools">
             <div class="export-main">
                 <a class="export"><span>{#export#}</span></a>
@@ -20,13 +22,14 @@
         </h2>
     </div>
 
-    <div class="block" id="acc-tracker"> {*Filter Report*}
+    <!-- contentSlide for the blockAccordeon -->
+    <div class="block blockaccordion_content overflow-hidden display-none" > {*Filter Report*}
         <div id = "form_filter" class="addmenue display-none">
             {include file="filterreport.tpl" }
         </div>
 
         <div class="nosmooth" id="sm_report">
-            <table cellpadding="0" cellspacing="0" border="0">
+            <table cellpadding="0" cellspacing="0" border="0" id="userTimetrackerAccordeon">
                 <thead>
                 <tr>
                     <th class="a"></th>
@@ -52,7 +55,7 @@
                         <td></td>
                         <td>
                             <div class="toggle-in">
-                                <span class="acc-toggle" onclick="javascript:accord_tracker.toggle(css('#acc-tracker_content{{$index}}'))"></span>
+                                <span class="acc-toggle" onclick="javascript:accord_tracker.toggle(css('#userTimetrackerAccordeon_content{{$index}}'))"></span>
                                 <a href = "managetimetracker.php?action=showproject&amp;id={{*tracker.project}}" title="{{*tracker.pname}}">
                                     {{{*tracker.pname | truncate '30'}}}
                                 </a>
@@ -89,7 +92,7 @@
                                     <template v-if="tracker.task > 0">
                                         <p class="tags-miles">
                                             <strong>{/literal}{#task#}:{literal}</strong><br />
-                                            <a href = "managetask.php?action=showtask&amp;tid={$tracker[track].task}&amp;id={$tracker[track].project}">{$tracker[track].tname}</a>
+                                            <a href = "managetask.php?action=showtask&amp;tid={$tracker[track].task}&amp;id={{*tracker.project}}">{{*tracker.tname}}</a>
                                         </p>
                                     </template>
                                 </div>
@@ -118,12 +121,4 @@
         </div>
     </div> {*block END*}
 </div> {*timetrack END*}
-<script type="text/javascript">
-    userProfileTimetracker.url = userProfileTimetracker.url + "&id=" + {$user.ID};
-    var userProfileTimetrackerView = createView(userProfileTimetracker);
-
-    var accord_tracker;
-    userProfileTimetrackerView.afterUpdate(function() {
-        accord_tracker = new accordion2('acc-tracker');
-    });
-</script>
+<div class="padding-bottom-two-px"></div>

@@ -1,7 +1,7 @@
 {if $userpermissions.admin.add}{*Projects*}
     <div class="projects" id="userProjects">
         <div class="headline">
-            <a href="javascript:void(0);" id="projecthead_toggle" class="win_block" onclick="toggleBlock('projecthead');"></a>
+            <a href="javascript:void(0);" id="userProjects_toggle" class="win_none" onclick=""></a>
             <div class="wintools">
                 <div class="progress display-none float-left" id="progressuserProjects" >
                     <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-project3.gif"/>
@@ -14,9 +14,10 @@
             </h2>
         </div>
 
-        <div class="block" id="projecthead">
+        <!-- contentSlide for the blockAccordeon -->
+        <div class="block blockaccordion_content overflow-hidden display-none" >
 
-            <table cellpadding="0" cellspacing="0" border="0">
+            <table cellpadding="0" cellspacing="0" border="0" id="userProjectsAccordeon">
                 <thead>
                 <tr>
                     <th class="a"></th>
@@ -47,7 +48,7 @@
                     <td>
                         <div class="toggle-in">
                             <span class="acc-toggle"
-                                  onclick="javascript:accord_projects.toggle(css('#projecthead_content{{$index}}'));"></span>
+                                  onclick="javascript:accord_projects.toggle(css('#userProjectsAccordeon_content{{$index}}'));"></span>
                             <a href="manageproject.php?action=showproject&amp;id={{*project.ID}}" title="{{*project.name}}">
                                 {{*project.name | truncate '30' }}
                             </a>
@@ -131,21 +132,10 @@
             <div class="tablemenue"></div>
         </div> <!--block END-->
     </div>
-    {*projects END*}
-    <div class="content-spacer"></div>
+    <div class="padding-bottom-two-px"></div>
     {*Projects End*}
 {literal}
     <script type="text/javascript" src="include/js/accordion.min.js"></script>
     <script type="text/javascript" src="include/js/views/userProfileView.min.js"></script>
-    <script type="text/javascript">
-        userProfileProjects.url = userProfileProjects.url + "&id=" + {/literal}{$user.ID}{literal};
-        var userProfileProjectsView = createView(userProfileProjects);
-
-        var accord_projects;
-
-        userProfileProjectsView.afterUpdate(function(){
-            accord_projects = new accordion2('projecthead');
-        });
-     </script>
 {/literal}
 {/if} {*if admin end*}
