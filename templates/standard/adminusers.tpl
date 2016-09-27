@@ -57,7 +57,7 @@
                 <!--Add User-->
                 {if $userpermissions.admin.add}
                     <div id="form_member" class="addmenue display-none">
-                        {include file="adduserform.tpl"}
+                        {include file="forms/adduserform.tpl"}
                     </div>
                 {/if}
                 <div class="nosmooth" id="sm_member">
