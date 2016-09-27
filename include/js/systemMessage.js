@@ -1,6 +1,6 @@
 var systemMessage = {
-    showFor: 1500,
-    fadeDuration: 2000,
+    showFor: 3000,
+    fadeDuration: 1500,
     createMessage: function (elementId) {
         var messageElement = document.getElementById(elementId);
         Velocity(messageElement, "fadeIn", {
@@ -16,8 +16,6 @@ var systemMessage = {
     notify: function (messageType, itemType) {
         //get the container element
         var notificationContainer = document.querySelector("#" + itemType + "SystemMessage");
-        //make sure it is empty
-        notificationContainer.innerHTML = "";
         var icon = notificationContainer.dataset.icon;
         var cssClass = "";
         var text = "";
@@ -46,14 +44,23 @@ var systemMessage = {
             text = notificationContainer.dataset.textDeassigned;
         }
 
-        //construct HTML element
+        //construct HTML text
         var notificationHTML = "<span class = \"" + cssClass + "\">";
-        notificationHTML += "<img src = \"" + icon + "\" />" + text + "</span>";
+        notificationHTML += "<img src = \"" + icon + "\" />" + text + "</span>" +
+        "<div class=\"padding-bottom-two-px\"></div>";
 
-        //write the notification element to the notification container
-        notificationContainer.innerHTML = notificationHTML;
-        //create the system message
-        this.createMessage(notificationContainer.id);
+
+        //create notification element
+        var notificationElement = document.createElement("div");
+        notificationElement.innerHTML = notificationHTML;
+        notificationElement.id = "message_" + notificationContainer.childNodes.length + "_" + notificationContainer.id;
+
+        //append the notification element to the notification container
+        notificationContainer.appendChild(notificationElement);
+        notificationContainer.style.display = "block";
+
+        //create the system message  animation
+        this.createMessage(notificationElement.id);
         //console.log(notificationHTML);
     },
     added: function (itemType) {
