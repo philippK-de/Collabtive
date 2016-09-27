@@ -59,7 +59,7 @@ class pluginManager
         //call the constructor
         $plugin = new $thePlugin();
         //call bindPlugin()
-        $plugin->bindPlugin();
+        $plugin->activate();
         return true;
     }
 

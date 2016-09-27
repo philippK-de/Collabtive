@@ -18,7 +18,7 @@ class test implements collabtivePlugin
         // TODO: Implement install() method.
     }
 
-    function bindPlugin()
+    function activate()
     {
         global $pluginManager;
         $templateTags = [
@@ -27,6 +27,9 @@ class test implements collabtivePlugin
         ];
         $pluginManager->registerPlugin($templateTags, "test");
         $pluginManager->registerHook($this->filterFunctions);
+    }
+    public function deactivate(){
+
     }
 
     /*
