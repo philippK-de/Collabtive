@@ -61,6 +61,7 @@
                                href="managefile.php?action=downloadfile&amp;id={{*file.project}}&amp;file={{*file.ID}}"
                                data-fileid="{{*file.ID}}">
                                 <img data-fileid="{{*file.ID}}"
+                                     class="fileicon"
                                      src="templates/{/literal}{$settings.template}/theme/{$settings.theme}/{literal}images/files/{{*file.type}}.png"
                                      alt="{{*file.name}}"/>
                             </a>
@@ -68,6 +69,7 @@
                         <template v-else>
                             <a href="managefile.php?action=downloadfile&amp;id={{*file.project}}&amp;file={{*file.ID}}" data-fileid="{{*file.ID}}">
                                 <img data-fileid="{{*file.ID}}"
+                                     class="fileicon"
                                      src="templates/{/literal}{$settings.template}/theme/{$settings.theme}/{literal}images/files/{{*file.type}}.png"
                                      alt="{{*file.name}}"/>
                             </a>
