@@ -51,7 +51,7 @@
                 {*Add File*}
                 {if $userpermissions.files.add}
                     <div id="form_file" class="addmenue display-none">
-                        <div id="newupload" style="display:block">{include file="addfileform_new.tpl"}</div>
+                        <div id="newupload" style="display:block">{include file="addfileform.tpl"}</div>
                     </div>
                 {/if}
                 <div class="nosmooth" id="sm_files">

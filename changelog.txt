@@ -1,4 +1,5 @@
 Collabtive 3.0
++ Start using native HTML5 form validation instead of a JS library
 + Added blockaccordeon for the blocks in the userprofile
 + Improved the look of the file list view
 + Fix a bug where getThemes() wouldnt finish if a template has no /theme/ folder
