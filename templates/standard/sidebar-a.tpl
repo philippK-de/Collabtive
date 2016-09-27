@@ -30,16 +30,17 @@
                     </form>
                 </div>
             </div>
+            <div class="content-spacer"></div>
         {/if}
 
-        {*Onlinelist*}
+        {*Onlinelist
         <div class="content-right-in overflow-hidden">
             <h2><a id="onlinelisttoggle" class="win-up"
                    href="javascript:blindtoggle('onlinelist');toggleClass('onlinelisttoggle','win-up','win-down');">{#usersonline#}</a></h2>
 
             <div id="onlinelist"></div>
         </div>
-    </div>
+    </div>*}
 </div>
 <script type="text/javascript" src="include/js/components/searchWidgetComponent.js"></script>
 <script type="text/javascript" src="include/js/views/sidebar.js"></script>
