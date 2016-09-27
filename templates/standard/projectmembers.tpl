@@ -38,7 +38,7 @@
                 {*Add User*}
                 {if $userpermissions.projects.edit}
                     <div id="form_member" class="addmenue display-none">
-                        {include file="adduserproject.tpl" }
+                        {include file="forms/assignUserToProject.tpl" }
                     </div>
                 {/if}
 
