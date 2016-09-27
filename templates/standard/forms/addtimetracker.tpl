@@ -1,14 +1,14 @@
 <script type="text/javascript" src="include/js/timetracker_widget.js"></script>
 <div class="block_in_wrapper">
 
-	<form novalidate class="main" id="trackeradd" method="post" action="managetimetracker.php?action=add" {literal} onsubmit="return validateCompleteForm(this,'input_error'); {/literal} ">
+	<form class="main" id="trackeradd" method="post" action="managetimetracker.php?action=add" {literal} onsubmit="return validateCompleteForm(this,'input_error'); {/literal} ">
 		<fieldset>
 
 			<input type="hidden" name="project" value="{$project.ID}" />
 
 		 	<div class="row">
 		  		<label for="ttday">{#startday#}:</label>
-		  		<input type="text" class="text" style="width:80px;margin:0 6px 0 0;" id="ttday" name="ttday" realname="{#date#}" />
+		  		<input type="text" class="text" style="width:80px;margin:0 6px 0 0;" id="ttday" name="ttday" required />
 			</div>
 
 			<div class="datepick">
@@ -27,11 +27,11 @@
 
 		  	<div class="row">
 		  		<label for="started">{#started#}:</label>
-		  		<input type="text" class="text" style="width:80px;margin:0 6px 0 0;" id="started" name="started" onkeyup=" populateHours();" required="1" regexp="^([01]?\d|2[0123]):[012345]\d$" realname="{#started#} ({#timeformat#}: hh:mm)" value="08:00" />
+		  		<input type="text" class="text" style="width:80px;margin:0 6px 0 0;" id="started" name="started" onkeyup=" populateHours();" required  pattern="^([01]?\d|2[0123]):[012345]\d$" value="08:00" />
 			</div>
 			<div class="row">
 				<label for = "ended">{#ended#}:</label>
-		  		<input type="text" class="text" style="width:80px;margin:0 6px 0 0;" id="ended" name="ended" onkeyup = " populateHours();" required="1" regexp="^([01]?\d|2[0123]):[012345]\d$" realname="{#started#} ({#timeformat#}: hh:mm)" value="09:00" />
+		  		<input type="text" class="text" style="width:80px;margin:0 6px 0 0;" id="ended" name="ended" onkeyup = " populateHours();" required pattern="^([01]?\d|2[0123]):[012345]\d$" value="09:00" />
 			</div>
 
 
