@@ -44,7 +44,7 @@
                     </h2>
                 </div>
 
-                <div class="block" id="accordeonUserTimetracker" v-cloak>
+                <div class="block" id="accordeonProjectTimetracker" v-cloak>
 
                     <div id="filter" class="addmenue display-none"> {*Filter Report*}
                         {include file="filtertracker.tpl" }
@@ -76,7 +76,7 @@
                                 <td>
                                     <div class="toggle-in">
                                         <span class="acc-toggle"
-                                              onclick="javascript:accord_tracker.toggle(css('#acc_tracker_content{{$index}}'));"></span>
+                                              onclick="javascript:accord_tracker.toggle(css('#accordeonProjectTimetracker_content{{$index}}'));"></span>
                                         <a href="manageuser.php?action=profile&amp;id={{*track.user}}" title="{{*track.pname}}">
                                             {{*track.uname | truncate '30' }}
                                         </a>
@@ -154,7 +154,7 @@
 
                 var accord_tracker;
                 projectTimetrackerView.afterUpdate(function(){
-                    accord_tracker = new accordion2('accordeonUserTimetracker');
+                    accord_tracker = new accordion2("accordeonProjectTimetracker");
                 });
             </script>
             {/literal}
