@@ -20,9 +20,14 @@
             <h1>{$projectname|truncate:45:"...":true}<span>/ {#tasklists#}</span></h1>
 
             {if $userpermissions.tasks.add}
-                <div class="add-main">
-                    <a id="addtasklists" class="add" href="javascript:blindtoggle('addlist');"
-                       onclick="toggleClass(this,'add-active','add');"><span>{#addtasklist#}</span></a>
+                <div class="add-main" style="left:-60px;">
+                  <form class="main" action="javascript:void(0);">
+                        <fieldset>
+                            <div class="row">
+                                <button onclick = "blindtoggle('addlist');">{#addtasklist#}</button>
+                            </div>
+                        </fieldset>
+                    </form>
                 </div>
             {/if}
 
