@@ -918,7 +918,9 @@ td.message ul {
 .inwrapper img {
 	float: left;
 }
-
+.inwrapper .fileicon{
+    max-height: 32px;
+}
 .itemwrapper {
 	/* in this are all the li */
 }
