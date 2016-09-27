@@ -1,11 +1,11 @@
 <div class="block_in_wrapper">
 	<h2>{#addproject#}</h2>
-	<form id="addprojectform" novalidate class="main" method="post" action="admin.php?action=addpro">
+	<form id="addprojectform" class="main" method="post" action="admin.php?action=addpro">
 		<fieldset>
             <!--projectTemplatesSelect-->
 			<div class="row">
 				<label for="name">{#name#}:</label>
-				<input type="text" class="text" name="name" id="name" required="1" realname="{#name#}" />
+				<input type="text" class="text" name="name" id="name" required="1" />
 			</div>
 
 			<div class="row">
@@ -19,7 +19,7 @@
 
 			<div class="row">
 				<label for="end">{#due#}:</label>
-				<input type="text" class="text" name="end" id="endP" realname="{#due#}" />
+				<input type="text" class="text" name="end" id="endP" />
 			</div>
 
 			<div class="row">
@@ -40,7 +40,7 @@
 
 			<div class = "row">
 				<label>{#customer#}:</label>
-				<select name="company" id="company" realname="{#assignto#}">
+				<select name="company" id="company">
 					<option value="-1">{#chooseone#}</option>
 					{section name=customer loop=$customers}
 						<option value = "{$customers[customer].ID}">{$customers[customer].company}</option>

@@ -2,12 +2,12 @@
 
 	<h2>{#addtask#}</h2>
 
-	<form novalidate id="addtaskform" class="main" method="post" action="managetask.php?action=add&amp;id=">
+	<form id="addtaskform" class="main" method="post" action="managetask.php?action=add&amp;id=">
 		<fieldset>
 
 			<div class="row">
 				<label for="title">{#title#}:</label>
-				<input type="text" class="text" name="title" id="title" realname="{#title#}" required="1" />
+				<input type="text" class="text" name="title" id="title" required="1" />
 			</div>
 
 			<div class="row">
@@ -19,7 +19,7 @@
 
             <div class="row">
                 <label for="start">{#start#}:</label>
-                <input type="text" class="text" name="start" realname="{#start#}" id="start" required="0" />
+                <input type="text" class="text" name="start" realname="{#start#}" id="start" />
             </div>
 
             <div class="datepick">
@@ -38,7 +38,7 @@
 
 			<div class="row">
 				<label for="end">{#end#}:</label>
-				<input type="text" class="text" name="end" realname="{#due#}" id="end{$myprojects[project].ID}" required="1" />
+				<input type="text" class="text" name="end" realname="{#due#}" id="end{$myprojects[project].ID}" required="true" />
 			</div>
 
 			<div class="datepick">
@@ -56,8 +56,8 @@
 
 		    <div class="row">
 		    	<label for="tasklist">{#project#}:</label>
-				<select name="project" id="projectTask" required="1" exclude="-1" realname="{#project#}" onchange="change('manageproject.php?action=tasklists&amp;id='+this.value,'tasklist');document.getElementById('addtaskform').action += this.value;">
-				    <option value="-1" selected="selected">{#chooseone#}</option>
+				<select name="project" id="projectTask" required onchange="change('manageproject.php?action=tasklists&amp;id='+this.value,'tasklist');document.getElementById('addtaskform').action += this.value;">
+				    <option value="" selected="selected">{#chooseone#}</option>
 				    {section name=project loop=$openProjects}
 				    	<option value="{$openProjects[project].ID}">{$openProjects[project].name}</option>
 				    {/section}
@@ -66,8 +66,8 @@
 
 		    <div class="row">
 		    	<label for="tasklist">{#tasklist#}:</label>
-			    <select name="tasklist" id="tasklist" required="1" exclude="-1" realname="{#tasklist#}">
-			    	<option value="-1" selected="selected">{#chooseone#}</option>
+			    <select name="tasklist" id="tasklist" required>
+			    	<option value="" selected="selected">{#chooseone#}</option>
 			    </select>
 		    </div>
 
