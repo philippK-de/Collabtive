@@ -24,7 +24,7 @@
                   <form class="main" action="javascript:void(0);">
                         <fieldset>
                             <div class="row">
-                                <button onclick = "blindtoggle('addlist');">{#addtasklist#}</button>
+                                <button id="addtasklist" onclick = "blindtoggle('addlist');">{#addtasklist#}</button>
                             </div>
                         </fieldset>
                     </form>
