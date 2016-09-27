@@ -22,7 +22,7 @@ if($action == "editform")
 {
 	$customer = $customer->getCompany($id);
 	$template->assign("customer",$customer);
-	$template->display("editcustomer.tpl");
+	$template->display("forms/editcustomer.tpl");
 }
 elseif($action == "edit")
 {

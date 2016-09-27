@@ -33,7 +33,7 @@
 
             {if $userpermissions.tasks.add} {*Add Tasklist*}
                 <div id="addlist" class="addmenue display-none">
-                    {include file="addtasklist.tpl" }
+                    {include file="forms/addtasklist.tpl" }
                 </div>
             {/if} {*Add Tasklist END*}
 

@@ -38,11 +38,11 @@
 
 			<div class="block" id="acc_customers"> {*Add Customer*}
 				<div id="form_addcustomer" class="addmenue display-none">
-					{include file="addcustomer.tpl" customers="1"}
+					{include file="forms/addcustomer.tpl" customers="1"}
 				</div>
 
 				<div id="form_editcustomer" class="addmenue display-none">
-				{include file = "editcustomer.tpl" async="yes"}
+				{include file = "forms/editcustomer.tpl" async="yes"}
 				</div>
 
 				<div class="nosmooth" id="sm_customers">

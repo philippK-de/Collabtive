@@ -27,7 +27,7 @@
     <div id="block_publicMessages" class="block blockaccordion_content overflow-hidden display-none">
         {*Add Message*}
         <div id="addmsg" class="addmenue display-none">
-            {include file="addmessageform.tpl" }
+            {include file="forms/addmessageform.tpl" }
         </div>
         <div class="nosmooth" id="sm_msgs">
             <table id="tablePublicMessages" cellpadding="0" cellspacing="0" border="0">

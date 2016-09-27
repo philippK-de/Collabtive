@@ -183,7 +183,7 @@
 
                         <div class="block accordion_content overflow-hidden display-none" id="trackerhead">
                             <div id="trackerform" class="addmenue">
-                                {include file="addtimetracker.tpl" }
+                                {include file="forms/addtimetracker.tpl" }
                             </div>
                             <div class="tablemenue"></div>
                         </div> {*block end*}
