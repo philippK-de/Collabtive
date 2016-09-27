@@ -5,14 +5,13 @@
 
             <div class="wintools">
                 <loader block="desktoptasks" loader="loader-tasks.gif"></loader>
-                <div class="export-main">
+               <!-- <div class="export-main">
                     <a class="export"><span>{#export#}</span></a>
                     <div class="export-in" style="width:69px;left: -69px;"> {* at two items *}
                         <a class="rss" href="managerss.php?action=rss-tasks&user={$userid}"><span>{#rssfeed#}</span></a>
-                        <!--<a class="ical" href="managetask.php?action=ical"><span>{#icalexport#}</span></a>-->
                         <a class="pdf" href="mytasks.php?action=pdf"><span>{#pdfexport#}</span></a>
                     </div>
-                </div>
+                </div>-->
             </div>
             <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt="" />{#mytasks#}</h2>
         </div>
