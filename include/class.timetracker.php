@@ -176,11 +176,11 @@ class timetracker {
         if ($project > 0) {
             $sql = "SELECT * FROM timetracker WHERE user = $user AND project = $project";
             $num = "SELECT COUNT(*) FROM timetracker WHERE user = $user AND project = $project";
-            $order = " ORDER BY ended ASC";
+            $order = " ORDER BY ID DESC";
         } else {
             $sql = "SELECT * FROM timetracker WHERE user = $user";
             $num = "SELECT COUNT(*) FROM timetracker WHERE user = $user";
-            $order = " ORDER BY ended ASC";
+            $order = " ORDER BY ID DESC";
         }
 
         if ($task > 0) {
@@ -270,11 +270,11 @@ class timetracker {
         if ($user > 0) {
             $sql = "SELECT * FROM timetracker WHERE project = $project AND user = $user";
             $num = "SELECT COUNT(*) FROM timetracker WHERE project = $project AND user = $user";
-            $order = " ORDER BY ended ASC";
+            $order = " ORDER BY ID DESC";
         } else {
             $sql = "SELECT * FROM timetracker WHERE project = $project";
             $num = "SELECT COUNT(*) FROM timetracker WHERE project = $project";
-            $order = " ORDER BY ended ASC";
+            $order = " ORDER BY ID DESC";
         }
 
         if ($task > 0) {
