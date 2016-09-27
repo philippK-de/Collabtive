@@ -12,7 +12,7 @@
 
         <!-- Add Roles-->
         <div id="form_addmyroles" class="addmenue display-none">
-            {include file="addroles.tpl" myroles="1"}
+            {include file="forms/addroles.tpl" myroles="1"}
         </div>
 
         <table cellpadding="0" cellspacing="0" border="0">
@@ -283,7 +283,7 @@
                                 <div class="row-butn-bottom">
                                     <label>&nbsp;</label>
                                     <button type="submit" onfocus="this.blur();">{/literal}{#save#}{literal}</button>
-                                    <button onclick="javascript:accord_roles.activate(document.querySelector('#acc-roles .accordion_toggle')[{$smarty.section.role.index}]);">{/literal}{#cancel#}{literal}
+                                    <button onclick="javascript:accord_roles.activate(css('#acc-roles .accordion_toggle')[{$smarty.section.role.index}]);">{/literal}{#cancel#}{literal}
                                     </button>
                                 </div>
 

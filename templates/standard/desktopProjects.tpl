@@ -14,7 +14,7 @@
     </div>
     <div class="block blockaccordion_content overflow-hidden display-none" id="projecthead">
         <div id="form_addmyproject" class="addmenue display-none">
-            {include file="addproject.tpl" myprojects="1"}
+            {include file="forms/addproject.tpl" myprojects="1"}
         </div>
         <div class="nosmooth" id="sm_deskprojects">
             <table cellpadding="0" cellspacing="0" border="0" id="desktoProjectsTable" v-cloak>

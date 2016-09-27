@@ -12,7 +12,7 @@
                  data-text-edited="{#projectwasedited#}"
                  data-text-added="{#projectwasadded#}"
                  data-text-closed="{#projectwasclosed#}"
-                >
+                    >
             </div>
 
             <h1>{$project.name|truncate:45:"...":true}<span>/ {#overview#}</span></h1>
@@ -21,32 +21,42 @@
                 <ul>
                     {if $userpermissions.projects.close}
                         {if $project.status == 1}
-                            <li class="link" id="closetoggle"><a class="close"
-                                                                 href="javascript:closeElement('closetoggle','manageproject.php?action=close&amp;id={$project.ID}');"
-                                                                 title="{#close#}"></a></li>
+                            <li class="link" id="closetoggle">
+                                <a class="close"
+                                   href="javascript:closeElement('closetoggle','manageproject.php?action=close&amp;id={$project.ID}');"
+                                   title="{#close#}"></a>
+                            </li>
                         {else}
-                            <li class="link" id="closetoggle"><a class="closed" href="manageproject.php?action=open&amp;id={$project.ID}"
-                                                                 title="{#open#}"></a></li>
+                            <li class="link" id="closetoggle">
+                                <a class="closed"
+                                   href="manageproject.php?action=open&amp;id={$project.ID}"
+                                   title="{#open#}"></a>
+                            </li>
                         {/if}
                     {/if}
                     {if $userpermissions.projects.edit}
-                        <li class="link"><a class="edit" href="javascript:void(0);" id="edit_butn"
-                                            onclick="blindtoggle('form_edit');toggleClass(this,'edit-active','edit');toggleClass('sm_project','smooth','nosmooth');toggleClass('sm_project_desc','smooth','nosmooth');"
-                                            title="{#edit#}"></a></li>
+                        <li class="link">
+                            <a class="edit" href="javascript:void(0);" id="edit_butn"
+                               onclick="blindtoggle('form_edit');toggleClass(this,'edit-active','edit');toggleClass('sm_project','smooth','nosmooth');toggleClass('sm_project_desc','smooth','nosmooth');"
+                               title="{#edit#}"></a>
+                        </li>
                     {/if}
                     {if $project.desc}
-                        <li class="link" onclick="blindtoggle('descript');toggleClass('desctoggle','desc_active','desc');"><a class="desc"
-                                                                                                                              id="desctoggle" href="#"
-                                                                                                                              title="{#open#}">{#description#}</a>
+                        <li class="link" onclick="blindtoggle('descript');toggleClass('desctoggle','desc_active','desc');">
+                            <a class="desc" id="desctoggle"
+                               href="#"
+                               title="{#open#}">{#description#}</a>
                         </li>
                     {/if}
                     {if $userpermissions.projects.del}{if $project.budget}
-                        <li><a>{#budget#}: {$project.budget}</a></li>
+                        <li>
+                            <a>{#budget#}: {$project.budget}</a>
+                        </li>
                     {/if}{/if}
                     {if $project.customer.company != ""}
-                        <li class="link" onclick="blindtoggle('customer');toggleClass('custtogle','desc_active','desc');"><a class="desc"
-                                                                                                                             id="custtogle">{#customer#}
-                                : {$project.customer.company}</a></li>
+                        <li class="link" onclick="blindtoggle('customer');toggleClass('custtogle','desc_active','desc');">
+                            <a class="desc" id="custtogle">{#customer#}: {$project.customer.company}</a>
+                        </li>
                     {/if}
                     {if $project.daysleft != "" || $project.daysleft == "0"}
                         <li {if $project.daysleft < 0}class="red" {elseif $project.daysleft == "0"}class="green"{/if}>
@@ -71,11 +81,9 @@
             {/if}
 
             <div class="nosmooth" id="sm_project_customer">
-                <div id="customer" class="descript display-none" >
+                <div id="customer" class="descript display-none">
                     <div class="content-spacer"></div>
-
                     <h2>{$project.customer.company}</h2>
-
                     <b>{#contactperson#}:</b> {$project.customer.contact}
                     <br/>
                     <b>{#email#}:</b> <a href="mailto:{$project.customer.email}">{$project.customer.email}</a>
@@ -194,15 +202,10 @@
                 {/if}
                 {*Timetracker End*}
 
-                {*Activity Log*}
                 <div class="neutral padding-bottom-two-px">
                     {include file="log.tpl" }
                 </div>
-                {*Activity Log End*}
-
-
             </div> {*nosmooth End*}
-
             {*block dashboard end*}
         </div>
 
