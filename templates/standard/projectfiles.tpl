@@ -44,14 +44,14 @@
                 {*Add Folder*}
                 {if $userpermissions.files.add}
                     <div id="form_folder" class="addmenue display-none">
-                        {include file="addfolder.tpl" }
+                        {include file="forms/addfolder.tpl" }
                     </div>
                 {/if}
 
                 {*Add File*}
                 {if $userpermissions.files.add}
                     <div id="form_file" class="addmenue display-none">
-                        <div id="newupload" style="display:block">{include file="addfileform.tpl"}</div>
+                        <div id="newupload" style="display:block">{include file="forms/addfileform.tpl"}</div>
                     </div>
                 {/if}
                 <div class="nosmooth" id="sm_files">

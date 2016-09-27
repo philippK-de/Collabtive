@@ -2,7 +2,7 @@
 	
 	<h2>{#addfolder#}</h2>
 	
-	<form novalidate class="main" action="managefile.php?action=addfolder&amp;id={$project.ID}" method="post" {literal}onsubmit="return validateCompleteForm(this,'input_error');"{/literal}>
+	<form class="main" action="managefile.php?action=addfolder&amp;id={$project.ID}" method="post" {literal}onsubmit="return validateCompleteForm(this,'input_error');"{/literal}>
 		<fieldset>
 			
 			<div class="row">
@@ -17,7 +17,7 @@
 			
 			<div class="row">
 				<label for="foldertitle">{#title#}:</label>
-				<input type="text" class="text" name="foldertitle" id="foldertitle" required="1" />
+				<input type="text" class="text" name="foldertitle" id="foldertitle" required />
 			</div>
 			
 			<input type="hidden" name="visible[]" value="" />

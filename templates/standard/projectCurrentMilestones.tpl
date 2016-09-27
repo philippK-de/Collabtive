@@ -15,7 +15,7 @@
     {*Add Milestone*}
     {if $userpermissions.milestones.add}
         <div id="addstone" class="addmenue display-none">
-            {include file="addmilestone.tpl" }
+            {include file="forms/addmilestone.tpl" }
         </div>
     {/if}
 
