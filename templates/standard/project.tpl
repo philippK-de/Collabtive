@@ -57,7 +57,7 @@
                 <div class="status">
                     {$done}%
                     <div class="statusbar">
-                        <div class="complete" id="completed" style="width:0%;"></div>
+                        <div class="complete" id="completed" style="width:{$done}%;"></div>
                     </div>
                 </div>
             </div>
