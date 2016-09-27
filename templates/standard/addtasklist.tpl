@@ -1,10 +1,10 @@
 <div class = "block_in_wrapper">
 	<h2>{#addtasklist#}</h2>
-	<form novalidate class="main" method="post" action="managetasklist.php?action=add&amp;id={$project.ID}" {literal} onsubmit="return validateCompleteForm(this);" {/literal} >
+	<form class="main" method="post" action="managetasklist.php?action=add&amp;id={$project.ID}" {literal} onsubmit="return validateCompleteForm(this);" {/literal} >
 		<fieldset>
 			<div class="row">
 				<label for="name">{#name#}:</label>
-				<input type="text" class="text" name="name" id="name" required="1" realname="{#name#}" />
+				<input type="text" class="text" name="name" id="name" required />
 			</div>
 			
 			<div class="row">

@@ -19,21 +19,20 @@
 {/if}
 
 			<div class="block_in_wrapper">
-
 				<h2>{#addmilestone#}</h2>
 
-				<form id="addmilestoneform" novalidate class="main" method="post" action="managemilestone.php?action=add&amp;id={$project.ID}">
+				<form id="addmilestoneform" class="main" method="post" action="managemilestone.php?action=add&amp;id={$project.ID}">
 					<fieldset>
 
 						<div class="row">
 							<label for="name">{#name#}:</label>
-							<input type="text" class="text" name="name" id="name" required="1" realname="{#name#}" />
+							<input type="text" class="text" name="name" id="name" required />
 						</div>
 
 						<div class="row">
 							<label for="desc">{#description#}:</label>
 							<div class="editor">
-								<textarea name="desc" id="desc" realname="{#description#}" rows="3" cols="1" ></textarea>
+								<textarea name="desc" id="desc" rows="3" cols="1" ></textarea>
 							</div>
 						</div>
 
@@ -41,7 +40,7 @@
 
 						<div class="row">
 							<label for="end">{#start#}:</label>
-							<input type="text" class="text" name="start" id="start" required="1" realname="{#due#}" />
+							<input type="text" class="text" name="start" id="start" required />
 						</div>
 
 						<div class="datepick">
@@ -59,7 +58,7 @@
 
 						<div class="row">
 							<label for="end">{#due#}:</label>
-							<input type="text" class="text" name="end" id="end" required="1" realname="{#due#}" {if $day|default and $month and $year} value = "{$day}.{$month}.{$year}" {/if} />
+							<input type="text" class="text" name="end" id="end" required {if $day|default and $month and $year} value = "{$day}.{$month}.{$year}" {/if} />
 						</div>
 
 						<div class="datepick">

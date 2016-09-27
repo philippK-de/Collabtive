@@ -2,7 +2,7 @@
 
 	<h2>{#addmessage#}</h2>
 
-	<form novalidate name="addmessageform" id="addmessageform" class="main" method="post" enctype="multipart/form-data" action="managemessage.php?action=add&amp;id={$project.ID}" >
+	<form name="addmessageform" id="addmessageform" class="main" method="post" enctype="multipart/form-data" action="managemessage.php?action=add&amp;id={$project.ID}" >
 		<fieldset>
             <div class="row">
                 <label>Recipient:</label>
@@ -17,13 +17,13 @@
             </div>
 			<div class="row">
 				<label for="title">{#title#}:</label>
-				<input type="text" class="text" name="title" id="title" required="1" realname="{#title#}" />
+				<input type="text" class="text" name="title" id="title" required />
 			</div>
 
 			<div class="row">
 				<label for="text">{#text#}:</label>
 				<div class="editor">
-					<textarea name="text" id="text" realname="{#text#}" rows="3" cols="1"></textarea>
+					<textarea name="text" id="text" rows="3" cols="1"></textarea>
 				</div>
 			</div>
 
@@ -43,7 +43,7 @@
 
 			<div class="row">
 				<label for="milestone">{#milestone#}:</label>
-				<select name="milestone" id="milestone" realname="{#milestone#}">
+				<select name="milestone" id="milestone">
 					<option value="0" selected="selected">{#chooseone#}</option>
 					{section name=stone loop=$milestones}
 						<option value="{$milestones[stone].ID}">{$milestones[stone].name}</option>

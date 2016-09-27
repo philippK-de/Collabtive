@@ -1,6 +1,6 @@
 <div class="block_in_wrapper">
 	<h2>{#addtask#}</h2>
-	<form novalidate
+	<form
           data-index="{$smarty.section.list.index}"
           data-tasklist="{$lists[list].ID}"
           data-project="{$project.ID}"
@@ -11,7 +11,7 @@
 
 			<div class="row">
 				<label for="title">{#title#}:</label>
-				<input type="text" class="text" name="title" id="title" realname="{#title#}" required="1" />
+				<input type="text" class="text" name="title" id="title" required />
 			</div>
 
 			<div class="row">
@@ -24,7 +24,7 @@
 
 			<div class="row">
 				<label for="start_{$lists[list].ID}">{#start#}:</label>
-				<input type="text" class="text" name="start" realname="{#start#}" id="start_{$lists[list].ID}" required="0" />
+				<input type="text" class="text" name="start" id="start_{$lists[list].ID}" required />
 			</div>
 
 			<div class="datepick">
@@ -43,7 +43,7 @@
 
 			<div class="row">
 				<label for="end_{$lists[list].ID}">{#due#}:</label>
-				<input type="text" class="text" name="end" realname="{#due#}" id="end_{$lists[list].ID}" required="1" />
+				<input type="text" class="text" name="end" id="end_{$lists[list].ID}" required />
 			</div>
 
 			<div class="datepick">
@@ -62,8 +62,8 @@
 
 			<div class="row">
 				<label for="assigned">{#assignto#}:</label>
-				<select name="assigned[]" multiple="multiple" style="height:80px;" id="assigned" required="1" exclude="-1" realname="{#assignto#}">
-					<option value="-1">{#chooseone#}</option>
+				<select name="assigned[]" multiple="multiple" style="height:80px;" id="assigned" required>
+					<option value="">{#chooseone#}</option>
 					{section name=user loop=$assignable_users}
 						<option value="{$assignable_users[user].ID}" {if $assignable_users[user].ID == $userid} selected {/if} >{$assignable_users[user].name}</option>
 					{/section}
