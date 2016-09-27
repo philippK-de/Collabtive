@@ -23,6 +23,11 @@
     visibility: visible;
 }
 
+.display-none {
+    display: none;
+}
+
+
 /* Clear float:right/left */
 .clear_both {
     clear: both;
@@ -51,9 +56,6 @@ button:focus {
     outline: 0;
 }
 
-.display-none {
-    display: none;
-}
 /* Width */
 .width-10{
     width: 10%;
@@ -163,6 +165,10 @@ button:focus {
     border-collapse: collapse;
 }
 
+/* LISTS */
+.list-style-none{
+    list-style-type: none;
+}
 /* Pagination */
 .pagination {
     margin-left: 10px;

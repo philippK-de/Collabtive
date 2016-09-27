@@ -45,7 +45,7 @@
                         <a href="javascript:void(0);" id="toggle-{$lists[list].ID}" class="win_block" onclick=""></a>
 
                         <div class="wintools" style="z-index:999;">
-                            <div class="progress display-none" id="progressblockTasks_content{$smarty.section.list.index}" style="width:22px;float:left">
+                            <div class="progress display-none float-left" id="progressblockTasks_content{$smarty.section.list.index}" style="width:22px;">
                                 <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-tasks.gif"/>
                             </div>
                             {if $userpermissions.tasks.close}

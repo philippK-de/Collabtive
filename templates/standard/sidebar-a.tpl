@@ -1,6 +1,6 @@
 <div id="content-right" class="overflow-hidden" data-opened="false">
     <!-- the overlay to be displayed when the sidebar is hidden -->
-    <div id="sidebar-overlay" style="text-align:center;">
+    <div id="sidebar-overlay" class="text-align-center">
        <img src="templates/standard/theme/standard/images/logo-b.png" onclick="toggleSidebar()" alt="" style="cursor: ew-resize" />
     </div>
     <div id="sidebar-content" class="overflow-hidden display-none">

@@ -4,7 +4,7 @@
         <!-- toggle for the blockaccordeon-->
         <a href="javascript:void(0);" id="publicMessages_toggle" class="win_none" onclick=""></a>
         <div class="wintools">
-            <div class="progress display-none" id="progressprojectMessages" style="width:20px;float:left">
+            <div class="progress display-none float-left width-20" id="progressprojectMessages">
                 <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-messages.gif"/>
             </div>
             <div class="export-main">

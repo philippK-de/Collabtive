@@ -82,7 +82,7 @@
                                     <h2>{/literal}{#tasklists#}{literal}</h2>
 
                                     <div class="inwrapper">
-                                        <ul style="list-style-type:none;">
+                                        <ul class="list-style-none">
                                             <li v-for="tasklist in milestone.tasklists">
                                                 <div class="itemwrapper">
                                                     <table cellpadding="0" cellspacing="0" border="0">

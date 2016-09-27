@@ -57,7 +57,7 @@
 	<div class="content-spacer"></div>
 
 	<div class="nosmooth" id="sm_tasklist">
-		<div id="descript" class="descript" style="display:none;">
+		<div id="descript" class="descript display-none">
 			<h2>{$tasklist.name}</h2>
 			{$tasklist.desc}
 			<div class="content-spacer"></div>
@@ -94,7 +94,7 @@
 						<th class="a"></th>
 						<th class="b">{#tasks#}</th>
 						<th class="c">{#user#}</th>
-						<th class="days" style="text-align:right">{#daysleft#}&nbsp;&nbsp;</th>
+						<th class="days text-align-right">{#daysleft#}&nbsp;&nbsp;</th>
 						<th class="tools"></th>
 					</tr>
 				</thead>
@@ -128,7 +128,7 @@
 									</div>
 								</td>
 								<td><a href="manageuser.php?action=profile&amp;id={$tasks[task].user_id}">{$tasks[task].user|truncate:23:"...":true}</a></td>
-								<td style="text-align:right">{$tasks[task].daysleft}&nbsp;&nbsp;</td>
+								<td class="text-align-right">{$tasks[task].daysleft}&nbsp;&nbsp;</td>
 								<td class="tools">
 									{if $userpermissions.tasks.edit}
 										<a class="tool_edit" href="javascript:void(0);"  onclick = "change('managetask.php?action=editform&amp;tid={$tasks[task].ID}&amp;id={$project.ID}','form_addtask');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_addtask');" title="{#edit#}"></a>
@@ -204,7 +204,7 @@
 											</div>
 										</td>
 										<td class="c"><a href="manageuser.php?action=profile&amp;id={$donetasks[donetask].user_id}">{$donetasks[donetask].user|truncate:23:"...":true}</a></td>
-										<td class="days" style="text-align:right">{$donetasks[donetask].daysleft}&nbsp;&nbsp;</td>
+										<td class="days text-align-right">{$donetasks[donetask].daysleft}&nbsp;&nbsp;</td>
 										<td class="tools">
 											{if $userpermissions.tasks.edit}
 												<a class="tool_edit" href="javascript:void(0);" onclick="change('managetask.php?action=editform&amp;tid={$donetasks[donetask].ID}&amp;id={$project.ID}','form_addtask');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_addtask');" title="{#edit#}"></a>

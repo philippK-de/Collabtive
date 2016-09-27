@@ -35,7 +35,7 @@
 
 			{*Edit Task*}
 			{if $userpermissions.tasks.edit}
-				<div id="form_edit" class="addmenue" style="display:none;clear:both;">
+				<div id="form_edit" class="addmenue display-none clear_both">
 					<div class="content-spacer"></div>
 					{include file="edittask.tpl" showhtml="no"}
 				</div>
