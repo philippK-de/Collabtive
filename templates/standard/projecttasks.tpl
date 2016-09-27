@@ -74,7 +74,7 @@
                         {*Add Task*}
                         {if $userpermissions.tasks.add}
                             <div id="form_{$lists[list].ID}" class="addmenue display-none">
-                                {include file="addtask.tpl" }
+                                {include file="forms/addtask.tpl" }
                             </div>
                         {/if}
                         <div class="nosmooth" id="sm_{$lists[list].ID}">
