@@ -93,7 +93,7 @@
 
                 });
             }
-            window.addEventListener("load",initTinyMce());
+            window.addEventListener("load",initTinyMce);
         </script>
     {/literal}
     {/if}
