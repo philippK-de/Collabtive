@@ -52,7 +52,7 @@ class pluginManager
     }
 
     /*
-     * Load a plugin by calling
+     * Load a plugin by calling  $activate();
      */
     function loadPlugin($thePlugin)
     {

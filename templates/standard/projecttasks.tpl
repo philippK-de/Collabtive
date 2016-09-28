@@ -153,7 +153,8 @@
                                              data-slide="{{$index}}">
                                             <div class="acc-in">
                                                 <div class="message-in-fluid">
-                                                    {{{task.text}}}
+                                                    {{{*task.text}}}
+                                                    <taskcomments :taskid="task.ID"></taskcomments>
                                                 </div>
                                             </div>
                                         </div>
@@ -341,7 +342,7 @@
         </div> {*content-left-in END*}
     </div>
     {*content-left END*}
-
+ </div>
 {/if} {*Done Tasklists End*}
 
 <script type="text/javascript" src="include/js/accordion.js"></script>
