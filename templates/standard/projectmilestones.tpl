@@ -22,12 +22,8 @@
                 {include file = "projectUpcomingMilestones.tpl"}
             </div>
 
-            <!--block End-->
-        </div>
-        <!--Miles END-->
-        <div class="content-spacer"></div>
-    </div>
-    <!--content-left-in END-->
+        </div> <!--Miles END-->
+    </div> <!--content-left-in END-->
 </div> <!--content-left END-->
 
 {literal}
@@ -77,5 +73,6 @@
 
 </script>
 {/literal}
+
 {include file="sidebar-a.tpl"}
 {include file="footer.tpl"}
