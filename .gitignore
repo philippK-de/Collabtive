@@ -39,3 +39,6 @@ conference.php
 plugins/plugin.conference.php
 include/class.detectmobile.php
 plugins/plugin.mobileWebApp.php
+managecomments.php
+include/js/components/listCommentsComponent.js
+include/js/components/listCommentsComponent.min.js

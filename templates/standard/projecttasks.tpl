@@ -1,6 +1,5 @@
 {include file="header.tpl" jsload = "ajax"  jsload1 = "tinymce" }
 {include file="tabsmenue-project.tpl" taskstab = "active"}
-
 <div id="content-left">
     <div id="content-left-in">
         <div class="tasks">
@@ -154,7 +153,9 @@
                                             <div class="acc-in">
                                                 <div class="message-in-fluid">
                                                     {{{*task.text}}}
-                                                    <taskcomments :taskid="task.ID"></taskcomments>
+                                                    {/literal}
+                                                    <!--taskComments-->
+                                                    {literal}
                                                 </div>
                                             </div>
                                         </div>
