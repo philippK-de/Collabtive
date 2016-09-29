@@ -125,7 +125,11 @@
                                             <a href="manageuser.php?action=profile&amp;id={{*user.ID}}">{{*user.name}}</a>&nbsp;
                                         </span>
                                     </td>
-                                    <td class="text-align-right">{{*task.daysleft}}&nbsp;&nbsp;</td>
+                                    <td class="text-align-right">
+                                        {/literal}
+                                        <!--autoTimetrackerToggle-->
+                                        {literal}
+                                        {{*task.daysleft}}&nbsp;&nbsp;</td>
                                     <td class="tools">
                                         {/literal}
                                         {if $userpermissions.tasks.edit}

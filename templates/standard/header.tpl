@@ -29,6 +29,8 @@
         <script type="text/javascript" src="include/js/components/paginationComponent.min.js"></script>
         <script type="text/javascript" src="include/js/components/progressComponent.min.js"></script>
         <!--taskCommentsScripts-->
+        <!--autoTimetrackerScripts-->
+
         {literal}
 
         <script type="text/javascript" src="include/js/systemMessage.min.js"></script>

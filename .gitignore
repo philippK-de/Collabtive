@@ -24,6 +24,7 @@ VueCompiler.jar
 
 include/js/views/mobile/*
 managetasksoverview.php
+plugins/*
 plugins/templates/*
 plugins/plugin.ganttChart.php
 plugins/gantt/*
