@@ -62,9 +62,10 @@
                         <a class="tool_edit" href="managemilestone.php?action=editform&amp;mid={{*milestone.ID}}&amp;id={{*milestone.project}}" title="{/literal}{#edit#}"></a>
                     {/if}
                     {if $userpermissions.milestones.del}
+                    {literal}
                         <a class="tool_del"
-                           href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'miles_{$upcomingStones[ustone].ID}\',\'managemilestone.php?action=del&amp;mid={$upcomingStones[ustone].ID}&amp;id={$project.ID}\')');"
-                           title="{#delete#}"></a>
+                        href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','miles_{{*milestone.ID}}','managemilestone.php?action=del&amp;mid={{*milestone.ID}}&amp;id={{*milestone.project}}', projectMilestonesView);"
+                        title="{/literal}{#delete#}"></a>
                     {/if}
                 </td>
             </tr>
@@ -83,7 +84,7 @@
 
                                     <div class="inwrapper">
                                         <ul class="list-style-none">
-                                            <li v-for="tasklist in milestone.tasklists">
+                                            <li class="list-style-none" v-for="tasklist in milestone.tasklists">
                                                 <div class="itemwrapper">
                                                     <table cellpadding="0" cellspacing="0" border="0">
                                                         <tr>
@@ -92,7 +93,7 @@
                                                             <td class="thumb">
                                                                 <a href="managetasklist.php?action=showtasklist&amp;tlid={{tasklist.ID}}&amp;id={{*tasklist.project}}"
                                                                    title="{{*tasklist.name}}">
-                                                                    <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png"
+                                                                    <img src="./templates/standard/theme/standard/images/symbols/tasklist.png"
                                                                          alt=""/>
                                                                 </a>
                                                             </td>
@@ -106,20 +107,17 @@
                                                                    title="{{*tasklist.name}}">
                                                                     {{*tasklist.name | truncate '10' }}
                                                                 </a>
-																							</span>
+                                                            </span>
                                                             </td>
                                                         <tr/>
                                                     </table>
 
                                                 </div>
-                                                {*itemwrapper End*}
-                                            </li>
-                                            {/section} <!--loop Tasklists End-->
+                                            </li><!--loop Tasklists End-->
 
                                         </ul>
                                     </div>
                                     <!--inwrapper End-->
-
                                 </template>
                             </div>
                         </div>

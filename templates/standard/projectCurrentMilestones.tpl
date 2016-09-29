@@ -89,8 +89,8 @@
                                     <h2 v-if="milestone.hasTasklist">{/literal}{#tasklists#}{literal}</h2>
 
                                     <div v-if="milestone.hasTasklist" class="inwrapper">
-                                        <ul style="list-style-type:none;">
-                                            <li v-for="tasklist in milestone.tasklists">
+                                        <ul class="list-style-none">
+                                            <li class="list-style-none" v-for="tasklist in milestone.tasklists">
                                                 <div class="itemwrapper">
 
                                                     <table cellpadding="0" cellspacing="0" border="0">
@@ -101,7 +101,7 @@
                                                                 <a href="managetasklist.php?action=showtasklist&amp;tlid={{*tasklist.ID}}&amp;id={{*tasklist.project}}"
                                                                    title="{{*tasklist.name}}">
                                                                     <img src="./templates/standard/theme/standard/images/symbols/tasklist.png"
-                                                                         style="width: 32px; height: auto;" alt=""/>
+                                                                         class="fileicon" alt=""/>
                                                                 </a>
                                                             </td>
                                                             <td class="rightmen" valign="top">

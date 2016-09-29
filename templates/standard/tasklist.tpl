@@ -5,17 +5,18 @@
 <div id="content-left-in">
 <div class="tasks">
 
-	<div class="infowin_left" style = "display:none;" id = "systemmsg">
-		{if $mode == "edited"}
-			<span class="info_in_yellow"><img src="templates/standard/img/symbols/tasklist.png" alt=""/>{#tasklistwasedited#}</span>
-		{/if}
-	</div>
-
-	{literal}
-		<script type = "text/javascript">
-			apperar = new Effect.Appear('systemmsg', { duration: 2.0 })
-		</script>
-	{/literal}
+    <div class="infowin_left display-none"
+         id="taskSystemMessage"
+         data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png"
+         data-text-deleted="{#taskwasdeleted#}"
+         data-text-edited="{#taskwasedited#}"
+         data-text-added="{#taskwasadded#}"
+         data-text-closed="{#taskwasclosed#}"
+         data-text-opened="{#taskwasopened#}"
+         data-text-assigned="{#taskwasassigned#}"
+         data-text-deassigned="{#taskwasdeassigned#}"
+            >
+    </div>
 
 	<div class="breadcrumb">
 		<a href="manageproject.php?action=showproject&amp;id={$project.ID}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{$projectname|truncate:40:"...":true}</a>
