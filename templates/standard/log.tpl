@@ -43,7 +43,7 @@
         <tr>
             <td style="padding:0" class="symbols">
                 <img style="margin:0 0 0 3px;"
-                     src="./templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/symbols/{{logitem.type}}.png"
+                     v-bind:src="'./templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/symbols/' + logitem.type + '.png'"
                      alt="{{*logitem.type}}" title="{{*logitem.type}}"/>
             </td>
             <td>

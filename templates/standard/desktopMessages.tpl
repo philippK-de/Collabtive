@@ -84,7 +84,8 @@
                                     <div class="message-in-fluid">
                                         <div class="avatar">
                                             <template v-if="item.avatar != ''">
-                                                <img src="thumb.php?width=80&amp;height=80&amp;pic=files/standard/avatar/{{*item.avatar}}" alt=""/>
+                                                <img v-bind:src="'thumb.php?width=80&amp;height=80&amp;pic=files/standard/avatar/' +item.avatar"
+                                                     alt=""/>
                                             </template>
                                             <template v-else>
                                                 <img src="thumb.php?width=80&amp;height=80&amp;pic=templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/no-avatar-male.jpg"/>
@@ -121,7 +122,7 @@
 
                                                                 <a href="managefile.php?action=downloadfile&amp;id={{*file.project}}&amp;file={{*file.ID}}"
                                                                    title="{{*file.name}}">
-                                                                    <img v-bind:src="templates/standard/theme/standard/images/files/{{file.type}}.png"
+                                                                    <img v-bind:src="'templates/standard/theme/standard/images/files/' +file.type +'.png'"
                                                                          alt="{{*file.name}}"/>
                                                                 </a>
                                                             </td>

@@ -34,7 +34,7 @@
                 </tfoot>
 
                 {literal}
-                <tbody v-for="item in items.open" id="proj_{{item.ID}}" class="alternateColors">
+                <tbody v-for="item in items.open" :id="'proj_'+item.ID" class="alternateColors">
 
                 <tr v-bind:class="{ 'marker-late': item.islate, 'marker-today': item.istoday }">
                     <td>
@@ -58,7 +58,7 @@
                     </td>
                     <td>
                         <div class="statusbar_b">
-                            <div class="complete" id="completed" style="width:{{item.done}}%"></div>
+                            <div class="complete" id="completed" v-bind:style="'width:' + item.done + '%'"></div>
                         </div>
                         <span>{{*item.done}}%</span>
                     </td>
