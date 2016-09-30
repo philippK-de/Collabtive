@@ -97,7 +97,7 @@
                                 {literal}
                                 <tbody v-for="task in items.open" class="alternateColors" id="task_{{*task.ID}}" v-cloak>
 
-                                <tr v-bind:class="{ 'marker-late': item.islate, 'marker-today': item.istoday }">
+                                <tr v-bind:class="{ 'marker-late': task.islate, 'marker-today': task.istoday }">
                                     <td>
                                         {/literal}
                                         {if $userpermissions.tasks.close}

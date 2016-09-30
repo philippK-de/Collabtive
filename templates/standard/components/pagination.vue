@@ -6,11 +6,11 @@ pagination
 
         <span id="page{{page.index}}" v-for="page in pages" class="margin-left-two-px">
            <button v-bind:class="currentPage == page.index ? 'paginationActive' : 'paginationInactive'"
-                    onclick="pagination.loadPage({{view}},{{page.index}});">
+                    v-bind:onclick="'pagination.loadPage(' + view +', '+page.index+')'">
                 {{page.index}}
            </button>
         </span>
 
-        <button class="float-none" onclick="pagination.loadNextPage({{view}})">>></button>
+        <button class="float-none" v-bind:onclick="'pagination.loadNextPage(' + view +')'">>></button>
     </span>
 </template>

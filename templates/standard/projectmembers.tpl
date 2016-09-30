@@ -104,7 +104,7 @@
 
                                             <div class="moreinfo-wrapper" v-if="member.avatar != ''">
                                                 <div class="moreinfo display-none" id="info_{$members[member].ID}">
-                                                    <img src="thumb.php?pic=files/standard/avatar/{{*member.avatar}}&amp;width=82"
+                                                    <img :src="'thumb.php?pic=files/standard/avatar/' + member.avatar + '&amp;width=82'"
                                                          alt=""
                                                          onclick="fadeToggle('info_{{*member.ID}}');"/>
                                                             <span class="name">
@@ -151,7 +151,7 @@
     projectMembersView = createView(projectMembers);
 
     projectMembersView.afterLoad(function () {
-        console.log("members view created");
+
     });
 </script>
 {include file="sidebar-a.tpl"}
