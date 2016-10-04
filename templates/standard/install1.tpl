@@ -11,20 +11,45 @@
 								<label for="language" style="width:210px;">{#installerlanguage#}</label>
 								<select name="locale" id="language" onchange="document.forms[0].submit();">
 									<option value="">{#chooseone#}</option>
-									<option value="ar">{#ar#}</option>
-									<option value="da">{#da#}</option>
-									<option value="de">{#de#}</option>
-									<option value="en">{#en#}</option>
-									<option value="es">{#es#}</option>
-									<option value="fi">{#fi#}</option>
-									<option value="fr">{#fr#}</option>
-									<option value="hu">{#hu#}</option>
-									<option value="id">{#id#}</option>
-									<option value="it">{#it#}</option>
-									<option value="nl">{#nl#}</option>
-									<option value="pl">{#pl#}</option>
-									<option value="sr">{#sr#}</option>
-									<option value="zh">{#zh#}</option>
+                                    <option value="al">{#al#}</option>
+                                    <option value="ar">{#ar#}</option>
+                                    <option value="bg">{#bg#}</option>
+                                    <option value="ca">{#ca#}</option>
+                                    <option value="cs">{#cs#}</option>
+                                    <option value="da">{#da#}</option>
+                                    <option value="de">{#de#}</option>
+                                    <option value="el">{#el#}</option>
+                                    <option value="en">{#en#}</option>
+                                    <option value="es">{#es#}</option>
+                                    <option value="et">{#et#}</option>
+                                    <option value="fa">{#fa#}</option>
+                                    <option value="fi">{#fi#}</option>
+                                    <option value="fr">{#fr#}</option>
+                                    <option value="gl">{#gl#}</option>
+                                    <option value="he">{#he#}</option>
+                                    <option value="hr">{#hr#}</option>
+                                    <option value="hu">{#hu#}</option>
+                                    <option value="id">{#id#}</option>
+                                    <option value="it">{#it#}</option>
+                                    <option value="ja">{#ja#}</option>
+                                    <option value="lt">{#lt#}</option>
+                                    <option value="nb">{#nb#}</option>
+                                    <option value="nl">{#nl#}</option>
+                                    <option value="nn">{#nn#}</option>
+                                    <option value="pl">{#pl#}</option>
+                                    <option value="pt">{#pt#}</option>
+                                    <option value="pt_br">{#pt_br#}</option>
+                                    <option value="ro">{#ro#}</option>
+                                    <option value="ru">{#ru#}</option>
+                                    <option value="se">{#se#}</option>
+                                    <option value="sk">{#sk#}</option>
+                                    <option value="sl">{#sl#}</option>
+                                    <option value="sr">{#sr#}</option>
+                                    <option value="tr">{#tr#}</option>
+                                    <option value="uk">{#uk#}</option>
+                                    <option value="vi">{#vi#}</option>
+                                    <option value="zh">{#zh#}</option>
+                                    <option value="zh_tw">{#zh_tw#}</option>
 								</select>
 							</div>
 
@@ -46,15 +71,23 @@
 							<td><strong>{#status#}:</strong></td>
 						</tr>
 						<tr valign="top">
-							<td>PHP 5.5</td>
+							<td>PHP 5.5+</td>
 							{if $phpver >= 5.5}
 								<td><span style="color:green;font-weight:bold;"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/butn-ok.png" alt="OK" /></span></td>
 							{else}
 								<td><span style="color:red;font-weight:bold;"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/butn-notok.png" alt="Not OK" /><br />(PHP {$phpver} - {#phpversion#})</span></td>
 							{/if}
 						</tr>
+                        <tr valign="top">
+                            <td>{#mb_string_enabled#}</td>
+                            {if $is_mbstring_enabled}
+                                <td><span style="color:green;font-weight:bold;"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/butn-ok.png" alt="OK" /></span></td>
+                            {else}
+                                <td><span style="color:red;font-weight:bold;"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/butn-notok.png" alt="Not OK" /><br />{#enable_mb_string#}</span></td>
+                            {/if}
+                        </tr>
 						<tr valign="top">
-							<td>config.php {#iswritable#}</td>
+							<td>'config.php' {#iswritable#}</td>
 							{if $configfile == 1}
 								<td><span style="color:green;font-weight:bold;"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/butn-ok.png" alt="OK" /></span></td>
 							{else}
@@ -62,7 +95,7 @@
 							{/if}
 						</tr>
 						<tr valign="top">
-							<td>/files {#iswritable#}</td>
+							<td>'./files' {#iswritable#}</td>
 							{if $filesdir == 1}
 							<td><span style="color:green;font-weight:bold;"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/butn-ok.png" alt="OK" /></span></td>
 							{else}
@@ -70,19 +103,11 @@
 							{/if}
 						</tr>
 						<tr valign="top">
-							<td>/templates_c {#iswritable#}</td>
+							<td>'./templates_c' {#iswritable#}</td>
 							{if $templatesdir == 1}
 							<td><span style="color:green;font-weight:bold;"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/butn-ok.png" alt="OK" /></span></td>
 							{else}
 							<td><span style="color:red;font-weight:bold;"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/butn-notok.png" alt="Not OK" /><br />{#makedirwritable#}</span></td>
-							{/if}
-						</tr>
-						<tr valign="top">
-							<td>{#mb_string_enabled#}</td>
-							{if $is_mbstring_enabled}
-							<td><span style="color:green;font-weight:bold;"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/butn-ok.png" alt="OK" /></span></td>
-							{else}
-							<td><span style="color:red;font-weight:bold;"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/butn-notok.png" alt="Not OK" /><br />{#enable_mb_string#}</span></td>
 							{/if}
 						</tr>
 					</table>
@@ -94,8 +119,8 @@
 						<h2>2. {#db#}</h2>
 						<form class="main" method="post" action="install.php?action=step2&locale={$locale}">
 							<fieldset>
-								<div class="row" style="padding-bottom:12px;"><i>Select your DB driver</i></div>
-								<label for="db_driver" style="width:210px;">Db Driver:</label>
+								<div class="row" style="padding-bottom:12px;"><i>Select your database driver</i></div>
+								<label for="db_driver" style="width:210px;">Database Driver:</label>
 								<select name="db_driver" id="db_driver">
 								<option value="mysql" onclick="$('dbdata').blindDown();">MySQL</option>
 								<option value="sqlite" onclick="$('dbdata').blindUp();">SQLite</option>

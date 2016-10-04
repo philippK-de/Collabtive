@@ -103,9 +103,10 @@
                 <table class="second-thead" cellpadding="0" cellspacing="0" border="0"
                        onclick="blindtoggle('projectsDoneblock');toggleClass('donebutn','butn_link_active','butn_link');toggleClass('toggle-done','acc-toggle','acc-toggle-active');">
                     <tr>
-                        <td class="a"><span id="toggle-done">{#closedprojects#}</span></td>
-                        <td class="b"></td>
-
+                        <td class="a"></td>
+                        <td class="b" class="cursor-pointer"><span id="toggle-done">{#closedprojects#}</span></td>
+                        <td class="c" class="cursor-pointer"></td>
+                        <td class="d" class="text-align-right"></td>
                         <td class="tools"></td>
                     </tr>
                 </table>
@@ -128,6 +129,8 @@
                             <td class="b">
                                 {{*item.name | truncate '30' }}
                             </td>
+                            <td></td>
+                            <td></td>
                             <td class="tools">
                                 {/literal}
                                 {if $userpermissions.projects.del}
