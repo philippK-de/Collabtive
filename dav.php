@@ -1,23 +1,96 @@
 <?php
 // Files we need
-require_once 'include/Sabre/autoload.php';
+require_once 'include/dav/autoload.php';
 require("init.php");
 // class MyDirectory extends Sabre_DAV_Collection {
-class MyDirectory extends Sabre_DAV_FS_Directory implements Sabre_DAV_ICollection, Sabre_DAV_IQuota {
+use Sabre\DAV;
+
+class MyDirectory extends DAV\Collection
+{
+
     private $myPath;
-    private $proObj;
-    private $user;
+
     function __construct($myPath)
     {
+
         $this->myPath = $myPath;
-        $this->proObj = new project();
         $this->fileObj = new datei();
+        $this->projectObj = new project();
+
     }
-    public function createFile($name, $data = null)
-    {
+
+    /**
+     * Creates a new file in the directory
+     *
+     * Data will either be supplied as a stream resource, or in certain cases
+     * as a string. Keep in mind that you may have to support either.
+     *
+     * After successful creation of the file, you may choose to return the ETag
+     * of the new file here.
+     *
+     * The returned ETag must be surrounded by double-quotes (The quotes should
+     * be part of the actual string).
+     *
+     * If you cannot accurately determine the ETag, you should not return it.
+     * If you don't store the file exactly as-is (you're transforming it
+     * somehow) you should also not return an ETag.
+     *
+     * This means that if a subsequent GET to this new file does not exactly
+     * return the same contents of what was submitted here, you are strongly
+     * recommended to omit the ETag.
+     *
+     * @param string $name Name of the file
+     * @param resource|string $data Initial payload
+     * @return null|string
+     */
+    function createFile($name, $data = null) {
+
         $newPath = $this->myPath . '/' . $name;
         file_put_contents($newPath, $data);
-        $this->fileObj->add_file(basename($newPath), "", 1, 0, "", $newPath, "", "");
+        clearstatcache(true, $newPath);
+
+    }
+
+    function getChildren()
+    {
+        $children = array();
+        // Loop through the directory, and create objects for each node
+        foreach (scandir($this->myPath) as $node) {
+            // Ignoring files staring with .
+            if ($node[0] === '.') {
+                continue;
+            }
+            //if its a directory check if the user belongs to the project
+            if (is_dir($this->myPath . "/" . $node)) {
+                if (chkproject($_SESSION["userid"], $node)) {
+                    $children[] = $this->getChild($node);
+                }
+            } else {
+                $children[] = $this->getChild($node);
+            }
+        }
+        return $children;
+    }
+
+    function getChild($name)
+    {
+        $path = $this->myPath . '/' . $name;
+
+        // We have to throw a NotFound exception if the file didn't exist
+        if (!file_exists($path)) {
+            //split up the display name, to infer the ID which is the real folder name
+            $projectId = explode("-", $name);
+            $path = $this->myPath . "/" . $projectId[1];
+            if (!file_exists($path)) {
+                throw new DAV\Exception\NotFound('The file with name: ' . $projectId[1] . ' could not be found');
+            }
+        }
+        if (is_dir($path)) {
+            return new MyDirectory($path);
+        } else {
+            return new MyFile($path);
+        }
+
     }
     /**
      * Creates a new subdirectory
@@ -25,113 +98,81 @@ class MyDirectory extends Sabre_DAV_FS_Directory implements Sabre_DAV_ICollectio
      * @param string $name
      * @return void
      */
-    public function createDirectory($name)
-    {
+    function createDirectory($name) {
+
         $newPath = $this->myPath . '/' . $name;
         mkdir($newPath);
+        clearstatcache(true, $newPath);
+
     }
     /**
-     * Deletes all files in this directory, and then itself
+     * Checks if a child exists.
      *
-     * @return void
+     * @param string $name
+     * @return bool
      */
-    public function delete()
-    {
-        foreach($this->getChildren() as $child) $child->delete();
-        rmdir($this->path);
-    }
-    function getChildren()
-    {
-        $children = array();
-        // Loop through the directory, and create objects for each node
-        foreach(scandir($this->myPath) as $node) {
-            // Ignoring files staring with .
-            if ($node[0] === '.') continue;
+    function childExists($name) {
 
-            $children[] = $this->getChild($node);
-        }
-
-        return $children;
-    }
-
-    function getChild($name)
-    {
-        if (strstr($name, "-")) {
-            $name = explode("-", $name);
-            $name = $name[1];
-        }
         $path = $this->myPath . '/' . $name;
         // We have to throw a NotFound exception if the file didn't exist
-        if (!file_exists($path)) die('The file with name: ' . $name . ' could not be found');
-        // Some added security
-        if ($name[0] == '.') throw new Sabre_DAV_Exception_NotFound('Access denied');
-
-        if (is_dir($path)) {
-            return new MyDirectory($path);
-        } else {
-            return new MyFile($path);
+        if (!file_exists($path)) {
+            //split up the display name, to infer the ID which is the real folder name
+            $projectId = explode("-", $name);
+            $path = $this->myPath . "/" . $projectId[1];
+            if (!file_exists($path)) {
+                return false;
+            }
         }
-    }
+        return true;
 
-    function childExists($name)
-    {
-        if (strstr($name, "-")) {
-            $name = explode("-", $name);
-            $name = $name[1];
-        }
-        return file_exists($this->myPath . '/' . $name);
     }
 
     function getName()
     {
-        $tmpname = (int) basename($this->myPath);
-        if ($tmpname > 0) {
-            $user = $_SESSION["userid"];
-
-            if (chkproject($user, $tmpname)) {
-                $name = $this->proObj->getProject($tmpname);
-                $name = $name["name"];
-                if ($name and $tmpname) {
-                    return $name . "-" . $tmpname;
-                }
-            }
+        $projectId = basename($this->myPath);
+        $folderName = $this->projectObj->getProject($projectId);
+        //return $folderName["name"] . basename($this->myPath);
+        if ($projectId > 0) {
+            return $folderName["name"] . "-" . $projectId;
         } else {
-            return basename($this->myPath);
+            return $projectId;
         }
     }
 
-    /**
-     * Returns available diskspace information
-     *
-     * @return array
-     */
-    public function getQuotaInfo()
-    {
-        return array(
-            disk_total_space($this->myPath) - disk_free_space($this->myPath),
-            disk_free_space($this->myPath)
-            );
-    }
 }
-class MyFile extends Sabre_DAV_FS_File implements Sabre_DAV_IFile {
+
+class MyFile extends DAV\File
+{
+
     private $myPath;
 
     function __construct($myPath)
     {
         $this->myPath = $myPath;
+        $this->fileObj = new datei();
     }
-    public function put($data)
-    {
-        file_put_contents($this->$myPath, $data);
-    }
+
     function getName()
     {
+        global $url;
+        $subPos = strpos($url, "dav.php/");
+        if($subPos){
+            $url = substr($url, 0, $subPos);
+        }
+        $file = $this->fileObj->getFileByName(basename($this->myPath));
         return basename($this->myPath);
     }
 
     function get()
     {
-        return fopen($this->myPath, 'r');
+        global $url;
+        $file = $this->fileObj->getFileByName(basename($this->myPath));
+        $subPos = strpos($url, "dav.php/");
+        if($subPos){
+            $url = substr($url, 0, $subPos);
+        }
+        return fopen($url . "managefile.php?action=downloadfile&id=$file[project]&file=$file[ID]", 'r');
+        // return fopen($this->myPath,'r');
     }
 
     function getSize()
@@ -143,6 +184,22 @@ class MyFile extends Sabre_DAV_FS_File implements Sabre_DAV_IFile {
     {
         return '"' . md5_file($this->myPath) . '"';
     }
+
+    function put($data){
+        file_put_contents($this->myPath, $data);
+        clearstatcache(true, $this->myPath);
+    }
+
+    /**
+     * Delete the current file
+     *
+     * @return void
+     */
+    function delete() {
+
+        unlink($this->myPath);
+
+    }
     /**
      * Returns the mime-type for a file
      *
@@ -150,69 +207,50 @@ class MyFile extends Sabre_DAV_FS_File implements Sabre_DAV_IFile {
      *
      * @return mixed
      */
-    public function getContentType()
-    {
+    function getContentType() {
+
         return null;
+
     }
-    public function delete()
-    {
-        unlink($this->$myPath);
+    /**
+     * Returns available diskspace information
+     *
+     * @return array
+     */
+    function getQuotaInfo() {
+        $absolute = realpath($this->myPath);
+        return [
+            disk_total_space($absolute) - disk_free_space($absolute),
+            disk_free_space($absolute)
+        ];
+
     }
 }
 
-$auth = new Sabre_HTTP_BasicAuth();
+use Sabre\DAV\Auth;
 
-$result = $auth->getUserPass();
-$aUser = $result[0];
-$aPass = $result[1];
+// Creating the backend.
+$authBackend = new Sabre\DAV\Auth\Backend\BasicCallBack(function ($userName, $password) {
+    $userObj = new user();
+    if ($userObj->login($userName, $password)) {
+        return true;
+    } else {
+        return false;
+    }
 
-$userObj = new user();
+});
+// Creating the plugin.
+$authPlugin = new Auth\Plugin($authBackend);
 
-$profile = $userObj->getProfile($userObj->getId($aUser));
-if (!$profile) {
-    $auth->requireLogin();
+$lockBackend = new DAV\Locks\Backend\File('files/standard/ics/');
+$lockPlugin = new DAV\Locks\Plugin($lockBackend);
 
-    echo "Username doesn't exist!\n";
-    die();
-}
-
-if ($profile["pass"] != sha1(trim($aPass))) {
-    $auth->requireLogin();
-
-    echo "Wrong password!\n";
-    die();
-}
-$userObj->login($aUser, $aPass);
-/*
-if (!$result || $result[0]!=$u || $result[1]!=$p) {
-
-    $auth->requireLogin();
-    echo "Authentication required\n";
-    die();
-
-}
-*/
-// Now we're creating a whole bunch of objects
-// Change public to something else, if you are using a different directory for your files
-// $rootDirectory = new Sabre_DAV_FS_Directory('files/standard');
-$rootDirectory = new MyDirectory('files/standard');
-// The server object is responsible for making sense out of the WebDAV protocol
-// Now we create an ObjectTree, which dispatches all requests to your newly created file system
-$objectTree = new Sabre_DAV_ObjectTree($rootDirectory);
-// The object tree needs in turn to be passed to the server class
-$server = new Sabre_DAV_Server($rootDirectory);
-// If your server is not on your webroot, make sure the following line has the correct information
-// $server->setBaseUri('/~evert/mydavfolder'); // if its in some kind of home directory
-$server->setBaseUri('/test/dav.php/'); // if you can't use mod_rewrite, use server.php as a base uri
-// $server->setBaseUri('/'); // ideally, SabreDAV lives on a root directory with mod_rewrite sending every request to server.php
-// The lock manager is reponsible for making sure users don't overwrite each others changes. Change 'data' to a different
-// directory, if you're storing your data somewhere else.
-$lockBackend = new Sabre_DAV_Locks_Backend_File('files/davdata/');
-$lockPlugin = new Sabre_DAV_Locks_Plugin($lockBackend);
-// $server->addPlugin($lockPlugin);
-$plugin = new Sabre_DAV_Browser_Plugin();
-$server->addPlugin($plugin);
-// All we need to do now, is to fire up the server
+// Make sure there is a directory in your current directory named 'public'. We will be exposing that directory to WebDAV
+$publicDir = new MyDirectory('files/standard');
+$server = new DAV\Server($publicDir);
+$server->setBaseUri('/collabtive-ide/dav.php/');
+// Adding the plugin to the server.
+$server->addPlugin($authPlugin);
+$server->addPlugin($lockPlugin);
+$server->addPlugin(new DAV\Browser\Plugin());
 $server->exec();
-
-?>

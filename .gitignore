@@ -23,6 +23,7 @@ VueCompiler.jar
 *.zip
 
 include/js/views/mobile/*
+include/dav/*
 managetasksoverview.php
 plugins/*
 plugins/templates/*

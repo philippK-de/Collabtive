@@ -469,6 +469,14 @@ class datei
         }
     }
 
+    function getFileByName($name){
+        global $conn;
+        $filesStmt = $conn->prepare("SELECT ID FROM files WHERE name = ?");
+        $filesStmt->execute(array($name));
+
+        $fileId = $filesStmt->fetch();
+        return $this->getFile($fileId["ID"]);
+    }
     /**
      * Move a file to another folder
      *

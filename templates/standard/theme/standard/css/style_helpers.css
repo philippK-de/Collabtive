@@ -26,6 +26,9 @@
 .display-none {
     display: none;
 }
+.display-inline{
+    display:inline;
+}
 
 
 /* Clear float:right/left */
