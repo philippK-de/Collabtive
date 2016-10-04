@@ -1,13 +1,16 @@
 <?php
 error_reporting(0);
-// Check if directory templates_c exists and is writable
+
+// Check if directory 'templates_c' exists and is writable
 if (!file_exists('./templates_c') and !mkdir('./templates_c')){
-	die("Required folder templates_c does not exist and cannot be created. <br>Please create the folder and make it writable in order to proceed.");
+	die("Required folder 'templates_c' does not exist and could not be created. <br>Please create the folder and make it writable in order to proceed.");
 }
+
 if (!is_writable("./templates_c")) {
-	die("Required folder templates_c is not writable. <br>Please make the folder writable in order to proceed.");
+	die("Required folder 'templates_c' is not writable. <br>Please make the folder writable in order to proceed.");
 }
-// check if the settings table / object is present. if yes, assume collabtive is already installed and abort
+
+// check if the settings table / object is present. If yes, assume Collabtive is already installed and abort
 if (!empty($settings)) {
     die("Collabtive seems to be already installed.<br />If this is an error, please clear your database.");
 }
@@ -66,7 +69,7 @@ if (!$action) {
     $template->display("install1.tpl");
 } elseif ($action == "step2") {
     function randomPassword() {
-        $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
+        $alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         $pass = array(); //remember to declare $pass as an array
         $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
 
