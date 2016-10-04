@@ -58,7 +58,7 @@
                                 </div>
                             </td>
                             <td>
-                                <a href="managetask.php?action=showproject&amp;id={{*item.project}}">{{*item.pname}}</a>
+                                <a href="managetask.php?action=showproject&amp;id={{*item.project}}">{{*item.pname | truncate '30' }}</a>
                             </td>
                             <td class="text-align-right">{{*item.daysleft}}&nbsp;&nbsp;</td>
                             <td class="tools">
