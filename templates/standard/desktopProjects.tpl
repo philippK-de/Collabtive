@@ -34,7 +34,7 @@
                 </tfoot>
 
                 {literal}
-                <tbody v-for="item in items.open" :id="'proj_'+item.ID" class="alternateColors">
+                <tbody v-for="item in items.open" id="proj_{{*item.ID}}" class="alternateColors">
 
                 <tr v-bind:class="{ 'marker-late': item.islate, 'marker-today': item.istoday }">
                     <td>
