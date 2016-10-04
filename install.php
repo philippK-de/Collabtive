@@ -170,7 +170,7 @@ if (!$action) {
     }
 
 	//add the first user
-    $usrid = $usr->add($user, "", 0, $pass);
+    $usrid = $usr->add($user, "", "", $pass);
     if (!$usrid) {
         $template->assign("errortext", "Error: Failed to create first user.");
         $template->display("error.tpl");
