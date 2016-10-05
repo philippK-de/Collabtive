@@ -170,7 +170,7 @@ if (isset($userid)) {
     $pluginManager = new pluginManager();
     $pluginManager->loadPlugins();
     //register filter to fix deprecated vue.js syntax
-    $template->registerFilter("pre", filterVueInterpolation);
+   $template->registerFilter("pre", filterVueInterpolation);
 }
 
 

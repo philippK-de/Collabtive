@@ -6,14 +6,6 @@
 
             <div class="wintools">
                 <loader block="desktopmessages" loader="loader-messages.gif"></loader>
-                <!--<div class="export-main">
-                    <a class="export"><span>{#export#}</span></a>
-
-                    <div class="export-in" style="width:46px;left: -46px;"> {* at one item *}
-                        <a class="rss" href="managerss.php?action=mymsgs-rss&amp;user={$userid}"><span>{#rssfeed#}</span></a>
-                        <a class="pdf" href="managemessage.php?action=mymsgs-pdf&amp;id={$userid}"><span>{#pdfexport#}</span></a>
-                    </div>
-                </div> -->
             </div>
             <h2>
                 <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#mymessages#}
@@ -41,8 +33,7 @@
                 </tfoot>
 
                 {literal}
-                <tbody v-for="item in items" class="alternateColors" id="messages_{{*item.ID}}"
-                       rel="{{*item.ID}},{{*item.title}},{{*item.posted}},0,0,0">
+                <tbody v-for="item in items" class="alternateColors" v-bind:id="'messages_' +item.ID">
                 <tr>
                     <td>
                         {/literal}{if $userpermissions.messages.close}{literal}
@@ -52,18 +43,18 @@
                     </td>
                     <td>
                         <div class="toggle-in">
-                            <span id="desktopmessages_toggle{{*item.ID}}"
+                            <span v-bind:id="'desktopmessages_toggle' + item.ID"
                                   class="acc-toggle"
                                   onclick="javascript:accord_msgs.toggle(css('#desktopmessages_content{{$index}}'));"></span>
                             <a href="managemessage.php?action=showmessage&amp;mid={{*item.ID}}&amp;id={{*item.project}}" title="{{*item
-                            .title}}">{{*item.title | truncate '30' }}</a>
+                            .title}}">{{item.title | truncate '30' }}</a>
                         </div>
                     </td>
                     <td>
-                        <a href="managemessage.php?action=showproject&amp;id={{*item.project}}">{{*item.pname | truncate '30' }}</a>
+                        <a v-bind:href="'managemessage.php?action=showproject&amp;id=' + item.project">{{item.pname | truncate '30' }}</a>
                     </td>
                     <td>
-                        <a href="manageuser.php?action=profile&amp;id={{*item.user}}">{{*item.username | truncate '30' }}</a>
+                        <a v-bind:href="'manageuser.php?action=profile&amp;id=' + item.user">{{item.username | truncate '30' }}</a>
                     </td>
                     <td>{{*item.postdate}}</td>
                     <td class="tools">
@@ -99,7 +90,9 @@
 
                                         <div class="content-spacer-b"></div>
                                         <strong>{/literal}{#milestone#}{literal}:</strong>
-                                        <a href="managemilestone.php?action=showmilestone&amp;msid={{*item.milestones.ID}}&amp;id={{*item.milestones.project}}">{{*item.milestones.name}}</a>
+                                        <a v-bind:href="'managemilestone.php?action=showmilestone&amp;msid=' + item.milestones.ID + '&amp;id=' +item.milestones.project">
+                                            {{item.milestones.name}}
+                                        </a>
                                         </p>
                                     </template>
 
@@ -111,7 +104,7 @@
                                     <div v-if="item.hasFiles" class="inwrapper">
                                         <ul>
                                             <li v-for="file in item.files">
-                                                <div class="itemwrapper" id="iw_{{*file.ID}}">
+                                                <div class="itemwrapper" v-bind:id="'iw_' + file.ID">
 
                                                     <table cellpadding="0" cellspacing="0" border="0">
                                                         <tr>
@@ -120,16 +113,16 @@
                                                             </td>
                                                             <td class="thumb">
 
-                                                                <a href="managefile.php?action=downloadfile&amp;id={{*file.project}}&amp;file={{*file.ID}}"
-                                                                   title="{{*file.name}}">
+                                                                <a v-bind:href="'managefile.php?action=downloadfile&amp;id=' + file.project +'&amp;file=' + file.ID"
+                                                                   v-bind:title=file.name>
                                                                     <img v-bind:src="'templates/standard/theme/standard/images/files/' +file.type +'.png'"
-                                                                         alt="{{*file.name}}"/>
+                                                                         v-bind:alt=file.name />
                                                                 </a>
                                                             </td>
                                                             <td class="rightmen" valign="top">
                                                                 <div class="inmenue">
                                                                     <a class="del"
-                                                                       href="managefile.php?action=delete&amp;id={{file.project}}&amp;file={{file].ID}}"
+                                                                       v-bind:href="'managefile.php?action=delete&amp;id=' + file.project + '&amp;file=' + file.ID"
                                                                        title="{#delete#}" onclick="fadeToggle('iw_{{file].ID}}');"></a>
                                                                 </div>
                                                             </td>
@@ -137,8 +130,8 @@
                                                         <tr>
                                                             <td colspan="3">
                                                                 <span class="name">
-                                                                    <a href="managefile.php?action=downloadfile&amp;id={{*file.project}}&amp;file={{*file.ID}}"
-                                                                       title="{{*file.name}}">{{*file.shortName}}</a>
+                                                                    <a v-bind:href="'managefile.php?action=downloadfile&amp;id=' +file.project +'&amp;file=' + file.ID"
+                                                                       v-bind:title=file.name>{{file.shortName}}</a>
                                                                 </span>
                                                             </td>
                                                         <tr/>

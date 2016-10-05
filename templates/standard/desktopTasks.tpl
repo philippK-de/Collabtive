@@ -31,7 +31,7 @@
                     </tfoot>
                  {*Color-Mix*}
                     {literal}
-                    <tbody v-for="item in items" class="alternateColors" id="task_{{*item.ID}}">
+                    <tbody v-for="item in items" class="alternateColors" v-bind:id="'task_' + item.ID">
                         <tr v-bind:class="{ 'marker-late': item.islate, 'marker-today': item.istoday }" >
                             <td>
                                 {/literal}{if $userpermissions.tasks.close}{literal}
@@ -88,7 +88,9 @@
                     <div class="tablemenue-in">
                         {if $userpermissions.tasks.add}
 
-                            <a class="butn_link" href="javascript:void(0);" id="add_butn_mytasks" onclick="blindtoggle('form_addmytask');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_desktoptasks','smooth','nosmooth');">{#addtask#}</a>
+                            <a class="butn_link" href="javascript:void(0);"
+                               id="add_butn_mytasks"
+                               onclick="blindtoggle('form_addmytask');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_desktoptasks','smooth','nosmooth');">{#addtask#}</a>
                         {/if}
                     </div>
                 </div>
