@@ -36,7 +36,7 @@ var handleForm = function (event, view) {
         //string holding the final post body
         var postBody = "";
         //loop over form elements
-        for (i = 0; i < theForm.elements.length; i++) {
+        for (var i = 0; i < theForm.elements.length; i++) {
             //one element
             var element = theForm.elements[i];
             //construct post body

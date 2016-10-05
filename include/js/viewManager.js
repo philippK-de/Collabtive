@@ -229,11 +229,29 @@ function submitForm(event) {
         //string holding the final post body
         var postBody = "";
         //loop over form elements
-        for (i = 0; i < theForm.elements.length; i++) {
+        for (var i = 0; i < theForm.elements.length; i++) {
             //one element
             var element = theForm.elements[i];
             //construct post body
-            if (element.value != undefined) {
+            //if multiple is set, it is a select element that can have multiple selections
+            if(element.attributes.multiple != undefined)
+            {
+                var selectPostStr = "";
+                //loop over the options and assign the selected values to the post body
+                for(var j=0;j<element.options.length;j++)
+                {
+                    var option = element.options[j];
+                    if(option.selected){
+                        selectPostStr += "&" + element.name + "=" + option.value;
+                    }
+                }
+                //if there were selected options, add to postBody
+                if(selectPostStr != ""){
+                    postBody += selectPostStr;
+                }
+            }
+            else if (element.value != undefined) {
+                //otherwhise its an element without multiple selections, so add the element value
                 postBody += "&" + element.name + "=" + element.value;
             }
         }

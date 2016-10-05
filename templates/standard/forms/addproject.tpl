@@ -48,17 +48,16 @@
 				</select>
 			</div>
 
-			<div class="row">
-				<label>{#members#}:</label>
-				<div class="float-left">
-			        {section name=user loop=$users}
-				        <div class="row">
-					        <input type="checkbox" class="checkbox" value="{$users[user].ID}" name="assignto[]" id="{$users[user].ID}" {if $users[user].ID == $userid} checked="checked"{/if} />
-					        <label for="{$users[user].ID}">{$users[user].name}</label><br />
-				      	</div>
-				    {/section}
-			    </div>
-			</div>
+            <div class="row">
+                <label for="assignto">{#members#}:</label>
+                <select name="assignto[]" multiple="multiple" style="height:80px;" id="assignto" required>
+                    <option value="" disabled>{#chooseone#}</option>
+                    {section name=user loop=$users}
+                        <option value="{$users[user].ID}" {if $users[user].ID == $userid} selected {/if} >{$users[user].name}</option>
+                    {/section}
+                </select>
+            </div>
+
 			<input type="hidden" name="assignme" value="1" />
 		    <div class="clear_both_b"></div>
 
