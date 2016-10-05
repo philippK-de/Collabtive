@@ -17,8 +17,8 @@
         </div>
         <!-- container for the blockAccordeon-->
         <div id="projectMessagesContainer">
-        {include file="projectPrivateMessages.tpl"}
-        {include file="projectPublicMessages.tpl"}
+            {include file="projectPrivateMessages.tpl"}
+            {include file="projectPublicMessages.tpl"}
         </div>
     </div>
     <!-- content-left-in END-->

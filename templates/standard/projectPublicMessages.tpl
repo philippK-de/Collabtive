@@ -1,5 +1,5 @@
 <!-- container for the messagesContent accordeon -->
-<div class="msgs" id="publicMessages"  v-cloak  >
+<div class="msgs" id="publicMessages" v-cloak >
     <div class="headline" >
         <!-- toggle for the blockaccordeon-->
         <a href="javascript:void(0);" id="publicMessages_toggle" class="win_none" onclick=""></a>

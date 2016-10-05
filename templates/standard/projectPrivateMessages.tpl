@@ -1,5 +1,5 @@
 <!-- container for the messagesContent accordeon -->
-<div class="msgs" id="privateMessages">
+<div class="msgs" id="privateMessages" v-cloak>
     <div class="headline">
         <!-- toggle for the blockaccordeon-->
         <a href="javascript:void(0);" id="privateMessages_toggle" class="win_none" onclick=""></a>
@@ -142,11 +142,11 @@
                                                     {literal}
                                                     <tr>
                                                         <td colspan="3">
-                                                                        <span class="name">
-																			<a href="managefile.php?action=downloadfile&amp;id={{*file.project}}&amp;file={{*file.ID}}">
-                                                                                {{*file.shortName}}
-                                                                            </a>
-                                                                        </span>
+                                                            <span class="name">
+                                                                <a href="managefile.php?action=downloadfile&amp;id={{*file.project}}&amp;file={{*file.ID}}">
+                                                                    {{*file.shortName}}
+                                                                </a>
+                                                            </span>
                                                         </td>
                                                     <tr/>
                                                 </table>

@@ -312,8 +312,9 @@ class message
 
         while ($messageId = $userMessagesStmt->fetch()) {
             $message = $this->getMessage($messageId["message"]);
-
-            array_push($messages, $message);
+            if($message){
+                array_push($messages, $message);
+            }
         }
 
         if (!empty($messages)) {
