@@ -1,14 +1,7 @@
 var projectMessages = {
-    el: "publicMessages",
+    el: "projectMessagesContainer",
     itemType: "message",
     url: "managemessage.php?action=projectMessages",
-    dependencies: []
-};
-
-var userMessages = {
-    el: "privateMessages",
-    itemType: "message",
-    url: "managemessage.php?action=userMessages",
     dependencies: []
 };
 
@@ -37,7 +30,6 @@ function initializeBlockaccordeon() {
 
 function formSubmited()
 {
-    console.log("formsubmitted");
     blindtoggle('addmsg');
     toggleClass('add_butn','butn_link_active','butn_link');
     toggleClass('sm_msgs','smooth','nosmooth');

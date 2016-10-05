@@ -48,7 +48,7 @@
                 </tr>
                 </tfoot>
                 {literal}
-                <tbody v-for="message in items" class="alternateColors" id="msgs_{{*message.ID}}">
+                <tbody v-for="message in items.public" class="alternateColors" id="msgs_{{*message.ID}}">
                 <tr>
                     <td>
                         {/literal}
@@ -71,7 +71,7 @@
                         <a href="managemessage.php?action=showmessage&amp;mid={{*message.ID}}&amp;id={{*message.project}}#replies">{{*message.replies}}</a>
                         &nbsp;
                     </td>
-                    <td><a href="manageuser.php?action=profile&amp;id={{message.user}}">{{*message.username}}</a></td>
+                    <td><a href="manageuser.php?action=profile&amp;id={{*message.user}}">{{*message.username}}</a></td>
                     <td>{{*message.postdate}}</td>
                     <td class="tools">
                         {/literal}

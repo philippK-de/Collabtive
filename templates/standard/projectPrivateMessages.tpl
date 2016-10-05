@@ -43,7 +43,7 @@
                 </tr>
                 </tfoot>
                 {literal}
-                <tbody v-for="message in items" class="alternateColors" id="privMsgs_{{*message.ID}}">
+                <tbody v-for="message in items.private" class="alternateColors" id="privMsgs_{{*message.ID}}">
                 <tr>
                     <td>
                         {/literal}
@@ -59,14 +59,15 @@
                                     <span class="acc-toggle"
                                           onclick="javascript:accord_user_messages.toggle(css('#privateMessages_content{{$index}}'));"></span>
                             <a href="managemessage.php?action=showmessage&amp;mid={{*message.ID}}&amp;id={{*message.project}}"
-                               title="{{*message.title}}">{{message.title | truncate '30' }}</a>
+                               title="{{*message.title}}">{{*message.title | truncate '30' }}</a>
                         </div>
                     </td>
                     <td class="text-align-right">
-                        <a href="managemessage.php?action=showmessage&amp;mid={{message.ID}}&amp;id={{message.project}}#replies">{{*message.replies}}</a>
+                        <a href="managemessage.php?action=showmessage&amp;mid={{*message.ID}}&amp;id={{*message.project}}#replies">
+                            {{*message.replies}}</a>
                         &nbsp;
                     </td>
-                    <td><a href="manageuser.php?action=profile&amp;id={{message.user}}">{{*message.username}}</a></td>
+                    <td><a href="manageuser.php?action=profile&amp;id={{*message.user}}">{{*message.username}}</a></td>
                     <td>{{*message.postdate}}</td>
                     <td class="tools">
                         {/literal}
@@ -126,7 +127,6 @@
                                                             {/literal}
                                                             <img src="templates/{$settings.template}/theme/{$settings.theme}/images/files/{literal}{{*file.type}}.png"
                                                                  alt=""/>
-                                                            </a>
                                                         </td>
                                                         {/literal}
                                                         <td class="rightmen" valign="top">
@@ -160,7 +160,6 @@
                             </div>
                             <!-- div messages end -->
                         </div>
-        </div>
         </td>
         </tr>
         </tbody>

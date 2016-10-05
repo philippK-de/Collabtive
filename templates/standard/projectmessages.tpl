@@ -17,8 +17,8 @@
         </div>
         <!-- container for the blockAccordeon-->
         <div id="projectMessagesContainer">
-        {include file="projectPublicMessages.tpl"}
         {include file="projectPrivateMessages.tpl"}
+        {include file="projectPublicMessages.tpl"}
         </div>
     </div>
     <!-- content-left-in END-->
@@ -30,18 +30,24 @@
     pagination.itemsPerPage = 20;
     projectMessages.url = projectMessages.url + "&id=" + {/literal}{$project.ID}{literal};
     projectMessagesView = createView(projectMessages);
-
-    userMessages.url = userMessages.url + "&id=" + {/literal}{$project.ID}{literal};
-    userMessagesView = createView(userMessages);
-
     //bind submit handler for the create message form and create the blockaccordeon
     projectMessagesView.afterLoad(function () {
+        console.log("project messages load");
         addMessageForm = document.getElementById("addmessageform");
         formView = projectMessagesView;
         formView.doUpdate = true;
         addMessageForm.addEventListener("submit", submitForm.bind(formView));
 
     });
+
+    //after each update create the inner accordeon
+    var accord_messages;
+    var accord_user_messages;
+    projectMessagesView.afterUpdate(function(){
+        accord_messages = new accordion2('publicMessages');
+        accord_user_messages = new accordion2('privateMessages');
+    });
+
     //initialize blocks accordeon
     //this creates the object on which methods are called later
     accordMessages = new accordion2("projectMessagesContainer", {
@@ -53,18 +59,7 @@
     });
     window.addEventListener("load",initializeBlockaccordeon);
 
-    var accord_messages;
-    var accord_user_messages;
-    //after each update create the inner accordeon
-    projectMessagesView.afterUpdate(function(){
-        accord_messages = new accordion2('publicMessages');
-        //update user messages when a message was added
-        updateView(userMessagesView);
-    });
 
-    userMessagesView.afterUpdate(function(){
-        accord_user_messages = new accordion2('privateMessages');
-    });
 </script>
 {/literal}
 

@@ -326,9 +326,13 @@ elseif($action == "projectMessages")
         $limit = $cleanGet["limit"];
     }
 
+    $userMessages = $messageObj->getUserMessages($userid, $limit, $offset);
     $projectMessages = $messageObj->getProjectMessages($id, $limit, $offset);
 
-    $jsonMessages["items"] = $projectMessages;
+    $messages["public"] = $projectMessages;
+    $messages["private"] = $userMessages;
+
+    $jsonMessages["items"] = $messages;
     $jsonMessages["count"] = $number = $messageObj->countProjectMessages($id);
 
     echo json_encode($jsonMessages);
