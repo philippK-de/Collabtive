@@ -6,14 +6,6 @@
 
         <div class="wintools">
             <loader block="userMessages" loader="loader-messages.gif"></loader>
-            <div class="export-main">
-                <a class="export"><span>{#export#}</span></a>
-
-                <div class="export-in" style="width:46px;left: -46px;"> {*at one item*}
-                    <a class="pdf" href="managemessage.php?action=export-project&amp;id={$project.ID}"><span>{#pdfexport#}</span></a>
-                    <a class="rss" href="managerss.php?action=mymsgs-rss&amp;user={$userid}"><span>{#rssfeed#}</span></a>
-                </div>
-            </div>
         </div>
 
         <h2>
@@ -24,7 +16,7 @@
 
     <!-- contentSlide for the blockAccordeon -->
     <div id="block_privateMessages" class="block blockaccordion_content overflow-hidden display-none">
-        <div class="nosmooth" id="sm_msgs">
+        <div class="nosmooth" id="sm_msgs_private">
             <table id="tablePrivateMessages" cellpadding="0" cellspacing="0" border="0">
                 <thead>
                 <tr>

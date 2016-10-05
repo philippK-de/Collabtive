@@ -25,10 +25,6 @@
 
     <!-- contentSlide for the blockAccordeon -->
     <div id="block_publicMessages" class="block blockaccordion_content overflow-hidden display-none">
-        {*Add Message*}
-        <div id="addmsg" class="addmenue display-none">
-            {include file="forms/addmessageform.tpl" }
-        </div>
         <div class="nosmooth" id="sm_msgs">
             <table id="tablePublicMessages" cellpadding="0" cellspacing="0" border="0">
                 <thead>
@@ -172,17 +168,7 @@
             </table>
         </div>
         <!--smooth End-->
-
-        <div class="tablemenue">
-            <div class="tablemenue-in">
-                {/literal}
-                {if $userpermissions.messages.add}
-                    <a class="butn_link" href="javascript:blindtoggle('addmsg');" id="add_butn"
-                       onclick="toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_msgs','smooth','nosmooth');">{#addmessage#}</a>
-                {/if}
-
-            </div>
-        </div>
+        {/literal}
     </div>
     <!-- block END  -->
     <div class="padding-bottom-two-px"></div>

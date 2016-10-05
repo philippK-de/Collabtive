@@ -18,6 +18,7 @@
 
             <h1>{$projectname|truncate:45:"...":true}<span>/ {#tasklists#}</span></h1>
 
+            {*Add Tasklist*}
             {if $userpermissions.tasks.add}
                 <div class="add-main" style="left:-60px;">
                   <form class="main" action="javascript:void(0);">
@@ -28,13 +29,12 @@
                         </fieldset>
                     </form>
                 </div>
-            {/if}
 
-            {if $userpermissions.tasks.add} {*Add Tasklist*}
                 <div id="addlist" class="addmenue display-none">
                     {include file="forms/addtasklist.tpl" }
                 </div>
-            {/if} {*Add Tasklist END*}
+            {/if}
+            {*Add Tasklist END*}
 
             <div id="blockTasks">
                 {*Tasks*}
