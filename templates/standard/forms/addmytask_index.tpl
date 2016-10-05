@@ -2,7 +2,7 @@
 
 	<h2>{#addtask#}</h2>
 
-	<form id="addtaskform" class="main" method="post" action="managetask.php?action=add&amp;id=">
+	<form id="addtaskform" class="main" method="post" action="managetask.php?action=add&amp;redir=yes&amp;id=">
 		<fieldset>
 
 			<div class="row">

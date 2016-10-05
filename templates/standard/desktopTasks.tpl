@@ -10,7 +10,7 @@
         </div>
         <div class="block blockaccordion_content overflow-hidden display-none" id="taskhead">
             <div id="form_addmytask" class="addmenue display-none">
-                {include file="addmytask_index.tpl" }
+                {include file="forms/addmytask_index.tpl" }
             </div>
             <div class="nosmooth" id="sm_desktoptasks">
                 <table  cellpadding="0" cellspacing="0" border="0" v-cloak>
