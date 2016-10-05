@@ -50,7 +50,7 @@
 					{/section}
 				</select>
 			</div>
-
+           {if $settings.mailnotify == 1}
 			<div class="row">
 				<label>{#notify#}:</label>
 				<select name="sendto[]" multiple style="height:100px;">
@@ -63,6 +63,7 @@
 					{/section}
 				</select>
 			</div>
+            {/if}
 
 			<div class="row-butn-bottom">
 				<label>&nbsp;</label>
