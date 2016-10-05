@@ -50,6 +50,7 @@
 					{/section}
 				</select>
 			</div>
+
            {if $settings.mailnotify == 1}
 			<div class="row">
 				<label>{#notify#}:</label>

@@ -38,7 +38,8 @@
 					<div id="fileInfo1"></div>
 				</div>
 			</div>
-			
+
+            {if $settings.mailnotify == 1}
 			<div class="row">
 				<label>{#notify#}:</label>
 				<select id="sendto" name="sendto[]" multiple style="height:100px;">
@@ -51,6 +52,7 @@
 					{/section}
 				</select>
 			</div>
+            {/if}
 			
 			<div class="row" id="statusrow" style="display:none;">
 				<label>&nbsp;</label><br />
