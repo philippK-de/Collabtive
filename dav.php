@@ -4,8 +4,10 @@ require_once 'include/dav/autoload.php';
 require("init.php");
 // class MyDirectory extends Sabre_DAV_Collection {
 use Sabre\DAV;
+use Sabre\HTTP\URLUtil;
 
-class MyDirectory extends DAV\Collection
+
+class MyDirectory implements DAV\ICollection, DAV\IQuota
 {
 
     private $myPath;
@@ -44,8 +46,12 @@ class MyDirectory extends DAV\Collection
      * @return null|string
      */
     function createFile($name, $data = null) {
-
         $newPath = $this->myPath . '/' . $name;
+        if (!file_exists($newPath)) {
+            //split up the display name, to infer the ID which is the real folder name
+            $pathName = explode("-", $name);
+            $newPath = $this->myPath . "/" . $pathName[1];
+        }
         file_put_contents($newPath, $data);
         clearstatcache(true, $newPath);
 
@@ -99,7 +105,12 @@ class MyDirectory extends DAV\Collection
      * @return void
      */
     function createDirectory($name) {
-
+        $newPath = $this->myPath . '/' . $name;
+        if (!file_exists($newPath)) {
+            //split up the display name, to infer the ID which is the real folder name
+            $pathName = explode("-", $name);
+            $newPath = $this->myPath . "/" . $pathName[1];
+        }
         $newPath = $this->myPath . '/' . $name;
         mkdir($newPath);
         clearstatcache(true, $newPath);
@@ -112,7 +123,6 @@ class MyDirectory extends DAV\Collection
      * @return bool
      */
     function childExists($name) {
-
         $path = $this->myPath . '/' . $name;
         // We have to throw a NotFound exception if the file didn't exist
         if (!file_exists($path)) {
@@ -138,10 +148,61 @@ class MyDirectory extends DAV\Collection
             return $projectId;
         }
     }
+    /**
+     * Returns available diskspace information
+     *
+     * @return array
+     */
+    function getQuotaInfo() {
+        $absolute = realpath($this->myPath);
+        return [
+            disk_total_space($absolute) - disk_free_space($absolute),
+            disk_free_space($absolute)
+        ];
 
+    }
+
+    /**
+     * Deleted the current node
+     *
+     * @return void
+     */
+    function delete()
+    {
+        // TODO: Implement delete() method.
+    }
+
+    /**
+     * Renames the node
+     *
+     * @param string $name The new name
+     * @return void
+     */
+    function setName($name) {
+
+        list($parentPath, ) = URLUtil::splitPath($this->path);
+        list(, $newName) = URLUtil::splitPath($name);
+
+        $newPath = $parentPath . '/' . $newName;
+        rename($this->path, $newPath);
+
+        $this->path = $newPath;
+
+    }
+
+    /**
+     * Returns the last modification time, as a unix timestamp
+     *
+     * @return int
+     */
+    function getLastModified() {
+
+        return filemtime($this->path);
+
+    }
 }
 
-class MyFile extends DAV\File
+class MyFile implements DAV\IFile
 {
 
     private $myPath;
@@ -212,17 +273,25 @@ class MyFile extends DAV\File
         return null;
 
     }
+    function setName($name) {
+
+        list($parentPath, ) = URLUtil::splitPath($this->myPath);
+        list(, $newName) = URLUtil::splitPath($name);
+
+        $newPath = $parentPath . '/' . $newName;
+        rename($this->myPath, $newPath);
+
+        $this->path = $newPath;
+
+    }
     /**
-     * Returns available diskspace information
+     * Returns the last modification time, as a unix timestamp
      *
-     * @return array
+     * @return int
      */
-    function getQuotaInfo() {
-        $absolute = realpath($this->myPath);
-        return [
-            disk_total_space($absolute) - disk_free_space($absolute),
-            disk_free_space($absolute)
-        ];
+    function getLastModified() {
+
+        return filemtime($this->myPath);
 
     }
 }
