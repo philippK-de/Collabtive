@@ -21,41 +21,6 @@ class MyDirectory implements DAV\ICollection, DAV\IQuota
 
     }
 
-    /**
-     * Creates a new file in the directory
-     *
-     * Data will either be supplied as a stream resource, or in certain cases
-     * as a string. Keep in mind that you may have to support either.
-     *
-     * After successful creation of the file, you may choose to return the ETag
-     * of the new file here.
-     *
-     * The returned ETag must be surrounded by double-quotes (The quotes should
-     * be part of the actual string).
-     *
-     * If you cannot accurately determine the ETag, you should not return it.
-     * If you don't store the file exactly as-is (you're transforming it
-     * somehow) you should also not return an ETag.
-     *
-     * This means that if a subsequent GET to this new file does not exactly
-     * return the same contents of what was submitted here, you are strongly
-     * recommended to omit the ETag.
-     *
-     * @param string $name Name of the file
-     * @param resource|string $data Initial payload
-     * @return null|string
-     */
-    function createFile($name, $data = null) {
-        $newPath = $this->myPath . '/' . $name;
-        if (!file_exists($newPath)) {
-            //split up the display name, to infer the ID which is the real folder name
-            $pathName = explode("-", $name);
-            $newPath = $this->myPath . "/" . $pathName[1];
-        }
-        file_put_contents($newPath, $data);
-        clearstatcache(true, $newPath);
-
-    }
 
     function getChildren()
     {
@@ -99,24 +64,6 @@ class MyDirectory implements DAV\ICollection, DAV\IQuota
 
     }
     /**
-     * Creates a new subdirectory
-     *
-     * @param string $name
-     * @return void
-     */
-    function createDirectory($name) {
-        $newPath = $this->myPath . '/' . $name;
-        if (!file_exists($newPath)) {
-            //split up the display name, to infer the ID which is the real folder name
-            $pathName = explode("-", $name);
-            $newPath = $this->myPath . "/" . $pathName[1];
-        }
-        $newPath = $this->myPath . '/' . $name;
-        mkdir($newPath);
-        clearstatcache(true, $newPath);
-
-    }
-    /**
      * Checks if a child exists.
      *
      * @param string $name
@@ -142,6 +89,7 @@ class MyDirectory implements DAV\ICollection, DAV\IQuota
         $projectId = basename($this->myPath);
         $folderName = $this->projectObj->getProject($projectId);
         //return $folderName["name"] . basename($this->myPath);
+        //echo $this->myPath;
         if ($projectId > 0) {
             return $folderName["name"] . "-" . $projectId;
         } else {
@@ -184,9 +132,9 @@ class MyDirectory implements DAV\ICollection, DAV\IQuota
         list(, $newName) = URLUtil::splitPath($name);
 
         $newPath = $parentPath . '/' . $newName;
-        rename($this->path, $newPath);
+        rename($this->myPath, $newPath);
 
-        $this->path = $newPath;
+        $this->myPath = $newPath;
 
     }
 
@@ -197,7 +145,60 @@ class MyDirectory implements DAV\ICollection, DAV\IQuota
      */
     function getLastModified() {
 
-        return filemtime($this->path);
+        return filemtime($this->myPath);
+
+    }
+    /**
+     * Creates a new file in the directory
+     *
+     * Data will either be supplied as a stream resource, or in certain cases
+     * as a string. Keep in mind that you may have to support either.
+     *
+     * After successful creation of the file, you may choose to return the ETag
+     * of the new file here.
+     *
+     * The returned ETag must be surrounded by double-quotes (The quotes should
+     * be part of the actual string).
+     *
+     * If you cannot accurately determine the ETag, you should not return it.
+     * If you don't store the file exactly as-is (you're transforming it
+     * somehow) you should also not return an ETag.
+     *
+     * This means that if a subsequent GET to this new file does not exactly
+     * return the same contents of what was submitted here, you are strongly
+     * recommended to omit the ETag.
+     *
+     * @param string $name Name of the file
+     * @param resource|string $data Initial payload
+     * @return null|string
+     */
+    function createFile($name, $data = null) {
+        $newPath = $this->myPath . '/' . $name;
+        if (!file_exists($newPath)) {
+            //split up the display name, to infer the ID which is the real folder name
+            $pathName = explode("-", $name);
+            $newPath = $this->myPath . "/" . $pathName[1];
+        }
+        file_put_contents($newPath, $data);
+        clearstatcache(true, $newPath);
+
+    }
+    /**
+     * Creates a new subdirectory
+     *
+     * @param string $name
+     * @return void
+     */
+    function createDirectory($name) {
+        $newPath = $this->myPath . '/' . $name;
+        if (!file_exists($newPath)) {
+            //split up the display name, to infer the ID which is the real folder name
+            $pathName = explode("-", $name);
+            $newPath = $this->myPath . "/" . $pathName[1];
+        }
+        $newPath = $this->myPath . '/' . $name;
+        mkdir($newPath);
+        clearstatcache(true, $newPath);
 
     }
 }
@@ -317,7 +318,7 @@ $lockPlugin = new DAV\Locks\Plugin($lockBackend);
 // Make sure there is a directory in your current directory named 'public'. We will be exposing that directory to WebDAV
 $publicDir = new MyDirectory('files/standard');
 $server = new DAV\Server($publicDir);
-$server->setBaseUri('/collabtive-ide/dav.php/');
+$server->setBaseUri('/collabtive-ide/dav.php');
 // Adding the plugin to the server.
 $server->addPlugin($authPlugin);
 $server->addPlugin($lockPlugin);
