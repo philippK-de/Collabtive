@@ -40,7 +40,24 @@ var handleForm = function (event, view) {
             //one element
             var element = theForm.elements[i];
             //construct post body
-            if (element.value != undefined) {
+            //if multiple is set, its a select element
+            if(element.attributes.multiple != undefined)
+            {
+                var selectPostStr = "";
+                //loop over the options and assign the selected values to the post body
+                for(var j=0;j<element.options.length;j++)
+                {
+                    var option = element.options[j];
+                    if(option.selected){
+                         selectPostStr += "&" + element.name + "=" + option.value;
+                    }
+                }
+                if(selectPostStr != ""){
+                    postBody += selectPostStr;
+                }
+            }
+            else if (element.value != undefined) {
+                //these are fields with single values. assign the element value
                 postBody += "&" + element.name + "=" + element.value;
             }
         }
@@ -59,6 +76,10 @@ var handleForm = function (event, view) {
                 blindtoggle("form_" + tasklistID);
                 toggleClass("add_butn_" + tasklistID, "butn_link_active", "butn_link");
                 toggleClass("sm_" + tasklistID, "smooth", "nosmooth");
+            }
+            else
+            {
+                console.log(response);
             }
         });
         ajax.requestType = "POST";
