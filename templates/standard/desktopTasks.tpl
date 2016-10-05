@@ -5,13 +5,6 @@
 
             <div class="wintools">
                 <loader block="desktoptasks" loader="loader-tasks.gif"></loader>
-               <!-- <div class="export-main">
-                    <a class="export"><span>{#export#}</span></a>
-                    <div class="export-in" style="width:69px;left: -69px;"> {* at two items *}
-                        <a class="rss" href="managerss.php?action=rss-tasks&user={$userid}"><span>{#rssfeed#}</span></a>
-                        <a class="pdf" href="mytasks.php?action=pdf"><span>{#pdfexport#}</span></a>
-                    </div>
-                </div>-->
             </div>
             <h2><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt="" />{#mytasks#}</h2>
         </div>
@@ -38,8 +31,7 @@
                     </tfoot>
                  {*Color-Mix*}
                     {literal}
-                    <tbody v-for="item in items" class="alternateColors" id="task_{{*item.ID}}" rel="{{*item.ID}},{{*item.title}},{{*item.daysleft}},
-                    {{*item.pname}}">
+                    <tbody v-for="item in items" class="alternateColors" id="task_{{*item.ID}}">
                         <tr v-bind:class="{ 'marker-late': item.islate, 'marker-today': item.istoday }" >
                             <td>
                                 {/literal}{if $userpermissions.tasks.close}{literal}
@@ -49,16 +41,17 @@
                             </td>
                             <td>
                                 <div class="toggle-in">
-                                    <span id="desktoptasks_toggle{{*item.ID}}"
+                                    <span v-bind:id="'desktoptasks_toggle' + item.ID"
                                           class="acc-toggle"
                                           onclick="javascript:accord_tasks.toggle(document.querySelector('#desktoptasks_content{{$index}}'));"></span>
-                                    <a href="managetask.php?action=showtask&amp;id={{*item.project}}&amp;tid={{*item.ID}}" title="{{*item.title}}">
+                                    <a v-bind:href="'managetask.php?action=showtask&amp;id=' + item.project + '&amp;tid=' + item.ID"
+                                       v-bind:title=item.title>
                                         {{*item.title | truncate '30' }}
                                     </a>
                                 </div>
                             </td>
                             <td>
-                                <a href="managetask.php?action=showproject&amp;id={{*item.project}}">{{*item.pname | truncate '30' }}</a>
+                                <a v-bind:href="'managetask.php?action=showproject&amp;id=' +item.project">{{*item.pname | truncate '30' }}</a>
                             </td>
                             <td class="text-align-right">{{*item.daysleft}}&nbsp;&nbsp;</td>
                             <td class="tools">

@@ -17,7 +17,7 @@
             {include file="forms/addproject.tpl" myprojects="1"}
         </div>
         <div class="nosmooth" id="sm_deskprojects">
-            <table cellpadding="0" cellspacing="0" border="0" id="desktoProjectsTable" v-cloak>
+            <table cellpadding="0" cellspacing="0" border="0" id="desktopProjectsTable" v-cloak>
                 <thead>
                 <tr>
                     <th class="a"></th>
@@ -51,7 +51,8 @@
                                 <span id="desktopprojects_toggle{{*item.ID}}"
                                       class="acc-toggle"
                                       onclick="javascript:accord_projects.toggle(css('#desktopprojects_content{{$index}}'));"></span>
-                            <a href="manageproject.php?action=showproject&amp;id={{*item.ID}}" title="{{*item.name}}">
+                            <a v-bind:href="'manageproject.php?action=showproject&amp;id=' + item.ID"
+                               v-bind:title=item.name>
                                 {{*item.name | truncate '30' }}
                             </a>
                         </div>
@@ -121,7 +122,7 @@
                                 {/literal}
                                 {if $userpermissions.projects.add}
                                     <a class="butn_checked"
-                                       href="manageproject.php?action=open&amp;id={literal}{{*item.ID}}{/literal}"
+                                       v-bind:href="'manageproject.php?action=open&amp;id='{literal}+ item.ID{/literal}"
                                        title="{#open#}"></a>
                                 {/if}
                                 {literal}

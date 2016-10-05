@@ -123,7 +123,7 @@
                                              alt=""/>
                                     </a>
 
-                                    <div id="tasks_modal{{*day.val}}" class="tasksmodal display-none">
+                                    <div v-bind:id="'tasks_modal' + day.val" class="tasksmodal display-none">
                                         <div class="modaltitle">
                                             <img src="./templates/{/literal}{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png"
                                                  alt=""/>
