@@ -169,5 +169,5 @@
     {/literal}
 </div>
 <!-- block END  -->
-<div class="content-spacer"></div>
+<div class="padding-bottom-two-px"></div>
 </div><!--msgs end-->
