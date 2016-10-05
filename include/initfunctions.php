@@ -1,6 +1,9 @@
 <?php
-interface collabtiveBase{
+
+interface collabtiveBase
+{
 }
+
 /* Autoload requires classes on new class() */
 function cl_autoload($class_name)
 {
@@ -11,21 +14,22 @@ function cl_autoload($class_name)
         return false;
     }
 }
+
 spl_autoload_register('cl_autoload');
 
 /**
-* Check if a user is assigned to a project
-*
-* @param int $user ID of the user
-* @param int $project ID of the project
-*
-* @return bool
-*/
+ * Check if a user is assigned to a project
+ *
+ * @param int $user ID of the user
+ * @param int $project ID of the project
+ *
+ * @return bool
+ */
 function chkproject($user, $project)
 {
     global $conn;
-    $user = (int) $user;
-    $project = (int) $project;
+    $user = (int)$user;
+    $project = (int)$project;
     $chk = @$conn->query("SELECT ID FROM projekte_assigned WHERE projekt = $project AND user = $user")->fetch();
     $chk = $chk[0];
 
@@ -37,18 +41,18 @@ function chkproject($user, $project)
 }
 
 /**
-* Read all available languages into an array
-*
-* @param string $locale the name of the locale (en, de, etc)
-*
-* @return array $languages List of available languages
-*/
+ * Read all available languages into an array
+ *
+ * @param string $locale the name of the locale (en, de, etc)
+ *
+ * @return array $languages List of available languages
+ */
 function getAvailableLanguages()
 {
     $dir = scandir(CL_ROOT . "/language/");
     $languages = array();
     if (!empty($dir)) {
-        foreach($dir as $folder) {
+        foreach ($dir as $folder) {
             if ($folder != "." and $folder != "..") {
                 array_push($languages, $folder);
             }
@@ -62,22 +66,22 @@ function getAvailableLanguages()
 }
 
 /**
-* Count how complete a specified locale is , compared to the english one
-*
-* @param string $locale the name of the locale (en, de, etc)
-*
-* @return int $proz Percentage of completeness
-*/
+ * Count how complete a specified locale is , compared to the english one
+ *
+ * @param string $locale the name of the locale (en, de, etc)
+ *
+ * @return int $proz Percentage of completeness
+ */
 function countLanguageStrings($locale)
 {
     if (file_exists(CL_ROOT . "/language/$locale/lng.conf")) {
         $langfile = file("./language/$locale/lng.conf");
-        $cou1 = (int) 0;
-        $cou2 = (int) 0;
+        $cou1 = (int)0;
+        $cou2 = (int)0;
     }
 
     if (!empty($langfile)) {
-        foreach($langfile as $lang) {
+        foreach ($langfile as $lang) {
             if (strstr($lang, "=")) {
                 $cou1 = $cou1 + 1;
                 $slang = explode("=", $lang);
@@ -97,12 +101,12 @@ function countLanguageStrings($locale)
 }
 
 /**
-* Read the language file for a specified locale to an associative array
-*
-* @param string $locale the name of the locale (en, de, etc)
-*
-* @return array $langfile An associative array with the language file strings
-*/
+ * Read the language file for a specified locale to an associative array
+ *
+ * @param string $locale the name of the locale (en, de, etc)
+ *
+ * @return array $langfile An associative array with the language file strings
+ */
 function readLangfile($locale)
 {
     // open the file
@@ -110,7 +114,7 @@ function readLangfile($locale)
     $langkeys = array();
     $langvalues = array();
     // loop through the lines
-    foreach($langfile as $lang) {
+    foreach ($langfile as $lang) {
         // if a line contains = it is not a comment
         if (strstr($lang, "=")) {
             // make an array of the string
@@ -130,8 +134,8 @@ function readLangfile($locale)
 }
 
 /**
-* Detect if Collabtive runs on HTTP or HTTPS
-*/
+ * Detect if Collabtive runs on HTTP or HTTPS
+ */
 function detectSSL()
 {
     if (getArrayVal($_SERVER, "https") == "on") {
@@ -150,8 +154,8 @@ function detectSSL()
 }
 
 /**
-* Get the URL Collabtive is running on
-*/
+ * Get the URL Collabtive is running on
+ */
 function getMyUrl()
 {
     if (isset($_SERVER['REQUEST_URI']) && !empty($_SERVER['REQUEST_URI'])) {
@@ -177,15 +181,15 @@ function getMyUrl()
 }
 
 /**
-* Get a specific value from an array.
-* Used to fetch user input from POST and GET
-* This sanitizes user input with HTMLPurifier
-*
-* @param array $array The array
-* @param string $name The key we want
-*
-* @return string a sanitized version of the array key
-*/
+ * Get a specific value from an array.
+ * Used to fetch user input from POST and GET
+ * This sanitizes user input with HTMLPurifier
+ *
+ * @param array $array The array
+ * @param string $name The key we want
+ *
+ * @return string a sanitized version of the array key
+ */
 function getArrayVal(array $array, $name)
 {
     if (array_key_exists($name, $array)) {
@@ -211,6 +215,7 @@ function cleanArray(array $theArray)
     }
     return $outArray;
 }
+
 function delete_directory($dirname)
 {
     if (is_dir($dirname)) {
@@ -218,7 +223,8 @@ function delete_directory($dirname)
     }
     if (!isset($dir_handle)) {
         return false;
-    } while ($file = readdir($dir_handle)) {
+    }
+    while ($file = readdir($dir_handle)) {
         if ($file != "." && $file != "..") {
             if (!is_dir($dirname . "/" . $file)) {
                 unlink($dirname . "/" . $file);
@@ -242,7 +248,7 @@ function reduceArray(array $arr)
 {
     $num = count($arr);
     $earr = array();
-    for($i = 0;$i < $num;$i++) {
+    for ($i = 0; $i < $num; $i++) {
         if (!empty($arr[$i])) {
             $earr = array_merge($earr, $arr[$i]);
         }
@@ -278,3 +284,24 @@ function clearTemplateCache()
     }
 }
 
+/*
+ * Function to fix deprecated vue syntax
+ * Converts id="foo_{{bar}}" to v-bind:id="'foo'+bar"
+ */
+function filterVueInterpolation($source, Smarty_Internal_Template $localTemplateObj)
+{
+    $attributeInterpolationMatches = [];
+    //find stuff in the form id="something_{{something}}"
+    $attributeInterpolationPattern = "(\w+=)\"(\w+){{(.+)}}\"";
+    $newAttributeValue = "";
+    if (preg_match("/$attributeInterpolationPattern/", $source, $attributeInterpolationMatches)) {
+        //convert notation to v-bind:something="'something' + something"
+        $newAttributeValue = preg_replace("/$attributeInterpolationPattern/", "v-bind:$1\"'$2'+$3\"", $attributeInterpolationMatches[0]);
+        $newAttributeValue = preg_replace("/\*/", "", $newAttributeValue);
+    }
+    //if a new value was constructed match it against the search pattern
+    if ($newAttributeValue) {
+        $source = preg_replace("/$attributeInterpolationPattern/", $newAttributeValue, $source);
+    }
+    return $source;
+}

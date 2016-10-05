@@ -169,6 +169,10 @@ if (isset($userid)) {
     //create plugins manager
     $pluginManager = new pluginManager();
     $pluginManager->loadPlugins();
+     $hrefPattern = "(^\w+=)\"(.+)(\b\w+=)(.+)\"";
+    $template->force_compile = true;
+
+    $template->registerFilter("pre", filterVueInterpolation);
 }
 
 
