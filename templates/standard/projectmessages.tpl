@@ -13,15 +13,16 @@
                  data-text-replied="{#replywasadded#}"
                     >
             </div>
+
             <h1>{$projectname|truncate:45:"...":true}<span>/ {#messages#}</span></h1>
+
             {*Add Message*}
             {if $userpermissions.messages.add}
                 <div class="add-main" style="left:-60px;">
                     <form class="main" action="javascript:void(0);">
                         <fieldset>
                             <div class="row">
-                                <button id="addtasklist"
-                                        onclick = "blindtoggle('addmsg');toggleClass('sm_msgs','smooth','nosmooth');">
+                                <button id="addtasklist" onclick="blindtoggle('addmsg');toggleClass('sm_msgs','smooth','nosmooth');">
                                     {#addmessage#}
                                 </button>
                             </div>
@@ -29,25 +30,28 @@
                     </form>
                 </div>
 
-            <div id="addmsg" class="addmenue display-none">
-                {include file="forms/addmessageform.tpl" }
-                <div class="content-spacer"></div>
-            </div>
+                <div id="addmsg" class="addmenue display-none">
+                    {include file="forms/addmessageform.tpl" }
+                    <div class="content-spacer"></div>
+                </div>
             {/if}
             {*Add Message End*}
+
         </div>
 
         <!-- container for the blockAccordeon-->
 
         <div id="projectMessagesContainer">
-            {include file="projectPrivateMessages.tpl"}
             {include file="projectPublicMessages.tpl"}
+            {include file="projectPrivateMessages.tpl"}
         </div>
-    </div>
-    <!-- content-left-in END-->
+
+    </div> <!-- content-left-in END-->
 </div> <!-- content-left END -->
-    <script type="text/javascript" src="include/js/accordion.js"></script>
-    <script type="text/javascript" src="include/js/views/projectMessages.min.js"></script>
+
+<script type="text/javascript" src="include/js/accordion.js"></script>
+<script type="text/javascript" src="include/js/views/projectMessages.min.js"></script>
+
 {literal}
 <script type="text/javascript">
     pagination.itemsPerPage = 20;
