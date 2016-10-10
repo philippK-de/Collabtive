@@ -123,11 +123,7 @@
                                                         {/literal}
                                                         <td class="rightmen" valign="top">
                                                             <div class="inmenue">
-                                                                {if $userpermissions.files.del}
-                                                                {literal}
-                                                                    <a class="del" href="javascript:confirmfunction
-																					('{/literal}{$langfile.confirmdel}{literal}','deleteElement(\'fli_{{file.ID}}\',\'managefile.php?action=delete&id={{*message.project}}&file={{file.ID}}\')');" title="{/literal}{#delete#}"></a>
-                                                                {/if}
+
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -140,7 +136,6 @@
                                                                 </a>
                                                             </span>
                                                         </td>
-                                                    <tr/>
                                                 </table>
                                             </div>
                                             <!-- itemwrapper End -->
