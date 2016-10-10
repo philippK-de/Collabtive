@@ -31,6 +31,5 @@ function initializeBlockaccordeon() {
 function formSubmited()
 {
     blindtoggle('addmsg');
-    toggleClass('add_butn','butn_link_active','butn_link');
     toggleClass('sm_msgs','smooth','nosmooth');
 }
