@@ -89,7 +89,9 @@ if ($action == "add") {
                     }
                 }
             }
-            if($cleanGet["redir"] == "yes")
+
+
+            if(isset($cleanGet["redir"]) && $cleanGet["redir"] == "yes")
             {
                 $loc = $url . "managetask.php?action=showproject&id=$id&mode=added";
                 header("Location: $loc");
