@@ -294,7 +294,6 @@ if ($action == "addform") {
     $template->assign("projectname", $projectname);
     $template->assign("files", $cleanPost["thefiles"]);
     $template->assign("members", $members);
-    $template->assign("messagenum", $mcount);
     $template->display("projectmessages.tpl");
 }
 elseif($action == "projectMessages")

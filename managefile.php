@@ -228,19 +228,17 @@ if ($action == "uploadAsync") {
    	//get all roles
     $allroles = $rolesobj->getAllRoles(10000);
 
-    //get the viewmode
-    $viewMode = $cleanGet["viewmode"];
     //default to gridview
-    if(!$viewMode)
+    if(!$cleanGet["viewmode"])
     {
-        $viewMode = "grid";
+        $cleanGet["viewmode"] = "grid";
     }
 
     //html page title
     $template->assign("title", $langfile['files']);
     $template->assign("projectname", $pro["name"]);
 
-    $template->assign("viewmode", $viewMode);
+    $template->assign("viewmode", $cleanGet["viewmode"]);
 
     $template->assign("folders", $folders);
     $template->assign("members", $members);

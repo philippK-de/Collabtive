@@ -363,11 +363,9 @@ if ($action == "add") {
     $title = $langfile["timetracker"];
     $template->assign("title", $title);
     $template->assign("ptasks", $projectTasks);
-    $template->assign("start", $cleanGet["start"]);
-    $template->assign("end", $cleanGet["end"]);
     $template->assign("usr", $cleanGet["usr"]);
     $template->assign("task", $cleanGet["task"]);
-    $template->assign("tracker", $track);
+
 
     $template->display("tracker_project.tpl");
 }
