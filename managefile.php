@@ -229,7 +229,7 @@ if ($action == "uploadAsync") {
     $allroles = $rolesobj->getAllRoles(10000);
 
     //default to gridview
-    if(!$cleanGet["viewmode"])
+    if(!isset($cleanGet["viewmode"]) || !$cleanGet["viewmode"])
     {
         $cleanGet["viewmode"] = "grid";
     }

@@ -202,8 +202,6 @@ if ($action == "loginerror") {
     $start = getArrayVal($_GET, "start");
     $end = getArrayVal($_GET, "end");
 
-
-    $template->assign("tracker", $track);
     $profile = $user->getProfile($id);
 
     $title = $langfile['userprofile'];

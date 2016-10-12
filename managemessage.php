@@ -53,21 +53,32 @@ if ($action == "addform") {
         $template->display("error.tpl");
         die();
     }
+
+    $milestone = 0;
+    if(isset($cleanPost["milestone"]))
+    {
+        $milestone = $cleanPost["milestone"];
+    }
+    $title = "";
+    if(isset($cleanPost["title"]))
+    {
+        $title = $cleanPost["title"];
+    }
+
     // add message
-    $messageID = $messageObj->add($id, $cleanPost["title"], $message, $userid, $username, 0, $cleanPost["milestone"]);
+    $messageID = $messageObj->add($id, $title, $message, $userid, $username, 0, $milestone);
 
     if ($messageID) {
         //create a private message
-        if($cleanPost["privateRecipient"] > 0){
+        if(isset($cleanPost["privateRecipient"]) && $cleanPost["privateRecipient"] > 0){
             $messageObj->assignToUser($cleanPost["privateRecipient"], $messageID);
         }
 
-        if ($cleanPost["thefiles"] > 0) {
-            // attach existing file
-            $messageObj->attachFile($cleanPost["thefiles"], $messageID);
-        } elseif ($cleanPost["thefiles"] == 0 and $cleanPost["numfiles"] > 0) {
-            // if upload files are set, upload and attach
-            $messageObj->attachFile(0, $messageID, $id);
+        if(isset($cleanPost["thefiles"])) {
+            if ($cleanPost["thefiles"] > 0) {
+                // attach existing file
+                $messageObj->attachFile($cleanPost["thefiles"], $messageID);
+            }
         }
 
 
@@ -409,7 +420,6 @@ elseif ($action == "showmessage") {
 
     $template->assign("projectname", $projectname);
     $template->assign("title", $cleanPost["title"]);
-    $template->assign("mode", $cleanGet["mode"]);
     $template->assign("message", $message);
     $template->assign("replies", $message["listReplies"]);
     $template->assign("ordner", $ordner);

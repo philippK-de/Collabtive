@@ -272,6 +272,10 @@ function submitForm(event) {
                 catch (e) {
                 }
             }
+            else
+            {
+                console.log(response);
+            }
         });
         ajax.requestType = "POST";
         ajax.postBody = postBody;
