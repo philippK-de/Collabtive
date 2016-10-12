@@ -83,7 +83,7 @@ form.main input {
 	height: 23px;
 	margin-right: 1px;
 	background-position: 0 0;
-	background-prepeat: no-repeat;
+	background-repeat: no-repeat;
 }
 
 .login .username {
@@ -113,10 +113,10 @@ form.main input {
 
 .login form input, .login form label.keep span, .login form label.keep-active span {
 	float: left;
-	width:153px;
+	width: 153px;
 	height: 19px;
 	padding: 4px 6px 0 6px;
-	border:none;
+	border: none;
 	font-size: 12px;
 	background: url(../images/input-bg-a.png) repeat-x 0 0;
 }
@@ -129,7 +129,6 @@ form.main input {
 .login form label.keep:hover span, .login form label.keep-active:hover span {
 	background-position: 0 -23px;
 }
-
 
 #stay {
 	visibility: hidden;
@@ -149,7 +148,6 @@ form.main input {
 	background-position: -32px 0;
 	cursor: pointer;
 }
-
 
 /* ## SEARCH - Form (Sidebar)) ############################### */
 

@@ -16,7 +16,6 @@ $logoName = "#fff";
 $logoSubname = "#6ab0c5";
 $leftBlockBg = "#fff";
 
-//$tabsInfo = "#6d7f93";
 $tabsInfo = "#c5d2e1";
 $mainMenueInfo = "#c5d2e1"; // Info-Span in Mainmenue
 
@@ -466,7 +465,7 @@ td.message ul {
 	margin: 13px 0 0 0;
 	border-top: 1px dotted #000;
 }
-/*width: 220px; */
+
 #content-right {
 	width: 80px;
 	min-height: 20px;
@@ -918,9 +917,11 @@ td.message ul {
 .inwrapper img {
 	float: left;
 }
+
 .inwrapper .fileicon{
     max-height: 32px;
 }
+
 .itemwrapper {
 	/* in this are all the li */
 }
@@ -1196,7 +1197,6 @@ td.message ul {
 	line-height: 22px;
 	margin: 0 0 1px 0;
 	padding: 0 8px 0 8px;
-
 	white-space: nowrap;
 	color: <?php echo $leftBlockBg;
 ?>;
@@ -1533,10 +1533,12 @@ body a.butn_link, body a.butn_link_active {
 	margin: 0;
 	padding: 0;
 }
+
 .msgs .message-fluid {
     margin: 0;
     padding: 0;
 }
+
 .message-in-fluid {
     width: 95%;
     overflow-x: auto;
@@ -1550,24 +1552,25 @@ body a.butn_link, body a.butn_link_active {
 	width: 585px;
 	overflow-x: auto;
 }
-.message-in ul
-{
-padding-left: inherit;
 
+.message-in ul {
+	padding-left: inherit;
 }
 
-.message-in li
-{
-list-style-type: disc;
-padding: 0;
+.message-in li {
+	list-style-type: disc;
+	padding: 0;
 }
+
 .message-in ul, .descript ul {
-list-style-type: disc;
-padding-left: 40px;
+	list-style-type: disc;
+	padding-left: 40px;
 }
+
 .message-in img {
 	height: auto;
 }
+
 .message img {
 	float: left;
 	margin: 0 6px 6px 0;
@@ -1623,7 +1626,6 @@ p.tags-miles {
 	border-bottom: 1px solid <?php echo $leftBlockBg;
 ?>;
 	padding: 12px 0 12px 6px;
-
 }
 
 /* ## Blind Toggles ################################### */
@@ -1793,7 +1795,6 @@ ul.tabs li.system-settings a {
 }
 
 #modal_container.tasksmodal, #modal_container.milesmodal {
-
 	background: <?php echo $tasksC;
 ?>;
 	color: <?php echo $tasksMain;
@@ -2009,7 +2010,6 @@ ul.tabs li.system-settings a {
 }
 
 .status {
-
 	width: 130px;
 	height:	56px;
 	position: relative;
@@ -2062,7 +2062,6 @@ ul.tabs li.system-settings a {
 	height: 25px;
 	padding: 12px 7px 0 6px;
 }
-
 
 .contenttitle_in {
 	float: left;
@@ -2580,12 +2579,15 @@ background: <?php echo $tasksColorB; ?>;
 	background: <?php echo $msgsColorA;
 ?>;
 }
+
 .msgs tbody.alternateColors:nth-child(even) {
-background: url(../images/tables-msgs-bg-a.png);
+	background: url(../images/tables-msgs-bg-a.png);
 }
+
 .msgs tbody.alternateColors:nth-child(odd) {
-background: url(../images/tables-msgs-bg-b.png);
+	background: url(../images/tables-msgs-bg-b.png);
 }
+
 .msgs .color-b {
 	background: <?php echo $msgsColorB;
 ?>;
@@ -2632,6 +2634,7 @@ background: url(../images/tables-msgs-bg-b.png);
     float:none;
     margin:0 0 0 0;
 }
+
 .msgs button.paginationInactive{
     float:none;
     margin:0 0 0 0;
@@ -2659,11 +2662,11 @@ background: url(../images/tables-msgs-bg-b.png);
 }
 
 .user tbody.alternateColors:nth-child(even) {
-background: <?php echo $userColorA;?>;
+	background: <?php echo $userColorA;?>;
 }
 
 .user tbody.alternateColors:nth-child(odd) {
-background: <?php echo $userColorB;?>;
+	background: <?php echo $userColorB;?>;
 }
 
 .user .color-b, .user .content_in_wrapper {
@@ -2762,11 +2765,13 @@ background: <?php echo $userColorB;?>;
 	background: <?php echo $neutralColorB;
 ?>;
 }
+
 .neutral tbody.alternateColors:nth-child(even) {
-background: <?php echo $neutralColorA;?>;
+	background: <?php echo $neutralColorA;?>;
 }
+
 .neutral tbody.alternateColors:nth-child(odd) {
-background: <?php echo $neutralColorB;?>;
+	background: <?php echo $neutralColorB;?>;
 }
 
 .neutral .color-a ul.files table, .neutral .color-b ul.files table {
@@ -2802,6 +2807,7 @@ background: <?php echo $neutralColorB;?>;
 	background: <?php echo $neutralC;
 ?>;
 }
+
 .neutral button.paginationActive{
     background: <?php echo $neutralC;?>;
     font-size:16px;
@@ -2809,6 +2815,7 @@ background: <?php echo $neutralColorB;?>;
     float:none;
     margin:0 0 0 0;
 }
+
 .neutral button.paginationInactive{
     float:none;
     margin:0 0 0 0;
@@ -2840,12 +2847,14 @@ background: <?php echo $neutralColorB;?>;
 	background: <?php echo $timetrackColorB;
 ?>;
 }
+
 .timetrack tbody.alternateColors:nth-child(even) {
-background: <?php echo $timetrackColorA;
+	background: <?php echo $timetrackColorA;
 ?>;
 }
+
 .timetrack tbody.alternateColors:nth-child(odd) {
-background: <?php echo $timetrackColorB;?>
+	background: <?php echo $timetrackColorB;?>
 }
 
 .timetrack .color-a ul.files table, .timetrack .color-b ul.files table {
@@ -2886,6 +2895,7 @@ background: <?php echo $timetrackColorB;?>
 	background: <?php echo $timetrackC;
 ?>;
 }
+
 .timetrack button.paginationActive{
     background: <?php echo $timetrackC;?>;
     font-size:16px;
@@ -2930,12 +2940,15 @@ background: <?php echo $timetrackColorB;?>
 	background: <?php echo $milesColorC;
 ?>;
 }
+
 .miles tbody.alternateColors:nth-child(even) {
-background: <?php echo $milesColorA;?>;
+	background: <?php echo $milesColorA;?>;
 }
+
 .miles tbody.alternateColors:nth-child(odd) {
-background: <?php echo $milesColorB;?>;
+	background: <?php echo $milesColorB;?>;
 }
+
 .miles, .miles a, .miles h1, .miles .block .tablemenue, .miles .block .addmenue, .miles p.tags-miles, .bigcal tbody.content td {
 	border-color: <?php echo $milesMain;
 ?>;
@@ -2977,10 +2990,12 @@ background: <?php echo $milesColorB;?>;
     float:none;
     margin:0 0 0 0;
 }
+
 .miles button.paginationInactive{
     float:none;
     margin:0 0 0 0;
 }
+
 /* FILES COLORS #####################################*/
 
 .files .headline, .files a.butn_link, .files button, .files a.butn_link_active:hover, .files .inmenue a span, .files .moreinfo {
@@ -3050,10 +3065,12 @@ background: <?php echo $milesColorB;?>;
     float:none;
     margin:0 0 0 0;
 }
+
 .files button.paginationInactive{
     float:none;
     margin:0 0 0 0;
 }
+
 /* ## ACCORDION ################ Toggle ############### */
 
 span.acc-toggle, span.acc-toggle-active, .second-thead span.acc-toggle, .second-thead span.acc-toggle-active {

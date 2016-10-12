@@ -110,9 +110,8 @@ $filesColorC = "url(../images/tables-projects-bg-c.png)"; // Files in Messages
 ?>
 
 /*
-##  Visional Arts CSS Framework 1.1 static
-##  Author & Copyright: Marcus Froehner
-##  URL: http://www.visional-arts.de
+##  Visional CSS Framework 3.0 static
+##  Author & Copyright: Marcus Froehner, Philipp Kiszka
 ##  Color Scheme: Eva Kiszka
 */
 
@@ -142,28 +141,6 @@ body a, body a:visited {
 body a:hover {
 	text-decoration: none;
 }
-
-.hidden {
-	visibility:hidden;
-}
-
-.visible {
-	visibility:visible;
-}
-
-.clear_both {
-	clear:both;
-}
-
-.clear_both_b {
-	clear:both;
-	height:15px;
-}
-
-img {
-	border: none;
-}
-
 ::selection {
 	background: <?php echo $colorMain;
 ?> ;
@@ -194,6 +171,7 @@ td.message ul {
 
 
 /* ## Basic-XHTML-Elements ############### END ############## */
+
 
 
 /* ## LOGIN-Elements ################################ */
@@ -448,7 +426,9 @@ td.message ul {
 }
 
 #content-left {
-	width: 742px;
+    //742 is the old block size with the sidebar open
+	//width: 742px;
+	width: 882px;
 	min-height: 100px;
 	background: <?php echo $leftBlockBg;
 ?>;
@@ -496,25 +476,20 @@ td.message ul {
 }
 
 #content-right {
-	width: 220px;
+	width: 80px;
 	min-height: 20px;
 	background: #fff;
 	margin: 0 0 0 0;
-	padding: 0 0 23px 0;
+	padding: 5px 0 5px 0;
 	float: left;
 	color: #598a31;
 }
 
 .content-right-in {
-	width: 184px;
+	//width: 184px;
+	width: 60px;
 	margin: 23px 0 0 18px;
 }
-
-.content-right-in .cloud { /* Tag Cloud */
-	width: 184px;
-	overflow: hidden;
-}
-
 
 .content-right-in a {
 	color: #598a31;
@@ -952,6 +927,10 @@ td.message ul {
 	float: left;
 }
 
+.inwrapper .fileicon{
+    max-height: 32px;
+}
+
 .itemwrapper {
 	/* in this are all the li */
 }
@@ -1227,7 +1206,6 @@ td.message ul {
 	line-height: 22px;
 	margin: 0 0 1px 0;
 	padding: 0 8px 0 8px;
-
 	white-space: nowrap;
 	color: <?php echo $leftBlockBg;
 ?>;
@@ -1357,6 +1335,7 @@ td.message ul {
 /* ## ONLINELISTE ######################################## */
 
 #onlinelist ul {
+	border-bottom: 1px solid #3c5570;
 	float: left;
 	position: relative;
 }
@@ -1364,6 +1343,7 @@ td.message ul {
 #onlinelist li {
 	width: 184px;
 	clear: both;
+	border-top: 1px solid #3c5570;
 }
 
 #onlinelist li a div {
@@ -1473,22 +1453,30 @@ a.win_block {
 	display: block;
 	width: 100%;
 	height: 100%;
-	background: url(../images/win-up.png) no-repeat 678px 8px;
+	background: url(../images/win-up.png) no-repeat 98.5% 8px;
+	//background: url(../images/win-up.png) no-repeat 815px 8px;
+	//background: url(../images/win-up.png) no-repeat 678px 8px;
 }
 
 a.win_block:hover {
-	background-position: 678px -23px;
+	background-position: 98.5% -23px;
+	//background-position: 815px -23px;
+	//background-position: 678px -23px;
 }
 
 a.win_none {
 	display:block;
 	width:100%;
 	height: 100%;
-	background: url(../images/win-up.png) no-repeat 678px -54px;
+	background: url(../images/win-up.png) no-repeat 98.5% -54px;
+	//background: url(../images/win-up.png) no-repeat 815px -54px;
+	//background: url(../images/win-up.png) no-repeat 678px -54px;
 }
 
 a.win_none:hover {
-	background-position: 678px -85px;
+	background-position: 98.5% -85px;
+	//background-position: 815px -85px;
+	//background-position: 678px -85px;
 }
 
 /* ## BUTTON ####################################### */
@@ -1554,6 +1542,16 @@ body a.butn_link, body a.butn_link_active {
 	padding: 0;
 }
 
+.msgs .message-fluid {
+    margin: 0;
+    padding: 0;
+}
+
+.message-in-fluid {
+    width: 95%;
+    overflow-x: auto;
+}
+
 .user .message {
 	width: 567px;
 }
@@ -1562,24 +1560,25 @@ body a.butn_link, body a.butn_link_active {
 	width: 585px;
 	overflow-x: auto;
 }
-.message-in ul
-{
-padding-left;
 
+.message-in ul {
+	padding-left: inherit;
 }
 
-message-in li
-{
-list-style-type: disc;
-padding: 0;
+.message-in li {
+	list-style-type: disc;
+	padding: 0;
 }
+
 .message-in ul, .descript ul {
-list-style-type: disc;
-padding-left: 40px;
+	list-style-type: disc;
+	padding-left: 40px;
 }
+
 .message-in img {
 	height: auto;
 }
+
 .message img {
 	float: left;
 	margin: 0 6px 6px 0;
@@ -1635,7 +1634,6 @@ p.tags-miles {
 	border-bottom: 1px solid <?php echo $leftBlockBg;
 ?>;
 	padding: 12px 0 12px 6px;
-
 }
 
 /* ## Blind Toggles ################################### */
@@ -2019,7 +2017,6 @@ ul.tabs li.system-settings a {
 }
 
 .status {
-
 	width: 130px;
 	height:	56px;
 	position: relative;
@@ -2072,7 +2069,6 @@ ul.tabs li.system-settings a {
 	height: 25px;
 	padding: 12px 7px 0 6px;
 }
-
 
 .contenttitle_in {
 	float: left;
@@ -2304,7 +2300,7 @@ a.dir_up_butn:hover {
 	display: none;
 }
 
-.block table tr.acc td .accordion_content .acc-in {
+.block table tr.acc td .accordion_content,.accordion_content_active .acc-in {
 
 	border-top: 1px solid <?php echo $leftBlockBg;
 ?>;
@@ -2424,13 +2420,16 @@ th.tools, td.tools {
 }
 
 .projects .color-a, .projects .statuswrapper li, .projects .datepick table td, .projects .datepick tr.head td {
-	background: <?php echo $projectsColorA;
-?>;
+	background: <?php echo $projectsColorA;?>;
 }
-
+.projects tbody.alternateColors:nth-child(even) {
+    background: <?php echo $projectsColorA;?>;
+}
+.projects tbody.alternateColors:nth-child(odd) {
+    background: <?php echo $projectsColorB;?>;
+}
 .projects .color-b, .projects .datepick td.wrong, .projects .datepick tr.weekday td {
-	background: <?php echo $projectsColorB;
-?>;
+	background: <?php echo $projectsColorB;?>;
 }
 
 .projects .block, .projects a, .projects h1, .projects .block .tablemenue, .projects .block .addmenue, .projects p.tags-miles {
@@ -2470,10 +2469,20 @@ th.tools, td.tools {
 }
 
 .projects a.butn_link:hover, .projects button:hover, .projects form .fileinput:hover button, .projects a.butn_link_active, .projects .datepick .picker {
-	background: <?php echo $projectsC;
-?>;
+	background: <?php echo $projectsC;?>;
 }
 
+.projects button.paginationActive{
+    background: <?php echo $projectsC;?>;
+    font-size:16px;
+    color:<?php echo $projectsMain;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+.projects button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 /* TASKS COLORS #####################################*/
 
 .tasks .headline, .tasks a.butn_link, .tasks button, .tasks a.butn_link_active:hover, .tasks .inmenue a span, .tasks .moreinfo {
@@ -2494,6 +2503,15 @@ th.tools, td.tools {
 .tasks .color-a, .tasks .datepick table td, .tasks .datepick tr.head td, .tasks .statuswrapper li {
 	background: <?php echo $tasksColorA;
 ?>;
+}
+
+.tasks tbody.alternateColors:nth-child(even) {
+background: <?php echo $tasksColorA;
+?>;
+}
+
+.tasks tbody.alternateColors:nth-child(odd) {
+background: <?php echo $tasksColorB; ?>;
 }
 
 .tasks .color-b, .tasks .datepick td.wrong, .tasks .datepick tr.weekday td {
@@ -2535,6 +2553,17 @@ th.tools, td.tools {
 ?>;
 }
 
+.tasks button.paginationActive{
+    background: <?php echo $tasksC;?>;
+    font-size:16px;
+    color:<?php echo $tasksB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+.tasks button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 
 /* MESSAGES COLORS #################################*/
 
@@ -2556,6 +2585,14 @@ th.tools, td.tools {
 .msgs .color-a, .msgs .statuswrapper li {
 	background: <?php echo $msgsColorA;
 ?>;
+}
+
+.msgs tbody.alternateColors:nth-child(even) {
+	background: url(../images/tables-msgs-bg-a.png);
+}
+
+.msgs tbody.alternateColors:nth-child(odd) {
+	background: url(../images/tables-msgs-bg-b.png);
 }
 
 .msgs .color-b {
@@ -2597,6 +2634,18 @@ th.tools, td.tools {
 ?>;
 }
 
+.msgs button.paginationActive{
+    background: <?php echo $msgsC;?>;
+    font-size:16px;
+    color:<?php echo $msgsB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+
+.msgs button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 /* USER COLORS #################################*/
 
 .user .headline, .user a.butn_link, .user button, .user a.butn_link_active:hover, .user .inmenue a span, .user .moreinfo {
@@ -2617,6 +2666,14 @@ th.tools, td.tools {
 .user .color-a, .user .staterow {
 	background: <?php echo $userColorA;
 ?>;
+}
+
+.user tbody.alternateColors:nth-child(even) {
+	background: <?php echo $userColorA;?>;
+}
+
+.user tbody.alternateColors:nth-child(odd) {
+	background: <?php echo $userColorB;?>;
 }
 
 .user .color-b, .user .content_in_wrapper {
@@ -2658,6 +2715,17 @@ th.tools, td.tools {
 ?>;
 }
 
+.user button.paginationActive{
+    background: <?php echo $userC;?>;
+    font-size:16px;
+    color:<?php echo $userB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+.user button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 /* USER PROFILE */
 
 .user .export-main {
@@ -2705,6 +2773,14 @@ th.tools, td.tools {
 ?>;
 }
 
+.neutral tbody.alternateColors:nth-child(even) {
+	background: <?php echo $neutralColorA;?>;
+}
+
+.neutral tbody.alternateColors:nth-child(odd) {
+	background: <?php echo $neutralColorB;?>;
+}
+
 .neutral .color-a ul.files table, .neutral .color-b ul.files table {
 	background: <?php echo $neutralColorC;
 ?>;
@@ -2739,6 +2815,19 @@ th.tools, td.tools {
 ?>;
 }
 
+.neutral button.paginationActive{
+    background: <?php echo $neutralC;?>;
+    font-size:16px;
+    color:<?php echo $neutralB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+
+.neutral button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
+
 /* TIMETRACKING COLORS #################################*/
 
 .timetrack .headline, .timetrack a.butn_link, .timetrack button, .timetrack a.butn_link_active:hover {
@@ -2764,6 +2853,15 @@ th.tools, td.tools {
 .timetrack .color-b, .timetrack .datepick td.wrong, .timetrack .datepick tr.weekday td {
 	background: <?php echo $timetrackColorB;
 ?>;
+}
+
+.timetrack tbody.alternateColors:nth-child(even) {
+	background: <?php echo $timetrackColorA;
+?>;
+}
+
+.timetrack tbody.alternateColors:nth-child(odd) {
+	background: <?php echo $timetrackColorB;?>
 }
 
 .timetrack .color-a ul.files table, .timetrack .color-b ul.files table {
@@ -2805,6 +2903,19 @@ th.tools, td.tools {
 ?>;
 }
 
+.timetrack button.paginationActive{
+    background: <?php echo $timetrackC;?>;
+    font-size:16px;
+    color:<?php echo $timetrackB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+
+.timetrack button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
+
 /* MILESTONES COLORS #################################*/
 
 .miles .headline, .miles a.butn_link, .miles button, .miles a.butn_link_active:hover, .miles .calinmenue ul {
@@ -2835,6 +2946,14 @@ th.tools, td.tools {
 .miles .color-a ul.files table, .miles .color-b ul.files table {
 	background: <?php echo $milesColorC;
 ?>;
+}
+
+.miles tbody.alternateColors:nth-child(even) {
+	background: <?php echo $milesColorA;?>;
+}
+
+.miles tbody.alternateColors:nth-child(odd) {
+	background: <?php echo $milesColorB;?>;
 }
 
 .miles, .miles a, .miles h1, .miles .block .tablemenue, .miles .block .addmenue, .miles p.tags-miles, .bigcal tbody.content td {
@@ -2869,6 +2988,19 @@ th.tools, td.tools {
 .miles a.butn_link:hover, .miles button:hover, .miles form .fileinput:hover button, .miles a.butn_link_active, .miles .datepick .picker {
 	background: <?php echo $milesC;
 ?>;
+}
+
+.miles button.paginationActive{
+    background: <?php echo $milesC;?>;
+    font-size:16px;
+    color:<?php echo $milesB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+
+.miles button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
 }
 
 /* FILES COLORS #####################################*/
@@ -2931,6 +3063,19 @@ th.tools, td.tools {
 .files a.butn_link:hover, .files button:hover, .files form .fileinput:hover button, .files a.butn_link_active, .files .datepick .picker {
 	background: <?php echo $filesC;
 ?>;
+}
+
+.files button.paginationActive{
+    background: <?php echo $filesC;?>;
+    font-size:16px;
+    color:<?php echo $filesB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+
+.files button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
 }
 
 /* ## ACCORDION ################ Toggle ############### */

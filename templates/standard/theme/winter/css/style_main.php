@@ -16,9 +16,6 @@ $logoName = "#fff";
 $logoSubname = "#4B6EB2";
 $leftBlockBg = "#fff";
 
-$textColor = "#4566A4";
-
-//$tabsInfo = "#6d7f93";
 $tabsInfo = "#4B6EB2";
 $mainMenueInfo = "#4B6EB2"; // Info-Span in Mainmenue
 
@@ -29,12 +26,9 @@ $greenbg = "#e0f1db";
 $red = "#be4c43";
 $redbg = "#e7dcda";
 
-
-
 $projectsMain = "#96B4DE";
 $projectsB = "#CCCCCC"; // Borders in Forms
 $projectsC = "#7F97BC"; // Buttons Hover
-//Blockhead
 $projectsBlockhead = "url(../images/bg_table.png)";
 $projectsTablehead = "url(../images/bg_th.png)";
 $projectsTableSecondhead = "url(../images/tables-projects-sechead.png)"; // closed Things
@@ -116,9 +110,8 @@ $filesColorC = "url(../images/tables-files-bg-c.png)"; // Files in Messages
 ?>
 
 /*
-##  Visional Arts CSS Framework 1.1 static
-##  Author & Copyright: Marcus Fröhner
-##  URL: http://www.visional-arts.de
+##  Visional CSS Framework 3.0 static
+##  Author & Copyright: Marcus Froehner, Philipp Kiszka
 */
 
 @import url("style_form.css");
@@ -147,28 +140,6 @@ body a, body a:visited {
 body a:hover {
 	text-decoration: none;
 }
-
-.hidden {
-	visibility:hidden;
-}
-
-.visible {
-	visibility:visible;
-}
-
-.clear_both {
-	clear:both;
-}
-
-.clear_both_b {
-	clear:both;
-	height:15px;
-}
-
-img {
-	border: none;
-}
-
 ::selection {
 	background: <?php echo $colorMain;
 ?> ;
@@ -199,6 +170,7 @@ td.message ul {
 
 
 /* ## Basic-XHTML-Elements ############### END ############## */
+
 
 
 /* ## LOGIN-Elements ################################ */
@@ -450,7 +422,9 @@ td.message ul {
 }
 
 #content-left {
-	width: 742px;
+    //742 is the old block size with the sidebar open
+	//width: 742px;
+	width: 882px;
 	min-height: 100px;
 	background: <?php echo $leftBlockBg;
 ?>;
@@ -498,29 +472,23 @@ td.message ul {
 }
 
 #content-right {
-	width: 220px;
+	width: 80px;
 	min-height: 20px;
 	background: url(../images/color-a.png) repeat 0 0;
 	margin: 0 0 0 0;
-	padding: 0 0 23px 0;
+	padding: 5px 0 5px 0;
 	float: left;
 	color: #6d7f93;
 }
 
 .content-right-in {
-	width: 184px;
+	//width: 184px;
+	width: 60px;
 	margin: 23px 0 0 18px;
 }
 
-.content-right-in .cloud { /* Tag Cloud */
-	width: 184px;
-	overflow: hidden;
-}
-
-
 .content-right-in a {
 	color: #FFFFFF;
-//	color: <?php echo $textColor;?>
 }
 
 .content-right-in a:hover {
@@ -667,8 +635,269 @@ td.message ul {
 
 /* ## EXPORT-MAIN ##################################### */
 
-<?php include "export.css";
-?>
+.export-main, .add-main {
+	float: right;
+	width: 30px;
+	height: 26px;
+	position: relative;
+	left: 0;
+	top: -41px;
+	margin: 0 9px -26px 0;
+	background-repeat: no-repeat;
+	background-position: right 0;
+	z-index: 9;
+}
+
+
+
+.add-main {
+	width: 19px;
+}
+
+.wintools .export-main {
+	position: relative;
+	top: 0;
+	z-index: 1;
+	margin: 0;
+	float: left;
+}
+
+.export-main a span, .wintools a span, .add-main a span {
+	display: none;
+	white-space: nowrap;
+}
+
+.export-main a:hover span, .export-main .export-in a:hover span, .wintools a:hover span, .add-main a:hover span {
+	display: block;
+	height: 21px;
+	line-height: 21px;
+	position: absolute;
+	top: -34px;
+	right: 0;
+	z-index: 9;
+	color: <?php echo $colorMain; ?>;
+	font-size: 12px;
+	background: <?php echo $leftBlockBg; ?>;
+	padding: 0 7px 0 7px;
+	-moz-border-radius-topleft: 2px;
+	-moz-border-radius-topright: 2px;
+	-webkit-border-top-left-radius: 2px;
+	-webkit-border-top-right-radius: 2px;
+}
+
+.wintools .export-main a:hover span, .wintools .export-main .export-in a:hover span, .wintools a:hover span {
+	top: -28px;
+	color: <?php echo $leftBlockBg; ?>;
+	font-weight: bold;
+}
+
+
+.export-main .export-in a:hover span {
+	right: -30px;
+}
+
+.export-main:hover, .add-main:hover {
+	cursor: pointer;
+	background-position: right -31px;
+}
+
+.export-in {
+	display: none;
+	position: absolute;
+	top: 0;
+	z-index: 8;
+	right: 30px;
+	height: 100%;
+	float: left;
+}
+
+.export-main:hover .export-in {
+	display: block;
+}
+
+.export-main a, .wintools a, .add-main a {
+	float: left;
+	display: block;
+	width: 19px;
+	height: 100%;
+	margin-left: 4px;
+	background-repeat: no-repeat;
+	background-position: 0 0;
+}
+
+.toolwrapper {
+	float: left;
+	height: 100%;
+	margin-left: 5px;
+}
+
+.projects .export-main, .projects .export-main a {
+	background-image: url(../images/export-tasks.png);
+}
+
+.projects .wintools .export-main, .projects .wintools .export-main a {
+	background-image: url(../images/export-headline.png);
+}
+
+.projects .wintools .export-main a:hover span, .projects .wintools a:hover span {
+	background: <?php echo $projectsMain; ?>;
+}
+
+.tasks .export-main, .tasks .export-main a {
+	background-image: url(../images/export-tasks.png);
+}
+
+.tasks .wintools .export-main, .tasks .wintools .export-main a {
+	background-image: url(../images/export-headline.png);
+}
+
+.tasks .wintools .export-main a:hover span, .tasks .wintools a:hover span, .wintools a:hover span {
+	background: <?php echo $tasksMain; ?>;
+}
+
+.msgs .export-main, .msgs .export-main a {
+	background-image: url(../images/export-msgs.png);
+}
+
+.msgs .wintools .export-main, .msgs .wintools .export-main a {
+	background-image: url(../images/export-headline.png);
+}
+
+.msgs .wintools .export-main a:hover span, .msgs .wintools a:hover span {
+	background: <?php echo $msgsMain; ?>;
+}
+
+.user .export-main, .user .export-main a {
+	background-image: url(../images/export-vcard.png);
+}
+
+.user .wintools .export-main, .user .wintools .export-main a {
+	background-image: url(../images/export-headline.png);
+}
+
+.user .wintools .export-main a:hover span, .user .wintools a:hover span {
+	background: <?php echo $userMain; ?>;
+}
+
+.timetrack .wintools .export-main, .timetrack .wintools .export-main a {
+	background-image: url(../images/export-headline.png);
+}
+
+.timetrack .wintools .export-main a:hover span, .timetrack .wintools a:hover span {
+	background: <?php echo $timetrackMain; ?>;
+}
+
+.miles .wintools .export-main, .miles .wintools .export-main a {
+	background-image: url(../images/export-headline.png);
+}
+
+.miles .wintools .export-main a:hover span, .miles .wintools a:hover span {
+	background: <?php echo $milesMain; ?>;
+}
+
+.neutral .wintools .export-main, .neutral .wintools .export-main a {
+	background-image: url(../images/export-headline.png);
+}
+
+.neutral .wintools .export-main a:hover span, .neutral .wintools a:hover span {
+	background: <?php echo $neutralMain; ?>;
+}
+
+.files .wintools .addmen .export-main, .files .wintools .addmen .export-main a {
+	background-image: url(../images/add-files.png);
+}
+
+.files .wintools .export-main, .files .wintools .export-main a {
+	background-image: url(../images/export-headline.png);
+}
+
+.files .wintools .export-main a:hover span, .files .wintools a:hover span {
+	background: <?php echo $filesMain; ?>;
+}
+
+.export-main a.export, .wintools .export-main a.export, .files .wintools .addmen .export-main a.export {
+	background: none;
+	width: 30px;
+	margin: 0;
+}
+
+.add-main a.add, .add-main a.add-active {
+	background-image: url(../images/adds.png);
+	margin: 0;
+}
+
+.add-main a.add:hover, .add-main a.add-active {
+	background-position: 0 -31px;
+}
+
+
+.export-main a.ical {
+	background-position: 0 0;
+}
+
+.export-main a.ical:hover {
+	background-position: 0 -31px;
+}
+
+.export-main a.pdf {
+	background-position: -23px 0;
+}
+
+.export-main a.pdf:hover {
+	background-position: -23px -31px;
+}
+
+.export-main a.rss {
+	background-position: -46px 0;
+}
+
+.export-main a.rss:hover {
+	background-position: -46px -31px;
+}
+
+.export-main a.excel {
+	background-position: -69px 0;
+}
+
+.export-main a.excel:hover {
+	background-position: -69px -31px;
+}
+
+.export-main a.vcardmale {
+	width: 28px;
+	background-position: -32px 0;
+}
+
+.export-main a.vcardmale:hover {
+	background-position: -32px -31px;
+}
+
+.export-main a.vcardfemale {
+	width: 28px;
+	background-position: 0 0;
+}
+
+.export-main a.vcardfemale:hover {
+	background-position: 0 -31px;
+}
+
+.export-main a.addfile {
+	background-position: -31px 0;
+}
+
+.export-main a.addfile:hover, .export-main a.addfile-active {
+	background-position: -31px -31px;
+}
+
+.export-main a.addfolder {
+	width: 27px;
+	background-position: 0 0;
+}
+
+.export-main a.addfolder:hover, .export-main a.addfolder-active {
+	width: 27px;
+	background-position: 0 -31px;
+}
 
 /* ## IN-MENUES ######################################## */
 
@@ -692,6 +921,10 @@ td.message ul {
 
 .inwrapper img {
 	float: left;
+}
+
+.inwrapper .fileicon{
+    max-height: 32px;
 }
 
 .itemwrapper {
@@ -1217,22 +1450,30 @@ a.win_block {
 	display: block;
 	width: 100%;
 	height: 100%;
-	background: url(../images/win-up.png) no-repeat 678px 8px;
+	background: url(../images/win-up.png) no-repeat 98.5% 8px;
+	//background: url(../images/win-up.png) no-repeat 815px 8px;
+	//background: url(../images/win-up.png) no-repeat 678px 8px;
 }
 
 a.win_block:hover {
-	background-position: 678px -23px;
+	background-position: 98.5% -23px;
+	//background-position: 815px -23px;
+	//background-position: 678px -23px;
 }
 
 a.win_none {
 	display:block;
 	width:100%;
 	height: 100%;
-	background: url(../images/win-up.png) no-repeat 678px -54px;
+	background: url(../images/win-up.png) no-repeat 98.5% -54px;
+	//background: url(../images/win-up.png) no-repeat 815px -54px;
+	//background: url(../images/win-up.png) no-repeat 678px -54px;
 }
 
 a.win_none:hover {
-	background-position: 678px -85px;
+	background-position: 98.5% -85px;
+	//background-position: 815px -85px;
+	//background-position: 678px -85px;
 }
 
 /* ## BUTTON ####################################### */
@@ -1293,9 +1534,19 @@ body a.butn_link, body a.butn_link_active {
 }
 
 .msgs .message {
-	width: 562px;
+	width: 585px;
 	margin: 0;
 	padding: 0;
+}
+
+.msgs .message-fluid {
+    margin: 0;
+    padding: 0;
+}
+
+.message-in-fluid {
+    width: 95%;
+    overflow-x: auto;
 }
 
 .user .message {
@@ -1303,25 +1554,28 @@ body a.butn_link, body a.butn_link_active {
 }
 
 .message-in {
-	width: 562px;
+	width: 585px;
 	overflow-x: auto;
 }
-.message-in ul
-{
-padding-left;
+
+.message-in ul {
+	padding-left: inherit;
 }
-message-in li
-{
-list-style-type: disc;
-padding: 0;
+
+.message-in li {
+	list-style-type: disc;
+	padding: 0;
 }
+
 .message-in ul, .descript ul {
-list-style-type: disc;
-padding-left: 40px;
+	list-style-type: disc;
+	padding-left: 40px;
 }
+
 .message-in img {
 	height: auto;
 }
+
 .message img {
 	float: left;
 	margin: 0 6px 6px 0;
@@ -1377,7 +1631,6 @@ p.tags-miles {
 	border-bottom: 1px solid <?php echo $leftBlockBg;
 ?>;
 	padding: 12px 0 12px 6px;
-
 }
 
 /* ## Blind Toggles ################################### */
@@ -1549,7 +1802,7 @@ ul.tabs li.system-settings a {
 #modal_container.tasksmodal, #modal_container.milesmodal {
 	background: <?php echo $tasksC;
 ?>;
-	color: <?php echo $textColor;
+	color: <?php echo $tasksMain;
 ?>;
 	min-height: 150px;
 	width: 500px;
@@ -1563,7 +1816,7 @@ ul.tabs li.system-settings a {
 #modal_container.milesmodal {
 	background: <?php echo $milesC;
 ?>;
-	color: <?php echo $textColor;
+	color: <?php echo $milesMain;
 ?>;
 }
 
@@ -2045,11 +2298,11 @@ a.dir_up_butn:hover {
 	display: none;
 }
 
-.block table tr.acc td .accordion_content .acc-in {
+.block table tr.acc td .accordion_content,.accordion_content_active .acc-in {
 
 	border-top: 1px solid <?php echo $leftBlockBg;
 ?>;
-	padding: 12px 9px 18px 45px;
+	padding: 12px 9px 18px 9px;
 	line-height: normal;
 	overflow: hidden;
 }
@@ -2165,13 +2418,16 @@ th.tools, td.tools {
 }
 
 .projects .color-a, .projects .statuswrapper li, .projects .datepick table td, .projects .datepick tr.head td {
-	background: <?php echo $projectsColorA;
-?>;
+	background: <?php echo $projectsColorA;?>;
 }
-
+.projects tbody.alternateColors:nth-child(even) {
+    background: <?php echo $projectsColorA;?>;
+}
+.projects tbody.alternateColors:nth-child(odd) {
+    background: <?php echo $projectsColorB;?>;
+}
 .projects .color-b, .projects .datepick td.wrong, .projects .datepick tr.weekday td {
-	background: <?php echo $projectsColorB;
-?>;
+	background: <?php echo $projectsColorB;?>;
 }
 
 .projects .block, .projects a, .projects h1, .projects .block .tablemenue, .projects .block .addmenue, .projects p.tags-miles {
@@ -2211,10 +2467,20 @@ th.tools, td.tools {
 }
 
 .projects a.butn_link:hover, .projects button:hover, .projects form .fileinput:hover button, .projects a.butn_link_active, .projects .datepick .picker {
-	background: <?php echo $projectsC;
-?>;
+	background: <?php echo $projectsC;?>;
 }
 
+.projects button.paginationActive{
+    background: <?php echo $projectsC;?>;
+    font-size:16px;
+    color:<?php echo $projectsMain;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+.projects button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 /* TASKS COLORS #####################################*/
 
 .tasks .headline, .tasks a.butn_link, .tasks button, .tasks a.butn_link_active:hover, .tasks .inmenue a span, .tasks .moreinfo {
@@ -2235,6 +2501,15 @@ th.tools, td.tools {
 .tasks .color-a, .tasks .datepick table td, .tasks .datepick tr.head td, .tasks .statuswrapper li {
 	background: <?php echo $tasksColorA;
 ?>;
+}
+
+.tasks tbody.alternateColors:nth-child(even) {
+background: <?php echo $tasksColorA;
+?>;
+}
+
+.tasks tbody.alternateColors:nth-child(odd) {
+background: <?php echo $tasksColorB; ?>;
 }
 
 .tasks .color-b, .tasks .datepick td.wrong, .tasks .datepick tr.weekday td {
@@ -2276,6 +2551,17 @@ th.tools, td.tools {
 ?>;
 }
 
+.tasks button.paginationActive{
+    background: <?php echo $tasksC;?>;
+    font-size:16px;
+    color:<?php echo $tasksB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+.tasks button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 
 /* MESSAGES COLORS #################################*/
 
@@ -2297,6 +2583,14 @@ th.tools, td.tools {
 .msgs .color-a, .msgs .statuswrapper li {
 	background: <?php echo $msgsColorA;
 ?>;
+}
+
+.msgs tbody.alternateColors:nth-child(even) {
+	background: url(../images/tables-msgs-bg-a.png);
+}
+
+.msgs tbody.alternateColors:nth-child(odd) {
+	background: url(../images/tables-msgs-bg-b.png);
 }
 
 .msgs .color-b {
@@ -2338,6 +2632,18 @@ th.tools, td.tools {
 ?>;
 }
 
+.msgs button.paginationActive{
+    background: <?php echo $msgsC;?>;
+    font-size:16px;
+    color:<?php echo $msgsB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+
+.msgs button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 /* USER COLORS #################################*/
 
 .user .headline, .user a.butn_link, .user button, .user a.butn_link_active:hover, .user .inmenue a span, .user .moreinfo {
@@ -2358,6 +2664,14 @@ th.tools, td.tools {
 .user .color-a, .user .staterow {
 	background: <?php echo $userColorA;
 ?>;
+}
+
+.user tbody.alternateColors:nth-child(even) {
+	background: <?php echo $userColorA;?>;
+}
+
+.user tbody.alternateColors:nth-child(odd) {
+	background: <?php echo $userColorB;?>;
 }
 
 .user .color-b, .user .content_in_wrapper {
@@ -2399,6 +2713,17 @@ th.tools, td.tools {
 ?>;
 }
 
+.user button.paginationActive{
+    background: <?php echo $userC;?>;
+    font-size:16px;
+    color:<?php echo $userB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+.user button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
 /* USER PROFILE */
 
 .user .export-main {
@@ -2446,6 +2771,14 @@ th.tools, td.tools {
 ?>;
 }
 
+.neutral tbody.alternateColors:nth-child(even) {
+	background: <?php echo $neutralColorA;?>;
+}
+
+.neutral tbody.alternateColors:nth-child(odd) {
+	background: <?php echo $neutralColorB;?>;
+}
+
 .neutral .color-a ul.files table, .neutral .color-b ul.files table {
 	background: <?php echo $neutralColorC;
 ?>;
@@ -2480,6 +2813,19 @@ th.tools, td.tools {
 ?>;
 }
 
+.neutral button.paginationActive{
+    background: <?php echo $neutralC;?>;
+    font-size:16px;
+    color:<?php echo $neutralB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+
+.neutral button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
+
 /* TIMETRACKING COLORS #################################*/
 
 .timetrack .headline, .timetrack a.butn_link, .timetrack button, .timetrack a.butn_link_active:hover {
@@ -2505,6 +2851,15 @@ th.tools, td.tools {
 .timetrack .color-b, .timetrack .datepick td.wrong, .timetrack .datepick tr.weekday td {
 	background: <?php echo $timetrackColorB;
 ?>;
+}
+
+.timetrack tbody.alternateColors:nth-child(even) {
+	background: <?php echo $timetrackColorA;
+?>;
+}
+
+.timetrack tbody.alternateColors:nth-child(odd) {
+	background: <?php echo $timetrackColorB;?>
 }
 
 .timetrack .color-a ul.files table, .timetrack .color-b ul.files table {
@@ -2546,6 +2901,19 @@ th.tools, td.tools {
 ?>;
 }
 
+.timetrack button.paginationActive{
+    background: <?php echo $timetrackC;?>;
+    font-size:16px;
+    color:<?php echo $timetrackB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+
+.timetrack button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
+
 /* MILESTONES COLORS #################################*/
 
 .miles .headline, .miles a.butn_link, .miles button, .miles a.butn_link_active:hover, .miles .calinmenue ul {
@@ -2576,6 +2944,14 @@ th.tools, td.tools {
 .miles .color-a ul.files table, .miles .color-b ul.files table {
 	background: <?php echo $milesColorC;
 ?>;
+}
+
+.miles tbody.alternateColors:nth-child(even) {
+	background: <?php echo $milesColorA;?>;
+}
+
+.miles tbody.alternateColors:nth-child(odd) {
+	background: <?php echo $milesColorB;?>;
 }
 
 .miles, .miles a, .miles h1, .miles .block .tablemenue, .miles .block .addmenue, .miles p.tags-miles, .bigcal tbody.content td {
@@ -2612,6 +2988,19 @@ th.tools, td.tools {
 ?>;
 }
 
+.miles button.paginationActive{
+    background: <?php echo $milesC;?>;
+    font-size:16px;
+    color:<?php echo $milesB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+
+.miles button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
+}
+
 /* FILES COLORS #####################################*/
 
 .files .headline, .files a.butn_link, .files button, .files a.butn_link_active:hover, .files .inmenue a span, .files .moreinfo {
@@ -2627,6 +3016,7 @@ th.tools, td.tools {
 .files .second-thead, .files .second-thead:hover td, .files .block_in_wrapper, .files .inwrapper li:hover {
 	background: <?php echo $filesTableSecondhead;
 ?>;
+	cursor:move;
 }
 
 .files .color-a, .files .datepick table td, .files .datepick tr.head td, .files .staterow {
@@ -2671,6 +3061,19 @@ th.tools, td.tools {
 .files a.butn_link:hover, .files button:hover, .files form .fileinput:hover button, .files a.butn_link_active, .files .datepick .picker {
 	background: <?php echo $filesC;
 ?>;
+}
+
+.files button.paginationActive{
+    background: <?php echo $filesC;?>;
+    font-size:16px;
+    color:<?php echo $filesB;?>;
+    float:none;
+    margin:0 0 0 0;
+}
+
+.files button.paginationInactive{
+    float:none;
+    margin:0 0 0 0;
 }
 
 /* ## ACCORDION ################ Toggle ############### */
@@ -2736,6 +3139,13 @@ a.butn_checked:hover {
 
 a.butn_reply {
 	background-image: url(../images/butn-reply.png);
+}
+
+a.butn_reply_active {
+	display: block;
+	width: 100%;
+	height: 27px;
+	background: url(../images/butn-reply.png) no-repeat 4px -20px;
 }
 
 a.tool_edit, a.tool_del {

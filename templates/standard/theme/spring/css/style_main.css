@@ -1,10 +1,9 @@
 
 /*
-##  Visional Arts CSS Framework 1.1 static
-##  Author & Copyright: Marcus Froehner
-##  URL: http://www.visional-arts.de
-##  Color Scheme: Eva Kiszka
-*/
+ # #  Visional CSS Framewor*k 3.0 static
+ ##  Author & Copyright: Marcus Froehner, Philipp Kiszka
+ ##  Color Scheme: Eva Kiszka
+ */
 
 @import url("style_form.css");
 
@@ -32,28 +31,6 @@ body a, body a:visited {
 body a:hover {
 	text-decoration: none;
 }
-
-.hidden {
-	visibility:hidden;
-}
-
-.visible {
-	visibility:visible;
-}
-
-.clear_both {
-	clear:both;
-}
-
-.clear_both_b {
-	clear:both;
-	height:15px;
-}
-
-img {
-	border: none;
-}
-
 ::selection {
 	background: #6daa3b ;
 	color: #fff;
@@ -84,6 +61,7 @@ td.message ul {
 /* ## Basic-XHTML-Elements ############### END ############## */
 
 
+
 /* ## LOGIN-Elements ################################ */
 
 .login {
@@ -99,9 +77,9 @@ td.message ul {
 	text-align: center;
 	padding: 20px 0 20px 0;
 	/*
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
-	*/
+	 - moz-border-radius: 2px;*
+	 -webkit-border-radius: 2px;
+	 */
 }
 
 .login-in {
@@ -138,21 +116,21 @@ td.message ul {
 
 
 #sitebody {
-	display: block;
-	min-width: 980px;
-	min-height: 100%;
-	margin: 0 auto;
+display: block;
+min-width: 980px;
+min-height: 100%;
+margin: 0 auto;
 }
 
 #header-wrapper {
-	width:100%;
-	height: 70px;
-	background: #598a31;
+width:100%;
+height: 70px;
+background: #598a31;
 }
 
 #header {
-	width: 980px;
-	margin: 0 auto 0 auto;
+width: 980px;
+margin: 0 auto 0 auto;
 }
 
 .header-in {
@@ -161,206 +139,208 @@ td.message ul {
 }
 
 #header .left {
-	float: left;
-	width: 742px;
-	height: 70px;
-	margin-right: 18px;
-	overflow: hidden;
+float: left;
+width: 742px;
+height: 70px;
+margin-right: 18px;
+overflow: hidden;
 }
 
 #header .right {
-	float: left;
-	width: 202px;
-	padding-left: 18px;
+float: left;
+width: 202px;
+padding-left: 18px;
 }
 
 #header .logo {
-	float: left;
+float: left;
 }
 
 #header .logo img {
-	float: left;
+float: left;
 }
 
 #header .logo h1 span.title {
-	color: #fff;
-	font-size: 26px;
-	font-weight: bold;
-	position: relative;
-	top: 20px;
-	left: -5px;
-	display:block;
-	float:left;
+color: #fff;
+font-size: 26px;
+font-weight: bold;
+position: relative;
+top: 20px;
+left: -5px;
+display:block;
+float:left;
 }
 
 #header .logo h1 span.subtitle {
-	color: #98ce6c;
+color: #98ce6c;
 }
 
 /* ## MAIN-MENUE ######################################## */
 
 #mainmenue {
-	padding: 8px 0 0 0;
-	position: relative;
+padding: 8px 0 0 0;
+position: relative;
 }
 
 #mainmenue li {
-	float: left;
-	width: 32px;
-	height: 32px;
-	margin-right: 6px;
+float: left;
+width: 32px;
+height: 32px;
+margin-right: 6px;
 }
 
 #mainmenue li a {
-	display: block;
-	float: left;
-	width: 32px;
-	height: 32px;
+display: block;
+float: left;
+width: 32px;
+height: 32px;
 }
 
 #mainmenue li.desktop a {
-	background: url(../images/main-desk.png) no-repeat 0 0;
+background: url(../images/main-desk.png) no-repeat 0 0;
 }
 
 
 #mainmenue li.profil-male a {
-	background: url(../images/main-prof-male.png) no-repeat 0 0;
+background: url(../images/main-prof-male.png) no-repeat 0 0;
 }
 
 #mainmenue li.profil-female a {
-	background: url(../images/main-prof-female.png) no-repeat 0 0;
+background: url(../images/main-prof-female.png) no-repeat 0 0;
 }
 
 #mainmenue li.admin a {
-	background: url(../images/main-settings.png) no-repeat 0 0;
+background: url(../images/main-settings.png) no-repeat 0 0;
 }
 
 #mainmenue li.logout a {
-	background: url(../images/main-logout.png) no-repeat 0 0;
+background: url(../images/main-logout.png) no-repeat 0 0;
 }
 
 #mainmenue li a span {
-	display: none;
+display: none;
 }
 
 #mainmenue .submen {
-	position: absolute;
-	top: 34px;
-	left: -6px;
-	padding: 25px 0 0 0;
-	float:left;
-	z-index: 6;
-	display: none;
+position: absolute;
+top: 34px;
+left: -6px;
+padding: 25px 0 0 0;
+float:left;
+z-index: 6;
+display: none;
 }
 
 #mainmenue .submen ul {
-	width: auto;
-	background: #598a31;
-	padding: 0 0 6px 6px;
-	float: left;
-	-moz-border-radius-bottomleft: 4px;
-	-moz-border-radius-bottomright: 4px;
-	-webkit-border-bottom-left-radius: 4px;
-	-webkit-border-bottom-right-radius: 4px;
-	border-bottom-left-radius: 4px;
-	border-bottom-right-radius: 4px;
+width: auto;
+background: #598a31;
+padding: 0 0 6px 6px;
+float: left;
+-moz-border-radius-bottomleft: 4px;
+-moz-border-radius-bottomright: 4px;
+-webkit-border-bottom-left-radius: 4px;
+-webkit-border-bottom-right-radius: 4px;
+border-bottom-left-radius: 4px;
+border-bottom-right-radius: 4px;
 }
 
 #mainmenue .submen li {
-	margin: -6px 6px 0 0;
+margin: -6px 6px 0 0;
 }
 
 #mainmenue li:hover .submen {
-	display: block;
+display: block;
 }
 
 #mainmenue .submen li.project-settings a {
-	background: url(../images/main-admin-a.png) no-repeat 0 0;
+background: url(../images/main-admin-a.png) no-repeat 0 0;
 }
 
 #mainmenue .submen li.user-settings a {
-	background: url(../images/main-admin-b.png) no-repeat 0 0;
+background: url(../images/main-admin-b.png) no-repeat 0 0;
 }
 
 #mainmenue .submen li.system-settings a {
-	background: url(../images/main-admin-c.png) no-repeat 0 0;
+background: url(../images/main-admin-c.png) no-repeat 0 0;
 }
 
 #mainmenue .submen li.customer-settings a {
-	background: url(../images/main-admin-d.png) no-repeat 0 0;
+background: url(../images/main-admin-d.png) no-repeat 0 0;
 }
 
 #mainmenue li:hover a, #mainmenue li a.active, #mainmenue .submen li:hover a, #mainmenue .submen li a.active {
-	background-position: 0 -32px;
+background-position: 0 -32px;
 }
 
 #mainmenue li a:hover span {
-	display: block;
-	width: 200px;
-	position: absolute;
-	top: 18px;
-	left: -222px;
-	color: #98ce6c;
-	font-size: 12px;
-	font-weight: bold;
-	text-align: right;
-	white-space: nowrap;
+display: block;
+width: 200px;
+position: absolute;
+top: 18px;
+left: -222px;
+color: #98ce6c;
+font-size: 12px;
+font-weight: bold;
+text-align: right;
+white-space: nowrap;
 }
 
 #mainmenue li .submen a:hover span {
-	top: -16px;
-	left: -216px;
+top: -16px;
+left: -216px;
 }
 
 #mainmenue li:hover a .submenarrow {
-	display: block;
-	position: relative;
-	top: 32px;
-	left: 0;
-	width: 32px;
-	height: 7px;
-	padding: 0;
-	background: url(../images/main-submen.png) no-repeat center 0;
+display: block;
+position: relative;
+top: 32px;
+left: 0;
+width: 32px;
+height: 7px;
+padding: 0;
+background: url(../images/main-submen.png) no-repeat center 0;
 }
 
 /* ## CONTENT ######################################## */
 
 #contentwrapper {
-	width: 980px;
-	margin: 0 auto -26px auto; /* same as footer-height (for IE 7) */
+width: 980px;
+margin: 0 auto -26px auto; /* same as footer-height (for IE 7) */
 }
 
 #content-left {
-	width: 742px;
-	min-height: 100px;
-	background: #fff;
-	margin: 0 18px 10px 0;
-	float: left;
+//742 is the old block size with the sidebar open
+//width: 742px;
+width: 882px;
+min-height: 100px;
+background: #fff;
+margin: 0 18px 10px 0;
+float: left;
 }
 
 #content-left-in {
-	margin: 18px 18px 0 18px;
+margin: 18px 18px 0 18px;
 }
 
 #content-left h1 {
-	padding: 0 0 15px 2px;
-	width: 100%;
-	overflow: hidden;
+padding: 0 0 15px 2px;
+width: 100%;
+overflow: hidden;
 }
 
 #content-left h1 span {
-	font-size: 15px;
+font-size: 15px;
 }
 
 #content-left h1.second {
-	line-height: 34px;
-	margin: -5px 0 10px 0;
-	position: relative;
-	left: -8px;
+line-height: 34px;
+margin: -5px 0 10px 0;
+position: relative;
+left: -8px;
 }
 
 #content-left h1 img {
-	float: left;
+float: left;
 }
 
 .content-spacer {
@@ -378,25 +358,20 @@ td.message ul {
 }
 
 #content-right {
-	width: 220px;
-	min-height: 20px;
-	background: #fff;
-	margin: 0 0 0 0;
-	padding: 0 0 23px 0;
-	float: left;
-	color: #598a31;
+width: 80px;
+min-height: 20px;
+background: #fff;
+margin: 0 0 0 0;
+padding: 5px 0 5px 0;
+float: left;
+color: #598a31;
 }
 
 .content-right-in {
-	width: 184px;
+	//width: 184px;
+	width: 60px;
 	margin: 23px 0 0 18px;
 }
-
-.content-right-in .cloud { /* Tag Cloud */
-	width: 184px;
-	overflow: hidden;
-}
-
 
 .content-right-in a {
 	color: #598a31;
@@ -407,25 +382,25 @@ td.message ul {
 }
 
 #content-right h2 {
-	font-size: 14px;
-	margin: 0;
-	line-height: 12px;
+font-size: 14px;
+margin: 0;
+line-height: 12px;
 }
 
 #content-right h2 a.win-up, #content-right h2 a.win-down {
-	display: block;
-	width: 100%;
-	height: 16px;
-	background: url(../images/win-up-side.png) no-repeat right 1px;
-	margin: 0 0 5px 0;
+display: block;
+width: 100%;
+height: 16px;
+background: url(../images/win-up-side.png) no-repeat right 1px;
+margin: 0 0 5px 0;
 }
 
- #content-right h2 a.win-down {
-	background: url(../images/win-down-side.png) no-repeat right 1px;
- }
+#content-right h2 a.win-down {
+background: url(../images/win-down-side.png) no-repeat right 1px;
+}
 
 #content-right h2 a.win-up:hover, #content-right h2 a.win-down:hover {
-	background-position: right -15px;
+background-position: right -15px;
 }
 
 /* ## CHAT ############################################# */
@@ -834,6 +809,10 @@ td.message ul {
 	float: left;
 }
 
+.inwrapper .fileicon{
+	max-height: 32px;
+}
+
 .itemwrapper {
 	/* in this are all the li */
 }
@@ -1106,7 +1085,6 @@ td.message ul {
 	line-height: 22px;
 	margin: 0 0 1px 0;
 	padding: 0 8px 0 8px;
-
 	white-space: nowrap;
 	color: #fff;
 	font-size: 11px;
@@ -1152,7 +1130,7 @@ td.message ul {
 }
 
 .datepick .picker a {
-
+	
 }
 
 .datepick .cal {
@@ -1233,46 +1211,48 @@ td.message ul {
 /* ## ONLINELISTE ######################################## */
 
 #onlinelist ul {
-	float: left;
-	position: relative;
+border-bottom: 1px solid #3c5570;
+float: left;
+position: relative;
 }
 
 #onlinelist li {
-	width: 184px;
-	clear: both;
+width: 184px;
+clear: both;
+border-top: 1px solid #3c5570;
 }
 
 #onlinelist li a div {
-	display: none;
+display: none;
 }
 
 #onlinelist li a div img {
-	margin: 5px 5px 5px 5px;
-	float: right;
+margin: 5px 5px 5px 5px;
+float: right;
 }
 
 #onlinelist a.user, #onlinelist a.chat, .chat-user {
-	display: block;
-	float: left;
-	width: 167px;
-	height: 23px;
-	line-height: 23px;
-	color: #598a31;
-	padding-left: 1px;
+display: block;
+float: left;
+width: 167px;
+height: 23px;
+line-height: 23px;
+color: #598a31;
+padding-left: 1px;
 }
 
 #onlinelist a.user:hover, .chat-user {
-	color: #6daa3b;
+color: #6daa3b;
 }
 
 #onlinelist a.chat, .chat-user {
-	width: 16px;
-	padding: 0;
-	background: url(../images/chat.png) no-repeat right -23px;
+width: 16px;
+padding: 0;
+background: url(../images/chat.png) no-repeat right -23px;
 }
 
 #onlinelist a.chat:hover {
-	background-position: right -46px;
+background-position: right -46px;
 }
 
 .chat-user {
@@ -1280,13 +1260,13 @@ td.message ul {
 }
 
 #onlinelist li a:hover div {
-	display:block;
-	position: absolute;
-	top: 0;
-	left: -119px;
-	width: 100px;
-	z-index: 8;
-	background: url(../images/color-b.png) repeat 0 0;
+display:block;
+position: absolute;
+top: 0;
+left: -119px;
+width: 100px;
+z-index: 8;
+background: url(../images/color-b.png) repeat 0 0;
 }
 
 /* ## HEADLINES ##################################### */
@@ -1296,7 +1276,7 @@ td.message ul {
 	height: 35px;
 	margin: 0 0 0 0;
 	position: relative;
-
+	
 }
 
 .headline h2 {
@@ -1332,12 +1312,12 @@ td.message ul {
 }
 
 h2 a:hover {
-		text-decoration: none;
+	text-decoration: none;
 }
 
 #content-left h2 a:hover {
-		text-decoration: none;
-		border-bottom: 1px dotted #fff;
+text-decoration: none;
+border-bottom: 1px dotted #fff;
 }
 
 
@@ -1347,22 +1327,30 @@ a.win_block {
 	display: block;
 	width: 100%;
 	height: 100%;
-	background: url(../images/win-up.png) no-repeat 678px 8px;
+	background: url(../images/win-up.png) no-repeat 98.5% 8px;
+	//background: url(../images/win-up.png) no-repeat 815px 8px;
+	//background: url(../images/win-up.png) no-repeat 678px 8px;
 }
 
 a.win_block:hover {
-	background-position: 678px -23px;
+	background-position: 98.5% -23px;
+	//background-position: 815px -23px;
+	//background-position: 678px -23px;
 }
 
 a.win_none {
 	display:block;
 	width:100%;
 	height: 100%;
-	background: url(../images/win-up.png) no-repeat 678px -54px;
+	background: url(../images/win-up.png) no-repeat 98.5% -54px;
+	//background: url(../images/win-up.png) no-repeat 815px -54px;
+	//background: url(../images/win-up.png) no-repeat 678px -54px;
 }
 
 a.win_none:hover {
-	background-position: 678px -85px;
+	background-position: 98.5% -85px;
+	//background-position: 815px -85px;
+	//background-position: 678px -85px;
 }
 
 /* ## BUTTON ####################################### */
@@ -1427,6 +1415,16 @@ body a.butn_link, body a.butn_link_active {
 	padding: 0;
 }
 
+.msgs .message-fluid {
+	margin: 0;
+	padding: 0;
+}
+
+.message-in-fluid {
+	width: 95%;
+	overflow-x: auto;
+}
+
 .user .message {
 	width: 567px;
 }
@@ -1435,24 +1433,25 @@ body a.butn_link, body a.butn_link_active {
 	width: 585px;
 	overflow-x: auto;
 }
-.message-in ul
-{
-padding-left;
 
+.message-in ul {
+	padding-left: inherit;
 }
 
-.message-in li
-{
-list-style-type: disc;
-padding: 0;
+.message-in li {
+	list-style-type: disc;
+	padding: 0;
 }
+
 .message-in ul, .descript ul {
-list-style-type: disc;
-padding-left: 40px;
+	list-style-type: disc;
+	padding-left: 40px;
 }
+
 .message-in img {
 	height: auto;
 }
+
 .message img {
 	float: left;
 	margin: 0 6px 6px 0;
@@ -1506,7 +1505,6 @@ p.tags-miles {
 	border-top: 1px solid #fff;
 	border-bottom: 1px solid #fff;
 	padding: 12px 0 12px 6px;
-
 }
 
 /* ## Blind Toggles ################################### */
@@ -1534,7 +1532,7 @@ p.tags-miles {
 	opacity: 0.4;
 	/*filter:alpha(opacity=40);*/
 	-moz-opacity: 0.4;
-
+	
 }
 
 .breadcrumb a {
@@ -1667,70 +1665,70 @@ ul.tabs li.system-settings a {
 /* ## MODALs ######################################## */
 
 #modal_container {
-    overflow: auto;
-    color:  #6daa3b;
-    background: none;
-    text-align: left;
+overflow: auto;
+color:  #6daa3b;
+background: none;
+text-align: left;
 }
 
 #modal_container.tasksmodal, #modal_container.milesmodal {
-	background: #6daa3b;
-	color: #598a31;
-	min-height: 150px;
-	width: 500px;
-	padding: 6px 12px 12px 12px;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 6px;
-	border-radius: 6px;
-	margin: -50px 0 0 -126px;
+background: #6daa3b;
+color: #598a31;
+min-height: 150px;
+width: 500px;
+padding: 6px 12px 12px 12px;
+-moz-border-radius: 6px;
+-webkit-border-radius: 6px;
+border-radius: 6px;
+margin: -50px 0 0 -126px;
 }
 
 #modal_container.milesmodal {
-	background: #6daa3b;
-	color: #598a31;
+background: #6daa3b;
+color: #598a31;
 }
 
 #modal_container.pics {
-	background: none;
-	margin: -50px 0 0 -126px;
+background: none;
+margin: -50px 0 0 -126px;
 }
 
 #modal_container.pics img {
-	margin: 0 0 -3px 0;
-	border: none;
-	padding: 0;
+margin: 0 0 -3px 0;
+border: none;
+padding: 0;
 }
 
 #modal_overlay {
-    background-color: #6daa3b;
+background-color: #6daa3b;
 
 }
 
 #modal_overlay.useroverlay {
-    background: #bacfa8;
+background: #bacfa8;
 }
 
 #modal_overlay.tasksoverlay {
-    background: #bacfa8;
+background: #bacfa8;
 }
 
 #modal_overlay.milesoverlay {
-    background: #bacfa8;
+background: #bacfa8;
 }
 
 #modal_container .inmodal {
-	background: #fff;
-	-moz-border-radius: 1px;
-	-webkit-border-radius: 1px;
-	border-radius: 1px;
-	padding: 8px;
-	min-height: 100px;
-	max-height: 450px;
-	overflow: auto;
+background: #fff;
+-moz-border-radius: 1px;
+-webkit-border-radius: 1px;
+border-radius: 1px;
+padding: 8px;
+min-height: 100px;
+max-height: 450px;
+overflow: auto;
 }
 
 #modal_container .inmodal h2 span {
-	font-size: 12px;
+font-size: 12px;
 }
 
 
@@ -1743,7 +1741,7 @@ ul.tabs li.system-settings a {
 }
 
 .acc_modal .m_b {
-
+	
 }
 
 .acc_modal .m_c {
@@ -1766,8 +1764,8 @@ ul.tabs li.system-settings a {
 }
 
 #modal_container .inmodal img {
-	max-width: 430px;
-	height: auto;
+max-width: 430px;
+height: auto;
 }
 
 .modaltitle {
@@ -1878,7 +1876,6 @@ ul.tabs li.system-settings a {
 }
 
 .status {
-
 	width: 130px;
 	height:	56px;
 	position: relative;
@@ -1932,7 +1929,6 @@ ul.tabs li.system-settings a {
 	padding: 12px 7px 0 6px;
 }
 
-
 .contenttitle_in {
 	float: left;
 	width: 652px;
@@ -1962,7 +1958,7 @@ ul.tabs li.system-settings a {
 	line-height: 23px;
 	clear: both;
 	font-size: 12px;
-
+	
 }
 
 .staterowin {
@@ -1970,8 +1966,8 @@ ul.tabs li.system-settings a {
 	height: 23px;
 	overflow: hidden;
 	margin: 0 0 0 48px;
-
-
+	
+	
 }
 .staterowin_right {
 	width:50px;
@@ -1979,9 +1975,9 @@ ul.tabs li.system-settings a {
 	overflow: hidden;
 	margin: -22px 0 0 650px;
 	float:left;
-
-
-
+	
+	
+	
 }
 
 /* ## FILES ################ Specials ################## */
@@ -2000,7 +1996,7 @@ a.dir_up_butn:hover {
 /* ## HEADLINES ############# Specials ############### */
 
 #content-left-in h1 a:hover {
-	border-bottom: 1px dotted #000;
+border-bottom: 1px dotted #000;
 }
 
 /* ## DESCRIPTION ############# Specials ############### */
@@ -2078,7 +2074,7 @@ a.dir_up_butn:hover {
 }
 
 .block table td.finished, .block table td.finished a {
-
+	
 }
 
 .block table td.symbols img {
@@ -2159,22 +2155,14 @@ a.dir_up_butn:hover {
 	display: none;
 }
 
-.block table tr.acc td .accordion_content .acc-in {
-
+.block table tr.acc td .accordion_content,.accordion_content_active .acc-in {
+	
 	border-top: 1px solid #fff;
 	padding: 12px 9px 18px 9px;
 	line-height: normal;
 	overflow: hidden;
 }
 
-
-.block table tr.acc td .accordion_content_active .acc-in {
-
-    border-top: 1px solid #fff;
-    padding: 12px 9px 18px 9px;
-    line-height: normal;
-    overflow: hidden;
-}
 .smooth {
 	opacity:.6;
 	/*filter:alpha(opacity=60);*/
@@ -2237,7 +2225,7 @@ th.d, td.d {
 }
 
 th.cd, td.cd {
-
+	
 }
 
 th.ce, td.ce {
@@ -2253,7 +2241,7 @@ th.cf, td.cf {
 }
 
 th.e, td.e {
-
+	
 }
 
 th.tools, td.tools {
@@ -2285,7 +2273,12 @@ th.tools, td.tools {
 .projects .color-a, .projects .statuswrapper li, .projects .datepick table td, .projects .datepick tr.head td {
 	background: #e5e7e6;
 }
-
+.projects tbody.alternateColors:nth-child(even) {
+	background: #e5e7e6;
+}
+.projects tbody.alternateColors:nth-child(odd) {
+	background: #f5f7f6;
+}
 .projects .color-b, .projects .datepick td.wrong, .projects .datepick tr.weekday td {
 	background: #f5f7f6;
 }
@@ -2321,6 +2314,17 @@ th.tools, td.tools {
 	background: #6daa3b;
 }
 
+.projects button.paginationActive{
+	background: #6daa3b;
+	font-size:16px;
+	color:#598a31;
+	float:none;
+	margin:0 0 0 0;
+}
+.projects button.paginationInactive{
+	float:none;
+	margin:0 0 0 0;
+}
 /* TASKS COLORS #####################################*/
 
 .tasks .headline, .tasks a.butn_link, .tasks button, .tasks a.butn_link_active:hover, .tasks .inmenue a span, .tasks .moreinfo {
@@ -2337,6 +2341,14 @@ th.tools, td.tools {
 
 .tasks .color-a, .tasks .datepick table td, .tasks .datepick tr.head td, .tasks .statuswrapper li {
 	background: #e5e7e6;
+}
+
+.tasks tbody.alternateColors:nth-child(even) {
+	background: #e5e7e6;
+}
+
+.tasks tbody.alternateColors:nth-child(odd) {
+	background: #f5f7f6;
 }
 
 .tasks .color-b, .tasks .datepick td.wrong, .tasks .datepick tr.weekday td {
@@ -2369,6 +2381,17 @@ th.tools, td.tools {
 	background: #6daa3b;
 }
 
+.tasks button.paginationActive{
+	background: #6daa3b;
+	font-size:16px;
+	color:#bacfa8;
+	float:none;
+	margin:0 0 0 0;
+}
+.tasks button.paginationInactive{
+	float:none;
+	margin:0 0 0 0;
+}
 
 /* MESSAGES COLORS #################################*/
 
@@ -2386,6 +2409,14 @@ th.tools, td.tools {
 
 .msgs .color-a, .msgs .statuswrapper li {
 	background: #e5e7e6;
+}
+
+.msgs tbody.alternateColors:nth-child(even) {
+	background: url(../images/tables-msgs-bg-a.png);
+}
+
+.msgs tbody.alternateColors:nth-child(odd) {
+	background: url(../images/tables-msgs-bg-b.png);
 }
 
 .msgs .color-b {
@@ -2418,6 +2449,18 @@ th.tools, td.tools {
 	background: #6daa3b;
 }
 
+.msgs button.paginationActive{
+	background: #6daa3b;
+	font-size:16px;
+	color:#bacfa8;
+	float:none;
+	margin:0 0 0 0;
+}
+
+.msgs button.paginationInactive{
+	float:none;
+	margin:0 0 0 0;
+}
 /* USER COLORS #################################*/
 
 .user .headline, .user a.butn_link, .user button, .user a.butn_link_active:hover, .user .inmenue a span, .user .moreinfo {
@@ -2434,6 +2477,14 @@ th.tools, td.tools {
 
 .user .color-a, .user .staterow {
 	background: #e5e7e6;
+}
+
+.user tbody.alternateColors:nth-child(even) {
+	background: #e5e7e6;
+}
+
+.user tbody.alternateColors:nth-child(odd) {
+	background: #f5f7f6;
 }
 
 .user .color-b, .user .content_in_wrapper {
@@ -2466,6 +2517,17 @@ th.tools, td.tools {
 	background: #6daa3b;
 }
 
+.user button.paginationActive{
+	background: #6daa3b;
+	font-size:16px;
+	color:#bacfa8;
+	float:none;
+	margin:0 0 0 0;
+}
+.user button.paginationInactive{
+	float:none;
+	margin:0 0 0 0;
+}
 /* USER PROFILE */
 
 .user .export-main {
@@ -2507,6 +2569,14 @@ th.tools, td.tools {
 	background: #f5f7f6;
 }
 
+.neutral tbody.alternateColors:nth-child(even) {
+	background: #e5e7e6;
+}
+
+.neutral tbody.alternateColors:nth-child(odd) {
+	background: #f5f7f6;
+}
+
 .neutral .color-a ul.files table, .neutral .color-b ul.files table {
 	background: url(../images/tables-projects-bg-c.png);
 }
@@ -2533,6 +2603,19 @@ th.tools, td.tools {
 	background: #6daa3b;
 }
 
+.neutral button.paginationActive{
+	background: #6daa3b;
+	font-size:16px;
+	color:#bacfa8;
+	float:none;
+	margin:0 0 0 0;
+}
+
+.neutral button.paginationInactive{
+	float:none;
+	margin:0 0 0 0;
+}
+
 /* TIMETRACKING COLORS #################################*/
 
 .timetrack .headline, .timetrack a.butn_link, .timetrack button, .timetrack a.butn_link_active:hover {
@@ -2555,361 +2638,415 @@ th.tools, td.tools {
 	background: #f5f7f6;
 }
 
-.timetrack .color-a ul.files table, .timetrack .color-b ul.files table {
-	background: url(../images/tables-projects-bg-c.png);
-}
-
-.timetrack .block, .timetrack a, .timetrack h1, .timetrack .block .tablemenue, .timetrack .block .addmenue, .timetrack p.tags-miles {
-	border-color: #598a31;
-	color: #598a31;
-}
-
-.timetrack .datepick .cal, .timetrack .block_in_wrapper h2 {
-	color: #598a31;
-}
-
-.timetrack h1 span, .timerack h1 span a, .timetrack .datepick td.wrong {
-	color: #bacfa8;
-}
-
-.timetrack h1 span a {
-	border-color: #598a31;
-}
-
-.timetrack form, .timetrack form input, .timetrack form select, .timetrack form textarea, .timetrack form .row .editor {
-	border-color: #bacfa8;
-	color: #598a31;
-}
-
-.timetrack a.butn_link:hover, .timetrack button:hover, .timetrack form .fileinput:hover button, .timetrack a.butn_link_active, .timetrack .datepick .picker {
-	background: #6daa3b;
-}
-
-/* MILESTONES COLORS #################################*/
-
-.miles .headline, .miles a.butn_link, .miles button, .miles a.butn_link_active:hover, .miles .calinmenue ul {
-	background: #598a31;
-}
-
-.miles thead, .miles .calhead th {
-	background: #f8faf9;
-}
-
-.miles .second-thead, .miles .block_in_wrapper, .miles .inwrapper li:hover, .miles .tableend, .miles .thecal, .miles .second-thead:hover td, .miles .statuswrapper li.link:hover {
-	background: #f7f9f8;
-}
-
-.miles .color-a, .miles table.thecal .dayhead th, .miles .calinmenue ul li.link a, .miles .datepick table td, .miles .datepick tr.head td, .miles .statuswrapper li {
+.timetrack tbody.alternateColors:nth-child(even) {
 	background: #e5e7e6;
 }
 
-.miles .color-b, .miles .calinmenue ul li.link a:hover, .miles .datepick td.wrong, .miles .datepick tr.weekday td, .miles .content_in_wrapper {
-	background: #f5f7f6;
-}
-
-.miles .color-a ul.files table, .miles .color-b ul.files table {
-	background: url(../images/tables-projects-bg-c.png);
-}
-
-.miles, .miles a, .miles h1, .miles .block .tablemenue, .miles .block .addmenue, .miles p.tags-miles, .bigcal tbody.content td {
-	border-color: #598a31;
-	color: #598a31;
-}
-
-.miles .block td.finished, .miles .block td.finished a, .miles .datepick .cal, .miles .block_in_wrapper h2 {
-	color: #598a31;
-}
-
-.miles h1 span, .miles h1 span a, .miles .block td.othermonth a, .miles .block td.othermonth, .miles .datepick td.wrong {
-	color: #bacfa8;
-}
-
-.miles h1 span a, .miles .content-spacer-b {
-	border-color: #598a31;
-}
-
-.miles form, .miles form input, .miles form select, .miles form textarea, .miles form .row .editor, .miles .statuswrapper li {
-	border-color: #bacfa8;
-	color: #598a31;
-}
-
-.miles a.butn_link:hover, .miles button:hover, .miles form .fileinput:hover button, .miles a.butn_link_active, .miles .datepick .picker {
-	background: #6daa3b;
-}
-
-/* FILES COLORS #####################################*/
-
-.files .headline, .files a.butn_link, .files button, .files a.butn_link_active:hover, .files .inmenue a span, .files .moreinfo {
-	background: #598a31;
-}
-
-.files thead, .files .contenttitle {
-	background: #f8faf9;
-}
-
-.files .second-thead, .files .second-thead:hover td, .files .block_in_wrapper, .files .inwrapper li:hover {
-	background: #f7f9f8;
-	cursor:move;
-}
-
-.files .color-a, .files .datepick table td, .files .datepick tr.head td, .files .staterow {
-	background: #e5e7e6;
-}
-
-.files .color-b, .files .datepick td.wrong, .files .datepick tr.weekday td, .files .content_in_wrapper {
-	background: #f5f7f6;
-}
-
-.files .block, .files .blockwrapper, .files a, .files h1, .files .tablemenue, .files .addmenue, .files p.tags-miles {
-	border-color: #598a31;
-	color: #598a31;
-}
-
-.files .block td.finished, .files .block td.finished a, .files .datepick .cal, .files .block_in_wrapper h2 {
-	color: #598a31;
-}
-
-.files h1 span, .files h1 span a, .files .datepick td.wrong {
-	color: #bacfa8;
-}
-
-.files h1 span a {
-	border-color: #598a31;
-}
-
-.files form, .files form input, .files form select, .files form textarea, .files form .row .editor {
-	border-color: #bacfa8;
-	color: #598a31;
-}
-
-.files a.butn_link:hover, .files button:hover, .files form .fileinput:hover button, .files a.butn_link_active, .files .datepick .picker {
-	background: #6daa3b;
-}
-
-/* ## ACCORDION ################ Toggle ############### */
-
-span.acc-toggle, span.acc-toggle-active, .second-thead span.acc-toggle, .second-thead span.acc-toggle-active {
-	display: block;
-	width: 97%;
-	height: 100%;
-	background: url(../images/acc-open.png) no-repeat right 10px;
-	cursor: pointer;
-
-}
-
-.second-thead span.acc-toggle, .second-thead span.acc-toggle-active { /* for darker backgrounds */
-	background-image: url(../images/acc-open-b.png);
-}
-
-span.acc-toggle:hover, .second-thead:hover span.acc-toggle {
-	background-position: right -15px;
-}
-
-span.acc-toggle-active, .second-thead span.acc-toggle-active {
-	background-position: right -40px;
-}
-
-span.acc-toggle-active:hover, .second-thead:hover span.acc-toggle-active  {
-	background-position: right -65px;
-}
-
-.toggle-in {
-	position: relative;
-	width: 100%;
-	height: 27px;
-}
-
-.toggle-in a, .toggle-in.acc-toggle-active a {
-	display: block;
-	height: 27px;
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 1;
-}
-
-
-
-/* ## ACCORDION ################ Tools ############### */
-
-a.butn_check, a.butn_checked, a.butn_reply {
-	display: block;
-	width: 100%;
-	height: 27px;
-	background: url(../images/butn-check.png) no-repeat 4px 6px;
-}
-
-a.butn_check:hover, a.butn_checked, a.butn_reply:hover {
-	background-position: 4px -20px;
-}
-
-a.butn_checked:hover {
-	background-position: 4px 6px;
-}
-
-a.butn_reply {
-	background-image: url(../images/butn-reply.png);
-}
-
-a.butn_reply_active {
-	display: block;
-	width: 100%;
-	height: 27px;
-	background: url(../images/butn-reply.png) no-repeat 4px -20px;
-}
-
-a.tool_edit, a.tool_del {
-	display: block;
-	width: 14px;
-	height: 23px;
-	float: left;
-	margin-right: 4px;
-	background: url(../images/butn-edit.png) no-repeat 0 4px;
-}
-a.tool_edit_active
-{
-	display: block;
-	width: 14px;
-	height: 23px;
-	float: left;
-	margin-right: 4px;
-	background: url(../images/butn-edit.png) no-repeat 0 -22px;
-
-}
-a.tool_del {
-	background-image: url(../images/butn-del.png);
-	margin: 0;
-}
-
-a.tool_edit:hover, a.tool_del:hover {
-	background-position: 0 -22px;
-}
-
-/* ## ACCORDION ############### Marker ############## */
-
-.marker-late, .marker-late a {
-	color: #8a3630;
-}
-
-.marker-today, .marker-today a {
-	color: #598a31;
-}
-
-.green, .green a {
-	color: #598a31;
-	border-color: #598a31;
-	background-color:#d1f0b5;
-}
-
-.red, .red a {
-	color: #8a3630;
-	border-color: #8a3630;
-	background-color:#e8dbdb;
-}
-
-/* ## Headlines ## start ## */
-
-h1 {
-	font-size: 21px;
-	margin:0 0 0px 0px;
-	height: 25px;
-	line-height: 21px;
-}
-
-#content-left h1 {
+.timetrack tbody.alternateColors:nth-child(odd) {
+	background: #f5f7f6}
+	
+	.timetrack .color-a ul.files table, .timetrack .color-b ul.files table {
+		background: url(../images/tables-projects-bg-c.png);
+	}
+	
+	.timetrack .block, .timetrack a, .timetrack h1, .timetrack .block .tablemenue, .timetrack .block .addmenue, .timetrack p.tags-miles {
+		border-color: #598a31;
+		color: #598a31;
+	}
+	
+	.timetrack .datepick .cal, .timetrack .block_in_wrapper h2 {
+		color: #598a31;
+	}
+	
+	.timetrack h1 span, .timerack h1 span a, .timetrack .datepick td.wrong {
+		color: #bacfa8;
+	}
+	
+	.timetrack h1 span a {
+		border-color: #598a31;
+	}
+	
+	.timetrack form, .timetrack form input, .timetrack form select, .timetrack form textarea, .timetrack form .row .editor {
+		border-color: #bacfa8;
+		color: #598a31;
+	}
+	
+	.timetrack a.butn_link:hover, .timetrack button:hover, .timetrack form .fileinput:hover button, .timetrack a.butn_link_active, .timetrack .datepick .picker {
+		background: #6daa3b;
+	}
+	
+	.timetrack button.paginationActive{
+		background: #6daa3b;
+		font-size:16px;
+		color:#bacfa8;
+		float:none;
+		margin:0 0 0 0;
+	}
+	
+	.timetrack button.paginationInactive{
+		float:none;
+		margin:0 0 0 0;
+	}
+	
+	/* MILESTONES COLORS #################################*/
+	
+	.miles .headline, .miles a.butn_link, .miles button, .miles a.butn_link_active:hover, .miles .calinmenue ul {
+		background: #598a31;
+	}
+	
+	.miles thead, .miles .calhead th {
+		background: #f8faf9;
+	}
+	
+	.miles .second-thead, .miles .block_in_wrapper, .miles .inwrapper li:hover, .miles .tableend, .miles .thecal, .miles .second-thead:hover td, .miles .statuswrapper li.link:hover {
+		background: #f7f9f8;
+	}
+	
+	.miles .color-a, .miles table.thecal .dayhead th, .miles .calinmenue ul li.link a, .miles .datepick table td, .miles .datepick tr.head td, .miles .statuswrapper li {
+		background: #e5e7e6;
+	}
+	
+	.miles .color-b, .miles .calinmenue ul li.link a:hover, .miles .datepick td.wrong, .miles .datepick tr.weekday td, .miles .content_in_wrapper {
+		background: #f5f7f6;
+	}
+	
+	.miles .color-a ul.files table, .miles .color-b ul.files table {
+		background: url(../images/tables-projects-bg-c.png);
+	}
+	
+	.miles tbody.alternateColors:nth-child(even) {
+		background: #e5e7e6;
+	}
+	
+	.miles tbody.alternateColors:nth-child(odd) {
+		background: #f5f7f6;
+	}
+	
+	.miles, .miles a, .miles h1, .miles .block .tablemenue, .miles .block .addmenue, .miles p.tags-miles, .bigcal tbody.content td {
+		border-color: #598a31;
+		color: #598a31;
+	}
+	
+	.miles .block td.finished, .miles .block td.finished a, .miles .datepick .cal, .miles .block_in_wrapper h2 {
+		color: #598a31;
+	}
+	
+	.miles h1 span, .miles h1 span a, .miles .block td.othermonth a, .miles .block td.othermonth, .miles .datepick td.wrong {
+		color: #bacfa8;
+	}
+	
+	.miles h1 span a, .miles .content-spacer-b {
+		border-color: #598a31;
+	}
+	
+	.miles form, .miles form input, .miles form select, .miles form textarea, .miles form .row .editor, .miles .statuswrapper li {
+		border-color: #bacfa8;
+		color: #598a31;
+	}
+	
+	.miles a.butn_link:hover, .miles button:hover, .miles form .fileinput:hover button, .miles a.butn_link_active, .miles .datepick .picker {
+		background: #6daa3b;
+	}
+	
+	.miles button.paginationActive{
+		background: #6daa3b;
+		font-size:16px;
+		color:#bacfa8;
+		float:none;
+		margin:0 0 0 0;
+	}
+	
+	.miles button.paginationInactive{
+		float:none;
+		margin:0 0 0 0;
+	}
+	
+	/* FILES COLORS #####################################*/
+	
+	.files .headline, .files a.butn_link, .files button, .files a.butn_link_active:hover, .files .inmenue a span, .files .moreinfo {
+		background: #598a31;
+	}
+	
+	.files thead, .files .contenttitle {
+		background: #f8faf9;
+	}
+	
+	.files .second-thead, .files .second-thead:hover td, .files .block_in_wrapper, .files .inwrapper li:hover {
+		background: #f7f9f8;
+		cursor:move;
+	}
+	
+	.files .color-a, .files .datepick table td, .files .datepick tr.head td, .files .staterow {
+		background: #e5e7e6;
+	}
+	
+	.files .color-b, .files .datepick td.wrong, .files .datepick tr.weekday td, .files .content_in_wrapper {
+		background: #f5f7f6;
+	}
+	
+	.files .block, .files .blockwrapper, .files a, .files h1, .files .tablemenue, .files .addmenue, .files p.tags-miles {
+		border-color: #598a31;
+		color: #598a31;
+	}
+	
+	.files .block td.finished, .files .block td.finished a, .files .datepick .cal, .files .block_in_wrapper h2 {
+		color: #598a31;
+	}
+	
+	.files h1 span, .files h1 span a, .files .datepick td.wrong {
+		color: #bacfa8;
+	}
+	
+	.files h1 span a {
+		border-color: #598a31;
+	}
+	
+	.files form, .files form input, .files form select, .files form textarea, .files form .row .editor {
+		border-color: #bacfa8;
+		color: #598a31;
+	}
+	
+	.files a.butn_link:hover, .files button:hover, .files form .fileinput:hover button, .files a.butn_link_active, .files .datepick .picker {
+		background: #6daa3b;
+	}
+	
+	.files button.paginationActive{
+		background: #6daa3b;
+		font-size:16px;
+		color:#bacfa8;
+		float:none;
+		margin:0 0 0 0;
+	}
+	
+	.files button.paginationInactive{
+		float:none;
+		margin:0 0 0 0;
+	}
+	
+	/* ## ACCORDION ################ Toggle ############### */
+	
+	span.acc-toggle, span.acc-toggle-active, .second-thead span.acc-toggle, .second-thead span.acc-toggle-active {
+		display: block;
+		width: 97%;
+		height: 100%;
+		background: url(../images/acc-open.png) no-repeat right 10px;
+		cursor: pointer;
+		
+	}
+	
+	.second-thead span.acc-toggle, .second-thead span.acc-toggle-active { /* for darker backgrounds */
+		background-image: url(../images/acc-open-b.png);
+	}
+	
+	span.acc-toggle:hover, .second-thead:hover span.acc-toggle {
+		background-position: right -15px;
+	}
+	
+	span.acc-toggle-active, .second-thead span.acc-toggle-active {
+		background-position: right -40px;
+	}
+	
+	span.acc-toggle-active:hover, .second-thead:hover span.acc-toggle-active  {
+		background-position: right -65px;
+	}
+	
+	.toggle-in {
+		position: relative;
+		width: 100%;
+		height: 27px;
+	}
+	
+	.toggle-in a, .toggle-in.acc-toggle-active a {
+		display: block;
+		height: 27px;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 1;
+	}
+	
+	
+	
+	/* ## ACCORDION ################ Tools ############### */
+	
+	a.butn_check, a.butn_checked, a.butn_reply {
+		display: block;
+		width: 100%;
+		height: 27px;
+		background: url(../images/butn-check.png) no-repeat 4px 6px;
+	}
+	
+	a.butn_check:hover, a.butn_checked, a.butn_reply:hover {
+		background-position: 4px -20px;
+	}
+	
+	a.butn_checked:hover {
+		background-position: 4px 6px;
+	}
+	
+	a.butn_reply {
+		background-image: url(../images/butn-reply.png);
+	}
+	
+	a.butn_reply_active {
+		display: block;
+		width: 100%;
+		height: 27px;
+		background: url(../images/butn-reply.png) no-repeat 4px -20px;
+	}
+	
+	a.tool_edit, a.tool_del {
+		display: block;
+		width: 14px;
+		height: 23px;
+		float: left;
+		margin-right: 4px;
+		background: url(../images/butn-edit.png) no-repeat 0 4px;
+	}
+	a.tool_edit_active
+	{
+		display: block;
+		width: 14px;
+		height: 23px;
+		float: left;
+		margin-right: 4px;
+		background: url(../images/butn-edit.png) no-repeat 0 -22px;
+		
+	}
+	a.tool_del {
+		background-image: url(../images/butn-del.png);
+		margin: 0;
+	}
+	
+	a.tool_edit:hover, a.tool_del:hover {
+		background-position: 0 -22px;
+	}
+	
+	/* ## ACCORDION ############### Marker ############## */
+	
+	.marker-late, .marker-late a {
+		color: #8a3630;
+	}
+	
+	.marker-today, .marker-today a {
+		color: #598a31;
+	}
+	
+	.green, .green a {
+		color: #598a31;
+		border-color: #598a31;
+		background-color:#d1f0b5;
+	}
+	
+	.red, .red a {
+		color: #8a3630;
+		border-color: #8a3630;
+		background-color:#e8dbdb;
+	}
+	
+	/* ## Headlines ## start ## */
+	
+	h1 {
+		font-size: 21px;
+		margin:0 0 0px 0px;
+		height: 25px;
+		line-height: 21px;
+	}
+	
+	#content-left h1 {
 	width: 669px;
 	overflow: hidden;
-}
-
-h1.head {
-	font-size: 24pt;
-	margin: 0 0 0px 0;
-	color: white;
-	height: 35px;
-}
-
-h1 span {
-	font-size:11pt;
-	margin-left:6px;
-}
-
-h2 {
-	font-size:11pt;
-	margin:0 0 10px 0;
-}
-
-h2.head {
-	font-size:11pt;
-	margin:0 0 10px 0;
-	color:white;
-	font-weight:normal;
-}
-
-/* ## Infos ## start ## */
-
-span.info {
-	font-size: 12px;
-}
-
-.infowin_left {
-	position: relative;
-	top: -72px;
-	right: 0;
-	height: 40px;
-	margin: 0 0 -40px 0;
-	font-size: 12px;
-	font-weight: bold;
-	float: right;
-}
-.infowin_left img {
-   	float:left;
-	position: relative;
-	top: -8px;
-	margin: 0 0 -12px 0;
-}
-.info_in_red, .info_in_green, .info_in_yellow {
-	padding: 10px 10px 8px 4px;
-	border: 1px solid #fff;
-	float: right;
-	color: #fff;
-	background: url(../images/infowin_red.png) repeat;
-	line-height: 22px;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 6px;
-	border-radius: 6px;
-}
-.info_in_green {
-	background: url(../images/infowin_green.png) repeat;
-}
-.info_in_yellow {
-	background: url(../images/infowin_yellow.png) repeat;
-}
-
-/* ## Footer ## start ## */
-
-#footer-wrapper {
+	}
+	
+	h1.head {
+		font-size: 24pt;
+		margin: 0 0 0px 0;
+		color: white;
+		height: 35px;
+	}
+	
+	h1 span {
+		font-size:11pt;
+		margin-left:6px;
+	}
+	
+	h2 {
+		font-size:11pt;
+		margin:0 0 10px 0;
+	}
+	
+	h2.head {
+		font-size:11pt;
+		margin:0 0 10px 0;
+		color:white;
+		font-weight:normal;
+	}
+	
+	/* ## Infos ## start ## */
+	
+	span.info {
+		font-size: 12px;
+	}
+	
+	.infowin_left {
+		position: relative;
+		top: -72px;
+		right: 0;
+		height: 40px;
+		margin: 0 0 -40px 0;
+		font-size: 12px;
+		font-weight: bold;
+		float: right;
+	}
+	.infowin_left img {
+		float:left;
+		position: relative;
+		top: -8px;
+		margin: 0 0 -12px 0;
+	}
+	.info_in_red, .info_in_green, .info_in_yellow {
+		padding: 10px 10px 8px 4px;
+		border: 1px solid #fff;
+		float: right;
+		color: #fff;
+		background: url(../images/infowin_red.png) repeat;
+		line-height: 22px;
+		-moz-border-radius: 6px;
+		-webkit-border-radius: 6px;
+		border-radius: 6px;
+	}
+	.info_in_green {
+		background: url(../images/infowin_green.png) repeat;
+	}
+	.info_in_yellow {
+		background: url(../images/infowin_yellow.png) repeat;
+	}
+	
+	/* ## Footer ## start ## */
+	
+	#footer-wrapper {
 	clear: both;
 	width: 100%;
 	min-width: 980px;
 	height: 26px;
 	font-size: 9pt;
 	margin-top: -26px;
-}
-
-.footer {
-	width: 980px;
-	margin: 0 auto 0 auto;
-}
-
-.footer-in {
-	padding: 7px 0 0 2px;
-	color: #598a31;
-}
-
-.footer a {
-	color: #598a31;
-}
-
-
-
-/* ## Footer ## end ## */
+	}
+	
+	.footer {
+		width: 980px;
+		margin: 0 auto 0 auto;
+	}
+	
+	.footer-in {
+		padding: 7px 0 0 2px;
+		color: #598a31;
+	}
+	
+	.footer a {
+		color: #598a31;
+	}
+	
+	
+	
+	/* ## Footer ## end ## */

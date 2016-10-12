@@ -67,6 +67,7 @@ form.main input {
 .login form {
 	width: 200px;
 	margin: 0 auto 0 auto;
+	/* color: #0a182f; */
 	font-weight: bold;
 	text-align: left;
 }
@@ -82,10 +83,10 @@ form.main input {
 	height: 23px;
 	margin-right: 1px;
 	background-position: 0 0;
-	background-prepeat: no-repeat;
+	background-repeat: no-repeat;
 }
 
-#username, #pass {
+#username, #pass { /* Spring Theme */
 	color: #598a31;
 }
 
@@ -121,12 +122,12 @@ form.main input {
 	padding: 4px 6px 0 6px;
 	border: none;
 	font-size: 12px;
-	background: #efefef; /*url(../images/input-bg-a.png) repeat-x 0 0;*/
+	background: #efefef; /* url(../images/input-bg-a.png) repeat-x 0 0; */
 }
 
 .login form label.keep span, .login form label.keep-active span {
 	margin: 0 0 0 35px;
-	background: #efefef; /*url(../images/login-logged-butn.png) repeat-x 0 0;*/
+	background: #efefef; /* url(../images/login-logged-butn.png) repeat-x 0 0; */
 }
 
 .login form label.keep:hover span, .login form label.keep-active:hover span {
@@ -157,7 +158,7 @@ form.main input {
 #search {
 	position: relative;
 	margin: 0;
-	background: #598A31;
+	background: #598A31; /* Spring Theme */
 }
 
 #search .row .text, #choices ul {
@@ -167,8 +168,9 @@ form.main input {
 	padding: 4px 6px 0 6px;
 	border:none;
 	font-size: 12px;
-	background: #efefef;
-	color: #6daa3b;
+	background: url(../images/input-bg-a.png) repeat-x 0 0;
+	color: #6daa3b; /* Spring Theme */
+	font-weight: bold;
 	margin-right: 1px;
 }
 
@@ -192,6 +194,7 @@ form.main input {
 	max-height: 300px;
 	overflow-y: auto;
 	overflow-x: hidden;
+	/* background: url(../images/color-a.png) repeat 0 0; */
 	float:left;
 	padding: 0 0 1px 0;
 }
@@ -199,7 +202,7 @@ form.main input {
 	width: 180px;
 	height: 31px;
 	line-height: 31px;
-	background: #f8faf9;
+	background: #f8faf9; /* Spring Theme */
 	margin-top: 1px;
 	padding: 2px;
 	float:left;
@@ -281,7 +284,7 @@ form.main option {
 	background:#fff;
 }
 
-#blaform div button, #resetpasswordform fieldset div div button {
+#blaform div button, #resetpasswordform fieldset div div button { /* Spring Theme */
 	background: #efefef;
 	color: #cb6e68;
 }
@@ -363,8 +366,8 @@ form.main .radio{
 
 
 form.main .input_error {
-	border-color: #8a3630;
-	color: #8a3630;
+	border-color: #8a3630; /* Spring Theme */
+	color: #8a3630; /* Spring Theme */
 }
 
 

@@ -113,10 +113,10 @@ form.main input {
 
 .login form input, .login form label.keep span, .login form label.keep-active span {
 	float: left;
-	width:153px;
+	width: 153px;
 	height: 19px;
 	padding: 4px 6px 0 6px;
-	border:none;
+	border: none;
 	font-size: 12px;
 	background: url(../images/input-bg-a.png) repeat-x 0 0;
 }
@@ -129,7 +129,6 @@ form.main input {
 .login form label.keep:hover span, .login form label.keep-active:hover span {
 	background-position: 0 -23px;
 }
-
 
 #stay {
 	visibility: hidden;
@@ -149,7 +148,6 @@ form.main input {
 	background-position: -32px 0;
 	cursor: pointer;
 }
-
 
 /* ## SEARCH - Form (Sidebar)) ############################### */
 
@@ -177,9 +175,8 @@ form.main input {
 	background: url(../images/search-butn-side.png) no-repeat 0 0;
 	float: left;
 	margin: 0;
-	-moz-border-radius: 0px;
 	-webkit-border-radius: 0px;
-	border-radius:0px;
+	border-radius: 0px;
 }
 
 #search button:hover {
@@ -237,9 +234,8 @@ button, button.inner, button.inner-active {
 	height: 22px;
 	line-height: 22px;
 	color: #fff;
-	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
-	border-radius:3px;
+	border-radius: 3px;
 	font-size: 11px;
 	font-weight: bold;
 	margin: 0 5px 0 0;
@@ -258,7 +254,6 @@ button:hover {
 button[disabled] {
 	opacity:.6;
 	filter:alpha(opacity=60);
-	-moz-opacity:.6;
 }
 
 button[disabled]:hover {
@@ -274,6 +269,10 @@ form.main select {
 	padding: 2px 0 0 0;
 	font-family: Arial, helvetica, sans-serif;
 	font-size: 9pt;
+}
+
+#acc-tracker form.main select#ttask{
+	height: 150px;
 }
 
 form.main option {
@@ -317,7 +316,6 @@ form.main option {
 
 form.main input.file {
 	position: relative;
-	-moz-opacity: 0 ;
 	filter: alpha(opacity: 0);
 	opacity: 0;
 	z-index: 2;
