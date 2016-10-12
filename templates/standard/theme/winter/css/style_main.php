@@ -16,6 +16,8 @@ $logoName = "#fff";
 $logoSubname = "#4B6EB2";
 $leftBlockBg = "#fff";
 
+$textColor = "#4566A4";
+
 $tabsInfo = "#4B6EB2";
 $mainMenueInfo = "#4B6EB2"; // Info-Span in Mainmenue
 
