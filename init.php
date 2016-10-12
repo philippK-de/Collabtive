@@ -18,9 +18,9 @@ define("CL_ROOT", realpath(dirname(__FILE__)));
 // configuration to load
 define("CL_CONFIG", "standard");
 // collabtive release date
-define("CL_PUBDATE", "1426201200");
+define("CL_PUBDATE", "1476223200");
 // uncomment next line for debugging
-error_reporting(E_ALL || E_STRICT);
+//error_reporting(E_ALL || E_STRICT);
 // include config file , pagination and global functions
 require(CL_ROOT . "/config/" . CL_CONFIG . "/config.php");
 //include composer dependencies
