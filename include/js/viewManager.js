@@ -324,6 +324,10 @@ function deleteElement(theElement, theUrl, theView) {
             }
             var result = true;
         }
+        else
+        {
+            console.log(ajax.request.responseText);
+        }
     });
 
     ajax.sendRequest();

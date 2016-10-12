@@ -104,6 +104,7 @@ class task
         $id = (int)$id;
         // get task text and project
         // we need to do this before deleting the task here
+        $projectProperties = $this->getProjectProperties($id);
 
         $delStmt = $conn->prepare("DELETE FROM tasks WHERE ID = ?");
         $del = $delStmt->execute(array($id));
@@ -112,8 +113,6 @@ class task
             $delAssignStmt = $conn->prepare("DELETE FROM tasks_assigned WHERE task = ?");
             $delAssign = $delAssignStmt->execute(array($id));
             // Add a log entry with the task text
-            $projectProperties = $this->getProjectProperties($id);
-
             $mylog->add($projectProperties[0], 'task', 3, $projectProperties[1]);
             return true;
         } else {
@@ -304,6 +303,9 @@ class task
             if ($task["daysleft"] == 0) {
                 $task["istoday"] = true;
             }
+
+            //$taskCommentObj = new taskComments();
+            //$task["comments"] = $taskCommentObj->getCommentsByTask($id);
 
             return $task;
         } else {
