@@ -1,0 +1,183 @@
+/* HELPERS
+ * This contains a number of CSS helper classes that accomplish things where inline styles would often be used
+ */
+/* Drag and Drop */
+[draggable] {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    /* Required to make elements draggable in old WebKit */
+    -webkit-user-drag: element;
+}
+
+.dragover {
+    border: 1px dashed #000;
+}
+
+/* Display and visibility */
+.hidden {
+    visibility: hidden;
+}
+
+.visible {
+    visibility: visible;
+}
+
+.display-none {
+    display: none;
+}
+.display-inline{
+    display:inline;
+}
+
+
+/* Clear float:right/left */
+.clear_both {
+    clear: both;
+}
+
+.clear_both_b {
+    clear: both;
+    height: 15px;
+}
+
+/* remove annoying borders from images */
+img {
+    border: none;
+}
+
+.error_message {
+    color: red;
+}
+
+/* Vue.js needs this to hide unrendered template code */
+[v-cloak] {
+    display: none;
+}
+
+button:focus {
+    outline: 0;
+}
+
+/* Width */
+.width-10{
+    width: 10%;
+}
+.width-20{
+    width: 20%;
+}
+.width-30{
+    width: 30%;
+}
+.width-40{
+    width: 40%;
+}
+.width-50{
+    width: 50%;
+}
+.width-60{
+    width: 60%;
+}
+.width-70{
+    width: 70%;
+}
+.width-80{
+    width: 80%;
+}
+.width-90{
+    width: 90%;
+}
+.width-100{
+    width: 100%;
+}
+
+/* Aligning */
+.center-margin {
+    margin: 0 auto;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+/* Text align */
+.text-align-right {
+    text-align: right;
+}
+
+.text-align-center {
+    text-align: center;
+}
+
+.text-align-left {
+    text-align: left;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/* Float */
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.float-none {
+    float: none;
+}
+
+/* Padding and Margin */
+.padding-bottom-two-px {
+    padding-bottom: 2px;
+}
+
+.padding-left-two-px {
+    padding-left: 2px;
+}
+
+.padding-right-two-px {
+    padding-right: 2px;
+}
+
+.margin-left-two-px {
+    margin-left: 2px;
+}
+
+.margin-right-two-px {
+    margin-right: 2px;
+}
+
+/* BORDERS */
+.border-none {
+    border: 0;
+}
+
+.border-left-none {
+    border-left: 0;
+}
+
+.border-right-none {
+    border-right: 0;
+}
+
+.border-collapse {
+    border-collapse: collapse;
+}
+
+/* LISTS */
+.list-style-none{
+    list-style-type: none;
+}
+/* Pagination */
+.pagination {
+    margin-left: 10px;
+}
+
+.pagination button {
+    font-size: 9pt;
+    margin: 0 1px 0 1px;
+}
