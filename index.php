@@ -140,7 +140,7 @@ if ($mode == "login") {
 if (!$action) {
 // Assign everything to the template engine
     $template->assign("title", $langfile["desktop"]);
-    $template->assign("today", $today);
+    $template->assign("today", date("d"));
 
     $template->assign("closedProjectnum", $project->countMyProjects($userid, 0));
     $template->assign("openProjectnum", $projectnum);
