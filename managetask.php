@@ -231,7 +231,7 @@ if ($action == "add") {
     }
     if ($task->del($cleanGet["tid"])) {
         // $redir = urldecode($redir);
-        if ($redir) {
+        if (isset($redir) && $redir) {
             $redir = $url . $redir;
             header("Location: $redir");
         } else {
