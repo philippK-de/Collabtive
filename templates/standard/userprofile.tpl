@@ -103,7 +103,7 @@
                                             <tbody class="color-b">
                                             <tr>
                                                 <td><strong>{#zip#} / {#city#}:</strong></td>
-                                                <td class="right">{$user.zip}{if $user.zip && $user.adress2} {/if}{$user.adress2} </td>
+                                                <td class="right">{$zipcity} </td>
                                             </tr>
                                             </tbody>
 

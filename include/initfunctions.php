@@ -207,6 +207,14 @@ function getArrayVal(array $array, $name)
     }
 }
 
+function purify($dirty)
+{
+    $config = HTMLPurifier_Config::createDefault();
+    $config->set('Cache.SerializerPath', CL_ROOT . "/files/standard/ics");
+    $purifier = new HTMLPurifier($config);
+    return $purifier->purify($dirty);
+}
+
 function cleanArray(array $theArray)
 {
     $outArray = array();

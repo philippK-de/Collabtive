@@ -208,6 +208,11 @@ if ($action == "loginerror") {
     $template->assign("title", $title);
     $template->assign("user", $profile);
 
+    // This is done specifically to address an XSS vulnerability
+    // caused by rendering two user inputs on same line in HTML.
+    // They must be escaped together and rendered as one.
+    $template->assign("zipcity", purify(implode(' ', [$profile['zip'], $profile['adress2']])));
+
     $template->display("userprofile.tpl");
 } elseif ($action == "showproject") {
     if (!chkproject($userid, $id)) {
