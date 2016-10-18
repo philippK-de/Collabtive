@@ -9,8 +9,8 @@
 				<label for="folderparent">{#parent#}:</label>
 				<select name="folderparent" id="folderparent">
 					<option value="0">{#rootdir#}</option>
-					{section name=fold loop=$allfolders}
-						<option value="{$allfolders[fold].ID}">{$allfolders[fold].abspath}</option>
+					{section name=fold loop=$folders}
+						<option value="{$folders[fold].ID}">{$folders[fold].abspath}</option>
 					{/section}
 				</select>
 			</div>
