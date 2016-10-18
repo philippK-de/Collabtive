@@ -58,7 +58,6 @@
             {include file="desktopMessages.tpl"}
 
         </div> {* block index end*}
-        <div class="content-spacer"></div>
     </div> {* content-left-in END *}
 </div> {* content-left END *}
 
