@@ -5,17 +5,9 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <title>{$title} @ {$settings.name}</title>
     <link rel="shortcut icon" href="templates/{$settings.template}/theme/{$settings.theme}/images/favicon.ico" type="image/x-icon"/>
-    {if $stage != "project" and $loggedin|default}
-        <link rel="search" type="application/opensearchdescription+xml" title="{$settings.name} {#search#}" href="manageajax.php?action=addfx-all"/>
-    {elseif $stage == "project" and $loggedin}
-        <link rel="search" type="application/opensearchdescription+xml" title="{$project.name} {#search#}"
-              href="manageajax.php?action=addfx-project&amp;project={$project.ID}"/>
+    {if $stage == "project" and $loggedin}
         <link rel="stylesheet" href="templates/{$settings.template}/theme/{$settings.theme}/css/dtree.css" type="text/css"/>
         <script type="text/javascript" src="include/js/dtree.min.js"></script>
-    {/if}
-    {if $loggedin}
-        <link rel="alternate" type="application/rss+xml" title="{#mymessages#}" href="managerss.php?action=mymsgs-rss&amp;user={$userid}"/>
-        <link rel="alternate" type="application/rss+xml" title="{#mytasks#}" href="managerss.php?action=rss-tasks&amp;user={$userid}"/>
     {/if}
     {if $jsload|default == "ajax"}
     {literal}

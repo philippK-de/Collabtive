@@ -32,65 +32,8 @@ if (!$id) {
     $id = 0;
 }
 $template->assign("id", $id);
-if ($action == "makeinputs") {
-    $num = getArrayVal($_GET, "num");
-    $file = $langfile["file"] . ":";
-    $title = $langfile["title"] . ":";
-    $tags = $langfile["tags"] . ":";
-
-    for($i = 1;$i <= $num;$i++) {
-        echo " <div class=\"row\"><label for = \"title$i\">$title </label><input type = \"text\" name = \"userfile$i-title\" id=\"title$i\" /></div>
-        <div class=\"row\"><label for = \"tags$i\">$tags </label><input type = \"text\" name = \"userfile$i-tags\" id=\"tags$i\" /></div>
-			<div class=\"row\"><label for = \"userfile$i\">$file </label><input type=\"file\" id = \"userfile$i\" name=\"userfile$i\" /><div style=\"clear:left\"></div>";
-    }
-}
-//This is used to add the search functionality to firefoxs seachbar
-elseif ($action == "addfx-all") {
-    $templ = $url . "managesearch.php?action=search&amp;query={searchTerms}";
-    $templ2 = $url . "managesearch.php?action=searchjson&amp;query={searchTerms}";
-    $fav = $url . "templates/standard/images/favicon.ico";
-    $strsearch = $langfile["search"];
-    $sysname = $settings["name"];
-    echo "
-<OpenSearchDescription xmlns=\"http://a9.com/-/spec/opensearch/1.1/\">
-<ShortName>$sysname $strsearch</ShortName>
-<Description>Search all Collabtive</Description>
-<Tags></Tags>
-<Image height=\"16\" width=\"16\" type=\"image/x-icon\">$fav</Image>
-<Url type=\"text/html\" method=\"get\"  template=\"$templ\"/>
-<Url type=\"application/x-suggestions+json\" method=\"get\"  template=\"$templ2\"/>
-<InputEncoding>UTF-8</InputEncoding>
-<OutputEncoding>UTF-8</OutputEncoding>
-
-<AdultContent>false</AdultContent>
-</OpenSearchDescription>";
-}
-//This is used to add the search functionality to firefoxs seachbar
-elseif ($action == "addfx-project") {
-    $templ = $url . "managesearch.php?action=projectsearch&amp;project=$project&amp;query={searchTerms}";
-    $templ2 = $url . "managesearch.php?action=searchjson-project&amp;project=$project&amp;query={searchTerms}";
-    $fav = $url . "templates/standard/images/favicon.ico";
-    $project = $_GET['project'];
-    $strsearch = $langfile["search"];
-    $pro = new project();
-    $pname = $pro->getProject($project);
-    $pname = $pname["name"];
-    echo "
-<OpenSearchDescription xmlns=\"http://a9.com/-/spec/opensearch/1.1/\">
-<ShortName>$pname $strsearch</ShortName>
-<Description>Search project $pname</Description>
-<Tags></Tags>
-<Image height=\"16\" width=\"16\" type=\"image/x-icon\">$fav</Image>
-<Url type=\"text/html\" method=\"GET\"  template=\"$templ\"/>
-<Url type=\"application/x-suggestions+json\" method=\"get\"  template=\"$templ2\"/>
-<InputEncoding>UTF-8</InputEncoding>
-<OutputEncoding>UTF-8</OutputEncoding>
-
-<AdultContent>false</AdultContent>
-</OpenSearchDescription>";
-}
 //This is used to put file lists into tinymce for selection
-elseif ($action == "jsonfiles") {
+if ($action == "jsonfiles") {
     if (!chkproject($userid, $id)) {
         $errtxt = $langfile["notyourproject"];
         $noperm = $langfile["accessdenied"];
