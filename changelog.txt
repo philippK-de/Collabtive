@@ -1,6 +1,8 @@
 Collabtive 3.0.1
-+ Fix XSS Vector in the userprofile
-+ Fix Selection of subfolders when uploading files
++ Fix broken link to task list in upcoming milestones block
++ Fix XSS Vector in the user profile
++ Fix selection of subfolders when uploading files
+
 Collabtive 3.0
 + All external library dependencies now live in /vendor/ and are managed using composer.
 + Restructured templates. Form templates now live in the /forms/ subdirectory of the template folder.
