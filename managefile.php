@@ -219,7 +219,7 @@ if ($action == "uploadAsync") {
     $projectObj = new project();
     $rolesobj = new roles();
     //get folders
-    $folders = $fileObj->getProjectFolders($id);
+    $folders = $fileObj->getAllProjectFolders($id);
 
 	//get the project
     $pro = $projectObj->getProject($id);
