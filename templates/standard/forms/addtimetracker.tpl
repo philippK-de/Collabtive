@@ -34,11 +34,12 @@
 		  		<input type="text" class="text" style="width:80px;margin:0 6px 0 0;" id="ended" name="ended" onkeyup = " populateHours();" required pattern="^([01]?\d|2[0123]):[012345]\d$" value="09:00" />
 			</div>
 
-
+<!-- Requires rework to enable submitting times <1 hour
 			<div class = "row">
 				<label for = "workhours" >Hours:</label>
 		  		<input type = "number" id = "workhours" name = "workhours" value = "1" min = "1" max = "10" step = "1" onkeyup = "populateEndtime();" onchange = "populateEndtime();" style="width:40px;"/>
 			</div>
+-->
 
 			<input type="hidden" name="project" value="{$project.ID}" />
 
