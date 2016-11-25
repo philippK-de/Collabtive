@@ -49,7 +49,7 @@
                             <th class="a"></th>
                             <th class="b">{#project#}</th>
                             <th class="c">{#done#}</th>
-                            <th class="days text-align-right">{#daysleft#}&nbsp;&nbsp;</th>
+                            <th class="d text-align-right">{#daysleft#}&nbsp;&nbsp;</th>
                             <th class="tools"></th>
                         </tr>
                         </thead>
@@ -79,7 +79,7 @@
                                     <span id="acc_projects_toggle{{project.ID}}" class="acc-toggle"
                                           onclick="javascript:accord_projects.toggle(css('#acc_projects_content{{$index}}'));"></span>
                                     <a href="manageproject.php?action=showproject&amp;id={{*project.ID}}" title="{{*project.name}}">
-                                        {{*project.name}}
+                                        {{*project.name | truncate '40'}}
                                     </a>
                                 </div>
                             </td>
