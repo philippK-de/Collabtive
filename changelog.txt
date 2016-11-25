@@ -5,6 +5,7 @@ Collabtive 3.0.1
 + Make truncation of project titles more consistent at 40 characters.
 + Correctly display timetracker and projects block in a users own profile
 + Fix user profiles when not logged in as admin
++ Fix changing the role of an existing user that already had a role assigned.
 
 Collabtive 3.0
 + All external library dependencies now live in /vendor/ and are managed using composer.
