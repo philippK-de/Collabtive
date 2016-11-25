@@ -138,11 +138,13 @@ class roles {
         // If there already is a role assigned to the user, just update this entry
         // Otherwise create a new entry
         if ($chk > 0) {
-            $insStmt = $conn->prepare("UPDATE roles_assigned SET user = ? WHERE role = ?");
+            $insStmt = $conn->prepare("UPDATE roles_assigned SET role = ? WHERE user = ?");
+            $ins = $insStmt->execute(array($role, $user));
         } else {
             $insStmt = $conn->prepare("INSERT INTO roles_assigned (user,role) VALUES (?,?)");
+            $ins = $insStmt->execute(array($user, $role));
         }
-        $ins = $insStmt->execute(array($user, $role));
+
         if ($ins) {
             return true;
         } else {
