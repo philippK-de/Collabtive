@@ -1,4 +1,3 @@
-{if $userpermissions.admin.add}{*Projects*}
     <div class="projects" id="userProjects">
         <div class="headline">
             <a href="javascript:void(0);" id="userProjects_toggle" class="win_none" onclick=""></a>
@@ -134,8 +133,3 @@
     </div>
     <div class="padding-bottom-two-px"></div>
     {*Projects End*}
-{literal}
-    <script type="text/javascript" src="include/js/accordion.min.js"></script>
-    <script type="text/javascript" src="include/js/views/userProfileView.min.js"></script>
-{/literal}
-{/if} {*if admin end*}

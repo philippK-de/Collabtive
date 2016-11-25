@@ -249,7 +249,7 @@ if ($action == "loginerror") {
     $template->assign("members", $members);
     $template->assign("users", $users);
     $template->display("projectmembers.tpl");
-}  elseif ($action == "onlinelist") {
+} elseif ($action == "onlinelist") {
     $onlinelist = $user->getOnlinelist();
     if (!empty($onlinelist)) {
         echo "<ul>";
@@ -286,8 +286,7 @@ if ($action == "loginerror") {
     header('Content-Disposition: inline; filename=' . $theuser["name"] . '_' . date("d-m-Y") . '.vcf');
 
     echo $vCard->getCardOutput();
-}
-/*
+} /*
  * DATA ROUTES
  * These are routes that render JSON data structures
  */
@@ -302,13 +301,11 @@ elseif ($action == "projectMembers") {
     }
 
     $offset = 0;
-    if(isset($cleanGet["offset"]))
-    {
+    if (isset($cleanGet["offset"])) {
         $offset = $cleanGet["offset"];
     }
     $limit = 21;
-    if(isset($cleanGet["limit"]))
-    {
+    if (isset($cleanGet["limit"])) {
         $limit = $cleanGet["limit"];
     }
 
@@ -321,9 +318,8 @@ elseif ($action == "projectMembers") {
 
     echo json_encode($projectMembers);
 
-}
-elseif ($action == "userProjects") {
-    if ($userpermissions["admin"]["add"]) {
+} elseif ($action == "userProjects") {
+    if ($userpermissions["admin"]["add"] || $userid == $id) {
         $offset = 0;
         if (isset($cleanGet["offset"])) {
             $offset = $cleanGet["offset"];
@@ -349,12 +345,15 @@ elseif ($action == "userProjects") {
 
         $projects["items"] = $openProjects;
         $projects["count"] = $openProjectsNum;
-
-        echo json_encode($projects);
     }
-}
-elseif ($action == "userTimetracker") {
-    if ($userpermissions["admin"]["add"]) {
+    if (!empty($projects)) {
+        echo json_encode($projects);
+    } else {
+        echo json_encode(array());
+    }
+
+} elseif ($action == "userTimetracker") {
+    if ($userpermissions["admin"]["add"] || $userid == $id) {
         $tracker = (object)new timetracker();
 
         $track = array();
@@ -371,12 +370,10 @@ elseif ($action == "userTimetracker") {
         $userTrack["items"] = $track;
         $trackCount = count($tracker->getUserTrack($id, 0, 0, 0, 0, 10000000));
         $userTrack["count"] = $trackCount;
-        if(!empty($track))
-        {
-            echo json_encode($userTrack);
-        }
-        else{
-            echo json_encode(array());
-        }
+    }
+    if (!empty($userTrack)) {
+        echo json_encode($userTrack);
+    } else {
+        echo json_encode(array());
     }
 }

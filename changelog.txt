@@ -2,6 +2,9 @@ Collabtive 3.0.1
 + Fix broken link to task list in upcoming milestones block
 + Fix XSS Vector in the user profile
 + Fix selection of subfolders when uploading files
++ Make truncation of project titles more consistent at 40 characters.
++ Correctly display timetracker and projects block in a users own profile
++ Fix user profiles when not logged in as admin
 
 Collabtive 3.0
 + All external library dependencies now live in /vendor/ and are managed using composer.

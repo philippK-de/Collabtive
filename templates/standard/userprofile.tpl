@@ -131,9 +131,9 @@
                 </div> {*UserWrapper End*}
             </div> {*User END*}
             <div class="padding-bottom-two-px clear_both"></div>
-            {include file="userProfileProjects.tpl"}
             {if $userpermissions.admin.add or $userid == $user.ID} {*timetracker start*}
                 {include file="userProfileTimetracker.tpl"}
+                {include file="userProfileProjects.tpl"}
             {/if}
             <div class="padding-bottom-two-px"></div>
         </div>
@@ -141,23 +141,16 @@
     </div> {*content-left-in END*}
 </div> {*content-left END*}
 
+<script type="text/javascript" src="include/js/accordion.min.js"></script>
+<script type="text/javascript" src="include/js/views/userProfileView.min.js"></script>
 <script type="text/javascript">
+    {if $userpermissions.admin.add or $userid == $user.ID}
     //create views
     userProfileTimetracker.url = userProfileTimetracker.url + "&id=" + {$user.ID};
     var userProfileTimetrackerView = createView(userProfileTimetracker);
 
     userProfileProjects.url = userProfileProjects.url + "&id=" + {$user.ID};
     var userProfileProjectsView = createView(userProfileProjects);
-
-    //create accordeons
-    accordUserprofile = new accordion2("userProfile", {
-        classNames: {
-            toggle: 'win_none',
-            toggleActive: 'win_block',
-            content: 'blockaccordion_content'
-        }
-    });
-    window.addEventListener("load",initializeBlockaccordeon);
 
     var accord_tracker;
     userProfileTimetrackerView.afterUpdate(function() {
@@ -168,7 +161,17 @@
     userProfileProjectsView.afterUpdate(function(){
         accord_projects = new accordion2('userProjectsAccordeon');
     });
+   {/if}
 
+    //create accordeons
+    accordUserprofile = new accordion2("userProfile", {
+        classNames: {
+            toggle: 'win_none',
+            toggleActive: 'win_block',
+            content: 'blockaccordion_content'
+        }
+    });
+    window.addEventListener("load",initializeBlockaccordeon);
 </script>
 {include file="sidebar-a.tpl"}
 {include file="footer.tpl"}
