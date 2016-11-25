@@ -1,4 +1,4 @@
-//Vue.config.silent = true;
+Vue.config.silent = true;
 //create the vue views, binding data to DOM elements
 /*
  * Function to create Vue.js view.
@@ -15,16 +15,6 @@ function createView(myView) {
      * @param Array dependencies A list of Vue.js views that depend on the data in  this view, and should be updated if this view is updated
      * @param String url The data URL that delivers the models items
      */
-    if(myView.loadHandler !== undefined) {
-        console.log(myView.loadHandler);
-    }
-    else
-    {
-        myView.loadHandler = function(){
-            console.log("dummy handler");
-        }
-    }
-
     var myModel = {
         items: [],
         pages: [],
