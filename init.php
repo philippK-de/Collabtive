@@ -29,6 +29,12 @@ require(CL_ROOT . "/vendor/autoload.php");
 require(CL_ROOT . "/include/initfunctions.php");
 require(CL_ROOT . "/include/pluginFunctions.php");
 
+// Start template engine
+$template = new Smarty();
+// STOP smarty from spewing notices all over the html code
+$template->error_reporting = E_ALL & ~E_NOTICE;
+
+
 //assume mysql as the default db
 if (!isset($db_driver)) {
     $db_driver = "mysql";
@@ -50,10 +56,30 @@ switch ($db_driver) {
         $conn = new PDO("sqlite:" . CL_ROOT . "/files/collabtive.sdb");
         break;
 }
-// Start template engine
-$template = new Smarty();
-// STOP smarty from spewing notices all over the html code
-$template->error_reporting = E_ALL & ~E_NOTICE;
+
+// get system settings
+if (isset($conn)) {
+    // Set PDO options
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+    $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_BOTH);
+    //$conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+
+    // create a global mylog object for loging system events
+    $mylog = new mylog();
+
+    // get a settings object, and fetch an array containing the system settings
+    $settingsObj = (object)new settings();
+    $settings = $settingsObj->getSettings();
+
+    // define a constant that holds the default dateformat
+    define("CL_DATEFORMAT", $settings["dateformat"]);
+    // set the default TZ for date etc
+    date_default_timezone_set($settings["timezone"]);
+    $template->assign("settings", $settings);
+} else {
+    $settings = array();
+}
+
 // get the available languages
 $languages = getAvailableLanguages();
 // get URL to collabtive
@@ -66,12 +92,13 @@ $template->assign("languages", $languages);
 // set the version number for display
 $template->assign("myversion", "3.0");
 $template->assign("cl_config", CL_CONFIG);
-// get current year and month
-$template->assign("theM", date("n"));
-$template->assign("theY", date("Y"));
 
 // Assign globals to all templates
 if (isset($_SESSION["userid"])) {
+    // get current year and month
+    $template->assign("theM", date("n"));
+    $template->assign("theY", date("Y"));
+
     // unique ID of the user
     $userid = $_SESSION["userid"];
     // name of the user
@@ -93,7 +120,6 @@ if (isset($_SESSION["userid"])) {
     $template->assign("userid", $userid);
     $template->assign("username", $username);
     $template->assign("lastlogin", $lastlogin);
-    $template->assign("usergender", $gender);
     $template->assign("userpermissions", $userpermissions);
     $template->assign("loggedin", 1);
 } else {
@@ -102,25 +128,7 @@ if (isset($_SESSION["userid"])) {
     $settings = array();
     $userid = 0;
 }
-// get system settings
-if (isset($conn)) {
-    // Set PDO options
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-    $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_BOTH);
-    // $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-    // create a global mylog object for loging system events
-    $mylog = new mylog();
-    // get a settings object, and fetch an array containing the system settings
-    $settingsObj = (object)new settings();
-    $settings = $settingsObj->getSettings();
-    // define a constant that holds the default dateformat
-    define("CL_DATEFORMAT", $settings["dateformat"]);
-    // set the default TZ for date etc
-    date_default_timezone_set($settings["timezone"]);
-    $template->assign("settings", $settings);
-} else {
-    $settings = array();
-}
+
 // Set template directory
 // If no directory is set in the system settings, default to the standard theme
 if (isset($settings['template'])) {
@@ -171,8 +179,6 @@ if (isset($userid)) {
     //create plugins manager
     $pluginManager = new pluginManager();
     $pluginManager->loadPlugins();
-    //register filter to fix deprecated vue.js syntax
-   //$template->registerFilter("pre", filterVueInterpolation);
 }
 
 
