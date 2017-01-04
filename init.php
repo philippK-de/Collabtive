@@ -28,6 +28,10 @@ require(CL_ROOT . "/vendor/autoload.php");
 // load init functions
 require(CL_ROOT . "/include/initfunctions.php");
 require(CL_ROOT . "/include/pluginFunctions.php");
+//initialise HTMLPurifier XSS protection filter
+$config = HTMLPurifier_Config::createDefault();
+$config->set('Cache.SerializerPath', CL_ROOT . "/files/standard/ics");
+$purifier = new HTMLPurifier($config);
 
 // Start template engine
 $template = new Smarty();

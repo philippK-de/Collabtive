@@ -193,9 +193,8 @@ function getMyUrl()
 function getArrayVal(array $array, $name)
 {
     if (array_key_exists($name, $array)) {
-        $config = HTMLPurifier_Config::createDefault();
-        $config->set('Cache.SerializerPath', CL_ROOT . "/files/standard/ics");
-        $purifier = new HTMLPurifier($config);
+        //use global HTMLPurifier object created in init.php
+        global $purifier;
         if (!is_array($array[$name])) {
             $clean = $purifier->purify($array[$name]);
         } else {
@@ -209,9 +208,7 @@ function getArrayVal(array $array, $name)
 
 function purify($dirty)
 {
-    $config = HTMLPurifier_Config::createDefault();
-    $config->set('Cache.SerializerPath', CL_ROOT . "/files/standard/ics");
-    $purifier = new HTMLPurifier($config);
+    global $purifier;
     return $purifier->purify($dirty);
 }
 
