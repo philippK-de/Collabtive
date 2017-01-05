@@ -26,10 +26,10 @@ class user {
     function add($name, $email, $company, $pass, $locale = "", $tags = "", $rate = 0.0)
     {
         global $conn,$mylog;
-        $pass = sha1($pass);
+        $hash = $this->hash($pass);
 
         $ins1Stmt = $conn->prepare("INSERT INTO user (name,email,company,pass,locale,tags,rate) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $ins1 = $ins1Stmt->execute(array($name, $email, $company, $pass, $locale, $tags, $rate));
+        $ins1 = $ins1Stmt->execute(array($name, $email, $company, $hash, $locale, $tags, $rate));
 
         if ($ins1) {
             $insid = $conn->lastInsertId();
@@ -275,6 +275,18 @@ class user {
     }
 
     /**
+     * Returns a hash of the password.
+     *
+     * @param $password
+     * @return string
+     */
+    function hash($password) {
+        $hashedPassword = sha1($password);
+
+        return $hashedPassword;
+    }
+
+    /**
      * Log a user in
      *
      * @param string $user User name
@@ -289,9 +301,9 @@ class user {
             return false;
         }
         $user = $conn->quote($user);
-        $pass = sha1($pass);
+        $hash = $this->hash($pass);
 
-        $sel1 = $conn->query("SELECT ID,name,locale,lastlogin,gender FROM user WHERE (name = $user OR email = $user) AND pass = '$pass'");
+        $sel1 = $conn->query("SELECT ID,name,locale,lastlogin,gender FROM user WHERE (name = $user OR email = $user) AND pass = '$hash'");
         $chk = $sel1->fetch();
         if ($chk["ID"] != "") {
             $rolesobj = new roles();
