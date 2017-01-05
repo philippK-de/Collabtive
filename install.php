@@ -159,8 +159,8 @@ if (!$action) {
             break;
     }
 
-    $user = $_POST["name"];
-    $pass = $_POST["pass"];
+    $user = getArrayVal($_POST, "name");
+    $pass = getArrayVal($_POST, "pass");
 
     // create the first user
     $usr = new user();
