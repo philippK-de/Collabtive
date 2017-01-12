@@ -18,7 +18,7 @@ define("CL_ROOT", realpath(dirname(__FILE__)));
 // configuration to load
 define("CL_CONFIG", "standard");
 // collabtive release date
-define("CL_PUBDATE", "1476223200");
+define("CL_PUBDATE", "1484175600");
 // uncomment next line for debugging
 error_reporting(E_ALL || E_STRICT);
 // include config file , pagination and global functions
@@ -94,7 +94,7 @@ $url = getMyUrl();
 $template->assign("url", $url);
 $template->assign("languages", $languages);
 // set the version number for display
-$template->assign("myversion", "3.0");
+$template->assign("myversion", "3.0.1");
 $template->assign("cl_config", CL_CONFIG);
 
 // Assign globals to all templates
