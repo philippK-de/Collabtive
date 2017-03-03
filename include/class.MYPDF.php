@@ -22,7 +22,7 @@ class MYPDF extends TCPDF {
         // TCPDF boilerplate setup
         $this->SetMargins(15, $this->headerMargin, 15);
         $this->SetFooterMargin(PDF_MARGIN_FOOTER);
-        $this->SetFont(PDF_FONT_NAME_DATA, "", 11);
+        $this->SetFont('freeserif', "", 11);
 
         $this->SetAutoPageBreak(true, PDF_MARGIN_FOOTER);
         $this->getAliasNbPages();
