@@ -44,7 +44,7 @@ $template->assign("mainclasses", $mainclasses);
 
 $project = new project();
 $milestone = new milestone();
-$mtask = new task();
+$taskObj = new task();
 $msg = new message();
 
 // create arrays to hold data
@@ -58,7 +58,7 @@ $offset = 0;
 if (isset($cleanGet["offset"])) {
     $offset = $cleanGet["offset"];
 }
-$limit = 10;
+$limit = 15;
 if (isset($cleanGet["limit"])) {
     $limit = $cleanGet["limit"];
 }
@@ -67,11 +67,13 @@ $myOpenProjects = $project->getMyProjects($userid, 1, $offset, $limit);
 $projectnum = $project->countMyProjects($userid, 1);
 $template->assign("openProjects", $myOpenProjects);
 
+$msgs = [];
+$tasks = [];
 // If user has projects, loop through them and get the messages and tasks belonging to those projects
 if (!empty($myOpenProjects)) {
     foreach ($myOpenProjects as $proj) {
         // get all the tasks in this project that are assigned to the current user
-        $task = $mtask->getAllMyProjectTasks($proj["ID"]);
+        $task = $taskObj->getAllMyProjectTasks($proj["ID"]);
         // get all messages in the project
         $msgs = $msg->getProjectMessages($proj["ID"]);
         // write those to arrays
@@ -102,16 +104,7 @@ if (!empty($messages)) {
 
 }
 $messageCount = count($messages);
-
-//flatten the array
 $sortedTasks = reduceArray($tasks);
-// Create sort array for multisort by adding the daysleft value to a sort array
-$tasksort = array();
-foreach ($sortedTasks as $etask) {
-    array_push($tasksort, $etask["project"]);
-}
-// Sort using array_multisort
-array_multisort($tasksort, SORT_NUMERIC, SORT_DESC, $sortedTasks);
 $taskCount = count($sortedTasks);
 
 // On Admin Login check for updates

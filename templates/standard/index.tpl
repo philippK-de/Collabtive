@@ -65,6 +65,7 @@
 <script type="text/javascript" src="include/js/modal.min.js"></script>
 <script type="text/javascript" src="include/js/views/index.js"></script>
 <script type="text/javascript">
+        pagination.itemsPerPage = 15;
     {if $tasknum > 0}
         var tasksView = createView(tasks);
         //add this view to the dependencies of projectsView
