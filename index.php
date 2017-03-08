@@ -42,10 +42,10 @@ $template->assign("mainclasses", $mainclasses);
 
 // create objects
 
-$project = new project();
-$milestone = new milestone();
+$projectObj = new project();
+$milestoneObj = new milestone();
 $taskObj = new task();
-$msg = new message();
+$messageObj = new message();
 
 // create arrays to hold data
 $messages = array();
@@ -63,19 +63,17 @@ if (isset($cleanGet["limit"])) {
     $limit = $cleanGet["limit"];
 }
 
-$myOpenProjects = $project->getMyProjects($userid, 1, $offset, $limit);
-$projectnum = $project->countMyProjects($userid, 1);
+$myOpenProjects = $projectObj->getMyProjects($userid, 1, $offset, $limit);
+$projectnum = $projectObj->countMyProjects($userid, 1);
 $template->assign("openProjects", $myOpenProjects);
 
-$msgs = [];
-$tasks = [];
 // If user has projects, loop through them and get the messages and tasks belonging to those projects
 if (!empty($myOpenProjects)) {
     foreach ($myOpenProjects as $proj) {
         // get all the tasks in this project that are assigned to the current user
         $task = $taskObj->getAllMyProjectTasks($proj["ID"]);
         // get all messages in the project
-        $msgs = $msg->getProjectMessages($proj["ID"]);
+        $msgs = $messageObj->getProjectMessages($proj["ID"]);
         // write those to arrays
         if (!empty($msgs)) {
             array_push($messages, $msgs);
@@ -135,7 +133,7 @@ if (!$action) {
     $template->assign("title", $langfile["desktop"]);
     $template->assign("today", date("d"));
 
-    $template->assign("closedProjectnum", $project->countMyProjects($userid, 0));
+    $template->assign("closedProjectnum", $projectObj->countMyProjects($userid, 0));
     $template->assign("openProjectnum", $projectnum);
     $template->assign("projectov", "yes");
 
@@ -153,7 +151,7 @@ if (!$action) {
 elseif ($action == "myprojects") {
     //create datastructure for projects
     $projects["open"] = $myOpenProjects;
-    $projects["closed"] = $project->getMyProjects($userid, 0);
+    $projects["closed"] = $projectObj->getMyProjects($userid, 0);
 
     //add projects to datastructure for JSON
     $myprojects["items"] = $projects;
