@@ -40,7 +40,7 @@
                     {/literal}
                     {if $userpermissions.milestones.close}
                     {literal}
-                        <a class="butn_check" href="javascript:closeElement('miles_upcoming_{{*milestone.ID}}','managemilestone.php?action=close&amp;mid={{*milestone.ID}}&amp;id={{*milestone.project}}');" title="{/literal}{#close#}"></a>
+                        <a class="butn_check" href="javascript:closeElement('miles_upcoming_{{milestone.ID}}','managemilestone.php?action=close&amp;mid={{milestone.ID}}&amp;id={{milestone.project}}');" title="{/literal}{#close#}"></a>
                     {/if}
                 </td>
                 {literal}
@@ -48,23 +48,23 @@
                         <div class="toggle-in">
                             <span class="acc-toggle"
                                   onclick="javascript:accord_miles_upcoming.activate(css('#upcomingMilestones_content{{$index}}'));">
-                                <a href="javascript:void(0);" title="{{*milestone.name}}">{{*milestone.name | truncate '30' }}</a>
+                                <a href="javascript:void(0);" title="{{milestone.name}}">{{milestone.name | truncate '30' }}</a>
                             </span>
 
                         </div>
                     </td>
-                    <td class="c">{{*milestone.startstring}} - {{*milestone.endstring}}</td>
-                    <td class="days text-align-right">{{*milestone.dayslate}}&nbsp;&nbsp;</td>
+                    <td class="c">{{milestone.startstring}} - {{milestone.endstring}}</td>
+                    <td class="days text-align-right">{{milestone.dayslate}}&nbsp;&nbsp;</td>
                 {/literal}
                 <td class="tools">
                     {if $userpermissions.milestones.edit}
                     {literal}
-                        <a class="tool_edit" href="managemilestone.php?action=editform&amp;mid={{*milestone.ID}}&amp;id={{*milestone.project}}" title="{/literal}{#edit#}"></a>
+                        <a class="tool_edit" href="managemilestone.php?action=editform&amp;mid={{milestone.ID}}&amp;id={{milestone.project}}" title="{/literal}{#edit#}"></a>
                     {/if}
                     {if $userpermissions.milestones.del}
                     {literal}
                         <a class="tool_del"
-                        href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','miles_{{*milestone.ID}}','managemilestone.php?action=del&amp;mid={{*milestone.ID}}&amp;id={{*milestone.project}}', projectMilestonesView);"
+                        href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','miles_{{milestone.ID}}','managemilestone.php?action=del&amp;mid={{milestone.ID}}&amp;id={{milestone.project}}', projectMilestonesView);"
                         title="{/literal}{#delete#}"></a>
                     {/if}
                 </td>
@@ -75,7 +75,7 @@
                     <div class="accordion_content" data-slide="{{$index}}" id="upcomingMilestones_content{{$index}}">
                         <div class="acc-in">
                             <div class="message-in">
-                                {{{*milestone.desc}}}
+                                {{{milestone.desc}}}
 
                                 <!--Tasklists-->
                                 <template v-if="milestone.tasklists.length > 0">
@@ -91,8 +91,8 @@
                                                             <td class="leftmen" valign="top">
                                                             </td>
                                                             <td class="thumb">
-                                                                <a href="managetasklist.php?action=showtasklist&amp;tlid={{*tasklist.ID}}&amp;id={{*tasklist.project}}"
-                                                                   title="{{*tasklist.name}}">
+                                                                <a href="managetasklist.php?action=showtasklist&amp;tlid={{tasklist.ID}}&amp;id={{tasklist.project}}"
+                                                                   title="{{tasklist.name}}">
                                                                     <img src="./templates/standard/theme/standard/images/symbols/tasklist.png"
                                                                          alt=""/>
                                                                 </a>
@@ -103,9 +103,9 @@
                                                         <tr>
                                                             <td colspan="3">
                                                             <span class="name">
-                                                                <a href="managetasklist.php?action=showtasklist&amp;tlid={{*tasklist.ID}}&amp;id={{*tasklist.project}}"
-                                                                   title="{{*tasklist.name}}">
-                                                                    {{*tasklist.name | truncate '10' }}
+                                                                <a href="managetasklist.php?action=showtasklist&amp;tlid={{tasklist.ID}}&amp;id={{tasklist.project}}"
+                                                                   title="{{tasklist.name}}">
+                                                                    {{tasklist.name | truncate '10' }}
                                                                 </a>
                                                             </span>
                                                             </td>

@@ -12,7 +12,7 @@
 
 <div class="block blockaccordion_content overflow-hidden display-none" id="currentMilestonesHead">
 
-    {*Add Milestone*}
+    <!--Add Milestone-->
     {if $userpermissions.milestones.add}
         <div id="addstone" class="addmenue display-none">
             {include file="forms/addmilestone.tpl" }
@@ -49,29 +49,29 @@
                         {/literal}
                         {if $userpermissions.milestones.close}
                         {literal}
-                            <a class="butn_check" href="javascript:closeElement('miles_{{*milestone.ID}}','managemilestone.php?action=close&amp;mid={{*milestone.ID}}&amp;id={{*milestone.project}}', projectMilestonesView);" title="{/literal}{#close#}"></a>
+                            <a class="butn_check" href="javascript:closeElement('miles_{{milestone.ID}}','managemilestone.php?action=close&amp;mid={{milestone.ID}}&amp;id={{milestone.project}}', projectMilestonesView);" title="{/literal}{#close#}"></a>
                         {/if}
                     </td>
                     {literal}
                         <td class="b">
                             <div class="toggle-in">
                                 <span class="acc-toggle" onclick="javascript:accord_miles_new.activate(css('#currentMilestones_content{{$index}}'));">
-                                    <a href="javascript:void(0);" title="{{*milestone.name}}">{{*milestone.name | truncate '30'}}</a>
+                                    <a href="javascript:void(0);" title="{{milestone.name}}">{{milestone.name | truncate '30'}}</a>
                                 </span>
                             </div>
                         </td>
-                        <td class="c">{{*milestone.fend}}</td>
-                        <td class="days text-align-right">{{*milestone.dayslate}}&nbsp;&nbsp;</td>
+                        <td class="c">{{milestone.fend}}</td>
+                        <td class="days text-align-right">{{milestone.dayslate}}&nbsp;&nbsp;</td>
                     {/literal}
                     <td class="tools">
                         {if $userpermissions.milestones.edit}
                         {literal}
-                            <a class="tool_edit" href="managemilestone.php?action=editform&amp;mid={{milestone.ID}}&amp;id={{*milestone.project}}" title="{/literal}{#edit#}"></a>
+                            <a class="tool_edit" href="managemilestone.php?action=editform&amp;mid={{milestone.ID}}&amp;id={{milestone.project}}" title="{/literal}{#edit#}"></a>
                         {/if}
                         {if $userpermissions.milestones.del}
                         {literal}
                             <a class="tool_del"
-                            href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','miles_{{*milestone.ID}}','managemilestone.php?action=del&amp;mid={{*milestone.ID}}&amp;id={{*milestone.project}}', projectMilestonesView);"
+                            href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','miles_{{milestone.ID}}','managemilestone.php?action=del&amp;mid={{milestone.ID}}&amp;id={{milestone.project}}', projectMilestonesView);"
                             title="{/literal}{#delete#}"></a>
                         {/if}
                     </td>
@@ -82,7 +82,7 @@
                         <div class="accordion_content" data-slide="{{$index}}" id="currentMilestones_content{{$index}}">
                             <div class="acc-in">
                                 <div class="message-in">
-                                    {{{*milestone.desc}}}
+                                    {{{milestone.desc}}}
 
                                     <!--Tasklists-->
                                     <div v-if="milestone.hasTasklist" class="content-spacer-b"></div>
@@ -98,8 +98,8 @@
                                                             <td class="leftmen" valign="top">
                                                             </td>
                                                             <td class="thumb">
-                                                                <a href="managetasklist.php?action=showtasklist&amp;tlid={{*tasklist.ID}}&amp;id={{*tasklist.project}}"
-                                                                   title="{{*tasklist.name}}">
+                                                                <a href="managetasklist.php?action=showtasklist&amp;tlid={{tasklist.ID}}&amp;id={{tasklist.project}}"
+                                                                   title="{{tasklist.name}}">
                                                                     <img src="./templates/standard/theme/standard/images/symbols/tasklist.png"
                                                                          class="fileicon" alt=""/>
                                                                 </a>
@@ -110,9 +110,9 @@
                                                         <tr>
                                                             <td colspan="3">
                                                                 <span class="name">
-                                                                    <a href="managetasklist.php?action=showtasklist&amp;tlid={{*tasklist.ID}}&amp;id={{*tasklist.project}}"
-                                                                       title="{{*tasklist.name}}">
-                                                                        {{*tasklist.name}}
+                                                                    <a href="managetasklist.php?action=showtasklist&amp;tlid={{tasklist.ID}}&amp;id={{tasklist.project}}"
+                                                                       title="{{tasklist.name}}">
+                                                                        {{tasklist.name}}
                                                                     </a>
                                                                 </span>
                                                             </td>
@@ -154,30 +154,30 @@
 
                     <table id="accordion_miles_done" cellpadding="0" cellspacing="0" border="0">
                         {literal}
-                        <tbody v-for="oldmilestone in items.closed" class="alternateColors" id="miles_{{*milestone.ID}}">
+                        <tbody v-for="oldmilestone in items.closed" class="alternateColors" id="miles_{{milestone.ID}}">
                         <tr>
                             <td class="a">
                                 {/literal}
                                 {if $userpermissions.milestones.close}
                                 {literal}
                                     <a class="butn_checked"
-                                    href="managemilestone.php?action=open&amp;mid={{*oldmilestone.ID}}&amp;id={{*oldmilestone.project}}"
+                                    href="managemilestone.php?action=open&amp;mid={{oldmilestone.ID}}&amp;id={{oldmilestone.project}}"
                                     title="{/literal}{#open#}"></a>
                                 {/if}
                             </td>
                             {literal}
                             <td class="b">
                                 <div class="toggle-in">
-                                    {{*oldmilestone.name | truncate '30'}}
+                                    {{oldmilestone.name | truncate '30'}}
                                 </div>
                             </td>
-                            <td class="c">{{*oldmilestone.fend}}</td>
+                            <td class="c">{{oldmilestone.fend}}</td>
                             <td class="tools">
                                 {/literal}
                                 {if $userpermissions.milestones.del}
                                 {literal}
                                     <a class="tool_del"
-                                    href="javascript:confirmDelete({/literal}'{#confirmdel#}'{literal},'miles_{{*oldmilestone.ID}}','managemilestone.php?action=del&amp;mid={{*oldmilestone.ID}}&amp;id={{*oldmilestone.project}}');"
+                                    href="javascript:confirmDelete({/literal}'{#confirmdel#}'{literal},'miles_{{oldmilestone.ID}}','managemilestone.php?action=del&amp;mid={{oldmilestone.ID}}&amp;id={{oldmilestone.project}}');"
                                     title="{/literal}{#delete#}"></a>
                                 {/if}
                             </td>

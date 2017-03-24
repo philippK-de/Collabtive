@@ -40,32 +40,32 @@
                     {/literal}
                     {if $userpermissions.milestones.close}
                     {literal}
-                        <a class="butn_check" href="javascript:closeElement('miles_late_{{*milestone.ID}}','managemilestone.php?action=close&amp;mid={{milestone.ID}}&amp;id={{*milestone.project}}', lateProjectMilestonesView);" title="{/literal}{#close#}"></a>
+                        <a class="butn_check" href="javascript:closeElement('miles_late_{{milestone.ID}}','managemilestone.php?action=close&amp;mid={{milestone.ID}}&amp;id={{milestone.project}}', lateProjectMilestonesView);" title="{/literal}{#close#}"></a>
                     {/if}
                 </td>
                 {literal}
                     <td class="b">
                         <div class="toggle-in">
                             <span class="acc-toggle"
-                                  onclick="javascript:accord_miles_late.activate(css('#lateMilestones_content{{*milestone.ID}}'));">
-                                 <a href="javascript:void(0);" title="{{*milestone.name}}">{{*milestone.name | truncate '30' }}</a>
+                                  onclick="javascript:accord_miles_late.activate(css('#lateMilestones_content{{milestone.ID}}'));">
+                                 <a href="javascript:void(0);" title="{{milestone.name}}">{{milestone.name | truncate '30' }}</a>
                             </span>
 
                         </div>
                     </td>
                     <td class="c">{{milestone.fend}}</td>
-                    <td class="days text-align-right">-{{*milestone.dayslate}}&nbsp;&nbsp;</td>
+                    <td class="days text-align-right">-{{milestone.dayslate}}&nbsp;&nbsp;</td>
                 {/literal}
                 <td class="tools">
                     {if $userpermissions.milestones.edit}
                     {literal}
-                        <a class="tool_edit" href="managemilestone.php?action=editform&amp;mid={{*milestone.ID}}&amp;id={{*milestone.project}}"
+                        <a class="tool_edit" href="managemilestone.php?action=editform&amp;mid={{milestone.ID}}&amp;id={{milestone.project}}"
                         title="{/literal}{#edit#}"></a>
                     {/if}
                     {if $userpermissions.milestones.del}
                     {literal}
                         <a class="tool_del"
-                        href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','miles_late_{{*milestone.ID}}','managemilestone.php?action=del&amp;mid={{*milestone.ID}}&amp;id={{*milestone.project}}', lateProjectMilestonesView);"
+                        href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','miles_late_{{milestone.ID}}','managemilestone.php?action=del&amp;mid={{milestone.ID}}&amp;id={{milestone.project}}', lateProjectMilestonesView);"
                         title="{#delete#}"></a>
                     {/literal}
                     {/if}
@@ -74,10 +74,10 @@
             </tr>
             <tr class="acc">
                 <td colspan="5">
-                    <div class="accordion_content" data-slide="{{$index}}" id="lateMilestones_content{{*milestone.ID}}">
+                    <div class="accordion_content" data-slide="{{$index}}" id="lateMilestones_content{{milestone.ID}}">
                         <div class="acc-in">
                             <div class="message-in">
-                                {{*milestone.desc}}
+                                {{milestone.desc}}
                             </div>
                         </div>
                     </div>
