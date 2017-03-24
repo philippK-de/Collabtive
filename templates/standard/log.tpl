@@ -86,7 +86,7 @@
                                     {#deassigned#}
                                     {literal}
                                 </span>
-								{{*logitem.datum}}
+								{{logitem.datum}}
 							</span>
                 </div>
             </td>

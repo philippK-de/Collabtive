@@ -43,7 +43,8 @@
         <div id="currentMilestones" class="toggleblock" v-cloak>
 
             <table id="accordion_miles_new" cellpadding="0" cellspacing="0" border="0" class="clear_both">
-                <tbody v-for="milestone in items.open" class="alternateColors" id="miles_{{milestone.ID}}">
+                <tbody v-for="milestone in items.open" class="alternateColors"
+                       v-bind:id="'miles_'+milestone.ID">
                 <tr>
                     <td class="a">
                         {/literal}
@@ -56,7 +57,7 @@
                         <td class="b">
                             <div class="toggle-in">
                                 <span class="acc-toggle" onclick="javascript:accord_miles_new.activate(css('#currentMilestones_content{{$index}}'));">
-                                    <a href="javascript:void(0);" title="{{milestone.name}}">{{milestone.name | truncate '30'}}</a>
+                                    <a href="javascript:void(0);" :title="milestone.name">{{milestone.name | truncate '30'}}</a>
                                 </span>
                             </div>
                         </td>
@@ -154,7 +155,8 @@
 
                     <table id="accordion_miles_done" cellpadding="0" cellspacing="0" border="0">
                         {literal}
-                        <tbody v-for="oldmilestone in items.closed" class="alternateColors" id="miles_{{milestone.ID}}">
+                        <tbody v-for="oldmilestone in items.closed" class="alternateColors"
+                               v-bind:id="'miles_'+milestone.ID">
                         <tr>
                             <td class="a">
                                 {/literal}

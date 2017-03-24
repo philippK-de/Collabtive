@@ -17,11 +17,11 @@ function formSubmited() {
 }
 
 function initializeBlockaccordeon() {
+
     //get the blocks
     var theBlocks = document.querySelectorAll("#block_index > div .headline > a");
-
     //loop through the blocks and add the accordion toggle link to the onclick handler of toggles
-    for (i = 0; i < theBlocks.length; i++) {
+    for (var i = 0; i < theBlocks.length; i++) {
         //get the id of the current html element
         var theId = theBlocks[i].getAttribute("id");
         blockIds.push(theId);

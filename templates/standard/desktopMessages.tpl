@@ -37,7 +37,8 @@
                 <tr>
                     <td>
                         {/literal}{if $userpermissions.messages.close}{literal}
-                            <a class="butn_reply" href="javascript:void(0);" onclick="change('managemessage.php?action=replyform&amp;mid={{*item.ID}}&amp;id={{*item.project}}','addmsg');toggleClass(this,'butn_reply_active','butn_reply');blindtoggle('addmsg');"
+                            <a class="butn_reply" href="javascript:void(0);"
+                            v-bind:onclick="'change(\'managemessage.php?action=replyform&amp;mid='+item.ID+'&amp;id='+item.project+'\',\'addmsg\');blindtoggle(\'addmsg\');'"
                             title="{/literal}{#answer#}"></a>
                         {/if}{literal}
                     </td>
@@ -45,26 +46,29 @@
                         <div class="toggle-in">
                             <span v-bind:id="'desktopmessages_toggle' + item.ID"
                                   class="acc-toggle"
-                                  :href="'javascript:accord_msgs.toggle(css(\'#desktopmessages_content'+$index+'\'));'"></span>
+                                  v-bind:onclick="'javascript:accord_msgs.toggle(css(\'#desktopmessages_content'+$index+'\'));'"></span>
                             <a :href="'managemessage.php?action=showmessage&amp;mid='+item.ID+'&amp;id='+item.project"
                                :title="item.title">
-                                {{item.title | truncate '30' }}</a>
+                                {{item.title}}</a>
                         </div>
                     </td>
                     <td>
-                        <a v-bind:href="'managemessage.php?action=showproject&amp;id=' + item.project">{{item.pname | truncate '30' }}</a>
+                        <a v-bind:href="'managemessage.php?action=showproject&amp;id=' + item.project">{{item.pname }}</a>
                     </td>
                     <td>
-                        <a v-bind:href="'manageuser.php?action=profile&amp;id=' + item.user">{{item.username | truncate '30' }}</a>
+                        <a v-bind:href="'manageuser.php?action=profile&amp;id=' + item.user">{{item.username }}</a>
                     </td>
                     <td>{{item.postdate}}</td>
                     <td class="tools">
                         {/literal}{if $userpermissions.messages.edit}{literal}
-                            <a class="tool_edit" href="javascript:void(0);" onclick="change('managemessage.php?action=editform&amp;mid={{*item.ID}}&amp;id={{*item.project}}','addmsg');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('addmsg');" title="{/literal}{#edit#}"></a>
+                            <a class="tool_edit" href="javascript:void(0);"
+                            :onclick="'change(\'managemessage.php?action=editform&amp;mid='+item.ID+'&amp;id='+item.project+'\',\'addmsg\');blindtoggle(\'addmsg\');'"
+                            title="{/literal}{#edit#}"></a>
                         {/if}
                         {if $userpermissions.messages.del}{literal}
                             <a class="tool_del"
-                            href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','messages_{{*item.ID}}','managemessage.php?action=del&amp;mid={{*item.ID}}&amp;id={{*item.project}}', msgsView);" title="{/literal}{#delete#}"></a>
+                            :href="'javascript:confirmDelete(\'{/literal}{#confirmdel#}{literal}\',\'messages_'+item.ID+'\',\'managemessage.php?action=del&amp;mid='+item.ID+'&amp;id='+item.project+'\',msgsView);'"
+                            title="{/literal}{#delete#}"></a>
                         {/if}{literal}
                     </td>
                 </tr>
@@ -83,7 +87,7 @@
                                                 <img src="thumb.php?width=80&amp;height=80&amp;pic=templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/no-avatar-male.jpg"/>
                                             </template>
                                         </div>
-                                        {{{*item.text}}}
+                                        {{{item.text}}}
                                     </div>
                                     <!-- message milestones -->
                                     <template v-if="item.hasMilestones">
@@ -124,7 +128,8 @@
                                                                 <div class="inmenue">
                                                                     <a class="del"
                                                                        v-bind:href="'managefile.php?action=delete&amp;id=' + file.project + '&amp;file=' + file.ID"
-                                                                       title="{#delete#}" onclick="fadeToggle('iw_{{file].ID}}');"></a>
+                                                                       title="{#delete#}"
+                                                                       :onclick="'fadeToggle(\'iw_'+file.ID+'\');'"></a>
                                                                 </div>
                                                             </td>
                                                         </tr>

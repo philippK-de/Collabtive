@@ -58,7 +58,8 @@
                                 <ul>
                                     {literal}
                                     <li v-for="member in items">
-                                        <div class="itemwrapper" id="iw_{{*member.ID}}">
+                                        <div class="itemwrapper"
+                                             v-bind:id="'iw_'+member.ID">
                                             <table cellpadding="0" cellspacing="0" border="0">
                                                 <tr>
                                                     <td class="leftmen" valign="top">
@@ -69,8 +70,8 @@
                                                         </div>
                                                     </td>
                                                     <td class="thumb">
-                                                        <a href="manageuser.php?action=profile&amp;id={{*member.ID}}"
-                                                           title="{{*member.name}}">
+                                                        <a v-bind:href="'manageuser.php?action=profile&amp;id='+member.ID"
+                                                           :title="member.name">
                                                             <img src="./templates/standard/theme/standard/images/symbols/user-icon-male.png"
                                                                  alt=""/>
                                                         </a>
@@ -81,9 +82,10 @@
                                                             {if $userpermissions.projects.edit}
                                                             {literal}
                                                                 <a class="del"
-                                                                href="manageproject.php?action=deassignform&amp;id={/literal}{$project.ID}{literal}&amp;user={{*member.ID}}"
+                                                                v-bind:href="'manageproject.php?action=deassignform&amp;id={/literal}{$project.ID}{literal}&amp;user='+member.ID"
                                                                 title="{#deassign#}"></a>
-                                                                <a class="edit" href="admin.php?action=editform&id={{*member.ID}}"
+                                                                <a class="edit"
+                                                                   v-bind:href="'admin.php?action=editform&id='+member.ID"
                                                                    title="{#edituser#}"></a>
                                                             {/literal}{/if}
                                                             {literal}
@@ -93,9 +95,9 @@
                                                 <tr>
                                                     <td colspan="3">
 														<span class="name">
-															<a href="manageuser.php?action=profile&amp;id={{*member.ID}}"
-                                                               title="{{*member.name}}">
-                                                                {{*member.name | truncate '13' }}
+															<a v-bind:href="'manageuser.php?action=profile&amp;id='+member.ID"
+                                                               :title="member.name">
+                                                                {{member.name | truncate '13' }}
                                                             </a>
 														</span>
                                                     </td>
@@ -108,8 +110,8 @@
                                                          alt=""
                                                          onclick="fadeToggle('info_{{*member.ID}}');"/>
                                                             <span class="name">
-                                                                <a href="manageuser.php?action=profile&amp;id={{*member.ID}}">
-                                                                    {{*member.name | truncate '15'}}</a></span>
+                                                                <a v-bind:href="'manageuser.php?action=profile&amp;id='+member.ID">
+                                                                    {{member.name | truncate '15'}}</a></span>
                                                 </div>
                                             </div>
 

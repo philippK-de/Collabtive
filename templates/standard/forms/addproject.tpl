@@ -71,6 +71,7 @@
 
 		</fieldset>
 	</form>
+    {if $myprojects != 1}
     <script type="text/javascript">
         {literal}
         theCal = new calendar({/literal}{$theM},{$theY}	);
@@ -80,4 +81,5 @@
         theCal.dateFormat = "{$settings.dateformat}";
         theCal.getDatepicker("add_project");
     </script>
+    {/if}
 </div> {*block_in_wrapper end*}

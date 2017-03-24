@@ -34,7 +34,8 @@
     <div class="toggleblock" id="lateMilestones" v-cloak>
         {literal}
         <table class="miles" id="accordion_miles_late" cellpadding="0" cellspacing="0" border="0">
-            <tbody v-for="milestone in items" class="alternateColors" id="miles_late_{{*milestone.ID}}">
+            <tbody v-for="milestone in items" class="alternateColors"
+                   v-bind:id="'miles_late_'+milestone.ID">
             <tr class="marker-late">
                 <td class="a">
                     {/literal}

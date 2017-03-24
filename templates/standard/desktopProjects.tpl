@@ -54,7 +54,7 @@
                                 <span
                                         v-bind:id="'desktopprojects_toggle'+item.ID"
                                         class="acc-toggle"
-                                        onclick="javascript:accord_projects.toggle(css('#desktopprojects_content{{$index}}'));"></span>
+                                        :onclick="'accord_projects.toggle(css(\'#desktopprojects_content'+$index+'\'));'"></span>
                             <a v-bind:href="'manageproject.php?action=showproject&amp;id=' + item.ID"
                                v-bind:title=item.name>
                                 {{item.name | truncate '40' }}
@@ -134,7 +134,7 @@
                                 {literal}
                             </td>
                             <td class="b">
-                                {{item.name | truncate '30' }}
+                                {{item.name | truncate '40' }}
                             </td>
                             <td></td>
                             <td></td>
@@ -181,6 +181,15 @@
         </div> {* block END *}
     </div> {* smooth END *}
 </div> {* projects END *}
+<script type="text/javascript">
+    {literal}
+    theCal = new calendar({/literal}{$theM},{$theY}	);
+    theCal.dayNames = ["{#monday#}","{#tuesday#}","{#wednesday#}","{#thursday#}","{#friday#}","{#saturday#}","{#sunday#}"];
+    theCal.monthNames = ["{#january#}","{#february#}","{#march#}","{#april#}","{#may#}","{#june#}","{#july#}","{#august#}","{#september#}","{#october#}","{#november#}","{#december#}"];
+    theCal.relateTo = "endP";
+    theCal.dateFormat = "{$settings.dateformat}";
+    theCal.getDatepicker("add_project");
+</script>
 
 
 

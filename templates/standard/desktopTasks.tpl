@@ -45,7 +45,7 @@
                                 <div class="toggle-in">
                                     <span v-bind:id="'desktoptasks_toggle' + item.ID"
                                           class="acc-toggle"
-                                          onclick="javascript:accord_tasks.toggle(document.querySelector('#desktoptasks_content{{$index}}'));"></span>
+                                          :onclick="'accord_tasks.toggle(document.querySelector(\'#desktoptasks_content'+$index+'\'));'"></span>
                                     <a v-bind:href="'managetask.php?action=showtask&amp;id=' + item.project + '&amp;tid=' + item.ID"
                                        v-bind:title=item.title>
                                         {{item.title | truncate '30' }}
@@ -103,4 +103,18 @@
             </div> {*block END*}
         </div> {* Smooth end *}
     </div> {*tasks END*}
+    <script type="text/javascript">
+        theCalStart = new calendar({$theM},{$theY});
+        theCalStart.dayNames = ["{#monday#}","{#tuesday#}","{#wednesday#}","{#thursday#}","{#friday#}","{#saturday#}","{#sunday#}"];
+        theCalStart.monthNames = ["{#january#}","{#february#}","{#march#}","{#april#}","{#may#}","{#june#}","{#july#}","{#august#}","{#september#}","{#october#}","{#november#}","{#december#}"];
+        theCalStart.relateTo = "start";
+        theCalStart.dateFormat = "{$settings.dateformat}";
+        theCalStart.getDatepicker("datepicker_start_task");
+        theCal = new calendar({$theM},{$theY});
+        theCal.dayNames = ["{#monday#}","{#tuesday#}","{#wednesday#}","{#thursday#}","{#friday#}","{#saturday#}","{#sunday#}"];
+        theCal.monthNames = ["{#january#}","{#february#}","{#march#}","{#april#}","{#may#}","{#june#}","{#july#}","{#august#}","{#september#}","{#october#}","{#november#}","{#december#}"];
+        theCal.relateTo = "end{$myprojects[project].ID}";
+        theCal.dateFormat = "{$settings.dateformat}";
+        theCal.getDatepicker("datepicker_task");
+    </script>
 {/if} {* Tasks END *}

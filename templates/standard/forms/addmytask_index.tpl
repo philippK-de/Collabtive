@@ -26,15 +26,6 @@
                 <div id="datepicker_start_task" class="picker" style="display:none;"></div>
             </div>
 
-            <script type="text/javascript">
-                theCalStart = new calendar({$theM},{$theY});
-                theCalStart.dayNames = ["{#monday#}","{#tuesday#}","{#wednesday#}","{#thursday#}","{#friday#}","{#saturday#}","{#sunday#}"];
-                theCalStart.monthNames = ["{#january#}","{#february#}","{#march#}","{#april#}","{#may#}","{#june#}","{#july#}","{#august#}","{#september#}","{#october#}","{#november#}","{#december#}"];
-                theCalStart.relateTo = "start";
-                theCalStart.dateFormat = "{$settings.dateformat}";
-                theCalStart.getDatepicker("datepicker_start_task");
-            </script>
-
 
 			<div class="row">
 				<label for="end">{#end#}:</label>
@@ -44,15 +35,6 @@
 			<div class="datepick">
 				<div id="datepicker_task" class="picker" style="display:none;"></div>
 			</div>
-
-			<script type="text/javascript">
-			  	theCal = new calendar({$theM},{$theY});
-				theCal.dayNames = ["{#monday#}","{#tuesday#}","{#wednesday#}","{#thursday#}","{#friday#}","{#saturday#}","{#sunday#}"];
-				theCal.monthNames = ["{#january#}","{#february#}","{#march#}","{#april#}","{#may#}","{#june#}","{#july#}","{#august#}","{#september#}","{#october#}","{#november#}","{#december#}"];
-				theCal.relateTo = "end{$myprojects[project].ID}";
-				theCal.dateFormat = "{$settings.dateformat}";
-				theCal.getDatepicker("datepicker_task");
-			</script>
 
 		    <div class="row">
 		    	<label for="tasklist">{#project#}:</label>
