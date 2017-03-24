@@ -513,9 +513,6 @@ class project
         $status = (int)$status;
         $offset = (int)$offset;
         $limit = (int)$limit;
-
-        //$sel = $conn->prepare("SELECT projekt FROM projekte_assigned WHERE user = ? ORDER BY ID ASC LIMIT $offset,$limit ");
-
         //get the projekt IDs of projects assigned to this user
         $selAssigned = $conn->query("SELECT projekt, status FROM projekte_assigned JOIN projekte ON projekte.ID = projekte_assigned.projekt WHERE user = $user AND projekte.status = $status ORDER BY projekt DESC LIMIT $limit OFFSET $offset");
 

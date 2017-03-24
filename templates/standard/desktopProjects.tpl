@@ -34,26 +34,26 @@
                 </tfoot>
 
                 {literal}
-                <tbody v-for="item in items.open" id="proj_{{*item.ID}}" class="alternateColors">
+                <tbody v-for="item in items.open" id="proj_{{item.ID}}" class="alternateColors">
 
                 <tr v-bind:class="{ 'marker-late': item.islate, 'marker-today': item.istoday }">
                     <td>
                         {/literal}
                         {if $userpermissions.projects.close}
                         {literal}
-                            <a class="butn_check" href="javascript:closeElement('proj_{{*item.ID}}','manageproject.php?action=close&amp;id={{*item.ID}}', projectsView);" title="{/literal}{#close#}{literal}"></a>
+                            <a class="butn_check" href="javascript:closeElement('proj_{{item.ID}}','manageproject.php?action=close&amp;id={{item.ID}}', projectsView);" title="{/literal}{#close#}{literal}"></a>
                         {/literal}
                         {/if}
                         {literal}
                     </td>
                     <td>
                         <div class="toggle-in">
-                                <span id="desktopprojects_toggle{{*item.ID}}"
+                                <span id="desktopprojects_toggle{{item.ID}}"
                                       class="acc-toggle"
                                       onclick="javascript:accord_projects.toggle(css('#desktopprojects_content{{$index}}'));"></span>
                             <a v-bind:href="'manageproject.php?action=showproject&amp;id=' + item.ID"
                                v-bind:title=item.name>
-                                {{*item.name | truncate '40' }}
+                                {{item.name | truncate '40' }}
                             </a>
                         </div>
                     </td>
@@ -61,9 +61,9 @@
                         <div class="statusbar_b">
                             <div class="complete" id="completed" v-bind:style="'width:' + item.done + '%'"></div>
                         </div>
-                        <span>{{*item.done}}%</span>
+                        <span>{{item.done}}%</span>
                     </td>
-                    <td class="text-align-right">{{*item.daysleft}}&nbsp;&nbsp;</td>
+                    <td class="text-align-right">{{item.daysleft}}&nbsp;&nbsp;</td>
                     <td class="tools">
                         {/literal}
                         {if $userpermissions.projects.edit}
@@ -76,7 +76,7 @@
                         {if $userpermissions.projects.del}
                         {literal}
                             <a class="tool_del"
-                            href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','proj_{{*item.ID}}','manageproject.php?action=del&amp;id={{*item.ID}}',projectsView);" title="{/literal}{#delete#}{literal}"></a>
+                            href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','proj_{{item.ID}}','manageproject.php?action=del&amp;id={{item.ID}}',projectsView);" title="{/literal}{#delete#}{literal}"></a>
                         {/literal}
                         {/if}
                         {literal}
@@ -89,7 +89,7 @@
                         <div class="accordion_content">
                             <div class="acc-in">
                                 <div class="message-in-fluid">
-                                    {{{*item.desc}}}
+                                    {{{item.desc}}}
                                 </div>
                             </div>
                         </div>
@@ -116,7 +116,7 @@
                 <div class="toggleblock">
                     <table cellpadding="0" cellspacing="0" border="0" id="acc-oldprojects">
 
-                        <tbody v-for="item in items.closed" class="alternateColors" id="proj_{{*item.ID}}">
+                        <tbody v-for="item in items.closed" class="alternateColors" id="proj_{{item.ID}}">
                         <tr>
                             <td class="a">
                                 {/literal}
@@ -128,7 +128,7 @@
                                 {literal}
                             </td>
                             <td class="b">
-                                {{*item.name | truncate '30' }}
+                                {{item.name | truncate '30' }}
                             </td>
                             <td></td>
                             <td></td>
@@ -137,7 +137,7 @@
                                 {if $userpermissions.projects.del}
                                 {literal}
                                     <a class="tool_del"
-                                    href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','proj_{{*item.ID}}','manageproject.php?action=del&amp;id={{*item.ID}}',projectsView);" title="{/literal}{#delete#}{literal}"></a>
+                                    href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','proj_{{item.ID}}','manageproject.php?action=del&amp;id={{item.ID}}',projectsView);" title="{/literal}{#delete#}{literal}"></a>
                                 {/literal}
                                 {/if}
                                 {literal}

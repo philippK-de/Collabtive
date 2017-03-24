@@ -59,25 +59,25 @@
                            'second': items.currentDay != day.val,
                            'othermonth': day.currmonth != 1
                            }"
-                            id="{{*day.val}}">
-                            {{*day.val}}
+                            id="{{day.val}}">
+                            {{day.val}}
 
                             <!--Only output tasks/milestones if the day belongs to the current month -->
                             <div v-if="day.currmonth == 1" class="calcontent">
                                 <!--Milestones -->
                                 <template v-if="day.milesnum > 0">
-                                    <a href="javascript:openModal('miles_modal{{*day.val}}');">
+                                    <a href="javascript:openModal('miles_modal{{day.val}}');">
                                         <img src="templates/{/literal}{$settings.template}/theme/{$settings.theme}/{literal}images/symbols/miles.png"
                                              alt=""/>
                                     </a>
 
-                                    <div id="miles_modal{{*day.val}}" class="milesmodal display-none" >
+                                    <div id="miles_modal{{day.val}}" class="milesmodal display-none" >
                                         <div class="modaltitle">
                                             <img src="./templates/{/literal}{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png"
                                                  alt=""/>
                                             {$langfile.milestones}{literal}
-                                            {{*day.val}}.{{*items.currentMonth}}.{{*items.currentYear}}
-                                            <a class="winclose" href="javascript:closeModal('miles_modal{{*day.val}}');"></a>
+                                            {{day.val}}.{{items.currentMonth}}.{{items.currentYear}}
+                                            <a class="winclose" href="javascript:closeModal('miles_modal{{day.val}}');"></a>
                                         </div>
 
                                         <div class="inmodal">
@@ -96,14 +96,14 @@
                                                         <tr>
                                                             {/literal}
                                                             {if $context != "project"}
-                                                            {literal}<td>{{*milestone.pname}}</td>{/literal}
+                                                            {literal}<td>{{milestone.pname}}</td>{/literal}
                                                             {/if}{literal}
                                                             <td>
-                                                                <a href="managemilestone.php?action=showmilestone&amp;msid={{*milestone.ID}}&amp;id={{*milestone.project}}"
-                                                                   title="{{*milestone.title}}">{{*milestone.name}}</a>
+                                                                <a href="managemilestone.php?action=showmilestone&amp;msid={{milestone.ID}}&amp;id={{milestone.project}}"
+                                                                   title="{{milestone.title}}">{{milestone.name}}</a>
                                                             </td>
                                                             <td class="tools">
-                                                                {{*milestone.daysleft}}
+                                                                {{milestone.daysleft}}
                                                             </td>
                                                         </tr>
                                                         </tbody>
@@ -118,7 +118,7 @@
 
                                 <!--Tasks -->
                                 <template v-if="day.tasksnum > 0">
-                                    <a href="javascript:openModal('tasks_modal{{*day.val}}');">
+                                    <a href="javascript:openModal('tasks_modal{{day.val}}');">
                                         <img src="templates/{/literal}{$settings.template}/theme/{$settings.theme}/{literal}images/symbols/task.png"
                                              alt=""/>
                                     </a>
@@ -129,8 +129,8 @@
                                                  alt=""/>
                                             {$langfile.tasklist}
                                             {literal}
-                                            {{*day.val}}.{{*items.currentMonth}}.{{items.currentYear}}
-                                            <a class="winclose" href="javascript:closeModal('tasks_modal{{*day.val}}');"></a>
+                                            {{day.val}}.{{items.currentMonth}}.{{items.currentYear}}
+                                            <a class="winclose" href="javascript:closeModal('tasks_modal{{day.val}}');"></a>
                                         </div>
                                         <div class="inmodal">
                                             <div class="tasks">
@@ -147,16 +147,16 @@
                                                         <tr>
                                                             {/literal}
                                                             {if $context != "project"}
-                                                            {literal}<td>{{*task.pname}}</td>{/literal}
+                                                            {literal}<td>{{task.pname}}</td>{/literal}
                                                             {/if}{literal}
                                                             <td>
-                                                                <a href="managetask.php?action=showtask&amp;tid={{*task.ID}}&amp;id={{*task.project}}"
-                                                                   title="{{*task.title}}">
-                                                                    {{*task.title }}
+                                                                <a href="managetask.php?action=showtask&amp;tid={{task.ID}}&amp;id={{task.project}}"
+                                                                   title="{{task.title}}">
+                                                                    {{task.title }}
                                                                 </a>
 
                                                             </td>
-                                                            <td class="tools">{{*task.daysleft}}</td>
+                                                            <td class="tools">{{task.daysleft}}</td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
