@@ -25,14 +25,15 @@
                     <tr>
                         <th>
                             <a class="scroll_left"
-                               href="javascript:updateCalendar(calendarView,'{{items.previousMonth}}','{{items.previousYear}}');"></a>
+                               v-bind:href="'javascript:updateCalendar(calendarView,\''+items.previousMonth+'\',\''+items.previousYear+'\');'"></a>
                         </th>
                         <th colspan="5" align="center">
                             <!--Localized month & year -->
                             {{items.monthName}} {{items.selectedYear}}
                         </th>
                         <th>
-                            <a class="scroll_right" href="javascript:updateCalendar(calendarView,'{{items.nextMonth}}','{{items.nextYear}}');"></a>
+                            <a class="scroll_right"
+                               v-bind:href="'javascript:updateCalendar(calendarView,\''+items.nextMonth+'\',\''+items.nextYear+'\');'"></a>
                         </th>
                     </tr>
 
@@ -66,18 +67,19 @@
                             <div v-if="day.currmonth == 1" class="calcontent">
                                 <!--Milestones -->
                                 <template v-if="day.milesnum > 0">
-                                    <a href="javascript:openModal('miles_modal{{day.val}}');">
+                                    <a v-bind:href="'javascript:openModal(\'miles_modal'+day.val+'\');'">
                                         <img src="templates/{/literal}{$settings.template}/theme/{$settings.theme}/{literal}images/symbols/miles.png"
                                              alt=""/>
                                     </a>
 
-                                    <div id="miles_modal{{day.val}}" class="milesmodal display-none" >
+                                    <div v-bind:id="'miles_modal'+day.val" class="milesmodal display-none" >
                                         <div class="modaltitle">
                                             <img src="./templates/{/literal}{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png"
                                                  alt=""/>
                                             {$langfile.milestones}{literal}
                                             {{day.val}}.{{items.currentMonth}}.{{items.currentYear}}
-                                            <a class="winclose" href="javascript:closeModal('miles_modal{{day.val}}');"></a>
+                                            <a class="winclose"
+                                               v-bind:href="'javascript:closeModal(\'miles_modal'+day.val+'\');'"></a>
                                         </div>
 
                                         <div class="inmodal">
@@ -99,8 +101,8 @@
                                                             {literal}<td>{{milestone.pname}}</td>{/literal}
                                                             {/if}{literal}
                                                             <td>
-                                                                <a href="managemilestone.php?action=showmilestone&amp;msid={{milestone.ID}}&amp;id={{milestone.project}}"
-                                                                   title="{{milestone.title}}">{{milestone.name}}</a>
+                                                                <a v-bind:href="'managemilestone.php?action=showmilestone&amp;msid='+milestone.ID+'&amp;id='+milestone.project"
+                                                                   :title="milestone.title">{{milestone.name}}</a>
                                                             </td>
                                                             <td class="tools">
                                                                 {{milestone.daysleft}}
@@ -118,7 +120,7 @@
 
                                 <!--Tasks -->
                                 <template v-if="day.tasksnum > 0">
-                                    <a href="javascript:openModal('tasks_modal{{day.val}}');">
+                                    <a v-bind:href="'javascript:openModal(\'tasks_modal'+day.val+'\');'">
                                         <img src="templates/{/literal}{$settings.template}/theme/{$settings.theme}/{literal}images/symbols/task.png"
                                              alt=""/>
                                     </a>
@@ -130,7 +132,8 @@
                                             {$langfile.tasklist}
                                             {literal}
                                             {{day.val}}.{{items.currentMonth}}.{{items.currentYear}}
-                                            <a class="winclose" href="javascript:closeModal('tasks_modal{{day.val}}');"></a>
+                                            <a class="winclose"
+                                               v-bind:href="'javascript:closeModal(\'tasks_modal'+day.val+'\');'"></a>
                                         </div>
                                         <div class="inmodal">
                                             <div class="tasks">
@@ -150,8 +153,8 @@
                                                             {literal}<td>{{task.pname}}</td>{/literal}
                                                             {/if}{literal}
                                                             <td>
-                                                                <a href="managetask.php?action=showtask&amp;tid={{task.ID}}&amp;id={{task.project}}"
-                                                                   title="{{task.title}}">
+                                                                <a v-bind:href="'managetask.php?action=showtask&amp;tid='+task.ID+'&amp;id='+task.project"
+                                                                   v-bind:title="task.title">
                                                                     {{task.title }}
                                                                 </a>
 
