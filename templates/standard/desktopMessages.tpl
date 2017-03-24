@@ -45,9 +45,10 @@
                         <div class="toggle-in">
                             <span v-bind:id="'desktopmessages_toggle' + item.ID"
                                   class="acc-toggle"
-                                  onclick="javascript:accord_msgs.toggle(css('#desktopmessages_content{{$index}}'));"></span>
-                            <a href="managemessage.php?action=showmessage&amp;mid={{*item.ID}}&amp;id={{*item.project}}" title="{{*item
-                            .title}}">{{item.title | truncate '30' }}</a>
+                                  :href="'javascript:accord_msgs.toggle(css(\'#desktopmessages_content'+$index+'\'));'"></span>
+                            <a :href="'managemessage.php?action=showmessage&amp;mid='+item.ID+'&amp;id='+item.project"
+                               :title="item.title">
+                                {{item.title | truncate '30' }}</a>
                         </div>
                     </td>
                     <td>
@@ -56,7 +57,7 @@
                     <td>
                         <a v-bind:href="'manageuser.php?action=profile&amp;id=' + item.user">{{item.username | truncate '30' }}</a>
                     </td>
-                    <td>{{*item.postdate}}</td>
+                    <td>{{item.postdate}}</td>
                     <td class="tools">
                         {/literal}{if $userpermissions.messages.edit}{literal}
                             <a class="tool_edit" href="javascript:void(0);" onclick="change('managemessage.php?action=editform&amp;mid={{*item.ID}}&amp;id={{*item.project}}','addmsg');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('addmsg');" title="{/literal}{#edit#}"></a>

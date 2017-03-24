@@ -5,7 +5,7 @@ pagination
         <span id="paging" class="pagination">
             <button class="float-none" v-bind:onclick="'pagination.loadPrevPage(' + view +')'"><<</button>
 
-            <span id="page{{page.index}}" v-for="page in pages" class="margin-left-two-px">
+            <span v-bind:id="'page'+page.index" v-for="page in pages" class="margin-left-two-px">
                <button v-bind:class="currentPage == page.index ? 'paginationActive' : 'paginationInactive'"
                         v-bind:onclick="'pagination.loadPage(' + view +', '+page.index+')'">
                     {{page.index}}

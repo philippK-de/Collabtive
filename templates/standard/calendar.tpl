@@ -60,7 +60,7 @@
                            'second': items.currentDay != day.val,
                            'othermonth': day.currmonth != 1
                            }"
-                            id="{{day.val}}">
+                            v-bind:id="day.val">
                             {{day.val}}
 
                             <!--Only output tasks/milestones if the day belongs to the current month -->

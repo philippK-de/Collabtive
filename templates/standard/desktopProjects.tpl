@@ -1,4 +1,4 @@
-<div id="desktopprojects" class="projects padding-bottom-two-px" >
+<div id="desktopprojects" class="projects padding-bottom-two-px">
     <div class="headline">
         <a href="javascript:void(0);" id="projecthead_toggle" class="win_block" onclick=""></a>
 
@@ -43,16 +43,18 @@
                         {if $userpermissions.projects.close}
                         {literal}
                             <a class="butn_check"
-                            href="javascript:closeElement('proj_{{item.ID}}','manageproject.php?action=close&amp;id={{item.ID}}', projectsView);" title="{/literal}{#close#}{literal}"></a>
+                            v-bind:href="'javascript:closeElement(\'proj_'+item.ID+'\',\'manageproject.php?action=close&amp;id='+item.ID+'\',projectsView);'"
+                            title="{/literal}{#close#}{literal}"></a>
                         {/literal}
                         {/if}
                         {literal}
                     </td>
                     <td>
                         <div class="toggle-in">
-                                <span id="desktopprojects_toggle{{item.ID}}"
-                                      class="acc-toggle"
-                                      onclick="javascript:accord_projects.toggle(css('#desktopprojects_content{{$index}}'));"></span>
+                                <span
+                                        v-bind:id="'desktopprojects_toggle'+item.ID"
+                                        class="acc-toggle"
+                                        onclick="javascript:accord_projects.toggle(css('#desktopprojects_content{{$index}}'));"></span>
                             <a v-bind:href="'manageproject.php?action=showproject&amp;id=' + item.ID"
                                v-bind:title=item.name>
                                 {{item.name | truncate '40' }}
@@ -72,7 +74,7 @@
                         {if $userpermissions.projects.edit}
                         {literal}
                             <a class="tool_edit"
-                              v-bind:href="'javascript:change(\'manageproject.php?action=editform&amp;id='+item.ID+'\',\'form_addmyproject\');blindtoggle(\'form_addmyproject\');'"
+                               v-bind:href="'javascript:change(\'manageproject.php?action=editform&amp;id='+item.ID+'\',\'form_addmyproject\');blindtoggle(\'form_addmyproject\');'"
                                title="{#edit#}"></a>
                         {/literal}
                         {/if}
@@ -92,8 +94,7 @@
                     <td colspan="5">
                         <div class="accordion_content">
                             <div class="acc-in">
-                                <div class="message-in-fluid">
-                                    {{{item.desc}}}
+                                <div class="message-in-fluid" v-html="item.desc">
                                 </div>
                             </div>
                         </div>
@@ -159,7 +160,7 @@
             {* If no projects exist, open form to add a project *}
             {if $openProjectnum < 1 && $userpermissions.projects.add}
                 <script type="text/javascript">
-                    toggleClass('sm_deskprojects','smooth','nosmooth');
+                    toggleClass('sm_deskprojects', 'smooth', 'nosmooth');
                     blindtoggle('form_addmyproject');
                 </script>
             {/if}
