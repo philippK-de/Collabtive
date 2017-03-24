@@ -44,7 +44,8 @@
                 </tr>
                 </tfoot>
                 {literal}
-                <tbody v-for="message in items.public" class="alternateColors" id="msgs_{{*message.ID}}">
+                <tbody v-for="message in items.public" class="alternateColors"
+                       v-bind:id="'msgs_'+message.ID">
                 <tr>
                     <td>
                         {/literal}
@@ -59,16 +60,16 @@
                                     <!--toggle for the messagesContent accordeon-->
                                     <span class="acc-toggle"
                                           onclick="javascript:accord_messages.toggle(css('#publicMessages_content{{$index}}'));"></span>
-                            <a href="managemessage.php?action=showmessage&amp;mid={{*message.ID}}&amp;id={{*message.project}}"
-                               title="{{*message.title}}">{{*message.title | truncate '30' }}</a>
+                            <a v-bind:href="'managemessage.php?action=showmessage&amp;mid='+message.ID+'&amp;id='+message.project"
+                               :title="message.title">{{*message.title | truncate '30' }}</a>
                         </div>
                     </td>
                     <td class="text-align-right">
-                        <a href="managemessage.php?action=showmessage&amp;mid={{*message.ID}}&amp;id={{*message.project}}#replies">{{*message.replies}}</a>
+                        <a v-bind:href="'managemessage.php?action=showmessage&amp;mid='+message.ID+'&amp;id='+message.project+'#replies'">{{message.replies}}</a>
                         &nbsp;
                     </td>
-                    <td><a href="manageuser.php?action=profile&amp;id={{*message.user}}">{{*message.username}}</a></td>
-                    <td>{{*message.postdate}}</td>
+                    <td><a v-bind:href="'manageuser.php?action=profile&amp;id='+message.user">{{message.username}}</a></td>
+                    <td>{{message.postdate}}</td>
                     <td class="tools">
                         {/literal}
                         {if $userpermissions.messages.edit}
@@ -99,7 +100,7 @@
                                                 <img src="thumb.php?width=80&amp;height=80&amp;pic=templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/no-avatar-male.jpg"/>
                                             </template>
                                         </div>
-                                        {{{*message.text}}}
+                                        {{{message.text}}}
                                     </div>
 
                                     <!-- message milestones -->
@@ -108,7 +109,7 @@
                                     <div v-if="message.hasMilestones" class="content-spacer-b"></div>
                                     <strong v-if="message.hasMilestones">{/literal}{#milestone#}{literal}:</strong>
                                     <a v-if="message.hasMilestones"
-                                       href="managemilestone.php?action=showmilestone&amp;msid={{*message.milestones.ID}}&amp;id={{*message.milestones.project}}">{{*message.milestones.name}}</a>
+                                       v-bind:href="'managemilestone.php?action=showmilestone&amp;msid='+message.milestones.ID+'&amp;id='+message.milestones.project">{{message.milestones.name}}</a>
                                     </p>
                                     <!-- message files -->
                                     <p v-if="message.hasFiles" class="tags-miles">
@@ -116,7 +117,8 @@
                                     </p>
                                     <div v-if="message.hasFiles" class="inwrapper">
                                         <ul>
-                                            <li v-for="file in message.files" id="fli_{{*file.ID}}">
+                                            <li v-for="file in message.files"
+                                                v-bind:id="'fli_'+file.ID">
                                                 <div class="itemwrapper">
                                                     <table cellpadding="0" cellspacing="0" border="0">
                                                         <tr>
@@ -139,8 +141,8 @@
                                                         <tr>
                                                             <td colspan="3">
                                                                 <span class="name">
-                                                                    <a href="managefile.php?action=downloadfile&amp;id={{*file.project}}&amp;file={{*file.ID}}">
-                                                                        {{*file.shortName}}
+                                                                    <a v-bind:href="'managefile.php?action=downloadfile&amp;id='+file.project+'&amp;file='+file.ID">
+                                                                        {{file.shortName}}
                                                                     </a>
                                                                 </span>
                                                             </td>

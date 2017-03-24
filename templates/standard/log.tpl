@@ -39,16 +39,17 @@
         </tr>
         </tfoot>
         {literal}
-        <tbody v-for="logitem in items" class="alternateColors" id="log_{{*logitem.ID}}">
+        <tbody v-for="logitem in items" class="alternateColors"
+               v-bind:id="'log_'+logitem.ID">
         <tr>
             <td style="padding:0" class="symbols">
                 <img style="margin:0 0 0 3px;"
                      v-bind:src="'./templates/{/literal}{$settings.template}/theme/{$settings.theme}{literal}/images/symbols/' + logitem.type + '.png'"
-                     alt="{{*logitem.type}}" title="{{*logitem.type}}"/>
+                     :alt="logitem.type" :title="logitem.type"/>
             </td>
             <td>
                 <div class="toggle-in">
-                    <strong>{{*logitem.name | truncate '30' }}</strong><br/>
+                    <strong>{{logitem.name | truncate '30' }}</strong><br/>
 							<span class="info">{/literal}{#was#}{literal}
                                 <span v-if="logitem.action == 1">
                                     {/literal}
@@ -90,7 +91,7 @@
                 </div>
             </td>
             <td>
-                <a href="manageuser.php?action=profile&amp;id={{*logitem.user}}">{{*logitem.username | truncate '30' }}</a>
+                <a v-bind:href="'manageuser.php?action=profile&amp;id='+logitem.user">{{logitem.username | truncate '30' }}</a>
             </td>
             <td class="tools"></td>
         </tr>
