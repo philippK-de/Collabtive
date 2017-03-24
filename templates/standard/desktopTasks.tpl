@@ -36,7 +36,8 @@
                             <td>
                                 {/literal}{if $userpermissions.tasks.close}{literal}
                                     <a class="butn_check"
-                                    :href="'javascript:closeElement(\'task_'+item.ID+'\',\'managetask.php?action=close&amp;tid='+item.ID+'&amp;id='+item.project+'\', tasksView);'" title="{/literal}{#close#}"></a>
+                                    v-bind:href="'javascript:closeElement(\'task_'+item.ID+'\',\'managetask.php?action=close&amp;tid='+item.ID+'&amp;id='+item.project+'\', tasksView);'"
+                                    title="{/literal}{#close#}"></a>
                                 {/if}{literal}
 
                             </td>
@@ -59,13 +60,13 @@
 
                                 {/literal}{if $userpermissions.tasks.edit} {literal}
                                     <a class="tool_edit" href="javascript:void(0);"
-                                       :href="'javascript:change(\'managetask.php?action=editform&amp;tid='+item.ID+'&amp;id='+item.project+'\',\'form_addmytask\');blindtoggle(\'form_addmytask\');'"
+                                       v-bind:href="'javascript:change(\'managetask.php?action=editform&amp;tid='+item.ID+'&amp;id='+item.project+'\',\'form_addmytask\');blindtoggle(\'form_addmytask\');'"
                                        title="Edit"></a>
                                 {/literal}{/if}{literal}
 
                                 {/literal}{if $userpermissions.tasks.del}{literal}
                                     <a class="tool_del"
-                                    :href="'javascript:confirmDelete(\'{/literal}{#confirmdel#}{literal}\',\'task_'+item.ID+'\',\'managetask.php?action=del&amp;tid='+item.ID+'&amp;id='+item.project+'\',tasksView);'"  title="{/literal}{#delete#}"></a>
+                                    v-bind:href="'javascript:confirmDelete(\'{/literal}{#confirmdel#}{literal}\',\'task_'+item.ID+'\',\'managetask.php?action=del&amp;tid='+item.ID+'&amp;id='+item.project+'\',tasksView);'"  title="{/literal}{#delete#}"></a>
 
                                 {/if}{literal}
 
