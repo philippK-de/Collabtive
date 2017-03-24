@@ -35,7 +35,8 @@
                         <tr v-bind:class="{ 'marker-late': item.islate, 'marker-today': item.istoday }" >
                             <td>
                                 {/literal}{if $userpermissions.tasks.close}{literal}
-                                    <a class="butn_check" href="javascript:closeElement('task_{{item.ID}}','managetask.php?action=close&amp;tid={{item.ID}}&amp;id={{*item.project}}', tasksView);" title="{/literal}{#close#}"></a>
+                                    <a class="butn_check"
+                                    :href="'javascript:closeElement(\'task_'+item.ID+'\',\'managetask.php?action=close&amp;tid='+item.ID+'&amp;id='+item.project+'\', tasksView);'" title="{/literal}{#close#}"></a>
                                 {/if}{literal}
 
                             </td>
@@ -57,12 +58,15 @@
                             <td class="tools">
 
                                 {/literal}{if $userpermissions.tasks.edit} {literal}
-                                    <a class="tool_edit" href="javascript:void(0);" onclick="change('managetask.php?action=editform&amp;tid={{item.ID}}&amp;id={{item.project}}','form_addmytask');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_addmytask');"
-                                       title="{/literal}{#edit#}"></a>
-                                {/if}{literal}
+                                    <a class="tool_edit" href="javascript:void(0);"
+                                       :href="'javascript:change(\'managetask.php?action=editform&amp;tid='+item.ID+'&amp;id='+item.project+'\',\'form_addmytask\');blindtoggle(\'form_addmytask\');'"
+                                       title="Edit"></a>
+                                {/literal}{/if}{literal}
 
                                 {/literal}{if $userpermissions.tasks.del}{literal}
-                                    <a class="tool_del" href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','task_{{item.ID}}','managetask.php?action=del&amp;tid={{item.ID}}&amp;id={{item.project}}',tasksView);"  title="{/literal}{#delete#}"></a>
+                                    <a class="tool_del"
+                                    :href="'javascript:confirmDelete(\'{/literal}{#confirmdel#}{literal}\',\'task_'+item.ID+'\',\'managetask.php?action=del&amp;tid='+item.ID+'&amp;id='+item.project+'\',tasksView);'"  title="{/literal}{#delete#}"></a>
+
                                 {/if}{literal}
 
                             </td>

@@ -69,8 +69,8 @@
                         {/literal}
                         {if $userpermissions.projects.edit}
                         {literal}
-                            <a class="tool_edit" href="javascript:void(0);"
-                               v-on:click="'change(\'manageproject.php?action=editform&amp;id='+item.ID+'\',\'form_addmyproject\');' + 'toggleClass(this,\'tool_edit_active\',\'tool_edit\');'+'blindtoggle(\'form_addmyproject\');'"
+                            <a class="tool_edit"
+                              :href="'javascript:change(\'manageproject.php?action=editform&amp;id='+item.ID+'\',\'form_addmyproject\');blindtoggle(\'form_addmyproject\');'"
                                title="{#edit#}"></a>
                         {/literal}
                         {/if}
