@@ -125,8 +125,9 @@ function updateView(view, updateDependencies) {
  * @param function loadNextPage Load the next page relative to the current one
  * @param function loadPrevPage Load the previous page relative to the current one
  */
+
 var pagination = {
-    itemsPerPage: 10,
+    itemsPerPage: 15,
     listPages: function (numTotal) {
         //round up the number of pages
         var pagenum = Math.ceil(numTotal / this.itemsPerPage);
