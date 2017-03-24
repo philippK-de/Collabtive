@@ -34,14 +34,15 @@
                 </tfoot>
 
                 {literal}
-                <tbody v-for="item in items.open" id="proj_{{item.ID}}" class="alternateColors">
+                <tbody v-for="item in items.open" :id="'proj_'+item.ID" class="alternateColors">
 
                 <tr v-bind:class="{ 'marker-late': item.islate, 'marker-today': item.istoday }">
                     <td>
                         {/literal}
                         {if $userpermissions.projects.close}
                         {literal}
-                            <a class="butn_check" href="javascript:closeElement('proj_{{item.ID}}','manageproject.php?action=close&amp;id={{item.ID}}', projectsView);" title="{/literal}{#close#}{literal}"></a>
+                            <a class="butn_check"
+                            href="javascript:closeElement('proj_{{item.ID}}','manageproject.php?action=close&amp;id={{item.ID}}', projectsView);" title="{/literal}{#close#}{literal}"></a>
                         {/literal}
                         {/if}
                         {literal}
@@ -69,14 +70,14 @@
                         {if $userpermissions.projects.edit}
                         {literal}
                             <a class="tool_edit" href="javascript:void(0);"
-                               onclick="change('manageproject.php?action=editform&amp;id={{ item.ID }}','form_addmyproject');toggleClass(this,'tool_edit_active','tool_edit');blindtoggle('form_addmyproject');"
+                               v-on:click="'change(\'manageproject.php?action=editform&amp;id='+item.ID+'\',\'form_addmyproject\');' + 'toggleClass(this,\'tool_edit_active\',\'tool_edit\');'+'blindtoggle(\'form_addmyproject\');'"
                                title="{#edit#}"></a>
                         {/literal}
                         {/if}
                         {if $userpermissions.projects.del}
                         {literal}
                             <a class="tool_del"
-                            href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','proj_{{item.ID}}','manageproject.php?action=del&amp;id={{item.ID}}',projectsView);" title="{/literal}{#delete#}{literal}"></a>
+                            :href="'javascript:confirmDelete(\'{/literal}{#confirmdel#}{literal}\',\'proj_'+item.ID+'\',\'manageproject.php?action=del&amp;id='+item.ID+'\',projectsView);'" title="{/literal}{#delete#}{literal}"></a>
                         {/literal}
                         {/if}
                         {literal}
@@ -116,7 +117,7 @@
                 <div class="toggleblock">
                     <table cellpadding="0" cellspacing="0" border="0" id="acc-oldprojects">
 
-                        <tbody v-for="item in items.closed" class="alternateColors" id="proj_{{item.ID}}">
+                        <tbody v-for="item in items.closed" class="alternateColors" :id="'proj_'+item.ID">
                         <tr>
                             <td class="a">
                                 {/literal}
@@ -137,7 +138,7 @@
                                 {if $userpermissions.projects.del}
                                 {literal}
                                     <a class="tool_del"
-                                    href="javascript:confirmDelete('{/literal}{#confirmdel#}{literal}','proj_{{item.ID}}','manageproject.php?action=del&amp;id={{item.ID}}',projectsView);" title="{/literal}{#delete#}{literal}"></a>
+                                    :href="'javascript:confirmDelete(\'{/literal}{#confirmdel#}{literal}\',\'proj_'+item.ID+'\',\'manageproject.php?action=del&amp;id='+item.ID+'\',projectsView);'" title="{/literal}{#delete#}{literal}"></a>
                                 {/literal}
                                 {/if}
                                 {literal}
