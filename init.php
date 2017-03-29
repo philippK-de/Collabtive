@@ -15,6 +15,7 @@ ob_start('ob_gzhandler');
 session_start();
 // get full path to collabtive
 define("CL_ROOT", realpath(dirname(__FILE__)));
+define("CL_DIRECTORY",basename(__DIR__));
 // configuration to load
 define("CL_CONFIG", "standard");
 // collabtive release date
@@ -37,7 +38,7 @@ $purifier = new HTMLPurifier($config);
 $template = new Smarty();
 // STOP smarty from spewing notices all over the html code
 $template->error_reporting = E_ALL & ~E_NOTICE;
-
+$template->force_compile = true;
 
 //assume mysql as the default db
 if (!isset($db_driver)) {
