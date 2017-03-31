@@ -469,6 +469,9 @@ class datei
         }
     }
 
+    /*
+     * Find a file by its filename
+     */
     function getFileByName($name){
         global $conn;
         $filesStmt = $conn->prepare("SELECT ID FROM files WHERE name = ?");
