@@ -1,16 +1,17 @@
     <div class="projects" id="userProjects">
         <div class="headline">
-            <a href="javascript:void(0);" id="userProjects_toggle" class="win_none" onclick=""></a>
+            <a href="javascript:void(0);" id="userProjects_toggle" class="win_none" onclick="">
+                <h2>
+                    <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt=""/>{#projects#}
+                    <pagination view="userProfileProjectsView" :pages="pages" :current-page="currentPage"></pagination>
+                </h2>
+            </a>
             <div class="wintools">
                 <div class="progress display-none float-left" id="progressuserProjects" >
                     <img src="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/loader-project3.gif"/>
                 </div>
             </div>
-            <h2>
-                <a href="myprojects.php" title="{#myprojects#}">
-                    <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt=""/>{#projects#}</a>
-                <pagination view="userProfileProjectsView" :pages="pages" :current-page="currentPage"></pagination>
-            </h2>
+
         </div>
 
         <!-- contentSlide for the blockAccordeon -->
