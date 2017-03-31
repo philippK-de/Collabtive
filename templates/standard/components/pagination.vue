@@ -6,10 +6,12 @@ pagination
             <button class="float-none" v-bind:onclick="'pagination.loadPrevPage(' + view +')'"><<</button>
 
             <span v-bind:id="'page'+page.index" v-for="page in pages" class="margin-left-two-px">
-               <button v-bind:class="currentPage == page.index ? 'paginationActive' : 'paginationInactive'"
-                        v-bind:onclick="'pagination.loadPage(' + view +', '+page.index+')'">
-                    {{page.index}}
-               </button>
+               <template v-if="(page.index == 1 || page.index == 2) || (page.index == pages.length || page.index == pages.length - 1) ||(page.index == pages.length / 2)">
+                   <button v-bind:class="currentPage == page.index ? 'paginationActive' : 'paginationInactive'"
+                            v-bind:onclick="'pagination.loadPage(' + view +', '+page.index+')'">
+                        {{page.index}}
+                   </button>
+               </template>
             </span>
 
             <button class="float-none" v-bind:onclick="'pagination.loadNextPage(' + view +')'">>></button>
