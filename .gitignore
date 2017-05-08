@@ -44,3 +44,11 @@ plugins/plugin.mobileWebApp.php
 managecomments.php
 include/js/components/listCommentsComponent.js
 include/js/components/listCommentsComponent.min.js
+*.backup
+dav.php
+include/class.myDavDirectory.php
+include/class.myDavFile.php
+*.sql
+dav.php
+dav.php
+dav.php

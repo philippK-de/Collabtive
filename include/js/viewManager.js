@@ -1,4 +1,4 @@
-Vue.config.silent = true;
+//Vue.config.silent = true;
 //create the vue views, binding data to DOM elements
 /*
  * Function to create Vue.js view.
@@ -18,6 +18,7 @@ function createView(myView) {
     var myModel = {
         items: [],
         pages: [],
+        additionalFields: [],
         limit: pagination.itemsPerPage,
         offset: 0,
         currentPage: 1,
@@ -56,10 +57,16 @@ function createView(myView) {
     var ajax = new ajaxRequest(myModel.url, myView.el, function () {
         //update the model with the retrieved data
         const responseData = JSON.parse(ajax.request.responseText);
-        //one page of data
+
+        //one page of requested items
         myModel.items = responseData.items;
         //total number of items available
         myModel.itemsCount = responseData.count;
+
+        //if the response has additional data fields, write em to the additionalFields field
+        if(responseData.additionalFields != undefined) {
+            myModel.additionalFields = responseData.additionalFields;
+        }
         //get the list of pages and add it to the model
         const pages = pagination.listPages(responseData.count);
         myModel.pages = pages;
@@ -191,6 +198,9 @@ var pagination = {
             nextPage = 1;
         }
         this.loadPage(view, nextPage);
+    },
+    limitPagesDisplayed: function(page,pages){
+        return (page.index == 1 || page.index == 2) || (page.index ==pages.length / 2) || (currentPage == page.index) || (page.index== pages.length - 1) ||(page.index == pages.length );
     }
 };
 
