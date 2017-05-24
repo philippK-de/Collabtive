@@ -24,6 +24,7 @@ function ajaxRequest(url, indicator, loadHandler) {
     this.loadHandler = loadHandler;
 }
 
+
 //actually send the request
 ajaxRequest.prototype.sendRequest = function () {
     //add the custom load handler function to the onload event

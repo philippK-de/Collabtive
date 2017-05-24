@@ -147,7 +147,7 @@
         </div> {*User END*}
     </div> {*content-left-in END*}
 </div> {*content-left END*}
-<script type="text/javascript" src="include/js/views/projectMembersView.js"></script>
+<script type="text/javascript" src="include/js/views/projectMembersView.min.js"></script>
 <script type="text/javascript">
     projectMembers.url = projectMembers.url + "&id=" + {$project.ID};
     projectMembersView = createView(projectMembers);
