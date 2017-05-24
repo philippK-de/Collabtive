@@ -12,6 +12,9 @@ pagination
                         {{page.index}}
                    </button>
                </template>
+               <template v-else>
+                ...
+               </template>
             </span>
 
             <button class="float-none" v-bind:onclick="'pagination.loadNextPage(' + view +')'">>></button>
