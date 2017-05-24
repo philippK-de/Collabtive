@@ -79,7 +79,7 @@
                                     <span id="acc_projects_toggle{{project.ID}}" class="acc-toggle"
                                           onclick="javascript:accord_projects.toggle(css('#acc_projects_content{{$index}}'));"></span>
                                     <a href="manageproject.php?action=showproject&amp;id={{*project.ID}}" title="{{*project.name}}">
-                                        {{*project.name | truncate '40'}}
+                                        {{{*project.name | truncate '35'}}}
                                     </a>
                                 </div>
                             </td>
@@ -110,7 +110,7 @@
                             <td colspan="5">
                                 <div class="accordion_content">
                                     <div class="acc-in">
-                                        {{*project.desc}}
+                                        {{{*project.desc}}}
                                         <p class="tags-miles">
                                             {/literal}<strong>{#user#}:</strong>{literal}
                                         </p>
@@ -118,14 +118,14 @@
                                         <div class="inwrapper">
                                             <ul>
                                                 <li v-for="member in project.members">
-                                                    <div class="itemwrapper" id="iw_{{*project.ID}_{{*member.ID}}">
+                                                    <div class="itemwrapper" id="iw_{{*project.ID}}_{{*member.ID}}">
 
                                                         <table cellpadding="0" cellspacing="0" border="0">
                                                             <tr>
                                                                 <td class="leftmen" valign="top">
                                                                     <div class="inmenue">
                                                                         <a v-show="member.avatar != ''" class="more"
-                                                                           href="javascript:fadeToggle('info_{{project.ID}_{{*member.ID}}');"></a>
+                                                                           href="javascript:fadeToggle('info_{{project.ID}}_{{*member.ID}}');"></a>
                                                                     </div>
                                                                 </td>
                                                                 <td class="thumb">
@@ -146,7 +146,7 @@
                                                                            title="{/literal}{#deassignuser#}{literal}"
                                                                            onclick="fadeToggle('iw_{{*project.ID}}_{{*member.ID}}');"></a>
                                                                         <a class="edit"
-                                                                           href="admin.php?action=editform&amp;id={{project.members[member].ID}"
+                                                                           href="admin.php?action=editform&amp;id={{project.members[member].ID}}"
                                                                            title="{/literal}{#edituser#}{literal}"></a>
                                                                     </div>
                                                                 </td>
@@ -165,9 +165,9 @@
                                                         </table>
 
                                                         <div v-show="member.avatar != ''" class="moreinfo display-none"
-                                                             id="info_{{*project.ID}_{{*member.ID}">
-                                                            <img src="thumb.php?pic=files/{$cl_config}/avatar/{{project.members[member].avatar}&amp;width=82"
-                                                                 alt="" onclick="fadeToggle('info_{{project.ID}_{{project.members[member].ID}');"/>
+                                                             id="info_{{*project.ID}}_{{*member.ID}">
+                                                            <img src="thumb.php?pic=files/{$cl_config}/avatar/{{project.members[member].avatar}}&amp;width=82"
+                                                                 alt="" onclick="fadeToggle('info_{{project.ID}}_{{project.members[member].ID}}');"/>
 																		<span class="name">
 																			<a href="manageuser.php?action=profile&amp;id={{*member.ID}}">
                                                                                 {{*member.name}}
@@ -252,8 +252,8 @@
                                     <td class="b">
                                         <div class="toggle-in">
                                             <a href="manageproject.php?action=showproject&amp;id={{*closedProject.ID}}"
-                                               title="{{*closedProject.name}}">
-                                                {{*closedProject.name}}
+                                               title="{{{*closedProject.name}}}">
+                                                {{{*closedProject.name}}}
                                             </a>
                                         </div>
                                     </td>
@@ -305,13 +305,12 @@
         <!--Projects END-->
 
 
-
     </div>
     <!--content-left-in END-->
 </div> <!--content-left END-->
 
-    <script type="text/javascript" src="include/js/accordion.min.js"></script>
-    <script type="text/javascript" src="include/js/views/adminProjectsView.min.js"></script>
+<script type="text/javascript" src="include/js/accordion.min.js"></script>
+<script type="text/javascript" src="include/js/views/adminProjectsView.min.js"></script>
 
 {include file="sidebar-a.tpl"}
 {include file="footer.tpl"}

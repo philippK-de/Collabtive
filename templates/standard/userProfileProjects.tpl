@@ -50,7 +50,7 @@
                             <span class="acc-toggle"
                                   onclick="javascript:accord_projects.toggle(css('#userProjectsAccordeon_content{{$index}}'));"></span>
                             <a href="manageproject.php?action=showproject&amp;id={{*project.ID}}" title="{{*project.name}}">
-                                {{*project.name | truncate '30' }}
+                                {{{*project.name | truncate '35' }}}
                             </a>
                         </div>
                     </td>
@@ -65,7 +65,7 @@
                     <td colspan="5">
                         <div class="accordion_content">
                             <div class="acc-in">
-                                {{*project.desc}}
+                                {{{*project.desc}}}
                                 <p class="tags-miles">
                                     {/literal}<strong>{#user#}:</strong>
                                 </p>
@@ -73,7 +73,8 @@
                                 <div class="inwrapper">
                                     <ul>
                                         <li v-for="member in project.members">
-                                            <div class="itemwrapper" id="iw_{{*project.ID}}_{{*member.ID}}">
+                                            <div class="itemwrapper"
+                                                 v-bind:id="'iw_'+project.ID+'_'+member.ID">
                                                 <table cellpadding="0" cellspacing="0" border="0">
                                                     <tr>
                                                         <td class="leftmen" valign="top">

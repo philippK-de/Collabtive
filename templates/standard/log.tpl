@@ -49,7 +49,7 @@
             </td>
             <td>
                 <div class="toggle-in">
-                    <strong>{{logitem.name | truncate '30' }}</strong><br/>
+                    <strong>{{{logitem.name | truncate '35' }}}</strong><br/>
 							<span class="info">{/literal}{#was#}{literal}
                                 <span v-if="logitem.action == 1">
                                     {/literal}

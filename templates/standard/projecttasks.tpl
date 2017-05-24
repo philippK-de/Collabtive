@@ -207,7 +207,7 @@
                                                 <div class="toggle-in">
                                                     <a href="managetask.php?action=showtask&amp;tid={{*oldtask.ID}}&amp;id={{*oldtask.project}}"
                                                        title="{{*oldtask.title}}">
-                                                        {{*oldtask.title | truncate '30' }}
+                                                        {{{*oldtask.title | truncate '30' }}}
                                                     </a>
                                                 </div>
                                             </td>

@@ -98,11 +98,11 @@
                                                         <tr>
                                                             {/literal}
                                                             {if $context != "project"}
-                                                            {literal}<td>{{milestone.pname}}</td>{/literal}
+                                                            {literal}<td>{{{milestone.pname}}}</td>{/literal}
                                                             {/if}{literal}
                                                             <td>
                                                                 <a v-bind:href="'managemilestone.php?action=showmilestone&amp;msid='+milestone.ID+'&amp;id='+milestone.project"
-                                                                   :title="milestone.title">{{milestone.name}}</a>
+                                                                   :title="milestone.title">{{{milestone.name}}}</a>
                                                             </td>
                                                             <td class="tools">
                                                                 {{milestone.daysleft}}
@@ -150,12 +150,12 @@
                                                         <tr>
                                                             {/literal}
                                                             {if $context != "project"}
-                                                            {literal}<td>{{task.pname}}</td>{/literal}
+                                                            {literal}<td>{{{task.pname}}}</td>{/literal}
                                                             {/if}{literal}
                                                             <td>
                                                                 <a v-bind:href="'managetask.php?action=showtask&amp;tid='+task.ID+'&amp;id='+task.project"
                                                                    v-bind:title="task.title">
-                                                                    {{task.title }}
+                                                                    {{{task.title}}}
                                                                 </a>
 
                                                             </td>

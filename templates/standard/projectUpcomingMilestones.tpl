@@ -92,7 +92,7 @@
                                                             </td>
                                                             <td class="thumb">
                                                                 <a href="managetasklist.php?action=showtasklist&amp;tlid={{tasklist.ID}}&amp;id={{tasklist.project}}"
-                                                                   title="{{tasklist.name}}">
+                                                                   title="{{{tasklist.name}}}">
                                                                     <img src="./templates/standard/theme/standard/images/symbols/tasklist.png"
                                                                          alt=""/>
                                                                 </a>
@@ -104,8 +104,8 @@
                                                             <td colspan="3">
                                                             <span class="name">
                                                                 <a href="managetasklist.php?action=showtasklist&amp;tlid={{tasklist.ID}}&amp;id={{tasklist.project}}"
-                                                                   title="{{tasklist.name}}">
-                                                                    {{tasklist.name | truncate '10' }}
+                                                                   title="{{{tasklist.name}}}">
+                                                                    {{{tasklist.name | truncate '10' }}}
                                                                 </a>
                                                             </span>
                                                             </td>

@@ -49,7 +49,7 @@
                         <div class="toggle-in">
                             <span class="acc-toggle"
                                   onclick="javascript:accord_miles_late.activate(css('#lateMilestones_content{{$index}}'));">
-                                 <a href="javascript:void(0);" title="{{milestone.name}}">{{{milestone.name | truncate '30' }}}</a>
+                                 <a href="javascript:void(0);" title="{{{milestone.name}}}">{{{milestone.name | truncate '30' }}}</a>
                             </span>
 
                         </div>
@@ -78,7 +78,7 @@
                     <div class="accordion_content" data-slide="{{$index}}" id="lateMilestones_content{{milestone.ID}}">
                         <div class="acc-in">
                             <div class="message-in">
-                                {{milestone.desc}}
+                                {{{milestone.desc}}}
                             </div>
                         </div>
                     </div>

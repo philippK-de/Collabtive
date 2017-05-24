@@ -109,7 +109,7 @@
 
                                             <p v-if="track.hasTask" class="tags-miles">
                                                 <strong>{/literal}{#task#}{literal}:</strong><br/>
-                                                <a href="managetask.php?action=showtask&amp;tid={{*track.task.ID}}&amp;id={{*track.project}}">{{*track.tname}}</a>
+                                                <a href="managetask.php?action=showtask&amp;tid={{*track.task.ID}}&amp;id={{*track.project}}">{{{*track.tname}}}</a>
                                             </p>
                                         </div>
                                     </div>
