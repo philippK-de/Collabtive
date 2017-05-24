@@ -59,59 +59,7 @@ if ($action == "jsonfiles") {
     echo $json;
 }
 //this is used to display the calendar on the desktop
-elseif ($action == "newcal") {
-    $currentDay = date("j");
-    $currentMonth = date("n");
-    $currentYear = date("Y");
-
-    $selectedMonth = getArrayVal($_GET, "m");
-    $selectedYear = getArrayVal($_GET, "y");
-    if (!$selectedMonth) {
-        $selectedMonth = $currentMonth;
-    }
-    if (!$selectedYear) {
-        $selectedYear = $currentYear;
-    }
-
-    $nextMonth = $selectedMonth + 1;
-    $previousMonth = $selectedMonth -1;
-    if ($nextMonth > 12) {
-        $nextMonth = 1;
-        $nextYear = $selectedYear + 1;
-    } else {
-        $nextYear = $selectedYear;
-    }
-    if ($previousMonth < 1) {
-        $previousMonth = 12;
-        $previousYear = $selectedYear-1;
-    } else {
-        $previousYear = $selectedYear;
-    }
-
-    $today = date("d");
-
-    $calobj = new calendar();
-    $cal = $calobj->getCal($selectedMonth, $selectedYear);
-    $weeks = $cal->calendar;
-    // print_r($weeks);
-
-    $monthName = strtolower(date('F', mktime(0, 0, 0, $selectedMonth, 1, $selectedYear)));
-    $monthName = $langfile[$monthName];
-    $template->assign("mstring", $monthName);
-
-    $template->assign("m", $selectedMonth);
-    $template->assign("y", $selectedYear);
-    $template->assign("thism", $currentMonth);
-    $template->assign("thisd", $currentDay);
-    $template->assign("thisy", $currentYear);
-    $template->assign("nm", $nextMonth);
-    $template->assign("pm", $previousMonth);
-    $template->assign("ny", $nextYear);
-    $template->assign("py", $previousYear);
-    $template->assign("weeks", $weeks);
-    $template->display("calbody.tpl");
-}
-elseif($action == "indexCalendar")
+if($action == "indexCalendar")
 {
     $currentDay = date("j");
     $currentMonth = date("n");
