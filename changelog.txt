@@ -1,4 +1,5 @@
 Collabtive 3.0.2
++ Fix character encoding issue with some special characters in titles of projects, tasks, etc
 + Refactor lots of vue.js 1.0 syntax to be compatible with 2.0
 + Change default number of projects displayed on the desktop to 15
 + Fix font encoding issue in PDF generation
@@ -7,6 +8,7 @@ Collabtive 3.0.2
 + add an additionalFields field to the model of the viewManager. It facilitates passing arbitrary global data from an endpoint to a vue template
 + Improve pagination with many pages: the pagination control now display only the first, second as well as the current +-1, and the 2 last pages
 + Actually load minified JS assets in some places
+
 
 Collabtive 3.0.1
 + Fix broken link to task list in upcoming milestones block
