@@ -18,7 +18,7 @@ function createView(myView) {
     var myModel = {
         items: [],
         pages: [],
-        additionalFields: [],
+        additionalData: [],
         limit: pagination.itemsPerPage,
         offset: 0,
         currentPage: 1,
@@ -64,8 +64,8 @@ function createView(myView) {
         myModel.itemsCount = responseData.count;
 
         //if the response has additional data fields, write em to the additionalFields field
-        if(responseData.additionalFields != undefined) {
-            myModel.additionalFields = responseData.additionalFields;
+        if (responseData.additionalData != undefined) {
+            myModel.additionalData = responseData.additionalData;
         }
         //get the list of pages and add it to the model
         const pages = pagination.listPages(responseData.count);
@@ -103,7 +103,12 @@ function updateView(view, updateDependencies) {
     var ajax = new ajaxRequest(myUrl, view.$el.id, function () {
         //retrieve data and update the views model with it
         const responseData = JSON.parse(ajax.request.responseText);
+        //update the items field with the regular list items
         Vue.set(view, "items", responseData.items);
+        //if the response has additional data fields, write em to the additionalFields field
+        if (responseData.additionalData != undefined) {
+            Vue.set(view, "additionalData", responseData.additionalData);
+        }
         Vue.set(view, "pages", pagination.listPages(responseData.count));
 
         view.$emit("iloaded");
@@ -199,8 +204,8 @@ var pagination = {
         }
         this.loadPage(view, nextPage);
     },
-    limitPagesDisplayed: function(page,pages){
-        return (page.index == 1 || page.index == 2) || (page.index ==pages.length / 2) || (currentPage == page.index) || (page.index== pages.length - 1) ||(page.index == pages.length );
+    limitPagesDisplayed: function (page, pages) {
+        return (page.index == 1 || page.index == 2) || (page.index == pages.length / 2) || (currentPage == page.index) || (page.index == pages.length - 1) || (page.index == pages.length );
     }
 };
 
@@ -233,19 +238,17 @@ function submitForm(event) {
             var element = theForm.elements[i];
             //construct post body
             //if multiple is set, it is a select element that can have multiple selections
-            if(element.attributes.multiple != undefined)
-            {
+            if (element.attributes.multiple != undefined) {
                 var selectPostStr = "";
                 //loop over the options and assign the selected values to the post body
-                for(var j=0;j<element.options.length;j++)
-                {
+                for (var j = 0; j < element.options.length; j++) {
                     var option = element.options[j];
-                    if(option.selected){
+                    if (option.selected) {
                         selectPostStr += "&" + element.name + "=" + encodeURIComponent(option.value);
                     }
                 }
                 //if there were selected options, add to postBody
-                if(selectPostStr != ""){
+                if (selectPostStr != "") {
                     postBody += selectPostStr;
                 }
             }
@@ -272,8 +275,7 @@ function submitForm(event) {
                 catch (e) {
                 }
             }
-            else
-            {
+            else {
                 console.log(response);
             }
         });
@@ -324,8 +326,7 @@ function deleteElement(theElement, theUrl, theView) {
             }
             var result = true;
         }
-        else
-        {
+        else {
             console.log(ajax.request.responseText);
         }
     });
@@ -362,7 +363,7 @@ function removeRow(row, color) {
         Velocity(rowElement, {
             backgroundColor: color,
             backgroundColorAlpha: 0.6,
-            colorAlpha:0.6
+            colorAlpha: 0.6
         }, {
             complete: function () {
                 Velocity(rowElement, "fadeOut", {
