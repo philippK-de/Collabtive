@@ -30,7 +30,7 @@ class emailer
     function send_mail($to, $subject, $text)
     {
 		//create PHP Mailer object
-		$mailer = (object) new PHPmailer();
+		$mailer = (object) new PHPMailer();
 		//setup PHPMailer
 		$mailer->From = $this->mailsettings["mailfrom"];
 		$mailer->Sender = $this->mailsettings["mailfrom"];

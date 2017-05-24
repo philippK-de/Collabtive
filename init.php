@@ -9,7 +9,7 @@ ini_set("upload_max_filesize", "256M");
 ini_set("max_file_uploads", "100");
 
 // Set content security policy header. This instructs the browser to block various unsafe behaviours.
-header("Content-Security-Policy:style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; frame-ancestors:'self';");
+header("Content-Security-Policy:style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'self';");
 // Start output buffering with gzip compression and start the session
 ob_start('ob_gzhandler');
 session_start();
