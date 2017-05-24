@@ -8,6 +8,7 @@ Collabtive 3.0.2
 + add an additionalFields field to the model of the viewManager. It facilitates passing arbitrary global data from an endpoint to a vue template
 + Improve pagination with many pages: the pagination control now display only the first, second as well as the current +-1, and the 2 last pages
 + Actually load minified JS assets in some places
++ Set CSP frame-ancestors to 'self'. this prevents clickjacking attacks, where collabtive is embedded into other website contexts.
 
 
 Collabtive 3.0.1
