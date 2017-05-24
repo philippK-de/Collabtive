@@ -132,7 +132,7 @@
                                                                     <a href="manageuser.php?action=profile&amp;id={{project.members[member].ID}"
                                                                        title="{{project.members[member].name}">
                                                                         <img v-if="member.gender == 'f'"
-                                                                             src="./templates/{$settings.template}/theme/{/literal}{$setting.theme}/{literal}images/symbols/user-icon-female.png"
+                                                                             src="./templates/{/literal}{$settings.template}{literal}/theme/{/literal}{$setting.theme}/{literal}images/symbols/user-icon-female.png"
                                                                              alt=""/>
                                                                         <img v-if="member.gender == 'm'"
                                                                              src="./templates/{/literal}{$settings.template}/theme/{$settings.theme}/{literal}images/symbols/user-icon-male.png"
