@@ -57,7 +57,7 @@
                                         :onclick="'accord_projects.toggle(css(\'#desktopprojects_content'+$index+'\'));'"></span>
                             <a v-bind:href="'manageproject.php?action=showproject&amp;id=' + item.ID"
                                v-bind:title=item.name>
-                                {{item.name | truncate '40' }}
+                                {{{item.name | truncate '35' }}}
                             </a>
                         </div>
                     </td>

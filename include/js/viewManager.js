@@ -241,7 +241,7 @@ function submitForm(event) {
                 {
                     var option = element.options[j];
                     if(option.selected){
-                        selectPostStr += "&" + element.name + "=" + option.value;
+                        selectPostStr += "&" + element.name + "=" + encodeURIComponent(option.value);
                     }
                 }
                 //if there were selected options, add to postBody
@@ -251,9 +251,10 @@ function submitForm(event) {
             }
             else if (element.value != undefined) {
                 //otherwhise its an element without multiple selections, so add the element value
-                postBody += "&" + element.name + "=" + element.value;
+                postBody += "&" + element.name + "=" + encodeURIComponent(element.value);
             }
         }
+
         //send the ajax request
         var ajax = new ajaxRequest(url, "", function () {
             var response = ajax.request.responseText;

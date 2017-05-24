@@ -116,7 +116,7 @@
                                                   onclick="accordeons[{/literal}{$smarty.section.list.index}{literal}].activate(css('#taskList_{/literal}{$lists[list].ID}{literal}_content{{$index}}'));"></span>
                                             <a href="managetask.php?action=showtask&amp;tid={{*task.ID}}&amp;id={{*task.project}}"
                                                title="{{*task.title}}">
-                                                {{*task.title | truncate '30' }}
+                                                {{{*task.title | truncate '30' }}}
                                             </a>
                                         </div>
                                     </td>
@@ -351,6 +351,6 @@
 {/if} {*Done Tasklists End*}
 
 <script type="text/javascript" src="include/js/accordion.js"></script>
-<script type="text/javascript" src="include/js/views/projectTasks.js"></script>
+<script type="text/javascript" src="include/js/views/projectTasks.min.js"></script>
 
 {include file="footer.tpl"}

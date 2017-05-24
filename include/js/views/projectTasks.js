@@ -49,7 +49,7 @@ var handleForm = function (event, view) {
                 {
                     var option = element.options[j];
                     if(option.selected){
-                         selectPostStr += "&" + element.name + "=" + option.value;
+                         selectPostStr += "&" + element.name + "=" + encodeURIComponent(option.value);
                     }
                 }
                 if(selectPostStr != ""){
@@ -58,7 +58,7 @@ var handleForm = function (event, view) {
             }
             else if (element.value != undefined) {
                 //these are fields with single values. assign the element value
-                postBody += "&" + element.name + "=" + element.value;
+                postBody += "&" + element.name + "=" + encodeURIComponent(element.value);
             }
         }
 

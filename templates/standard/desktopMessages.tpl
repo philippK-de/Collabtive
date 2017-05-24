@@ -49,7 +49,7 @@
                                   v-bind:onclick="'javascript:accord_msgs.toggle(css(\'#desktopmessages_content'+$index+'\'));'"></span>
                             <a :href="'managemessage.php?action=showmessage&amp;mid='+item.ID+'&amp;id='+item.project"
                                :title="item.title">
-                                {{item.title | truncate '30'}}</a>
+                                {{{item.title | truncate '30'}}}</a>
                         </div>
                     </td>
                     <td>

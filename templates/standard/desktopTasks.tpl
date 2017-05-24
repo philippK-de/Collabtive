@@ -48,7 +48,7 @@
                                           :onclick="'accord_tasks.toggle(document.querySelector(\'#desktoptasks_content'+$index+'\'));'"></span>
                                     <a v-bind:href="'managetask.php?action=showtask&amp;id=' + item.project + '&amp;tid=' + item.ID"
                                        v-bind:title=item.title>
-                                        {{item.title | truncate '30' }}
+                                        {{{item.title | truncate '30' }}}
                                     </a>
                                 </div>
                             </td>
