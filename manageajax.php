@@ -1,6 +1,5 @@
 <?php
 require("init.php");
-/*
 if (!isset($_SESSION["userid"]))
 {
     $template->assign("loginerror", 0);
@@ -9,7 +8,6 @@ if (!isset($_SESSION["userid"]))
     $template->display("login.tpl");
     die();
 }
-*/
 
 $milestone = new milestone();
 
