@@ -1,3 +1,10 @@
+Collabtive 3.0.3
++ Fix a bug where the generic female avatar wasnt shown in the user-admin area
++ Update PHPMailer to its latest stable release 5.2.2 to mitigate potential issues with PHP7
++ PHPMailer dependency now managed by composer
++ PCLZip dependency now managed by composer
++ Fix CSP header frame-ancestors
+
 Collabtive 3.0.2
 + Fix character encoding issue with some special characters in titles of projects, tasks, etc
 + Refactor lots of vue.js 1.0 syntax to be compatible with 2.0
@@ -9,7 +16,6 @@ Collabtive 3.0.2
 + Improve pagination with many pages: the pagination control now display only the first, second as well as the current +-1, and the 2 last pages
 + Actually load minified JS assets in some places
 + Set CSP frame-ancestors to 'self'. this prevents clickjacking attacks, where collabtive is embedded into other website contexts.
-
 
 Collabtive 3.0.1
 + Fix broken link to task list in upcoming milestones block

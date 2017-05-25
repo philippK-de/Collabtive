@@ -17,7 +17,7 @@
         "require": {
             "php": ">=5.2"
         },
-        "time": "2015-12-21 01:57:06",
+        "time": "2015-12-21T01:57:06+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -76,7 +76,7 @@
             "ext-xmlwriter": "*",
             "php": ">=5.2.0"
         },
-        "time": "2015-05-01 07:00:55",
+        "time": "2015-05-01T07:00:55+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -133,7 +133,7 @@
         "require": {
             "php": ">=5.2"
         },
-        "time": "2015-08-05 01:03:42",
+        "time": "2015-08-05T01:03:42+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -179,7 +179,7 @@
         "require": {
             "php": ">=5.3.0"
         },
-        "time": "2013-09-12 17:00:40",
+        "time": "2013-09-12T17:00:40+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -260,7 +260,7 @@
         "suggest": {
             "league/oauth2-google": "Needed for Google XOAUTH2 authentication"
         },
-        "time": "2017-03-15 19:32:56",
+        "time": "2017-03-15T19:32:56+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -296,5 +296,44 @@
             }
         ],
         "description": "PHPMailer is a full-featured email creation and transfer class for PHP"
+    },
+    {
+        "name": "pclzip/pclzip",
+        "version": "2.8.2",
+        "version_normalized": "2.8.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ivanlanin/pclzip.git",
+            "reference": "19dd1de9d3f5fc4d7d70175b4c344dee329f45fd"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ivanlanin/pclzip/zipball/19dd1de9d3f5fc4d7d70175b4c344dee329f45fd",
+            "reference": "19dd1de9d3f5fc4d7d70175b4c344dee329f45fd",
+            "shasum": ""
+        },
+        "time": "2014-06-05T11:42:24+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "pclzip.lib.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "LGPL-2.1"
+        ],
+        "authors": [
+            {
+                "name": "Vincent Blavet"
+            }
+        ],
+        "description": "A PHP library that offers compression and extraction functions for Zip formatted archives",
+        "homepage": "http://www.phpconcept.net/pclzip",
+        "keywords": [
+            "php",
+            "zip"
+        ]
     }
 ]
