@@ -4,6 +4,9 @@ Collabtive 3.0.3
 + PHPMailer dependency now managed by composer
 + PCLZip dependency now managed by composer
 + Fix CSP header frame-ancestors
++ Submit timetracker entries asyncronously
++ Display total hours in timetracker report (again)
++ Make forms reset by default after they have been submitted.
 
 Collabtive 3.0.2
 + Fix character encoding issue with some special characters in titles of projects, tasks, etc

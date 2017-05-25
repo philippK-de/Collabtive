@@ -269,6 +269,7 @@ function submitForm(event) {
                 //show system message for element added
                 systemMessage.added(formView.$get("itemType"));
                 //try calling the formSubmited() handler that can be defined
+                theForm.reset();
                 try {
                     formSubmited();
                 }
