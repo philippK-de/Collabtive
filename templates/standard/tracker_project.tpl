@@ -121,8 +121,10 @@
                             <tr>
                                 <td></td>
                                 <td colspan="4"><strong>{#totalhours#}:</strong></td>
-                                <td class="text-align-right"><strong>{$totaltime|default}</strong>&nbsp;&nbsp;</td>
+                                {literal}
+                                <td class="text-align-right"><strong>{{additionalData.totalHours}}</strong>&nbsp;&nbsp;</td>
                                 <td class="tools"></td>
+                                {/literal}
                             </tr>
                             </tbody>
                         </table>

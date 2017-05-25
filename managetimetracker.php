@@ -88,8 +88,7 @@ if ($action == "add") {
         } elseif ($ajaxreq == 1) {
             echo "ok";
         } else {
-            $loc = $url . "manageproject.php?action=showproject&id=" . $cleanPost["project"] . "&mode=timeadded";
-            header("Location: $loc");
+            echo "ok";
         }
     } else {
         $goback = $langfile["goback"];
@@ -368,9 +367,7 @@ if ($action == "add") {
 
 
     $template->display("tracker_project.tpl");
-}
-
-/*
+} /*
  * DATA ROUTES
  * These are routes that render JSON data structures
  */
@@ -390,7 +387,6 @@ elseif ($action == "projectTimetracker") {
         $template->display("error.tpl");
         die();
     }
-    $tracker = (object)new timetracker();
     // If the user can not read tt entries from other user, set the user filter to the current user id.
     if (!$cleanGet["usr"]) {
         if (!$userpermissions["timetracker"]["read"]) {
@@ -412,16 +408,16 @@ elseif ($action == "projectTimetracker") {
         $track = $tracker->getProjectTrack($id, $cleanGet["usr"], $cleanGet["task"], $cleanGet["start"], $cleanGet["end"], $limit, $offset);
         $trackCount = count($tracker->getProjectTrack($id, $cleanGet["usr"], $cleanGet["task"], $cleanGet["start"], $cleanGet["end"], 100000000));
     } else {
-        $track = $tracker->getProjectTrack($id, $cleanGet["usr"], $cleanGet["task"], 0, 0, $limit,$offset);
+        $track = $tracker->getProjectTrack($id, $cleanGet["usr"], $cleanGet["task"], 0, 0, $limit, $offset);
         $trackCount = count($tracker->getProjectTrack($id, $cleanGet["usr"], $cleanGet["task"], 0, 0, 10000000000));
     }
     if (!empty($track)) {
         $projectTrack["items"] = $track;
+        $projectTrack["additionalData"]["totalHours"] = $tracker->getTotalTrackTime($track);
         $projectTrack["count"] = $trackCount;
+
         echo json_encode($projectTrack);
-    }
-    else
-    {
+    } else {
         echo json_encode(array());
     }
 
