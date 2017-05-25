@@ -1,7 +1,7 @@
 <script type="text/javascript" src="include/js/timetracker_widget.js"></script>
 <div class="block_in_wrapper">
 
-	<form class="main" id="trackeradd" method="post" action="managetimetracker.php?action=add" {literal} onsubmit="return validateCompleteForm(this,'input_error'); {/literal} ">
+	<form class="main" id="trackeradd" method="post" action="managetimetracker.php?action=add"">
 		<fieldset>
 
 			<input type="hidden" name="project" value="{$project.ID}" />

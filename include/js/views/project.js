@@ -6,12 +6,6 @@ function updateCalendar(myCalendar, newMonth, newYear) {
     updateView(myCalendar);
 
 }
-window.addEventListener("load", function () {
-    /* new Effect.Morph('completed', {
-     style: 'width:{/literal}{$done}{literal}%',
-     duration: 4.0
-     });*/
-});
 
 var projectCalendar = {
     el: "desktopCalendar",

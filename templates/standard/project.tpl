@@ -6,13 +6,9 @@
         <div class="projects">
 
             <div class="infowin_left display-none"
-                 id="systemMessage"
-                 data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png"
-                 data-text-deleted="{#projectwasdeleted#}"
-                 data-text-edited="{#projectwasedited#}"
-                 data-text-added="{#projectwasadded#}"
-                 data-text-closed="{#projectwasclosed#}"
-                    >
+                 id="timetrackerSystemMessage"
+                 data-icon="templates/{$settings.template}/theme/{$settings.theme}/images/symbols/timetracker.png"
+                 data-text-added="{#timetrackeradded#}">
             </div>
 
             <h1>{$project.name|truncate:45:"...":true}<span>/ {#overview#}</span></h1>
@@ -230,6 +226,16 @@
                 }
                 activateAccordeon(0);
             });
+
+            //get the form to be submitted
+            var addProjectForm = document.getElementById("trackeradd");
+            //assign the view to be updated after submitting to the formView variable
+            var formView = calendarView;
+            formView.doUpdate = false;
+            formView.itemType = "timetracker";
+            //add an event listener capaturing the submit event of the form
+            //add submitForm() as the handler for the event, and bind the form view to it
+            addProjectForm.addEventListener("submit", submitForm.bind(formView));
         </script>
         {/literal}
 
