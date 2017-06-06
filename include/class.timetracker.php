@@ -42,13 +42,16 @@ class timetracker {
         $ended = $endday . " " . $ended;
         $ended = strtotime($ended);
 
+        //if the start time is after the end time, something is wrong
+        if ($started >= $ended) {
+            return false;
+        }
+
+        //calculate the amount of hours worked
         $hours = $ended - $started;
         $hours = $hours / 3600;
         $hours = round($hours, 2);
 
-        if ($started >= $ended) {
-            return false;
-        }
 
         $insStmt = $conn->prepare("INSERT INTO timetracker (user,project,task,comment,started,ended,hours,pstatus) VALUES (?,?,?,?,?,?,?,0)");
         $ins = $insStmt->execute(array((int) $user, (int) $project, (int) $task, $comment, $started, $ended, $hours));
