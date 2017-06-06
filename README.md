@@ -7,8 +7,8 @@ It features a modern, responsive UI as well as powerful features for structuring
 With a responsive UI and powerful plugin system - it's easy to use and customize.
 
 ##Requirements
-* PHP 5.5 or newer
-* MySQL or SQLite Database
+* PHP 5.5, PHP 7 
+* MySQL/MariaDB or SQLite Database
 
 ##Browser support
 * Internet Explorer 10/11
