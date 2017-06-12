@@ -10,8 +10,11 @@
  * @link http://collabtive.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
-class project
+class project extends databaseModel
 {
+    function __construct(){
+        $this->databaseTable = "projekte";
+    }
     /**
      * Add a project
      *
@@ -395,13 +398,8 @@ class project
      */
     function getProject($id)
     {
-        global $conn;
         $id = (int)$id;
-
-        $projectStmt = $conn->prepare("SELECT * FROM projekte WHERE ID = ?");
-        $projectStmt->execute(array($id));
-
-        $project = $projectStmt->fetch();
+        $project = $this->getElement($id);
 
         if (!empty($project)) {
             if ($project["end"]) {
