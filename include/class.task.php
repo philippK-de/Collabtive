@@ -347,43 +347,6 @@ class task
         }
     }
 
-    /**
-     * Return all active / open tasks of a given project and user
-     *
-     * @param int $project Project ID
-     * @param int $limit Number of tasks to return
-     * @return array $lists Tasks
-     */
-    function getMyProjectTasks($project, $limit = 10)
-    {
-        global $conn;
-        $project = (int)$project;
-        $limit = (int)$limit;
-        // Get the id of the currently logged in user.
-        $user = $_SESSION['userid'];
-        $user = (int)$user;
-
-        $projectTasks = array();
-        $now = time();
-
-        $projectTasksStmt = $conn->prepare("SELECT ID FROM tasks WHERE project = ? AND status=1 AND end > ? ORDER BY `end` ASC LIMIT $limit");
-        $projectTasksStmt->execute(array($project, $now));
-
-        while ($tasks = $projectTasksStmt->fetch()) {
-            $isTaskAssigned = $conn->query("SELECT ID FROM tasks_assigned WHERE user = $user AND task = $tasks[ID]")->fetch();
-            $isTaskAssigned = $isTaskAssigned[0];
-            if ($isTaskAssigned) {
-                $task = $this->getTask($tasks["ID"]);
-                array_push($projectTasks, $task);
-            }
-        }
-
-        if (!empty($projectTasks)) {
-            return $projectTasks;
-        } else {
-            return false;
-        }
-    }
 
     /**
      * Return open tasks from a given project a user
@@ -417,6 +380,28 @@ class task
             return false;
         }
     }
+
+    function countAllProjectTasks($project, $user = 0, $status = 1)
+    {
+        global $conn;
+        $project = (int)$project;
+        // If no user is given, use the currently logged in one.
+        if ($user < 1) {
+            $user = $_SESSION['userid'];
+        }
+        $user = (int)$user;
+        $projectTasks = array();
+
+        $projectTasksStmt = $conn->prepare("SELECT COUNT(*) FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task AND tasks_assigned.user = ?
+         AND tasks.project = ? AND status=?");
+        $projectTasksStmt->execute(array($user, $project, $status));
+
+        $count = $projectTasksStmt->fetch()[0];
+
+        return $count;
+
+    }
+
     /**
      * Return open tasks from a given project a user
      *
