@@ -159,6 +159,19 @@ class task
         $updStmt = $conn->prepare("UPDATE tasks SET status = 0 WHERE ID = ?");
         $upd = $updStmt->execute(array($id));
 
+
+        $updStmt = $conn->prepare("SELECT liste FROM tasks WHERE ID = ?");
+        $sql = $updStmt->execute(array($id));
+        $liste = $updStmt->fetch();
+        
+        $sql2 = $conn->query("SELECT count(*) FROM tasks WHERE liste = $liste[0] AND status = 1");
+        $task_list_count = $sql2->fetch();
+        // if this is the last task in its list, close the list too.
+        if ($task_list_count[0] == 0) {
+            $tasklist = new tasklist();
+            $tasklist->close_liste($liste[0]);
+        }
+
         if ($upd) {
             // get task text and project
             $projectProperties = $this->getProjectProperties($id);
