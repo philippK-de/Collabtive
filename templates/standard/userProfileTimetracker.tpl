@@ -70,13 +70,13 @@
                             {if $userpermissions.timetracker.edit}
                             {literal}
                                 <a class="tool_edit"
-                                href="managetimetracker.php?action=editform&amp;tid={$tracker[track].ID}&amp;id={$tracker[track].project}"
+                                href="managetimetracker.php?action=editform&amp;tid={{*tracker.ID}}&amp;id={{*tracker.project}}"
                                 title="{/literal}{#edit#}"></a>
                             {/if}
                             {if $userpermissions.timetracker.del}
                             {literal}
                                 <a class="tool_del"
-                                   href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'track_{$tracker[track].ID}\',\'managetimetracker.php?action=del&amp;tid={$tracker[track].ID}&amp;id={$project.ID}\')');"
+                                   href="javascript:confirmfunction('{#confirmdel#}','deleteElement(\'track_{{*tracker.ID}}\',\'managetimetracker.php?action=del&amp;tid={{*tracker.ID}}&amp;id={{*tracker.project}}\')');"
                                    title={/literal}"{#delete#}"></a>
                             {/if}
                         </td>
@@ -92,7 +92,7 @@
                                     <template v-if="tracker.task > 0">
                                         <p class="tags-miles">
                                             <strong>{/literal}{#task#}:{literal}</strong><br />
-                                            <a href = "managetask.php?action=showtask&amp;tid={$tracker[track].task}&amp;id={{*tracker.project}}">{{*tracker.tname}}</a>
+                                            <a href = "managetask.php?action=showtask&amp;tid={{*tracker.task}}&amp;id={{*tracker.project}}">{{*tracker.tname}}</a>
                                         </p>
                                     </template>
                                 </div>
