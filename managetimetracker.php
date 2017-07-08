@@ -134,9 +134,9 @@ if ($action == "add") {
     }
     for ($i = 0; $i < count($tasks); $i++) {
         if (empty($tasks[$i]["title"])) {
-            $name = substr($tasks[$i]["text"], 0, 30);
+            $name = mb_substr($tasks[$i]["text"], 0, 50);
         } else {
-            $name = substr($tasks[$i]["title"], 0, 30);
+            $name = mb_substr($tasks[$i]["title"], 0, 50);
         }
         $tasks[$i]["name"] = $name;
     }
