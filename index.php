@@ -151,7 +151,7 @@ if (!$action) {
 elseif ($action == "myprojects") {
     //create datastructure for projects
     $projects["open"] = $myOpenProjects;
-    $projects["closed"] = $projectObj->getMyProjects($userid, 0);
+    $projects["closed"] = $projectObj->getMyProjects($userid, 0, 0, $projectObj->countMyProjects($userid, 0));
 
     //add projects to datastructure for JSON
     $myprojects["items"] = $projects;

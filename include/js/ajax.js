@@ -1,3 +1,4 @@
+
 //endcolor for close element flashing
 closeEndcolor = '#377814';
 //endcolor for delete element flashing
@@ -14,7 +15,6 @@ function ajaxRequest(url, indicator, loadHandler) {
     if (indicator === undefined) {
         indicator = "";
     }
-
 
     this.request = new XMLHttpRequest();
     this.requestType = "GET";
