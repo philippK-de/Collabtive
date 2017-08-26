@@ -690,8 +690,6 @@ class milestone
     {
         global $conn;
         $milestone = (int)$milestone;
-        $objmessage = new message();
-
         $sel = $conn->query("SELECT title,ID,milestone FROM messages WHERE milestone = $milestone");
         $msgs = array();
         while ($msg = $sel->fetch()) {

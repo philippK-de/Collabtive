@@ -275,6 +275,9 @@ class project extends databaseModel
         global $conn, $mylog;
         $id = (int)$id;
 
+        /*
+         * Close projectt milestones
+         */
         $mile = new milestone();
         $milestones = $mile->getAllProjectMilestones($id, 100000);
         if (!empty($milestones)) {
@@ -284,24 +287,33 @@ class project extends databaseModel
             }
         }
 
-        $task = new task();
-        $tasks = $task->getProjectTasks($id);
-        if (!empty($tasks)) {
-            $close_tasks = $conn->prepare("UPDATE tasks SET status = 0 WHERE ID = ?");
-            foreach ($tasks as $tas) {
-                $close_tasks->execute(array($tas["ID"]));
-            }
-        }
-
-        $tasklist = new tasklist();
-        $tasklists = $tasklist->getProjectTasklists($id);
+        /*
+         * Close tasklists
+         */
+        $tasklistObj = new tasklist();
+        $tasklists = $tasklistObj->getProjectTasklists($id);
         if (!empty($tasklists)) {
             $close_tasklists = $conn->prepare("UPDATE tasklist SET status = 0 WHERE ID = ?");
-            foreach ($tasklists as $tl) {
-                $close_tasklists->execute(array($tl["ID"]));
+            foreach ($tasklists as $tasklist) {
+                $close_tasklists->execute(array($tasklist["ID"]));
             }
         }
 
+        /*
+         * Close tasks
+         */
+        $taskObj = new task();
+        $tasks = $taskObj->getProjectTasks($id);
+        if (!empty($tasks)) {
+            $close_tasks = $conn->prepare("UPDATE tasks SET status = 0 WHERE ID = ?");
+            foreach ($tasks as $task) {
+                $close_tasks->execute(array($task["ID"]));
+            }
+        }
+
+        /*
+         * Close project
+         */
         $updStmt = $conn->prepare("UPDATE projekte SET status=0 WHERE ID = ?");
         $upd = $updStmt->execute(array($id));
 
@@ -440,7 +452,7 @@ class project extends databaseModel
     }
 
     /**
-     * Listet die aktuellsten Projekte auf
+     * List projectts
      *
      * @param int $status Status of the project (1=open, 2= closed)
      * @param int $limit Anzahl der anzuzeigenden Projekte
@@ -461,8 +473,7 @@ class project extends databaseModel
         $projectIdStmt->execute(array($status));
 
         while ($projectId = $projectIdStmt->fetch()) {
-            $project = $this->getProject($projectId["ID"]);
-            array_push($projects, $project);
+            array_push($projects, $this->getProject($projectId["ID"]));
         }
 
         if (!empty($projects)) {
@@ -472,26 +483,6 @@ class project extends databaseModel
         }
     }
 
-    /**
-     * Counts all open or closed projects.
-     *
-     * @param int $status Status of the project (1=open, 2= closed)
-     * @return int $count Number of open or closed projects
-     */
-    function countProjects($status = 1)
-    {
-        global $conn;
-
-        $status = (int) $status;
-
-        $countStmt = $conn->prepare("SELECT COUNT(*) FROM projekte WHERE `status`= ?");
-        $countStmt->execute(array($status));
-
-        $count = $countStmt->fetch();
-        $count = $count["COUNT(*)"];
-
-        return $count;
-    }
 
     /**
      * Lists all projects assigned to a given member ordered by due date ascending
@@ -530,6 +521,28 @@ class project extends databaseModel
         }
     }
 
+    /**
+     * Counts all open or closed projects.
+     *
+     * @param int $status Status of the project (1=open, 2= closed)
+     * @return int $count Number of open or closed projects
+     */
+    function countProjects($status = 1)
+    {
+        global $conn;
+
+        $status = (int) $status;
+
+        $countStmt = $conn->prepare("SELECT COUNT(*) FROM projekte WHERE `status`= ?");
+        $countStmt->execute(array($status));
+
+        //fetch from db
+        $count = $countStmt->fetch();
+        //get the actual number
+        $count = $count["COUNT(*)"];
+
+        return $count;
+    }
     /**
      * Counts all project assigned to a given member.
      *
@@ -594,37 +607,7 @@ class project extends databaseModel
      */
     function getProjectMembers($project, $lim = 10, $paginate = true)
     {
-        global $conn;
-        $project = (int)$project;
-        $lim = (int)$lim;
-        $project = (int)$project;
-        $lim = (int)$lim;
-
-        $members = array();
-
-        if ($paginate) {
-            $num = $conn->query("SELECT COUNT(*) FROM projekte_assigned WHERE projekt = $project")->fetch();
-            $num = $num[0];
-            $lim = (int)$lim;
-
-            $start = 0;
-        } else {
-            $start = 0;
-        }
-
-        $userAssignedQuery = $conn->query("SELECT user FROM projekte_assigned WHERE projekt = $project LIMIT $start,$lim");
-
-        $userObject = new user();
-        while ($user = $userAssignedQuery->fetch()) {
-            $theUser = $userObject->getProfile($user[0]);
-            array_push($members, $theUser);
-        }
-
-        if (!empty($members)) {
-            return $members;
-        } else {
-            return false;
-        }
+        return $this->listProjectMembers($project, $lim, 0);
     }
     /**
      * Lists all the users in a project
