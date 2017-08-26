@@ -85,8 +85,9 @@
                 </tr>
                 {literal}
                 <tr class="acc">
+                    <td></td>
                     <td colspan="5">
-                        <div class="accordioncontent" data-slide="{{$index}}" id="currentMilestones_content{{$index}}">
+                        <div class="accordion_content" data-slide="{{$index}}" id="currentMilestones_content{{$index}}">
                             <div class="acc-in">
                                 <div class="message-in">
                                     {{{milestone.desc}}}

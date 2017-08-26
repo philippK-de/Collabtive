@@ -341,7 +341,7 @@ class milestone
                 // If only one user is assigned, get his profile and add him to users, user_id fields
                 $user = $userObj->getProfile($users[0]);
                 //if there is only one user, the user field contains the string with his name
-                $milestone["user"] = $milestone["name"];
+                $milestone["user"] = $user["name"];
                 //users contains an array with only the single user
                 $milestone["users"] = array($user);
                 //user id contains the id of the user

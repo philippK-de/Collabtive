@@ -76,6 +76,7 @@
                 {literal}
             </tr>
             <tr class="acc">
+                <td></td>
                 <td colspan="5">
                     <div class="accordion_content" data-slide="{{$index}}" id="lateMilestones_content{{milestone.ID}}">
                         <div class="acc-in">

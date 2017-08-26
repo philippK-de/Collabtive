@@ -35,11 +35,17 @@
     /* Create views */
     lateProjectMilestones.url = lateProjectMilestones.url + "&id=" + {/literal}{$project.ID}{literal};
     var lateProjectMilestonesView = createView(lateProjectMilestones);
-
+    lateProjectMilestonesView.afterLoad(function(){
+        //render tasklist tree
+        renderTasklistTree(lateProjectMilestonesView);
+    });
 
     upcomingProjectMilestones.url = upcomingProjectMilestones.url + "&id=" + {/literal}{$project.ID}{literal};
     var upcomingProjectMilestonesView = createView(upcomingProjectMilestones);
-
+    upcomingProjectMilestonesView.afterLoad(function(){
+        //render tasklist tree
+        renderTasklistTree(upcomingProjectMilestonesView);
+    });
 
     projectMilestones.url = projectMilestones.url + "&id=" + {/literal}{$project.ID}{literal};
     var projectMilestonesView = createView(projectMilestones);
@@ -48,10 +54,8 @@
 
     /* Event handlers */
     projectMilestonesView.afterLoad(function () {
-
-        // /loop through the blocks and add the accordion toggle link
+        //loop through the blocks and add the accordion toggle link
         var theBlocks = document.querySelectorAll("#projectMilestones > div[class~='headline'] > a");
-
         //loop through the blocks and add the accordion toggle link
         for (i = 0; i < theBlocks.length; i++) {
             var theAction = theBlocks[i].getAttribute("onclick");

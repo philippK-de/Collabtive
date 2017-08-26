@@ -26,7 +26,8 @@
 
 						<div class="row">
 							<label for="name">{#name#}:</label>
-							<input type="text" class="text" name="name" id="name" required />
+							<input type="text" class="text" name="name" id="name"
+                                   onkeyup="cssId('tasklist[]').value = this.value" required />
 						</div>
 
 						<div class="row">
@@ -71,7 +72,7 @@
                             <select name="assigned[]" multiple="multiple" style="height:80px;" id="assigned" required>
                                 <option value="">{#chooseone#}</option>
                                 {section name=user loop=$assignable_users}
-                                    <option selected value="{$assignable_users[user].ID}" {if $assignable_users[user].ID == $userid} selected {/if} >{$assignable_users[user].name}</option>
+                                    <option value="{$assignable_users[user].ID}" {if $assignable_users[user].ID == $userid} selected {/if} >{$assignable_users[user].name}</option>
                                 {/section}
                             </select>
                         </div>
