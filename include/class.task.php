@@ -381,6 +381,12 @@ class task
         }
     }
 
+    /*
+     * Return the number of tasks in project with status
+     * @param int $project ID of the project
+     * @param int $user ID of the user
+     * @param int $status Open or closed tasks
+     */
     function countAllProjectTasks($project, $user = 0, $status = 1)
     {
         global $conn;
@@ -390,7 +396,6 @@ class task
             $user = $_SESSION['userid'];
         }
         $user = (int)$user;
-        $projectTasks = array();
 
         $projectTasksStmt = $conn->prepare("SELECT COUNT(*) FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task AND tasks_assigned.user = ?
          AND tasks.project = ? AND status=?");

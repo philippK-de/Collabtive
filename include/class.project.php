@@ -599,6 +599,7 @@ class project extends databaseModel
 
     /**
      * Lists all the users in a project
+     * LEGACY
      *
      * @param int $project ProjectId
      * @param int $lim Max number of members to return

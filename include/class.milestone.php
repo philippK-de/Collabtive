@@ -115,9 +115,8 @@ class milestone
         $del = $conn->query("DELETE FROM milestones WHERE ID = $id");
 
         if ($del) {
-            // delete message assignments
             $messageObj = new message();
-
+            // delete message assignments
             $milestoneMessages = $this->getMilestoneMessages($id);
             if (!empty($milestoneMessages)) {
                 foreach ($milestoneMessages as $milestoneMessage) {
@@ -125,6 +124,16 @@ class milestone
                 }
             }
 
+            $tasklistObj = new tasklist();
+            /*
+             * Delete assigned tasklists
+             */
+            $milestoneTasklists = $this->getMilestoneTasklists($id);
+            if (!empty($milestoneTasklists)) {
+                foreach ($milestoneTasklists as $milestoneTasklist) {
+                    $tasklistObj->del_liste($milestoneTasklist["ID"]);
+                }
+            }
             // delete user assignments
             $conn->query("DELETE FROM milestones_assigned WHERE milestone = $id");
 
