@@ -458,6 +458,7 @@ class task
         }
         $starttime = strtotime($startdate);
 
+        //logged in user
         $user = (int)$_SESSION["userid"];
 
         $todaysTasks = array();
@@ -518,11 +519,11 @@ class task
         global $conn;
         $id = (int)$id;
 
-        $sql = $conn->prepare("SELECT user FROM tasks_assigned WHERE task = ?");
-        $sql->execute(array($id));
+        $stmt = $conn->prepare("SELECT user FROM tasks_assigned WHERE task = ?");
+        $stmt->execute(array($id));
 
         $result = array();
-        while ($user = $sql->fetch()) {
+        while ($user = $stmt->fetch()) {
             $sel2 = $conn->query("SELECT name FROM user WHERE ID = $user[0]");
             $uname = $sel2->fetch();
             $uname = $uname[0];
@@ -544,11 +545,13 @@ class task
         global $conn;
         $projectNameStmt = $conn->prepare("SELECT name FROM projekte WHERE ID = ?");
         $projectNameStmt->execute(array($task["project"]));
+
         $projectName = $projectNameStmt->fetch();
         $projectName = stripslashes($projectName[0]);
 
         $listStmt = $conn->prepare("SELECT name FROM tasklist WHERE ID = ?");
         $listStmt->execute(array($task["liste"]));
+
         $list = $listStmt->fetch();
         $list = stripslashes($list[0]);
 

@@ -117,12 +117,12 @@ class timetracker {
         }
     }
 
-    function setPaystatus($pstatus, $id)
+    function setPaystatus($paystatus, $id)
     {
         global $conn;
-        $pstatus = (int) $pstatus;
+        $paystatus = (int) $paystatus;
         $id = (int) $id;
-        $upd = $conn->query("UPDATE timetracker SET pstatus = $pstatus WHERE ID = $id");
+        $upd = $conn->query("UPDATE timetracker SET pstatus = $paystatus WHERE ID = $id");
 
         if ($upd) {
             return true;
@@ -142,7 +142,6 @@ class timetracker {
         $id = (int) $id;
 
         $sel = $conn->query("SELECT * FROM timetracker WHERE ID = $id");
-        $track = array();
         $track = $sel->fetch();
 
         if (!empty($track)) {
@@ -167,6 +166,9 @@ class timetracker {
         }
     }
 
+    /*
+     * Get timetrack of a user
+     */
     function getUserTrack($user, $project = 0, $task = 0, $start = 0, $end = 0 , $lim = 25, $offset = 0)
     {
         global $conn;
@@ -254,6 +256,9 @@ class timetracker {
         }
     }
 
+    /*
+     * Get timetrack for a project
+     */
     function getProjectTrack($project, $user = 0, $task = 0, $start = 0, $end = 0, $lim = 25, $offset=0)
     {
         global $conn;

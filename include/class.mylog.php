@@ -61,7 +61,7 @@ class mylog {
         $id = (int) $id;
 
         $delStmt = $conn->prepare("DELETE FROM log WHERE ID = ?");
-        $del = $delStmt->execute($id);
+        $del = $delStmt->execute(array($id));
 
 		if ($del) {
             return true;
@@ -84,26 +84,17 @@ class mylog {
         $limit = (int) $limit;
         $offset = (int) $offset;
 
-        $sel = $conn->prepare("SELECT COUNT(*) FROM log WHERE project = ? ");
-    	$sel->execute(array($project));
-        $num = $sel->fetch();
-        $num = $num[0];
-        if ($num > 200) {
-            $num = 200;
-        }
-
-        $sel2 = $conn->prepare("SELECT * FROM log WHERE project = ? ORDER BY ID DESC LIMIT $limit OFFSET $offset");
-    	$sel2->execute(array($project));
+        //get the logentries for the project
+        $projectLogStmt = $conn->prepare("SELECT * FROM log WHERE project = ? ORDER BY ID DESC LIMIT $limit OFFSET $offset");
+    	$projectLogStmt->execute(array($project));
 
         $mylog = array();
-        while ($log = $sel2->fetch()) {
+        while ($log = $projectLogStmt->fetch()) {
             if (!empty($log)) {
-                $sel3 = $conn->query("SELECT name FROM projekte WHERE ID = $log[project]");
-                $proname = $sel3->fetch();
-                $proname = $proname[0];
-                $log["proname"] = $proname;
-                //$log["proname"] = stripslashes($log["proname"]);
-                //$log["username"] = stripslashes($log["username"]);
+                //get the project name
+                $projectNameStmt = $conn->query("SELECT name FROM projekte WHERE ID = $log[project]");
+
+                $log["proname"] = $projectNameStmt->fetch()[0];
                 $log["name"] = stripslashes($log["name"]);
                 array_push($mylog, $log);
             }
@@ -129,13 +120,11 @@ class mylog {
         $user = (int) $user;
         $limit = (int) $limit;
 
-        $sel = $conn->prepare("SELECT * FROM log WHERE user = ? ORDER BY ID DESC LIMIT ?");
-		$sel->execute(array($user,$limit));
+        $userLogStmt = $conn->prepare("SELECT * FROM log WHERE user = ? ORDER BY ID DESC LIMIT ?");
+		$userLogStmt->execute(array($user,$limit));
 
         $mylog = array();
-        while ($log = $sel->fetch()) {
-            //$log["username"] = stripslashes($log["username"]);
-            //$log["name"] = stripslashes($log["name"]);
+        while ($log = $userLogStmt->fetch()) {
             array_push($mylog, $log);
         }
 
@@ -159,28 +148,24 @@ class mylog {
         $limit = (int) $limit;
 
         $mylog = array();
-        $sel3 = $conn->prepare("SELECT projekt FROM projekte_assigned WHERE user = ?");
-    	$sel3->execute(array($userid));
+        $userProjectsStmt = $conn->prepare("SELECT projekt FROM projekte_assigned WHERE user = ?");
+    	$userProjectsStmt->execute(array($userid));
 
+        //construct string of project names for use with IN()
         $prstring = "";
-        while ($upro = $sel3->fetch()) {
-            $projekt = $upro[0];
+        while ($userProject = $userProjectsStmt->fetch()) {
+            $projekt = $userProject[0];
             $prstring .= $projekt . ",";
         }
-
         $prstring = substr($prstring, 0, strlen($prstring)-1);
 
         if ($prstring) {
             $sel = $conn->query("SELECT * FROM log  WHERE project IN($prstring) OR project = 0 ORDER BY ID DESC LIMIT $limit");
 
             while ($log = $sel->fetch()) {
-                $sel2 = $conn->query("SELECT name FROM projekte WHERE ID = $log[project]");
-                $proname = $sel2->fetch();
-                $proname = $proname[0];
-                $log["proname"] = $proname;
-                //$log["proname"] = stripslashes($log["proname"]);
-                //$log["username"] = stripslashes($log["username"]);
-                //$log["name"] = stripslashes($log["name"]);
+                $projectNameStmt = $conn->query("SELECT name FROM projekte WHERE ID = $log[project]");
+                $log["proname"] = $projectNameStmt->fetch()[0];
+
                 array_push($mylog, $log);
             }
         }
