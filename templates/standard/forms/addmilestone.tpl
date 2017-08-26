@@ -56,12 +56,13 @@
 							theCal.getDatepicker("datepicker_miles_start");
 						</script>
 
-						<div class="row">
-							<label for="end">{#due#}:</label>
-							<input type="text" class="text" name="end" id="end" required {if $day|default and $month and $year} value = "{$day}.{$month}.{$year}" {/if} />
-						</div>
+                        <div class="row">
+                            <label for="end">{#due#}:</label>
+                            <input type="text" class="text" name="end" id="end" required value="{$project.endstring}" />
+                        </div>
 
-						<div class="datepick">
+
+                        <div class="datepick">
 							<div id="datepicker_miles" class="picker display-none" ></div>
 						</div>
 
