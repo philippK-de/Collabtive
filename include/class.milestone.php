@@ -61,6 +61,32 @@ class milestone
         $updStmt = $conn->prepare("UPDATE milestones SET `name`=?, `desc`=?, `start`=?, `end`=? WHERE ID=?");
         $upd = $updStmt->execute(array($name, $desc, $start, $end, $id));
         if ($upd) {
+
+            $tasklistObj = new tasklist();
+            $taskObj = new task();
+
+            //get tasklists for the milestone
+            $assignedTasklists = $this->getMilestoneTasklists($id);
+
+            //loop tasklists
+            foreach ($assignedTasklists as $assignedTasklist) {
+                //get tasks for this tasklist
+                $tasklistTasks = $tasklistObj->getTasksFromList($assignedTasklist["ID"]);
+
+                //edit the tasklist, set the name to the new milestoone new
+                $tasklistObj->edit_liste($assignedTasklist["ID"], $name, $desc, $assignedTasklist["milestone"]);
+
+                //loop tasks
+                foreach ($tasklistTasks as $tasklistTask) {
+                    $assignees = $taskObj->getUsers($tasklistTask["ID"]);
+                    //edit task and set start and end date to the new milestone start and end
+                    $taskObj->edit($tasklistTask["ID"], $start, $end, $tasklistTask["title"], $tasklistTask["text"], $tasklistTask["liste"]);
+                    foreach ($assignees as $assignee) {
+                        $taskObj->assign($tasklistTask["ID"], $assignee["user"]);
+                    }
+                }
+            }
+
             $namStmt = $conn->prepare("SELECT project,name FROM milestones WHERE ID = ?");
             $namStmt->execute(array($id));
             $nam = $namStmt->fetch();
@@ -289,15 +315,13 @@ class milestone
             $tasks = $this->getMilestoneTasklists($milestone["ID"]);
             $milestone["tasklists"] = $tasks;
             $milestone["hasTasklist"] = false;
-            if(count($tasks) > 0 )
-            {
+            if (count($tasks) > 0) {
                 $milestone["hasTasklist"] = true;
             }
             $messages = $this->getMilestoneMessages($milestone["ID"]);
             $milestone["messages"] = $messages;
             $milestone["hasMessages"] = false;
-            if(count($messages) > 0)
-            {
+            if (count($messages) > 0) {
                 $milestone["hasMessages"] = true;
             }
 
