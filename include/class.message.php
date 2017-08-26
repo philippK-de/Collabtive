@@ -258,8 +258,8 @@ class message
     {
         global $conn;
         $project = (int)$project;
-        $limit = (int) $limit;
-        $offset = (int) $offset;
+        $limit = (int)$limit;
+        $offset = (int)$offset;
 
         $messages = array();
         if ($limit > 0) {
@@ -298,11 +298,12 @@ class message
         }
     }
 
-    function getUserMessages($user, $limit = 10, $offset = 0){
+    function getUserMessages($user, $limit = 10, $offset = 0)
+    {
         global $conn;
         $user = (int)$user;
-        $limit = (int) $limit;
-        $offset = (int) $offset;
+        $limit = (int)$limit;
+        $offset = (int)$offset;
 
         $messages = array();
         $userMessagesStmt =
@@ -312,7 +313,7 @@ class message
 
         while ($messageId = $userMessagesStmt->fetch()) {
             $message = $this->getMessage($messageId["message"]);
-            if($message){
+            if ($message) {
                 array_push($messages, $message);
             }
         }
@@ -333,7 +334,7 @@ class message
     function countProjectMessages($project)
     {
         global $conn;
-        $project = (int) $project;
+        $project = (int)$project;
 
         $messages = array();
         $sel1 = $conn->prepare("
@@ -370,6 +371,7 @@ class message
 
         return $number;
     }
+
     function assignToUser($user, $message)
     {
         global $conn;

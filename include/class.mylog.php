@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This class provides methods to realize the logging of different activities
  *
@@ -9,7 +10,9 @@
  * @link http://collabtive.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
-class mylog {
+
+class mylog
+{
     /*
     * Constructor
     */
@@ -34,8 +37,8 @@ class mylog {
         $user = $this->userid;
         $uname = $this->uname;
 
-        $action = (int) $action;
-        $project = (int) $project;
+        $action = (int)$action;
+        $project = (int)$project;
 
         $now = time();
 
@@ -58,12 +61,12 @@ class mylog {
     function del($id)
     {
         global $conn;
-        $id = (int) $id;
+        $id = (int)$id;
 
         $delStmt = $conn->prepare("DELETE FROM log WHERE ID = ?");
         $del = $delStmt->execute(array($id));
 
-		if ($del) {
+        if ($del) {
             return true;
         } else {
             return false;
@@ -80,13 +83,13 @@ class mylog {
     function getProjectLog($project, $limit = 25, $offset = 0)
     {
         global $conn;
-        $project = (int) $project;
-        $limit = (int) $limit;
-        $offset = (int) $offset;
+        $project = (int)$project;
+        $limit = (int)$limit;
+        $offset = (int)$offset;
 
         //get the logentries for the project
         $projectLogStmt = $conn->prepare("SELECT * FROM log WHERE project = ? ORDER BY ID DESC LIMIT $limit OFFSET $offset");
-    	$projectLogStmt->execute(array($project));
+        $projectLogStmt->execute(array($project));
 
         $mylog = array();
         while ($log = $projectLogStmt->fetch()) {
@@ -117,11 +120,11 @@ class mylog {
     function getUserLog($user, $limit = 25)
     {
         global $conn;
-        $user = (int) $user;
-        $limit = (int) $limit;
+        $user = (int)$user;
+        $limit = (int)$limit;
 
         $userLogStmt = $conn->prepare("SELECT * FROM log WHERE user = ? ORDER BY ID DESC LIMIT ?");
-		$userLogStmt->execute(array($user,$limit));
+        $userLogStmt->execute(array($user, $limit));
 
         $mylog = array();
         while ($log = $userLogStmt->fetch()) {
@@ -145,11 +148,11 @@ class mylog {
     {
         global $conn;
         $userid = $_SESSION["userid"];
-        $limit = (int) $limit;
+        $limit = (int)$limit;
 
         $mylog = array();
         $userProjectsStmt = $conn->prepare("SELECT projekt FROM projekte_assigned WHERE user = ?");
-    	$userProjectsStmt->execute(array($userid));
+        $userProjectsStmt->execute(array($userid));
 
         //construct string of project names for use with IN()
         $prstring = "";
@@ -157,7 +160,7 @@ class mylog {
             $projekt = $userProject[0];
             $prstring .= $projekt . ",";
         }
-        $prstring = substr($prstring, 0, strlen($prstring)-1);
+        $prstring = substr($prstring, 0, strlen($prstring) - 1);
 
         if ($prstring) {
             $sel = $conn->query("SELECT * FROM log  WHERE project IN($prstring) OR project = 0 ORDER BY ID DESC LIMIT $limit");
@@ -192,7 +195,7 @@ class mylog {
         $cou = 0;
 
         if ($log) {
-            foreach($log as $thelog) {
+            foreach ($log as $thelog) {
                 $datetime = date($format, $thelog[7]);
                 $log[$cou]["datum"] = $datetime;
                 $cou = $cou + 1;
