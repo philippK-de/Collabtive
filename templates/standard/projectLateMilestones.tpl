@@ -79,6 +79,16 @@
                         <div class="acc-in">
                             <div class="message-in">
                                 {{{milestone.desc}}}
+                                <!--Tasklists-->
+                                <template v-if="milestone.hasTasklist">
+                                    <div class="content-spacer-b"></div>
+                                    <h2>{/literal}{#tasklists#}{literal}</h2>
+
+                                    <div class="dtree"
+                                         :id="'milestoneTree_' + milestone.ID">
+
+                                    </div>
+                                </template>
                             </div>
                         </div>
                     </div>

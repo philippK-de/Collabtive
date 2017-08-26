@@ -1,4 +1,4 @@
-{include file="header.tpl" jsload="ajax"  jsload1="tinymce"}
+{include file="header.tpl" stage = "project" jsload="ajax"  jsload1="tinymce"}
 {include file="tabsmenue-project.tpl" milestab = "active"}
 
 <div id="content-left">
@@ -12,7 +12,7 @@
                  data-text-deleted="{#milestonewasdeleted#}"
                  data-text-closed="{#milestonewasclosed#}"
                  data-text-opened="{#milestonewasopened#}"
-                 >
+                    >
             </div>
             <h1>{$projectname|truncate:45:"...":true}<span>/ {#milestones#}</span></h1>
 
@@ -22,16 +22,20 @@
                 {include file = "projectUpcomingMilestones.tpl"}
             </div>
 
-        </div> <!--Miles END-->
-    </div> <!--content-left-in END-->
+        </div>
+        <!--Miles END-->
+    </div>
+    <!--content-left-in END-->
 </div> <!--content-left END-->
 
 {literal}
     <script type="text/javascript" src="include/js/accordion.js"></script>
-    <script type="text/javascript" src="include/js/views/projectMilestones.min.js"></script>
+    <script type="text/javascript" src="include/js/views/projectMilestones.js"></script>
 <script type="text/javascript">
+    /* Create views */
     lateProjectMilestones.url = lateProjectMilestones.url + "&id=" + {/literal}{$project.ID}{literal};
     var lateProjectMilestonesView = createView(lateProjectMilestones);
+
 
     upcomingProjectMilestones.url = upcomingProjectMilestones.url + "&id=" + {/literal}{$project.ID}{literal};
     var upcomingProjectMilestonesView = createView(upcomingProjectMilestones);
@@ -42,10 +46,7 @@
     //make late and upcoming milestones update with current milestones
     Vue.set(projectMilestonesView, "dependencies", [lateProjectMilestonesView, upcomingProjectMilestonesView]);
 
-
-    var accord_miles_late;
-    var accord_miles_new;
-    var accord_miles_upcoming;
+    /* Event handlers */
     projectMilestonesView.afterLoad(function () {
 
         // /loop through the blocks and add the accordion toggle link
@@ -60,13 +61,24 @@
         }
         activateAccordeon(1);
 
+        //render tasklist tree
+        renderTasklistTree(projectMilestonesView);
+
         addMilestoneForm = document.getElementById("addmilestoneform");
         formView = projectMilestonesView;
         formView.doUpdate = true;
         addMilestoneForm.addEventListener("submit", submitForm.bind(formView));
     });
 
+
+    var accord_miles_late;
+    var accord_miles_new;
+    var accord_miles_upcoming;
+
     projectMilestonesView.afterUpdate(function () {
+        //render tasklist tree
+        renderTasklistTree(projectMilestonesView);
+        //create inner accordeons
         accord_miles_late = new accordion2('lateMilestones');
         accord_miles_new = new accordion2('currentMilestones');
         accord_miles_upcoming = new accordion2('upcomingMilestones');
