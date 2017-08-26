@@ -56,11 +56,9 @@ if ($action == "add") {
         $liste = (object)new tasklist();
 
         //assign users to milestone
-        /*
         foreach($cleanPost["assigned"] as $assignee){
             $milestone->assign($milestone_id, $assignee);
         }
-        */
 
         //create tasklists
         foreach($cleanPost["tasklist"] as $tasklist){
@@ -194,6 +192,10 @@ if ($action == "add") {
 
     // Get the project name
     $project = $projectObj->getProject($id);
+
+    // Get number of assignable users
+    $project_members = $projectObj->getProjectMembers($id, $projectObj->countMembers($id));
+    $template->assign("assignable_users", $project_members);
 
     $template->assign("title", $langfile["milestones"]);
     $template->assign("projectname", $project["name"]);

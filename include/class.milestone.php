@@ -225,7 +225,7 @@ class milestone
         $milestone = (int)$milestone;
         $user = (int)$user;
 
-        $updStmt = $conn->prepare("INSERT INTO milestones_assigned (NULL,?,?)");
+        $updStmt = $conn->prepare("INSERT INTO milestones_assigned (user,milestone) VALUES (?,?)");
         $upd = $updStmt->execute(array($user, $milestone));
 
         if ($upd) {
@@ -323,6 +323,40 @@ class milestone
             $milestone["hasMessages"] = false;
             if (count($messages) > 0) {
                 $milestone["hasMessages"] = true;
+            }
+
+            $assignedUserStmt = $conn->query("SELECT user FROM milestones_assigned WHERE milestone = $milestone[ID]");
+
+            $users = array();
+            // fetch the assigned user(s)
+            while ($assignedUser = $assignedUserStmt->fetch()) {
+                // push the assigned users to an array
+                array_push($users, $assignedUser[0]);
+                $milestone["user"] = "All";
+                $milestone["user_id"] = $users;
+            }
+            $userObj = new user();
+
+            if (count($users) == 1) {
+                // If only one user is assigned, get his profile and add him to users, user_id fields
+                $user = $userObj->getProfile($users[0]);
+                //if there is only one user, the user field contains the string with his name
+                $milestone["user"] = $milestone["name"];
+                //users contains an array with only the single user
+                $milestone["users"] = array($user);
+                //user id contains the id of the user
+                $milestone["user_id"] = $user["ID"];
+            } elseif (count($users) > 1) {
+                // if there is more than one user push them to the users field. no user or user_id field is present.
+                $milestone["users"] = array();
+                $milestone["user"] = "";
+                $milestone["user_id"] = 0;
+                //loop through the users and push each one to the user array
+                foreach ($users as $assignedUser) {
+                    $user = $userObj->getProfile($assignedUser);
+                    $milestone["user"] .= $user["name"] . " ";
+                    array_push($milestone["users"], $user);
+                }
             }
 
             return $milestone;

@@ -66,6 +66,16 @@
 							<div id="datepicker_miles" class="picker display-none" ></div>
 						</div>
 
+                        <div class="row">
+                            <label for="assigned">{#assignto#}:</label>
+                            <select name="assigned[]" multiple="multiple" style="height:80px;" id="assigned" required>
+                                <option value="">{#chooseone#}</option>
+                                {section name=user loop=$assignable_users}
+                                    <option selected value="{$assignable_users[user].ID}" {if $assignable_users[user].ID == $userid} selected {/if} >{$assignable_users[user].name}</option>
+                                {/section}
+                            </select>
+                        </div>
+
                         <div id="tasklistsContainer">
                             <div class="row">
                                 <label for="name">{#tasklist#}:</label>

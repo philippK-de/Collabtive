@@ -26,7 +26,8 @@
             <tr>
                 <th class="a"></th>
                 <th class="b">{#milestone#}</th>
-                <th class="c">{#due#}</th>
+                <th class="c">{#user#}</th>
+                <th class="d">{#due#}</th>
                 <th class="days" class="text-align-right">{#daysleft#}&nbsp;&nbsp;</th>
                 <th class="tools"></th>
             </tr>
@@ -64,7 +65,9 @@
                                 </span>
                             </div>
                         </td>
-                        <td class="c">{{milestone.fend}}</td>
+
+                        <td class="c">{{milestone.user}}</td>
+                        <td class="d">{{milestone.fend}}</td>
                         <td class="days text-align-right">{{milestone.dayslate}}&nbsp;&nbsp;</td>
                     {/literal}
                     <td class="tools">
