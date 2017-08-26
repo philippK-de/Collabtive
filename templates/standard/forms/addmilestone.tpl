@@ -66,6 +66,16 @@
 							<div id="datepicker_miles" class="picker display-none" ></div>
 						</div>
 
+                        <div id="tasklistsContainer">
+                            <div class="row">
+                                <label for="name">{#tasklist#}:</label>
+                                <input type="text" class="text" name="tasklist[]" id="tasklist[]"  required />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <button class="text" title="Taskliste hinzufügen" type="button" onclick="copyTasklist()">+</button>
+                        </div>
+
 						<script type="text/javascript">
 							theCal = new calendar({$theM},{$theY});
 							theCal.dayNames = ["{#monday#}","{#tuesday#}","{#wednesday#}","{#thursday#}","{#friday#}","{#saturday#}","{#sunday#}"];

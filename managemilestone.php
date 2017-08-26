@@ -54,13 +54,18 @@ if ($action == "add") {
     $milestone_id = $milestone->add($id, $cleanPost["name"], $cleanPost["desc"], $start, $cleanPost["end"], 1);
     if ($milestone_id) {
         $liste = (object)new tasklist();
-        if ($liste->add_liste($id, $cleanPost["name"], $cleanPost["desc"], 0, $milestone_id)) {
-            //$loc = $url . "managetask.php?action=showproject&id=$id&mode=listadded";
-            $loc = $url . "managemilestone.php?action=showproject&id=$id&mode=added";
-        } else {
-            $loc = $url . "managemilestone.php?action=showproject&id=$id&mode=added";
+
+        //assign users to milestone
+        /*
+        foreach($cleanPost["assigned"] as $assignee){
+            $milestone->assign($milestone_id, $assignee);
         }
-        // header("Location: $loc");
+        */
+
+        //create tasklists
+        foreach($cleanPost["tasklist"] as $tasklist){
+            $liste->add_liste($id, $tasklist, "", 0, $milestone_id);
+        }
         echo "ok";
     }
 } elseif ($action == "editform") {

@@ -76,6 +76,18 @@ function renderTasklistTree(view) {
         }
     }
 }
+
+/*
+* Function to copy a tasklist entry in the add milestone form
+ */
+function copyTasklist(){
+    var container = cssId("tasklistsContainer");
+    var field = container.lastElementChild;
+    var fieldCopy = field.cloneNode(true);
+
+    container.appendChild(fieldCopy);
+}
+
 //will be called after form has been submitted
 function formSubmited() {
     blindtoggle('addstone');
