@@ -48,18 +48,18 @@ class milestone
      * @param int $id Milestone ID
      * @param string $name Name
      * @param string $desc Description
-     * @param string $end Day it is due
+     * @param string $endTime Day it is due
      * @return bool
      */
     function edit($id, $name, $desc, $start, $end)
     {
         global $conn, $mylog;
         $id = (int)$id;
-        $start = strtotime($start);
-        $end = strtotime($end);
+        $startTime = strtotime($start);
+        $endTime = strtotime($end);
 
         $updStmt = $conn->prepare("UPDATE milestones SET `name`=?, `desc`=?, `start`=?, `end`=? WHERE ID=?");
-        $upd = $updStmt->execute(array($name, $desc, $start, $end, $id));
+        $upd = $updStmt->execute(array($name, $desc, $startTime, $endTime, $id));
         if ($upd) {
 
             $tasklistObj = new tasklist();
