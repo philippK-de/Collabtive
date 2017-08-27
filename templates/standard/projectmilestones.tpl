@@ -30,9 +30,10 @@
 
 {literal}
     <script type="text/javascript" src="include/js/accordion.js"></script>
-    <script type="text/javascript" src="include/js/views/projectMilestones.js"></script>
+    <script type="text/javascript" src="include/js/views/projectMilestones.min.js"></script>
 <script type="text/javascript">
     /* Create views */
+    /* Late Milestone */
     lateProjectMilestones.url = lateProjectMilestones.url + "&id=" + {/literal}{$project.ID}{literal};
     var lateProjectMilestonesView = createView(lateProjectMilestones);
     lateProjectMilestonesView.afterLoad(function(){
@@ -40,6 +41,7 @@
         renderTasklistTree(lateProjectMilestonesView);
     });
 
+    /* Upcoming milestones */
     upcomingProjectMilestones.url = upcomingProjectMilestones.url + "&id=" + {/literal}{$project.ID}{literal};
     var upcomingProjectMilestonesView = createView(upcomingProjectMilestones);
     upcomingProjectMilestonesView.afterLoad(function(){
@@ -47,12 +49,11 @@
         renderTasklistTree(upcomingProjectMilestonesView);
     });
 
+    /* Current Milestones */
     projectMilestones.url = projectMilestones.url + "&id=" + {/literal}{$project.ID}{literal};
     var projectMilestonesView = createView(projectMilestones);
     //make late and upcoming milestones update with current milestones
     Vue.set(projectMilestonesView, "dependencies", [lateProjectMilestonesView, upcomingProjectMilestonesView]);
-
-    /* Event handlers */
     projectMilestonesView.afterLoad(function () {
         //loop through the blocks and add the accordion toggle link
         var theBlocks = document.querySelectorAll("#projectMilestones > div[class~='headline'] > a");

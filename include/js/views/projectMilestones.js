@@ -36,6 +36,7 @@ function renderTasklistTree(view) {
 
     var openMilestones = view.items.open != undefined ? view.items.open : view.items;
     if (openMilestones != undefined) {
+        var basicImgPath = "templates/standard/theme/standard/images/symbols/";
         //loop over open milestones
         for (var i = 0; i < openMilestones.length; i++) {
             var milestoneId = openMilestones[i].ID;
@@ -55,13 +56,13 @@ function renderTasklistTree(view) {
                     var tasklistTasks = tasklist.tasks;
 
                     //add tasklist to tree
-                    milestoneTree.add("tl" + tasklist.ID, 0, tasklist.name, "managetasklist.php?action=showtasklist&id=" + tasklist.project + "&tlid=" + tasklist.ID, "", "", "templates/standard/theme/standard/images/symbols/tasklist.png", "templates/standard/theme/standard/images/symbols/tasklist.png", true);
+                    milestoneTree.add("tl" + tasklist.ID, 0, tasklist.name, "managetasklist.php?action=showtasklist&id=" + tasklist.project + "&tlid=" + tasklist.ID, "", "", basicImgPath + "tasklist.png", basicImgPath + "tasklist.png", true);
 
                     if (tasklistTasks.length > 0) {
                         //loop tasks in this list
                         for (var k = 0; k < tasklistTasks.length; k++) {
                             //add task to project tree
-                            milestoneTree.add("ta" + tasklistTasks[k].ID, "tl" + tasklistTasks[k].liste, tasklistTasks[k].title, "managetask.php?action=showtask&tid=" + tasklistTasks[k].ID + "&id=" + tasklistTasks[k].project, "", "", "templates/standard/theme/standard/images/symbols/task.png", "templates/standard/theme/standard/images/symbols/task.png", "", tasklistTasks[k].daysleft);
+                            milestoneTree.add("ta" + tasklistTasks[k].ID, "tl" + tasklistTasks[k].liste, tasklistTasks[k].title, "managetask.php?action=showtask&tid=" + tasklistTasks[k].ID + "&id=" + tasklistTasks[k].project, "", "", basicImgPath + "task.png", basicImgPath + "task.png", "", tasklistTasks[k].daysleft);
                         }
                     }
 
@@ -71,7 +72,7 @@ function renderTasklistTree(view) {
             if(messages.length > 0){
                 console.log(messages);
                 for(var l=0;l<messages.length;l++) {
-                    milestoneTree.add("msg" + messages[l].ID, 0, messages[l].title, "managemessage.php?action=showmessage&id=" + messages[l].project + "&mid=" + messages[l].ID, "", "", "templates/standard/theme/standard/images/symbols/msgs.png", "templates/standard/theme/standard/images/symbols/msgs.png");
+                    milestoneTree.add("msg" + messages[l].ID, 0, messages[l].title, "managemessage.php?action=showmessage&id=" + messages[l].projekt + "&mid=" + messages[l].ID, messages[l].text, "", basicImgPath +"msgs.png", basicImgPath + "msgs.png");
                 }
             }
             //write the tree to the target element
