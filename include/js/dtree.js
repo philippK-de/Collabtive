@@ -125,8 +125,13 @@ dTree.prototype.node = function(node, nodeId) {
 	str = '<div class="dTreeNode">' + this.indent(node, nodeId);
 
 	if (this.config.useIcons) {
-		if (!node.icon) node.icon = (this.root.id == node.pid) ? this.icon.root : ((node._firstNode) ? this.icon.folder : this.icon.node);
-		if (!node.iconOpen) node.iconOpen = (node._firstNode) ? this.icon.folderOpen : this.icon.node;
+		if (!node.icon) {
+            node.icon = (this.root.id == node.pid) ? this.icon.root : ((node._firstNode) ? this.icon.folder : this.icon.node);
+        }
+		if (!node.iconOpen) {
+            node.iconOpen = (node._firstNode) ? this.icon.folderOpen : this.icon.node;
+        }
+
 		if (this.root.id == node.pid) {
 			node.icon = this.icon.root;
 			node.iconOpen = this.icon.root;
@@ -135,16 +140,23 @@ dTree.prototype.node = function(node, nodeId) {
 		//dont display root node we dont need it
 		if(this.root.id != node.pid)
 		{
-		str += '<img id="i' + this.obj + nodeId + '" src="' + ((node._isOpen) ? node.iconOpen : node.icon) + '" alt="" style = "height:27px;width:27px;" />';
+		    str += '<img id="i' + this.obj + nodeId + '" src="' + ((node._isOpen) ? node.iconOpen : node.icon) + '" alt="" style = "height:27px;width:27px;" />';
 		}
 	}
 	if (node.url) {
 		str += '<a id="s' + this.obj + nodeId + '" class="' + ((this.config.useSelection) ? ((node._currentNode ? 'nodeSel' : 'node')) : 'node') + '" href="' + node.url + '"';
-		if (node.title) str += ' title="' + node.title + '"';
-		if (node.target) str += ' target="' + node.target + '"';
-		if (this.config.useStatusText) str += ' onmouseover="window.status=\'' + node.name + '\';return true;" onmouseout="window.status=\'\';return true;" ';
-		if (this.config.useSelection && ((node._firstNode && this.config.folderLinks) || !node._firstNode))
-			str += ' onclick="javascript: ' + this.obj + '.s(' + nodeId + ');"';
+		if (node.title) {
+            str += ' title="' + node.title + '"';
+        }
+
+        if (node.target) {
+            str += ' target="' + node.target + '"';
+        }
+
+        if (this.config.useSelection && ((node._firstNode && this.config.folderLinks) || !node._firstNode))
+        {
+            str += ' onclick="javascript: ' + this.obj + '.s(' + nodeId + ');"';
+        }
 
 	if(typeof node.daysLeft == "number")
 	{
@@ -157,11 +169,19 @@ dTree.prototype.node = function(node, nodeId) {
 		str += '>';
 	}
 	else if ((!this.config.folderLinks || !node.url) && node._firstNode && node.pid != this.root.id)
-		str += '<a href="javascript: ' + this.obj + '.o(' + nodeId + ');" class="node">';
+    {
+        str += '<a href="javascript: ' + this.obj + '.o(' + nodeId + ');" class="node">';
+    }
+
 	str += node.name;
-	if (node.url || ((!this.config.folderLinks || !node.url) && node._firstNode)) str += '</a>';
+
+    if (node.url || ((!this.config.folderLinks || !node.url) && node._firstNode)) {
+        str += '</a>';
+    }
+
 	str += '</div>';
-	if (node._firstNode) {
+
+    if (node._firstNode) {
 		str += '<div id="d' + this.obj + nodeId + '" class="clip" style="display:' + ((this.root.id == node.pid || node._isOpen) ? 'block' : 'none') + ';">';
 		str += this.addNode(node);
 		str += '</div>';
