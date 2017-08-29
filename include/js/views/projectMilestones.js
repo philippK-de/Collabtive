@@ -43,8 +43,6 @@ function renderTasklistTree(view) {
 
             //initialise tree component
             var milestoneTree = new dTree('projectTree' + openMilestones[i].ID);
-            milestoneTree.config.useCookies = true;
-            milestoneTree.config.useSelection = false;
             milestoneTree.add(0, -1, '');
 
             var tasklists = openMilestones[i].tasklists;

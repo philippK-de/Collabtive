@@ -70,6 +70,7 @@
         renderTasklistTree(projectMilestonesView);
 
         addMilestoneForm = document.getElementById("addmilestoneform");
+
         formView = projectMilestonesView;
         formView.doUpdate = true;
         addMilestoneForm.addEventListener("submit", submitForm.bind(formView));
