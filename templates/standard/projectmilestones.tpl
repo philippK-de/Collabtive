@@ -30,24 +30,9 @@
 
 {literal}
     <script type="text/javascript" src="include/js/accordion.js"></script>
-    <script type="text/javascript" src="include/js/views/projectMilestones.min.js"></script>
+    <script type="text/javascript" src="include/js/views/projectMilestones.js"></script>
 <script type="text/javascript">
     /* Create views */
-    /* Late Milestone */
-    lateProjectMilestones.url = lateProjectMilestones.url + "&id=" + {/literal}{$project.ID}{literal};
-    var lateProjectMilestonesView = createView(lateProjectMilestones);
-    lateProjectMilestonesView.afterLoad(function(){
-        //render tasklist tree
-        renderTasklistTree(lateProjectMilestonesView);
-    });
-
-    /* Upcoming milestones */
-    upcomingProjectMilestones.url = upcomingProjectMilestones.url + "&id=" + {/literal}{$project.ID}{literal};
-    var upcomingProjectMilestonesView = createView(upcomingProjectMilestones);
-    upcomingProjectMilestonesView.afterLoad(function(){
-        //render tasklist tree
-        renderTasklistTree(upcomingProjectMilestonesView);
-    });
 
     /* Current Milestones */
     projectMilestones.url = projectMilestones.url + "&id=" + {/literal}{$project.ID}{literal};
@@ -64,12 +49,14 @@
             theBlocks[i].setAttribute("onclick", theAction);
             //console.log(theBlocks[i].getAttribute("onclick"));
         }
+        //open first slide
         activateAccordeon(1);
 
         //render tasklist tree
         renderTasklistTree(projectMilestonesView);
 
-        addMilestoneForm = document.getElementById("addmilestoneform");
+        /* bind submit form handler to add milestone form */
+        var addMilestoneForm = document.getElementById("addmilestoneform");
 
         formView = projectMilestonesView;
         formView.doUpdate = true;
@@ -77,18 +64,38 @@
     });
 
 
-    var accord_miles_late;
     var accord_miles_new;
-    var accord_miles_upcoming;
-
     projectMilestonesView.afterUpdate(function () {
         //render tasklist tree
         renderTasklistTree(projectMilestonesView);
         //create inner accordeons
-        accord_miles_late = new accordion2('lateMilestones');
         accord_miles_new = new accordion2('currentMilestones');
+    });
+
+    /* Late Milestone */
+    lateProjectMilestones.url = lateProjectMilestones.url + "&id=" + {/literal}{$project.ID}{literal};
+
+    var accord_miles_late;
+    var lateProjectMilestonesView = createView(lateProjectMilestones);
+    lateProjectMilestonesView.afterUpdate(function(){
+        //render tasklist tree
+        renderTasklistTree(lateProjectMilestonesView);
+        //create inner accordeons
+        accord_miles_late = new accordion2('lateMilestones');
+    });
+
+    /* Upcoming milestones */
+    upcomingProjectMilestones.url = upcomingProjectMilestones.url + "&id=" + {/literal}{$project.ID}{literal};
+
+    var accord_miles_upcoming;
+    var upcomingProjectMilestonesView = createView(upcomingProjectMilestones);
+    upcomingProjectMilestonesView.afterUpdate(function(){
+        //render tasklist tree
+        renderTasklistTree(upcomingProjectMilestonesView);
+        //create inner accordeons
         accord_miles_upcoming = new accordion2('upcomingMilestones');
     });
+
 
 </script>
 {/literal}
