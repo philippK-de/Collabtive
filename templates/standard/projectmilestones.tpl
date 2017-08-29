@@ -1,4 +1,4 @@
-{include file="header.tpl" stage = "project" jsload="ajax"  jsload1="tinymce"}
+{include file="header.tpl" stage = "project" treeView="treeView" jsload="ajax"  jsload1="tinymce"}
 {include file="tabsmenue-project.tpl" milestab = "active"}
 
 <div id="content-left">
