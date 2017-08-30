@@ -47,8 +47,6 @@ function renderMilestoneTree(view) {
             var itemId = treeItems[i].ID;
             //current milestone
             var milestone = treeItems[i].milestones;
-
-            console.log(treeItems[i].title);
             //initialise tree component
             var messageTree = new dTree('milestoneTree' + itemId);
             messageTree.add(0, -1, '');
@@ -104,7 +102,7 @@ function renderFilesTree(view) {
             var itemId = treeItems[i].ID;
 
             //initialise tree component
-            var messageTree = new dTree("filesTree" + itemId);
+            var messageTree = new dTree(treeName + itemId);
             messageTree.add(0, -1, '');
 
             var hasFiles = treeItems[i].hasFiles;
@@ -114,10 +112,10 @@ function renderFilesTree(view) {
                     messageTree.add("fi" + files[l].ID, 0, files[l].title, "managefile.php?action=downloadfile&amp;id=" + files[l].project + "&amp;file=" + files[l].ID, "", "", basicImgPath + "files.png", basicImgPath + "files.png", "", 0);
                 }
                 //write the tree to the target element
-                console.log("filesTree" + itemId);
-                cssId("filesTree" + itemId).innerHTML = messageTree;
+
+                cssId(treeName + itemId).innerHTML = messageTree;
                 //export global variable so the tree is clickable
-                window["filesTree" + itemId] = messageTree;
+                window[treeName + itemId] = messageTree;
             }
         }
     }
