@@ -383,15 +383,15 @@ class datei
         global $conn, $mylog;
         $datei = (int)$datei;
 
-        $thisfile = $conn->query("SELECT datei, name, project, title FROM files WHERE ID = $datei")->fetch();
+        $file = $conn->query("SELECT datei, name, project, title FROM files WHERE ID = $datei")->fetch();
 
-        if (!empty($thisfile)) {
-            $fname = $thisfile[1];
-            $project = $thisfile[2];
-            $ftitle = $thisfile[3];
-            $thisfile = $thisfile[0];
+        if (!empty($file)) {
+            $fname = $file[1];
+            $project = $file[2];
+            $ftitle = $file[3];
+            $file = $file[0];
 
-            $delfile = "./" . $thisfile;
+            $delfile = "./" . $file;
 
             if (!file_exists($delfile)) {
                 return false;
@@ -528,7 +528,6 @@ class datei
         $folder = (int)$folder;
         // If folder is given, return files from this folder, otherwise return files from root folder
         if ($folder > 0) {
-            $fold = "files/" . CL_CONFIG . "/$id/$folder/";
             $sel = $conn->prepare("SELECT COUNT(*) FROM files WHERE project = ? AND folder = ? ORDER BY ID DESC");
             $sel->execute(array($id, $folder));
         } else {
@@ -667,13 +666,12 @@ class datei
         $project = (int)$project;
         $milestone = (int)$milestone;
         $folder = (int)$folder;
-        $userid = $_SESSION["userid"];
+        $userid = (int) $_SESSION["userid"];
         $now = time();
         $insStmt = $conn->prepare("INSERT INTO files (`name`, `desc`, `project`, `milestone`, `user`, `added`, `datei`, `type`, `title`, `folder`, `visible`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $ins = $insStmt->execute(array($name, $desc, $project, $milestone, $userid, $now, $datei, $type, $title, $folder, $visstr));
         if ($ins) {
-            $insid = $conn->lastInsertId();
-            return $insid;
+            return $conn->lastInsertId();
         } else {
             return false;
         }

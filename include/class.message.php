@@ -149,26 +149,31 @@ class message
                 }
                 $message["listReplies"] = $replies;
             }
-            //assume no files
-            $message["hasFiles"] = false;
-
             //get files attached to this message
-            $attached = $this->getAttachedFiles($message["ID"]);
-            $message["files"] = $attached;
-
+            $attachedFiles = $this->getAttachedFiles($message["ID"]);
             //if there is files set hasFiles to true, else false
-            if (!empty($attached)) {
+            if (!empty($attachedFiles)) {
                 $message["hasFiles"] = true;
+                $message["files"] = $attachedFiles;
+
+            }
+            else
+            {
+                $message["hasFiles"] = false;
+                $message["files"] = [];
             }
 
-            $message["hasMilestones"] = false;
-            $miles = array();
             if ($message["milestone"] > 0) {
-                $miles = $milesobj->getMilestone($message["milestone"]);
+                $milestones = $milesobj->getMilestone($message["milestone"]);
                 $message["hasMilestones"] = true;
+                $message["milestones"] = $milestones;
+            }
+            else
+            {
+                $message["hasMilestones"] = false;
+                $message["milestones"] = [];
             }
 
-            $message["milestones"] = $miles;
 
             return $message;
         } else {
@@ -187,12 +192,12 @@ class message
         global $conn;
         $id = (int)$id;
 
-        $sel = $conn->prepare("SELECT ID FROM messages WHERE replyto = ? ORDER BY posted DESC");
-        $sel->execute(array($id));
+        $repliesStmt = $conn->prepare("SELECT ID FROM messages WHERE replyto = ? ORDER BY posted DESC");
+        $repliesStmt->execute(array($id));
 
         $replies = array();
 
-        while ($reply = $sel->fetch()) {
+        while ($reply = $repliesStmt->fetch()) {
             if (!empty($reply)) {
                 $replyMessage = $this->getMessage($reply["ID"]);
                 array_push($replies, $replyMessage);
@@ -363,10 +368,10 @@ class message
         global $conn;
         $user = (int)$user;
 
-        $sel1 = $conn->prepare("SELECT COUNT(*) FROM messages_assigned WHERE user = ?");
-        $sel1->execute(array($user));
+        $countUserMessagesStmt = $conn->prepare("SELECT COUNT(*) FROM messages_assigned WHERE user = ?");
+        $countUserMessagesStmt->execute(array($user));
 
-        $number = $sel1->fetch();
+        $number = $countUserMessagesStmt->fetch();
         $number = $number["COUNT(*)"];
 
         return $number;
@@ -418,26 +423,27 @@ class message
     /**
      * Get files attached to a message
      *
-     * @param int $msg ID of the message
+     * @param int $message ID of the message
      * @return array $files Attached files
      */
-    private function getAttachedFiles($msg)
+    private function getAttachedFiles($message)
     {
         global $conn;
-        $msg = (int)$msg;
+        $message = (int)$message;
 
         $files = array();
-        $sel = $conn->prepare("SELECT file FROM files_attached WHERE message = ?");
-        $sel->execute(array($msg));
+        $attachedFilesStmt = $conn->prepare("SELECT file FROM files_attached WHERE message = ?");
+        $attachedFilesStmt->execute(array($message));
 
-        while ($file = $sel->fetch()) {
-            $sel2 = $conn->query("SELECT * FROM files WHERE ID = $file[0]");
-            $thisfile = $sel2->fetch();
+        //get systemSettings
+        $settingsObj = new settings();
+        $settings = $settingsObj->getSettings();
+
+        while ($file = $attachedFilesStmt->fetch()) {
+            $filesQuery = $conn->query("SELECT * FROM files WHERE ID = $file[0]");
+            $thisfile = $filesQuery->fetch();
             $thisfile["type"] = str_replace("/", "-", $thisfile["type"]);
 
-            //get systemSettings
-            $settingsObj = new settings();
-            $settings = $settingsObj->getSettings();
             // Construct the path to the MIME-type icon
             $myfile = "./templates/" . $settings["template"] . "/theme/" . $settings["theme"] . "/images/files/" . $thisfile['type'] . ".png";
             if (!file_exists($myfile)) {
