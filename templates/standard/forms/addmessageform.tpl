@@ -30,7 +30,7 @@
 			{*Attach*}
 			<div class="row">
 				<label for="thefiles">{#attachfile#}:</label>
-				<select name="thefiles" id="thefiles">
+				<select name="attachedFiles[]" id="thefiles" multiple style="height:100px;">
 					<option value="0">{#chooseone#}</option>
 					{section name=file loop=$files}
 						<option value="{$files[file].ID}">{$files[file].name}</option>

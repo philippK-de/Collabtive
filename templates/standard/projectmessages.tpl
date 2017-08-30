@@ -50,7 +50,7 @@
 </div> <!-- content-left END -->
 
 <script type="text/javascript" src="include/js/accordion.js"></script>
-<script type="text/javascript" src="include/js/views/projectMessages.js"></script>
+<script type="text/javascript" src="include/js/views/projectMessages.min.js"></script>
 
 {literal}
 <script type="text/javascript">
@@ -74,6 +74,7 @@
         accord_messages = new accordion2('publicMessages');
         accord_user_messages = new accordion2('privateMessages');
         renderMilestoneTree(projectMessagesView);
+        renderFilesTree(projectMessagesView);
 
     });
 

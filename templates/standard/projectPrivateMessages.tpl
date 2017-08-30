@@ -9,7 +9,8 @@
         </div>
 
         <h2>
-            <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#personalmessages#}
+            <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png"
+                 alt=""/>{#personalmessages#}
             <pagination view="userMessagesView" :pages="pages" :current-page="currentPage"></pagination>
         </h2>
     </div>
@@ -48,11 +49,11 @@
                     {literal}
                     <td>
                         <div class="toggle-in">
-                                    <!--toggle for the messagesContent accordeon-->
+                            <!--toggle for the messagesContent accordeon-->
                                     <span class="acc-toggle"
                                           onclick="javascript:accord_user_messages.toggle(css('#privateMessages_content{{$index}}'));"></span>
-                            <a v-bind:href="'managemessage.php?action=showmessage&amp;mid='+message.ID+'&amp;id='+message.project}}"
-                               :title="message.title">{{{message.title | truncate '30' }}}</a>
+                            <a v-bind:href="'managemessage.php?action=showmessage&amp;mid='+message.ID+'&amp;id='+message.project"
+                               :title="message.title">{{{*message.title | truncate '30' }}}</a>
                         </div>
                     </td>
                     <td class="text-align-right">
@@ -60,7 +61,8 @@
                             {{message.replies}}</a>
                         &nbsp;
                     </td>
-                    <td><a v-bind:href="'manageuser.php?action=profile&amp;id='+message.user">{{message.username}}</a></td>
+                    <td><a v-bind:href="'manageuser.php?action=profile&amp;id='+message.user">{{message.username}}</a>
+                    </td>
                     <td>{{message.postdate}}</td>
                     <td class="tools">
                         {/literal}
@@ -95,67 +97,34 @@
                                 </div>
 
                                 <!-- message milestones -->
-                                <p v-if="message.hasMilestones">
+                                <template v-if="message.hasMilestones">
+                                    <div class="content-spacer-b"></div>
+                                    <h2>{/literal}{#milestones#}{literal}</h2>
 
-                                <div v-if="message.hasMilestones" class="content-spacer-b"></div>
-                                <strong v-if="message.hasMilestones">{/literal}{#milestone#}{literal}:</strong>
-                                <a v-if="message.hasMilestones"
-                                   href="managemilestone.php?action=showmilestone&amp;msid={{*message.milestones.ID}}&amp;id={{*message.milestones.project}}">{{*message.milestones.name}}</a>
-                                </p>
+                                    <div class="dtree"
+                                         :id="'milestoneTree' + message.ID">
+
+                                    </div>
+                                </template>
                                 <!-- message files -->
-                                <p v-if="message.hasFiles" class="tags-miles">
-                                    <strong>{/literal}{#files#}:{literal}</strong>
-                                </p>
+                                <template v-if="message.hasFiles">
+                                    <div class="content-spacer-b"></div>
+                                    <h2>{/literal}{#files#}{literal}</h2>
 
-                                <div v-if="message.hasFiles" class="inwrapper">
-                                    <ul>
-                                        <li v-for="file in message.files" v-bind:id="'fli_'+file.ID">
-                                            <div class="itemwrapper">
-                                                <table cellpadding="0" cellspacing="0" border="0">
-                                                    <tr>
-                                                        <td class="leftmen" valign="top">
-                                                            <div class="inmenue"></div>
-                                                        </td>
-                                                        <td class="thumb">
-                                                            {/literal}
-                                                            <img src="templates/{$settings.template}/theme/{$settings.theme}/images/files/{literal}{{*file.type}}.png"
-                                                                 alt=""/>
-                                                        </td>
-                                                        {/literal}
-                                                        <td class="rightmen" valign="top">
-                                                            <div class="inmenue">
+                                    <div class="dtree"
+                                         :id="'filesTree' + message.ID">
 
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    {literal}
-                                                    <tr>
-                                                        <td colspan="3">
-                                                            <span class="name">
-                                                                <a href="managefile.php?action=downloadfile&amp;id={{*file.project}}&amp;file={{*file.ID}}">
-                                                                    {{*file.shortName}}
-                                                                </a>
-                                                            </span>
-                                                        </td>
-                                                </table>
-                                            </div>
-                                            <!-- itemwrapper End -->
-                                        </li>
-                                    </ul>
-                                </div>
-                                <!-- inwrapper End -->
-                                <div class="clear_both"></div>
+                                    </div>
+                                </template>
                             </div>
-                            <!-- div messages end -->
-                        </div>
-        </td>
-        </tr>
-        </tbody>
-        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--smooth End-->
+        {/literal}
     </div>
-    <!--smooth End-->
-    {/literal}
-</div>
-<!-- block END  -->
-<div class="padding-bottom-two-px"></div>
+    <!-- block END  -->
+    <div class="padding-bottom-two-px"></div>
 </div><!--msgs end-->

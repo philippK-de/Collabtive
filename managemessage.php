@@ -74,10 +74,13 @@ if ($action == "addform") {
             $messageObj->assignToUser($cleanPost["privateRecipient"], $messageID);
         }
 
-        if(isset($cleanPost["thefiles"])) {
-            if ($cleanPost["thefiles"] > 0) {
+        if(isset($cleanPost["attachedFiles"])) {
+            if (count($cleanPost["attachedFiles"]) > 0) {
                 // attach existing file
-                $messageObj->attachFile($cleanPost["thefiles"], $messageID);
+                foreach($cleanPost["attachedFiles"] as $attachedFile){
+                    $messageObj->attachFile($attachedFile, $messageID);
+                }
+
             }
         }
 

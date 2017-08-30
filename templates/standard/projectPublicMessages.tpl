@@ -118,6 +118,16 @@
 
                                         </div>
                                     </template>
+                                    <!-- message files -->
+                                    <template v-if="message.hasFiles">
+                                        <div class="content-spacer-b"></div>
+                                        <h2>{/literal}{#files#}{literal}</h2>
+
+                                        <div class="dtree"
+                                             :id="'filesTree' + message.ID">
+
+                                        </div>
+                                    </template>
                                 </div>
                             </div>
                     </td>

@@ -33,17 +33,22 @@ function initializeBlockaccordeon() {
  */
 function renderMilestoneTree(view) {
 
-    console.log();
     var treeItems = view.items.public;
+    //if there is private messages, merge them into the tree items array
+    if (view.items.private.length > 0) {
+        treeItems = treeItems.concat(view.items.private);
+    }
+
     if (treeItems != undefined) {
         var basicImgPath = "templates/standard/theme/standard/images/symbols/";
-        //loop over open milestones
+        //loop over all top level items for the tree
         for (var i = 0; i < treeItems.length; i++) {
             //ID of the current item to draw a tree for
             var itemId = treeItems[i].ID;
             //current milestone
             var milestone = treeItems[i].milestones;
 
+            console.log(treeItems[i].title);
             //initialise tree component
             var messageTree = new dTree('milestoneTree' + itemId);
             messageTree.add(0, -1, '');
@@ -53,7 +58,7 @@ function renderMilestoneTree(view) {
 
 
             var tasklists = milestone.tasklists;
-            if (tasklists.length > 0) {
+            if (tasklists != undefined) {
                 //loop over tasklists
                 for (var j = 0; j < tasklists.length; j++) {
                     var tasklist = tasklists[j];
@@ -72,23 +77,52 @@ function renderMilestoneTree(view) {
                     }
 
                 }
+                //write the tree to the target element
+                cssId("milestoneTree" + itemId).innerHTML = messageTree;
+                //export global variable so the tree is clickable
+                window["milestoneTree" + itemId] = messageTree;
             }
-            var files = treeItems[i].files;
-            if(files.length > 0){
-                for(var l=0;l<files.length;l++){
-                    messageTree.add("fi" + files[l].ID, "ml" + milestone.ID, files[l].title, "managefile.php?action=downloadfile&amp;id="+files[l].project+"&amp;file="+files[l].ID, "", "", basicImgPath + "files.png", basicImgPath + "files.png", "", 0);
-                }
-            }
-            console.log(files);
-            //write the tree to the target element
-            cssId("milestoneTree" + itemId).innerHTML = messageTree;
-            //export global variable so the tree is clickable
-            window["milestoneTree" + itemId] = messageTree;
+
+
         }
     }
 }
-function formSubmited()
-{
+function renderFilesTree(view) {
+    var treeName = "filesTree";
+    var basicImgPath = "templates/standard/theme/standard/images/symbols/";
+
+    var treeItems = view.items.public;
+    //if there is private messages, merge them into the tree items array
+    if (view.items.private.length > 0) {
+        treeItems = treeItems.concat(view.items.private);
+    }
+
+    if (treeItems != undefined) {
+        //loop over all top level items for the tree
+        for (var i = 0; i < treeItems.length; i++) {
+            //ID of the current item to draw a tree for
+            var itemId = treeItems[i].ID;
+
+            //initialise tree component
+            var messageTree = new dTree("filesTree" + itemId);
+            messageTree.add(0, -1, '');
+
+            var hasFiles = treeItems[i].hasFiles;
+            if (hasFiles) {
+                var files = treeItems[i].files;
+                for (var l = 0; l < files.length; l++) {
+                    messageTree.add("fi" + files[l].ID, 0, files[l].title, "managefile.php?action=downloadfile&amp;id=" + files[l].project + "&amp;file=" + files[l].ID, "", "", basicImgPath + "files.png", basicImgPath + "files.png", "", 0);
+                }
+                //write the tree to the target element
+                console.log("filesTree" + itemId);
+                cssId("filesTree" + itemId).innerHTML = messageTree;
+                //export global variable so the tree is clickable
+                window["filesTree" + itemId] = messageTree;
+            }
+        }
+    }
+}
+function formSubmited() {
     blindtoggle('addmsg');
-    toggleClass('sm_msgs','smooth','nosmooth');
+    toggleClass('sm_msgs', 'smooth', 'nosmooth');
 }
