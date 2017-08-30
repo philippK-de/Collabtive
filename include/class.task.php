@@ -245,9 +245,9 @@ class task
             }
 
             // get list and projectname of the task
-            $details = $this->getTaskDetails($task);
-            $list = $details["list"];
-            $projectName = $details["projectName"];
+            $taskDetails = $this->getTaskDetails($task);
+            $list = $taskDetails["list"];
+            $projectName = $taskDetails["projectName"];
 
             // get remaining days until due date
             $daysLeft = $this->getDaysLeft($task['end']);
