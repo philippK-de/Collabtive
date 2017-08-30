@@ -32,7 +32,7 @@ var accordIndex = new accordion2('projectMilestones', {
 /*
  * Render a treeview of tasklists for a milestone
  */
-function renderTasklistTree(view) {
+function renderMilestoneTree(view) {
 
     var openMilestones = view.items.open != undefined ? view.items.open : view.items;
     if (openMilestones != undefined) {

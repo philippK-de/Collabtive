@@ -30,7 +30,7 @@
 
 {literal}
     <script type="text/javascript" src="include/js/accordion.js"></script>
-    <script type="text/javascript" src="include/js/views/projectMilestones.js"></script>
+    <script type="text/javascript" src="include/js/views/projectMilestones.min.js"></script>
 <script type="text/javascript">
     /* Create views */
 
@@ -53,7 +53,7 @@
         activateAccordeon(1);
 
         //render tasklist tree
-        renderTasklistTree(projectMilestonesView);
+        renderMilestoneTree(projectMilestonesView);
 
         /* bind submit form handler to add milestone form */
         var addMilestoneForm = document.getElementById("addmilestoneform");
@@ -67,7 +67,7 @@
     var accord_miles_new;
     projectMilestonesView.afterUpdate(function () {
         //render tasklist tree
-        renderTasklistTree(projectMilestonesView);
+        renderMilestoneTree(projectMilestonesView);
         //create inner accordeons
         accord_miles_new = new accordion2('currentMilestones');
     });
@@ -79,7 +79,7 @@
     var lateProjectMilestonesView = createView(lateProjectMilestones);
     lateProjectMilestonesView.afterUpdate(function(){
         //render tasklist tree
-        renderTasklistTree(lateProjectMilestonesView);
+        renderMilestoneTree(lateProjectMilestonesView);
         //create inner accordeons
         accord_miles_late = new accordion2('lateMilestones');
     });
@@ -91,7 +91,7 @@
     var upcomingProjectMilestonesView = createView(upcomingProjectMilestones);
     upcomingProjectMilestonesView.afterUpdate(function(){
         //render tasklist tree
-        renderTasklistTree(upcomingProjectMilestonesView);
+        renderMilestoneTree(upcomingProjectMilestonesView);
         //create inner accordeons
         accord_miles_upcoming = new accordion2('upcomingMilestones');
     });
