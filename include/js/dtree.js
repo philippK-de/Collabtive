@@ -25,11 +25,10 @@ function dTree(objName) {
     this.config = {
         target: null,
         folderLinks: true,
-        useSelection: true,
+        useSelection: false,
         useCookies: true,
         useLines: true,
         useIcons: true,
-        useStatusText: false,
         closeSameLevel: false,
         inOrder: false
     };
@@ -74,12 +73,8 @@ dTree.prototype.closeAll = function () {
 // Outputs the tree to the page
 dTree.prototype.toString = function () {
     var str = '<div class="dtree">\n';
-    if (document.getElementById) {
-        if (this.config.useCookies) this.selectedNode = this.getSelected();
-        str += this.addNode(this.root);
-    } else str += 'Browser not supported.';
+    str += this.addNode(this.root);
     str += '</div>';
-    if (!this.selectedFound) this.selectedNode = null;
     this.completed = true;
     return str;
 };
@@ -105,11 +100,6 @@ dTree.prototype.addNode = function (pNode) {
                 clonedNode.url = null;
             }
 
-            if (this.config.useSelection && clonedNode.id == this.selectedNode && !this.selectedFound) {
-                clonedNode._currentNode = true;
-                this.selectedNode = n;
-                this.selectedFound = true;
-            }
             str += this.node(clonedNode, n);
             if (clonedNode._lastNode) break;
         }
@@ -120,10 +110,7 @@ dTree.prototype.addNode = function (pNode) {
 // Creates the node icon, url and text
 dTree.prototype.node = function (node, nodeId) {
     var str;
-
-
     str = '<div class="dTreeNode">' + this.indent(node, nodeId);
-
     if (this.config.useIcons) {
         if (!node.icon) {
             node.icon = (this.root.id == node.pid) ? this.icon.root : ((node._firstNode) ? this.icon.folder : this.icon.node);
@@ -150,10 +137,6 @@ dTree.prototype.node = function (node, nodeId) {
 
         if (node.target) {
             str += ' target="' + node.target + '"';
-        }
-
-        if (this.config.useSelection && ((node._firstNode && this.config.folderLinks) || !node._firstNode)) {
-            str += ' onclick="javascript: ' + this.obj + '.s(' + nodeId + ');"';
         }
 
         if (typeof node.daysLeft == "number") {
@@ -227,29 +210,6 @@ dTree.prototype.setCS = function (node) {
     }
 };
 
-// Returns the selected node
-dTree.prototype.getSelected = function () {
-    var selectedNode = this.getCookie('cs' + this.obj);
-    return (selectedNode) ? selectedNode : null;
-};
-
-// Highlights the selected node
-dTree.prototype.s = function (id) {
-    if (!this.config.useSelection) return;
-    var cn = this.allNodes[id];
-    if (cn._firstNode && !this.config.folderLinks) return;
-    if (this.selectedNode != id) {
-        if (this.selectedNode || this.selectedNode == 0) {
-            eOld = document.getElementById("s" + this.obj + this.selectedNode);
-            eOld.className = "node";
-        }
-        eNew = document.getElementById("s" + this.obj + id);
-        eNew.className = "nodeSel";
-        this.selectedNode = id;
-        if (this.config.useCookies) this.setCookie('cs' + this.obj, cn.id);
-    }
-};
-
 // Toggle Open or close
 dTree.prototype.o = function (id) {
     var cn = this.allNodes[id];
@@ -299,7 +259,7 @@ dTree.prototype.closeLevel = function (node) {
             this.closeAllChildren(this.allNodes[n]);
         }
     }
-}
+};
 
 // Closes all children of a node
 dTree.prototype.closeAllChildren = function (node) {
@@ -310,7 +270,7 @@ dTree.prototype.closeAllChildren = function (node) {
             this.closeAllChildren(this.allNodes[n]);
         }
     }
-}
+};
 
 // Change the status of a node(open or closed)
 dTree.prototype.nodeStatus = function (status, id, bottom) {
