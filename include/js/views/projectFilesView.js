@@ -7,7 +7,7 @@ var projectFiles = {
 
 
 /*
-* Function to load a new folder to the files view
+ * Function to load a new folder to the files view
  */
 function loadFolder(view, folder) {
     var currentUrl = view.$get("url");
@@ -18,7 +18,7 @@ function loadFolder(view, folder) {
     updateView(view);
 }
 /*
-* Select a folder in the add file, add folder dropdowns
+ * Select a folder in the add file, add folder dropdowns
  */
 function selectFolder(folderId) {
     var theParentOptions = cssId("folderparent").options;
@@ -35,15 +35,12 @@ function selectFolder(folderId) {
     }
 }
 
-function changeFileview(fileviewType, project)
-{
+function changeFileview(fileviewType, project) {
     //grid view
-    if(fileviewType == "grid")
-    {
+    if (fileviewType == "grid") {
         window.location = "managefile.php?action=showproject&id=" + project;
     }
-    else if(fileviewType == "list")
-    {
+    else if (fileviewType == "list") {
         window.location = "managefile.php?action=showproject&viewmode=list&id=" + project;
     }
 }
@@ -118,4 +115,37 @@ function handleDragLeave(evt) {
     var elm = evt.target;
 
     elm.classList.remove('dragover');  // this / e.target is previous target element.
+}
+
+function renderFilesTree(view) {
+    var treeName = "filesTree";
+    var basicImgPath = "templates/standard/theme/standard/images/symbols/";
+
+    var treeItems = view.items;
+
+    console.log(treeItems);
+
+    if (treeItems != undefined) {
+        //initialise tree component
+        var messageTree = new dTree(treeName);
+        messageTree.add(0, -1, '');
+
+
+        messageTree.add("fo0", 0, "Root folder", "managefile.php?action=downloadfile&amp;id="  + "&amp;file=" , "", "", basicImgPath + "folder.png", basicImgPath + "folder.png", "", 0);
+
+        for (var i = 0; i < treeItems.files.length; i++) {
+            var treeItem = treeItems.files[i];
+             console.log(treeItem);
+            //ID of the current item to draw a tree for
+            var itemId = treeItem.ID;
+            messageTree.add("fi" + treeItem.ID, "fo0", "a", "managefile.php?action=downloadfile&amp;id=" + treeItem.project + "&amp;file=" + treeItem.ID, "", "", basicImgPath + "files.png", basicImgPath + "files.png", "", 0);
+
+        }
+         //write the tree to the target element
+
+        cssId(treeName).innerHTML = messageTree;
+        //export global variable so the tree is clickable
+        window[treeName] = messageTree;
+        window[treeName].openAll();
+    }
 }
