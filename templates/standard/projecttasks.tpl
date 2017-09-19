@@ -41,7 +41,7 @@
                 {if $lists[0][0]}
                 {section name=list loop=$lists}
                     <div class="headline accordion_toggle" style="margin-top:5px;">
-                        <a href="javascript:void(0);" id="toggle-{$lists[list].ID}" class="win_block" onclick=""></a>
+                        <a href="javascript:void(0);" id="toggle-{$lists[list].ID}" class="win_none" onclick=""></a>
 
                         <div class="wintools" style="z-index:999;">
                             <div class="progress display-none float-left" id="progressblockTasks_content{$smarty.section.list.index}" style="width:22px;">
