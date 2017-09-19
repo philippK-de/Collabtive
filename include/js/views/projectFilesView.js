@@ -116,14 +116,36 @@ function handleDragLeave(evt) {
 
     elm.classList.remove('dragover');  // this / e.target is previous target element.
 }
+var basicImgPath = "templates/standard/theme/standard/images/symbols/";
 
+function renderFolders(tree, folders) {
+    if (folders.length > 0) {
+        console.log(folders);
+        for (var f = 0; f < folders.length; f++) {
+            var folder = folders[f];
+            if(folder.subfolders !== false){
+                renderFolders(tree, folder.subfolders);
+            }
+            tree.add("fo" + folder.ID, "fo" + folder.parent, folder.name, "javascript:alert('bla')", "", "", basicImgPath + "folder.png", basicImgPath + "folder.png", "", 0);
+        }
+    }
+}
+function renderFiles(tree, files, folder){
+    if (files.length > 0) {
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            //ID of the current item to draw a tree for
+            console.log(file.folder);
+
+            tree.add("fi" + file.ID, "fo" + file.folder, file.name, "managefile.php?action=downloadfile&amp;id=" + file.project + "&amp;file=" + file.ID, "", "", basicImgPath + "files.png", basicImgPath + "files.png", "", 0);
+        }
+
+    }
+}
 function renderFilesTree(view) {
     var treeName = "filesTree";
-    var basicImgPath = "templates/standard/theme/standard/images/symbols/";
 
     var treeItems = view.items;
-
-    console.log(treeItems);
 
     if (treeItems != undefined) {
         //initialise tree component
@@ -131,21 +153,17 @@ function renderFilesTree(view) {
         messageTree.add(0, -1, '');
 
 
-        messageTree.add("fo0", 0, "Root folder", "managefile.php?action=downloadfile&amp;id="  + "&amp;file=" , "", "", basicImgPath + "folder.png", basicImgPath + "folder.png", "", 0);
-
-        for (var i = 0; i < treeItems.files.length; i++) {
-            var treeItem = treeItems.files[i];
-             console.log(treeItem);
-            //ID of the current item to draw a tree for
-            var itemId = treeItem.ID;
-            messageTree.add("fi" + treeItem.ID, "fo0", "a", "managefile.php?action=downloadfile&amp;id=" + treeItem.project + "&amp;file=" + treeItem.ID, "", "", basicImgPath + "files.png", basicImgPath + "files.png", "", 0);
-
-        }
-         //write the tree to the target element
-
-        cssId(treeName).innerHTML = messageTree;
-        //export global variable so the tree is clickable
-        window[treeName] = messageTree;
-        window[treeName].openAll();
+        var files = treeItems.files;
+        var folders = treeItems.folders;
+        messageTree.add("fo0", 0, "Root folder", "managefile.php?action=downloadfile&amp;id=" + "&amp;file=", "", "", basicImgPath + "folder.png", basicImgPath + "folder.png", "", 0);
+        renderFolders(messageTree, folders);
+        renderFiles(messageTree, files, 0);
     }
+
+    //write the tree to the target element
+
+    cssId(treeName).innerHTML = messageTree;
+    //export global variable so the tree is clickable
+    window[treeName] = messageTree;
+    window[treeName].openAll();
 }

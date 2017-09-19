@@ -15,8 +15,8 @@ Collabtive 3.1
 + Make opening an accordion slide a lot faster in accordions with many items
 + Replace pixel graphics in the tree view with SVG vector graphics
 + Fix the accordion in "late" milestone when creating a new milestone that is late
-+ Draw milestones associated to messages, with  their tasklists, tasks as well as files in a tree view in the
-  message details.
++ Draw milestones associated to messages, with  their tasklists, tasks in a tree view
++ Draw files associated to messages in a tree view in the message details.
 
 Collabtive 3.0.2
 + Fix character encoding issue with some special characters in titles of projects, tasks, etc

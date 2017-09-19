@@ -88,7 +88,7 @@ function renderMilestoneTree(view) {
             messageTree.add(0, -1, '');
 
             //add the milestone
-            messageTree.add("ml" + milestone.ID, 0, milestone.name, "managetasklist.php?action=showtasklist&id=" + milestone.project + "&tlid=" + milestone.ID, "", "", basicImgPath + "milestone.png", basicImgPath + "milestone.png", true);
+            messageTree.add("ml" + milestone.ID, 0, milestone.name, "#", "", "", basicImgPath + "milestone.png", basicImgPath + "milestone.png", true);
 
 
             var tasklists = milestone.tasklists;
