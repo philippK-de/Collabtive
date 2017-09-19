@@ -20,7 +20,7 @@ class datei
      * @param int $project ID of the project the folder belongs to
      * @param string $folder Name of the new folder
      * @param string $desc Description of the new folder
-     * @param strin $visible Visibility of the new folder
+     * @param string $visible Visibility of the new folder
      * @return bool
      */
     function addFolder($parent, $project, $folder, $desc)
@@ -36,11 +36,6 @@ class datei
         // Make a copy of the original folder name before replacing umlauts
         // This is for display in the system log
         $folderOrig = $folder;
-        // Replace umlauts
-        $folder = str_replace("ä", "ae", $folder);
-        $folder = str_replace("ö", "oe", $folder);
-        $folder = str_replace("ü", "ue", $folder);
-        $folder = str_replace("ß", "ss", $folder);
         // Remove whitespace
         $folder = preg_replace("/\W/", "", $folder);
         $folder = preg_replace("/[^-_0-9a-zA-Z]/", "_", $folder);
@@ -312,13 +307,10 @@ class datei
                 if ($project > 0) {
                     // File did not already exist, was uploaded, and a project is set
                     // Now add the file to the database, log the upload event and return the file ID.
-                    if (!$title) {
-                        $title = $name;
-                    }
 
                     chmod($datei_final, 0755);
 
-                    $fid = $this->add_file($name, $desc, $project, 0, $datei_final2, "$typ", $title, $folder, "");
+                    $fid = $this->add_file($name, "", $project, 0, $datei_final2, "$typ", $title, $folder, "");
 
                     if (!empty($title)) {
                         $mylog->add($title, 'file', 1, $project);
