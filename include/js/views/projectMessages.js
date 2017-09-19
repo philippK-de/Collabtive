@@ -32,7 +32,6 @@ function initializeBlockaccordeon() {
  * Render a treeview of tasklists for a milestone
  */
 function renderMilestoneTree(view) {
-
     var treeItems = view.items.public;
     //if there is private messages, merge them into the tree items array
     if (view.items.private.length > 0) {

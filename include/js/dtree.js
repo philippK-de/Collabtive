@@ -215,20 +215,27 @@ dTree.prototype.o = function (id) {
     var cn = this.allNodes[id];
     this.nodeStatus(!cn._isOpen, id, cn._lastNode);
     cn._isOpen = !cn._isOpen;
-    if (this.config.closeSameLevel) this.closeLevel(cn);
-    if (this.config.useCookies) this.updateCookie();
+    if (this.config.closeSameLevel) {
+        this.closeLevel(cn);
+    }
+    if (this.config.useCookies){
+        this.updateCookie();
+    }
 };
 
 // Open or close all nodes
 dTree.prototype.oAll = function (status) {
     for (var n = 0; n < this.allNodes.length; n++) {
         if (this.allNodes[n]._firstNode && this.allNodes[n].pid != this.root.id) {
-            this.nodeStatus(status, n, this.allNodes[n]._lastNode)
+            this.nodeStatus(status, n, this.allNodes[n]._lastNode);
             this.allNodes[n]._isOpen = status;
         }
     }
-    if (this.config.useCookies) this.updateCookie();
+    if (this.config.useCookies) {
+        this.updateCookie();
+    }
 };
+
 
 // Opens the tree to a specific node
 dTree.prototype.openTo = function (nId, bSelect, bFirst) {
@@ -241,12 +248,20 @@ dTree.prototype.openTo = function (nId, bSelect, bFirst) {
         }
     }
     var cn = this.allNodes[nId];
-    if (cn.pid == this.root.id || !cn._parentNode) return;
+    if (cn.pid == this.root.id || !cn._parentNode){
+        return;
+    }
     cn._isOpen = true;
     cn._currentNode = bSelect;
-    if (this.completed && cn._firstNode) this.nodeStatus(true, cn._autoIncrement, cn._lastNode);
-    if (this.completed && bSelect) this.s(cn._autoIncrement);
-    else if (bSelect) this._sn = cn._autoIncrement;
+    if (this.completed && cn._firstNode) {
+        this.nodeStatus(true, cn._autoIncrement, cn._lastNode);
+    }
+    if (this.completed && bSelect) {
+        this.s(cn._autoIncrement);
+    }
+    else if (bSelect) {
+        this._sn = cn._autoIncrement;
+    }
     this.openTo(cn._parentNode._autoIncrement, false, true);
 };
 
@@ -265,7 +280,9 @@ dTree.prototype.closeLevel = function (node) {
 dTree.prototype.closeAllChildren = function (node) {
     for (var n = 0; n < this.allNodes.length; n++) {
         if (this.allNodes[n].pid == node.id && this.allNodes[n]._firstNode) {
-            if (this.allNodes[n]._isOpen) this.nodeStatus(false, n, this.allNodes[n]._lastNode);
+            if (this.allNodes[n]._isOpen) {
+                this.nodeStatus(false, n, this.allNodes[n]._lastNode);
+            }
             this.allNodes[n]._isOpen = false;
             this.closeAllChildren(this.allNodes[n]);
         }
@@ -323,7 +340,9 @@ dTree.prototype.updateCookie = function () {
     var str = '';
     for (var n = 0; n < this.allNodes.length; n++) {
         if (this.allNodes[n]._isOpen && this.allNodes[n].pid != this.root.id) {
-            if (str) str += '.';
+            if (str) {
+                str += '.';
+            }
             str += this.allNodes[n].id;
         }
     }
@@ -333,16 +352,21 @@ dTree.prototype.updateCookie = function () {
 // [Cookie] Checks if a node id is in a cookie
 dTree.prototype.isOpen = function (id) {
     var aOpen = this.getCookie('co' + this.obj).split('.');
-    for (var n = 0; n < aOpen.length; n++)
-        if (aOpen[n] == id) return true;
+    for (var n = 0; n < aOpen.length; n++) {
+        if (aOpen[n] == id) {
+            return true;
+        }
+    }
     return false;
 };
+
 
 // If Push and pop is not implemented by the browser
 if (!Array.prototype.push) {
     Array.prototype.push = function array_push() {
-        for (var i = 0; i < arguments.length; i++)
+        for (var i = 0; i < arguments.length; i++){
             this[this.length] = arguments[i];
+        }
         return this.length;
     }
 }
