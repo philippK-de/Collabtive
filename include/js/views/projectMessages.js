@@ -52,9 +52,7 @@ function renderMilestoneTree(view) {
             messageTree.add(0, -1, '');
 
             //add the milestone
-            messageTree.add("ml" + milestone.ID, 0, milestone.name, "managetasklist.php?action=showtasklist&id=" + milestone.project + "&tlid=" + milestone.ID, "", "", basicImgPath + "tasklist.png", basicImgPath + "milestone.png", true);
-
-
+            messageTree.add("ml" + milestone.ID, 0, milestone.name, "managemilestone.php?action=showproject&id=" + milestone.project, "", "", basicImgPath + "tasklist.png", basicImgPath + "milestone.png", true);
             var tasklists = milestone.tasklists;
             if (tasklists != undefined) {
                 //loop over tasklists
