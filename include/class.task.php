@@ -304,8 +304,13 @@ class task
                 $task["istoday"] = true;
             }
 
-            //$taskCommentObj = new taskComments();
-            //$task["comments"] = $taskCommentObj->getCommentsByTask($id);
+            try{
+                $taskCommentObj = new taskComments();
+                $task["comments"] = $taskCommentObj->getCommentsByTask($id);
+
+            }catch (Exception $error){
+
+            }
 
             return $task;
         } else {
