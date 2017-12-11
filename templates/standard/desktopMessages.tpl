@@ -8,7 +8,8 @@
                 <loader block="desktopmessages" loader="loader-messages.gif"></loader>
             </div>
             <h2>
-                <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt=""/>{#mymessages#}
+                <img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png"
+                     alt=""/>{#mymessages#}
             </h2>
         </div>
         <div class="block blockaccordion_content overflow-hidden display-none" id="activityhead">
@@ -53,7 +54,8 @@
                         </div>
                     </td>
                     <td>
-                        <a v-bind:href="'managemessage.php?action=showproject&amp;id=' + item.project">{{item.pname }}</a>
+                        <a v-bind:href="'managemessage.php?action=showproject&amp;id=' + item.project">{{item.pname
+                            }}</a>
                     </td>
                     <td>
                         <a v-bind:href="'manageuser.php?action=profile&amp;id=' + item.user">{{item.username }}</a>
@@ -91,68 +93,27 @@
                                     </div>
                                     <!-- message milestones -->
                                     <template v-if="item.hasMilestones">
-                                        <p>
-
                                         <div class="content-spacer-b"></div>
-                                        <strong>{/literal}{#milestone#}{literal}:</strong>
-                                        <a v-bind:href="'managemilestone.php?action=showmilestone&amp;msid=' + item.milestones.ID + '&amp;id=' +item.milestones.project">
-                                            {{item.milestones.name}}
-                                        </a>
-                                        </p>
+                                        <h2>{/literal}{#milestones#}{literal}</h2>
+
+                                        <div class="dtree"
+                                             :id="'milestoneTree' + item.ID">
+
+                                        </div>
+                                    </template>
+                                    <!-- message files -->
+                                    <template v-if="item.hasFiles">
+                                        <div class="content-spacer-b"></div>
+                                        <h2>{/literal}{#files#}{literal}</h2>
+
+                                        <div class="dtree"
+                                             :id="'filesTree' + item.ID">
+
+                                        </div>
                                     </template>
 
-                                    <!-- message files -->
-                                    <p v-if="item.hasFiles" class="tags-miles">
-                                        <strong>{/literal}{#files#}:{literal}</strong>
-                                    </p>
-
-                                    <div v-if="item.hasFiles" class="inwrapper">
-                                        <ul>
-                                            <li v-for="file in item.files">
-                                                <div class="itemwrapper" v-bind:id="'iw_' + file.ID">
-
-                                                    <table cellpadding="0" cellspacing="0" border="0">
-                                                        <tr>
-                                                            <td class="leftmen" valign="top">
-                                                                <div class="inmenue"></div>
-                                                            </td>
-                                                            <td class="thumb">
-
-                                                                <a v-bind:href="'managefile.php?action=downloadfile&amp;id=' + file.project +'&amp;file=' + file.ID"
-                                                                   v-bind:title=file.name>
-                                                                    <img v-bind:src="'templates/standard/theme/standard/images/files/' +file.type +'.png'"
-                                                                         v-bind:alt=file.name />
-                                                                </a>
-                                                            </td>
-                                                            <td class="rightmen" valign="top">
-                                                                <div class="inmenue">
-                                                                    <a class="del"
-                                                                       v-bind:href="'managefile.php?action=delete&amp;id=' + file.project + '&amp;file=' + file.ID"
-                                                                       title="{#delete#}"
-                                                                       :onclick="'fadeToggle(\'iw_'+file.ID+'\');'"></a>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="3">
-                                                                <span class="name">
-                                                                    <a v-bind:href="'managefile.php?action=downloadfile&amp;id=' +file.project +'&amp;file=' + file.ID"
-                                                                       v-bind:title=file.name>{{file.shortName}}</a>
-                                                                </span>
-                                                            </td>
-                                                        <tr/>
-                                                    </table>
-
-                                                </div>
-                                            </li>
-
-                                        </ul>
-                                    </div>
-                                    <div class="clear_both"></div>
                                 </div>
-                                <!-- div messages end -->
                             </div>
-                        </div>
                     </td>
                 </tr>
                 </tbody>

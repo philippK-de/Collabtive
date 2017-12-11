@@ -1,4 +1,4 @@
-{include file="header.tpl"  jsload = "ajax"  jsload1="tinymce" jsload3 = "lightbox"}
+{include file="header.tpl"  treeView="treeView" jsload = "ajax"  jsload1="tinymce" jsload3 = "lightbox"}
 {include file="tabsmenue-project.tpl" msgstab = "active"}
 
 <div id="content-left">
@@ -55,12 +55,12 @@
 {literal}
 <script type="text/javascript">
     pagination.itemsPerPage = 20;
+
     projectMessages.url = projectMessages.url + "&id=" + {/literal}{$project.ID}{literal};
     projectMessagesView = createView(projectMessages);
     //bind submit handler for the create message form and create the blockaccordeon
     projectMessagesView.afterLoad(function () {
-        console.log("project messages load");
-        addMessageForm = document.getElementById("addmessageform");
+        var addMessageForm = document.getElementById("addmessageform");
         formView = projectMessagesView;
         formView.doUpdate = true;
         addMessageForm.addEventListener("submit", submitForm.bind(formView));
@@ -73,6 +73,10 @@
     projectMessagesView.afterUpdate(function(){
         accord_messages = new accordion2('publicMessages');
         accord_user_messages = new accordion2('privateMessages');
+        renderMilestoneTree(projectMessagesView);
+        renderFilesTree(projectMessagesView);
+        new LyteBox()
+
     });
 
     //initialize blocks accordeon

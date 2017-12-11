@@ -61,22 +61,27 @@ accordion2.prototype.initializeAccordion = function () {
 accordion2.prototype.toggle = function (contentSlide) {
     //get number of the slide to be opened
     var numSlide = contentSlide.dataset.slide;
+
+
+    this.currentToggle = this.accordionToggles[numSlide];
+    Velocity(this.accordionContents[numSlide],"slideDown",{
+        duration: this.slideDuration,
+        begin: this.showToggle()
+    });
+
     for (var i = 0; i < this.accordionContents.length; i++) {
         //save the current content and toggle in an instance var so it can be used in other method scopes
-        this.currentContent = this.accordionContents[i];
         this.currentToggle = this.accordionToggles[i];
 
-        if (i == numSlide) {
-            Velocity(this.accordionContents[i],"slideDown",{
-                duration: this.slideDuration,
-                begin: this.showToggle()
-            });
-        }
-        else {
-          Velocity(this.accordionContents[i],"slideUp",{
-                duration: this.slideDuration,
-                complete: this.hideToggle()
-            });
+
+        if (i != numSlide) {
+            //only on visible elements
+            if(this.accordionContents[i].style.display != "none"){
+                Velocity(this.accordionContents[i],"slideUp",{
+                    duration: this.slideDuration,
+                    complete: this.hideToggle()
+                });
+            }
         }
     }
 

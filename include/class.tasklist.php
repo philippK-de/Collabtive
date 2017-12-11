@@ -78,13 +78,13 @@ class tasklist {
         global $conn,$mylog;
         $id = (int) $id;
 
-        $sel = $conn->query("SELECT project, name FROM tasklist WHERE ID = $id");
+        $projectDetailsStmt = $conn->query("SELECT project, name FROM tasklist WHERE ID = $id");
         $del = $conn->query("DELETE FROM tasklist WHERE ID = $id");
         if ($del) {
-            $tasks1 = $this->getTasksFromList($id);
+            $tasks = $this->getTasksFromList($id);
             $taskobj = new task();
-            if (!empty($tasks1)) {
-                foreach($tasks1 as $task) {
+            if (!empty($tasks)) {
+                foreach($tasks as $task) {
                     $taskobj->del($task["ID"]);
                 }
             }
@@ -94,10 +94,10 @@ class tasklist {
                     $taskobj->del($task["ID"]);
                 }
             }
-            $sel1 = $sel->fetch();
-            $proj = $sel1[0];
-            $name = $sel1[1];
-            $mylog->add($name, 'tasklist', 3, $proj);
+            $projectDetails = $projectDetailsStmt->fetch();
+            $project = $projectDetails[0];
+            $name = $projectDetails[1];
+            $mylog->add($name, 'tasklist', 3, $project);
             return true;
         } else {
             return false;
@@ -193,26 +193,25 @@ class tasklist {
         $project = (int) $project;
         $status = (int) $status;
 
-        $sel = $conn->prepare("SELECT * FROM tasklist WHERE project = ? AND status=?");
-    	$sel->execute(array($project,$status));
+        $projectTasklistsStmt = $conn->prepare("SELECT * FROM tasklist WHERE project = ? AND status=?");
+    	$projectTasklistsStmt->execute(array($project,$status));
 
         $tasklists = array();
 
         $taskobj = new task();
-        while ($list = $sel->fetch()) {
-            $sel2 = $conn->query("SELECT ID FROM tasks WHERE liste = $list[ID] AND status=1 ORDER BY `end`,`title` ASC");
-            $list['tasks'] = array();
-            while ($tasks = $sel2->fetch()) {
-                array_push($list['tasks'], $taskobj->getTask($tasks["ID"]));
+        while ($tasklist = $projectTasklistsStmt->fetch()) {
+            $tasklistTasksStmt = $conn->query("SELECT ID FROM tasks WHERE liste = $tasklist[ID] AND status=1 ORDER BY `end`,`title` ASC");
+            $tasklist['tasks'] = array();
+            while ($tasks = $tasklistTasksStmt->fetch()) {
+                array_push($tasklist['tasks'], $taskobj->getTask($tasks["ID"]));
             }
 
-            $sel3 = $conn->query("SELECT ID FROM tasks WHERE liste = $list[ID] AND status=0 ORDER BY `end` ASC");
-            $list['oldtasks'] = array();
-            while ($oldtasks = $sel3->fetch()) {
-                array_push($list['oldtasks'], $taskobj->getTask($oldtasks["ID"]));
+            $oldTasklistTasksStmt = $conn->query("SELECT ID FROM tasks WHERE liste = $tasklist[ID] AND status=0 ORDER BY `end` ASC");
+            $tasklist['oldtasks'] = array();
+            while ($oldtasks = $oldTasklistTasksStmt->fetch()) {
+                array_push($tasklist['oldtasks'], $taskobj->getTask($oldtasks["ID"]));
             }
-
-            array_push($tasklists, $list);
+            array_push($tasklists, $tasklist);
         }
 
         if (!empty($tasklists)) {
@@ -233,7 +232,7 @@ class tasklist {
         global $conn;
 
         $selStmt = $conn->prepare("SELECT * FROM `tasklist` WHERE ID = ?");
-        $sel = $selStmt->execute(array($id));
+        $selStmt->execute(array($id));
         $tasklist = $selStmt->fetch();
 
         if (!empty($tasklist)) {
@@ -262,11 +261,11 @@ class tasklist {
 
         $taskobj = new task();
 
-        $sel = $conn->prepare("SELECT ID FROM tasks WHERE `liste` = ? AND `status` = ? ORDER BY `end`,`title` ASC");
-    	$sel->execute(array($id,$status));
+        $tasksStmt = $conn->prepare("SELECT ID FROM tasks WHERE `liste` = ? AND `status` = ? ORDER BY `end`,`title` ASC");
+    	$tasksStmt->execute(array($id,$status));
 
         $tasks = array();
-        while ($task = $sel->fetch()) {
+        while ($task = $tasksStmt->fetch()) {
             array_push($tasks, $taskobj->getTask($task["ID"]));
         }
 

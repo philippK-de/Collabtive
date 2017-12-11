@@ -1,4 +1,4 @@
-{include file="header.tpl" jsload = "ajax" jsload3 = "lightbox" }
+{include file="header.tpl" treeView="treeView" jsload = "ajax" jsload3 = "lightbox" }
 {include file="tabsmenue-project.tpl" filestab = "active"}
 
 <div id="content-left">
@@ -115,6 +115,7 @@
     var projectFilesView = createView(projectFiles);
 
     projectFilesView.afterUpdate(function(){
+        //renderFilesTree(projectFilesView);
         new LyteBox();
     });
 </script>

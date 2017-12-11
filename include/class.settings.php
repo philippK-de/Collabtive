@@ -1,4 +1,5 @@
 <?php
+
 /*
  * The class 'settings' provides methods to deal with the global system settings
  *
@@ -9,7 +10,9 @@
  * @link http://collabtive.o-dyn.de
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License v3 or later
  */
-class settings {
+
+class settings
+{
 
     /*
      * Returns all global settings
@@ -55,7 +58,7 @@ class settings {
         // Now prepare a statement to edit one settings row
         $updStmt = $conn->prepare("UPDATE settings SET `settingsValue` = ? WHERE `settingsKey` = ?");
         // Loop through the array containing the key/value pairs, writing the database field to $setKey and the value to $setVal
-        foreach($theSettings as $setKey => $setVal) {
+        foreach ($theSettings as $setKey => $setVal) {
             // Execute the prepared statement by binding the current settings field and values
             $upd = $updStmt->execute(array($setVal, $setKey));
         }
@@ -86,7 +89,7 @@ class settings {
         $theSettings = array("mailnotify" => $onoff, "mailfrom" => $mailfrom, "mailfromname" => $mailfromname, "mailmethod" => $method, "mailhost" => $mailhost, "mailuser" => $mailuser, "mailpass" => $mailpass);
         $updStmt = $conn->prepare("UPDATE settings SET `settingsValue` = ? WHERE `settingsKey` = ?");
 
-        foreach($theSettings as $setKey => $setVal) {
+        foreach ($theSettings as $setKey => $setVal) {
             $upd = $updStmt->execute(array($setVal, $setKey));
         }
         if ($upd) {
@@ -134,7 +137,7 @@ class settings {
         $handle = opendir(CL_ROOT . "/templates/$template/theme");
 
         $themes = array();
-        if($handle) {
+        if ($handle) {
             // Iterate through the templates directory and count each subdirectory within it as a template
             while (false !== ($file = readdir($handle))) {
                 $type = filetype(CL_ROOT . "/templates/$template/theme/" . $file);

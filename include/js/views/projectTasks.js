@@ -76,6 +76,7 @@ var handleForm = function (event, view) {
                 blindtoggle("form_" + tasklistID);
                 toggleClass("add_butn_" + tasklistID, "butn_link_active", "butn_link");
                 toggleClass("sm_" + tasklistID, "smooth", "nosmooth");
+                theForm.reset();
             }
             else
             {

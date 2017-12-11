@@ -20,7 +20,7 @@ class datei
      * @param int $project ID of the project the folder belongs to
      * @param string $folder Name of the new folder
      * @param string $desc Description of the new folder
-     * @param strin $visible Visibility of the new folder
+     * @param string $visible Visibility of the new folder
      * @return bool
      */
     function addFolder($parent, $project, $folder, $desc)
@@ -36,17 +36,13 @@ class datei
         // Make a copy of the original folder name before replacing umlauts
         // This is for display in the system log
         $folderOrig = $folder;
-        // Replace umlauts
-        $folder = str_replace("ä", "ae", $folder);
-        $folder = str_replace("ö", "oe", $folder);
-        $folder = str_replace("ü", "ue", $folder);
-        $folder = str_replace("ß", "ss", $folder);
         // Remove whitespace
         $folder = preg_replace("/\W/", "", $folder);
         $folder = preg_replace("/[^-_0-9a-zA-Z]/", "_", $folder);
         // Insert folder into database
         $insStmt = $conn->prepare("INSERT INTO projectfolders (parent, project, name, description, visible) VALUES (?, ?, ?, ?, ?)");
         $ins = $insStmt->execute(array($parent, $project, $folder, $desc, ""));
+        $folderId = $conn->lastInsertId();
 
         if ($ins) {
             // Construct the path to the new folder
@@ -56,7 +52,7 @@ class datei
                 if (mkdir($makefolder, 0777, true)) {
                     // Folder created
                     $mylog->add($folderOrig, 'folder', 1, $project);
-                    return true;
+                    return $folderId;
                 }
             } else {
                 // Folder already existed, return false
@@ -312,13 +308,10 @@ class datei
                 if ($project > 0) {
                     // File did not already exist, was uploaded, and a project is set
                     // Now add the file to the database, log the upload event and return the file ID.
-                    if (!$title) {
-                        $title = $name;
-                    }
 
                     chmod($datei_final, 0755);
 
-                    $fid = $this->add_file($name, $desc, $project, 0, $datei_final2, "$typ", $title, $folder, "");
+                    $fid = $this->add_file($name, "", $project, 0, $datei_final2, "$typ", $name, $folder, "");
 
                     if (!empty($title)) {
                         $mylog->add($title, 'file', 1, $project);
@@ -383,15 +376,15 @@ class datei
         global $conn, $mylog;
         $datei = (int)$datei;
 
-        $thisfile = $conn->query("SELECT datei, name, project, title FROM files WHERE ID = $datei")->fetch();
+        $file = $conn->query("SELECT datei, name, project, title FROM files WHERE ID = $datei")->fetch();
 
-        if (!empty($thisfile)) {
-            $fname = $thisfile[1];
-            $project = $thisfile[2];
-            $ftitle = $thisfile[3];
-            $thisfile = $thisfile[0];
+        if (!empty($file)) {
+            $fname = $file[1];
+            $project = $file[2];
+            $ftitle = $file[3];
+            $file = $file[0];
 
-            $delfile = "./" . $thisfile;
+            $delfile = "./" . $file;
 
             if (!file_exists($delfile)) {
                 return false;
@@ -528,7 +521,6 @@ class datei
         $folder = (int)$folder;
         // If folder is given, return files from this folder, otherwise return files from root folder
         if ($folder > 0) {
-            $fold = "files/" . CL_CONFIG . "/$id/$folder/";
             $sel = $conn->prepare("SELECT COUNT(*) FROM files WHERE project = ? AND folder = ? ORDER BY ID DESC");
             $sel->execute(array($id, $folder));
         } else {
@@ -667,13 +659,12 @@ class datei
         $project = (int)$project;
         $milestone = (int)$milestone;
         $folder = (int)$folder;
-        $userid = $_SESSION["userid"];
+        $userid = (int) $_SESSION["userid"];
         $now = time();
         $insStmt = $conn->prepare("INSERT INTO files (`name`, `desc`, `project`, `milestone`, `user`, `added`, `datei`, `type`, `title`, `folder`, `visible`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $ins = $insStmt->execute(array($name, $desc, $project, $milestone, $userid, $now, $datei, $type, $title, $folder, $visstr));
         if ($ins) {
-            $insid = $conn->lastInsertId();
-            return $insid;
+            return $conn->lastInsertId();
         } else {
             return false;
         }

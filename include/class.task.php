@@ -245,9 +245,9 @@ class task
             }
 
             // get list and projectname of the task
-            $details = $this->getTaskDetails($task);
-            $list = $details["list"];
-            $projectName = $details["projectName"];
+            $taskDetails = $this->getTaskDetails($task);
+            $list = $taskDetails["list"];
+            $projectName = $taskDetails["projectName"];
 
             // get remaining days until due date
             $daysLeft = $this->getDaysLeft($task['end']);
@@ -304,8 +304,13 @@ class task
                 $task["istoday"] = true;
             }
 
-            //$taskCommentObj = new taskComments();
-            //$task["comments"] = $taskCommentObj->getCommentsByTask($id);
+            try{
+                $taskCommentObj = new taskComments();
+                $task["comments"] = $taskCommentObj->getCommentsByTask($id);
+
+            }catch (Exception $error){
+
+            }
 
             return $task;
         } else {
@@ -381,6 +386,12 @@ class task
         }
     }
 
+    /*
+     * Return the number of tasks in project with status
+     * @param int $project ID of the project
+     * @param int $user ID of the user
+     * @param int $status Open or closed tasks
+     */
     function countAllProjectTasks($project, $user = 0, $status = 1)
     {
         global $conn;
@@ -390,7 +401,6 @@ class task
             $user = $_SESSION['userid'];
         }
         $user = (int)$user;
-        $projectTasks = array();
 
         $projectTasksStmt = $conn->prepare("SELECT COUNT(*) FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task AND tasks_assigned.user = ?
          AND tasks.project = ? AND status=?");
@@ -453,6 +463,7 @@ class task
         }
         $starttime = strtotime($startdate);
 
+        //logged in user
         $user = (int)$_SESSION["userid"];
 
         $todaysTasks = array();
@@ -513,11 +524,11 @@ class task
         global $conn;
         $id = (int)$id;
 
-        $sql = $conn->prepare("SELECT user FROM tasks_assigned WHERE task = ?");
-        $sql->execute(array($id));
+        $stmt = $conn->prepare("SELECT user FROM tasks_assigned WHERE task = ?");
+        $stmt->execute(array($id));
 
         $result = array();
-        while ($user = $sql->fetch()) {
+        while ($user = $stmt->fetch()) {
             $sel2 = $conn->query("SELECT name FROM user WHERE ID = $user[0]");
             $uname = $sel2->fetch();
             $uname = $uname[0];
@@ -539,11 +550,13 @@ class task
         global $conn;
         $projectNameStmt = $conn->prepare("SELECT name FROM projekte WHERE ID = ?");
         $projectNameStmt->execute(array($task["project"]));
+
         $projectName = $projectNameStmt->fetch();
         $projectName = stripslashes($projectName[0]);
 
         $listStmt = $conn->prepare("SELECT name FROM tasklist WHERE ID = ?");
         $listStmt->execute(array($task["liste"]));
+
         $list = $listStmt->fetch();
         $list = stripslashes($list[0]);
 

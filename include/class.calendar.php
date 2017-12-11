@@ -63,8 +63,8 @@ class calendar {
     private function buildCal()
     {
         $counter = 0;
-        $ms = new milestone();
-        $tsk = new task();
+        $milestoneObj = new milestone();
+        $taskObj = new task();
 
         for($j = 0; $j < $this->weeksInMonth; $j++) {
             for($i = 0; $i < 7; $i++) {
@@ -78,10 +78,10 @@ class calendar {
                     $this->calendar[$j][$i]["val"] = $theday - $this->daysInMonth;
                     $this->calendar[$j][$i]["currmonth"] = 0;
                 } else {
-                    $miles = $ms->getTodayMilestones($this->month, $this->year, $theday, $this->project);
+                    $miles = $milestoneObj->getTodayMilestones($this->month, $this->year, $theday, $this->project);
                     $milesnum = count($miles);
 
-                    $tasks = $tsk->getTodayTasks($this->month, $this->year, $theday, $this->project);
+                    $tasks = $taskObj->getTodayTasks($this->month, $this->year, $theday, $this->project);
                     $tasksnum = count($tasks);
 
                     $this->calendar[$j][$i] = array("val" => $theday,
@@ -97,5 +97,3 @@ class calendar {
         return $this;
     }
 }
-
-?>

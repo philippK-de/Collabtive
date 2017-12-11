@@ -1,4 +1,4 @@
-{include file="header.tpl" jsload="ajax" jsload1="tinymce" jsload3="lightbox" stage="index"}
+{include file="header.tpl" treeView="treeView" jsload="ajax" jsload1="tinymce" jsload3="lightbox" stage="index"}
 {include file="tabsmenue-desk.tpl" desktab="active"}
 
 <div id="content-left">
@@ -63,7 +63,7 @@
 
 <script type="text/javascript" src="include/js/accordion.js"></script>
 <script type="text/javascript" src="include/js/modal.min.js"></script>
-<script type="text/javascript" src="include/js/views/index.js"></script>
+<script type="text/javascript" src="include/js/views/index.min.js"></script>
 <script type="text/javascript">
         pagination.itemsPerPage = 15;
     {if $tasknum > 0}
@@ -77,13 +77,15 @@
         });
     {/if}
     {if $msgnum > 0}
-        var msgsView = createView(messages);
+        var messagesView = createView(messages);
         //add this view to the dependencies of projectsView
-        projectsViewDependencies.push(msgsView);
+        projectsViewDependencies.push(messagesView);
 
         var accord_msgs;
-        msgsView.afterUpdate(function () {
+        messagesView.afterUpdate(function () {
             accord_msgs = new accordion2('desktopmessages');
+            renderMilestoneTree(messagesView);
+            renderFilesTree(messagesView);
         });
     {/if}
     //setup dependenciens

@@ -1,14 +1,59 @@
 <?php
 
-class databaseModel
+abstract class databaseModel
 {
     protected $databaseTable;
 
-    function __construct()
+
+    protected function addElement(array $fields)
     {
+        global $conn;
+        $sqlQuery = "INSERT INTO " . $this->databaseTable . " (";
+        $fieldcount = count($fields);
+
+        foreach ($fields as $name => $value) {
+            $sqlQuery .= $name . ",";
+        }
+        //remove superflous comma
+        $sqlQuery = substr($sqlQuery, 0, strlen($sqlQuery) - 1);
+        $sqlQuery .= ") VALUES (";
+
+        for ($i = 0; $i < $fieldcount; $i++) {
+            $sqlQuery .= "?,";
+        }
+
+        //remove comma
+        $sqlQuery = substr($sqlQuery, 0, strlen($sqlQuery) - 1);
+        $sqlQuery .= ")";
+        //execute the query
+        $stmt = $conn->prepare($sqlQuery);
+        $stmt->execute(array_values($fields));
+
+        //return the ID for the element
+        return $conn->lastInsertId();
     }
 
-    function getElement($id)
+    protected function editElement($id, $fields)
+    {
+        global $conn;
+
+        $sqlQuery = "UPDATE " . $this->databaseTable . " SET ";
+
+        foreach ($fields as $name => $value) {
+            $sqlQuery .= $name . "=?,";
+        }
+        //remove comma
+        $sqlQuery = substr($sqlQuery, 0, strlen($sqlQuery) - 1);
+        $sqlQuery .= " WHERE ID = ?";
+
+        $stmt = $conn->prepare($sqlQuery);
+
+        $values = array_values($fields);
+        array_push($values, $id);
+        return $stmt->execute($values);
+    }
+
+    protected function getElement($id)
     {
         global $conn;
 
@@ -18,7 +63,7 @@ class databaseModel
         return $stmt->fetch();
     }
 
-    function getLimited($limit, $offset)
+    protected function getLimited($limit, $offset)
     {
         global $conn;
         $limit = (int)$limit;
@@ -30,7 +75,7 @@ class databaseModel
         return $stmt->fetchAll();
     }
 
-    function getAllElements()
+    protected function getAllElements()
     {
         global $conn;
 
@@ -40,48 +85,27 @@ class databaseModel
         return $stmt->fetchAll();
     }
 
-    function getAllElementsBy(array $parameters)
+    protected function getElementsBy(array $parameters)
     {
         global $conn;
         $sqlQuery = "SELECT * FROM " . $this->databaseTable . " WHERE ";
 
-
+        $i = 0;
         foreach ($parameters as $name => $value) {
-            $sqlQuery += $name . " = ?";
-        }
-
-        echo $sqlQuery;
-        $stmt = $conn->prepare($sqlQuery);
-        $stmt->execute(array_values($parameters));
-
-        return $stmt->fetchAll();
-    }
-
-
-    function getElementsBy(array $parameters, $limit, $offset)
-    {
-        $limit = (int) $limit;
-        $offset = (int)$offset;
-
-        global $conn;
-        $sqlQuery = "SELECT * FROM " . $this->databaseTable . " WHERE ";
-
-
-        foreach ($parameters as $name => $value) {
+            if ($i > 0) {
+                $sqlQuery .= " AND ";
+            }
             $sqlQuery .= $name . " = ?";
+
+            $i++;
         }
-
-
-        $sqlQuery .= " LIMIT $limit OFFSET $offset";
-
-        echo $sqlQuery;
         $stmt = $conn->prepare($sqlQuery);
         $stmt->execute(array_values($parameters));
 
         return $stmt->fetchAll();
     }
 
-    function countElements()
+    protected function countElements()
     {
         global $conn;
 
@@ -94,7 +118,7 @@ class databaseModel
         return $count;
     }
 
-    function deleteElement($id)
+    protected function deleteElement($id)
     {
         global $conn;
         $id = (int)$id;

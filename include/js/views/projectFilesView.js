@@ -7,7 +7,7 @@ var projectFiles = {
 
 
 /*
-* Function to load a new folder to the files view
+ * Function to load a new folder to the files view
  */
 function loadFolder(view, folder) {
     var currentUrl = view.$get("url");
@@ -18,7 +18,7 @@ function loadFolder(view, folder) {
     updateView(view);
 }
 /*
-* Select a folder in the add file, add folder dropdowns
+ * Select a folder in the add file, add folder dropdowns
  */
 function selectFolder(folderId) {
     var theParentOptions = cssId("folderparent").options;
@@ -35,15 +35,12 @@ function selectFolder(folderId) {
     }
 }
 
-function changeFileview(fileviewType, project)
-{
+function changeFileview(fileviewType, project) {
     //grid view
-    if(fileviewType == "grid")
-    {
+    if (fileviewType == "grid") {
         window.location = "managefile.php?action=showproject&id=" + project;
     }
-    else if(fileviewType == "list")
-    {
+    else if (fileviewType == "list") {
         window.location = "managefile.php?action=showproject&viewmode=list&id=" + project;
     }
 }
@@ -118,4 +115,55 @@ function handleDragLeave(evt) {
     var elm = evt.target;
 
     elm.classList.remove('dragover');  // this / e.target is previous target element.
+}
+var basicImgPath = "templates/standard/theme/standard/images/symbols/";
+
+function renderFolders(tree, folders) {
+    if (folders.length > 0) {
+        console.log(folders);
+        for (var f = 0; f < folders.length; f++) {
+            var folder = folders[f];
+            if(folder.subfolders !== false){
+                renderFolders(tree, folder.subfolders);
+            }
+            tree.add("fo" + folder.ID, "fo" + folder.parent, folder.name, "javascript:alert('bla')", "", "", basicImgPath + "folder.png", basicImgPath + "folder.png", "", 0);
+        }
+    }
+}
+function renderFiles(tree, files, folder){
+    if (files.length > 0) {
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            //ID of the current item to draw a tree for
+            console.log(file.folder);
+
+            tree.add("fi" + file.ID, "fo" + file.folder, file.name, "managefile.php?action=downloadfile&amp;id=" + file.project + "&amp;file=" + file.ID, "", "", basicImgPath + "files.png", basicImgPath + "files.png", "", 0);
+        }
+
+    }
+}
+function renderFilesTree(view) {
+    var treeName = "filesTree";
+
+    var treeItems = view.items;
+
+    if (treeItems != undefined) {
+        //initialise tree component
+        var messageTree = new dTree(treeName);
+        messageTree.add(0, -1, '');
+
+
+        var files = treeItems.files;
+        var folders = treeItems.folders;
+        messageTree.add("fo0", 0, "Root folder", "managefile.php?action=downloadfile&amp;id=" + "&amp;file=", "", "", basicImgPath + "folder.png", basicImgPath + "folder.png", "", 0);
+        renderFolders(messageTree, folders);
+        renderFiles(messageTree, files, 0);
+    }
+
+    //write the tree to the target element
+
+    cssId(treeName).innerHTML = messageTree;
+    //export global variable so the tree is clickable
+    window[treeName] = messageTree;
+    window[treeName].openAll();
 }

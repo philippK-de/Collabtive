@@ -26,7 +26,8 @@
 
 						<div class="row">
 							<label for="name">{#name#}:</label>
-							<input type="text" class="text" name="name" id="name" required />
+							<input type="text" class="text" name="name" id="name"
+                                   onkeyup="cssId('tasklist[]').value = this.value" required />
 						</div>
 
 						<div class="row">
@@ -56,14 +57,35 @@
 							theCal.getDatepicker("datepicker_miles_start");
 						</script>
 
-						<div class="row">
-							<label for="end">{#due#}:</label>
-							<input type="text" class="text" name="end" id="end" required {if $day|default and $month and $year} value = "{$day}.{$month}.{$year}" {/if} />
-						</div>
+                        <div class="row">
+                            <label for="end">{#due#}:</label>
+                            <input type="text" class="text" name="end" id="end" required value="{$project.endstring}" />
+                        </div>
 
-						<div class="datepick">
+
+                        <div class="datepick">
 							<div id="datepicker_miles" class="picker display-none" ></div>
 						</div>
+
+                        <div class="row">
+                            <label for="assigned">{#assignto#}:</label>
+                            <select name="assigned[]" multiple="multiple" style="height:80px;" id="assigned" required>
+                                <option value="">{#chooseone#}</option>
+                                {section name=user loop=$assignable_users}
+                                    <option value="{$assignable_users[user].ID}" {if $assignable_users[user].ID == $userid} selected {/if} >{$assignable_users[user].name}</option>
+                                {/section}
+                            </select>
+                        </div>
+
+                        <div id="tasklistsContainer">
+                            <div class="row">
+                                <label for="name">{#tasklist#}:</label>
+                                <input type="text" class="text" name="tasklist[]" id="tasklist[]"  required />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <button class="text" title="Taskliste hinzufügen" type="button" onclick="copyTasklist()">+</button>
+                        </div>
 
 						<script type="text/javascript">
 							theCal = new calendar({$theM},{$theY});

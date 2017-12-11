@@ -1,4 +1,4 @@
-Collabtive 3.0.3
+Collabtive 3.1
 + Fix a bug where the generic female avatar wasnt shown in the user-admin area
 + Update PHPMailer to its latest stable release 5.2.2 to mitigate potential issues with PHP7
 + PHPMailer dependency now managed by composer
@@ -7,6 +7,16 @@ Collabtive 3.0.3
 + Submit timetracker entries asyncronously
 + Display total hours in timetracker report (again)
 + Make forms reset by default after they have been submitted.
++ Allow users to be assigned to milestones
++ When moving the due date of a milestone, the due dates of associated tasks are also moved
++ Allow multiple tasklists to be created when creating a milestone
++ Display tree view of tasklist assigned to a milestone in milestone details
++ Display messages in milestone details treeview
++ Make opening an accordion slide a lot faster in accordions with many items
++ Replace pixel graphics in the tree view with SVG vector graphics
++ Fix the accordion in "late" milestone when creating a new milestone that is late
++ Draw milestones associated to messages, with  their tasklists, tasks in a tree view
++ Draw files associated to messages in a tree view in the message details.
 
 Collabtive 3.0.2
 + Fix character encoding issue with some special characters in titles of projects, tasks, etc

@@ -48,19 +48,45 @@ class milestone
      * @param int $id Milestone ID
      * @param string $name Name
      * @param string $desc Description
-     * @param string $end Day it is due
+     * @param string $endTime Day it is due
      * @return bool
      */
     function edit($id, $name, $desc, $start, $end)
     {
         global $conn, $mylog;
         $id = (int)$id;
-        $start = strtotime($start);
-        $end = strtotime($end);
+        $startTime = strtotime($start);
+        $endTime = strtotime($end);
 
         $updStmt = $conn->prepare("UPDATE milestones SET `name`=?, `desc`=?, `start`=?, `end`=? WHERE ID=?");
-        $upd = $updStmt->execute(array($name, $desc, $start, $end, $id));
+        $upd = $updStmt->execute(array($name, $desc, $startTime, $endTime, $id));
         if ($upd) {
+
+            $tasklistObj = new tasklist();
+            $taskObj = new task();
+
+            //get tasklists for the milestone
+            $assignedTasklists = $this->getMilestoneTasklists($id);
+
+            //loop tasklists
+            foreach ($assignedTasklists as $assignedTasklist) {
+                //get tasks for this tasklist
+                $tasklistTasks = $tasklistObj->getTasksFromList($assignedTasklist["ID"]);
+
+                //edit the tasklist, set the name to the new milestoone new
+                $tasklistObj->edit_liste($assignedTasklist["ID"], $name, $desc, $assignedTasklist["milestone"]);
+
+                //loop tasks
+                foreach ($tasklistTasks as $tasklistTask) {
+                    $assignees = $taskObj->getUsers($tasklistTask["ID"]);
+                    //edit task and set start and end date to the new milestone start and end
+                    $taskObj->edit($tasklistTask["ID"], $start, $end, $tasklistTask["title"], $tasklistTask["text"], $tasklistTask["liste"]);
+                    foreach ($assignees as $assignee) {
+                        $taskObj->assign($tasklistTask["ID"], $assignee["user"]);
+                    }
+                }
+            }
+
             $namStmt = $conn->prepare("SELECT project,name FROM milestones WHERE ID = ?");
             $namStmt->execute(array($id));
             $nam = $namStmt->fetch();
@@ -89,9 +115,8 @@ class milestone
         $del = $conn->query("DELETE FROM milestones WHERE ID = $id");
 
         if ($del) {
-            // delete message assignments
             $messageObj = new message();
-
+            // delete message assignments
             $milestoneMessages = $this->getMilestoneMessages($id);
             if (!empty($milestoneMessages)) {
                 foreach ($milestoneMessages as $milestoneMessage) {
@@ -99,6 +124,16 @@ class milestone
                 }
             }
 
+            $tasklistObj = new tasklist();
+            /*
+             * Delete assigned tasklists
+             */
+            $milestoneTasklists = $this->getMilestoneTasklists($id);
+            if (!empty($milestoneTasklists)) {
+                foreach ($milestoneTasklists as $milestoneTasklist) {
+                    $tasklistObj->del_liste($milestoneTasklist["ID"]);
+                }
+            }
             // delete user assignments
             $conn->query("DELETE FROM milestones_assigned WHERE milestone = $id");
 
@@ -199,7 +234,7 @@ class milestone
         $milestone = (int)$milestone;
         $user = (int)$user;
 
-        $updStmt = $conn->prepare("INSERT INTO milestones_assigned (NULL,?,?)");
+        $updStmt = $conn->prepare("INSERT INTO milestones_assigned (user,milestone) VALUES (?,?)");
         $upd = $updStmt->execute(array($user, $milestone));
 
         if ($upd) {
@@ -289,16 +324,48 @@ class milestone
             $tasks = $this->getMilestoneTasklists($milestone["ID"]);
             $milestone["tasklists"] = $tasks;
             $milestone["hasTasklist"] = false;
-            if(count($tasks) > 0 )
-            {
+            if (count($tasks) > 0) {
                 $milestone["hasTasklist"] = true;
             }
             $messages = $this->getMilestoneMessages($milestone["ID"]);
             $milestone["messages"] = $messages;
             $milestone["hasMessages"] = false;
-            if(count($messages) > 0)
-            {
+            if (count($messages) > 0) {
                 $milestone["hasMessages"] = true;
+            }
+
+            $assignedUserStmt = $conn->query("SELECT user FROM milestones_assigned WHERE milestone = $milestone[ID]");
+
+            $users = array();
+            // fetch the assigned user(s)
+            while ($assignedUser = $assignedUserStmt->fetch()) {
+                // push the assigned users to an array
+                array_push($users, $assignedUser[0]);
+                $milestone["user"] = "All";
+                $milestone["user_id"] = $users;
+            }
+            $userObj = new user();
+
+            if (count($users) == 1) {
+                // If only one user is assigned, get his profile and add him to users, user_id fields
+                $user = $userObj->getProfile($users[0]);
+                //if there is only one user, the user field contains the string with his name
+                $milestone["user"] = $user["name"];
+                //users contains an array with only the single user
+                $milestone["users"] = array($user);
+                //user id contains the id of the user
+                $milestone["user_id"] = $user["ID"];
+            } elseif (count($users) > 1) {
+                // if there is more than one user push them to the users field. no user or user_id field is present.
+                $milestone["users"] = array();
+                $milestone["user"] = "";
+                $milestone["user_id"] = 0;
+                //loop through the users and push each one to the user array
+                foreach ($users as $assignedUser) {
+                    $user = $userObj->getProfile($assignedUser);
+                    $milestone["user"] .= $user["name"] . " ";
+                    array_push($milestone["users"], $user);
+                }
             }
 
             return $milestone;
@@ -632,8 +699,6 @@ class milestone
     {
         global $conn;
         $milestone = (int)$milestone;
-        $objmessage = new message();
-
         $sel = $conn->query("SELECT title,ID,milestone FROM messages WHERE milestone = $milestone");
         $msgs = array();
         while ($msg = $sel->fetch()) {
