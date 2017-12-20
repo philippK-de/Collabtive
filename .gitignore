@@ -49,6 +49,5 @@ dav.php
 include/class.myDavDirectory.php
 include/class.myDavFile.php
 *.sql
-dav.php
-dav.php
-dav.php
+/installPlugins.php
+/addstuff.php
