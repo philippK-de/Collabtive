@@ -40,11 +40,10 @@
     {/if}
 
     {if $jsload3 == "lightbox"}
-        <link rel="stylesheet" href="templates/{$settings.template}/theme/{$settings.theme}/css/lytebox.css" type="text/css"/>
         <script type="text/javascript" src="include/js/lytebox.js"></script>
     {/if}
-    <link rel="stylesheet" type="text/css" href="templates/{$settings.template}/theme/{$settings.theme}/css/style_main.css"/>
-    <link rel="stylesheet" type="text/css" href="templates/{$settings.template}/theme/{$settings.theme}/css/style_helpers.css"/>
+    <link rel="stylesheet" type="text/css" href="templates/{$settings.template}/theme/{$settings.theme}/css/collabtive.css"/>
+{*    <link rel="stylesheet" type="text/css" href="templates/{$settings.template}/theme/{$settings.theme}/css/style_helpers.css"/> *}
 
 
     {if $jsload1 == "tinymce"}
