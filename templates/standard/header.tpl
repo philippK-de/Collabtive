@@ -6,7 +6,6 @@
     <title>{$title} @ {$settings.name}</title>
     <link rel="shortcut icon" href="templates/{$settings.template}/theme/{$settings.theme}/images/favicon.ico" type="image/x-icon"/>
     {if $treeView == "treeView" and $loggedin}
-        <link rel="stylesheet" href="templates/{$settings.template}/theme/{$settings.theme}/css/dtree.css" type="text/css"/>
         <script type="text/javascript" src="include/js/dtree.min.js"></script>
     {/if}
     {if $jsload|default == "ajax"}
