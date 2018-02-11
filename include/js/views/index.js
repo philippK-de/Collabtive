@@ -70,7 +70,7 @@ var accordIndex = new accordion2('block_index', {
 /*
  * Render a treeview of tasklists for a milestone
  */
-function renderMilestoneTree(view) {
+function renderMilestoneTree(view, treeName = "milestoneTree") {
 
     var treeItems = view.items;
 
@@ -84,11 +84,11 @@ function renderMilestoneTree(view) {
             //current milestone
             var milestone = treeItems[i].milestones;
             //initialise tree component
-            var messageTree = new dTree('milestoneTree' + itemId);
-            messageTree.add(0, -1, '');
+            var milestoneTree = new dTree(treeName + itemId);
+            milestoneTree.add(0, -1, '');
 
             //add the milestone
-            messageTree.add("ml" + milestone.ID, 0, milestone.name, "#", "", "", basicImgPath + "milestone.png", basicImgPath + "milestone.png", true);
+            milestoneTree.add("ml" + milestone.ID, 0, milestone.name, "#", "", "", basicImgPath + "milestone.png", basicImgPath + "milestone.png", true);
 
 
             var tasklists = milestone.tasklists;
@@ -100,57 +100,73 @@ function renderMilestoneTree(view) {
                     var tasklistTasks = tasklist.tasks;
 
                     //add tasklist to tree
-                    messageTree.add("tl" + tasklist.ID, "ml" + milestone.ID, tasklist.name, "managetasklist.php?action=showtasklist&id=" + tasklist.project + "&tlid=" + tasklist.ID, "", "", basicImgPath + "tasklist.png", basicImgPath + "tasklist.png", true);
+                    milestoneTree.add("tl" + tasklist.ID, "ml" + milestone.ID, tasklist.name, "managetasklist.php?action=showtasklist&id=" + tasklist.project + "&tlid=" + tasklist.ID, "", "", basicImgPath + "tasklist.png", basicImgPath + "tasklist.png", true);
 
                     if (tasklistTasks.length > 0) {
                         //loop tasks in this list
                         for (var k = 0; k < tasklistTasks.length; k++) {
                             //add task to project tree
-                            messageTree.add("ta" + tasklistTasks[k].ID, "tl" + tasklistTasks[k].liste, tasklistTasks[k].title, "managetask.php?action=showtask&tid=" + tasklistTasks[k].ID + "&id=" + tasklistTasks[k].project, "", "", basicImgPath + "task.png", basicImgPath + "task.png", "", tasklistTasks[k].daysleft);
+                            milestoneTree.add("ta" + tasklistTasks[k].ID, "tl" + tasklistTasks[k].liste, tasklistTasks[k].title, "managetask.php?action=showtask&tid=" + tasklistTasks[k].ID + "&id=" + tasklistTasks[k].project, "", "", basicImgPath + "task.png", basicImgPath + "task.png", "", tasklistTasks[k].daysleft);
                         }
                     }
 
                 }
                 //write the tree to the target element
-                cssId("milestoneTree" + itemId).innerHTML = messageTree;
+                cssId(treeName + itemId).innerHTML = milestoneTree;
                 //export global variable so the tree is clickable
-                window["milestoneTree" + itemId] = messageTree;
+                window[treeName + itemId] = milestoneTree;
             }
 
 
         }
     }
 }
-function renderFilesTree(view) {
-    var treeName = "filesTree";
-    var basicImgPath = "templates/standard/theme/standard/images/symbols/";
+function renderFilesTree(view, treeName = "filesTree") {
 
     var treeItems = view.items;
 
     if (treeItems != undefined) {
-        //loop over all top level items for the tree
-        for (var i = 0; i < treeItems.length; i++) {
-            //ID of the current item to draw a tree for
-            var itemId = treeItems[i].ID;
+        renderFiles(treeItems, treeName);
+    }
+}
 
-            //initialise tree component
-            var messageTree = new dTree(treeName + itemId);
-            messageTree.add(0, -1, '');
+function renderFiles(items, treeName) {
+    var basicImgPath = "templates/standard/theme/standard/images/symbols/";
 
-            var hasFiles = treeItems[i].hasFiles;
-            if (hasFiles) {
-                var files = treeItems[i].files;
-                for (var l = 0; l < files.length; l++) {
-                    messageTree.add("fi" + files[l].ID, 0, files[l].title, "managefile.php?action=downloadfile&amp;id=" + files[l].project + "&amp;file=" + files[l].ID, "", "", basicImgPath + "files.png", basicImgPath + "files.png", "", 0);
-                }
-                //write the tree to the target element
+    //loop over all top level items for the tree
+    for (var i = 0; i < items.length; i++) {
+        //ID of the current item to draw a tree for
+        var itemId = items[i].ID;
 
-                cssId(treeName + itemId).innerHTML = messageTree;
-                //export global variable so the tree is clickable
-                window[treeName + itemId] = messageTree;
+        //initialise tree component
+        var filesTree = new dTree(treeName + itemId);
+        filesTree.add(0, -1, '');
+
+        var hasFiles = items[i].hasFiles;
+        if (hasFiles) {
+            var files = items[i].files;
+            for (var l = 0; l < files.length; l++) {
+                filesTree.add("fi" + files[l].ID, 0, files[l].title, "managefile.php?action=downloadfile&amp;id=" + files[l].project + "&amp;file=" + files[l].ID, "", "", basicImgPath + "files.png", basicImgPath + "files.png", "", 0);
             }
+            //write the tree to the target element
+
+            cssId(treeName + itemId).innerHTML = filesTree;
+            //export global variable so the tree is clickable
+            window[treeName + itemId] = filesTree;
         }
     }
+}
+
+function renderProjectTree(view, treeName = "projectTree") {
+
+    var basicImgPath = "templates/standard/theme/standard/images/symbols/";
+
+    var treeItems = view.items.open;
+    console.log(treeItems, view.items);
+    if(treeItems){
+        renderFiles(treeItems, treeName);
+    }
+
 }
 
 var projectsViewDependencies = [];
@@ -200,6 +216,7 @@ projectsView.afterLoad(initializeBlockaccordeon);
 var accord_projects;
 projectsView.afterUpdate(function () {
     accord_projects = new accordion2('desktopprojects');
+    renderProjectTree(projectsView, "projectTree");
 });
 
 

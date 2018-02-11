@@ -94,8 +94,12 @@
                     <td colspan="5">
                         <div class="accordion_content">
                             <div class="acc-in">
-                                <div class="message-in-fluid" v-html="item.desc">
-                                </div>
+                                <div class="message-in-fluid">
+                                    {{{item.desc}}}
+                                    <div class="dtree"
+                                         :id="'projectTree' + item.ID">
+
+                                    </div>
                             </div>
                         </div>
                     </td>
