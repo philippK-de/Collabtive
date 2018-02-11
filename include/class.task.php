@@ -304,12 +304,9 @@ class task
                 $task["istoday"] = true;
             }
 
-            try{
+            if (class_exists("taskComments")) {
                 $taskCommentObj = new taskComments();
                 $task["comments"] = $taskCommentObj->getCommentsByTask($id);
-
-            }catch (Exception $error){
-
             }
 
             return $task;
