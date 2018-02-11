@@ -69,7 +69,7 @@
                         {/if}
                         {if $userpermissions.messages.del}{literal}
                             <a class="tool_del"
-                            :href="'javascript:confirmDelete(\'{/literal}{#confirmdel#}{literal}\',\'messages_'+item.ID+'\',\'managemessage.php?action=del&amp;mid='+item.ID+'&amp;id='+item.project+'\',msgsView);'"
+                            :href="'javascript:confirmDelete(\'{/literal}{#confirmdel#}{literal}\',\'messages_'+item.ID+'\',\'managemessage.php?action=del&amp;mid='+item.ID+'&amp;id='+item.project+'\',messagesView);'"
                             title="{/literal}{#delete#}"></a>
                         {/if}{literal}
                     </td>
