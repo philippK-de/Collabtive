@@ -48,6 +48,7 @@
 					<h2>{#description#}</h2>
 					{$task.text}
 					<div class="content-spacer"></div>
+                    <!--showCommentsInTask-->
 				</div>
 			</div>
 
