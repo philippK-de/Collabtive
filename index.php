@@ -71,16 +71,16 @@ $template->assign("openProjects", $myOpenProjects);
 if (!empty($myOpenProjects)) {
     foreach ($myOpenProjects as $proj) {
         // get all the tasks in this project that are assigned to the current user
-        $task = $taskObj->getAllMyProjectTasks($proj["ID"]);
+        $projectTasks = $taskObj->getAllMyProjectTasks($proj["ID"]);
         // get all messages in the project
-        $msgs = $messageObj->getProjectMessages($proj["ID"]);
+        $projectMessages = $messageObj->getProjectMessages($proj["ID"]);
         // write those to arrays
-        if (!empty($msgs)) {
-            array_push($messages, $msgs);
+        if (!empty($projectMessages)) {
+            array_push($messages, $projectMessages);
         }
 
-        if (!empty($task)) {
-            array_push($tasks, $task);
+        if (!empty($projectTasks)) {
+            array_push($tasks, $projectTasks);
         }
 
         $cou = $cou + 1;
@@ -170,4 +170,3 @@ elseif ($action == "myprojects") {
     echo json_encode($myMessages);
 
 }
-?>
