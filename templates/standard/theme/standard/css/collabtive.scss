@@ -1,15 +1,7 @@
-// import color definitions etc
-@import "theme";
-// definitions for forms
+@import "theme"; // color definitions etc
 @import "form";
-// main styles
-@import "styleMain";
-// calendar styles
+@import "styleMain"; // main styles
 @import "calendar";
-// helpers for positioning etc
-@import "helpers";
-// tree view component
-@import "treeView";
-// lightbox
+@import "helpers"; // helpers for positioning etc
+@import "treeView"; // tree view component
 @import "lytebox";
-

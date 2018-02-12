@@ -51,3 +51,4 @@ include/class.myDavFile.php
 *.sql
 /installPlugins.php
 /addstuff.php
+/map.php

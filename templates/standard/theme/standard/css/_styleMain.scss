@@ -184,12 +184,10 @@ td.message ul {
 }
 
 #mainmenue li.desktop a {
-  background: url(../images/main-desk.png) no-repeat 0 0;
+  background: $menuTabDesktop;
 }
-
-
 #mainmenue li.profil-male a {
-  background: url(../images/main-prof-male.png) no-repeat 0 0;
+  background: $menuTabProfileMale;
 }
 
 #mainmenue li.profil-female a {

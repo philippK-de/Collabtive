@@ -1,3 +1,6 @@
+/*
+* Base colors
+*/
 $colorMain: #001e40;
 
 $loginAlert:#fac3b7;
@@ -14,13 +17,21 @@ $mainMenueInfo:#c5d2e1; // Info-Span in Mainmenue
 
 $bigCalToday:#eaf6e3; //day in the Big Calendar
 
-
-
 $green:#009359;
 $greenbg:#e0f1db;
 $red:#be4c43;
 $redbg:#e7dcda;
 
+/*
+* Main menu tabs
+*/
+$menuTabDesktop: url(../images/main-desk.png) no-repeat 0 0;
+$menuTabProfileMale: url(../images/main-prof-male.png) no-repeat 0 0;
+
+
+/*
+* Block colors
+*/
 $projectsMain:#3f7174;
 $projectsB:#8caaac; // Borders in Forms
 $projectsC:#275154; // Buttons Hover
@@ -104,6 +115,7 @@ $timetrackColorC:url(../images/tables-timetracking-bg-c.png); // Files in Messag
 $filesMain:#484f64;
 $filesB:#9195a2; // Borders in Forms
 $filesC:#2e3345; // Buttons Hover
+
 $filesBlockhead:url(../images/tables-files-head.png);
 $filesTablehead:url(../images/tables-files-thead.png);
 $filesTableSecondhead:url(../images/tables-files-sechead.png); // closed Things
