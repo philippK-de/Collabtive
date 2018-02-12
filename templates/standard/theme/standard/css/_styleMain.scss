@@ -22,6 +22,7 @@ body a, body a:visited {
 body a:hover {
   text-decoration: none;
 }
+
 ::selection {
   background: $colorMain;
   color: #fff;
@@ -29,7 +30,6 @@ body a:hover {
 
 ::-moz-selection {
   background: $colorMain;
-
   color: #fff;
 }
 
@@ -63,10 +63,6 @@ td.message ul {
   background: url($backgroundColorA) repeat 0 0;
   text-align: center;
   padding: 20px 0 20px 0;
-  /*
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  */
 }
 
 .login-alert {
@@ -75,7 +71,6 @@ td.message ul {
   background-image: url(../images/login-alert.png);
   font-weight: bold;
   color: $loginAlert;
-
 }
 
 .login .logo-name {
@@ -85,7 +80,6 @@ td.message ul {
 
 .logo-name h1 {
   color: $logoName;
-
   margin: 0;
   height: auto;
   line-height: normal;
@@ -94,7 +88,6 @@ td.message ul {
 .logo-name h2 {
   font-size: 15px;
   color: $logoSubname;
-
   margin: 8px 0 18px 0;
 }
 
@@ -186,6 +179,7 @@ td.message ul {
 #mainmenue li.desktop a {
   background: $menuTabDesktop;
 }
+
 #mainmenue li.profil-male a {
   background: $menuTabProfileMale;
 }
@@ -199,7 +193,7 @@ td.message ul {
 }
 
 #mainmenue li.logout a {
-  background: url(../images/main-logout.png) no-repeat 0 0;
+  background: $menuTabLogout;
 }
 
 #mainmenue li a span {
@@ -236,19 +230,19 @@ td.message ul {
 }
 
 #mainmenue .submen li.project-settings a {
-  background: url(../images/main-admin-a.png) no-repeat 0 0;
+  background: $submenuProjectSettings;
 }
 
 #mainmenue .submen li.user-settings a {
-  background: url(../images/main-admin-b.png) no-repeat 0 0;
+  background: $submenuUserSettings;
 }
 
 #mainmenue .submen li.system-settings a {
-  background: url(../images/main-admin-c.png) no-repeat 0 0;
+  background: $submenuSystemSettings;
 }
 
 #mainmenue .submen li.customer-settings a {
-  background: url(../images/main-admin-d.png) no-repeat 0 0;
+  background: $submenuCustomerSettings;
 }
 
 #mainmenue li:hover a, #mainmenue li a.active, #mainmenue .submen li:hover a, #mainmenue .submen li a.active {
@@ -262,7 +256,6 @@ td.message ul {
   top: 18px;
   left: -222px;
   color: $mainMenueInfo;
-
   font-size: 12px;
   font-weight: bold;
   text-align: right;
@@ -293,12 +286,9 @@ td.message ul {
 }
 
 #content-left {
-  //742 is the old block size with the sidebar open
-  //width: 742px;
   width: 882px;
   min-height: 100px;
   background: $leftBlockBg;
-
   margin: 0 18px 10px 0;
   float: left;
 }
@@ -353,7 +343,6 @@ td.message ul {
 }
 
 .content-right-in {
-  //width: 184px;
   width: 60px;
   margin: 23px 0 0 18px;
 }
@@ -442,7 +431,6 @@ td.message ul {
   padding: 12px 0px 23px 18px;
   float: left;
   color: $baseTextColor;
-
   -webkit-border-radius: 6px;
   border-radius: 6px;
 }
@@ -494,7 +482,6 @@ td.message ul {
   background-position: -69px -31px;
 }
 
-
 .wintools a.add, .wintools a.add-active {
   background-position: right 0;
   margin-left: 9px;
@@ -518,8 +505,6 @@ td.message ul {
   background-position: right 0;
   z-index: 9;
 }
-
-
 
 .add-main {
   width: 19px;
@@ -561,7 +546,6 @@ td.message ul {
   color: $leftBlockBg;
   font-weight: bold;
 }
-
 
 .export-main .export-in a:hover span {
   right: -30px;
@@ -701,7 +685,6 @@ td.message ul {
   background-position: 0 -31px;
 }
 
-
 .export-main a.ical {
   background-position: 0 0;
 }
@@ -785,7 +768,6 @@ td.message ul {
   margin: 0 1px 6px 0;
   padding: 4px 0 0 0;
   text-align: center;
-
   -webkit-border-radius: 4px;
   border-radius: 4px;
 }
@@ -864,6 +846,7 @@ td.message ul {
 .inmenue a.more {
   background-position: 1px 1px;
 }
+
 .inmenue a.more:hover {
   background-position: 1px -13px;
 }
@@ -871,6 +854,7 @@ td.message ul {
 .inmenue a.export {
   background-position: -13px 1px;
 }
+
 .inmenue a.export:hover {
   background-position: -13px -13px;
 }
@@ -878,6 +862,7 @@ td.message ul {
 .inmenue a.edit {
   background-position: -27px 1px;
 }
+
 .inmenue a.edit:hover {
   background-position: -27px -13px;
 }
@@ -885,6 +870,7 @@ td.message ul {
 .inmenue a.del {
   background-position: -41px 1px;
 }
+
 .inmenue a.del:hover {
   background-position: -41px -13px;
 }
@@ -899,7 +885,6 @@ td.message ul {
   left: 0;
   bottom: 0px;
   padding: 5px 5px 0 5px;
-
   -webkit-border-radius: 4px;
   border-radius: 4px;
   width: 82px;
@@ -997,7 +982,6 @@ td.message ul {
 
 .block .bigcal table.thecal thead {
   background: $leftBlockBg;
-
   font-size: 14px;
 }
 
@@ -1018,7 +1002,6 @@ td.message ul {
   border: none;
   width: 100px;
   background: $leftBlockBg;
-
   padding: 6px;
   line-height: normal;
 }
@@ -1026,12 +1009,12 @@ td.message ul {
 .block .bigcal table.thecal td.today {
   background: $bigCalToday
 }
-.block .bigcal table.thecal td.second {
-}
-.block .bigcal table.thecal td.othermonth {
-}
-.block .bigcal .calcontent {
-}
+
+.block .bigcal table.thecal td.second {}
+
+.block .bigcal table.thecal td.othermonth {}
+
+.block .bigcal .calcontent {}
 
 .bigcal .scroll_left, .bigcal .scroll_right {
   display: block;
@@ -1059,7 +1042,6 @@ td.message ul {
   left: 0;
   top: 0;
   padding: 6px;
-
   -webkit-border-radius: 4px;
   border-radius: 4px;
 }
@@ -1072,7 +1054,6 @@ td.message ul {
   padding: 0 8px 0 8px;
   white-space: nowrap;
   color: $leftBlockBg;
-
   font-size: 11px;
   font-weight: bold;
 }
@@ -1110,14 +1091,11 @@ td.message ul {
   left: 152px;
   top: -210px;
   padding: 6px;
-
   -webkit-border-radius: 3px;
   border-radius: 3px;
 }
 
-.datepick .picker a {
-
-}
+.datepick .picker a {}
 
 .datepick .cal {
   background: #fff;
@@ -1138,13 +1116,11 @@ td.message ul {
 
 .projects .datepick td.today, .tasks .datepick td.today, .miles .datepick td.today, .timetrack .datepick td.today, .neutral .datepick td.today {
   color: $green;
-
   background: url(../images/color-c-green.png) repeat 0 0;
 }
 
 .projects .datepick td.red, .tasks .datepick td.red, .miles .datepick td.red, .timetrack .datepick td.red, .neutral .datepick td.red {
   color: $red;
-
   background: url(../images/color-c-red.png) repeat 0 0;
 }
 
@@ -1156,42 +1132,55 @@ td.message ul {
 .projects .datepick td.next a {
   background-image: url(../images/next-side-projects.png);
 }
+
 .projects .datepick td.back a {
   background-image: url(../images/back-side-projects.png);
 }
+
 .tasks .datepick td.next a {
   background-image: url(../images/next-side-tasks.png);
 }
+
 .tasks .datepick td.back a {
   background-image: url(../images/back-side-tasks.png);
 }
+
 .timetrack .datepick td.next a {
   background-image: url(../images/next-side-timetrack.png);
 }
+
 .timetrack .datepick td.back a {
   background-image: url(../images/back-side-timetrack.png);
 }
+
 .user .datepick td.next a {
   background-image: url(../images/next-side-user.png);
 }
+
 .user .datepick td.back a {
   background-image: url(../images/back-side-user.png);
 }
+
 .miles .datepick td.next a {
   background-image: url(../images/next-side-miles.png);
 }
+
 .miles .datepick td.back a {
   background-image: url(../images/back-side-miles.png);
 }
+
 .files .datepick td.next a {
   background-image: url(../images/next-side-files.png);
 }
+
 .files .datepick td.back a {
   background-image: url(../images/back-side-files.png);
 }
+
 .neutral .datepick td.next a {
   background-image: url(../images/next-side-neutral.png);
 }
+
 .neutral .datepick td.back a {
   background-image: url(../images/back-side-neutral.png);
 }
@@ -1231,7 +1220,6 @@ td.message ul {
 
 #onlinelist a.user:hover, .chat-user {
   color: #9daab7;
-  /*background: url(../images/onlinelist-hover.png) repeat 0 0; */
 }
 
 #onlinelist a.chat, .chat-user {
@@ -1289,7 +1277,6 @@ td.message ul {
 
 .headline h2, .headline h2 a {
   color: $leftBlockBg;
-
 }
 
 .headline img, .headline_lone img {
@@ -1308,25 +1295,19 @@ h2 a:hover {
 #content-left h2 a:hover {
   text-decoration: none;
   border-bottom: 1px dotted $leftBlockBg;
-
 }
 
-
-/* ## Block-headline - Aufklappfunktion ## start ## */
+/* ## Block-headline - Toggle ## start ## */
 
 a.win_block {
   display: block;
   width: 100%;
   height: 100%;
   background: url(../images/win-up.png) no-repeat 98.5% 8px;
-  //background: url(../images/win-up.png) no-repeat 815px 8px;
-  //background: url(../images/win-up.png) no-repeat 678px 8px;
 }
 
 a.win_block:hover {
   background-position: 98.5% -23px;
-  //background-position: 815px -23px;
-  //background-position: 678px -23px;
 }
 
 a.win_none {
@@ -1334,14 +1315,10 @@ a.win_none {
   width:100%;
   height: 100%;
   background: url(../images/win-up.png) no-repeat 98.5% -54px;
-  //background: url(../images/win-up.png) no-repeat 815px -54px;
-  //background: url(../images/win-up.png) no-repeat 678px -54px;
 }
 
 a.win_none:hover {
   background-position: 98.5% -85px;
-  //background-position: 815px -85px;
-  //background-position: 678px -85px;
 }
 
 /* ## BUTTON ####################################### */
@@ -1352,7 +1329,6 @@ a.butn_link, a.butn_link_active {
   height: 23px;
   line-height: 23px;
   padding: 0px 8px 0 8px;
-
   -webkit-border-radius: 3px;
   border-radius: 3px;
   font-size: 11px;
@@ -1369,7 +1345,6 @@ a.butn_link, a.butn_link_active {
 
 body a.butn_link, body a.butn_link_active {
   color: $leftBlockBg;
-
 }
 
 /* ## AVATARE / MESSAGES ########################### */
@@ -1395,7 +1370,8 @@ body a.butn_link, body a.butn_link_active {
   float: left;
   overflow: hidden;
 }
-.message .block { /* Block for Userdetails in Profil*/
+
+.message .block { /* block for user details in profile */
   margin: 0;
 }
 
@@ -1493,9 +1469,7 @@ p.tags-miles {
 .message .toggle-content {
   border-right: none;
   border-top: 1px solid $leftBlockBg;
-
   border-bottom: 1px solid $leftBlockBg;
-
   padding: 12px 0 12px 6px;
 }
 
@@ -1522,8 +1496,6 @@ p.tags-miles {
   display: block;
   float: left;
   opacity: 0.4;
-
-
 }
 
 .breadcrumb a {
@@ -1540,7 +1512,6 @@ p.tags-miles {
   float: left;
   height: 22px;
 }
-
 
 /* ## TAB-MENUES ################################### */
 
@@ -1581,7 +1552,6 @@ ul.tabs li a:hover span {
   display: block;
   width: 250px;
   color: $tabsInfo;
-
   font-size: 12px;
   font-weight: bold;
 }
@@ -1655,20 +1625,16 @@ ul.tabs li.system-settings a {
 #modal_container {
   overflow: auto;
   color:  $colorMain;
-
   background: none;
   text-align: left;
 }
 
 #modal_container.tasksmodal, #modal_container.milesmodal {
   background: $tasksC;
-
   color: $tasksMain;
-
   min-height: 150px;
   width: 500px;
   padding: 6px 12px 12px 12px;
-
   -webkit-border-radius: 6px;
   border-radius: 6px;
   margin: -50px 0 0 -126px;
@@ -1676,9 +1642,7 @@ ul.tabs li.system-settings a {
 
 #modal_container.milesmodal {
   background: $milesC;
-
   color: $milesMain;
-
 }
 
 #modal_container.pics {
@@ -1694,28 +1658,22 @@ ul.tabs li.system-settings a {
 
 #modal_overlay {
   background-color: $colorMain;
-
-
 }
 
 #modal_overlay.useroverlay {
   background: $userB;
-
 }
 
 #modal_overlay.tasksoverlay {
   background: $tasksB;
-
 }
 
 #modal_overlay.milesoverlay {
   background: $milesB;
-
 }
 
 #modal_container .inmodal {
   background: $leftBlockBg;
-
   -moz-border-radius: 1px;
   -webkit-border-radius: 1px;
   border-radius: 1px;
@@ -1729,7 +1687,6 @@ ul.tabs li.system-settings a {
   font-size: 12px;
 }
 
-
 .acc_modal {
   width: 100%;
 }
@@ -1738,9 +1695,7 @@ ul.tabs li.system-settings a {
   width: 24px;
 }
 
-.acc_modal .m_b {
-
-}
+.acc_modal .m_b {}
 
 .acc_modal .m_c {
   width: 150px;
@@ -1759,7 +1714,6 @@ ul.tabs li.system-settings a {
 .acc_modal .content_in {
   padding: 6px 6px 6px 31px;
   border-top: 1px solid $leftBlockBg;
-
 }
 
 #modal_container .inmodal img {
@@ -1772,7 +1726,6 @@ ul.tabs li.system-settings a {
   height: 38px;
   line-height: 38px;
   color: $leftBlockBg;
-
   font-size: 14px;
   font-weight: bold;
   position: relative;
@@ -1958,7 +1911,6 @@ ul.tabs li.system-settings a {
   line-height: 23px;
   clear: both;
   font-size: 12px;
-
 }
 
 .staterowin {
@@ -1966,18 +1918,14 @@ ul.tabs li.system-settings a {
   height: 23px;
   overflow: hidden;
   margin: 0 0 0 48px;
-
-
 }
+
 .staterowin_right {
   width:50px;
   height: 23px;
   overflow: hidden;
   margin: -22px 0 0 650px;
   float:left;
-
-
-
 }
 
 /* ## FILES ################ Specials ################## */
@@ -2047,7 +1995,6 @@ a.dir_up_butn:hover {
   width: 100%;
   text-align: left;
   border-collapse: collapse;
-  /*display: inline-table;*/
 }
 
 .block table tfoot td {
@@ -2058,7 +2005,6 @@ a.dir_up_butn:hover {
   height: 27px;
   line-height: 27px;
   border-right: 1px solid $leftBlockBg;
-
   padding: 0 0 0 6px;
 }
 
@@ -2074,9 +2020,7 @@ a.dir_up_butn:hover {
   padding: 0 0 0 6px;
 }
 
-.block table td.finished, .block table td.finished a {
-
-}
+.block table td.finished, .block table td.finished a {}
 
 .block table td.symbols img {
   float: left;
@@ -2095,7 +2039,6 @@ a.dir_up_butn:hover {
   line-height: 37px;
   padding: 0 0 0 6px;
   border-right: 1px solid $leftBlockBg;
-
 }
 
 .block table.second-thead td {
@@ -2104,7 +2047,6 @@ a.dir_up_butn:hover {
   font-weight: bold;
   border-color: transparent;
   border-top: 1px solid $leftBlockBg;
-
 }
 
 .block table.second-thead:hover {
@@ -2113,7 +2055,6 @@ a.dir_up_butn:hover {
 
 .toggleblock {
   border-top: 1px solid $leftBlockBg;
-
 }
 
 .doneblock .toggleblock td, .block .dones td {
@@ -2158,9 +2099,7 @@ a.dir_up_butn:hover {
 }
 
 .block table tr.acc td .accordion_content,.accordion_content_active .acc-in {
-
   border-top: 1px solid $leftBlockBg;
-
   padding: 12px 9px 18px 9px;
   line-height: normal;
   overflow: hidden;
@@ -2193,8 +2132,6 @@ a.dir_up_butn:hover {
   padding: 10px 0 10px 44px;
 }
 
-
-
 /* ## TABLES - COLS ########### ges. 706px ############# */
 
 th.a, td.a {
@@ -2225,9 +2162,7 @@ th.d, td.d {
   width: 176px;
 }
 
-th.cd, td.cd {
-
-}
+th.cd, td.cd {}
 
 th.ce, td.ce {
   width: 121px;
@@ -2241,9 +2176,7 @@ th.cf, td.cf {
   width: 91px;
 }
 
-th.e, td.e {
-
-}
+th.e, td.e {}
 
 th.tools, td.tools {
   width: 42px;
@@ -2261,17 +2194,14 @@ th.tools, td.tools {
 
 .projects .headline, .projects a.butn_link, .projects button, .projects a.butn_link_active:hover, .projects .inmenue a span, .projects .moreinfo {
   background: $projectsBlockhead;
-
 }
 
 .projects thead {
   background: $projectsTablehead;
-
 }
 
 .projects .second-thead, .projects .second-thead:hover td, .projects .block_in_wrapper, .projects .inwrapper li:hover, .projects .tableend, .projects .statuswrapper li.link:hover {
   background: $projectsTableSecondhead;
-
 }
 
 .projects .color-a, .projects .statuswrapper li, .projects .datepick table td, .projects .datepick tr.head td {
@@ -2289,14 +2219,11 @@ th.tools, td.tools {
 
 .projects .block, .projects a, .projects h1, .projects .block .tablemenue, .projects .block .addmenue, .projects p.tags-miles {
   border-color: $projectsMain;
-
   color: $projectsMain;
-
 }
 
 .projects, .projects .block td.finished, .projects .block td.finished a, .projects .datepick .cal, .projects .block_in_wrapper h2 {
   color: $projectsMain;
-
 }
 
 .projects h1 span, .projects h1 span a, .projects .status, .projects .statusbar, .projects .statusbar_b {
@@ -2306,19 +2233,15 @@ th.tools, td.tools {
 
 .projects .datepick td.wrong {
   color: $projectsB;
-
 }
 
 .projects h1 span a {
   border-color: $projectsMain;
-
 }
 
 .projects form, .projects form input, .projects form select, .projects form textarea, .projects form .row .editor, .projects .statuswrapper li {
   border-color: $projectsB;
-
   color: $projectsMain;
-
 }
 
 .projects a.butn_link:hover, .projects button:hover, .projects form .fileinput:hover button, .projects a.butn_link_active, .projects .datepick .picker {
@@ -2332,30 +2255,28 @@ th.tools, td.tools {
   float:none;
   margin:0 0 0 0;
 }
+
 .projects button.paginationInactive{
   float:none;
   margin:0 0 0 0;
 }
+
 /* TASKS COLORS #####################################*/
 
 .tasks .headline, .tasks a.butn_link, .tasks button, .tasks a.butn_link_active:hover, .tasks .inmenue a span, .tasks .moreinfo {
   background: $tasksBlockhead;
-
 }
 
 .tasks thead {
   background: $tasksTablehead;
-
 }
 
 .tasks .second-thead, .tasks .second-thead:hover td, .tasks .block_in_wrapper, .tasks .statuswrapper li.link:hover {
   background: $tasksTableSecondhead;
-
 }
 
 .tasks .color-a, .tasks .datepick table td, .tasks .datepick tr.head td, .tasks .statuswrapper li {
   background: $tasksColorA;
-
 }
 
 .tasks tbody.alternateColors:nth-child(even) {
@@ -2377,7 +2298,6 @@ th.tools, td.tools {
 
 .tasks .block td.finished, .tasks .block td.finished a, .tasks .datepick .cal, .tasks .block_in_wrapper h2 {
   color: $tasksMain;
-
 }
 
 .tasks h1 span, .tasks h1 span a, .tasks .datepick td.wrong {
@@ -2404,6 +2324,7 @@ th.tools, td.tools {
   float:none;
   margin:0 0 0 0;
 }
+
 .tasks button.paginationInactive{
   float:none;
   margin:0 0 0 0;
@@ -2413,22 +2334,18 @@ th.tools, td.tools {
 
 .msgs .headline, .msgs a.butn_link, .msgs button, .msgs a.butn_link_active:hover, .msgs .inmenue a span, .msgs .moreinfo, .msgs .inmenue a span, .msgs .moreinfo {
   background: $msgsBlockhead;
-
 }
 
 .msgs thead {
   background: $msgsTablehead;
-
 }
 
 .msgs .second-thead, .msgs .second-thead:hover td, .msgs .block_in_wrapper, .msgs .inwrapper li:hover, .msgs .statuswrapper li.link:hover {
   background: $msgsTableSecondhead;
-
 }
 
 .msgs .color-a, .msgs .statuswrapper li {
   background: $msgsColorA;
-
 }
 
 .msgs tbody.alternateColors:nth-child(even) {
@@ -2441,41 +2358,32 @@ th.tools, td.tools {
 
 .msgs .color-b {
   background: $msgsColorB;
-
 }
 
 .msgs .color-a ul.files table, .msgs .color-b ul.files table {
   background: $msgsColorC;
-
 }
 
 .msgs, .msgs .block, .msgs a, .msgs h1, .msgs .block .tablemenue, .msgs .block .addmenue, .msgs p.tags-miles {
   border-color: $msgsMain;
-
   color: $msgsMain;
-
 }
 
 .msgs h1 span, .msgs h1 span a, .msgs .block_in_wrapper h2 {
   color: $msgsB;
-
 }
 
 .msgs h1 span a {
   border-color: $msgsMain;
-
 }
 
 .msgs form, .msgs form input, .msgs form select, .msgs form textarea, .msgs form .row .editor, .msgs .statuswrapper li {
   border-color: $msgsB;
-
   color: $msgsMain;
-
 }
 
 .msgs a.butn_link:hover, .msgs button:hover, .msgs button.inner-active, .msgs form .fileinput:hover button, .msgs a.butn_link_active {
   background: $msgsC;
-
 }
 
 .msgs button.paginationActive{
@@ -2490,26 +2398,23 @@ th.tools, td.tools {
   float:none;
   margin:0 0 0 0;
 }
+
 /* USER COLORS #################################*/
 
 .user .headline, .user a.butn_link, .user button, .user a.butn_link_active:hover, .user .inmenue a span, .user .moreinfo {
   background: $userBlockhead;
-
 }
 
 .user thead, .user .contenttitle {
   background: $userTablehead;
-
 }
 
 .user .second-thead, .user .second-thead:hover td, .user .block_in_wrapper, .user .inwrapper li:hover, .user .tableend {
   background: $userTableSecondhead;
-
 }
 
 .user .color-a, .user .staterow {
   background: $userColorA;
-
 }
 
 .user tbody.alternateColors:nth-child(even) {
@@ -2522,12 +2427,10 @@ th.tools, td.tools {
 
 .user .color-b, .user .content_in_wrapper {
   background: $userColorB;
-
 }
 
 .user .color-a ul.files table, .user .color-b ul.files table {
   background: $userColorC;
-
 }
 
 .user .block, .user .blockwrapper, .user a, .user h1, .user .tablemenue, .user .addmenue, .user p.tags-miles, .user .userwrapper, .user .block_in_wrapper h2 {
@@ -2551,7 +2454,6 @@ th.tools, td.tools {
 
 .user a.butn_link:hover, .user button:hover, .user form .fileinput:hover button, .user a.butn_link_active {
   background: $userC;
-
 }
 
 .user button.paginationActive{
@@ -2561,10 +2463,12 @@ th.tools, td.tools {
   float:none;
   margin:0 0 0 0;
 }
+
 .user button.paginationInactive{
   float:none;
   margin:0 0 0 0;
 }
+
 /* USER PROFILE */
 
 .user .export-main {
@@ -2580,7 +2484,6 @@ th.tools, td.tools {
 
 .userwrapper td.avatarcell {
   background: $userColorA;
-
   border-right: 1px solid $leftBlockBg;
   padding: 8px 8px 0 8px;
 }
@@ -2589,27 +2492,22 @@ th.tools, td.tools {
 
 .neutral .headline, .neutral a.butn_link, .neutral button, .neutral a.butn_link_active:hover {
   background: $neutralBlockhead;
-
 }
 
 .neutral thead, .neutral .contenttitle {
   background: $neutralTablehead;
-
 }
 
 .neutral .second-thead, .neutral .second-thead:hover td, .neutral .block_in_wrapper, .neutral .inwrapper li:hover, .neutral .tableend, .neutral .paging {
   background: $neutralTableSecondhead;
-
 }
 
 .neutral .color-a, .neutral .staterow {
   background: $neutralColorA;
-
 }
 
 .neutral .color-b, .neutral .content_in_wrapper {
   background: $neutralColorB;
-
 }
 
 .neutral tbody.alternateColors:nth-child(even) {
@@ -2627,31 +2525,24 @@ th.tools, td.tools {
 
 .neutral .block, .neutral a, .neutral h1, .neutral .block .tablemenue, .neutral .block .addmenue, .neutral p.tags-miles, .neutral .block_in_wrapper h2 {
   border-color: $neutralMain;
-
   color: $neutralMain;
-
 }
 
 .neutral h1 span, .neutral h1 span a {
   color: $neutralB;
-
 }
 
 .neutral h1 span a {
   border-color: $neutralMain;
-
 }
 
 .neutral form, .neutral form input, .neutral form select, .neutral form textarea, .neutral form .row .editor {
   border-color: $neutralB;
-
   color: $neutralMain;
-
 }
 
 .neutral a.butn_link:hover, .neutral button:hover, .neutral form .fileinput:hover button, .neutral a.butn_link_active, .neutral .datepick .picker {
   background: $neutralC;
-
 }
 
 .neutral button.paginationActive{
@@ -2671,32 +2562,26 @@ th.tools, td.tools {
 
 .timetrack .headline, .timetrack a.butn_link, .timetrack button, .timetrack a.butn_link_active:hover {
   background: $timetrackBlockhead;
-
 }
 
 .timetrack thead {
   background: $timetrackTablehead;
-
 }
 
 .timetrack .second-thead, .timetrack .second-thead:hover td, .timetrack .block_in_wrapper, .timetrack .inwrapper li:hover, .timetrack .tableend {
   background: $timetrackTableSecondhead;
-
 }
 
 .timetrack .color-a, .timetrack .datepick table td, .timetrack .datepick tr.head td {
   background: $timetrackColorA;
-
 }
 
 .timetrack .color-b, .timetrack .datepick td.wrong, .timetrack .datepick tr.weekday td {
   background: $timetrackColorB;
-
 }
 
 .timetrack tbody.alternateColors:nth-child(even) {
   background: $timetrackColorA;
-
 }
 
 .timetrack tbody.alternateColors:nth-child(odd) {
@@ -2705,41 +2590,32 @@ th.tools, td.tools {
 
 .timetrack .color-a ul.files table, .timetrack .color-b ul.files table {
   background: $timetrackColorC;
-
 }
 
 .timetrack .block, .timetrack a, .timetrack h1, .timetrack .block .tablemenue, .timetrack .block .addmenue, .timetrack p.tags-miles {
   border-color: $timetrackMain;
-
   color: $timetrackMain;
-
 }
 
 .timetrack .datepick .cal, .timetrack .block_in_wrapper h2 {
   color: $timetrackMain;
-
 }
 
 .timetrack h1 span, .timerack h1 span a, .timetrack .datepick td.wrong {
   color: $timetrackB;
-
 }
 
 .timetrack h1 span a {
   border-color: $timetrackMain;
-
 }
 
 .timetrack form, .timetrack form input, .timetrack form select, .timetrack form textarea, .timetrack form .row .editor {
   border-color: $timetrackB;
-
   color: $timetrackMain;
-
 }
 
 .timetrack a.butn_link:hover, .timetrack button:hover, .timetrack form .fileinput:hover button, .timetrack a.butn_link_active, .timetrack .datepick .picker {
   background: $timetrackC;
-
 }
 
 .timetrack button.paginationActive{
@@ -2759,32 +2635,26 @@ th.tools, td.tools {
 
 .miles .headline, .miles a.butn_link, .miles button, .miles a.butn_link_active:hover, .miles .calinmenue ul {
   background: $milesBlockhead;
-
 }
 
 .miles thead, .miles .calhead th {
   background: $milesTablehead;
-
 }
 
 .miles .second-thead, .miles .block_in_wrapper, .miles .inwrapper li:hover, .miles .tableend, .miles .thecal, .miles .second-thead:hover td, .miles .statuswrapper li.link:hover {
   background: $milesTableSecondhead;
-
 }
 
 .miles .color-a, .miles table.thecal .dayhead th, .miles .calinmenue ul li.link a, .miles .datepick table td, .miles .datepick tr.head td, .miles .statuswrapper li {
   background: $milesColorA;
-
 }
 
 .miles .color-b, .miles .calinmenue ul li.link a:hover, .miles .datepick td.wrong, .miles .datepick tr.weekday td, .miles .content_in_wrapper {
   background: $milesColorB;
-
 }
 
 .miles .color-a ul.files table, .miles .color-b ul.files table {
   background: $milesColorC;
-
 }
 
 .miles tbody.alternateColors:nth-child(even) {
@@ -2797,36 +2667,28 @@ th.tools, td.tools {
 
 .miles, .miles a, .miles h1, .miles .block .tablemenue, .miles .block .addmenue, .miles p.tags-miles, .bigcal tbody.content td {
   border-color: $milesMain;
-
   color: $milesMain;
-
 }
 
 .miles .block td.finished, .miles .block td.finished a, .miles .datepick .cal, .miles .block_in_wrapper h2 {
   color: $milesMain;
-
 }
 
 .miles h1 span, .miles h1 span a, .miles .block td.othermonth a, .miles .block td.othermonth, .miles .datepick td.wrong {
   color: $milesB;
-
 }
 
 .miles h1 span a, .miles .content-spacer-b {
   border-color: $milesMain;
-
 }
 
 .miles form, .miles form input, .miles form select, .miles form textarea, .miles form .row .editor, .miles .statuswrapper li {
   border-color: $milesB;
-
   color: $milesMain;
-
 }
 
 .miles a.butn_link:hover, .miles button:hover, .miles form .fileinput:hover button, .miles a.butn_link_active, .miles .datepick .picker {
   background: $milesC;
-
 }
 
 .miles button.paginationActive{
@@ -2846,62 +2708,49 @@ th.tools, td.tools {
 
 .files .headline, .files a.butn_link, .files button, .files a.butn_link_active:hover, .files .inmenue a span, .files .moreinfo {
   background: $filesBlockhead;
-
 }
 
 .files thead, .files .contenttitle {
   background: $filesTablehead;
-
 }
 
 .files .second-thead, .files .second-thead:hover td, .files .block_in_wrapper, .files .inwrapper li:hover {
   background: $filesTableSecondhead;
-
   cursor:move;
 }
 
 .files .color-a, .files .datepick table td, .files .datepick tr.head td, .files .staterow {
   background: $filesColorA;
-
 }
 
 .files .color-b, .files .datepick td.wrong, .files .datepick tr.weekday td, .files .content_in_wrapper {
   background: $filesColorB;
-
 }
 
 .files .block, .files .blockwrapper, .files a, .files h1, .files .tablemenue, .files .addmenue, .files p.tags-miles {
   border-color: $filesMain;
-
   color: $filesMain;
-
 }
 
 .files .block td.finished, .files .block td.finished a, .files .datepick .cal, .files .block_in_wrapper h2 {
   color: $filesMain;
-
 }
 
 .files h1 span, .files h1 span a, .files .datepick td.wrong {
   color: $filesB;
-
 }
 
 .files h1 span a {
   border-color: $filesMain;
-
 }
 
 .files form, .files form input, .files form select, .files form textarea, .files form .row .editor {
   border-color: $filesB;
-
   color: $filesMain;
-
 }
 
 .files a.butn_link:hover, .files button:hover, .files form .fileinput:hover button, .files a.butn_link_active, .files .datepick .picker {
   background: $filesC;
-
 }
 
 .files button.paginationActive{
@@ -2925,7 +2774,6 @@ span.acc-toggle, span.acc-toggle-active, .second-thead span.acc-toggle, .second-
   height: 100%;
   background: url(../images/acc-open.png) no-repeat right 10px;
   cursor: pointer;
-
 }
 
 .second-thead span.acc-toggle, .second-thead span.acc-toggle-active { /* for darker backgrounds */
@@ -2958,8 +2806,6 @@ span.acc-toggle-active:hover, .second-thead:hover span.acc-toggle-active  {
   left: 0;
   z-index: 1;
 }
-
-
 
 /* ## ACCORDION ################ Tools ############### */
 
@@ -2997,6 +2843,7 @@ a.tool_edit, a.tool_del {
   margin-right: 4px;
   background: url(../images/butn-edit.png) no-repeat 0 4px;
 }
+
 a.tool_edit_active
 {
   display: block;
@@ -3005,8 +2852,8 @@ a.tool_edit_active
   float: left;
   margin-right: 4px;
   background: url(../images/butn-edit.png) no-repeat 0 -22px;
-
 }
+
 a.tool_del {
   background-image: url(../images/butn-del.png);
   margin: 0;
@@ -3020,30 +2867,22 @@ a.tool_edit:hover, a.tool_del:hover {
 
 .marker-late, .marker-late a {
   color: $red;
-
 }
 
 .marker-today, .marker-today a {
   color: $green;
-
 }
 
 .green, .green a {
   color: $green;
-
   border-color: $green;
-
   background-color:$greenbg;
-
 }
 
 .red, .red a {
   color: $red;
-
   border-color: $red;
-
   background-color:$redbg;
-
 }
 
 /* ## Headlines ## start ## */
@@ -3100,12 +2939,14 @@ span.info {
   font-weight: bold;
   float: right;
 }
+
 .infowin_left img {
   float:left;
   position: relative;
   top: -8px;
   margin: 0 0 -12px 0;
 }
+
 .info_in_red, .info_in_green, .info_in_yellow {
   padding: 10px 10px 8px 4px;
   border: 1px solid #fff;
@@ -3113,13 +2954,14 @@ span.info {
   color: #fff;
   background: url(../images/infowin_red.png) repeat;
   line-height: 22px;
-
   -webkit-border-radius: 6px;
   border-radius: 6px;
 }
+
 .info_in_green {
   background: url(../images/infowin_green.png) repeat;
 }
+
 .info_in_yellow {
   background: url(../images/infowin_yellow.png) repeat;
 }
@@ -3148,7 +2990,5 @@ span.info {
 .footer a {
   color: #6ab0c5;
 }
-
-
 
 /* ## Footer ## end ## */
