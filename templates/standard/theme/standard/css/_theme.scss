@@ -18,25 +18,39 @@ $submenuCustomerSettings: url(../images/main-admin-d.png) no-repeat 0 0;
 /*
 * Tabs on top of blocks
 */
-$blockTabDesktop:url(../images/symbols/tab-desk.png);
-$blockTabProject:url(../images/symbols/tab-projects.png);
-$blockTabCustomers:url(../images/symbols/tab-customers.png);
-$blockTabTasklist:url(../images/symbols/tab-tasklist.png);
-$blockTabMessages:url(../images/symbols/tab-msgs.png);
-$blockTabMilestones:url(../images/symbols/tab-miles.png);
-$blockTabFiles:url(../images/symbols/tab-files.png);
-$blockTabTimetracker:url(../images/symbols/tab-timetracking.png);
-$blockTabSystemSettings:url(../images/symbols/tab-system-settings.png);
+$blockTabDesktop: url(../images/symbols/tab-desk.png);
+$blockTabProject: url(../images/symbols/tab-projects.png);
+$blockTabCustomers: url(../images/symbols/tab-customers.png);
+$blockTabTasklist: url(../images/symbols/tab-tasklist.png);
+$blockTabMessages: url(../images/symbols/tab-msgs.png);
+$blockTabMilestones: url(../images/symbols/tab-miles.png);
+$blockTabFiles: url(../images/symbols/tab-files.png);
+$blockTabTimetracker: url(../images/symbols/tab-timetracking.png);
+$blockTabSystemSettings: url(../images/symbols/tab-system-settings.png);
 
 // Users
-$blockTabUserList:url(../images/symbols/tab-userlist.png);
-$blockTabUserMale:url(../images/symbols/tab-userprofil-male.png);
-$blockTabEditMale:url(../images/symbols/tab-settings.png);
-$blockTabEditFemale:url(../images/symbols/tab-userprofil-female.png);
-$blockTabSettings:url(../images/symbols/tab-settings.png);
+$blockTabUserList: url(../images/symbols/tab-userlist.png);
+$blockTabUserMale: url(../images/symbols/tab-userprofil-male.png);
+$blockTabEditMale: url(../images/symbols/tab-settings.png);
+$blockTabEditFemale: url(../images/symbols/tab-userprofil-female.png);
+$blockTabSettings: url(../images/symbols/tab-settings.png);
 
+/*
+* Tool icons in accordions
+*/
+$toolIconCheck: url(../images/butn-check.png) no-repeat 4px 6px;
+$toolIconEdit: url(../images/butn-edit.png) no-repeat 0 4px;
+$toolIconEditActive: url(../images/butn-edit.png) no-repeat 0 -22px;
+$toolIconDelete: url(../images/butn-del.png);
+$toolIconReply: url(../images/butn-reply.png);
+$toolIconReplyActive: url(../images/butn-reply.png) no-repeat 4px -20px;
 
-
+/*
+* Toast message background colors
+*/
+$infoError: url(../images/infowin_red.png) repeat;
+$infoSuccess: url(../images/infowin_green.png) repeat;
+$infoWarning: url(../images/infowin_yellow.png) repeat;
 
 /*
 * Base colors
@@ -50,7 +64,7 @@ $logoSubname: #6ab0c5;
 $baseTextColor: #6d7f93;
 
 $leftBlockBg: #fff;
-$backgroundColorA:"../images/color-a.png";
+$backgroundColorA: "../images/color-a.png";
 
 
 $tabsInfo: #c5d2e1;
