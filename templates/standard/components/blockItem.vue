@@ -1,0 +1,56 @@
+blockitem
+["items"]
+<tbody v-for="item in items" class="alternateColors" v-bind:id="'task_' + item.ID">
+                        <tr v-bind:class="{ 'marker-late': item.islate, 'marker-today': item.istoday }" >
+                            <td>
+
+                                    <a class="butn_check"
+                                    v-bind:href="'javascript:closeElement(\'task_'+item.ID+'\',\'managetask.php?action=close&amp;tid='+item.ID+'&amp;id='+item.project+'\', tasksView);'"
+                                    title="{/literal}{#close#}"></a>
+
+
+                            </td>
+                            <td>
+                                <div class="toggle-in">
+                                    <span v-bind:id="'desktoptasks_toggle' + item.ID"
+                                          class="acc-toggle"
+                                          :onclick="'accord_tasks.toggle(document.querySelector(\'#desktoptasks_content'+$index+'\'));'"></span>
+                                    <a v-bind:href="'managetask.php?action=showtask&amp;id=' + item.project + '&amp;tid=' + item.ID"
+                                       v-bind:title=item.title>
+                                        {{{item.title | truncate '30' }}}
+                                    </a>
+                                </div>
+                            </td>
+                            <td>
+                                <a v-bind:href="'managetask.php?action=showproject&amp;id=' +item.project">{{item.pname | truncate '30' }}</a>
+                            </td>
+                            <td class="text-align-right">{{item.daysleft}}&nbsp;&nbsp;</td>
+                            <td class="tools">
+
+                                {/literal}{if $userpermissions.tasks.edit} {literal}
+                                    <a class="tool_edit" href="javascript:void(0);"
+                                       v-bind:href="'javascript:change(\'managetask.php?action=editform&amp;tid='+item.ID+'&amp;id='+item.project+'\',\'form_addmytask\');blindtoggle(\'form_addmytask\');'"
+                                       title="Edit"></a>
+                                {/literal}{/if}{literal}
+
+                                {/literal}{if $userpermissions.tasks.del}{literal}
+                                    <a class="tool_del"
+                                    v-bind:href="'javascript:confirmDelete(\'{/literal}{#confirmdel#}{literal}\',\'task_'+item.ID+'\',\'managetask.php?action=del&amp;tid='+item.ID+'&amp;id='+item.project+'\',tasksView);'"  title="{/literal}{#delete#}"></a>
+
+                                {/if}{literal}
+
+                            </td>
+                        </tr>
+
+                        <tr class="acc">
+                            <td colspan="5">
+                                <div class="accordion_content" >
+                                    <div class="acc-in">
+                                        <div class="message-in-fluid" >
+                                            {{{item.text}}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
