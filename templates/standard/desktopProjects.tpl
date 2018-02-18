@@ -96,8 +96,10 @@
                             <div class="acc-in">
                                 <div class="message-in-fluid">
                                     {{{item.desc}}}
+                                    <div class="content-spacer-b"></div>
+                                    <strong>Members:</strong>
                                     <div class="dtree"
-                                         :id="'projectTree' + item.ID">
+                                         :id="'usersTree' + item.ID">
 
                                     </div>
                             </div>

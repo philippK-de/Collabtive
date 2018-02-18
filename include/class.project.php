@@ -441,9 +441,11 @@ class project extends databaseModel
             $project["startstring"] = date(CL_DATEFORMAT, $project["start"]);
 
             $project["done"] = $this->getProgress($project["ID"]);
+            $project["members"] = $this->listProjectMembers($id,10000,0);
 
             $companyObj = new company();
             $project["customer"] = $companyObj->getProjectCompany($id);
+
 
             return $project;
         } else {
