@@ -36,6 +36,12 @@ $blockTabEditFemale: url(../images/symbols/tab-userprofil-female.png);
 $blockTabSettings: url(../images/symbols/tab-settings.png);
 
 /*
+* Toggle icons in accordions
+*/
+$toggleIcon: url(../images/acc-open.png) no-repeat right 10px;
+$toggleIconLight: url(../images/acc-open-b.png);
+
+/*
 * Tool icons in accordions
 */
 $toolIconCheck: url(../images/butn-check.png) no-repeat 4px 6px;
@@ -51,6 +57,22 @@ $toolIconReplyActive: url(../images/butn-reply.png) no-repeat 4px -20px;
 $infoError: url(../images/infowin_red.png) repeat;
 $infoSuccess: url(../images/infowin_green.png) repeat;
 $infoWarning: url(../images/infowin_yellow.png) repeat;
+
+/*
+* Project status bar
+*/
+$statusBarGradientComplete: url(../images/statusbar_complete_b.jpg) repeat-x 0 0;
+$statusBarBGradientComplete: url(../images/statusbar_complete_b.jpg) repeat-x 0 -1px;
+
+/*
+* Icons in user profile
+*/
+$vcardIcon: url(../images/export-vcard.png);
+
+/*
+* Icons in file manager
+*/
+$parentFolderIcon: url(../images/root-arrow.png) no-repeat 2px 0;
 
 /*
 * Base colors
@@ -153,7 +175,6 @@ $userColorA: url(../images/tables-user-bg-a.png);
 $userColorB: url(../images/tables-user-bg-b.png);
 // ColorMix Rows
 $userColorC: url(../images/tables-user-bg-c.png);
-// Files in Messages
 
 $milesMain: #824e48;
 $milesB: #b49591;

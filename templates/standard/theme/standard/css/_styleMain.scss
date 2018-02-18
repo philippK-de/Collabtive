@@ -1844,27 +1844,27 @@ ul.tabs li.system-settings a {
 
 .statusbar, .statusbar_b {
   width: 128px;
-  height:	12px;
+  height: 12px;
   background: url(../images/statusbar_incomplete_b.jpg) repeat-x 0 0;
   border: 1px solid #000;
   margin: 6px 0 0 0;
 }
 
 .statusbar_b {
-  float:left;
+  float: left;
   height: 8px;
   background: url(../images/statusbar_incomplete_b.jpg) repeat-x 0 -1px;
   margin: 9px 12px 0 0;
 }
 
 .statusbar .complete, .statusbar_b .complete {
-  height:	12px;
-  background: url(../images/statusbar_complete_b.jpg) repeat-x 0 0;
+  height: 12px;
+  background: $statusBarGradientComplete;
 }
 
 .statusbar_b .complete {
   height: 8px;
-  background: url(../images/statusbar_complete_b.jpg) repeat-x 0 -1px;
+  background: $statusBarBGradientComplete;
 }
 
 /* ## CONTENT ########### without table ################ */
@@ -1922,11 +1922,11 @@ ul.tabs li.system-settings a {
 }
 
 .staterowin_right {
-  width:50px;
+  width: 50px;
   height: 23px;
   overflow: hidden;
   margin: -22px 0 0 650px;
-  float:left;
+  float: left;
 }
 
 /* ## FILES ################ Specials ################## */
@@ -1935,7 +1935,7 @@ a.dir_up_butn {
   display: block;
   width: 28px;
   height: 12px;
-  background: url(../images/root-arrow.png) no-repeat 2px 0;
+  background: $parentFolderIcon;
 }
 
 a.dir_up_butn:hover {
@@ -2208,12 +2208,15 @@ th.tools, td.tools {
 .projects .color-a, .projects .statuswrapper li, .projects .datepick table td, .projects .datepick tr.head td {
   background: $projectsColorA;
 }
+
 .projects tbody.alternateColors:nth-child(even) {
   background: $projectsColorA;
 }
+
 .projects tbody.alternateColors:nth-child(odd) {
   background: $projectsColorB;
 }
+
 .projects .color-b, .projects .datepick td.wrong, .projects .datepick tr.weekday td {
   background: $projectsColorB;
 }
@@ -2251,15 +2254,15 @@ th.tools, td.tools {
 
 .projects button.paginationActive{
   background: $projectsC;
-  font-size:16px;
-  color:$projectsMain;
-  float:none;
-  margin:0 0 0 0;
+  font-size: 16px;
+  color: $projectsMain;
+  float: none;
+  margin: 0 0 0 0;
 }
 
 .projects button.paginationInactive{
-  float:none;
-  margin:0 0 0 0;
+  float: none;
+  margin: 0 0 0 0;
 }
 
 /* TASKS COLORS #####################################*/
@@ -2320,15 +2323,15 @@ th.tools, td.tools {
 
 .tasks button.paginationActive{
   background: $tasksC;
-  font-size:16px;
-  color:$tasksB;
-  float:none;
-  margin:0 0 0 0;
+  font-size: 16px;
+  color: $tasksB;
+  float: none;
+  margin: 0 0 0 0;
 }
 
 .tasks button.paginationInactive{
-  float:none;
-  margin:0 0 0 0;
+  float: none;
+  margin: 0 0 0 0;
 }
 
 /* MESSAGES COLORS #################################*/
@@ -2350,14 +2353,14 @@ th.tools, td.tools {
 }
 
 .msgs tbody.alternateColors:nth-child(even) {
-  background: url(../images/tables-msgs-bg-a.png);
-}
-
-.msgs tbody.alternateColors:nth-child(odd) {
-  background: url(../images/tables-msgs-bg-b.png);
+  background: $msgsColorA;
 }
 
 .msgs .color-b {
+  background: $msgsColorB;
+}
+
+.msgs tbody.alternateColors:nth-child(odd) {
   background: $msgsColorB;
 }
 
@@ -2389,15 +2392,15 @@ th.tools, td.tools {
 
 .msgs button.paginationActive{
   background: $msgsC;
-  font-size:16px;
-  color:$msgsB;
-  float:none;
-  margin:0 0 0 0;
+  font-size: 16px;
+  color: $msgsB;
+  float: none;
+  margin: 0 0 0 0;
 }
 
 .msgs button.paginationInactive{
-  float:none;
-  margin:0 0 0 0;
+  float: none;
+  margin: 0 0 0 0;
 }
 
 /* USER COLORS #################################*/
@@ -2450,7 +2453,6 @@ th.tools, td.tools {
 .user form, .user form input, .user form select, .user form textarea, .user form .row .editor {
   border-color: $userB;
   color: $userMain;
-
 }
 
 .user a.butn_link:hover, .user button:hover, .user form .fileinput:hover button, .user a.butn_link_active {
@@ -2459,34 +2461,34 @@ th.tools, td.tools {
 
 .user button.paginationActive{
   background: $userC;
-  font-size:16px;
-  color:$userB;
-  float:none;
-  margin:0 0 0 0;
+  font-size: 16px;
+  color: $userB;
+  float: none;
+  margin: 0 0 0 0;
 }
 
 .user button.paginationInactive{
-  float:none;
-  margin:0 0 0 0;
+  float: none;
+  margin: 0 0 0 0;
 }
 
 /* USER PROFILE */
 
 .user .export-main {
-  background-image: url(../images/export-vcard.png);
+  background-image: $vcardIcon;
 }
 
 .userwrapper {
   float: left;
   border-top: 1px solid;
   border-bottom: 1px solid;
-  padding: 1px 0 1px 0;
+  padding: 1px 0;
 }
 
 .userwrapper td.avatarcell {
   background: $userColorA;
   border-right: 1px solid $leftBlockBg;
-  padding: 8px 8px 0 8px;
+  padding: 8px 8px 0;
 }
 
 /* NEUTRAL COLORS #################################*/
@@ -2548,15 +2550,15 @@ th.tools, td.tools {
 
 .neutral button.paginationActive{
   background: $neutralC;
-  font-size:16px;
-  color:$neutralB;
-  float:none;
-  margin:0 0 0 0;
+  font-size: 16px;
+  color: $neutralB;
+  float: none;
+  margin: 0 0 0 0;
 }
 
 .neutral button.paginationInactive{
-  float:none;
-  margin:0 0 0 0;
+  float: none;
+  margin: 0 0 0 0;
 }
 
 /* TIMETRACKING COLORS #################################*/
@@ -2621,15 +2623,15 @@ th.tools, td.tools {
 
 .timetrack button.paginationActive{
   background: $timetrackC;
-  font-size:16px;
-  color:$timetrackB;
-  float:none;
-  margin:0 0 0 0;
+  font-size: 16px;
+  color: $timetrackB;
+  float: none;
+  margin: 0 0 0 0;
 }
 
 .timetrack button.paginationInactive{
-  float:none;
-  margin:0 0 0 0;
+  float: none;
+  margin: 0 0 0 0;
 }
 
 /* MILESTONES COLORS #################################*/
@@ -2773,12 +2775,12 @@ span.acc-toggle, span.acc-toggle-active, .second-thead span.acc-toggle, .second-
   display: block;
   width: 97%;
   height: 100%;
-  background: url(../images/acc-open.png) no-repeat right 10px;
+  background: $toggleIcon;
   cursor: pointer;
 }
 
 .second-thead span.acc-toggle, .second-thead span.acc-toggle-active { /* for darker backgrounds */
-  background-image: url(../images/acc-open-b.png);
+  background-image: $toggleIconLight;
 }
 
 span.acc-toggle:hover, .second-thead:hover span.acc-toggle {
