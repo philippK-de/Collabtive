@@ -2814,7 +2814,7 @@ a.butn_check, a.butn_checked, a.butn_reply {
   display: block;
   width: 100%;
   height: 27px;
-  background: url(../images/butn-check.png) no-repeat 4px 6px;
+  background: $toolIconCheck;
 }
 
 a.butn_check:hover, a.butn_checked, a.butn_reply:hover {
@@ -2826,14 +2826,14 @@ a.butn_checked:hover {
 }
 
 a.butn_reply {
-  background-image: url(../images/butn-reply.png);
+  background-image: $toolIconReply;
 }
 
 a.butn_reply_active {
   display: block;
   width: 100%;
   height: 27px;
-  background: url(../images/butn-reply.png) no-repeat 4px -20px;
+  background: $toolIconReplyActive;
 }
 
 a.tool_edit, a.tool_del {
@@ -2842,7 +2842,7 @@ a.tool_edit, a.tool_del {
   height: 23px;
   float: left;
   margin-right: 4px;
-  background: url(../images/butn-edit.png) no-repeat 0 4px;
+  background: $toolIconEdit;
 }
 
 a.tool_edit_active
@@ -2852,11 +2852,11 @@ a.tool_edit_active
   height: 23px;
   float: left;
   margin-right: 4px;
-  background: url(../images/butn-edit.png) no-repeat 0 -22px;
+  background: $toolIconEditActive;
 }
 
 a.tool_del {
-  background-image: url(../images/butn-del.png);
+  background-image: $toolIconDelete;
   margin: 0;
 }
 
@@ -2953,18 +2953,18 @@ span.info {
   border: 1px solid #fff;
   float: right;
   color: #fff;
-  background: url(../images/infowin_red.png) repeat;
+  background: $infoError;
   line-height: 22px;
   -webkit-border-radius: 6px;
   border-radius: 6px;
 }
 
 .info_in_green {
-  background: url(../images/infowin_green.png) repeat;
+  background: $infoSuccess;
 }
 
 .info_in_yellow {
-  background: url(../images/infowin_yellow.png) repeat;
+  background: $infoWarning;
 }
 
 /* ## Footer ## start ## */
