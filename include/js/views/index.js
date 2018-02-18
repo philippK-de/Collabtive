@@ -157,8 +157,6 @@ function createFilesTree(view, treeName = "filesTree") {
 
 function renderUsers(items, treeName) {
     var basicImgPath = "templates/standard/theme/standard/images/symbols/";
-    console.log(treeName);
-
     //loop over all top level items for the tree
     for (var i = 0; i < items.length; i++) {
         //ID of the current item to draw a tree for
@@ -170,7 +168,6 @@ function renderUsers(items, treeName) {
 
         var users = items[i].members;
         for (var l = 0; l < users.length; l++) {
-            console.log(users[l].name);
             userTree.add("us" + users[l].ID, 0, users[l].name, "manageuser.php?action=profile&amp;id=" + users[l].ID, "", "", basicImgPath + "user.png", basicImgPath + "user.png", "", 0);
         }
         //write the tree to the target element

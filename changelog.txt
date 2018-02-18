@@ -1,3 +1,10 @@
+Collabtive 3.2
++ Fix problem when using the task comments plugin
++ Modularize CSS to use SCSS instead of custom buildscript
++ Draw project members tree in project details on the dashboard
++ Hook comments plugin into task details in my tasks
++ Hook comments plugin into single task view
+
 Collabtive 3.1
 + Fix a bug where the generic female avatar wasnt shown in the user-admin area
 + Update PHPMailer to its latest stable release 5.2.2 to mitigate potential issues with PHP7
