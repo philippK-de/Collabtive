@@ -1303,7 +1303,7 @@ a.win_block {
   display: block;
   width: 100%;
   height: 100%;
-  background: url(../images/win-up.png) no-repeat 98.5% 8px;
+  background: $upIconBlock;
 }
 
 a.win_block:hover {
@@ -1314,7 +1314,7 @@ a.win_none {
   display:block;
   width:100%;
   height: 100%;
-  background: url(../images/win-up.png) no-repeat 98.5% -54px;
+  background: $upIconNone;
 }
 
 a.win_none:hover {
@@ -1740,7 +1740,7 @@ ul.tabs li.system-settings a {
   display: block;
   width: 19px;
   height: 19px;
-  background: url(../images/closemodalwin.png) no-repeat 0 0;
+  background: $modalCloseIcon;
   float: right;
   position: absolute;
   right: 0;
@@ -1785,22 +1785,22 @@ ul.tabs li.system-settings a {
 
 .statuswrapper a.close, .statuswrapper a.closed {
   width: 19px;
-  background: url(../images/butn-check.png) no-repeat center 4px;
+  background: $projectCloseIcon;
 }
 
 .statuswrapper a.reply, .statuswrapper a.reply-active {
   width: 19px;
-  background: url(../images/butn-reply.png) no-repeat center 4px;
+  background: $projectReplyIconActive;
 }
 
 .statuswrapper a.edit, .statuswrapper a.edit-active  {
   width: 19px;
-  background: url(../images/butn-edit.png) no-repeat center 4px;
+  background: $projectEditIconActive;
 }
 
 .statuswrapper a.del {
   width: 19px;
-  background: url(../images/butn-del.png) no-repeat center 4px;
+  background: $projectDeleteIcon;
 }
 
 .statuswrapper a:hover, .statuswrapper a.closed, .statuswrapper a.edit-active, .statuswrapper a.reply-active {
@@ -1814,7 +1814,7 @@ ul.tabs li.system-settings a {
 .statuswrapper a.desc, .statuswrapper a.desc_active {
   padding: 0 12px 0 6px;
   margin: 0 6px 0 0;
-  background: url(../images/acc-open.png) no-repeat right 9px;
+  background: $projectDescriptionToggleIconActive;
 }
 
 .statuswrapper a.desc:hover {
@@ -1831,7 +1831,7 @@ ul.tabs li.system-settings a {
 
 .status {
   width: 130px;
-  height:	56px;
+  height: 56px;
   position: relative;
   right: 0;
   top: -47px;
@@ -1845,7 +1845,7 @@ ul.tabs li.system-settings a {
 .statusbar, .statusbar_b {
   width: 128px;
   height: 12px;
-  background: url(../images/statusbar_incomplete_b.jpg) repeat-x 0 0;
+  background: $statusBarGradientIncomplete;
   border: 1px solid #000;
   margin: 6px 0 0 0;
 }
@@ -1853,7 +1853,7 @@ ul.tabs li.system-settings a {
 .statusbar_b {
   float: left;
   height: 8px;
-  background: url(../images/statusbar_incomplete_b.jpg) repeat-x 0 -1px;
+  background: $statusBarBGradientIncomplete;
   margin: 9px 12px 0 0;
 }
 
@@ -2816,7 +2816,7 @@ a.butn_check, a.butn_checked, a.butn_reply {
   display: block;
   width: 100%;
   height: 27px;
-  background: $toolIconCheck;
+  background: $toolIconClose;
 }
 
 a.butn_check:hover, a.butn_checked, a.butn_reply:hover {

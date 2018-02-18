@@ -40,11 +40,13 @@ $blockTabSettings: url(../images/symbols/tab-settings.png);
 */
 $toggleIcon: url(../images/acc-open.png) no-repeat right 10px;
 $toggleIconLight: url(../images/acc-open-b.png);
+$upIconBlock: url(../images/win-up.png) no-repeat 98.5% 8px;
+$upIconNone: url(../images/win-up.png) no-repeat 98.5% -54px;
 
 /*
 * Tool icons in accordions
 */
-$toolIconCheck: url(../images/butn-check.png) no-repeat 4px 6px;
+$toolIconClose: url(../images/butn-check.png) no-repeat 4px 6px;
 $toolIconEdit: url(../images/butn-edit.png) no-repeat 0 4px;
 $toolIconEditActive: url(../images/butn-edit.png) no-repeat 0 -22px;
 $toolIconDelete: url(../images/butn-del.png);
@@ -59,10 +61,26 @@ $infoSuccess: url(../images/infowin_green.png) repeat;
 $infoWarning: url(../images/infowin_yellow.png) repeat;
 
 /*
-* Project status bar
+* Modals
 */
+$modalCloseIcon: url(../images/closemodalwin.png) no-repeat 0 0;
+
+/*
+* Project status wrapper
+*/
+
+// Status bar gradients
+$statusBarGradientIncomplete: url(../images/statusbar_incomplete_b.jpg) repeat-x 0 0;
+$statusBarBGradientIncomplete: url(../images/statusbar_incomplete_b.jpg) repeat-x 0 -1px;
 $statusBarGradientComplete: url(../images/statusbar_complete_b.jpg) repeat-x 0 0;
 $statusBarBGradientComplete: url(../images/statusbar_complete_b.jpg) repeat-x 0 -1px;
+
+// Tool icons
+$projectCloseIcon: url(../images/butn-check.png) no-repeat center 4px;
+$projectDeleteIcon: url(../images/butn-del.png) no-repeat center 4px;
+$projectEditIconActive: url(../images/butn-edit.png) no-repeat center 4px;
+$projectReplyIconActive: url(../images/butn-reply.png) no-repeat center 4px;
+$projectDescriptionToggleIconActive: url(../images/acc-open.png) no-repeat right 9px;
 
 /*
 * Icons in user profile
