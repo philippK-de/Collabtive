@@ -1556,68 +1556,69 @@ ul.tabs li a:hover span {
   font-weight: bold;
 }
 
+// Tabs menue
 ul.tabs li span {
   display: none;
 }
 
 ul.tabs li.desk a {
-  background-image: url(../images/symbols/tab-desk.png);
+  background-image: $blockTabDesktop;
 }
 
 ul.tabs li.projects a {
-  background-image: url(../images/symbols/tab-projects.png);
+  background-image: $blockTabProject;
 }
 
 ul.tabs li.customers a {
-  background-image: url(../images/symbols/tab-customers.png);
+  background-image: $blockTabCustomers;
 }
 
 ul.tabs li.tasks a {
-  background-image: url(../images/symbols/tab-tasklist.png);
+  background-image: $blockTabTasklist;
 }
 
 ul.tabs li.msgs a {
-  background-image: url(../images/symbols/tab-msgs.png);
+  background-image: $blockTabMessages;
 }
 
 ul.tabs li.user-male a {
-  background-image: url(../images/symbols/tab-userprofil-male.png);
+  background-image: $blockTabUserMale;
 }
 
 ul.tabs li.edit-male a {
-  background-image: url(../images/symbols/tab-settings.png);
+  background-image: $blockTabEditMale;
 }
 
 ul.tabs li.user-female a {
-  background-image: url(../images/symbols/tab-userprofil-female.png);
+  background-image: $blockTabEditFemale;
 }
 
 ul.tabs li.edit-female a {
-  background-image: url(../images/symbols/tab-settings.png);
+  background-image: $blockTabSettings;
 }
 
 ul.tabs li.edit a {
-  background-image: url(../images/symbols/tab-edit-male.png);
+  background-image: $blockTabEditMale;
 }
 
 ul.tabs li.miles a {
-  background-image: url(../images/symbols/tab-miles.png);
+  background-image: $blockTabMilestones;
 }
 
 ul.tabs li.files a {
-  background-image: url(../images/symbols/tab-files.png);
+  background-image: $blockTabFiles;
 }
 
 ul.tabs li.user a {
-  background-image: url(../images/symbols/tab-userlist.png);
+  background-image: $blockTabUserList;
 }
 
 ul.tabs li.timetrack a {
-  background-image: url(../images/symbols/tab-timetracking.png);
+  background-image: $blockTabTimetracker;
 }
 
 ul.tabs li.system-settings a {
-  background-image: url(../images/symbols/tab-system-settings.png);
+  background-image: $blockTabSystemSettings;
 }
 
 /* ## MODALs ######################################## */
