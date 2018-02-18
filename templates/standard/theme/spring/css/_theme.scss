@@ -2,39 +2,39 @@
 /*
 * Main menu tabs
 */
-$menuTabDesktop: url(images/main-desk.png) no-repeat 0 0;
-$menuTabProfileMale: url(images/main-prof-male.png) no-repeat 0 0;
-$menuTabProfileFemale: url(images/main-prof-female.png) no-repeat 0 0;
-$menuTabAdmin:url(images/main-settings.png) no-repeat 0 0;
-$menuTabLogout: url(images/main-logout.png) no-repeat 0 0;
+$menuTabDesktop: url(../images/main-desk.png) no-repeat 0 0;
+$menuTabProfileMale: url(../images/main-prof-male.png) no-repeat 0 0;
+$menuTabProfileFemale: url(../images/main-prof-female.png) no-repeat 0 0;
+$menuTabAdmin:url(../images/main-settings.png) no-repeat 0 0;
+$menuTabLogout: url(../images/main-logout.png) no-repeat 0 0;
 
 /*
 * Submenu tabs
 */
-$submenuProjectSettings: url(images/main-admin-a.png) no-repeat 0 0;
-$submenuUserSettings: url(images/main-admin-b.png) no-repeat 0 0;
-$submenuSystemSettings: url(images/main-admin-c.png) no-repeat 0 0;
-$submenuCustomerSettings: url(images/main-admin-d.png) no-repeat 0 0;
+$submenuProjectSettings: url(../images/main-admin-a.png) no-repeat 0 0;
+$submenuUserSettings: url(../images/main-admin-b.png) no-repeat 0 0;
+$submenuSystemSettings: url(../images/main-admin-c.png) no-repeat 0 0;
+$submenuCustomerSettings: url(../images/main-admin-d.png) no-repeat 0 0;
 
 /*
 * Tabs on top of blocks
 */
-$blockTabDesktop:url(images/symbols/tab-desk.png);
-$blockTabProject:url(images/symbols/tab-projects.png);
-$blockTabCustomers:url(images/symbols/tab-customers.png);
-$blockTabTasklist:url(images/symbols/tab-tasklist.png);
-$blockTabMessages:url(images/symbols/tab-msgs.png);
-$blockTabMilestones:url(images/symbols/tab-miles.png);
-$blockTabFiles:url(images/symbols/tab-files.png);
-$blockTabTimetracker:url(images/symbols/tab-timetracking.png);
-$blockTabSystemSettings:url(images/symbols/tab-system-settings.png);
+$blockTabDesktop:url(../images/symbols/tab-desk.png);
+$blockTabProject:url(../images/symbols/tab-projects.png);
+$blockTabCustomers:url(../images/symbols/tab-customers.png);
+$blockTabTasklist:url(../images/symbols/tab-tasklist.png);
+$blockTabMessages:url(../images/symbols/tab-msgs.png);
+$blockTabMilestones:url(../images/symbols/tab-miles.png);
+$blockTabFiles:url(../images/symbols/tab-files.png);
+$blockTabTimetracker:url(../images/symbols/tab-timetracking.png);
+$blockTabSystemSettings:url(../images/symbols/tab-system-settings.png);
 
 // Users
-$blockTabUserList:url(images/symbols/tab-userlist.png);
-$blockTabUserMale:url(images/symbols/tab-userprofil-male.png);
-$blockTabEditMale:url(images/symbols/tab-settings.png);
-$blockTabEditFemale:url(images/symbols/tab-userprofil-female.png);
-$blockTabSettings:url(images/symbols/tab-settings.png);
+$blockTabUserList:url(../images/symbols/tab-userlist.png);
+$blockTabUserMale:url(../images/symbols/tab-userprofil-male.png);
+$blockTabEditMale:url(../images/symbols/tab-settings.png);
+$blockTabEditFemale:url(../images/symbols/tab-userprofil-female.png);
+$blockTabSettings:url(../images/symbols/tab-settings.png);
 
 
 /*
@@ -49,7 +49,7 @@ $logoSubname:#98ce6c;
 $baseTextColor: #fff;
 
 $leftBlockBg:#fff;
-$backgroundColorA:"images/color-a.png";
+$backgroundColorA:"../images/color-a.png";
 
 $tabsInfo:#98ce6c;
 $mainMenueInfo:#98ce6c; // Info-Span in Mainmenue
@@ -77,7 +77,7 @@ $projectsTableSecondhead:#f7f9f8; // closed Things
 
 $projectsColorA:#e5e7e6; // ColorMix Rows
 $projectsColorB:#f5f7f6; // ColorMix Rows
-$projectsColorC:url(images/tables-projects-bg-c.png); // Files in Messages
+$projectsColorC:url(../images/tables-projects-bg-c.png); // Files in Messages
 
 $tasksMain:#598a31;
 $tasksB:#bacfa8; // Borders in Forms
@@ -89,7 +89,7 @@ $tasksTableSecondhead:#f7f9f8; // closed Things
 
 $tasksColorA:#e5e7e6; // ColorMix Rows
 $tasksColorB:#f5f7f6; // ColorMix Rows
-$tasksColorC:url(images/tables-tasks-bg-c.png); // Files in Messages
+$tasksColorC:url(../images/tables-tasks-bg-c.png); // Files in Messages
 
 $msgsMain:#598a31;
 $msgsB:#bacfa8; // Borders in Forms
@@ -99,7 +99,7 @@ $msgsTablehead:#f8faf9;
 $msgsTableSecondhead:#f7f9f8; // closed Things
 $msgsColorA:#e5e7e6; // ColorMix Rows
 $msgsColorB:#f5f7f6; // ColorMix Rows
-$msgsColorC:url(images/tables-projects-bg-c.png); // Files in Messages
+$msgsColorC:url(../images/tables-projects-bg-c.png); // Files in Messages
 
 $userMain:#598a31;
 $userB:#bacfa8; // Borders in Forms
@@ -109,7 +109,7 @@ $userTablehead:#f8faf9;
 $userTableSecondhead:#f7f9f8; // closed Things
 $userColorA:#e5e7e6; // ColorMix Rows
 $userColorB:#f5f7f6; // ColorMix Rows
-$userColorC:url(images/tables-projects-bg-c.png); // Files in Messages
+$userColorC:url(../images/tables-projects-bg-c.png); // Files in Messages
 
 $milesMain:#598a31;
 $milesB:#bacfa8; // Borders in Forms
@@ -119,7 +119,7 @@ $milesTablehead:#f8faf9;
 $milesTableSecondhead:#f7f9f8; // closed Things
 $milesColorA:#e5e7e6; // ColorMix Rows
 $milesColorB:#f5f7f6; // ColorMix Rows
-$milesColorC:url(images/tables-projects-bg-c.png); // Files in Messages
+$milesColorC:url(../images/tables-projects-bg-c.png); // Files in Messages
 
 $neutralMain:#598a31;
 $neutralB:#bacfa8; // Borders in Forms
@@ -129,7 +129,7 @@ $neutralTablehead:#f8faf9;
 $neutralTableSecondhead:#f7f9f8; // closed Things
 $neutralColorA:#e5e7e6; // ColorMix Rows
 $neutralColorB:#f5f7f6; // ColorMix Rows
-$neutralColorC:url(images/tables-projects-bg-c.png); // Files in Messages
+$neutralColorC:url(../images/tables-projects-bg-c.png); // Files in Messages
 
 $timetrackMain:#598a31;
 $timetrackB:#bacfa8; // Borders in Forms
@@ -139,7 +139,7 @@ $timetrackTablehead:#f8faf9;
 $timetrackTableSecondhead:#f7f9f8; // closed Things
 $timetrackColorA:#e5e7e6; // ColorMix Rows
 $timetrackColorB:#f5f7f6; // ColorMix Rows
-$timetrackColorC:url(images/tables-projects-bg-c.png); // Files in Messages
+$timetrackColorC:url(../images/tables-projects-bg-c.png); // Files in Messages
 
 $filesMain:#598a31;
 $filesB:#bacfa8; // Borders in Forms
@@ -149,4 +149,4 @@ $filesTablehead:#f8faf9;
 $filesTableSecondhead:#f7f9f8; // closed Things
 $filesColorA:#e5e7e6; // ColorMix Rows
 $filesColorB:#f5f7f6; // ColorMix Rows
-$filesColorC:url(images/tables-projects-bg-c.png); // Files in Messages
+$filesColorC:url(../images/tables-projects-bg-c.png); // Files in Messages

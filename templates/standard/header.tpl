@@ -41,7 +41,7 @@
     {if $jsload3 == "lightbox"}
         <script type="text/javascript" src="include/js/lytebox.js"></script>
     {/if}
-    <link rel="stylesheet" type="text/css" href="templates/{$settings.template}/theme/{$settings.theme}/{$settings.theme}.css"/>
+    <link rel="stylesheet" type="text/css" href="templates/{$settings.template}/theme/{$settings.theme}/css/{$settings.theme}.css"/>
 
     {if $jsload1 == "tinymce"}
     {literal}
