@@ -211,6 +211,7 @@ window.addEventListener("load", function () {
         theBlocks[i].setAttribute("onclick", theAction);
     }
     activateAccordeon(0);
+    initTinyMce();
 
 });
 window.addEventListener("load", initTasklistViews());

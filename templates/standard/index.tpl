@@ -75,6 +75,8 @@
         var accord_tasks;
         tasksView.afterUpdate(function () {
             accord_tasks = new accordion2('desktoptasks');
+            // redraw editors
+            initTinyMce();
         });
     {/if}
     {if $msgnum > 0}
