@@ -85,7 +85,7 @@
         messagesView.afterUpdate(function () {
             accord_msgs = new accordion2('desktopmessages');
             renderMilestoneTree(messagesView);
-            renderFilesTree(messagesView);
+            createFilesTree(messagesView);
         });
     {/if}
     //setup dependenciens

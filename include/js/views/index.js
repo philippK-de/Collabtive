@@ -121,15 +121,6 @@ function renderMilestoneTree(view, treeName = "milestoneTree") {
         }
     }
 }
-function renderFilesTree(view, treeName = "filesTree") {
-
-    var treeItems = view.items;
-
-    if (treeItems != undefined) {
-        renderFiles(treeItems, treeName);
-    }
-}
-
 function renderFiles(items, treeName) {
     var basicImgPath = "templates/standard/theme/standard/images/symbols/";
 
@@ -154,6 +145,13 @@ function renderFiles(items, treeName) {
             //export global variable so the tree is clickable
             window[treeName + itemId] = filesTree;
         }
+    }
+}
+
+function createFilesTree(view, treeName = "filesTree") {
+    var treeItems = view.items;
+    if (treeItems != undefined) {
+        renderFiles(treeItems, treeName);
     }
 }
 

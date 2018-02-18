@@ -74,7 +74,7 @@
         accord_messages = new accordion2('publicMessages');
         accord_user_messages = new accordion2('privateMessages');
         renderMilestoneTree(projectMessagesView);
-        renderFilesTree(projectMessagesView);
+        createFilesTree(projectMessagesView);
         new LyteBox()
 
     });
