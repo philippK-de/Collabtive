@@ -93,6 +93,34 @@ $vcardIcon: url(../images/export-vcard.png);
 $parentFolderIcon: url(../images/root-arrow.png) no-repeat 2px 0;
 
 /*
+* Datepicker
+*/
+$datePickerBackgroundGreen: url(../images/color-c-green.png) repeat 0 0;
+$datePickerBackgroundRed: url(../images/color-c-red.png) repeat 0 0;
+$datePickerIconNext: url(../images/next-side-neutral.png);
+$datePickerIconBack: url(../images/back-side-neutral.png);
+$datePickerIconNextInProject: url(../images/next-side-projects.png);
+$datePickerIconBackInProject: url(../images/back-side-projects.png);
+$datePickerIconNextInTask: url(../images/next-side-tasks.png);
+$datePickerIconBackInTask: url(../images/back-side-tasks.png);
+$datePickerIconNextInTimeTracking: url(../images/next-side-timetrack.png);
+$datePickerIconBackInTimeTracking: url(../images/back-side-timetrack.png);
+$datePickerIconNextInUserProfile: url(../images/next-side-user.png);
+$datePickerIconBackInUserProfile: url(../images/back-side-user.png);
+$datePickerIconNextInMilestone: url(../images/next-side-miles.png);
+$datePickerIconBackInMilestone: url(../images/back-side-miles.png);
+$datePickerIconNextInFileManager: url(../images/next-side-files.png);
+$datePickerIconBackInFileManager: url(../images/back-side-files.png);
+
+/*
+* Online list
+*/
+$onlineListChatIcon: url(../images/chat.png) no-repeat right -23px;
+$onlineListUserHoverColor: #9daab7;
+$onlineListLinkColor: #3c5570;
+$onlineListLinkHoverColor: url(../images/color-b.png) repeat 0 0;
+
+/*
 * Base colors
 */
 $colorMain: #001e40;
@@ -116,6 +144,7 @@ $bigCalToday: #eaf6e3;
 
 $footer: #6ab0c5;
 
+$white: #fff;
 $green: #009359;
 $greenbg: #e0f1db;
 $red: #be4c43;

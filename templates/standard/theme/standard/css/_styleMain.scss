@@ -1098,7 +1098,7 @@ td.message ul {
 .datepick .picker a {}
 
 .datepick .cal {
-  background: #fff;
+  background: $white;
 }
 
 .block .datepick table, .datepick table {
@@ -1116,79 +1116,79 @@ td.message ul {
 
 .projects .datepick td.today, .tasks .datepick td.today, .miles .datepick td.today, .timetrack .datepick td.today, .neutral .datepick td.today {
   color: $green;
-  background: url(../images/color-c-green.png) repeat 0 0;
+  background: $datePickerBackgroundGreen;
 }
 
 .projects .datepick td.red, .tasks .datepick td.red, .miles .datepick td.red, .timetrack .datepick td.red, .neutral .datepick td.red {
   color: $red;
-  background: url(../images/color-c-red.png) repeat 0 0;
+  background: $datePickerBackgroundRed;
 }
 
 .datepick td.normalday:hover, .datepick td.today:hover, .datepick td.red:hover {
   cursor: pointer;
-  background: #fff;
+  background: $white;
 }
 
 .projects .datepick td.next a {
-  background-image: url(../images/next-side-projects.png);
+  background-image: $datePickerIconNextInProject;
 }
 
 .projects .datepick td.back a {
-  background-image: url(../images/back-side-projects.png);
+  background-image: $datePickerIconBackInProject;
 }
 
 .tasks .datepick td.next a {
-  background-image: url(../images/next-side-tasks.png);
+  background-image: $datePickerIconNextInTask;
 }
 
 .tasks .datepick td.back a {
-  background-image: url(../images/back-side-tasks.png);
+  background-image: $datePickerIconBackInTask;
 }
 
 .timetrack .datepick td.next a {
-  background-image: url(../images/next-side-timetrack.png);
+  background-image: $datePickerIconNextInTimeTracking;
 }
 
 .timetrack .datepick td.back a {
-  background-image: url(../images/back-side-timetrack.png);
+  background-image: $datePickerIconBackInTimeTracking;
 }
 
 .user .datepick td.next a {
-  background-image: url(../images/next-side-user.png);
+  background-image: $datePickerIconNextInUserProfile;
 }
 
 .user .datepick td.back a {
-  background-image: url(../images/back-side-user.png);
+  background-image: $datePickerIconBackInUserProfile;
 }
 
 .miles .datepick td.next a {
-  background-image: url(../images/next-side-miles.png);
+  background-image: $datePickerIconNextInMilestone;
 }
 
 .miles .datepick td.back a {
-  background-image: url(../images/back-side-miles.png);
+  background-image: $datePickerIconBackInMilestone;
 }
 
 .files .datepick td.next a {
-  background-image: url(../images/next-side-files.png);
+  background-image: $datePickerIconNextInFileManager;
 }
 
 .files .datepick td.back a {
-  background-image: url(../images/back-side-files.png);
+  background-image: $datePickerIconBackInFileManager;
 }
 
 .neutral .datepick td.next a {
-  background-image: url(../images/next-side-neutral.png);
+  background-image: $datePickerIconNext;
 }
 
 .neutral .datepick td.back a {
-  background-image: url(../images/back-side-neutral.png);
+  background-image: $datePickerIconBack;
 }
 
 /* ## ONLINELISTE ######################################## */
 
 #onlinelist ul {
-  border-bottom: 1px solid #3c5570;
+  border-bottom: 1px solid $onlineListLinkColor;
   float: left;
   position: relative;
 }
@@ -1196,7 +1196,7 @@ td.message ul {
 #onlinelist li {
   width: 184px;
   clear: both;
-  border-top: 1px solid #3c5570;
+  border-top: 1px solid $onlineListLinkColor;
 }
 
 #onlinelist li a div {
@@ -1219,13 +1219,13 @@ td.message ul {
 }
 
 #onlinelist a.user:hover, .chat-user {
-  color: #9daab7;
+  color: $onlineListUserHoverColor;
 }
 
 #onlinelist a.chat, .chat-user {
   width: 16px;
   padding: 0;
-  background: url(../images/chat.png) no-repeat right -23px;
+  background: $onlineListChatIcon;
 }
 
 #onlinelist a.chat:hover {
@@ -1237,13 +1237,13 @@ td.message ul {
 }
 
 #onlinelist li a:hover div {
-  display:block;
+  display: block;
   position: absolute;
   top: 0;
   left: -119px;
   width: 100px;
   z-index: 8;
-  background: url(../images/color-b.png) repeat 0 0;
+  background: $onlineListLinkHoverColor;
 }
 
 /* ## HEADLINES ##################################### */
