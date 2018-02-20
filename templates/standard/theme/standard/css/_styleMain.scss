@@ -1,5 +1,5 @@
+/* Basic XHTML Elements */
 
-/* ## Basic-XHTML-Elements ################################ */
 html, body {
   margin: 0;
   padding: 0;
@@ -45,10 +45,7 @@ td.message ul {
   list-style-type: disc;
 }
 
-/* ## Basic-XHTML-Elements ############### END ############## */
-
-
-/* ## LOGIN-Elements ################################ */
+/* LOGIN Elements */
 
 .login {
   width: 460px;
@@ -91,8 +88,7 @@ td.message ul {
   margin: 8px 0 18px 0;
 }
 
-/* ## LOGIN-Elements ############## END ############# */
-
+/* SITEBODY */
 
 #sitebody {
   display: block;
@@ -100,6 +96,8 @@ td.message ul {
   min-height: 100%;
   margin: 0 auto;
 }
+
+/* HEADER */
 
 #header-wrapper {
   width:100%;
@@ -155,7 +153,7 @@ td.message ul {
 
 }
 
-/* ## MAIN-MENUE ######################################## */
+/* MAIN MENUE */
 
 #mainmenue {
   padding: 8px 0 0 0;
@@ -278,11 +276,11 @@ td.message ul {
   background: url(../images/main-submen.png) no-repeat center 0;
 }
 
-/* ## CONTENT ######################################## */
+/* CONTENT */
 
 #contentwrapper {
   width: 980px;
-  margin: 0 auto -26px auto; /* same as footer-height (for IE 7) */
+  margin: 0 auto -26px auto; /* same as footer height (for IE 7) */
 }
 
 #content-left {
@@ -377,7 +375,7 @@ td.message ul {
   background-position: right -15px;
 }
 
-/* ## CHAT ############################################# */
+/* CHAT */
 
 .chat {
   background: url($backgroundColorA) repeat 0 0;
@@ -421,7 +419,7 @@ td.message ul {
   color: #fff;
 }
 
-/* ## SEARCH MODAL ################################### */
+/* SEARCH MODAL */
 
 .search-modal {
   width: 202px;
@@ -435,7 +433,7 @@ td.message ul {
   border-radius: 6px;
 }
 
-/* ## WINTOOLS ######################################## */
+/* WINDOW TOOLS */
 
 .wintools {
   float: right;
@@ -491,7 +489,7 @@ td.message ul {
   background-position: right -31px;
 }
 
-/* ## EXPORT-MAIN ##################################### */
+/* EXPORT MAIN */
 
 .export-main, .add-main {
   float: right;
@@ -753,7 +751,7 @@ td.message ul {
   background-position: 0 -31px;
 }
 
-/* ## IN-MENUES ######################################## */
+/* IN MENUES */
 
 .inwrapper {
   float: left;
@@ -780,9 +778,7 @@ td.message ul {
   max-height: 32px;
 }
 
-.itemwrapper {
-  /* in this are all the li */
-}
+.itemwrapper { /* in this are all the li */ }
 
 .itemwrapper table {
   width: 100%;
@@ -904,7 +900,7 @@ td.message ul {
 
 }
 
-/* ## CALENDAR ############## Sidebar / Datepicker ################# */
+/* CALENDAR Sidebar / Datepicker */
 
 .cal {
   width: 184px;
@@ -933,9 +929,7 @@ td.message ul {
   background: url(../images/color-c.png) repeat 0 0;
 }
 
-.cal td.back, .cal td.next {
-  /*background: url(../images/autocomplete-bg-a.png) repeat-x 0 0;*/
-}
+.cal td.back, .cal td.next {}
 
 .cal td.back a, .cal td.next a {
   display: block;
@@ -972,7 +966,7 @@ td.message ul {
   background: url(../images/color-c-cyan.png) repeat 0 0;
 }
 
-/* ## BIG CALENDAR ###################################### */
+/* BIG CALENDAR */
 
 .block .bigcal table.thecal {
   border-collapse: separate;
@@ -1078,7 +1072,7 @@ td.message ul {
   margin: 0 0 4px 0;
 }
 
-/* ## DATEPICKER ######################################## */
+/* DATEPICKER */
 
 .datepick {
   clear:both;
@@ -1185,7 +1179,7 @@ td.message ul {
   background-image: $datePickerIconBack;
 }
 
-/* ## ONLINELISTE ######################################## */
+/* ONLINE LIST */
 
 #onlinelist ul {
   border-bottom: 1px solid $onlineListLinkColor;
@@ -1246,7 +1240,7 @@ td.message ul {
   background: $onlineListLinkHoverColor;
 }
 
-/* ## HEADLINES ##################################### */
+/* HEADLINES */
 
 .headline, .headline_lone {
   width: 100%;
@@ -1297,7 +1291,7 @@ h2 a:hover {
   border-bottom: 1px dotted $leftBlockBg;
 }
 
-/* ## Block-headline - Toggle ## start ## */
+/* Block Headline - Toggle */
 
 a.win_block {
   display: block;
@@ -1321,7 +1315,7 @@ a.win_none:hover {
   background-position: 98.5% -85px;
 }
 
-/* ## BUTTON ####################################### */
+/* BUTTON */
 
 a.butn_link, a.butn_link_active {
   display: block;
@@ -1347,7 +1341,7 @@ body a.butn_link, body a.butn_link_active {
   color: $leftBlockBg;
 }
 
-/* ## AVATARE / MESSAGES ########################### */
+/* AVATAR / MESSAGE */
 
 .avatar, .avatar-profile {
   float: left;
@@ -1473,14 +1467,14 @@ p.tags-miles {
   padding: 12px 0 12px 6px;
 }
 
-/* ## Blind Toggles ################################### */
+/* Blind Toggles */
 
 .blinded {
   overflow: hidden;
   clear: both;
 }
 
-/* ## Breadcrumbs #################################### */
+/* Breadcrumbs */
 
 .breadcrumb {
   width: 100%;
@@ -1513,7 +1507,7 @@ p.tags-miles {
   height: 22px;
 }
 
-/* ## TAB-MENUES ################################### */
+/* TAB MENUE */
 
 .tabswrapper {
   height: 45px;
@@ -1556,7 +1550,6 @@ ul.tabs li a:hover span {
   font-weight: bold;
 }
 
-// Tabs menue
 ul.tabs li span {
   display: none;
 }
@@ -1621,7 +1614,7 @@ ul.tabs li.system-settings a {
   background-image: $blockTabSystemSettings;
 }
 
-/* ## MODALs ######################################## */
+/* MODAL */
 
 #modal_container {
   overflow: auto;
@@ -1751,7 +1744,7 @@ ul.tabs li.system-settings a {
   background-position: 0 -37px;
 }
 
-/* ## STATUS ############ Statusbar Project ############# */
+/* PROJECT STATUS WRAPPER */
 
 .statuswrapper {
   width: 100%;
@@ -1867,7 +1860,7 @@ ul.tabs li.system-settings a {
   background: $statusBarBGradientComplete;
 }
 
-/* ## CONTENT ########### without table ################ */
+/* CONTENT without table */
 
 .contenttitle {
   width: 100%;
@@ -1929,7 +1922,7 @@ ul.tabs li.system-settings a {
   float: left;
 }
 
-/* ## FILES ################ Specials ################## */
+/* FILES Specials */
 
 a.dir_up_butn {
   display: block;
@@ -1942,13 +1935,13 @@ a.dir_up_butn:hover {
   background-position: 2px -31px;
 }
 
-/* ## HEADLINES ############# Specials ############### */
+/* HEADLINES Specials */
 
 #content-left-in h1 a:hover {
   border-bottom: 1px dotted #000;
 }
 
-/* ## DESCRIPTION ############# Specials ############### */
+/* DESCRIPTION Specials */
 
 .descript {
   clear: both;
@@ -1974,9 +1967,9 @@ a.dir_up_butn:hover {
   text-decoration: underline;
 }
 
-/* ## TABLES ######################################## */
+/* TABLES */
 
-.blockwrapper { /* in projectfiles */
+.blockwrapper { /* in project files */
   margin: 1px 0 0 0;
 }
 
@@ -2133,7 +2126,7 @@ a.dir_up_butn:hover {
   padding: 10px 0 10px 44px;
 }
 
-/* ## TABLES - COLS ########### ges. 706px ############# */
+/* TABLES - COLS 706px total */
 
 th.a, td.a {
   width: 31px;
@@ -2191,7 +2184,7 @@ th.tools, td.tools {
   width: 372px;
 }
 
-/* ## TABLES ################ Block - Colors ############# */
+/* TABLES Block Colors */
 
 .projects .headline, .projects a.butn_link, .projects button, .projects a.butn_link_active:hover, .projects .inmenue a span, .projects .moreinfo {
   background: $projectsBlockhead;
@@ -2265,7 +2258,7 @@ th.tools, td.tools {
   margin: 0 0 0 0;
 }
 
-/* TASKS COLORS #####################################*/
+/* TASK COLORS */
 
 .tasks .headline, .tasks a.butn_link, .tasks button, .tasks a.butn_link_active:hover, .tasks .inmenue a span, .tasks .moreinfo {
   background: $tasksBlockhead;
@@ -2334,7 +2327,7 @@ th.tools, td.tools {
   margin: 0 0 0 0;
 }
 
-/* MESSAGES COLORS #################################*/
+/* MESSAGE COLORS */
 
 .msgs .headline, .msgs a.butn_link, .msgs button, .msgs a.butn_link_active:hover, .msgs .inmenue a span, .msgs .moreinfo, .msgs .inmenue a span, .msgs .moreinfo {
   background: $msgsBlockhead;
@@ -2403,7 +2396,7 @@ th.tools, td.tools {
   margin: 0 0 0 0;
 }
 
-/* USER COLORS #################################*/
+/* USER COLORS */
 
 .user .headline, .user a.butn_link, .user button, .user a.butn_link_active:hover, .user .inmenue a span, .user .moreinfo {
   background: $userBlockhead;
@@ -2491,7 +2484,7 @@ th.tools, td.tools {
   padding: 8px 8px 0;
 }
 
-/* NEUTRAL COLORS #################################*/
+/* NEUTRAL COLORS */
 
 .neutral .headline, .neutral a.butn_link, .neutral button, .neutral a.butn_link_active:hover {
   background: $neutralBlockhead;
@@ -2561,7 +2554,7 @@ th.tools, td.tools {
   margin: 0 0 0 0;
 }
 
-/* TIMETRACKING COLORS #################################*/
+/* TIME TRACKING COLORS */
 
 .timetrack .headline, .timetrack a.butn_link, .timetrack button, .timetrack a.butn_link_active:hover {
   background: $timetrackBlockhead;
@@ -2634,7 +2627,7 @@ th.tools, td.tools {
   margin: 0 0 0 0;
 }
 
-/* MILESTONES COLORS #################################*/
+/* MILESTONE COLORS */
 
 .miles .headline, .miles a.butn_link, .miles button, .miles a.butn_link_active:hover, .miles .calinmenue ul {
   background: $milesBlockhead;
@@ -2707,7 +2700,7 @@ th.tools, td.tools {
   margin:0 0 0 0;
 }
 
-/* FILES COLORS #####################################*/
+/* FILE COLORS */
 
 .files .headline, .files a.butn_link, .files button, .files a.butn_link_active:hover, .files .inmenue a span, .files .moreinfo {
   background: $filesBlockhead;
@@ -2769,7 +2762,7 @@ th.tools, td.tools {
   margin:0 0 0 0;
 }
 
-/* ## ACCORDION ################ Toggle ############### */
+/* ACCORDION Toggle */
 
 span.acc-toggle, span.acc-toggle-active, .second-thead span.acc-toggle, .second-thead span.acc-toggle-active {
   display: block;
@@ -2810,7 +2803,7 @@ span.acc-toggle-active:hover, .second-thead:hover span.acc-toggle-active  {
   z-index: 1;
 }
 
-/* ## ACCORDION ################ Tools ############### */
+/* ACCORDION Tools */
 
 a.butn_check, a.butn_checked, a.butn_reply {
   display: block;
@@ -2866,7 +2859,7 @@ a.tool_edit:hover, a.tool_del:hover {
   background-position: 0 -22px;
 }
 
-/* ## ACCORDION ############### Marker ############## */
+/* ACCORDION Marker Colors */
 
 .marker-late, .marker-late a {
   color: $red;
@@ -2888,7 +2881,7 @@ a.tool_edit:hover, a.tool_del:hover {
   background-color:$redbg;
 }
 
-/* ## Headlines ## start ## */
+/* Headlines */
 
 h1 {
   font-size: 21px;
@@ -2926,7 +2919,7 @@ h2.head {
   font-weight:normal;
 }
 
-/* ## Infos ## start ## */
+/* Infos */
 
 span.info {
   font-size: 12px;
@@ -2969,7 +2962,7 @@ span.info {
   background: $infoWarning;
 }
 
-/* ## Footer ## start ## */
+/* Footer */
 
 #footer-wrapper {
   clear: both;
@@ -2993,5 +2986,3 @@ span.info {
 .footer a {
   color: $footer;
 }
-
-/* ## Footer ## end ## */
