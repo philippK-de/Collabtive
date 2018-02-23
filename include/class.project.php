@@ -27,7 +27,7 @@ class project extends databaseModel
      */
     function add($name, $desc, $end, $budget, $assignme = 0)
     {
-        global $conn, $mylog;
+        global $mylog;
 
         if ($end > 0) {
             $end = strtotime($end);
