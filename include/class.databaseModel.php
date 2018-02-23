@@ -107,11 +107,11 @@ abstract class databaseModel
         return $stmt->fetchAll();
     }
 
-    protected function countElements()
+    protected function countElements($field = "*")
     {
         global $conn;
 
-        $countStmt = $conn->prepare("SELECT COUNT(*) FROM " . $this->databaseTable);
+        $countStmt = $conn->prepare("SELECT COUNT(" . $field . ") FROM " . $this->databaseTable);
         $countStmt->execute();
 
         $count = $countStmt->fetch();
