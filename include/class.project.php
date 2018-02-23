@@ -36,6 +36,7 @@ class project extends databaseModel
         $insid = $this->addElement([
             "name" => $name,
             "desc" => $desc,
+            "start" => time(),
             "end" => $end,
             "status" => 1,
             "budget" => $budget
