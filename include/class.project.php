@@ -13,7 +13,10 @@
 class project extends databaseModel
 {
     function __construct(){
+        global $conn;
+        $this->databaseConnection = $conn;
         $this->databaseTable = "projekte";
+
     }
     /**
      * Add a project
