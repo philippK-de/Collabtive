@@ -125,7 +125,7 @@ abstract class databaseModel
         global $conn;
         $id = (int)$id;
 
-        $delStmt = $conn->prepare("DELETE FROM deployments WHERE ID = ? LIMIT 1");
+        $delStmt = $conn->prepare("DELETE FROM " . $this->databaseTable . " WHERE ID = ? LIMIT 1");
 
         return $delStmt->execute(array($id));
     }
