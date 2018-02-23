@@ -11,8 +11,9 @@ abstract class databaseModel
         $sqlQuery = "INSERT INTO " . $this->databaseTable . " (";
         $fieldcount = count($fields);
 
-        foreach ($fields as $name => $value) {
-            $sqlQuery .= $name . ",";
+        $keys = array_keys($fields);
+        foreach ($keys as $key) {
+            $sqlQuery .= "`" . $key . "`,";
         }
         //remove superflous comma
         $sqlQuery = substr($sqlQuery, 0, strlen($sqlQuery) - 1);
@@ -27,8 +28,9 @@ abstract class databaseModel
         $sqlQuery .= ")";
         //execute the query
         $stmt = $conn->prepare($sqlQuery);
-        $stmt->execute(array_values($fields));
 
+        $values = array_values($fields);
+        $stmt->execute($values);
         //return the ID for the element
         return $conn->lastInsertId();
     }

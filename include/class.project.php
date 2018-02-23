@@ -33,17 +33,22 @@ class project extends databaseModel
             $end = strtotime($end);
         }
 
-        $now = time();
+        $insid = $this->addElement([
+            "name" => $name,
+            "desc" => $desc,
+            "end" => $end,
+            "status" => 1,
+            "budget" => $budget
+        ]);
+        //$ins1Stmt = $conn->prepare("INSERT INTO projekte (`name`, `desc`, `end`, `start`, `status`, `budget`) VALUES (?,?,?,?,1,?)");
+        //$ins1 = $ins1Stmt->execute(array($name, $desc, $end, $now, (float)$budget));
 
-        $ins1Stmt = $conn->prepare("INSERT INTO projekte (`name`, `desc`, `end`, `start`, `status`, `budget`) VALUES (?,?,?,?,1,?)");
-        $ins1 = $ins1Stmt->execute(array($name, $desc, $end, $now, (float)$budget));
-
-        $insid = $conn->lastInsertId();
+        //$insid = $conn->lastInsertId();
         if ((int)$assignme == 1) {
             $uid = $_SESSION['userid'];
             $this->assign($uid, $insid);
         }
-        if ($ins1) {
+        if ($insid) {
             mkdir(CL_ROOT . "/files/" . CL_CONFIG . "/$insid/", 0777);
             $mylog->add($name, 'projekt', 1, $insid);
             return $insid;
