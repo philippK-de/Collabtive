@@ -55,7 +55,12 @@
                             <td>
                                 <a v-bind:href="'managetask.php?action=showproject&amp;id=' +task.project">{{task.pname | truncate '30' }}</a>
                             </td>
-                            <td class="text-align-right">{{task.daysleft}}&nbsp;&nbsp;</td>
+                            <td class="text-align-right">
+                                {/literal}
+                                <!--autoTimetrackerToggle-->
+                                {literal}
+                                {{task.daysleft}}&nbsp;&nbsp;
+                            </td>
                             <td class="tools">
 
                                 {/literal}{if $userpermissions.tasks.edit} {literal}
