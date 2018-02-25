@@ -504,7 +504,7 @@ class project extends databaseModel
      * @param int $offset Offset for the SQL statement
      * @return array $myProjects Projects for this user
      */
-    function getMyProjects($user, $status = 1, $offset = 0, $limit = 10)
+    function getMyProjects($user, $status = 1, $offset = 0, $limit = 10, $orderBy = "projekt", $orderDirection = "DESC")
     {
         global $conn;
 
@@ -514,7 +514,7 @@ class project extends databaseModel
         $offset = (int)$offset;
         $limit = (int)$limit;
         //get the projekt IDs of projects assigned to this user
-        $selAssigned = $conn->query("SELECT projekt, status FROM projekte_assigned JOIN projekte ON projekte.ID = projekte_assigned.projekt WHERE user = $user AND projekte.status = $status ORDER BY projekt DESC LIMIT $limit OFFSET $offset");
+        $selAssigned = $conn->query("SELECT projekt, status FROM projekte_assigned JOIN projekte ON projekte.ID = projekte_assigned.projekt WHERE user = $user AND projekte.status = $status ORDER BY $orderBy $orderDirection LIMIT $limit OFFSET $offset");
 
         $projectsAssigned = $selAssigned->fetchAll();
 

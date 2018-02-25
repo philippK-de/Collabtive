@@ -63,7 +63,19 @@ if (isset($cleanGet["limit"])) {
     $limit = $cleanGet["limit"];
 }
 
-$myOpenProjects = $projectObj->getMyProjects($userid, 1, $offset, $limit);
+$sortBy = "projekt";
+if(isset($cleanGet["sortBy"]))
+{
+    $sortBy = $cleanGet["sortBy"];
+}
+$sortDirection = "DESC";
+if(isset($cleanGet["sortDirection"]))
+{
+    $sortDirection = $cleanGet["sortDirection"];
+}
+
+
+$myOpenProjects = $projectObj->getMyProjects($userid, 1, $offset, $limit, $sortBy, $sortDirection);
 $projectnum = $projectObj->countMyProjects($userid, 1);
 $template->assign("openProjects", $myOpenProjects);
 
@@ -157,7 +169,6 @@ elseif ($action == "myprojects") {
     $myprojects["items"] = $projects;
     //number of open projects total
     $myprojects["count"] = $projectnum;
-
     echo json_encode($myprojects);
 } elseif ($action == "mytasks") {
     $myTasks["items"] = $sortedTasks;

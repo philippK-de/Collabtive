@@ -192,6 +192,8 @@ var projects = {
     el: "desktopprojects",
     url: "index.php?action=myprojects",
     itemType: "project",
+    sortBy: "projekt",
+    sortDirection: "DESC",
     dependencies: []
 };
 

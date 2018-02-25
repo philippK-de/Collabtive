@@ -21,6 +21,8 @@ function createView(myView) {
         additionalData: [],
         limit: pagination.itemsPerPage,
         offset: 0,
+        sortBy: myView.sortBy || "",
+        sortDirection: myView.sortDirection || "ASC",
         currentPage: 1,
         itemsCount: 0,
         itemType: myView.itemType,
@@ -54,9 +56,17 @@ function createView(myView) {
         }
     });
 
-    var ajax = new ajaxRequest(myModel.url, myView.el, function () {
+    if(myView.sortBy){
+        myView.url = myView.url  + "&sortBy=" + myView.sortBy;
+    }
+    if(myView.sortDirection){
+        myView.url = myView.url  + "&sortDirection=" + myView.sortDirection;
+    }
+
+    var ajax = new ajaxRequest(myView.url, myView.el, function () {
         //update the model with the retrieved data
         const responseData = JSON.parse(ajax.request.responseText);
+
 
         //one page of requested items
         myModel.items = responseData.items;
@@ -99,6 +109,12 @@ function updateView(view, updateDependencies) {
     if (view.offset > 0) {
         myUrl += "&offset=" + view.offset;
     }
+    if(view.sortBy){
+        view.url = myView.url  + "&sortBy=" + myView.sortBy;
+    }
+    if(view.sortDirection){
+        view.url = myView.url  + "&sortDirection=" + myView.sortDirection;
+    }
 
     var ajax = new ajaxRequest(myUrl, view.$el.id, function () {
         //retrieve data and update the views model with it
@@ -128,6 +144,10 @@ function updateView(view, updateDependencies) {
         }
     });
     ajax.sendRequest();
+}
+
+function sortView(view, sortProperty, sortDirection) {
+
 }
 /*
  * Pagination for view JS views
@@ -208,6 +228,8 @@ var pagination = {
         return (page.index == 1 || page.index == 2) || (page.index == pages.length / 2) || (currentPage == page.index) || (page.index == pages.length - 1) || (page.index == pages.length );
     }
 };
+
+
 
 /*
  * Function to asyncronously submit a form
