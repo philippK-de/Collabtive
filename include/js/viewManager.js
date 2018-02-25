@@ -56,17 +56,17 @@ function createView(myView) {
         }
     });
 
+    var myUrl = myView.url;
     if(myView.sortBy){
-        myView.url = myView.url  + "&sortBy=" + myView.sortBy;
+        myUrl += "&sortBy=" + myView.sortBy;
     }
     if(myView.sortDirection){
-        myView.url = myView.url  + "&sortDirection=" + myView.sortDirection;
+        myUrl += "&sortDirection=" + myView.sortDirection;
     }
 
-    var ajax = new ajaxRequest(myView.url, myView.el, function () {
+    var ajax = new ajaxRequest(myUrl, myView.el, function () {
         //update the model with the retrieved data
         const responseData = JSON.parse(ajax.request.responseText);
-
 
         //one page of requested items
         myModel.items = responseData.items;
@@ -110,10 +110,10 @@ function updateView(view, updateDependencies) {
         myUrl += "&offset=" + view.offset;
     }
     if(view.sortBy){
-        view.url = myView.url  + "&sortBy=" + myView.sortBy;
+        myUrl += "&sortBy=" + view.sortBy;
     }
     if(view.sortDirection){
-        view.url = myView.url  + "&sortDirection=" + myView.sortDirection;
+        myUrl += "&sortDirection=" + view.sortDirection;
     }
 
     var ajax = new ajaxRequest(myUrl, view.$el.id, function () {
@@ -146,8 +146,16 @@ function updateView(view, updateDependencies) {
     ajax.sendRequest();
 }
 
-function sortView(view, sortProperty, sortDirection) {
+function sortView(view, sortBy, sortDirection) {
+   view.sortBy = sortBy;
+   view.sortDirection = sortDirection;
+   view.update(false);
+}
 
+function toggleSortDirection(view)
+{
+    var sortDirection = view.sortDirection == "ASC" ? "DESC" : "ASC";
+    sortView(view, view.sortBy, sortDirection);
 }
 /*
  * Pagination for view JS views

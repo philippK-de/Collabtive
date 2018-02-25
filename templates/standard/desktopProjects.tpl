@@ -21,7 +21,7 @@
                 <thead>
                 <tr>
                     <th class="a"></th>
-                    <th class="b" class="cursor-pointer">{#project#}</th>
+                    <th class="b"><span class="cursor-pointer" onclick="toggleSortDirection(projectsView)">{#project#}</span></th>
                     <th class="c" class="cursor-pointer">{#done#}</th>
                     <th class="d" class="text-align-right">{#daysleft#}&nbsp;&nbsp;</th>
                     <th class="tools"></th>
