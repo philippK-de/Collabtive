@@ -80,6 +80,13 @@
                         editor.onChange.add(function () {
                             tinyMCE.triggerSave();
                         });
+                        editor.onKeyDown.add(function(){
+                            editor.save();
+
+                            var textarea = document.getElementsByName(editor.id)[0];
+                            textarea.value = editor.getContent();
+                            console.log(textarea.value);
+                        });
                     }
 
                 });
