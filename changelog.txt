@@ -4,7 +4,8 @@ Collabtive 3.2
 + Draw project members tree in project details on the dashboard
 + Hook comments plugin into task details in my tasks
 + Hook comments plugin into single task view
-+ Update PHP Mailer and Smarty to their latest versions
++ Update PHP Mailer, HTMLPurifier, Smarty to their latest versions
++ Fix issues with tinyMCE not correctly syncing content when saving
 
 Collabtive 3.1
 + Fix a bug where the generic female avatar wasnt shown in the user-admin area

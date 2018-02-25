@@ -69,23 +69,23 @@
                     theme_advanced_resizing_min_width: "450px",
                     theme_advanced_resizing_max_width: "600px",
                     theme_advanced_resize_horizontal: false,
-                    force_br_newlines: true,
                     cleanup: true,
                     cleanup_on_startup: true,
                     force_p_newlines: false,
+                    force_br_newlines: false,
                     convert_newlines_to_brs: false,
                     forced_root_block: false,
                     external_image_list_url: 'manageajax.php?action=jsonfiles&id={/literal}{$project.ID}{literal}',
                     setup: function (editor) {
                         editor.onChange.add(function () {
-                            tinyMCE.triggerSave();
+                            editor.save();
                         });
                         editor.onKeyDown.add(function(){
                             editor.save();
 
                             var textarea = document.getElementsByName(editor.id)[0];
                             textarea.value = editor.getContent();
-                            console.log(textarea.value);
+
                         });
                     }
 
