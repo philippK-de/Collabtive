@@ -8,6 +8,7 @@ Thumbs.db
 *.swo
 
 templates_c/*
+templates/feather/*
 files/*
 templates/mobile/*
 .idea/
