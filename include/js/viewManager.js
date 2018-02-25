@@ -161,7 +161,7 @@ function sortView(view, sortBy, sortDirection = "DESC") {
  */
 
 var pagination = {
-    itemsPerPage: 15,
+    itemsPerPage: 10,
     listPages: function (numTotal) {
         //round up the number of pages
         var pagenum = Math.ceil(numTotal / this.itemsPerPage);
