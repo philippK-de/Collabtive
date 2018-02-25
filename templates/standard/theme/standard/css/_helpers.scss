@@ -10,6 +10,9 @@
   -webkit-user-drag: element;
 }
 
+.mce-container, .mce-ico, .mce-caret, .mce-txt {
+  color: black !important;
+}
 .dragover {
   border: 1px dashed #000;
 }
