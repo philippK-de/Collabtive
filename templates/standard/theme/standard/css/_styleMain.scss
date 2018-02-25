@@ -9,13 +9,13 @@ html, body {
 }
 
 body {
-  color:#082343;
-  background:#28648b;
+  color: $bodyColor;
+  background: $bodyBackground;
   background-attachment: fixed;
 }
 
 body a, body a:visited {
-  text-decoration:none;
+  text-decoration: none;
   outline: none;
 }
 
@@ -25,12 +25,12 @@ body a:hover {
 
 ::selection {
   background: $colorMain;
-  color: #fff;
+  color: $white;
 }
 
 ::-moz-selection {
   background: $colorMain;
-  color: #fff;
+  color: $white;
 }
 
 ul {
@@ -65,7 +65,7 @@ td.message ul {
 .login-alert {
   margin: 3px 0 0 0;
   padding: 5px 0 5px 0;
-  background-image: url(../images/login-alert.png);
+  background-image: $loginAlertBackground;
   font-weight: bold;
   color: $loginAlert;
 }
@@ -138,7 +138,7 @@ td.message ul {
 }
 
 #header .logo h1 span.title {
-  color: #fff;
+  color: $white;
   font-size: 26px;
   font-weight: bold;
   position: relative;
@@ -273,7 +273,7 @@ td.message ul {
   width: 32px;
   height: 7px;
   padding: 0;
-  background: url(../images/main-submen.png) no-repeat center 0;
+  background: $subMenuArrowIcon;
 }
 
 /* CONTENT */
@@ -350,7 +350,7 @@ td.message ul {
 }
 
 .content-right-in a:hover {
-  color: #9daab7;
+  color: $onlineListUserHoverColor;
 }
 
 #content-right h2 {
@@ -363,12 +363,12 @@ td.message ul {
   display: block;
   width: 100%;
   height: 16px;
-  background: url(../images/win-up-side.png) no-repeat right 1px;
+  background: $windowUpIcon;
   margin: 0 0 5px 0;
 }
 
 #content-right h2 a.win-down {
-  background: url(../images/win-down-side.png) no-repeat right 1px;
+  background: $windowDownIcon;
 }
 
 #content-right h2 a.win-up:hover, #content-right h2 a.win-down:hover {
@@ -392,8 +392,8 @@ td.message ul {
   padding: 4px 6px 0 6px;
   border:none;
   font-size: 12px;
-  background: url(../images/input-bg-a.png) repeat-x 0 0;
-  color: #0a182f;
+  background: $chatRowBackgroundColor;
+  color: $chatRowTextColor;
   font-weight: bold;
   margin-right: 3px;
 }
@@ -405,18 +405,18 @@ td.message ul {
   overflow: auto;
   margin: 0 0 10px 0;
   float: left;
-  background: #fff;
-  color: #0a182f;
+  background: $white;
+  color: $chatTextColor;
 }
 
 .chat button:hover {
   background: $baseTextColor;
-  color: #0a182f;
+  color: $chatButtonTextColor;
 }
 
 .chat button[disabled]:hover {
-  background: #384e67;
-  color: #fff;
+  background: $chatButtonBackgroundDisabled;
+  color: $white;
 }
 
 /* SEARCH MODAL */
@@ -445,7 +445,7 @@ td.message ul {
 }
 
 .wintools a {
-  background: url(../images/win-tools.png) 0 0;
+  background: $toolIconsWindow;
 }
 
 .wintools a.close {
@@ -585,11 +585,11 @@ td.message ul {
 }
 
 .projects .export-main, .projects .export-main a {
-  background-image: url(../images/export-tasks.png);
+  background-image: $exportTasksIcons;
 }
 
 .projects .wintools .export-main, .projects .wintools .export-main a {
-  background-image: url(../images/export-headline.png);
+  background-image: $exportIcons;
 }
 
 .projects .wintools .export-main a:hover span, .projects .wintools a:hover span {
@@ -597,11 +597,11 @@ td.message ul {
 }
 
 .tasks .export-main, .tasks .export-main a {
-  background-image: url(../images/export-tasks.png);
+  background-image: $exportTasksIcons;
 }
 
 .tasks .wintools .export-main, .tasks .wintools .export-main a {
-  background-image: url(../images/export-headline.png);
+  background-image: $exportIcons;
 }
 
 .tasks .wintools .export-main a:hover span, .tasks .wintools a:hover span, .wintools a:hover span {
@@ -609,11 +609,11 @@ td.message ul {
 }
 
 .msgs .export-main, .msgs .export-main a {
-  background-image: url(../images/export-msgs.png);
+  background-image: $exportMessagesIcons;
 }
 
 .msgs .wintools .export-main, .msgs .wintools .export-main a {
-  background-image: url(../images/export-headline.png);
+  background-image: $exportIcons;
 }
 
 .msgs .wintools .export-main a:hover span, .msgs .wintools a:hover span {
@@ -621,11 +621,11 @@ td.message ul {
 }
 
 .user .export-main, .user .export-main a {
-  background-image: url(../images/export-vcard.png);
+  background-image: $vcardIcon;
 }
 
 .user .wintools .export-main, .user .wintools .export-main a {
-  background-image: url(../images/export-headline.png);
+  background-image: $exportIcons;
 }
 
 .user .wintools .export-main a:hover span, .user .wintools a:hover span {
@@ -633,7 +633,7 @@ td.message ul {
 }
 
 .timetrack .wintools .export-main, .timetrack .wintools .export-main a {
-  background-image: url(../images/export-headline.png);
+  background-image: $exportIcons;
 }
 
 .timetrack .wintools .export-main a:hover span, .timetrack .wintools a:hover span {
@@ -641,7 +641,7 @@ td.message ul {
 }
 
 .miles .wintools .export-main, .miles .wintools .export-main a {
-  background-image: url(../images/export-headline.png);
+  background-image: $exportIcons;
 }
 
 .miles .wintools .export-main a:hover span, .miles .wintools a:hover span {
@@ -649,7 +649,7 @@ td.message ul {
 }
 
 .neutral .wintools .export-main, .neutral .wintools .export-main a {
-  background-image: url(../images/export-headline.png);
+  background-image: $exportIcons
 }
 
 .neutral .wintools .export-main a:hover span, .neutral .wintools a:hover span {
@@ -657,11 +657,11 @@ td.message ul {
 }
 
 .files .wintools .addmen .export-main, .files .wintools .addmen .export-main a {
-  background-image: url(../images/add-files.png);
+  background-image: $addFilesIcons;
 }
 
 .files .wintools .export-main, .files .wintools .export-main a {
-  background-image: url(../images/export-headline.png);
+  background-image: $exportIcons;
 }
 
 .files .wintools .export-main a:hover span, .files .wintools a:hover span {
@@ -675,7 +675,7 @@ td.message ul {
 }
 
 .add-main a.add, .add-main a.add-active {
-  background-image: url(../images/adds.png);
+  background-image: $addIcon;
   margin: 0;
 }
 
@@ -831,7 +831,7 @@ td.message ul {
   display: none;
   width: 14px;
   height: 14px;
-  background: url(../images/inmenue-tools.png) no-repeat;
+  background: $toolIcons;
   margin: 0 0 3px 8px;
 }
 
@@ -912,7 +912,7 @@ td.message ul {
 
 .cal td {
   padding: 0;
-  background: url(../images/color-d.png) repeat 0 0;
+  background: $datePickerBackground;
   text-align: center;
   font-size: 11px;
 }
@@ -922,11 +922,11 @@ td.message ul {
 }
 
 .cal tr.head td {
-  background: url(../images/color-d.png) repeat 0 0;
+  background: $datePickerBackground;
 }
 
 .cal tr.weekday td {
-  background: url(../images/color-c.png) repeat 0 0;
+  background: $datePickerWeekdayBackground;
 }
 
 .cal td.back, .cal td.next {}
@@ -935,11 +935,11 @@ td.message ul {
   display: block;
   width: 100%;
   height: 23px;
-  background: url(../images/back-side.png) no-repeat center 7px;
+  background: $datePickerIconBack;
 }
 
 .cal td.next a {
-  background-image: url(../images/next-side.png);
+  background-image: $datePickerIconNext;
 }
 
 .cal td.back a:hover, .cal td.next a:hover {
@@ -947,23 +947,23 @@ td.message ul {
 }
 
 .cal td.wrong {
-  color: #3c556f;
-  background: url(../images/color-c.png) repeat 0 0;
+  color: $datePickerWrong;
+  background: $datePickerBackgroundWrong;
 }
 
 .cal td.today {
-  color: #52a454;
-  background: url(../images/color-c-green.png) repeat 0 0;
+  color: $datePickerToday;
+  background: $datePickerBackgroundToday;
 }
 
 .cal td.red {
-  color: #be4c43;
-  background: url(../images/color-c-red.png) repeat 0 0;
+  color: $datePickerRed;
+  background: $datePickerBackgroundRed;
 }
 
 .cal td.cyan {
-  color: #529ba4;
-  background: url(../images/color-c-cyan.png) repeat 0 0;
+  color: $datePickerBlue;
+  background: $datePickerBackgroundBlue;
 }
 
 /* BIG CALENDAR */
@@ -1014,11 +1014,11 @@ td.message ul {
   display: block;
   width: 100%;
   height: 100%;
-  background: url(../images/scroll_left_miles.png) no-repeat center 15px;
+  background: $calendarScrollLeftBackground;
 }
 
 .bigcal .scroll_right {
-  background-image: url(../images/scroll_right_miles.png);
+  background-image: $calendarScrollRightBackground;
 }
 
 .bigcal .scroll_left:hover, .bigcal .scroll_right:hover {
@@ -1058,7 +1058,7 @@ td.message ul {
 
 .closewin a {
   display: block;
-  background: url(../images/closewin.png) no-repeat right 1px;
+  background: $calendarCloseIcon;
 }
 
 .closewin a:hover {
@@ -1110,7 +1110,7 @@ td.message ul {
 
 .projects .datepick td.today, .tasks .datepick td.today, .miles .datepick td.today, .timetrack .datepick td.today, .neutral .datepick td.today {
   color: $green;
-  background: $datePickerBackgroundGreen;
+  background: $datePickerBackgroundToday;
 }
 
 .projects .datepick td.red, .tasks .datepick td.red, .miles .datepick td.red, .timetrack .datepick td.red, .neutral .datepick td.red {
@@ -1172,11 +1172,11 @@ td.message ul {
 }
 
 .neutral .datepick td.next a {
-  background-image: $datePickerIconNext;
+  background-image: $datePickerIconNextNeutral;
 }
 
 .neutral .datepick td.back a {
-  background-image: $datePickerIconBack;
+  background-image: $datePickerIconBackNeutral;
 }
 
 /* ONLINE LIST */

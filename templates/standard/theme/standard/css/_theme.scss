@@ -1,19 +1,32 @@
 /*
-* Main menu tabs
+* Main menu
 */
 $menuTabDesktop: url(../images/main-desk.png) no-repeat 0 0;
 $menuTabProfileMale: url(../images/main-prof-male.png) no-repeat 0 0;
 $menuTabProfileFemale: url(../images/main-prof-female.png) no-repeat 0 0;
 $menuTabAdmin: url(../images/main-settings.png) no-repeat 0 0;
 $menuTabLogout: url(../images/main-logout.png) no-repeat 0 0;
+$subMenuArrowIcon: url(../images/main-submen.png) no-repeat center 0;
 
 /*
-* Submenu tabs
+* Submenu
 */
 $submenuProjectSettings: url(../images/main-admin-a.png) no-repeat 0 0;
 $submenuUserSettings: url(../images/main-admin-b.png) no-repeat 0 0;
 $submenuSystemSettings: url(../images/main-admin-c.png) no-repeat 0 0;
 $submenuCustomerSettings: url(../images/main-admin-d.png) no-repeat 0 0;
+
+/*
+* Tool icons
+*/
+$toolIcons: url(../images/inmenue-tools.png) no-repeat;
+$toolIconsWindow: url(../images/win-tools.png) 0 0;
+$vcardIcon: url(../images/export-vcard.png);
+$addIcon: url(../images/adds.png);
+$addFilesIcons: url(../images/add-files.png);
+$exportIcons: url(../images/export-headline.png);
+$exportTasksIcons: url(../images/export-tasks.png);
+$exportMessagesIcons: url(../images/export-msgs.png);
 
 /*
 * Tabs on top of blocks
@@ -83,22 +96,34 @@ $projectReplyIconActive: url(../images/butn-reply.png) no-repeat center 4px;
 $projectDescriptionToggleIconActive: url(../images/acc-open.png) no-repeat right 9px;
 
 /*
-* Icons in user profile
-*/
-$vcardIcon: url(../images/export-vcard.png);
-
-/*
 * Icons in file manager
 */
 $parentFolderIcon: url(../images/root-arrow.png) no-repeat 2px 0;
 
 /*
+* Calendar
+*/
+$calendarScrollLeftBackground: url(../images/scroll_left_miles.png) no-repeat center 15px;
+$calendarScrollRightBackground: url(../images/scroll_right_miles.png);
+$calendarCloseIcon: url(../images/closewin.png) no-repeat right 1px;
+
+/*
 * Datepicker
 */
-$datePickerBackgroundGreen: url(../images/color-c-green.png) repeat 0 0;
+$datePickerBackground: url(../images/color-d.png) repeat 0 0;
+$datePickerWeekdayBackground: url(../images/color-c.png) repeat 0 0;
+$datePickerWrong: #3c556f;
+$datePickerToday: #52a454;
+$datePickerRed: #be4c43;
+$datePickerBlue: #529ba4;
+$datePickerBackgroundWrong: url(../images/color-c.png) repeat 0 0;
+$datePickerBackgroundToday: url(../images/color-c-green.png) repeat 0 0;
+$datePickerBackgroundBlue: url(../images/color-c-cyan.png) repeat 0 0;
 $datePickerBackgroundRed: url(../images/color-c-red.png) repeat 0 0;
-$datePickerIconNext: url(../images/next-side-neutral.png);
-$datePickerIconBack: url(../images/back-side-neutral.png);
+$datePickerIconNext: url(../images/next-side.png);
+$datePickerIconBack: url(../images/back-side.png) no-repeat center 7px;
+$datePickerIconNextNeutral: url(../images/next-side-neutral.png);
+$datePickerIconBackNeutral: url(../images/back-side-neutral.png);
 $datePickerIconNextInProject: url(../images/next-side-projects.png);
 $datePickerIconBackInProject: url(../images/back-side-projects.png);
 $datePickerIconNextInTask: url(../images/next-side-tasks.png);
@@ -113,19 +138,33 @@ $datePickerIconNextInFileManager: url(../images/next-side-files.png);
 $datePickerIconBackInFileManager: url(../images/back-side-files.png);
 
 /*
-* Online list
+* Online list and chat
 */
+$chatRowTextColor: #0a182f;
+$chatRowBackgroundColor: url(../images/input-bg-a.png) repeat-x 0 0;
+$chatTextColor: #0a182f;
+$chatButtonTextColor: #0a182f;
+$chatButtonBackgroundDisabled: #384e67;
 $onlineListChatIcon: url(../images/chat.png) no-repeat right -23px;
 $onlineListUserHoverColor: #9daab7;
 $onlineListLinkColor: #3c5570;
 $onlineListLinkHoverColor: url(../images/color-b.png) repeat 0 0;
 
 /*
+* Content
+*/
+$windowDownIcon: url(../images/win-down-side.png) no-repeat right 1px;
+$windowUpIcon: url(../images/win-up-side.png) no-repeat right 1px;
+
+/*
 * Base colors
 */
+$bodyColor: #082343;
+$bodyBackground: #28648b;
 $colorMain: #001e40;
 
 $loginAlert: #fac3b7;
+$loginAlertBackground: url(../images/login-alert.png);
 
 $logoName: #fff;
 $logoSubname: #6ab0c5;
