@@ -1,9 +1,8 @@
-
-README
-    All about HTML Purifier
+HTML Purifier [![Build Status](https://secure.travis-ci.org/ezyang/htmlpurifier.svg?branch=master)](http://travis-ci.org/ezyang/htmlpurifier)
+=============
 
 HTML Purifier is an HTML filtering solution that uses a unique combination
-of robust whitelists and agressive parsing to ensure that not only are
+of robust whitelists and aggressive parsing to ensure that not only are
 XSS attacks thwarted, but the resulting HTML is standards compliant.
 
 HTML Purifier is oriented towards richly formatted documents from
@@ -19,6 +18,12 @@ Places to go:
   an in-depth installation guide.
 * See WYSIWYG for information on editors like TinyMCE and FCKeditor
 
-HTML Purifier can be found on the web at: http://htmlpurifier.org/
+HTML Purifier can be found on the web at: [http://htmlpurifier.org/](http://htmlpurifier.org/)
 
-    vim: et sw=4 sts=4
+## Installation
+
+Package available on [Composer](https://packagist.org/packages/ezyang/htmlpurifier).
+
+If you're using Composer to manage dependencies, you can use
+
+    $ composer require "ezyang/htmlpurifier":"dev-master"
