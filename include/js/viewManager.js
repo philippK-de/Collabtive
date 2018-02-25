@@ -146,16 +146,10 @@ function updateView(view, updateDependencies) {
     ajax.sendRequest();
 }
 
-function sortView(view, sortBy, sortDirection) {
+function sortView(view, sortBy, sortDirection = "DESC") {
    view.sortBy = sortBy;
-   view.sortDirection = sortDirection;
+   view.sortDirection = view.sortDirection == "ASC" ? "DESC" : "ASC";
    view.update(false);
-}
-
-function toggleSortDirection(view)
-{
-    var sortDirection = view.sortDirection == "ASC" ? "DESC" : "ASC";
-    sortView(view, view.sortBy, sortDirection);
 }
 /*
  * Pagination for view JS views

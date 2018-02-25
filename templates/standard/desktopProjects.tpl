@@ -21,9 +21,9 @@
                 <thead>
                 <tr>
                     <th class="a"></th>
-                    <th class="b"><span class="cursor-pointer" onclick="toggleSortDirection(projectsView)">{#project#}</span></th>
+                    <th class="b"><span class="cursor-pointer" onclick="sortView(projectsView, 'projekt');">{#project#}</span></th>
                     <th class="c" class="cursor-pointer">{#done#}</th>
-                    <th class="d" class="text-align-right">{#daysleft#}&nbsp;&nbsp;</th>
+                    <th class="d" class="text-align-right"><span class="cursor-pointer" onclick="sortView(projectsView, 'end');">{#daysleft#}</span>&nbsp;&nbsp;</th>
                     <th class="tools"></th>
                 </tr>
                 </thead>
