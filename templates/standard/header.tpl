@@ -58,7 +58,7 @@
                     menubar: false,
                     toolbar: ["bold italic underline | fontsizeselect forecolor | alignleft aligncenter alignright | bullist numlist |",
                         "| link image | forecolor"],
-                    plugins: 'autolink link image lists charmap code textcolor colorpicker',
+                    plugins: 'autolink link image lists code textcolor colorpicker',
                     branding: false,
                     cleanup: true,
                     cleanup_on_startup: true,
