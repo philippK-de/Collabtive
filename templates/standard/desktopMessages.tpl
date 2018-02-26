@@ -47,15 +47,14 @@
                         <div class="toggle-in">
                             <span v-bind:id="'desktopmessages_toggle' + item.ID"
                                   class="acc-toggle"
-                                  v-bind:onclick="'javascript:accord_msgs.toggle(css(\'#desktopmessages_content'+$index+'\'));'"></span>
+                                  v-bind:onclick="'javascript:createFilesTree(messagesView);createMilestonesTree(messagesView);accord_msgs.toggle(css(\'#desktopmessages_content'+$index+'\'));'"></span>
                             <a :href="'managemessage.php?action=showmessage&amp;mid='+item.ID+'&amp;id='+item.project"
                                :title="item.title">
                                 {{{item.title | truncate '30'}}}</a>
                         </div>
                     </td>
                     <td>
-                        <a v-bind:href="'managemessage.php?action=showproject&amp;id=' + item.project">{{item.pname
-                            }}</a>
+                        <a v-bind:href="'managemessage.php?action=showproject&amp;id=' + item.project">{{item.pname}}</a>
                     </td>
                     <td>
                         <a v-bind:href="'manageuser.php?action=profile&amp;id=' + item.user">{{item.username }}</a>

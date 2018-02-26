@@ -75,8 +75,6 @@
         var accord_tasks;
         tasksView.afterUpdate(function () {
             accord_tasks = new accordion2('desktoptasks');
-            // redraw editors
-            initTinyMce();
         });
     {/if}
     {if $msgnum > 0}
@@ -87,8 +85,6 @@
         var accord_msgs;
         messagesView.afterUpdate(function () {
             accord_msgs = new accordion2('desktopmessages');
-            createMilestonesTree(messagesView);
-            createFilesTree(messagesView);
 
         });
     {/if}
