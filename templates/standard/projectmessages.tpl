@@ -18,7 +18,7 @@
 
             {*Add Message*}
             {if $userpermissions.messages.add}
-                <div class="add-main" style="left:-60px;">
+                <div class="add-main" style="left:-160px;">
                     <form class="main" action="javascript:void(0);">
                         <fieldset>
                             <div class="row">
