@@ -186,6 +186,7 @@ function createUsersTree(view, treeName="usersTree"){
 }
 
 
+
 var projectsViewDependencies = [];
 //create the objects representing the Widgets with their DOM element, DataURL, Dependencies and view managing them
 var projects = {
@@ -218,9 +219,45 @@ var desktopCalendar = {
     dependencies: []
 };
 
+var calendarView;
+
+var tasksView;
+var accord_tasks;
+
+var messagesView;
+var accord_msgs;
+function initialiseView(viewName) {
+    if(viewName == "calendar")
+    {
+        calendarView = createView(desktopCalendar);
+    }
+    if(viewName == "tasks") {
+        tasksView = createView(tasks);
+        //add this view to the dependencies of projectsView
+        projectsViewDependencies.push(tasksView);
+
+
+
+        tasksView.afterUpdate(function () {
+            accord_tasks = new accordion2('desktoptasks');
+        });
+    }
+    if(viewName == "messages"){
+        messagesView = createView(messages);
+        //add this view to the dependencies of projectsView
+        projectsViewDependencies.push(messagesView);
+
+
+        messagesView.afterUpdate(function () {
+            accord_msgs = new accordion2('desktopmessages');
+
+        });
+    }
+
+}
 //create views - binding the data to the dom element
 var projectsView = createView(projects);
-var calendarView = createView(desktopCalendar);
+//var calendarView = createView(desktopCalendar);
 //get the form to be submitted
 var addProjectForm = document.getElementById("addprojectform");
 //assign the view to be updated after submitting to the formView variable

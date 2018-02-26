@@ -1,6 +1,6 @@
-<div id="desktopCalendar" class="miles padding-bottom-two-px"  v-cloak>
+<div id="desktopCalendar" class="miles padding-bottom-two-px"  >
     <div class="headline">
-        <a href="javascript:void(0);" id="mileshead_toggle" class="win_none" onclick=""></a>
+        <a href="javascript:void(0);" id="mileshead_toggle" class="win_none" onclick="initialiseView('calendar');"></a>
 
         <div class="wintools">
             <loader block="desktopCalendar" loader="loader-calendar.gif"></loader>
@@ -13,7 +13,7 @@
     </div>
 
     {if $context == "project"}
-    <div class="block accordion_content overflow-hidden" id="mileshead" >
+    <div class="block accordion_content overflow-hidden" id="mileshead" v-cloak>
         {else}
         <div class="block blockaccordion_content overflow-hidden" id="mileshead">
             {/if}

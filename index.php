@@ -58,7 +58,7 @@ $offset = 0;
 if (isset($cleanGet["offset"])) {
     $offset = $cleanGet["offset"];
 }
-$limit = 10;
+$limit = 15;
 if (isset($cleanGet["limit"])) {
     $limit = $cleanGet["limit"];
 }

@@ -72,8 +72,6 @@ accordion2.prototype.toggle = function (contentSlide) {
     for (var i = 0; i < this.accordionContents.length; i++) {
         //save the current content and toggle in an instance var so it can be used in other method scopes
         this.currentToggle = this.accordionToggles[i];
-
-
         if (i != numSlide) {
             //only on visible elements
             if(this.accordionContents[i].style.display != "none"){
