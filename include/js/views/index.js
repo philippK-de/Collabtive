@@ -39,7 +39,8 @@ function initializeBlockaccordeon() {
         var theAction = theBlocks[i].getAttribute("onclick");
         //add a call to activate accordeon
         theAction += "activateAccordeon(" + i + ");";
-        theBlocks[i].setAttribute("onclick", theAction);
+       // theBlocks[i].setAttribute("onclick", theAction);
+
     }
     //activateAccordeon(openSlide);
     activateAccordeon(0);
@@ -227,19 +228,24 @@ var accord_tasks;
 var messagesView;
 var accord_msgs;
 function initialiseView(viewName) {
-    if(viewName == "calendar")
-    {
-        calendarView = createView(desktopCalendar);
-    }
     if(viewName == "tasks") {
         tasksView = createView(tasks);
         //add this view to the dependencies of projectsView
         projectsViewDependencies.push(tasksView);
 
 
-
+        tasksView.afterLoad(function() {
+            activateAccordeon(1);
+        });
         tasksView.afterUpdate(function () {
             accord_tasks = new accordion2('desktoptasks');
+        });
+    }
+    if(viewName == "calendar")
+    {
+        calendarView = createView(desktopCalendar);
+        calendarView.afterUpdate(function() {
+            activateAccordeon(2);
         });
     }
     if(viewName == "messages"){
@@ -248,10 +254,14 @@ function initialiseView(viewName) {
         projectsViewDependencies.push(messagesView);
 
 
+        messagesView.afterUpdate(function(){
+            activateAccordeon(3);
+        });
         messagesView.afterUpdate(function () {
             accord_msgs = new accordion2('desktopmessages');
 
         });
+
     }
 
 }
