@@ -112,7 +112,6 @@ var messagesView;
 var accord_msgs;
 function initialiseView(viewName) {
     if (viewName == "tasks") {
-        console.log(tasksView);
         if (!tasksView) {
             tasksView = createView(tasks);
             //add this view to the dependencies of projectsView
