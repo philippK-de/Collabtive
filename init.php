@@ -1,5 +1,9 @@
 <?php
-//set PHP configuration
+/*
+ *
+ * PHP configuration
+ *
+ */
 ini_set("arg_separator.output", "&amp;");
 //default to utf8
 ini_set("default_charset", "utf-8");
@@ -7,13 +11,25 @@ ini_set("default_charset", "utf-8");
 ini_set("post_max_size", "256M");
 ini_set("upload_max_filesize", "256M");
 ini_set("max_file_uploads", "100");
+// uncomment next line for debugging
+error_reporting(E_ALL || E_STRICT);
 
+/*
+ *
+ * Webserver / Headers
+ *
+ */
 // Set content security policy header. This instructs the browser to block various unsafe behaviours.
 header("Content-Security-Policy:style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'self';");
 // Start output buffering with gzip compression and start the session
 ob_start('ob_gzhandler');
 session_start();
 
+/*
+ *
+ * Collabtive Constants
+ *
+ */
 // get full path to collabtive
 define("CL_ROOT", realpath(dirname(__FILE__)));
 define("CL_DIRECTORY",basename(__DIR__));
@@ -25,8 +41,11 @@ define("CL_PUBDATE", "1484175600");
 define("CL_PUBLIC_VERSION", "3.2");
 
 
-// uncomment next line for debugging
-error_reporting(E_ALL || E_STRICT);
+/*
+ *
+ * Imports / globals
+ *
+ */
 // include config file , pagination and global functions
 require(CL_ROOT . "/config/" . CL_CONFIG . "/config.php");
 //include composer dependencies
@@ -70,6 +89,12 @@ $template->assign("myversion", CL_PUBLIC_VERSION);
 if (!isset($db_driver)) {
     $db_driver = "mysql";
 }
+
+/*
+ *
+ * Database
+ *
+ */
 // Start database connection
 // Depending on the DB driver, instantiate a PDO object with the necessary credentials.
 $db_drivers = PDO::getAvailableDrivers();
@@ -113,6 +138,12 @@ if (isset($conn)) {
 }
 
 
+/*
+ *
+ * Locale
+ *
+ */
+
 // Set template directory
 // If no directory is set in the system settings, default to the standard theme
 if (isset($settings['template'])) {
@@ -144,6 +175,20 @@ $langfile = readLangfile($locale);
 $template->assign("langfile", $langfile);
 $template->assign("locale", $locale);
 
+// css classes for headmenue
+// this indicates which of the 3 main stages the user is on
+$mainclasses = array("desktop" => "desktop",
+    "profil" => "profil",
+    "admin" => "admin"
+);
+$template->assign("mainclasses", $mainclasses);
+
+
+/*
+ *
+ * User
+ *
+ */
 // If a user is logged in , assign globals to all templates
 if (isset($_SESSION["userid"])) {
     // get current year and month
@@ -174,7 +219,6 @@ if (isset($_SESSION["userid"])) {
     $pluginManager = new pluginManager();
     $pluginManager->loadPlugins();
 
-
     // assign it all to the templates
     $template->assign("userid", $userid);
     $template->assign("username", $username);
@@ -187,14 +231,5 @@ if (isset($_SESSION["userid"])) {
     $settings = array();
     $userid = 0;
 }
-
-
-// css classes for headmenue
-// this indicates which of the 3 main stages the user is on
-$mainclasses = array("desktop" => "desktop",
-    "profil" => "profil",
-    "admin" => "admin"
-);
-$template->assign("mainclasses", $mainclasses);
 
 
