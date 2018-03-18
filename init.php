@@ -47,6 +47,13 @@ $template->error_reporting = E_ALL & ~E_NOTICE;
 $template->force_compile = true;
 //$template->force_compile = true;
 
+
+/* Smarty 3 seems to have a problem with re-compiling the config if the user config is different than the system config.
+ * this forces a compile of the config.
+ * uncomment this if you have issues with language switching
+ */
+// $template->compileAllConfig('.config',true);
+
 // get the available languages
 $languages = getAvailableLanguages();
 // get URL to this instance
@@ -105,6 +112,38 @@ if (isset($conn)) {
     $settings = array();
 }
 
+
+// Set template directory
+// If no directory is set in the system settings, default to the standard theme
+if (isset($settings['template'])) {
+    $template->setTemplateDir(CL_ROOT . "/templates/" . $settings["template"] . "/");
+} else {
+    $template->setTemplateDir(CL_ROOT . "/templates/standard/");
+}
+
+// If no locale is set, get the settings locale or default to english
+if (!isset($locale)) {
+    if (isset($settings["locale"])) {
+        $locale = $settings['locale'];
+    } else {
+        $locale = "en";
+    }
+    $_SESSION['userlocale'] = $locale;
+}
+// if detected locale doesnt have a corresponding langfile , use system default locale
+// if, for whatever reason, no system default language is set, default to english as a last resort
+if (!file_exists(CL_ROOT . "/language/$locale/lng.conf")) {
+    $locale = $settings['locale'];
+    $_SESSION['userlocale'] = $locale;
+}
+// Set locale directory
+$template->setConfigDir(CL_ROOT . "/language/$locale/");
+
+// read language file into PHP array
+$langfile = readLangfile($locale);
+$template->assign("langfile", $langfile);
+$template->assign("locale", $locale);
+
 // If a user is logged in , assign globals to all templates
 if (isset($_SESSION["userid"])) {
     // get current year and month
@@ -129,6 +168,13 @@ if (isset($_SESSION["userid"])) {
     if (isset($conn)) {
         $conn->exec("UPDATE LOW_PRIORITY user SET lastlogin='$mynow' WHERE ID = $userid");
     }
+
+    $project = new project();
+    //create plugins manager
+    $pluginManager = new pluginManager();
+    $pluginManager->loadPlugins();
+
+
     // assign it all to the templates
     $template->assign("userid", $userid);
     $template->assign("username", $username);
@@ -142,43 +188,7 @@ if (isset($_SESSION["userid"])) {
     $userid = 0;
 }
 
-// Set template directory
-// If no directory is set in the system settings, default to the standard theme
-if (isset($settings['template'])) {
-    $template->setTemplateDir(CL_ROOT . "/templates/$settings[template]/");
-    // $template->tname = $settings["template"];
-} else {
-    $template->setTemplateDir(CL_ROOT . "/templates/standard/");
-    // $template->tname = "standard";
-}
-// If no locale is set, get the settings locale or default to english
-if (!isset($locale)) {
-    if (isset($settings["locale"])) {
-        $locale = $settings['locale'];
-    } else {
-        $locale = "en";
-    }
-    $_SESSION['userlocale'] = $locale;
-}
-// if detected locale doesnt have a corresponding langfile , use system default locale
-// if, for whatever reason, no system default language is set, default to english as a last resort
-if (!file_exists(CL_ROOT . "/language/$locale/lng.conf")) {
-    $locale = $settings['locale'];
-    $_SESSION['userlocale'] = $locale;
-}
-// Set locale directory
-$template->setConfigDir(CL_ROOT . "/language/$locale/");
 
-/* Smarty 3 seems to have a problem with re-compiling the config if the user config is different than the system config.
- * this forces a compile of the config.
- * uncomment this if you have issues with language switching
- */
-// $template->compileAllConfig('.config',true);
-
-// read language file into PHP array
-$langfile = readLangfile($locale);
-$template->assign("langfile", $langfile);
-$template->assign("locale", $locale);
 // css classes for headmenue
 // this indicates which of the 3 main stages the user is on
 $mainclasses = array("desktop" => "desktop",
@@ -186,12 +196,5 @@ $mainclasses = array("desktop" => "desktop",
     "admin" => "admin"
 );
 $template->assign("mainclasses", $mainclasses);
-// if user is logged in
-if (isset($userid)) {
-    $project = new project();
-    //create plugins manager
-    $pluginManager = new pluginManager();
-    $pluginManager->loadPlugins();
-}
 
 
