@@ -13,6 +13,7 @@ header("Content-Security-Policy:style-src 'self' 'unsafe-inline'; script-src 'se
 // Start output buffering with gzip compression and start the session
 ob_start('ob_gzhandler');
 session_start();
+
 // get full path to collabtive
 define("CL_ROOT", realpath(dirname(__FILE__)));
 define("CL_DIRECTORY",basename(__DIR__));
@@ -20,6 +21,10 @@ define("CL_DIRECTORY",basename(__DIR__));
 define("CL_CONFIG", "standard");
 // collabtive release date
 define("CL_PUBDATE", "1484175600");
+// set the version number for display
+define("CL_PUBLIC_VERSION", "3.2");
+
+
 // uncomment next line for debugging
 error_reporting(E_ALL || E_STRICT);
 // include config file , pagination and global functions
@@ -36,9 +41,23 @@ $purifier = new HTMLPurifier($config);
 
 // Start template engine
 $template = new Smarty();
+// Smarty config
 // STOP smarty from spewing notices all over the html code
 $template->error_reporting = E_ALL & ~E_NOTICE;
 $template->force_compile = true;
+//$template->force_compile = true;
+
+// get the available languages
+$languages = getAvailableLanguages();
+// get URL to this instance
+$url = getMyUrl();
+
+// assign values to templates
+$template->assign("url", $url);
+$template->assign("languages", $languages);
+$template->assign("cl_config", CL_CONFIG);
+$template->assign("myversion", CL_PUBLIC_VERSION);
+
 
 //assume mysql as the default db
 if (!isset($db_driver)) {
@@ -63,7 +82,7 @@ switch ($db_driver) {
         break;
 }
 
-// get system settings
+// database connection established
 if (isset($conn)) {
     // Set PDO options
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
@@ -76,30 +95,17 @@ if (isset($conn)) {
     // get a settings object, and fetch an array containing the system settings
     $settingsObj = (object)new settings();
     $settings = $settingsObj->getSettings();
+    $template->assign("settings", $settings);
 
     // define a constant that holds the default dateformat
     define("CL_DATEFORMAT", $settings["dateformat"]);
     // set the default TZ for date etc
     date_default_timezone_set($settings["timezone"]);
-    $template->assign("settings", $settings);
 } else {
     $settings = array();
 }
 
-// get the available languages
-$languages = getAvailableLanguages();
-// get URL to collabtive
-$url = getMyUrl();
-
-//$template->force_compile = true;
-
-$template->assign("url", $url);
-$template->assign("languages", $languages);
-// set the version number for display
-$template->assign("myversion", "3.1");
-$template->assign("cl_config", CL_CONFIG);
-
-// Assign globals to all templates
+// If a user is logged in , assign globals to all templates
 if (isset($_SESSION["userid"])) {
     // get current year and month
     $template->assign("theM", date("n"));
@@ -117,10 +123,11 @@ if (isset($_SESSION["userid"])) {
     $gender = $_SESSION["usergender"];
     // what the user may or may not do
     $userpermissions = $_SESSION["userpermissions"];
+
     // update user lastlogin for the onlinelist
     $mynow = time();
     if (isset($conn)) {
-        $conn->exec("UPDATE user SET lastlogin='$mynow' WHERE ID = $userid");
+        $conn->exec("UPDATE LOW_PRIORITY user SET lastlogin='$mynow' WHERE ID = $userid");
     }
     // assign it all to the templates
     $template->assign("userid", $userid);
