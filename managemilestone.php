@@ -84,7 +84,8 @@ if ($action == "add") {
     $template->assign("title", $langfile["editmilestone"]);
     $template->assign("projectname", $project["name"]);
     $template->assign("milestone", $milestone);
-    $template->display("editmilestone.tpl");
+
+    $template->display("forms/editmilestone.tpl");
 } elseif ($action == "edit") {
     if (!$userpermissions["milestones"]["edit"]) {
         $errtxt = $langfile["nopermission"];
