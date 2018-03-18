@@ -368,7 +368,7 @@ class task
         $user = (int)$user;
         $projectTasks = array();
 
-        $projectTasksStmt = $conn->prepare("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task AND tasks_assigned.user = ? AND tasks.project = ? AND status=? ORDER BY `end` ASC ");
+        $projectTasksStmt = $conn->prepare("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task AND tasks_assigned.user = ? AND tasks.project = ? AND status=? ORDER BY tasks.project ");
         $projectTasksStmt->execute(array($user, $project, $status));
 
         while ($tasks = $projectTasksStmt->fetch()) {

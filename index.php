@@ -68,7 +68,7 @@ if(isset($cleanGet["sortBy"]))
 {
     $sortBy = $cleanGet["sortBy"];
 }
-$sortDirection = "DESC";
+$sortDirection = "ASC";
 if(isset($cleanGet["sortDirection"]))
 {
     $sortDirection = $cleanGet["sortDirection"];

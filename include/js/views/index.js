@@ -74,7 +74,7 @@ var projects = {
     url: "index.php?action=myprojects",
     itemType: "project",
     sortBy: "projekt",
-    sortDirection: "DESC",
+    sortDirection: "ASC",
     dependencies: []
 };
 
