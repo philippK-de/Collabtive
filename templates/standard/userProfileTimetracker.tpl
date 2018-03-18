@@ -87,7 +87,7 @@
                             <div class="accordion_content">
                                 <div class="acc-in">
                                     <template v-if="tracker.comment != ''">
-                                        <strong>{/literal}{#comment#}{literal}:</strong><br />{{*tracker.comment}}
+                                        <strong>{/literal}{#comment#}{literal}:</strong><br />{{{*tracker.comment}}}
                                     </template>
                                     <template v-if="tracker.task > 0">
                                         <p class="tags-miles">
