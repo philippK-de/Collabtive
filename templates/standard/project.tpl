@@ -130,23 +130,23 @@
                                     {section name=titem loop=$tree}
                                     projectTree.add("m" +{$tree[titem].ID}, 0, "{$tree[titem].name}", "managemilestone.php?action=showmilestone&msid={$tree[titem].ID}&id={$project.ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png", "", {$tree[titem].daysleft});
 
-                                    // Task lists
-                                    {section name=tlist loop=$tree[titem].tasklists}
-                                    projectTree.add("tl" +{$tree[titem].tasklists[tlist].ID}, "m" +{$tree[titem].tasklists[tlist].milestone}, "{$tree[titem].tasklists[tlist].name}", "managetasklist.php?action=showtasklist&id={$project.ID}&tlid={$tree[titem].tasklists[tlist].ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png");
+                                        // Task lists
+                                        {section name=tlist loop=$tree[titem].tasklists}
+                                            projectTree.add("tl" +{$tree[titem].tasklists[tlist].ID}, "m" +{$tree[titem].tasklists[tlist].milestone}, "{$tree[titem].tasklists[tlist].name}", "#", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png");
 
-                                    // Tasks from lists
-                                    {section name=ttask loop=$tree[titem].tasklists[tlist].tasks}
-                                    projectTree.add("ta" +{$tree[titem].tasklists[tlist].tasks[ttask].ID}, "tl" +{$tree[titem].tasklists[tlist].tasks[ttask].liste}, "{$tree[titem].tasklists[tlist].tasks[ttask].title}", "managetask.php?action=showtask&tid={$tree[titem].tasklists[tlist].tasks[ttask].ID}&id={$project.ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png", "", {$tree[titem].tasklists[tlist].tasks[ttask].daysleft});
-                                    {/section}
+                                        // Tasks from lists
+                                        {section name=ttask loop=$tree[titem].tasklists[tlist].tasks}
+                                            projectTree.add("ta" +{$tree[titem].tasklists[tlist].tasks[ttask].ID}, "tl" +{$tree[titem].tasklists[tlist].tasks[ttask].liste}, "{$tree[titem].tasklists[tlist].tasks[ttask].title}", "managetask.php?action=showtask&tid={$tree[titem].tasklists[tlist].tasks[ttask].ID}&id={$project.ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/task.png", "", {$tree[titem].tasklists[tlist].tasks[ttask].daysleft});
+                                        {/section}
 
-                                    // End task lists
-                                    {/section}
-                                    // Messages
-                                    {section name=tmsg loop=$tree[titem].messages}
-                                    {if $tree[titem].messages[tmsg].milestone > 0}
-                                    projectTree.add("msg" +{$tree[titem].messages[tmsg].ID}, "m" +{$tree[titem].messages[tmsg].milestone}, "{$tree[titem].messages[tmsg].title}", "managemessage.php?action=showmessage&id={$project.ID}&mid={$tree[titem].messages[tmsg].ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png");
-                                    {/if}
-                                    {/section}
+                                        // End task lists
+                                        {/section}
+                                        // Messages
+                                        {section name=tmsg loop=$tree[titem].messages}
+                                            {if $tree[titem].messages[tmsg].milestone > 0}
+                                                projectTree.add("msg" +{$tree[titem].messages[tmsg].ID}, "m" +{$tree[titem].messages[tmsg].milestone}, "{$tree[titem].messages[tmsg].title}", "managemessage.php?action=showmessage&id={$project.ID}&mid={$tree[titem].messages[tmsg].ID}", "", "", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png", "templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png");
+                                            {/if}
+                                        {/section}
                                     // End Messages
                                     {/section}
                                     // End milestones
