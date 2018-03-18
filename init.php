@@ -56,6 +56,7 @@ switch ($db_driver) {
             die("You must set db_name and db_user in /config/" . CL_CONFIG . "/config.php to use mysql, or set db_driver to \"sqlite\" to use an SQLite database!");
         }
         $conn = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8", $db_user, $db_pass);
+        $conn->exec("SET GLOBAL sql_mode='STRICT_TRANS_TABLES';");
         break;
     case "sqlite":
         $conn = new PDO("sqlite:" . CL_ROOT . "/files/collabtive.sdb");
