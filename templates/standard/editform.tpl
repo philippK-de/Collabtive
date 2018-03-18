@@ -87,7 +87,7 @@
 						</div>
 						<div class="row">
 							<label for="neverdue"></label>
-							<input type="checkbox" class="checkbox" value="neverdue" name="neverdue" id="neverdue" {if $project.end == 0} checked = "checked" {/if} onclick="$('end').value='';$('end').disabled=!$('end').disabled;">
+							<input type="checkbox" class="checkbox" value="neverdue" name="neverdue" id="neverdue" {if $project.end == 0} checked = "checked" {/if} onclick="cssId('end').value='';cssId('end').disabled=!cssId('end').disabled;">
 							<label>{$langfile.neverdue}</label>
 						</div>
                         <div class="row">
