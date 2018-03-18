@@ -39,7 +39,7 @@ function initializeBlockaccordeon() {
         var theAction = theBlocks[i].getAttribute("onclick");
         //add a call to activate accordeon
         theAction += "activateAccordeon(" + i + ");";
-        // theBlocks[i].setAttribute("onclick", theAction);
+        theBlocks[i].setAttribute("onclick", theAction);
 
     }
     //activateAccordeon(openSlide);
@@ -68,10 +68,6 @@ var accordIndex = new accordion2('block_index', {
     }
 });
 
-
-
-
-var projectsViewDependencies = [];
 //create the objects representing the Widgets with their DOM element, DataURL, Dependencies and view managing them
 var projects = {
     el: "desktopprojects",
@@ -114,8 +110,6 @@ function initialiseView(viewName) {
     if (viewName == "tasks") {
         if (!tasksView) {
             tasksView = createView(tasks);
-            //add this view to the dependencies of projectsView
-            projectsViewDependencies.push(tasksView);
 
             // open the slide after data has loaded
             tasksView.afterLoad(function () {
@@ -149,8 +143,6 @@ function initialiseView(viewName) {
     if (viewName == "messages") {
         if (!messagesView) {
             messagesView = createView(messages);
-            //add this view to the dependencies of projectsView
-            projectsViewDependencies.push(messagesView);
 
             // open the slide after data has loaded
             messagesView.afterLoad(function () {
@@ -170,9 +162,11 @@ function initialiseView(viewName) {
     }
 
 }
+
+var projectsViewDependencies = [];
 //create views - binding the data to the dom element
 var projectsView = createView(projects);
-//var calendarView = createView(desktopCalendar);
+var calendarView = createView(desktopCalendar);
 //get the form to be submitted
 var addProjectForm = document.getElementById("addprojectform");
 //assign the view to be updated after submitting to the formView variable

@@ -74,7 +74,6 @@ if(isset($cleanGet["sortDirection"]))
     $sortDirection = $cleanGet["sortDirection"];
 }
 
-
 $myOpenProjects = $projectObj->getMyProjects($userid, 1, $offset, $limit, $sortBy, $sortDirection);
 $projectnum = $projectObj->countMyProjects($userid, 1);
 $template->assign("openProjects", $myOpenProjects);
@@ -163,12 +162,13 @@ if (!$action) {
 elseif ($action == "myprojects") {
     //create datastructure for projects
     $projects["open"] = $myOpenProjects;
-    $projects["closed"] = $projectObj->getMyProjects($userid, 0, 0, $projectObj->countMyProjects($userid, 0));
+    $projects["closed"] = $projectObj->getMyProjects($userid, 0);
 
     //add projects to datastructure for JSON
     $myprojects["items"] = $projects;
     //number of open projects total
     $myprojects["count"] = $projectnum;
+
     echo json_encode($myprojects);
 } elseif ($action == "mytasks") {
     $myTasks["items"] = $sortedTasks;
@@ -181,3 +181,4 @@ elseif ($action == "myprojects") {
     echo json_encode($myMessages);
 
 }
+?>

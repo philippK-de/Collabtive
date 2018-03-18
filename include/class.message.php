@@ -303,16 +303,18 @@ class message
         }
     }
 
+    /*
+     * Get privates messages directly sent to $user
+     */
     function getUserMessages($user, $limit = 10, $offset = 0)
     {
         global $conn;
         $user = (int)$user;
         $limit = (int)$limit;
         $offset = (int)$offset;
-
+        echo $user . " " . $limit;
         $messages = array();
-        $userMessagesStmt =
-            $conn->prepare("SELECT message FROM messages_assigned WHERE user = ? ORDER BY ID DESC LIMIT $limit OFFSET $offset");
+        $userMessagesStmt = $conn->prepare("SELECT `message` FROM messages_assigned WHERE `user` = ? ORDER BY ID DESC LIMIT $limit OFFSET $offset");
 
         $userMessagesStmt->execute(array($user));
 
@@ -325,6 +327,33 @@ class message
 
         if (!empty($messages)) {
             return $messages;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Return open tasks from a user
+     *
+     * @param int $user User ID (0 means the user, to whom the session belongs)
+     * @return array $lists Messages
+     */
+    function getPublicUserMessages($user)
+    {
+        global $conn;
+        $user = (int)$user;
+        $myTasks = array();
+
+        $projectTasksStmt = $conn->prepare("SELECT messages.*,projekte_assigned.user FROM messages,projekte_assigned WHERE messages.project = projekte_assigned.projekt AND projekte_assigned.user = ? ORDER BY `projekt` ASC ");
+        $projectTasksStmt->execute(array($user));
+
+        while ($messages = $projectTasksStmt->fetch()) {
+            $task = $this->getMessage($messages["ID"]);
+            array_push($myTasks, $task);
+        }
+
+        if (!empty($myTasks)) {
+            return $myTasks;
         } else {
             return false;
         }
@@ -470,5 +499,3 @@ class message
         }
     }
 }
-
-?>

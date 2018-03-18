@@ -90,6 +90,7 @@ function createView(myView) {
     return vueview;
 }
 
+
 /*
  * Function to recursively update a view and its dependencies
  * @param Object view A vue.js view to be updated
@@ -149,7 +150,7 @@ function updateView(view, updateDependencies) {
 function sortView(view, sortBy, sortDirection = "DESC") {
    view.sortBy = sortBy;
    view.sortDirection = view.sortDirection == "ASC" ? "DESC" : "ASC";
-   view.update(false);
+   view.update(true);
 }
 /*
  * Pagination for view JS views
@@ -161,7 +162,7 @@ function sortView(view, sortBy, sortDirection = "DESC") {
  */
 
 var pagination = {
-    itemsPerPage: 10,
+    itemsPerPage: 15,
     listPages: function (numTotal) {
         //round up the number of pages
         var pagenum = Math.ceil(numTotal / this.itemsPerPage);
@@ -231,8 +232,6 @@ var pagination = {
     }
 };
 
-
-
 /*
  * Function to asyncronously submit a form
  * This is to be used with form.addEventListener()
@@ -293,7 +292,6 @@ function submitForm(event) {
                 //show system message for element added
                 systemMessage.added(formView.$get("itemType"));
                 //try calling the formSubmited() handler that can be defined
-                theForm.reset();
                 try {
                     formSubmited();
                 }

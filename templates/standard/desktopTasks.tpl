@@ -1,7 +1,7 @@
 {if $tasknum > 0}
     <div class="tasks padding-bottom-two-px" id="desktoptasks">
         <div class="headline">
-            <a href="javascript:void(0);" id="taskhead_toggle" class="win_none" onclick="initialiseView('tasks');"></a>
+            <a href="javascript:void(0);" id="taskhead_toggle" class="win_none" onclick=""></a>
 
             <div class="wintools">
                 <loader block="desktoptasks" loader="loader-tasks.gif"></loader>

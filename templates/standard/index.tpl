@@ -68,7 +68,7 @@
 <script type="text/javascript">
         pagination.itemsPerPage = 15;
     {if $tasknum > 0}
-        /*
+
         var tasksView = createView(tasks);
         //add this view to the dependencies of projectsView
         projectsViewDependencies.push(tasksView);
@@ -78,10 +78,10 @@
         tasksView.afterUpdate(function () {
             accord_tasks = new accordion2('desktoptasks');
         });
-        */
+
     {/if}
     {if $msgnum > 0}
-        /*var messagesView = createView(messages);
+        var messagesView = createView(messages);
         //add this view to the dependencies of projectsView
         projectsViewDependencies.push(messagesView);
 
@@ -89,7 +89,7 @@
         messagesView.afterUpdate(function () {
             accord_msgs = new accordion2('desktopmessages');
 
-        });*/
+        });
     {/if}
     //setup dependenciens
     Vue.set(projectsView, "dependencies", projectsViewDependencies);

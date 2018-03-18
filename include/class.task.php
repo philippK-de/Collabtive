@@ -410,20 +410,24 @@ class task
     }
 
     /**
-     * Return open tasks from a given project a user
+     * Return open tasks from a user
      *
      * @param int $user User ID (0 means the user, to whom the session belongs)
      * @param int $status Status of the tasks to be returned (1 = open, 0 = closed)
      * @return array $lists Tasks
      */
-    function getMyTasks($user, $status = 1)
+    function getMyTasks($user, $status = 1, $offset = 0, $limit = 15)
     {
         global $conn;
+        $limit = (int)$limit;
+        $offset = (int)$offset;
+
         $status = (int)$status;
         $user = (int)$user;
+
         $myTasks = array();
 
-        $projectTasksStmt = $conn->prepare("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task AND tasks_assigned.user = ? AND status= ?  ORDER BY `project` ASC ");
+        $projectTasksStmt = $conn->prepare("SELECT tasks.*,tasks_assigned.user FROM tasks,tasks_assigned WHERE tasks.ID = tasks_assigned.task AND tasks_assigned.user = ? AND status= ?  ORDER BY `project` ASC  LIMIT $limit OFFSET $offset");
         $projectTasksStmt->execute(array($user, $status));
 
         while ($tasks = $projectTasksStmt->fetch()) {

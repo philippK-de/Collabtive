@@ -1,6 +1,6 @@
 <div id="desktopCalendar" class="miles padding-bottom-two-px"  >
     <div class="headline">
-        <a href="javascript:void(0);" id="mileshead_toggle" class="win_none" onclick="initialiseView('calendar');"></a>
+        <a href="javascript:void(0);" id="mileshead_toggle" class="win_none" onclick=""></a>
 
         <div class="wintools">
             <loader block="desktopCalendar" loader="loader-calendar.gif"></loader>
