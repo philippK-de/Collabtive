@@ -44,8 +44,11 @@
 			<input type="hidden" name="project" value="{$project.ID}" />
 
 		  	<div class="row">
-		  		<label for="trackcomm">{#comment#}:</label>
-		  		<textarea name="comment" id="trackcomm"></textarea>
+		  		<label for="comment">{#comment#}:</label>
+                <div class="editor">
+                    <textarea name="comment" id="comment"></textarea>
+                </div>
+
 		  	</div>
 
 		  	<div class="clear_both_b"></div>

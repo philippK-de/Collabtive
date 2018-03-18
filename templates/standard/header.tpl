@@ -65,11 +65,10 @@
                     convert_newlines_to_brs: false,
                     forced_root_block: false,
                     setup: function (editor) {
-                        editor.on("keyDown", function () {
+                        editor.on("keyUp", function () {
                             editor.save();
-                            var textarea = document.getElementsByName(editor.id)[0];
+                            var textarea = cssId(editor.id);
                             textarea.value = editor.getContent();
-                            console.log(textarea.value);
                         });
                     }
 
