@@ -53,3 +53,4 @@ include/class.myDavFile.php
 /installPlugins.php
 /addstuff.php
 /map.php
+/closure-compiler.jar
