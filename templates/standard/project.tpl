@@ -228,14 +228,14 @@
             });
 
             //get the form to be submitted
-            var addProjectForm = document.getElementById("trackeradd");
+            var addTimeTrackerForm = document.getElementById("trackeradd");
             //assign the view to be updated after submitting to the formView variable
             var formView = calendarView;
             formView.doUpdate = false;
             formView.itemType = "timetracker";
             //add an event listener capaturing the submit event of the form
             //add submitForm() as the handler for the event, and bind the form view to it
-            addProjectForm.addEventListener("submit", submitForm.bind(formView));
+            addTimeTrackerForm.addEventListener("submit", submitForm.bind(formView));
         </script>
         {/literal}
 
@@ -244,7 +244,4 @@
 </div> {*content-left END*}
 
 {include file="sidebar-a.tpl" showcloud="1"}
-
-
-
 {include file="footer.tpl"}
