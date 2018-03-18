@@ -51,7 +51,7 @@
 	{if $userpermissions.tasks.edit}
 		<div id="form_edit" class="addmenue" style = "display:none;clear:both;">
 			<div class="content-spacer"></div>
-			{include file="edittasklist.tpl" showhtml="no"}
+			{include file="form/edittasklist.tpl" showhtml="no"}
 		</div>
 	{/if}
 

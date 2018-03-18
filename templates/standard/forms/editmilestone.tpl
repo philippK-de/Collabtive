@@ -8,8 +8,8 @@
 		<div class="miles">
 
 			<div class="breadcrumb">
-				<a href="manageproject.php?action=showproject&amp;id={$project.ID}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{$projectname|truncate:40:"...":true}</a>
-				<a href="managemilestone.php?action=showproject&amp;id={$project.ID}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt="" />{#milestones#}</a>
+				<a href="../../../manageproject.php?action=showproject&amp;id={$project.ID}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{$projectname|truncate:40:"...":true}</a>
+				<a href="../../../managemilestone.php?action=showproject&amp;id={$project.ID}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/miles.png" alt="" />{#milestones#}</a>
 			</div>
 
 			<h1>{#editmilestone#}</h1>
@@ -24,7 +24,7 @@
 				<h2>&nbsp;</h2>
 			{/if}
 
-				<form novalidate class="main" method="post" action="managemilestone.php?action=edit&amp;id={$milestone.project}" {literal}onsubmit="return validateCompleteForm(this,'input_error');"{/literal}>
+				<form novalidate class="main" method="post" action="../../../managemilestone.php?action=edit&amp;id={$milestone.project}" {literal}onsubmit="return validateCompleteForm(this,'input_error');"{/literal}>
 					<fieldset>
 
 						<div class="row">

@@ -72,7 +72,7 @@
             {if $userpermissions.projects.edit}
                 <div id="form_edit" class="addmenue display-none clear_both">
                     <div class="content-spacer"></div>
-                    {include file="editform.tpl" showhtml="no" }
+                    {include file="forms/editform.tpl" showhtml="no" }
                 </div>
             {/if}
 

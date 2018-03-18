@@ -10,6 +10,8 @@ Collabtive 3.2
 + Make title and daysleft column sortable in the projects block ont he desktop
 + Update tinyMce to latest version 4.7.7 from 2.x
 + Only draw file and milestone trees when message details are opened
++ Enable mySQL strict mode by default. this prevents mysql from truncating too long strings, and otherwhise trying to force
+  inputs to the data type of a column
 
 Collabtive 3.1
 + Fix a bug where the generic female avatar wasnt shown in the user-admin area

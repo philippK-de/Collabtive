@@ -8,19 +8,19 @@
 		<div class="tasks">
 
 			<div class="breadcrumb">
-				<a href="manageproject.php?action=showproject&amp;id={$project.ID}" title="{$projectname}">
+				<a href="../../../manageproject.php?action=showproject&amp;id={$project.ID}" title="{$projectname}">
 					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />
 					{$projectname|truncate:25:"...":true}
 				</a>
-				<a href="managetask.php?action=showproject&amp;id={$project.ID}">
+				<a href="../../../managetask.php?action=showproject&amp;id={$project.ID}">
 					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt="" />
 					{#tasklists#}
 				</a>
-				<a href="managetasklist.php?action=showtasklist&id={$project.ID}&tlid={$task.liste}" title="{#tasklist#} / {$task.list}">
+				<a href="../../../managetasklist.php?action=showtasklist&id={$project.ID}&tlid={$task.liste}" title="{#tasklist#} / {$task.list}">
 					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt="" />
 					{$task.list|truncate:25:"...":true}
 				</a>
-				<a href="managetask.php?action=showtask&amp;tid={$task.ID}&amp;id={$project.ID}" title="{#task#} / {$task.title}">
+				<a href="../../../managetask.php?action=showtask&amp;tid={$task.ID}&amp;id={$project.ID}" title="{#task#} / {$task.title}">
 					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt="" />
 					{$task.title|truncate:50:"...":true}
 				</a>
@@ -76,7 +76,7 @@
 
 				<h2>{$langfile.edittask}</h2>
 
-				<form novalidate class="main" method="post" action="managetask.php?action=edit&amp;tid={$task.ID}&amp;id={$pid}" {literal} onsubmit="return validateCompleteForm(this);" {/literal} >
+				<form novalidate class="main" method="post" action="../../../managetask.php?action=edit&amp;tid={$task.ID}&amp;id={$pid}" {literal} onsubmit="return validateCompleteForm(this);" {/literal} >
 					<fieldset>
 
 						<div class="row">
