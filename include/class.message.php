@@ -312,7 +312,7 @@ class message
         $user = (int)$user;
         $limit = (int)$limit;
         $offset = (int)$offset;
-        echo $user . " " . $limit;
+
         $messages = array();
         $userMessagesStmt = $conn->prepare("SELECT `message` FROM messages_assigned WHERE `user` = ? ORDER BY ID DESC LIMIT $limit OFFSET $offset");
 

@@ -99,69 +99,9 @@ var desktopCalendar = {
     dependencies: []
 };
 
-var calendarView;
 
-var tasksView;
 var accord_tasks;
-
-var messagesView;
 var accord_msgs;
-function initialiseView(viewName) {
-    if (viewName == "tasks") {
-        if (!tasksView) {
-            tasksView = createView(tasks);
-
-            // open the slide after data has loaded
-            tasksView.afterLoad(function () {
-                activateAccordeon(1);
-            });
-            tasksView.afterUpdate(function () {
-                accord_tasks = new accordion2('desktoptasks');
-            });
-        }
-        else {
-            tasksView.update();
-            // open the slide right away
-            activateAccordeon(1);
-        }
-    }
-    if (viewName == "calendar") {
-        if (!calendarView) {
-            calendarView = createView(desktopCalendar);
-            // open the slide after data has loaded
-            calendarView.afterLoad(function () {
-                activateAccordeon(2);
-            });
-        }
-        else {
-            calendarView.update();
-            // open the slide right away
-            activateAccordeon(2);
-        }
-
-    }
-    if (viewName == "messages") {
-        if (!messagesView) {
-            messagesView = createView(messages);
-
-            // open the slide after data has loaded
-            messagesView.afterLoad(function () {
-                activateAccordeon(3);
-            });
-            messagesView.afterUpdate(function () {
-                accord_msgs = new accordion2('desktopmessages');
-            });
-
-        }
-        else {
-            messagesView.update();
-            // open the slide right away
-            activateAccordeon(3);
-        }
-
-    }
-
-}
 
 var projectsViewDependencies = [];
 //create views - binding the data to the dom element

@@ -7,6 +7,7 @@ Collabtive 3.2
 + Update PHP Mailer, HTMLPurifier, Smarty to their latest versions
 + Fix issues with tinyMCE not correctly syncing content when saving
 + Make title and daysleft column sortable in the projects block ont he desktop
++ Update tinyMce to latest version 4.7.7 from 2.x
 
 Collabtive 3.1
 + Fix a bug where the generic female avatar wasnt shown in the user-admin area
