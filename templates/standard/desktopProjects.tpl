@@ -1,6 +1,6 @@
 <div id="desktopprojects" class="projects padding-bottom-two-px">
     <div class="headline">
-        <a href="javascript:void(0);" id="projecthead_toggle" class="win_block" onclick=""></a>
+        <a href="javascript:void(0);" id="projecthead_toggle" class="win_block" onclick="projectsView.update();"></a>
 
         <div class="wintools">
             <loader block="desktopprojects" loader="loader-project3.gif"></loader>

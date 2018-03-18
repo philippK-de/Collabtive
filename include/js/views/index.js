@@ -17,32 +17,6 @@ function formSubmited() {
 }
 
 function initializeBlockaccordeon() {
-
-    //get the blocks
-    var theBlocks = document.querySelectorAll("#block_index > div .headline > a");
-    //loop through the blocks and add the accordion toggle link to the onclick handler of toggles
-    for (var i = 0; i < theBlocks.length; i++) {
-        //get the id of the current html element
-        var theId = theBlocks[i].getAttribute("id");
-        blockIds.push(theId);
-
-        //get the index of the last opened block
-        var theCook = readCookie("activeSlideIndex");
-
-        //console.log(theCook);
-        var openSlide;
-        if (theCook > 0) {
-            openSlide = theCook;
-        }
-
-        //get the onclick action of the current block
-        var theAction = theBlocks[i].getAttribute("onclick");
-        //add a call to activate accordeon
-        theAction += "activateAccordeon(" + i + ");";
-        theBlocks[i].setAttribute("onclick", theAction);
-
-    }
-    //activateAccordeon(openSlide);
     activateAccordeon(0);
 }
 /**
@@ -100,13 +74,73 @@ var desktopCalendar = {
 };
 
 
+var calendarView;
+var tasksView;
+var messagesView;
+
 var accord_tasks;
 var accord_msgs;
+function initialiseView(viewName) {
+    if (viewName == "tasks") {
+        if (!tasksView) {
+            tasksView = createView(tasks);
+
+            // open the slide after data has loaded
+            tasksView.afterLoad(function () {
+                activateAccordeon(1);
+            });
+            tasksView.afterUpdate(function () {
+                accord_tasks = new accordion2('desktoptasks');
+            });
+        }
+        else {
+            tasksView.update();
+            // open the slide right away
+            activateAccordeon(1);
+        }
+    }
+    if (viewName == "calendar") {
+        if (!calendarView) {
+            calendarView = createView(desktopCalendar);
+            // open the slide after data has loaded
+            calendarView.afterLoad(function () {
+                activateAccordeon(2);
+            });
+        }
+        else {
+            calendarView.update();
+            // open the slide right away
+            activateAccordeon(2);
+        }
+
+    }
+    if (viewName == "messages") {
+        if (!messagesView) {
+            messagesView = createView(messages);
+
+            // open the slide after data has loaded
+            messagesView.afterLoad(function () {
+                activateAccordeon(3);
+            });
+            messagesView.afterUpdate(function () {
+                accord_msgs = new accordion2('desktopmessages');
+            });
+
+        }
+        else {
+            messagesView.update();
+            // open the slide right away
+            activateAccordeon(3);
+        }
+
+    }
+
+}
 
 var projectsViewDependencies = [];
 //create views - binding the data to the dom element
 var projectsView = createView(projects);
-var calendarView = createView(desktopCalendar);
+//var calendarView = createView(desktopCalendar);
 //get the form to be submitted
 var addProjectForm = document.getElementById("addprojectform");
 //assign the view to be updated after submitting to the formView variable
