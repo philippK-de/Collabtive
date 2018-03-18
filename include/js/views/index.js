@@ -137,7 +137,6 @@ function initialiseView(viewName) {
 
 }
 
-var projectsViewDependencies = [];
 //create views - binding the data to the dom element
 var projectsView = createView(projects);
 //var calendarView = createView(desktopCalendar);
