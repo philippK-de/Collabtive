@@ -8,8 +8,8 @@
 		<div class="msgs">
 
 			<div class="breadcrumb">
-				<a href="../../../managemessage.php?action=showproject&amp;id={$project.ID}" title="{$project.name}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{$message.pname}</a>
-				<a href="../../../managemessage.php?action=showmessage&amp;id={$project.ID}&mid={$message.ID}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt="" />{#message#}</a>
+				<a href="managemessage.php?action=showproject&amp;id={$project.ID}" title="{$project.name}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{$message.pname}</a>
+				<a href="managemessage.php?action=showmessage&amp;id={$project.ID}&mid={$message.ID}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt="" />{#message#}</a>
 			</div>
 
 			<h1 class="second"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/msgs.png" alt="" />{$message.name}</h1>
@@ -54,7 +54,7 @@
 			<div class="block_in_wrapper">
 				<h2>{#editmessage#}</h2>
 
-				<form novalidate class="main" method="post" action="../../../managemessage.php?action=edit&amp;id={$project.ID}" {literal}onsubmit="return validateCompleteForm(this);"{/literal}>
+				<form novalidate class="main" method="post" action="managemessage.php?action=edit&amp;id={$project.ID}" {literal}onsubmit="return validateCompleteForm(this);"{/literal}>
 					<fieldset>
 
 						<div class="row">

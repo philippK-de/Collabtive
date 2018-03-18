@@ -8,7 +8,7 @@
 		<div class="projects">
 
 			<div class="breadcrumb">
-				<a href="../../../manageproject.php?action=showproject&amp;id={$project.ID}" title="{$project.name}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{$project.name|truncate:50:"...":true}</a>
+				<a href="manageproject.php?action=showproject&amp;id={$project.ID}" title="{$project.name}"><img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />{$project.name|truncate:50:"...":true}</a>
 				<span>&nbsp;/...</span>
 			</div>
 
@@ -61,7 +61,7 @@
 
 				<h2>{$langfile.editproject}</h2>
 
-				<form novalidate class="main" method="post" action="../../../manageproject.php?action=edit&amp;id={$project.ID}" {literal}onsubmit="return validateCompleteForm(this,'input_error');"{/literal}>
+				<form novalidate class="main" method="post" action="manageproject.php?action=edit&amp;id={$project.ID}" {literal}onsubmit="return validateCompleteForm(this,'input_error');"{/literal}>
 					<fieldset>
 
 						<div class="row">

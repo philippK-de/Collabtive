@@ -8,15 +8,15 @@
 		<div class="tasks">
 			
 			<div class="breadcrumb">
-				<a href="../../../manageproject.php?action=showproject&amp;id={$project.ID}" title="{$projectname}">
+				<a href="manageproject.php?action=showproject&amp;id={$project.ID}" title="{$projectname}">
 					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/projects.png" alt="" />
 					{$projectname|truncate:25:"...":true}
 				</a>
-				<a href="../../../managetask.php?action=showproject&amp;id={$project.ID}">
+				<a href="managetask.php?action=showproject&amp;id={$project.ID}">
 					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt="" />
 					{#tasklists#}
 				</a>
-				<a href="../../../managetasklist.php?action=showtasklist&amp;id={$project.ID}&amp;tlid={$tasklist.ID}">
+				<a href="managetasklist.php?action=showtasklist&amp;id={$project.ID}&amp;tlid={$tasklist.ID}">
 					<img src="./templates/{$settings.template}/theme/{$settings.theme}/images/symbols/tasklist.png" alt="" />
 					{$tasklist.name|truncate:55:"...":true}
 				</a>
@@ -33,7 +33,7 @@
 				
 				<h2>{#edittasklist#}</h2>
 				
-				<form novalidate class="main" method="post" action="../../../managetasklist.php?action=edit&amp;id={$project.ID}&amp;tlid={$tasklist.ID}" {literal} onsubmit="return validateCompleteForm(this);" {/literal} >
+				<form novalidate class="main" method="post" action="managetasklist.php?action=edit&amp;id={$project.ID}&amp;tlid={$tasklist.ID}" {literal} onsubmit="return validateCompleteForm(this);" {/literal} >
 					<fieldset>
 						
 						<div class="row">
