@@ -4,7 +4,11 @@ function updateCalendar(myCalendar, newMonth, newYear) {
     var calendarUrl = currentUrl + "&y=" + newYear + "&m=" + newMonth;
     Vue.set(myCalendar, "url", calendarUrl);
     updateView(myCalendar);
+}
 
+function formSubmited() {
+    tinymce.activeEditor.setContent("");
+    delete cssId("comment").value;
 }
 
 var projectCalendar = {
@@ -22,9 +26,7 @@ var accord_dashboard = new accordion2('block_dashboard', {
     }
 });
 
-
 function activateAccordeon(theAccord) {
-
     accord_dashboard.toggle(cssAll('#block_dashboard .accordion_content')[theAccord]);
     setCookie("activeSlideProject", theAccord);
 }
