@@ -1,4 +1,4 @@
-#Collabtive
+# Collabtive
 
 Collabtive is web-based project management software. 
 It's an open source alternative to proprietary tools like Basecamp.
@@ -6,18 +6,18 @@ It's an open source alternative to proprietary tools like Basecamp.
 It features a modern, responsive UI as well as powerful features for structuring and tracking projects.
 With a responsive UI and powerful plugin system - it's easy to use and customize.
 
-#Requirements
+# Requirements
 * PHP 5.5, PHP 7 
 * MySQL/MariaDB or SQLite Database
 
-#Browser support
+# Browser support
 * Internet Explorer 10/11
 * MS Edge
 * Google Chrome
 * Mozilla Firefox
 
 
-#Features
+# Features
 * Task lists
     Each tasklist can have an arbitrary number of tasks.
 * Tasks
