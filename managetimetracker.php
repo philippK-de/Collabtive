@@ -29,16 +29,16 @@ $id = getArrayVal($_GET, "id");
  * Get strings from the langfile and decode them to ASCII/ANSI
  * Needed for PDF
  */
-$strproj = utf8_decode($langfile["project"]);
-$strtimetrack = utf8_decode($langfile["timetracker"]);
-$struser = utf8_decode($langfile["user"]);
-$strstarted = utf8_decode($langfile["started"]);
-$strday = utf8_decode($langfile["day"]);
-$strended = utf8_decode($langfile["ended"]);
-$strhours = utf8_decode($langfile["hours"]);
-$strtask = utf8_decode($langfile["task"]);
-// $strtimetable = utf8_decode($langfile["timetable"]);
-$strcomment = utf8_decode($langfile["comment"]);
+$strproj = $langfile["project"];
+$strtimetrack = $langfile["timetracker"];
+$struser = $langfile["user"];
+$strstarted = $langfile["started"];
+$strday = $langfile["day"];
+$strended = $langfile["ended"];
+$strhours = $langfile["hours"];
+$strtask = $langfile["task"];
+// $strtimetable = $langfile["timetable"];
+$strcomment = $langfile["comment"];
 
 if (empty($cleanGet["usr"])) {
     $cleanGet["usr"] = 0;
@@ -139,9 +139,9 @@ if ($action == "add") {
     }
     for ($i = 0; $i < count($tasks); $i++) {
         if (empty($tasks[$i]["title"])) {
-            $name = substr($tasks[$i]["text"], 0, 30);
+            $name = mb_substr($tasks[$i]["text"], 0, 50);
         } else {
-            $name = substr($tasks[$i]["title"], 0, 30);
+            $name = mb_substr($tasks[$i]["title"], 0, 50);
         }
         $tasks[$i]["name"] = $name;
     }
