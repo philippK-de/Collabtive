@@ -62,7 +62,7 @@ if ($action == "editform") {
     $template->assign("showheader", "no");
     $template->assign("projectov", "yes");
     $template->assign("async", "yes");
-    $template->display("editform.tpl");
+    $template->display("forms/editform.tpl");
 } elseif ($action == "edit") {
     if (!$userpermissions["projects"]["edit"]) {
         $errtxt = $langfile["nopermission"];

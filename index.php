@@ -63,7 +63,18 @@ if (isset($cleanGet["limit"])) {
     $limit = $cleanGet["limit"];
 }
 
-$myOpenProjects = $projectObj->getMyProjects($userid, 1, $offset, $limit);
+$sortBy = "projekt";
+if(isset($cleanGet["sortBy"]))
+{
+    $sortBy = $cleanGet["sortBy"];
+}
+$sortDirection = "ASC";
+if(isset($cleanGet["sortDirection"]))
+{
+    $sortDirection = $cleanGet["sortDirection"];
+}
+
+$myOpenProjects = $projectObj->getMyProjects($userid, 1, $offset, $limit, $sortBy, $sortDirection);
 $projectnum = $projectObj->countMyProjects($userid, 1);
 $template->assign("openProjects", $myOpenProjects);
 
@@ -71,16 +82,16 @@ $template->assign("openProjects", $myOpenProjects);
 if (!empty($myOpenProjects)) {
     foreach ($myOpenProjects as $proj) {
         // get all the tasks in this project that are assigned to the current user
-        $task = $taskObj->getAllMyProjectTasks($proj["ID"]);
+        $projectTasks = $taskObj->getAllMyProjectTasks($proj["ID"]);
         // get all messages in the project
-        $msgs = $messageObj->getProjectMessages($proj["ID"]);
+        $projectMessages = $messageObj->getProjectMessages($proj["ID"]);
         // write those to arrays
-        if (!empty($msgs)) {
-            array_push($messages, $msgs);
+        if (!empty($projectMessages)) {
+            array_push($messages, $projectMessages);
         }
 
-        if (!empty($task)) {
-            array_push($tasks, $task);
+        if (!empty($projectTasks)) {
+            array_push($tasks, $projectTasks);
         }
 
         $cou = $cou + 1;
@@ -151,7 +162,7 @@ if (!$action) {
 elseif ($action == "myprojects") {
     //create datastructure for projects
     $projects["open"] = $myOpenProjects;
-    $projects["closed"] = $projectObj->getMyProjects($userid, 0, 0, $projectObj->countMyProjects($userid, 0));
+    $projects["closed"] = $projectObj->getMyProjects($userid, 0);
 
     //add projects to datastructure for JSON
     $myprojects["items"] = $projects;

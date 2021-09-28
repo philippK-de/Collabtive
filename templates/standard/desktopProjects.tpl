@@ -21,9 +21,9 @@
                 <thead>
                 <tr>
                     <th class="a"></th>
-                    <th class="b" class="cursor-pointer">{#project#}</th>
+                    <th class="b"><span class="cursor-pointer" onclick="sortView(projectsView, 'projekt');">{#project#}</span></th>
                     <th class="c" class="cursor-pointer">{#done#}</th>
-                    <th class="d" class="text-align-right">{#daysleft#}&nbsp;&nbsp;</th>
+                    <th class="d" class="text-align-right"><span class="cursor-pointer" onclick="sortView(projectsView, 'end');">{#daysleft#}</span>&nbsp;&nbsp;</th>
                     <th class="tools"></th>
                 </tr>
                 </thead>
@@ -94,8 +94,14 @@
                     <td colspan="5">
                         <div class="accordion_content">
                             <div class="acc-in">
-                                <div class="message-in-fluid" v-html="item.desc">
-                                </div>
+                                <div class="message-in-fluid">
+                                    {{{item.desc}}}
+                                    <div class="content-spacer-b"></div>
+                                    <strong>Members:</strong>
+                                    <div class="dtree"
+                                         :id="'usersTree' + item.ID">
+
+                                    </div>
                             </div>
                         </div>
                     </td>

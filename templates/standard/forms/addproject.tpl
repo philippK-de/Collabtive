@@ -63,7 +63,7 @@
 
 			<div class="row-butn-bottom">
 				<label>&nbsp;</label>
-				<button type="submit" onfocus="this.blur();" onclick="tinyMCE.triggerSave();">{#addbutton#}</button>
+				<button type="submit" onfocus="this.blur();" >{#addbutton#}</button>
 
 				<button type="reset" onclick="blindtoggle('form_{$myprojects[project].ID}');return false;">{#cancel#}</button>
 

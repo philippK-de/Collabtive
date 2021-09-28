@@ -51,7 +51,7 @@
 	{if $userpermissions.tasks.edit}
 		<div id="form_edit" class="addmenue" style = "display:none;clear:both;">
 			<div class="content-spacer"></div>
-			{include file="edittasklist.tpl" showhtml="no"}
+			{include file="forms/edittasklist.tpl" showhtml="no"}
 		</div>
 	{/if}
 
@@ -128,7 +128,7 @@
 										</a>
 									</div>
 								</td>
-								<td><a href="manageuser.php?action=profile&amp;tlid={$tasks[task].user_id}&amp;id={$project.ID}">{$tasks[task].user|truncate:23:"...":true}</a></td>
+								<td><a href="manageuser.php?action=profile&amp;id={$tasks[task].user_id}">{$tasks[task].user|truncate:23:"...":true}</a></td>
 								<td style="text-align:right">{$tasks[task].daysleft}&nbsp;&nbsp;</td>
 								<td class="tools">
 									{if $userpermissions.tasks.edit}

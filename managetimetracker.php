@@ -62,6 +62,11 @@ $template->assign("classes", $classes);
  */
 
 
+function br2nl($string)
+{
+    return preg_replace('/\<br(\s*)?\/?\>/i', "\n", $string);
+}
+
 if ($action == "add") {
     if (!$userpermissions["timetracker"]["add"]) {
         $template->assign("errortext", "Permission denied.");
@@ -108,21 +113,21 @@ if ($action == "add") {
     $cleanPost["ttask"] = new task();
     $cleanGet["user"] = new user();
     // get track to edit
-    $track = $tracker->getTrack($cleanGet["tid"]);
+    $tracks = $tracker->getTrack($cleanGet["tid"]);
     // get username
-    $member = $cleanGet["user"]->getProfile($track["user"]);
-    $track["username"] = $member["name"];
-    if ($track["task"] != 0) {
+    $member = $cleanGet["user"]->getProfile($tracks["user"]);
+    $tracks["username"] = $member["name"];
+    if ($tracks["task"] != 0) {
         // get task
-        $thetask = $cleanPost["ttask"]->getTask($track["task"]);
+        $thetask = $cleanPost["ttask"]->getTask($tracks["task"]);
         if (empty($thetask["title"])) {
             $taskname = substr($thetask["text"], 0, 30);
         } else {
             $taskname = substr($thetask["title"], 0, 30);
         }
-        $track["taskname"] = $taskname;
+        $tracks["taskname"] = $taskname;
     }
-    $template->assign("track", $track);
+    $template->assign("track", $tracks);
     // get current and closed tasks
     $newtasks = $cleanPost["ttask"]->getProjectTasks($id);
     $oldtasks = $cleanPost["ttask"]->getProjectTasks($id, false);
@@ -203,16 +208,16 @@ if ($action == "add") {
     fputcsv($excelFile, $line);
 
     if (!empty($cleanGet["start"]) and !empty($cleanGet["end"])) {
-        $track = $tracker->getProjectTrack($id, $cleanGet["usr"], $cleanGet["task"], $cleanGet["start"], $cleanGet["end"], false);
+        $tracks = $tracker->getProjectTrack($id, $cleanGet["usr"], $cleanGet["task"], $cleanGet["start"], $cleanGet["end"], false);
     } else {
-        $track = $tracker->getProjectTrack($id, $cleanGet["usr"], $cleanGet["task"], 0, 0, false);
+        $tracks = $tracker->getProjectTrack($id, $cleanGet["usr"], $cleanGet["task"], 0, 0, false);
     }
 
-    if (!empty($track)) {
-        foreach ($track as $tra) {
-            $hrs = round($tra["hours"], 2);
+    if (!empty($tracks)) {
+        foreach ($tracks as $track) {
+            $hrs = round($track["hours"], 2);
             $hrs = str_replace(".", ",", $hrs);
-            $myArr = array($tra["uname"], $tra["tname"], $tra["comment"], $tra["daystring"], $tra["startstring"], $tra["endstring"], $hrs);
+            $myArr = array($track["uname"], $track["tname"], br2nl($track["comment"]), $track["daystring"], $track["startstring"], $track["endstring"], $hrs);
             fputcsv($excelFile, $myArr);
         }
     }
@@ -245,15 +250,15 @@ if ($action == "add") {
 
     // if a filter has been applied, get only those timetracks
     if (!empty($cleanGet["start"]) and !empty($cleanGet["end"])) {
-        $track = $tracker->getProjectTrack($id, $cleanGet["usr"], $cleanGet["task"], $cleanGet["start"], $cleanGet["end"], false);
+        $tracks = $tracker->getProjectTrack($id, $cleanGet["usr"], $cleanGet["task"], $cleanGet["start"], $cleanGet["end"], false);
     } else {
-        $track = $tracker->getProjectTrack($id, $cleanGet["usr"], $cleanGet["task"], 0, 0, false);
+        $tracks = $tracker->getProjectTrack($id, $cleanGet["usr"], $cleanGet["task"], 0, 0, false);
     }
     // array representing the content of the table. each field is a column
     $thetrack = array();
-    if (!empty($track)) {
+    if (!empty($tracks)) {
         $i = 0;
-        foreach ($track as $timetrack) {
+        foreach ($tracks as $timetrack) {
             if (empty($timetrack["tname"])) {
                 $timetrack["tname"] = "";
             }
@@ -276,15 +281,15 @@ if ($action == "add") {
     $line = array($strproj, $strtask, $strcomment, $strday, $strstarted, $strended, $strhours);
     fputcsv($excelFile, $line);
     if (!empty($cleanGet["start"]) and !empty($cleanGet["end"])) {
-        $track = $tracker->getUserTrack($id, $cleanGet["project"], $cleanGet["task"], $cleanGet["start"], $cleanGet["end"], false);
+        $tracks = $tracker->getUserTrack($id, $cleanGet["project"], $cleanGet["task"], $cleanGet["start"], $cleanGet["end"], false);
     } else {
-        $track = $tracker->getUserTrack($id, $cleanGet["project"], $cleanGet["task"], 0, 0, false);
+        $tracks = $tracker->getUserTrack($id, $cleanGet["project"], $cleanGet["task"], 0, 0, false);
     }
-    if (!empty($track)) {
-        foreach ($track as $tra) {
-            $hrs = round($tra["hours"], 2);
+    if (!empty($tracks)) {
+        foreach ($tracks as $track) {
+            $hrs = round($track["hours"], 2);
             $hrs = str_replace(".", ",", $hrs);
-            $myArr = array($tra["pname"], $tra["tname"], $tra["comment"], $tra["daystring"], $tra["startstring"], $tra["endstring"], $hrs);
+            $myArr = array($track["pname"], $track["tname"], br2nl($track["comment"]), $track["daystring"], $track["startstring"], $track["endstring"], $hrs);
             fputcsv($excelFile, $myArr);
         }
     }
@@ -293,13 +298,15 @@ if ($action == "add") {
     header("Location: $loc");
 } elseif ($action == "userpdf") {
     if (!empty($cleanGet["start"]) and !empty($cleanGet["end"])) {
-        $track = $tracker->getUserTrack($id, $cleanGet["project"], $cleanGet["task"], $cleanGet["start"], $cleanGet["end"], false);
+        $tracks = $tracker->getUserTrack($id, $cleanGet["project"], $cleanGet["task"], $cleanGet["start"], $cleanGet["end"], false);
     } else {
-        $track = $tracker->getUserTrack($id, $cleanGet["project"], $cleanGet["task"], 0, 0, false);
+        $tracks = $tracker->getUserTrack($id, $cleanGet["project"], $cleanGet["task"], 0, 0, false);
     }
     $thetrack = array();
 
-    $totaltime = $tracker->getTotalTrackTime($track);
+    global $conn;
+
+    $totaltime = $tracker->getTotalTrackTime($tracks);
     $totaltime = str_replace(".", ",", $totaltime);
     $uname = $conn->query("SELECT name FROM user WHERE ID = {$conn->quote($id)}")->fetch();
     $uname = $uname[0];
@@ -310,19 +317,19 @@ if ($action == "add") {
     $headers = array($langfile["project"], $langfile["task"], $langfile["comment"], $langfile["started"] . " - " . $langfile["ended"], $langfile["hours"]);
 
     $thetrack = array();
-    if (!empty($track)) {
-        foreach ($track as $tra) {
-            if (empty($tra["tname"])) {
-                $tra["tname"] = "";
+    if (!empty($tracks)) {
+        foreach ($tracks as $track) {
+            if (empty($track["tname"])) {
+                $track["tname"] = "";
             }
-            $hrs = round($tra["hours"], 2);
+            $hrs = round($track["hours"], 2);
             $hrs = number_format($hrs, 2, ",", ".");
 
-            $tra["comment"] = strip_tags($tra["comment"]);
-            array_push($thetrack, array($tra["pname"], $tra["tname"], $tra["comment"], $tra["daystring"] . "/" . $tra["startstring"] . "-" . $tra["endstring"], $hrs));
+            $track["comment"] = strip_tags($track["comment"]);
+            array_push($thetrack, array($track["pname"], $track["tname"], $track["comment"], $track["daystring"] . "/" . $track["startstring"] . "-" . $track["endstring"], $hrs));
         }
 
-        $totaltime = $tracker->getTotalTrackTime($track);
+        $totaltime = $tracker->getTotalTrackTime($tracks);
         $totaltime = str_replace(".", ",", $totaltime);
 
         $pdf->table($headers, $thetrack);
@@ -405,15 +412,15 @@ elseif ($action == "projectTimetracker") {
         $limit = $cleanGet["limit"];
     }
     if (!empty($cleanGet["start"]) and !empty($cleanGet["end"])) {
-        $track = $tracker->getProjectTrack($id, $cleanGet["usr"], $cleanGet["task"], $cleanGet["start"], $cleanGet["end"], $limit, $offset);
+        $tracks = $tracker->getProjectTrack($id, $cleanGet["usr"], $cleanGet["task"], $cleanGet["start"], $cleanGet["end"], $limit, $offset);
         $trackCount = count($tracker->getProjectTrack($id, $cleanGet["usr"], $cleanGet["task"], $cleanGet["start"], $cleanGet["end"], 100000000));
     } else {
-        $track = $tracker->getProjectTrack($id, $cleanGet["usr"], $cleanGet["task"], 0, 0, $limit, $offset);
+        $tracks = $tracker->getProjectTrack($id, $cleanGet["usr"], $cleanGet["task"], 0, 0, $limit, $offset);
         $trackCount = count($tracker->getProjectTrack($id, $cleanGet["usr"], $cleanGet["task"], 0, 0, 10000000000));
     }
-    if (!empty($track)) {
-        $projectTrack["items"] = $track;
-        $projectTrack["additionalData"]["totalHours"] = $tracker->getTotalTrackTime($track);
+    if (!empty($tracks)) {
+        $projectTrack["items"] = $tracks;
+        $projectTrack["additionalData"]["totalHours"] = $tracker->getTotalTrackTime($tracks);
         $projectTrack["count"] = $trackCount;
 
         echo json_encode($projectTrack);

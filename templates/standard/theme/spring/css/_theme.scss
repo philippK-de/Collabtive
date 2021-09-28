@@ -1,0 +1,209 @@
+
+/*
+* Main menu tabs
+*/
+$menuTabDesktop: url(../images/main-desk.png) no-repeat 0 0;
+$menuTabProfileMale: url(../images/main-prof-male.png) no-repeat 0 0;
+$menuTabProfileFemale: url(../images/main-prof-female.png) no-repeat 0 0;
+$menuTabAdmin:url(../images/main-settings.png) no-repeat 0 0;
+$menuTabLogout: url(../images/main-logout.png) no-repeat 0 0;
+
+/*
+* Submenu tabs
+*/
+$submenuProjectSettings: url(../images/main-admin-a.png) no-repeat 0 0;
+$submenuUserSettings: url(../images/main-admin-b.png) no-repeat 0 0;
+$submenuSystemSettings: url(../images/main-admin-c.png) no-repeat 0 0;
+$submenuCustomerSettings: url(../images/main-admin-d.png) no-repeat 0 0;
+
+/*
+* Tabs on top of blocks
+*/
+$blockTabDesktop:url(../images/symbols/tab-desk.png);
+$blockTabProject:url(../images/symbols/tab-projects.png);
+$blockTabCustomers:url(../images/symbols/tab-customers.png);
+$blockTabTasklist:url(../images/symbols/tab-tasklist.png);
+$blockTabMessages:url(../images/symbols/tab-msgs.png);
+$blockTabMilestones:url(../images/symbols/tab-miles.png);
+$blockTabFiles:url(../images/symbols/tab-files.png);
+$blockTabTimetracker:url(../images/symbols/tab-timetracking.png);
+$blockTabSystemSettings:url(../images/symbols/tab-system-settings.png);
+
+// Users
+$blockTabUserList:url(../images/symbols/tab-userlist.png);
+$blockTabUserMale:url(../images/symbols/tab-userprofil-male.png);
+$blockTabEditMale:url(../images/symbols/tab-settings.png);
+$blockTabEditFemale:url(../images/symbols/tab-userprofil-female.png);
+$blockTabSettings:url(../images/symbols/tab-settings.png);
+
+
+/*
+* Toggle icons in accordions
+*/
+$toggleIcon: url(../images/acc-open.png) no-repeat right 10px;
+$toggleIconLight: url(../images/acc-open-b.png);
+$upIconBlock: url(../images/win-up.png) no-repeat 98.5% 8px;
+$upIconNone: url(../images/win-up.png) no-repeat 98.5% -54px;
+
+/*
+* Tool icons in accordions
+*/
+$toolIconClose: url(../images/butn-check.png) no-repeat 4px 6px;
+$toolIconEdit: url(../images/butn-edit.png) no-repeat 0 4px;
+$toolIconEditActive: url(../images/butn-edit.png) no-repeat 0 -22px;
+$toolIconDelete: url(../images/butn-del.png);
+$toolIconReply: url(../images/butn-reply.png);
+$toolIconReplyActive: url(../images/butn-reply.png) no-repeat 4px -20px;
+
+/*
+* Toast message background colors
+*/
+$infoError: url(../images/infowin_red.png) repeat;
+$infoSuccess: url(../images/infowin_green.png) repeat;
+$infoWarning: url(../images/infowin_yellow.png) repeat;
+
+/*
+* Modals
+*/
+$modalCloseIcon: url(../images/closemodalwin.png) no-repeat 0 0;
+
+/*
+* Project status wrapper
+*/
+
+// Status bar gradients
+$statusBarGradientIncomplete: url(../images/statusbar_incomplete_b.jpg) repeat-x 0 0;
+$statusBarBGradientIncomplete: url(../images/statusbar_incomplete_b.jpg) repeat-x 0 -1px;
+$statusBarGradientComplete: url(../images/statusbar_complete_b.jpg) repeat-x 0 0;
+$statusBarBGradientComplete: url(../images/statusbar_complete_b.jpg) repeat-x 0 -1px;
+
+// Tool icons
+$projectCloseIcon: url(../images/butn-check.png) no-repeat center 4px;
+$projectDeleteIcon: url(../images/butn-del.png) no-repeat center 4px;
+$projectEditIconActive: url(../images/butn-edit.png) no-repeat center 4px;
+$projectReplyIconActive: url(../images/butn-reply.png) no-repeat center 4px;
+$projectDescriptionToggleIconActive: url(../images/acc-open.png) no-repeat right 9px;
+
+/*
+* Icons in user profile
+*/
+$vcardIcon: url(../images/export-vcard.png);
+
+/*
+* Icons in file manager
+*/
+$parentFolderIcon: url(../images/root-arrow.png) no-repeat 2px 0;
+
+/*
+* Base colors
+*/
+$colorMain: #6daa3b;
+
+$loginAlert:#fff;
+
+$logoName:#fff;
+$logoSubname:#98ce6c;
+$baseTextColor: #fff;
+
+$leftBlockBg:#fff;
+$backgroundColorA:"../images/color-a.png";
+
+$tabsInfo:#98ce6c;
+$mainMenueInfo:#98ce6c; // Info-Span in Mainmenue
+
+$bigCalToday:#d1f0b5; //day in the Big Calendar
+
+$footer: #6ab0c5;
+
+$green:#598a31;
+$greenbg:#d1f0b5;
+$red:#8a3630;
+$redbg:#e8dbdb;
+
+
+/*
+* Block colors
+*/
+$projectsMain:#598a31;
+$projectsB:#bacfa8; // Borders in Forms
+$projectsC:#6daa3b; // Buttons Hover
+
+$projectsBlockhead:#598a31;
+$projectsTablehead:#f8faf9;
+$projectsTableSecondhead:#f7f9f8; // closed Things
+
+$projectsColorA:#e5e7e6; // ColorMix Rows
+$projectsColorB:#f5f7f6; // ColorMix Rows
+$projectsColorC:url(../images/tables-projects-bg-c.png); // Files in Messages
+
+$tasksMain:#598a31;
+$tasksB:#bacfa8; // Borders in Forms
+$tasksC:#6daa3b; // Buttons Hover
+
+$tasksBlockhead:#598a31;
+$tasksTablehead:#f8faf9;
+$tasksTableSecondhead:#f7f9f8; // closed Things
+
+$tasksColorA:#e5e7e6; // ColorMix Rows
+$tasksColorB:#f5f7f6; // ColorMix Rows
+$tasksColorC:url(../images/tables-tasks-bg-c.png); // Files in Messages
+
+$msgsMain:#598a31;
+$msgsB:#bacfa8; // Borders in Forms
+$msgsC:#6daa3b; // Buttons Hover
+$msgsBlockhead:#598a31;
+$msgsTablehead:#f8faf9;
+$msgsTableSecondhead:#f7f9f8; // closed Things
+$msgsColorA:#e5e7e6; // ColorMix Rows
+$msgsColorB:#f5f7f6; // ColorMix Rows
+$msgsColorC:url(../images/tables-projects-bg-c.png); // Files in Messages
+
+$userMain:#598a31;
+$userB:#bacfa8; // Borders in Forms
+$userC:#6daa3b; // Buttons Hover
+$userBlockhead:#598a31;
+$userTablehead:#f8faf9;
+$userTableSecondhead:#f7f9f8; // closed Things
+$userColorA:#e5e7e6; // ColorMix Rows
+$userColorB:#f5f7f6; // ColorMix Rows
+$userColorC:url(../images/tables-projects-bg-c.png); // Files in Messages
+
+$milesMain:#598a31;
+$milesB:#bacfa8; // Borders in Forms
+$milesC:#6daa3b; // Buttons Hover
+$milesBlockhead:#598a31;
+$milesTablehead:#f8faf9;
+$milesTableSecondhead:#f7f9f8; // closed Things
+$milesColorA:#e5e7e6; // ColorMix Rows
+$milesColorB:#f5f7f6; // ColorMix Rows
+$milesColorC:url(../images/tables-projects-bg-c.png); // Files in Messages
+
+$neutralMain:#598a31;
+$neutralB:#bacfa8; // Borders in Forms
+$neutralC:#6daa3b; // Buttons Hover
+$neutralBlockhead:#598a31;
+$neutralTablehead:#f8faf9;
+$neutralTableSecondhead:#f7f9f8; // closed Things
+$neutralColorA:#e5e7e6; // ColorMix Rows
+$neutralColorB:#f5f7f6; // ColorMix Rows
+$neutralColorC:url(../images/tables-projects-bg-c.png); // Files in Messages
+
+$timetrackMain:#598a31;
+$timetrackB:#bacfa8; // Borders in Forms
+$timetrackC:#6daa3b; // Buttons Hover
+$timetrackBlockhead:#598a31;
+$timetrackTablehead:#f8faf9;
+$timetrackTableSecondhead:#f7f9f8; // closed Things
+$timetrackColorA:#e5e7e6; // ColorMix Rows
+$timetrackColorB:#f5f7f6; // ColorMix Rows
+$timetrackColorC:url(../images/tables-projects-bg-c.png); // Files in Messages
+
+$filesMain:#598a31;
+$filesB:#bacfa8; // Borders in Forms
+$filesC:#6daa3b; // Buttons Hover
+$filesBlockhead:#598a31;
+$filesTablehead:#f8faf9;
+$filesTableSecondhead:#f7f9f8; // closed Things
+$filesColorA:#e5e7e6; // ColorMix Rows
+$filesColorB:#f5f7f6; // ColorMix Rows
+$filesColorC:url(../images/tables-projects-bg-c.png); // Files in Messages

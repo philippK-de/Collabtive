@@ -63,18 +63,22 @@
 
 <script type="text/javascript" src="include/js/accordion.js"></script>
 <script type="text/javascript" src="include/js/modal.min.js"></script>
+<script type="text/javascript" src="include/js/treeView.min.js"></script>
 <script type="text/javascript" src="include/js/views/index.min.js"></script>
 <script type="text/javascript">
         pagination.itemsPerPage = 15;
     {if $tasknum > 0}
+
         var tasksView = createView(tasks);
         //add this view to the dependencies of projectsView
         projectsViewDependencies.push(tasksView);
+
 
         var accord_tasks;
         tasksView.afterUpdate(function () {
             accord_tasks = new accordion2('desktoptasks');
         });
+
     {/if}
     {if $msgnum > 0}
         var messagesView = createView(messages);
@@ -84,8 +88,7 @@
         var accord_msgs;
         messagesView.afterUpdate(function () {
             accord_msgs = new accordion2('desktopmessages');
-            renderMilestoneTree(messagesView);
-            renderFilesTree(messagesView);
+
         });
     {/if}
     //setup dependenciens

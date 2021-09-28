@@ -1,0 +1,331 @@
+/*
+* Main menu
+*/
+$menuTabDesktop: url(../images/main-desk.png) no-repeat 0 0;
+$menuTabProfileMale: url(../images/main-prof-male.png) no-repeat 0 0;
+$menuTabProfileFemale: url(../images/main-prof-female.png) no-repeat 0 0;
+$menuTabAdmin: url(../images/main-settings.png) no-repeat 0 0;
+$menuTabLogout: url(../images/main-logout.png) no-repeat 0 0;
+$subMenuArrowIcon: url(../images/main-submen.png) no-repeat center 0;
+
+/*
+* Submenu
+*/
+$submenuProjectSettings: url(../images/main-admin-a.png) no-repeat 0 0;
+$submenuUserSettings: url(../images/main-admin-b.png) no-repeat 0 0;
+$submenuSystemSettings: url(../images/main-admin-c.png) no-repeat 0 0;
+$submenuCustomerSettings: url(../images/main-admin-d.png) no-repeat 0 0;
+
+/*
+* Tool icons
+*/
+$toolIcons: url(../images/inmenue-tools.png) no-repeat;
+$toolIconsWindow: url(../images/win-tools.png) 0 0;
+$vcardIcon: url(../images/export-vcard.png);
+$addIcon: url(../images/adds.png);
+$addFilesIcons: url(../images/add-files.png);
+$exportIcons: url(../images/export-headline.png);
+$exportTasksIcons: url(../images/export-tasks.png);
+$exportMessagesIcons: url(../images/export-msgs.png);
+
+/*
+* Tabs on top of blocks
+*/
+$blockTabDesktop: url(../images/symbols/tab-desk.png);
+$blockTabProject: url(../images/symbols/tab-projects.png);
+$blockTabCustomers: url(../images/symbols/tab-customers.png);
+$blockTabTasklist: url(../images/symbols/tab-tasklist.png);
+$blockTabMessages: url(../images/symbols/tab-msgs.png);
+$blockTabMilestones: url(../images/symbols/tab-miles.png);
+$blockTabFiles: url(../images/symbols/tab-files.png);
+$blockTabTimetracker: url(../images/symbols/tab-timetracking.png);
+$blockTabSystemSettings: url(../images/symbols/tab-system-settings.png);
+
+// Users
+$blockTabUserList: url(../images/symbols/tab-userlist.png);
+$blockTabUserMale: url(../images/symbols/tab-userprofil-male.png);
+$blockTabEditMale: url(../images/symbols/tab-settings.png);
+$blockTabEditFemale: url(../images/symbols/tab-userprofil-female.png);
+$blockTabSettings: url(../images/symbols/tab-settings.png);
+
+/*
+* Toggle icons in accordions
+*/
+$toggleIcon: url(../images/acc-open.png) no-repeat right 10px;
+$toggleIconLight: url(../images/acc-open-b.png);
+$upIconBlock: url(../images/win-up.png) no-repeat 98.5% 8px;
+$upIconNone: url(../images/win-up.png) no-repeat 98.5% -54px;
+
+/*
+* Tool icons in accordions
+*/
+$toolIconClose: url(../images/butn-check.png) no-repeat 4px 6px;
+$toolIconEdit: url(../images/butn-edit.png) no-repeat 0 4px;
+$toolIconEditActive: url(../images/butn-edit.png) no-repeat 0 -22px;
+$toolIconDelete: url(../images/butn-del.png);
+$toolIconReply: url(../images/butn-reply.png);
+$toolIconReplyActive: url(../images/butn-reply.png) no-repeat 4px -20px;
+
+/*
+* Toast message background colors
+*/
+$infoError: url(../images/infowin_red.png) repeat;
+$infoSuccess: url(../images/infowin_green.png) repeat;
+$infoWarning: url(../images/infowin_yellow.png) repeat;
+
+/*
+* Modals
+*/
+$modalCloseIcon: url(../images/closemodalwin.png) no-repeat 0 0;
+
+/*
+* Project status wrapper
+*/
+
+// Status bar gradients
+$statusBarGradientIncomplete: url(../images/statusbar_incomplete_b.jpg) repeat-x 0 0;
+$statusBarBGradientIncomplete: url(../images/statusbar_incomplete_b.jpg) repeat-x 0 -1px;
+$statusBarGradientComplete: url(../images/statusbar_complete_b.jpg) repeat-x 0 0;
+$statusBarBGradientComplete: url(../images/statusbar_complete_b.jpg) repeat-x 0 -1px;
+
+// Tool icons
+$projectCloseIcon: url(../images/butn-check.png) no-repeat center 4px;
+$projectDeleteIcon: url(../images/butn-del.png) no-repeat center 4px;
+$projectEditIconActive: url(../images/butn-edit.png) no-repeat center 4px;
+$projectReplyIconActive: url(../images/butn-reply.png) no-repeat center 4px;
+$projectDescriptionToggleIconActive: url(../images/acc-open.png) no-repeat right 9px;
+
+/*
+* Icons in file manager
+*/
+$parentFolderIcon: url(../images/root-arrow.png) no-repeat 2px 0;
+
+/*
+* Calendar
+*/
+$calendarScrollLeftBackground: url(../images/scroll_left_miles.png) no-repeat center 15px;
+$calendarScrollRightBackground: url(../images/scroll_right_miles.png);
+$calendarCloseIcon: url(../images/closewin.png) no-repeat right 1px;
+
+/*
+* Datepicker
+*/
+$datePickerBackground: url(../images/color-d.png) repeat 0 0;
+$datePickerWeekdayBackground: url(../images/color-c.png) repeat 0 0;
+$datePickerWrong: #3c556f;
+$datePickerToday: #52a454;
+$datePickerRed: #be4c43;
+$datePickerBlue: #529ba4;
+$datePickerBackgroundWrong: url(../images/color-c.png) repeat 0 0;
+$datePickerBackgroundToday: url(../images/color-c-green.png) repeat 0 0;
+$datePickerBackgroundBlue: url(../images/color-c-cyan.png) repeat 0 0;
+$datePickerBackgroundRed: url(../images/color-c-red.png) repeat 0 0;
+$datePickerIconNext: url(../images/next-side.png);
+$datePickerIconBack: url(../images/back-side.png) no-repeat center 7px;
+$datePickerIconNextNeutral: url(../images/next-side-neutral.png);
+$datePickerIconBackNeutral: url(../images/back-side-neutral.png);
+$datePickerIconNextInProject: url(../images/next-side-projects.png);
+$datePickerIconBackInProject: url(../images/back-side-projects.png);
+$datePickerIconNextInTask: url(../images/next-side-tasks.png);
+$datePickerIconBackInTask: url(../images/back-side-tasks.png);
+$datePickerIconNextInTimeTracking: url(../images/next-side-timetrack.png);
+$datePickerIconBackInTimeTracking: url(../images/back-side-timetrack.png);
+$datePickerIconNextInUserProfile: url(../images/next-side-user.png);
+$datePickerIconBackInUserProfile: url(../images/back-side-user.png);
+$datePickerIconNextInMilestone: url(../images/next-side-miles.png);
+$datePickerIconBackInMilestone: url(../images/back-side-miles.png);
+$datePickerIconNextInFileManager: url(../images/next-side-files.png);
+$datePickerIconBackInFileManager: url(../images/back-side-files.png);
+
+/*
+* Online list and chat
+*/
+$chatRowTextColor: #0a182f;
+$chatRowBackgroundColor: url(../images/input-bg-a.png) repeat-x 0 0;
+$chatTextColor: #0a182f;
+$chatButtonTextColor: #0a182f;
+$chatButtonBackgroundDisabled: #384e67;
+$onlineListChatIcon: url(../images/chat.png) no-repeat right -23px;
+$onlineListUserHoverColor: #9daab7;
+$onlineListLinkColor: #3c5570;
+$onlineListLinkHoverColor: url(../images/color-b.png) repeat 0 0;
+
+/*
+* Content
+*/
+$windowDownIcon: url(../images/win-down-side.png) no-repeat right 1px;
+$windowUpIcon: url(../images/win-up-side.png) no-repeat right 1px;
+
+/*
+* Base colors
+*/
+$bodyColor: #082343;
+$bodyBackground: #28648b;
+$colorMain: #001e40;
+
+$loginAlert: #fac3b7;
+$loginAlertBackground: url(../images/login-alert.png);
+
+$logoName: #fff;
+$logoSubname: #6ab0c5;
+$baseTextColor: #6d7f93;
+
+$leftBlockBg: #fff;
+$backgroundColorA: "../images/color-a.png";
+
+
+$tabsInfo: #c5d2e1;
+$mainMenueInfo: #c5d2e1;
+// Info-Span in Mainmenue
+
+$bigCalToday: #eaf6e3;
+//day in the Big Calendar
+
+$footer: #6ab0c5;
+
+$white: #fff;
+$green: #009359;
+$greenbg: #e0f1db;
+$red: #be4c43;
+$redbg: #e7dcda;
+
+/*
+* Block colors
+*/
+$projectsMain: #3f7174;
+$projectsB: #8caaac;
+// Borders in Forms
+$projectsC: #275154;
+// Buttons Hover
+
+$projectsBlockhead: url(../images/tables-projects-head.png);
+$projectsTablehead: url(../images/tables-projects-thead.png);
+$projectsTableSecondhead: url(../images/tables-projects-sechead.png);
+// closed Things
+
+$projectsColorA: url(../images/tables-projects-bg-a.png);
+// ColorMix Rows
+$projectsColorB: url(../images/tables-projects-bg-b.png);
+// ColorMix Rows
+$projectsColorC: url(../images/tables-projects-bg-c.png);
+// Files in Messages
+
+$tasksMain: #365a76;
+$tasksB: #869cad;
+// Borders in Forms
+$tasksC: #203d56;
+// Buttons Hover
+
+$tasksBlockhead: url(../images/tables-tasks-head.png);
+$tasksTablehead: url(../images/tables-tasks-thead.png);
+$tasksTableSecondhead: url(../images/tables-tasks-sechead.png);
+// closed Things
+
+$tasksColorA: url(../images/tables-tasks-bg-a.png);
+// ColorMix Rows
+$tasksColorB: url(../images/tables-tasks-bg-b.png);
+// ColorMix Rows
+$tasksColorC: url(../images/tables-tasks-bg-c.png);
+// Files in Messages
+
+$msgsMain: #65635e;
+$msgsB: #a3a19e;
+// Borders in Forms
+$msgsC: #464440;
+// Buttons Hover
+
+$msgsBlockhead: url(../images/tables-msgs-head.png);
+$msgsTablehead: url(../images/tables-msgs-thead.png);
+$msgsTableSecondhead: url(../images/tables-msgs-sechead.png);
+// closed Things
+
+$msgsColorA: url(../images/tables-msgs-bg-a.png);
+// ColorMix Rows
+$msgsColorB: url(../images/tables-msgs-bg-b.png);
+// ColorMix Rows
+$msgsColorC: url(../images/tables-msgs-bg-c.png);
+// Files in Messages
+
+$userMain: #576d5a;
+$userB: #bbcbbb;
+// Borders in Forms
+$userC: #3d573f;
+// Buttons Hover
+
+$userBlockhead: url(../images/tables-user-head.png);
+$userTablehead: url(../images/tables-user-thead.png);
+$userTableSecondhead: url(../images/tables-user-sechead.png);
+// closed Things
+$userColorA: url(../images/tables-user-bg-a.png);
+// ColorMix Rows
+$userColorB: url(../images/tables-user-bg-b.png);
+// ColorMix Rows
+$userColorC: url(../images/tables-user-bg-c.png);
+
+$milesMain: #824e48;
+$milesB: #b49591;
+// Borders in Forms
+$milesC: #62332e;
+// Buttons Hover
+
+$milesBlockhead: url(../images/tables-miles-head.png);
+$milesTablehead: url(../images/tables-miles-thead.png);
+$milesTableSecondhead: url(../images/tables-miles-sechead.png);
+// closed Things
+$milesColorA: url(../images/tables-miles-bg-a.png);
+// ColorMix Rows
+$milesColorB: url(../images/tables-miles-bg-b.png);
+// ColorMix Rows
+$milesColorC: url(../images/tables-miles-bg-c.png);
+// Files in Messages
+
+$neutralMain: #6f6d6e;
+$neutralB: #a9a7a8;
+// Borders in Forms
+$neutralC: #4f4e4e;
+// Buttons Hover
+
+$neutralBlockhead: url(../images/tables-neutral-head.png);
+$neutralTablehead: url(../images/tables-neutral-thead.png);
+$neutralTableSecondhead: url(../images/tables-neutral-sechead.png);
+// closed Things
+$neutralColorA: url(../images/tables-neutral-bg-a.png);
+// ColorMix Rows
+$neutralColorB: url(../images/tables-neutral-bg-b.png);
+// ColorMix Rows
+$neutralColorC: url(../images/tables-neutral-bg-c.png);
+// Files in Messages
+
+$timetrackMain: #8f5f45;
+$timetrackB: #bc9f8f;
+// Borders in Forms
+$timetrackC: #6f412c;
+// Buttons Hover
+
+$timetrackBlockhead: url(../images/tables-timetracking-head.png);
+$timetrackTablehead: url(../images/tables-timetracking-thead.png);
+$timetrackTableSecondhead: url(../images/tables-timetracking-sechead.png);
+// closed Things
+$timetrackColorA: url(../images/tables-timetracking-bg-a.png);
+// ColorMix Rows
+$timetrackColorB: url(../images/tables-timetracking-bg-b.png);
+// ColorMix Rows
+$timetrackColorC: url(../images/tables-timetracking-bg-c.png);
+// Files in Messages
+
+$filesMain: #484f64;
+$filesB: #9195a2;
+// Borders in Forms
+$filesC: #2e3345;
+// Buttons Hover
+
+$filesBlockhead: url(../images/tables-files-head.png);
+$filesTablehead: url(../images/tables-files-thead.png);
+$filesTableSecondhead: url(../images/tables-files-sechead.png);
+// closed Things
+$filesColorA: url(../images/tables-files-bg-a.png);
+// ColorMix Rows
+$filesColorB: url(../images/tables-files-bg-b.png);
+// ColorMix Rows
+$filesColorC: url(../images/tables-files-bg-c.png);
+// Files in Messages

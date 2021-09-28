@@ -13,7 +13,10 @@
 class project extends databaseModel
 {
     function __construct(){
+        global $conn;
+        $this->databaseConnection = $conn;
         $this->databaseTable = "projekte";
+
     }
     /**
      * Add a project
@@ -27,23 +30,29 @@ class project extends databaseModel
      */
     function add($name, $desc, $end, $budget, $assignme = 0)
     {
-        global $conn, $mylog;
+        global $mylog;
 
         if ($end > 0) {
             $end = strtotime($end);
         }
 
-        $now = time();
+        $insid = $this->addElement([
+            "name" => $name,
+            "desc" => $desc,
+            "start" => time(),
+            "end" => $end,
+            "status" => 1,
+            "budget" => $budget
+        ]);
+        //$ins1Stmt = $conn->prepare("INSERT INTO projekte (`name`, `desc`, `end`, `start`, `status`, `budget`) VALUES (?,?,?,?,1,?)");
+        //$ins1 = $ins1Stmt->execute(array($name, $desc, $end, $now, (float)$budget));
 
-        $ins1Stmt = $conn->prepare("INSERT INTO projekte (`name`, `desc`, `end`, `start`, `status`, `budget`) VALUES (?,?,?,?,1,?)");
-        $ins1 = $ins1Stmt->execute(array($name, $desc, $end, $now, (float)$budget));
-
-        $insid = $conn->lastInsertId();
+        //$insid = $conn->lastInsertId();
         if ((int)$assignme == 1) {
             $uid = $_SESSION['userid'];
             $this->assign($uid, $insid);
         }
-        if ($ins1) {
+        if ($insid) {
             mkdir(CL_ROOT . "/files/" . CL_CONFIG . "/$insid/", 0777);
             $mylog->add($name, 'projekt', 1, $insid);
             return $insid;
@@ -441,9 +450,11 @@ class project extends databaseModel
             $project["startstring"] = date(CL_DATEFORMAT, $project["start"]);
 
             $project["done"] = $this->getProgress($project["ID"]);
+            $project["members"] = $this->listProjectMembers($id,10000,0);
 
             $companyObj = new company();
             $project["customer"] = $companyObj->getProjectCompany($id);
+
 
             return $project;
         } else {
@@ -493,7 +504,7 @@ class project extends databaseModel
      * @param int $offset Offset for the SQL statement
      * @return array $myProjects Projects for this user
      */
-    function getMyProjects($user, $status = 1, $offset = 0, $limit = 10)
+    function getMyProjects($user, $status = 1, $offset = 0, $limit = 10, $orderBy = "projekt", $orderDirection = "DESC")
     {
         global $conn;
 
@@ -503,7 +514,7 @@ class project extends databaseModel
         $offset = (int)$offset;
         $limit = (int)$limit;
         //get the projekt IDs of projects assigned to this user
-        $selAssigned = $conn->query("SELECT projekt, status FROM projekte_assigned JOIN projekte ON projekte.ID = projekte_assigned.projekt WHERE user = $user AND projekte.status = $status ORDER BY projekt DESC LIMIT $limit OFFSET $offset");
+        $selAssigned = $conn->query("SELECT projekt, status FROM projekte_assigned JOIN projekte ON projekte.ID = projekte_assigned.projekt WHERE user = $user AND projekte.status = $status ORDER BY $orderBy $orderDirection LIMIT $limit OFFSET $offset");
 
         $projectsAssigned = $selAssigned->fetchAll();
 

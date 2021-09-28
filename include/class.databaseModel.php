@@ -3,16 +3,16 @@
 abstract class databaseModel
 {
     protected $databaseTable;
-
+    protected $databaseConnection;
 
     protected function addElement(array $fields)
     {
-        global $conn;
         $sqlQuery = "INSERT INTO " . $this->databaseTable . " (";
         $fieldcount = count($fields);
 
-        foreach ($fields as $name => $value) {
-            $sqlQuery .= $name . ",";
+        $keys = array_keys($fields);
+        foreach ($keys as $key) {
+            $sqlQuery .= "`" . $key . "`,";
         }
         //remove superflous comma
         $sqlQuery = substr($sqlQuery, 0, strlen($sqlQuery) - 1);
@@ -26,17 +26,16 @@ abstract class databaseModel
         $sqlQuery = substr($sqlQuery, 0, strlen($sqlQuery) - 1);
         $sqlQuery .= ")";
         //execute the query
-        $stmt = $conn->prepare($sqlQuery);
-        $stmt->execute(array_values($fields));
+        $stmt = $this->databaseConnection->prepare($sqlQuery);
 
+        $values = array_values($fields);
+        $stmt->execute($values);
         //return the ID for the element
-        return $conn->lastInsertId();
+        return $this->databaseConnection->lastInsertId();
     }
 
     protected function editElement($id, $fields)
     {
-        global $conn;
-
         $sqlQuery = "UPDATE " . $this->databaseTable . " SET ";
 
         foreach ($fields as $name => $value) {
@@ -46,7 +45,7 @@ abstract class databaseModel
         $sqlQuery = substr($sqlQuery, 0, strlen($sqlQuery) - 1);
         $sqlQuery .= " WHERE ID = ?";
 
-        $stmt = $conn->prepare($sqlQuery);
+        $stmt = $this->databaseConnection->prepare($sqlQuery);
 
         $values = array_values($fields);
         array_push($values, $id);
@@ -55,9 +54,7 @@ abstract class databaseModel
 
     protected function getElement($id)
     {
-        global $conn;
-
-        $stmt = $conn->prepare("SELECT * FROM " . $this->databaseTable . " WHERE ID = ?");
+        $stmt = $this->databaseConnection->prepare("SELECT * FROM " . $this->databaseTable . " WHERE ID = ?");
         $stmt->execute(array($id));
 
         return $stmt->fetch();
@@ -65,11 +62,11 @@ abstract class databaseModel
 
     protected function getLimited($limit, $offset)
     {
-        global $conn;
+        
         $limit = (int)$limit;
         $offset = (int)$offset;
 
-        $stmt = $conn->prepare("SELECT * FROM " . $this->databaseTable . " LIMIT $limit OFFSET $offset");
+        $stmt = $this->databaseConnection->prepare("SELECT * FROM " . $this->databaseTable . " LIMIT $limit OFFSET $offset");
         $stmt->execute();
 
         return $stmt->fetchAll();
@@ -77,9 +74,7 @@ abstract class databaseModel
 
     protected function getAllElements()
     {
-        global $conn;
-
-        $stmt = $conn->prepare("SELECT * FROM " . $this->databaseTable);
+        $stmt = $this->databaseConnection->prepare("SELECT * FROM " . $this->databaseTable);
         $stmt->execute();
 
         return $stmt->fetchAll();
@@ -87,7 +82,6 @@ abstract class databaseModel
 
     protected function getElementsBy(array $parameters)
     {
-        global $conn;
         $sqlQuery = "SELECT * FROM " . $this->databaseTable . " WHERE ";
 
         $i = 0;
@@ -99,17 +93,15 @@ abstract class databaseModel
 
             $i++;
         }
-        $stmt = $conn->prepare($sqlQuery);
+        $stmt = $this->databaseConnection->prepare($sqlQuery);
         $stmt->execute(array_values($parameters));
 
         return $stmt->fetchAll();
     }
 
-    protected function countElements()
+    protected function countElements($field = "*")
     {
-        global $conn;
-
-        $countStmt = $conn->prepare("SELECT COUNT(*) FROM " . $this->databaseTable);
+        $countStmt = $this->databaseConnection->prepare("SELECT COUNT(" . $field . ") FROM " . $this->databaseTable);
         $countStmt->execute();
 
         $count = $countStmt->fetch();
@@ -120,10 +112,9 @@ abstract class databaseModel
 
     protected function deleteElement($id)
     {
-        global $conn;
         $id = (int)$id;
 
-        $delStmt = $conn->prepare("DELETE FROM deployments WHERE ID = ? LIMIT 1");
+        $delStmt = $this->databaseConnection->prepare("DELETE FROM " . $this->databaseTable . " WHERE ID = ? LIMIT 1");
 
         return $delStmt->execute(array($id));
     }

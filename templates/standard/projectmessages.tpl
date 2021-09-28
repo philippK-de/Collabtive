@@ -18,7 +18,7 @@
 
             {*Add Message*}
             {if $userpermissions.messages.add}
-                <div class="add-main" style="left:-60px;">
+                <div class="add-main" style="left:-160px;">
                     <form class="main" action="javascript:void(0);">
                         <fieldset>
                             <div class="row">
@@ -74,7 +74,7 @@
         accord_messages = new accordion2('publicMessages');
         accord_user_messages = new accordion2('privateMessages');
         renderMilestoneTree(projectMessagesView);
-        renderFilesTree(projectMessagesView);
+        createFilesTree(projectMessagesView);
         new LyteBox()
 
     });

@@ -57,7 +57,7 @@
             {if $userpermissions.messages.edit}
                 <div id="form_edit" class="addmenue display-none">
                     <div class="content-spacer"></div>
-                    {include file="editmessageform.tpl" showhtml="no"}
+                    {include file="forms/editmessageform.tpl" showhtml="no"}
                 </div>
             {/if}
 

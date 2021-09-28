@@ -51,7 +51,7 @@
 			{if $userpermissions.milestones.edit}
 				<div id="form_edit" class="addmenue" style="display:none;clear:both;">
 					<div class="content-spacer"></div>
-					{include file="editmilestone.tpl" showhtml="no"}
+					{include file="forms/editmilestone.tpl" showhtml="no"}
 				</div>
 			{/if}
 

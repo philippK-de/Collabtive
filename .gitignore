@@ -8,6 +8,7 @@ Thumbs.db
 *.swo
 
 templates_c/*
+templates/feather/*
 files/*
 templates/mobile/*
 .idea/
@@ -49,7 +50,8 @@ dav.php
 include/class.myDavDirectory.php
 include/class.myDavFile.php
 *.sql
-dav.php
-dav.php
-dav.php
+/installPlugins.php
+/addstuff.php
+/map.php
 nbproject/
+/closure-compiler.jar

@@ -1,3 +1,20 @@
+Collabtive 3.2
++ Fix problem when using the task comments plugin
++ Modularize CSS to use SCSS instead of custom buildscript
++ Draw project members tree in project details on the dashboard
++ Hook comments plugin into task details in my tasks
++ Hook comments plugin into single task view
++ Update PHP Mailer, HTMLPurifier, Smarty to their latest versions
++ Fix issues with tinyMCE not correctly syncing content when saving
++ Add facilities for server-side sorting of tables to the view manager
++ Make title and daysleft column sortable in the projects block ont he desktop
++ Update tinyMCE to latest version 4.7.7 from 2.x
++ Only draw file and milestone trees when message details are opened
++ Enable mySQL strict mode by default. This prevents MySQL from truncating too long strings, and otherwhise trying to force
+  inputs to the data type of a column
++ Only change a milestone's tasks' dates if the corresponding form field is checked
++ Don't change a milestone's task lists names when editing the milestone
+
 Collabtive 3.1
 + Fix a bug where the generic female avatar wasnt shown in the user-admin area
 + Update PHPMailer to its latest stable release 5.2.2 to mitigate potential issues with PHP7
